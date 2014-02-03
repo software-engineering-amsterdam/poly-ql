@@ -14,46 +14,6 @@ import org.uva.sea.ql.ast.form.*;
 package org.uva.sea.ql.parser.antlr;
 }
 
-
-form returns [Form result]
-  : 'form' Ident body=block { $result = new Form(new Ident($Ident.text), $body.result); }
-  ;
-  
-block returns [Block result]
-@init { List<Stat> stats = new ArrayList<Stat>(); }
-  : '{' ( s=stat { stats.add($s.result); } )* '}' { $result = new Block(stats); }
-  ;
-  
-stat returns [Stat result]
-  : 'if' '(' c=orExpr ')' tru=stat 'else' fls=stat { $result = new IfThenElse($c.result, $tru.result, $fls.result); }
-  | 'if' '(' c=orExpr ')' tru=stat { $result = new IfThen($c.result, $tru.result); }
-  | b=block { $result = $b.result; }
-  | l=label name=Ident ':' t=type '(' e=orExpr ')' { $result = new Computed($l.result, new Ident($name.text), $t.result, $e.result); }
-  | l=label name=Ident ':' t=type { $result = new Answerable($l.result, new Ident($name.text), $t.result); }   
-  ;
-
-label returns [Label result]
-  : Str { $result = new Label($Str.text); }
-  ;
-  
-type returns [org.uva.sea.ql.ast.types.Type result]
-  : 'int' { $result = new org.uva.sea.ql.ast.types.Int(); }
-  | 'str' { $result = new org.uva.sea.ql.ast.types.Str(); }
-  | 'bool' { $result = new org.uva.sea.ql.ast.types.Bool(); }
-  ;
-  
-primary returns [Expr result]
-  : Int   { $result = new Int(Integer.parseInt($Int.text)); }
-  | Ident { $result = new Ident($Ident.text); }
-  | Str   { $result = new Str($Str.text); }
-  | bool  { $result = $bool.result; }
-  | '(' x=orExpr ')'{ $result = $x.result; }
-  ;
-  
-bool returns [Expr result]
-  : 'true'  { $result = new Bool(true); }
-  | 'false' { $result = new Bool(true); }
-  ;
     
 unExpr returns [Expr result]
     :  '+' x=unExpr { $result = new Pos($x.result); }
