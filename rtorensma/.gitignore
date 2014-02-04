@@ -1,0 +1,4 @@
+.metadata/*
+.metadata/.*
+QLJava/bin
+QLJava/.*
