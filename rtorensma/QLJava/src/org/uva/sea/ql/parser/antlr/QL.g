@@ -32,11 +32,11 @@ stat returns [Stat result]
   ;
 
 computed returns [Computed result]
-  : Ident ':' Str type '(' orExpr ')' { $result = new Computed($Ident.text, $Str.text, $type.result, $orExpr.result); }
+  : Ident ':' Str type '(' orExpr ')' { $result = new Computed(new Ident($Ident.text), $Str.text, $type.result, $orExpr.result); }
   ;
 
 question returns [Question result]
-  : Ident ':' Str type { $result = new Question($Ident.text, $Str.text, $type.result); }
+  : Ident ':' Str type { $result = new Question(new Ident($Ident.text), $Str.text, $type.result); }
   ;
 
 type returns [org.uva.sea.ql.ast.types.Type result]

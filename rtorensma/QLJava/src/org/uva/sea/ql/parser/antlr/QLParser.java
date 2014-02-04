@@ -1,4 +1,4 @@
-// $ANTLR 3.4 src/org/uva/sea/ql/parser/antlr/QL.g 2014-02-04 16:40:15
+// $ANTLR 3.4 src/org/uva/sea/ql/parser/antlr/QL.g 2014-02-04 17:02:59
 
 package org.uva.sea.ql.parser.antlr;
 import org.uva.sea.ql.ast.expr.*;
@@ -401,7 +401,7 @@ public class QLParser extends Parser {
 
             match(input,14,FOLLOW_14_in_computed167); if (state.failed) return result;
 
-            if ( state.backtracking==0 ) { result = new Computed((Ident9!=null?Ident9.getText():null), (Str10!=null?Str10.getText():null), type11, orExpr12); }
+            if ( state.backtracking==0 ) { result = new Computed(new Ident((Ident9!=null?Ident9.getText():null)), (Str10!=null?Str10.getText():null), type11, orExpr12); }
 
             }
 
@@ -452,7 +452,7 @@ public class QLParser extends Parser {
             state._fsp--;
             if (state.failed) return result;
 
-            if ( state.backtracking==0 ) { result = new Question((Ident13!=null?Ident13.getText():null), (Str14!=null?Str14.getText():null), type15); }
+            if ( state.backtracking==0 ) { result = new Question(new Ident((Ident13!=null?Ident13.getText():null)), (Str14!=null?Str14.getText():null), type15); }
 
             }
 
