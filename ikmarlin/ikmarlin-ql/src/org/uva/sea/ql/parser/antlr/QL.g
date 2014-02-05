@@ -1,5 +1,5 @@
 grammar QL;
-options {backtrack=true; memoize=true;}
+options {backtrack=false; memoize=true;}
 
 @parser::header
 {
@@ -14,6 +14,64 @@ import org.uva.sea.ql.ast.form.*;
 package org.uva.sea.ql.parser.antlr;
 }
 
+form
+    : 'form' fIdent '{' block '}'
+    ;
+
+block
+    : (question|ifThenElse)*
+    ;
+    
+question
+    : qIdent ':' qLabel qType (computation)?
+    ;
+    
+fIdent
+    : Ident
+    ;
+    
+qIdent
+    : Ident
+    ;
+    
+qLabel
+    : Str
+    ;
+qType
+    : 'boolean'
+    | 'string'
+    | 'integer'
+    | 'date'
+    | 'decimal'
+    | 'money'
+    ;
+    
+computation
+    : '(' addExpr ')'
+    ;
+    
+ifThenElse
+    : 'if' ifCondition '{' thenBlock '}'
+      ('else' '{' elseBlock '}')?
+    ;
+    
+ifCondition
+    : '(' orExpr ')'
+    ;
+    
+thenBlock
+    : block
+    ;
+
+elseBlock
+    : block
+    ;
+        
+primary
+    : Int
+    : Str
+    : Ident
+    ;
     
 unExpr returns [Expr result]
     :  '+' x=unExpr { $result = new Pos($x.result); }
