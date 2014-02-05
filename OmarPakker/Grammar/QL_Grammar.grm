@@ -1,0 +1,115 @@
+"Name"     = 'Questionaire Language'
+"Author"   = 'Omar Pakker'
+"Version"  = 'v0.1'
+"About"    = 'A grammar for Questionaires.'
+
+"Start Symbol"   = <Forms>
+"Case Sensitive" = True
+
+! -------------------------------------------------
+! Character Sets
+! -------------------------------------------------
+{ID Head}      = {Letter} + [_]
+{ID Tail}      = {Alphanumeric} + [_]
+{String Chars} = {Printable} + {HT} - ["\]
+
+! -------------------------------------------------
+! Terminals
+! -------------------------------------------------
+Identifier    = {ID Head}{ID Tail}*
+
+StringLiteral = '"' ( {String Chars} | '\' {Printable} )* '"'
+IntLiteral    = {Digit}+
+RealLiteral   = {Digit}*'.'{Digit}+
+MoneyLiteral  = {Digit}+','{Digit}{Digit}
+!DateLiteral   = (19|20)[0..9][0..9][- /.](0[1..9]|1[012])[- /.](0[1..9]|[12][0..9]|3[01])
+
+Comment Line = '//'
+Comment Start = '/*'
+Comment End   = '*/'
+
+! -------------------------------------------------
+! Types
+! -------------------------------------------------
+<Type>        ::= string
+               |  int
+               |  real
+               |  money
+               |  boolean
+               !|  date
+
+! -------------------------------------------------
+! Rules
+! -------------------------------------------------
+<Forms>       ::= <Form> <Forms>
+               |  <Form>
+
+<Form>        ::= form Identifier <Block>
+
+<VarDecl>     ::= Identifier ':' <Type>
+
+<VarAssign>   ::= Identifier ':' <Type> '=' <Expression>
+               |  <Expression>
+
+<Block>       ::= '{' '}'
+               |  '{' <Statements> '}'
+
+<Statements>  ::= <Statement> <Statements>
+               |  <Statement>
+
+<Statement>   ::= if '(' <Expression> ')' <Statement>
+               |  if '(' <Expression> ')' <SubStmnt> else <Statement>
+               |  <ExprStmnt>
+               |  <Block>
+
+<SubStmnt>    ::= if '(' <Expression> ')' <SubStmnt> else <SubStmnt>
+               |  <ExprStmnt>
+               |  <Block>
+
+<ExprStmnt>   ::= StringLiteral '>>' <VarDecl> ';'
+               |  StringLiteral '<<' <VarAssign> ';'
+               |  goto Identifier ';'
+
+<Expression>  ::= <OrExpr> '?' <OrExpr> ':' <Expression>
+               |  <OrExpr>
+
+<OrExpr>      ::= <OrExpr> '||' <AndExpr>
+               |  <AndExpr>
+
+<AndExpr>     ::= <AndExpr> '&&' <EqExpr>
+               |  <EqExpr>
+
+<EqExpr>      ::= <EqExpr> '==' <CompExpr>
+               |  <EqExpr> '!=' <CompExpr>
+               |  <CompExpr>
+
+<CompExpr>    ::= <CompExpr> '<'  <AddExpr>
+               |  <CompExpr> '>'  <AddExpr>
+               |  <CompExpr> '<=' <AddExpr>
+               |  <CompExpr> '>=' <AddExpr>
+               |  <AddExpr>
+
+<AddExpr>     ::= <AddExpr> '+' <MultExpr>
+               |  <AddExpr> '-' <MultExpr>
+               |  <MultExpr>
+
+<MultExpr>    ::= <MultExpr> '*' <NegateExpr>
+               |  <MultExpr> '/' <NegateExpr>
+               |  <NegateExpr> 
+
+<NegateExpr>  ::= '-' <Value>
+               |  '!' <Value>
+               |  <Value>
+
+<Value>       ::= Identifier
+               |  <Literal>
+               |  '(' <Expression> ')'
+
+<Literal>     ::= StringLiteral
+               |  IntLiteral
+               |  RealLiteral
+               |  MoneyLiteral
+               !|  DateLiteral
+               |  true
+               |  false
+
