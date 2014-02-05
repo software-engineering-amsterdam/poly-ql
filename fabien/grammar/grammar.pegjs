@@ -1,24 +1,25 @@
-start =
-    additive
+{
+  function word(str) {
+    return str.join("").trim();
+  }
+}
 
-additive =
-    left:multiplicative "+" right:additive
-        { return {tag: "+", left:left, right:right}; }
-  / multiplicative
+start = questionnaire
 
-multiplicative =
-    left:primary "*" right:multiplicative
-        { return {tag: "*", left:left, right:right}; }
-  / primary
+id     = l:[0-9a-zA-Z_\- ]* { return word(l).toLowerCase(); }
+type   = l:[a-zA-Z_ ]*      { return word(l); }
+label  = l:[a-zA-Z ]*     { return word(l); } 
+required = l:.?              { return l == "*"; }
 
-primary =
-    integer
-  / "(" additive:additive ")"
-      { return additive; }
+// Question id:input-type:label/question text
+question = id:id ":" type:type ":" label:label r:required "\n"?
+  { 
+    return {
+        type:type,
+        id:id,
+        label:label,
+        required:r
+    }
+  }
 
-integer =
-    digits:[0-9]+
-        { return parseInt(digits.join(""), 10); }
-
-ws
- = [ \t\r\n]
+questionnaire = question*

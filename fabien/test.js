@@ -3,13 +3,26 @@ var parser = require("./parser/parser");
 var assert = require('assert');
 
 
-var out = parser.parse("3+4");
-
 // Do a test
-assert.deepEqual( parser.parse("3+4"), {
-   "tag": "+",
-   "left": 3,
-   "right": 4
-} );
+assert.deepEqual( parser.parse("label1 : text : This is my first test question"),
+  [
+     {
+        "type": "text",
+        "id": "label1",
+        "label": "This is my first test question",
+        "required": false
+     }
+  ]
+);
 
-console.log(out);
+// Check if "*" sets required to true
+assert.deepEqual( parser.parse("label1 : text : This is my second test question*"),
+  [
+     {
+        "type": "text",
+        "id": "label1",
+        "label": "This is my second test question",
+        "required": true
+     }
+  ]
+);
