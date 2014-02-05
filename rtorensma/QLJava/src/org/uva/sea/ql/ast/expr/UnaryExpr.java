@@ -1,13 +1,18 @@
 package org.uva.sea.ql.ast.expr;
 
 public abstract class UnaryExpr extends Expr {
-	private final Expr arg;
+	private final Expr expr;
+	protected String symbol = "";
 	
-	protected UnaryExpr(Expr arg) {
-		this.arg = arg;
+	public UnaryExpr(Expr arg) {
+		this.expr = arg;
 	}
 	
-	public Expr getArg() {
-		return arg;
+	public Expr getExpr() {
+		return expr;
+	}
+
+	public String getSymbol() {
+		return symbol;
 	}
 }
