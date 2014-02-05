@@ -1,7 +1,24 @@
-start = question
+start =
+    additive
 
-letter = [a-zA-Z]
-number = [0-9]
-word   = l:letter* { return l.join("") } 
+additive =
+    left:multiplicative "+" right:additive
+        { return {tag: "+", left:left, right:right}; }
+  / multiplicative
 
-question = word ":" word { return "Hello world!" }
+multiplicative =
+    left:primary "*" right:multiplicative
+        { return {tag: "*", left:left, right:right}; }
+  / primary
+
+primary =
+    integer
+  / "(" additive:additive ")"
+      { return additive; }
+
+integer =
+    digits:[0-9]+
+        { return parseInt(digits.join(""), 10); }
+
+ws
+ = [ \t\r\n]
