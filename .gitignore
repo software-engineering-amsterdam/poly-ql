@@ -4,3 +4,12 @@
 *.jar
 *.war
 *.ear
+
+# Editor files #
+*~
+*.swp
+
+# Platform files #
+.DS_Store
+.Thumbs
+
