@@ -1,0 +1,68 @@
+\documentclass[10pt,a4paper]{article}
+%\usepackage[options]{natbib}
+%\usepackage{natbib}% 
+
+\usepackage{authblk}
+\usepackage[numbers]{natbib}
+
+\usepackage{titlesec, blindtext, color}
+
+\usepackage{mathtools}
+\usepackage{pifont}
+\usepackage{caption}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{listings}
+\usepackage{array} 
+
+\newcommand\wordcount{
+    \immediate\write18{texcount -sub=subsection \jobname.tex  | grep "ection" | sed -e 's/+.*//' | tail -n +\thesection | head -n 1 > count.txt }
+    (\input{count.txt}words) 
+    }
+
+\title{Parsing parser generated parser program\\DRAFT}
+
+\author[1]{W.Y. Leung}
+
+\affil[1]{Master Software Engineering - Student}
+\date{\today}
+
+
+
+% Shortcut macros to show TOC of a particular section
+\newcommand{\sectiontitle}{}
+\newcommand{\newsection}[1]{\renewcommand{\sectiontitle}{#1}\section{#1}}
+\newcommand{\tick}{\ding{52}}
+
+\def\ignore#1\endignore{}
+\newcolumntype{I}{@{}>{\ignore}l<{\endignore}} %% blind out some colums
+
+\lstset{breaklines=true,breakatwhitespace=false,basicstyle=\ttfamily}
+
+
+\begin{document}
+
+    \maketitle
+
+    \section{Summary} \wordcount
+    \clearpage
+    \section{Introduction} \wordcount
+    \clearpage
+    \section{Methods} \wordcount
+    
+    \clearpage
+    
+    \section{Results} \wordcount
+        \subsection{NGS low coverage}  \wordcount
+        
+    \clearpage
+    
+    \section{Discussion} \wordcount
+    \clearpage
+
+\bibliographystyle{plainnat}
+\bibliography{reference}
+
+
+\end{document}
