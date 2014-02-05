@@ -1,0 +1,124 @@
+##LANGUAGE 'C#'
+##TEMPLATE-NAME 'Edit free parser class'
+##ENGINE-NAME 'Frengine'
+##SYSTEM-VERSION '5.0'
+##AUTHOR 'Omar Pakker' 
+##FILE-EXTENSION 'cs'
+##NOTES
+This template creates the parser file
+in such a way that no edits to the file
+are required. Instead, you should extend
+from it and work from there. This allows
+for regeneration without losing custom code.
+##END-NOTES
+##ID-CASE Propercase
+##ID-SEPARATOR '_'
+##DELIMITER ','
+
+using System.IO;
+using GOLD;
+
+namespace com.OPCreations.GoldParser
+{
+	public enum SymbolIndex
+    {
+##SYMBOLS
+        @%ID% = %Value%%Delimiter% %Col:50% // %Description%
+##END-SYMBOLS
+    };
+
+    public enum ProductionIndex
+    {
+##PRODUCTIONS
+        @%ID% = %Value%%Delimiter% %Col:50% // %Description%
+##END-PRODUCTIONS
+    };
+
+	public abstract class BaseParser
+	{
+		private Parser parser;
+
+		public Reduction Root { get; private set; }
+
+		public BaseParser()
+		{
+			parser = new GOLD.Parser();
+		}
+
+		public bool LoadGrammar(string grammarFilePath)
+		{
+			return parser.LoadTables(grammarFilePath);
+		}
+
+		public bool Parse(TextReader reader)
+		{
+			parser.Open(reader);
+			parser.TrimReductions = false;
+
+			bool done = false;
+			bool accepted = false;
+
+			while (!done)
+			{
+				switch (parser.Parse())
+				{
+					case ParseMessage.TokenRead:
+						break;
+
+					case ParseMessage.Reduction:
+						//Create a custom object and store the reduction
+						parser.CurrentReduction = OnReduction(parser.CurrentReduction as Reduction);
+						break;
+
+					case ParseMessage.Accept:
+						//All good!
+						Root = (Reduction)parser.CurrentReduction;
+						done = true;
+						accepted = true;
+						break;
+
+					case ParseMessage.GroupError:
+						//Unexpected end of file (EOF)
+						OnGroupError();
+						done = true;
+						break;
+
+					case ParseMessage.InternalError:
+						//Something went wrong internally
+						OnInternalError();
+						done = true;
+						break;
+
+					case ParseMessage.LexicalError:
+						//Token not recognized
+						OnLexicalError(parser.CurrentPosition().Line, parser.CurrentPosition().Column, parser.CurrentToken().Data);
+						done = true;
+						break;
+
+					case ParseMessage.NotLoadedError:
+						//CGT wasn't loaded
+						OnNotLoadedError();
+						done = true;
+						break;
+
+					case ParseMessage.SyntaxError:
+						//Expected a different token
+						OnSyntaxError(parser.CurrentPosition().Line, parser.CurrentPosition().Column,
+							parser.CurrentToken().Data, parser.ExpectedSymbols().Text());
+						done = true;
+						break;
+				}
+			}
+
+			return accepted;
+		}
+
+		protected abstract object OnReduction(Reduction r);
+
+		protected abstract void OnGroupError();
+		protected abstract void OnInternalError();
+		protected abstract void OnNotLoadedError();
+		protected abstract void OnLexicalError(int line, int column, object token);
+		protected abstract void OnSyntaxError(int line, int column, object token, string expected);
+	}
+}
