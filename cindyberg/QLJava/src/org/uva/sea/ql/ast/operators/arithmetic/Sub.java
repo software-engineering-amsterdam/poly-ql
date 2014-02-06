@@ -1,11 +1,11 @@
 package org.uva.sea.ql.ast.operators.arithmetic;
 
 import org.uva.sea.ql.ast.ASTNode;
-import org.uva.sea.ql.ast.Expr;
+import org.uva.sea.ql.ast.Expression;
 
 public class Sub implements ASTNode {
 
-	public Sub(Expr expr, Expr expr2) {
+	public Sub(Expression expr, Expression expr2) {
 		// TODO Auto-generated constructor stub
 	}
 
