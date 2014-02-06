@@ -5,6 +5,14 @@ options {
 	language = Java;
 }
 
-r : 'hello' ID;
-ID : [a-z]+;
-WS: [ \t\r\n]+ -> skip;
+form: 'form' NAME '{' FULLQUESTION+ '}';
+FULLQUESTION: QUESTION ID TYPE;
+NAME: [a-z]+;
+QUESTION: [a-z]+;
+ID: [a-z]+;
+TYPE: BOOL | INT | MONEY;
+
+MONEY: INT ',' INT INT;
+BOOL: [boolean value];
+INT: [0-9]+;
+WS: [ \t\n]+ -> skip;

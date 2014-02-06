@@ -8,13 +8,13 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface NewqlListener extends ParseTreeListener {
 	/**
-	 * Enter a parse tree produced by {@link NewqlParser#r}.
+	 * Enter a parse tree produced by {@link NewqlParser#form}.
 	 * @param ctx the parse tree
 	 */
-	void enterR(@NotNull NewqlParser.RContext ctx);
+	void enterForm(@NotNull NewqlParser.FormContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link NewqlParser#r}.
+	 * Exit a parse tree produced by {@link NewqlParser#form}.
 	 * @param ctx the parse tree
 	 */
-	void exitR(@NotNull NewqlParser.RContext ctx);
+	void exitForm(@NotNull NewqlParser.FormContext ctx);
 }

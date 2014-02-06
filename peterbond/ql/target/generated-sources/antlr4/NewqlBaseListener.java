@@ -16,13 +16,13 @@ public class NewqlBaseListener implements NewqlListener {
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
-	@Override public void enterR(@NotNull NewqlParser.RContext ctx) { }
+	@Override public void enterForm(@NotNull NewqlParser.FormContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
-	@Override public void exitR(@NotNull NewqlParser.RContext ctx) { }
+	@Override public void exitForm(@NotNull NewqlParser.FormContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
