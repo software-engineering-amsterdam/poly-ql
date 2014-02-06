@@ -1,0 +1,20 @@
+﻿{
+module QL_Lexer
+open System   
+open QL_Parser   
+open Microsoft.FSharp.Text.Lexing 
+}   
+
+let whitespace	= ' ' | '\t'
+let colon		= ':'
+let text		= ['a'-'z'] | ['A'-'Z'] | whitespace | '?'
+let label		= '"' text+ '"'
+let b			= "boolean"
+
+rule tokenize = parse
+| whitespace			{ tokenize lexbuf }
+| ['a'-'z' 'A'-'Z']+	{ ID (LexBuffer<_>.LexemeString lexbuf) }
+| label					{ LABEL (LexBuffer<_>.LexemeString lexbuf) }
+| colon					{ COLON }
+| whitespace? b			{ BOOL }
+| eof					{ END }

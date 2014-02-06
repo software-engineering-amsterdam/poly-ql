@@ -1,0 +1,24 @@
+﻿%{
+open System
+open QL_AST
+open Microsoft.FSharp.Collections
+%}
+
+%start start
+%type <QL_AST.question> start
+%token <string> ID
+%token <string> LABEL
+%token COLON END INT STRING BOOL
+
+%%
+
+start:
+	StmtExpr END { $1 }
+
+Qtype:
+	  BOOL { Boolean }
+	| STRING { String }
+	| INT { Integer }
+
+StmtExpr:
+	ID COLON LABEL Qtype	{ Question($1, $3, $4) }
