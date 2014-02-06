@@ -2,8 +2,8 @@
 	<!-- global properties -->
     <property name="srcPath" location="src/org/uva/sea/ql/parser/antlr" />
     <property name="genPath" location="gen" />
-	<property name="grammar" value="Calculator4" />
-	<property name="interpreter" value="Calculator4" />
+	<property name="grammar" value="WordSeparation" />
+	<property name="interpreter" value="WordSeparation" />
  
 	<!-- library classpaths -->
     <path id="classpath">
@@ -18,7 +18,7 @@
             <arg value="-o" />
             <arg path="${genPath}/${grammar}" />
         	<arg value="-lib" />
-        	<arg path="${src}/${interpreter}" />
+        	<arg path="${srcPath}/${interpreter}" />
             <arg value="grammar/${grammar}.g4" />
         </java>
     </target>
@@ -36,6 +36,6 @@
 	
  	<!-- clean up directories -->
     <target name="clean">
-        <delete dir="${gen}/${grammar}" includeemptydirs="true" />
+        <delete dir="${genPath}/${grammar}" includeemptydirs="true" />
     </target>
 </project>
