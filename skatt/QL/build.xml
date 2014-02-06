@@ -1,9 +1,9 @@
 <project name="QL"  basedir=".">
 	<!-- global properties -->
-    <property name="src" location="src/org/uva/sea/ql/parser/antlr" />
-    <property name="gen" location="gen" />
-	<property name="package" value="WordSeparation" />
-	<property name="grammar" location="src/grammars" />
+    <property name="srcPath" location="src/org/uva/sea/ql/parser/antlr" />
+    <property name="genPath" location="gen" />
+	<property name="grammar" value="WordSeparation" />
+	<property name="interpreter" value="WordSeparation" />
  
 	<!-- library classpaths -->
     <path id="classpath">
@@ -13,13 +13,13 @@
  
 	<!-- generate parser -->
     <target name="generate" depends="clean">
-    	<mkdir dir="${gen}/${package}" />
+    	<mkdir dir="${genPath}/${grammar}" />
         <java classname="org.antlr.v4.Tool" classpathref="classpath" fork="true">
             <arg value="-o" />
-            <arg path="${gen}/${package}" />
+            <arg path="${genPath}/${grammar}" />
         	<arg value="-lib" />
-        	<arg path="${src}/${package}" />
-            <arg value="${grammar}/${package}.g4" />
+        	<arg path="${src}/${interpreter}" />
+            <arg value="grammar/${grammar}.g4" />
         </java>
     </target>
  
@@ -27,7 +27,7 @@
     <target name="showtree">
         <input message="Enter Script To Test:" addproperty="test.script" defaultvalue="test/" />
         <java classname="org.antlr.v4.runtime.misc.TestRig" classpathref="classpath" fork="true">
-            <arg value="WordSeparation.WordSeparation" />
+            <arg value="${grammar}.${grammar}" />
             <arg value="program" />
             <arg value="-gui" />
             <arg value="${test.script}" />
@@ -36,6 +36,6 @@
 	
  	<!-- clean up directories -->
     <target name="clean">
-        <delete dir="${gen}/${package}" includeemptydirs="true" />
+        <delete dir="${gen}/${grammar}" includeemptydirs="true" />
     </target>
 </project>
