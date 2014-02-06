@@ -1,15 +1,15 @@
-// Output created by jacc on Thu Feb 06 15:16:11 CET 2014
+// Output created by jacc on Thu Feb 06 15:33:12 CET 2014
 
 package org.uva.sea.ql.parser.jacc;
 
+import org.uva.sea.ql.ast.*;
 import org.uva.sea.ql.ast.literal.*;
 import org.uva.sea.ql.ast.operators.arithmetic.*;
-import org.uva.sea.ql.ast.operators.comparison.*;
 import org.uva.sea.ql.ast.operators.booleans.*;
+import org.uva.sea.ql.ast.operators.comparison.*;
 import org.uva.sea.ql.ast.statement.*;
 import org.uva.sea.ql.ast.type.*;
-import org.uva.sea.ql.ast.Expr;
-import org.uva.sea.ql.ast.Identifier;
+
 
 class QLParser implements QLTokens {
     private int yyss = 100;
@@ -1997,12 +1997,14 @@ class QLParser implements QLTokens {
     }
 
     private int yyr3() { // statements : statements statement
-        yysp -= 2;
+        {yyrv = new QuestionSet(yysv[yysp-2],yysv[yysp-1]);}
+        yysv[yysp-=2] = yyrv;
         return yypstatements();
     }
 
     private int yyr4() { // statements : statement
-        yysp -= 1;
+        {yyrv = new QuestionSet(yysv[yysp-1]);}
+        yysv[yysp-=1] = yyrv;
         return yypstatements();
     }
 

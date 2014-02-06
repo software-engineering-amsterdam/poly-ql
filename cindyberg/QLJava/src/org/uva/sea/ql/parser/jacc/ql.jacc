@@ -48,8 +48,8 @@ import org.uva.sea.ql.ast.*;
  form : FORM IDENTIFIER '{' statements '}' {$$ = new Form($2,$4);}
  	  ; 
 
- statements : statements statement
- 		    | statement
+ statements : statements statement {$$ = new QuestionSet($1,$2);}
+ 		    | statement			   {$$ = new QuestionSet($1);}
  		    ;
  		    
  statement : question
