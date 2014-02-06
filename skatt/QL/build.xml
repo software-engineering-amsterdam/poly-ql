@@ -1,8 +1,8 @@
-<project name="QL" default="clean" basedir=".">
+<project name="QL"  basedir=".">
 	<!-- global properties -->
     <property name="src" location="src/org/uva/sea/ql/parser/antlr" />
     <property name="gen" location="gen" />
-	<property name="package" value="Calculator4" />
+	<property name="package" value="WordSeparation" />
 	<property name="grammar" location="src/grammars" />
  
 	<!-- library classpaths -->
@@ -17,16 +17,17 @@
         <java classname="org.antlr.v4.Tool" classpathref="classpath" fork="true">
             <arg value="-o" />
             <arg path="${gen}/${package}" />
-        	
-            <arg value="${grammar}\${package}.g4" />
+        	<arg value="-lib" />
+        	<arg path="${src}/${package}" />
+            <arg value="${grammar}/${package}.g4" />
         </java>
     </target>
  
 	<!-- show the tree of a particular input file -->
     <target name="showtree">
-        <input message="Enter Script To Test:" addproperty="test.script" defaultvalue="test/test1.calc" />
+        <input message="Enter Script To Test:" addproperty="test.script" defaultvalue="test/" />
         <java classname="org.antlr.v4.runtime.misc.TestRig" classpathref="classpath" fork="true">
-            <arg value="QL.${package}" />
+            <arg value="WordSeparation.WordSeparation" />
             <arg value="program" />
             <arg value="-gui" />
             <arg value="${test.script}" />

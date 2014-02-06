@@ -2,7 +2,7 @@ grammar Calculator4;
  
 @header
 {
-package QL;
+package Calculator4;
 }
  
 // PARSER

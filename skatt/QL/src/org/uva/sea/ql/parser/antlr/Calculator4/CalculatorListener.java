@@ -1,16 +1,17 @@
-package org.uva.sea.ql.parser.antlr;
+package org.uva.sea.ql.parser.antlr.Calculator4;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
  
-import QL.Calculator4Parser.AddOrSubtractContext;
-import QL.Calculator4Parser.ArgContext;
-import QL.Calculator4Parser.AssignmentContext;
-import QL.Calculator4Parser.IntegerContext;
-import QL.Calculator4Parser.MultOrDivContext;
-import QL.Calculator4Parser.PrintContext;
- 
+import Calculator4.Calculator4BaseListener;
+import Calculator4.Calculator4Parser.AddOrSubtractContext;
+import Calculator4.Calculator4Parser.ArgContext;
+import Calculator4.Calculator4Parser.AssignmentContext;
+import Calculator4.Calculator4Parser.IntegerContext;
+import Calculator4.Calculator4Parser.MultOrDivContext;
+import Calculator4.Calculator4Parser.PrintContext;
+
 public class CalculatorListener extends Calculator4BaseListener
 {
   public Stack<Integer>       stack = new Stack<Integer>();
