@@ -8,7 +8,7 @@ namespace QL_GOLD_C_Sharp
 		static int Main(string[] args)
 		{
 			BaseParser tp = new ConsoleParser();
-			bool a = tp.LoadGrammar(@"C:\School\Master\Repos\Software Construction\poly-ql\OmarPakker\Grammar\QL_Grammar.egt");
+			bool a = tp.LoadGrammar(@".\Grammar\QL_Grammar.egt");
 			bool b = tp.Parse(System.IO.File.OpenText(@"C:\School\Master\Repos\Software Construction\poly-ql\OmarPakker\Grammar\QL_Test.txt"));
 
 			Console.ReadKey();

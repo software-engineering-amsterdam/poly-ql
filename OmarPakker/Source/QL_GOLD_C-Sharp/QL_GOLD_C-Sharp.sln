@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QL_GOLD_C-Sharp", "QL_GOLD_C-Sharp.csproj", "{464B390C-7DDC-4C69-9361-6E7748836886}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleParser", "ConsoleParser/ConsoleParser.csproj", "{464B390C-7DDC-4C69-9361-6E7748836886}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
