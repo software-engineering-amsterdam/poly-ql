@@ -1,0 +1,38 @@
+<project name="QL" default="generate" basedir=".">
+    <property name="src" location="src" />
+    <property name="gen" location="gen" />
+    <property name="src" location="src" />
+    <property name="package" value="QL" />
+ 
+    <path id="classpath">
+        <pathelement location="lib/antlr-4.2-complete.jar" />
+        <pathelement location="bin" />
+    </path>
+ 
+    <target name="generate" depends="clean">
+        <mkdir dir="${gen}/${package}" />
+        <java classname="org.antlr.v4.Tool" classpathref="classpath" fork="true">
+            <arg value="-o" />
+            <arg path="${gen}/${package}" />
+            <arg value="-lib" />
+            <arg path="${src}/${package}" />
+            <arg value="-listener" />
+ 
+            <arg value="${src}/${package}/Calculator4.g4" />
+        </java>
+    </target>
+ 
+    <target name="showtree">
+        <input message="Enter Script To Test:" addproperty="test.script" defaultvalue="test/test1.calc" />
+        <java classname="org.antlr.v4.runtime.misc.TestRig" classpathref="classpath" fork="true">
+            <arg value="${package}.QL4" />
+            <arg value="program" />
+            <arg value="-gui" />
+            <arg value="${test.script}" />
+        </java>
+    </target>
+ 
+    <target name="clean">
+        <delete file="${gen}/*" includeemptydirs="true" />
+    </target>
+</project>
