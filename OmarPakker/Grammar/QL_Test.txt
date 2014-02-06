@@ -1,20 +1,19 @@
 form Form1
 {
     "Boolean:" >> answer1:boolean;
-    "Money:" >> answer2:money;
+    "Real:" >> answer2:real;
 
     if(answer1)
     {
         "Sub 1, boolean:" >> answer3:boolean;
-        "Sub 2, money:" >> answer4:money;
+        "Sub 2, real:" >> answer4:real;
     }
 
-    "Final money:" << result:money = answer2 + answer4;
+    "Final real:" << result:real = answer2 + answer4;
     "No var assignment:" << answer1 || answer2;
 
     "Int:" << intValue:int = 500;
     "Real:" << realValue:real = .5;
-    "Money:" << moneyValue:money = 10,50;
     "Boolean:" << boolValue:boolean = true;
     
     //Line comment

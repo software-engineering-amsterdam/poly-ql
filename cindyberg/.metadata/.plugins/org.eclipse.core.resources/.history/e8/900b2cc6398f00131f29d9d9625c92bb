@@ -1,0 +1,19 @@
+package org.uva.sea.ql.parser.jacc;
+
+public class Parser {
+
+}
+
+/*
+class Main {
+public static void main(String[] args) {
+CalcLexer lexer = new CalcLexer();
+lexer.nextToken();
+CalcParser parser = new CalcParser(lexer);
+parser.parse();
+}
+static void error(String msg) {
+System.out.println("ERROR: " + msg);
+System.exit(1);
+}
+}*/

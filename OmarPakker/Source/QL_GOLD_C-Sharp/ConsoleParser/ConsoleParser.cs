@@ -241,28 +241,24 @@ namespace QL_GOLD_C_Sharp
 					// <Value> ::= '(' <Expression> ')'
 					break;
 
-				case ProductionIndex.Literal_Stringliteral:
-					// <Literal> ::= StringLiteral
+				case ProductionIndex.Literal_String:
+					// <Literal> ::= String
 					break;
 
-				case ProductionIndex.Literal_Intliteral:
-					// <Literal> ::= IntLiteral
+				case ProductionIndex.Literal_Int:
+					// <Literal> ::= Int
 					break;
 
-				case ProductionIndex.Literal_Realliteral:
-					// <Literal> ::= RealLiteral
+				case ProductionIndex.Literal_Real:
+					// <Literal> ::= Real
 					break;
 
-				case ProductionIndex.Literal_Moneyliteral:
-					// <Literal> ::= MoneyLiteral
+				case ProductionIndex.Literal_Money:
+					// <Literal> ::= Money
 					break;
 
-				case ProductionIndex.Literal_True:
-					// <Literal> ::= true
-					break;
-
-				case ProductionIndex.Literal_False:
-					// <Literal> ::= false
+				case ProductionIndex.Literal_Bool:
+					// <Literal> ::= Bool
 					break;
 			}
 			#endregion
