@@ -29,11 +29,11 @@
 %left UMIN UPLUS UNOT
 
 //nonterminals
-//%type <ASTNode> astnode
+%type <ASTNode> astnode
 %type <Form> form
 %type <Question> question
 %type <Type> type
-%type <Expr> expr
+%type <Expression> expr
 
 %{
 import org.uva.sea.ql.ast.*;
@@ -41,9 +41,14 @@ import org.uva.sea.ql.ast.*;
 
 %%
 
- top : form {result = $1;}
+ top : astnode {result = $1;}
      ;
-
+     
+ astnode : form
+         | statements
+ 		 | expr
+ 		 ;
+ 
             
  form : FORM IDENTIFIER '{' statements '}' {$$ = new Form($2,$4);}
  	  ; 
@@ -97,7 +102,7 @@ import org.uva.sea.ql.ast.*;
 %%
 private QLLexer lexer; 
 
-private Form result;
+private ASTNode result;
 
 public Form getResult() {
   return result;

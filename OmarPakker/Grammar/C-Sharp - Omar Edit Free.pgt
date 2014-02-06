@@ -50,9 +50,27 @@ namespace com.OPCreations.GoldParser
 			return parser.LoadTables(grammarFilePath);
 		}
 
+		public bool LoadGrammar(BinaryReader reader)
+		{
+			return parser.LoadTables(reader);
+		}
+
+		public bool Parse(string text)
+		{
+			parser.Open(ref text);
+			
+			return DoParse();
+		}
+
 		public bool Parse(TextReader reader)
 		{
 			parser.Open(reader);
+
+			return DoParse();
+		}
+
+		private bool DoParse()
+		{
 			parser.TrimReductions = false;
 
 			bool done = false;

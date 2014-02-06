@@ -13,6 +13,16 @@ public class QLLexer implements QLTokens {
 	
 	static {
 		KEYWORDS = new HashMap<String, Integer>();
+		
+		KEYWORDS.put("true", BOOLEAN);
+		KEYWORDS.put("false", BOOLEAN);
+		KEYWORDS.put("form", FORM);
+		KEYWORDS.put("if", IF);
+		KEYWORDS.put("else", ELSE);
+		KEYWORDS.put("integer", INTEGER);
+		KEYWORDS.put("boolean", BOOLEAN);
+		KEYWORDS.put("string", STRING);
+		KEYWORDS.put("money", MONEY);
 	}
 	
 	
@@ -168,6 +178,7 @@ public class QLLexer implements QLTokens {
 	public ASTNode getSemantic() {
 		return yylval;
 	}
+
 
 
 }
