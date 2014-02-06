@@ -1,0 +1,7 @@
+FORM IDENTIFIER '{'
+ IDENTIFIER':' LABEL MONEY '(' INT '+' INT ')' 
+ IF '('IDENTIFIER')' '{'
+ IDENTIFIER':' LABEL MONEY '(' INT '+' INT ')'
+'}'
+
+'}'
