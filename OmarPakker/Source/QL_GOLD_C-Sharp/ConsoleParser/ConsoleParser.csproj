@@ -35,6 +35,16 @@
     <StartupObject>QL_GOLD_C_Sharp.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="..\..\..\Grammar\C-Sharp - Omar Edit Free.pgt">
+      <Link>Grammar\C-Sharp - Omar Edit Free.pgt</Link>
+    </None>
+    <None Include="..\..\..\Grammar\QL_Grammar.egt">
+      <Link>Grammar\QL_Grammar.egt</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\..\Grammar\QL_Grammar.grm">
+      <Link>Grammar\QL_Grammar.grm</Link>
+    </None>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
@@ -44,11 +54,25 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="GOLD Engine">
-      <HintPath>lib\GOLD Engine.dll</HintPath>
+      <HintPath>..\lib\GOLD Engine.dll</HintPath>
     </Reference>
     <Reference Include="System" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\..\Grammar\QL_Test.txt">
+      <Link>Grammar\QL_Test.txt</Link>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>"$(SolutionDir)tools\GOLDbuild.exe" "$(ProjectDir)..\..\..\Grammar\QL_Grammar.grm" "$(ProjectDir)..\..\..\Grammar\QL_Grammar.egt"
+"$(SolutionDir)tools\GOLDtest.exe" "$(ProjectDir)..\..\..\Grammar\QL_Grammar.egt" "$(ProjectDir)..\..\..\Grammar\QL_Test.txt"
+"$(SolutionDir)tools\GOLDprog.exe" "$(ProjectDir)..\..\..\Grammar\QL_Grammar.egt" "$(ProjectDir)..\..\..\Grammar\C-Sharp - Omar Edit Free.pgt" "$(ProjectDir)BaseParser.cs"</PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
