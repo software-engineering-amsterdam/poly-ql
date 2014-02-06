@@ -1,0 +1,12 @@
+package org.uva.sea.ql.ast.statement;
+
+import org.uva.sea.ql.ast.ASTNode;
+import org.uva.sea.ql.ast.expr.*;
+
+public class IfConditional extends Statement implements ASTNode{
+
+	public IfConditional(Expr expr, ASTNode astNode) {
+		// TODO Auto-generated constructor stub
+	}
+
+}

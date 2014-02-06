@@ -5,9 +5,8 @@ import java.io.Reader;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.uva.sea.ql.ast.ASTNode;
-import org.uva.sea.ql.ast.expr.Ident;
-import org.uva.sea.ql.ast.expr.Int;
+import org.uva.sea.ql.ast.*;
+import org.uva.sea.ql.ast.type.IntType;
 
 public class QLLexer implements QLTokens {
 	private static final Map<String, Integer> KEYWORDS;
@@ -138,8 +137,8 @@ public class QLLexer implements QLTokens {
 			    			n = 10 * n + (c - '0');
 			    			nextChar(); 
 			    		} while (Character.isDigit(c)); 
-			    		yylval = new Int(n);
-			    		return token = INT;
+			    		yylval = new IntType(n);
+			    		return token = INTEGER;
 			    	}
 			    	if (Character.isLetter(c)) {
 			    		StringBuilder sb = new StringBuilder();
@@ -152,8 +151,8 @@ public class QLLexer implements QLTokens {
 			    		if (KEYWORDS.containsKey(name)) {
 			    			return token = KEYWORDS.get(name);
 			    		}
-						yylval = new Ident(name);
-			    		return token = IDENT;
+						yylval = new Identifier(name);
+			    		return token = IDENTIFIER;
 			    	}
 			    	throw new RuntimeException("Unexpected character: " + (char)c);
 			    }
