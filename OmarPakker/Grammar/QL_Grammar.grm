@@ -18,11 +18,11 @@
 ! -------------------------------------------------
 Identifier    = {ID Head}{ID Tail}*
 
-StringLiteral = '"' ( {String Chars} | '\' {Printable} )* '"'
-IntLiteral    = {Digit}+
-RealLiteral   = {Digit}*'.'{Digit}+
-MoneyLiteral  = {Digit}+','{Digit}{Digit}
-!DateLiteral   = (19|20)[0..9][0..9][- /.](0[1..9]|1[012])[- /.](0[1..9]|[12][0..9]|3[01])
+String = '"' ( {String Chars} | '\' {Printable} )* '"'
+Int    = {Digit}+
+Real   = {Digit}*'.'{Digit}+
+Bool   = 'true' | 'false'
+!Date   = (19|20)[0..9][0..9][- /.](0[1..9]|1[012])[- /.](0[1..9]|[12][0..9]|3[01])
 
 Comment Line = '//'
 Comment Start = '/*'
@@ -34,7 +34,6 @@ Comment End   = '*/'
 <Type>        ::= string
                |  int
                |  real
-               |  money
                |  boolean
                !|  date
 
@@ -66,8 +65,8 @@ Comment End   = '*/'
                |  <ExprStmnt>
                |  <Block>
 
-<ExprStmnt>   ::= StringLiteral '>>' <VarDecl> ';'
-               |  StringLiteral '<<' <VarAssign> ';'
+<ExprStmnt>   ::= String '>>' <VarDecl> ';'
+               |  String '<<' <VarAssign> ';'
                |  goto Identifier ';'
 
 <Expression>  ::= <OrExpr> '?' <OrExpr> ':' <Expression>
@@ -105,11 +104,9 @@ Comment End   = '*/'
                |  <Literal>
                |  '(' <Expression> ')'
 
-<Literal>     ::= StringLiteral
-               |  IntLiteral
-               |  RealLiteral
-               |  MoneyLiteral
-               !|  DateLiteral
-               |  true
-               |  false
+<Literal>     ::= String
+               |  Int
+               |  Real
+               |  Bool
+               !|  Date
 

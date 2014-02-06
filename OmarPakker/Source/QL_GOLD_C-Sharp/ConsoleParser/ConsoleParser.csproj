@@ -35,21 +35,10 @@
     <StartupObject>QL_GOLD_C_Sharp.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="..\..\..\Grammar\C-Sharp - Omar Edit Free.pgt">
-      <Link>Grammar\C-Sharp - Omar Edit Free.pgt</Link>
-    </None>
-    <None Include="..\..\..\Grammar\QL_Grammar.egt">
-      <Link>Grammar\QL_Grammar.egt</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="..\..\..\Grammar\QL_Grammar.grm">
-      <Link>Grammar\QL_Grammar.grm</Link>
-    </None>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
-    <Compile Include="BaseParser.cs" />
     <Compile Include="ConsoleParser.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -59,15 +48,15 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\..\Grammar\QL_Test.txt">
-      <Link>Grammar\QL_Test.txt</Link>
-    </Content>
+    <ProjectReference Include="..\QL_Grammar\QL_Grammar.csproj">
+      <Project>{adef29ed-b350-451a-a0c7-5e7ae04609a5}</Project>
+      <Name>QL_Grammar</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>"$(SolutionDir)tools\GOLDbuild.exe" "$(ProjectDir)..\..\..\Grammar\QL_Grammar.grm" "$(ProjectDir)..\..\..\Grammar\QL_Grammar.egt"
-"$(SolutionDir)tools\GOLDtest.exe" "$(ProjectDir)..\..\..\Grammar\QL_Grammar.egt" "$(ProjectDir)..\..\..\Grammar\QL_Test.txt"
-"$(SolutionDir)tools\GOLDprog.exe" "$(ProjectDir)..\..\..\Grammar\QL_Grammar.egt" "$(ProjectDir)..\..\..\Grammar\C-Sharp - Omar Edit Free.pgt" "$(ProjectDir)BaseParser.cs"</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent>
