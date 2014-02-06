@@ -29,6 +29,19 @@ public class NewqlBaseListener implements NewqlListener {
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
+	@Override public void enterHallon(@NotNull NewqlParser.HallonContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitHallon(@NotNull NewqlParser.HallonContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
 	@Override public void enterEveryRule(@NotNull ParserRuleContext ctx) { }
 	/**
 	 * {@inheritDoc}

@@ -17,4 +17,15 @@ public interface NewqlListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitForm(@NotNull NewqlParser.FormContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link NewqlParser#hallon}.
+	 * @param ctx the parse tree
+	 */
+	void enterHallon(@NotNull NewqlParser.HallonContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link NewqlParser#hallon}.
+	 * @param ctx the parse tree
+	 */
+	void exitHallon(@NotNull NewqlParser.HallonContext ctx);
 }

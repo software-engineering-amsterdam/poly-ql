@@ -14,7 +14,7 @@ public class Compilert {
 		
 		// create a parser that feeds off the tokens buffer
 		NewqlParser parser = new NewqlParser(tokens);
-		ParseTree tree = parser.form();// begin parsing
+		ParseTree tree = parser.hallon();// begin parsing
 		System.out.println(tree.toStringTree(parser));// print LISP-style tree
 	}
 }
