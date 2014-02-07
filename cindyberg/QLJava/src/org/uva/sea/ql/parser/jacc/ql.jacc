@@ -15,7 +15,7 @@
 
 //operators
 %token '*' '/' '+' '-' OR AND NEQ EQ '<' LEQ '>' GEQ '!'
-%token '(' ')' '{' '}'
+%token '(' ')' '{' '}' ':'
 
 //keywords
 %token FORM IF ELSE

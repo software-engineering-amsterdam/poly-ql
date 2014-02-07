@@ -8,7 +8,7 @@ public class Question extends Statement implements ASTNode{
 
 	public Question(Identifier identifier, ASTNode astNode,
 			StringLiteral stringLiteral) {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 

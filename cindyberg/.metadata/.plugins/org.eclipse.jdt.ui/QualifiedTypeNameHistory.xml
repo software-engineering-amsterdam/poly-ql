@@ -6,7 +6,6 @@
 <fullyQualifiedTypeName name="org.uva.sea.ql.ast.expr.bool.And"/>
 <fullyQualifiedTypeName name="org.uva.sea.ql.ast.type.IntType"/>
 <fullyQualifiedTypeName name="org.uva.sea.ql.ast.type.StringType"/>
-<fullyQualifiedTypeName name="org.uva.sea.ql.ast.type.BoolType"/>
 <fullyQualifiedTypeName name="org.uva.sea.ql.ast.type.MoneyType"/>
 <fullyQualifiedTypeName name="org.uva.sea.ql.ast.literal.StringLiteral"/>
 <fullyQualifiedTypeName name="org.uva.sea.ql.ast.statement.Question"/>
@@ -14,10 +13,12 @@
 <fullyQualifiedTypeName name="org.uva.sea.ql.ast.operators.booleans.Or"/>
 <fullyQualifiedTypeName name="org.junit.Test"/>
 <fullyQualifiedTypeName name="org.uva.sea.ql.parser.jacc.Parser"/>
-<fullyQualifiedTypeName name="org.uva.sea.ql.ast.operators.arithmetic.Add"/>
 <fullyQualifiedTypeName name="org.uva.sea.ql.ast.ASTNode"/>
 <fullyQualifiedTypeName name="java.io.StringReader"/>
 <fullyQualifiedTypeName name="xtc.parser.ParseError"/>
-<fullyQualifiedTypeName name="org.uva.sea.ql.ast.operators.booleans.And"/>
 <fullyQualifiedTypeName name="java.lang.System"/>
+<fullyQualifiedTypeName name="org.uva.sea.ql.ast.operators.arithmetic.Add"/>
+<fullyQualifiedTypeName name="org.uva.sea.ql.ast.operators.booleans.And"/>
+<fullyQualifiedTypeName name="org.uva.sea.ql.ast.operators.comparison.Eq"/>
+<fullyQualifiedTypeName name="org.uva.sea.ql.ast.type.BoolType"/>
 </qualifiedTypeNameHistroy>
