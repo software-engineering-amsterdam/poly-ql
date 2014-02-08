@@ -14,7 +14,7 @@ namespace QL_Grammar.Eval.Expr
 
 		public IValue Eval()
 		{
-			IValue eval = Expression.Eval();
+			IValue eval = Expr1.Eval();
 
 			if (eval is IntValue)
 			{

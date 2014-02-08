@@ -14,17 +14,17 @@ namespace QL_Grammar.Eval.Expr
 
         public IValue Eval()
         {
-            object aEval = ExprA.Eval().Value;
+            object aEval = Expr1.Eval().Value;
 
             if (aEval is bool)
             {
                 if ((bool)aEval)
                 {
-                    return ExprB.Eval();
+                    return Expr2.Eval();
                 }
                 else
                 {
-                    return ExprC.Eval();
+                    return Expr3.Eval();
                 }
             }
 

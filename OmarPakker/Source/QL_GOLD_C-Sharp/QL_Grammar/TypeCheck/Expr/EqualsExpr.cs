@@ -17,10 +17,10 @@ namespace QL_Grammar.TypeCheck.Expr
 
         public IEnumerable<Tuple<string, bool>> CheckTypesValid()
         {
-            if (!Left.ExprType.CompatibleWith(Right.ExprType))
+            if (!Expr1.ExprType.CompatibleWith(Expr2.ExprType))
             {
                 yield return new Tuple<string, bool>(String.Format("Comparison using '==' not possible. Incompatible types: '{0}', '{1}'. Only the bool type is supported.",
-                    Left.ExprType.ToString(), Right.ExprType.ToString()), true);
+                    Expr1.ExprType.ToString(), Expr2.ExprType.ToString()), true);
             }
         }
 	}

@@ -14,8 +14,8 @@ namespace QL_Grammar.Eval.Expr
 
         public IValue Eval()
 		{
-			IValue lEval = Left.Eval();
-			IValue rEval = Left.Eval();
+			IValue lEval = Expr1.Eval();
+			IValue rEval = Expr1.Eval();
 
 			if (lEval is IntValue && rEval is IntValue)
 			{

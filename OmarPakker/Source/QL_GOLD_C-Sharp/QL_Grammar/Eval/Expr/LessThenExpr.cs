@@ -14,8 +14,8 @@ namespace QL_Grammar.Eval.Expr
 
         public IValue Eval()
 		{
-			object lEval = Left.Eval().Value;
-            object rEval = Right.Eval().Value;
+			object lEval = Expr1.Eval().Value;
+            object rEval = Expr2.Eval().Value;
 
 			if (lEval is IComparable && rEval is IComparable)
 			{

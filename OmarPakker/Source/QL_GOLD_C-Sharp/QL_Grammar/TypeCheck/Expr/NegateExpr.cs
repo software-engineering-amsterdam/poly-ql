@@ -13,14 +13,14 @@ namespace QL_Grammar.TypeCheck.Expr
             
 		}
 
-        public IType ExprType { get { return Expression.ExprType; } }
+        public IType ExprType { get { return Expr1.ExprType; } }
 
         public IEnumerable<Tuple<string, bool>> CheckTypesValid()
         {
-            if (!(Expression.ExprType is BoolType || Expression.ExprType is NumericType))
+            if (!(Expr1.ExprType is BoolType || Expr1.ExprType is NumericType))
             {
                 yield return new Tuple<string, bool>(String.Format("Negation not possible. Incompatible type: '{0}', Only bool and numerical types are supported.",
-                    Expression.ExprType.ToString()), true);
+                    Expr1.ExprType.ToString()), true);
             }
         }
 	}
