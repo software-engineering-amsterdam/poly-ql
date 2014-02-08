@@ -13,7 +13,7 @@ namespace QL_Grammar.Eval.Expr
 
 		public IValue Eval()
 		{
-			return new BoolValue(Left.Eval().Value.Equals(Right.Eval().Value));
+			return new BoolValue(Expr1.Eval().Value.Equals(Expr2.Eval().Value));
 		}
 	}
 }

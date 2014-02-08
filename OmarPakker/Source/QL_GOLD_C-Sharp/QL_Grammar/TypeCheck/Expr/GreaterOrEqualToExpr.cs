@@ -17,10 +17,10 @@ namespace QL_Grammar.TypeCheck.Expr
 
         public IEnumerable<Tuple<string, bool>> CheckTypesValid()
         {
-            if (!(Left.ExprType is NumericType && Right.ExprType is NumericType))
+            if (!(Expr1.ExprType is NumericType && Expr2.ExprType is NumericType))
             {
                 yield return new Tuple<string, bool>(String.Format("Comparison using '>=' not possible. Incompatible types: '{0}', '{1}'. Only numeric types are supported.",
-                    Left.ExprType.ToString(), Right.ExprType.ToString()), true);
+                    Expr1.ExprType.ToString(), Expr2.ExprType.ToString()), true);
             }
         }
 	}

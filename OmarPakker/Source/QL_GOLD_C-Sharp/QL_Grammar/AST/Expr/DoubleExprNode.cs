@@ -1,16 +1,15 @@
 ﻿
 namespace QL_Grammar.AST.Expr
 {
-    public class DoubleExprNode<E> : IExprNode
+    public class DoubleExprNode<E> : SingleExprNode<E>
         where E : IExprNode
     {
-        public E Left { get; private set; }
-        public E Right { get; private set; }
+        public E Expr2 { get; private set; }
 
-        public DoubleExprNode(E l, E r)
+        public DoubleExprNode(E e1, E e2)
+            : base(e1)
         {
-            Left = l;
-            Right = r;
+            Expr2 = e2;
         }
     }
 }
