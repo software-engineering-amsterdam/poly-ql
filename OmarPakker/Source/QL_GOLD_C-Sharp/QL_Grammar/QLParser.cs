@@ -15,15 +15,13 @@ namespace QL_Grammar
         where E : IExprNode
         where S : IStmntNode
     {
-        protected IFactory<E, S> Factory { get; private set; }
+        protected abstract IFactory<E, S> Factory { get; }
 
-        public QLParser(IFactory<E, S> factory)
+        public QLParser()
             : base(true)
         {
             Assembly a = typeof(QLParser<E, S>).Assembly;
             LoadGrammar(new BinaryReader(a.GetManifestResourceStream("QL_Grammar.Grammar.QL_Grammar.egt")));
-
-            Factory = factory;
         }
 
         protected override object OnReduction(Reduction r)
@@ -38,12 +36,28 @@ namespace QL_Grammar
             {
                 OnObjectCreated((S)newObj);
             }
+            else
+            {
+                OnObjectCreated(newObj);
+            }
 
             return newObj;
         }
 
-        protected abstract void OnObjectCreated(E exprObj);
-        protected abstract void OnObjectCreated(S stmntObj);
+        protected virtual void OnObjectCreated(E exprObj)
+        {
+
+        }
+
+        protected virtual void OnObjectCreated(S stmntObj)
+        {
+
+        }
+
+        protected virtual void OnObjectCreated(object obj)
+        {
+
+        }
 
         private object CreateObjectFor(Reduction r)
         {
