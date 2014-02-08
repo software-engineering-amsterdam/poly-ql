@@ -1,122 +1,87 @@
-﻿using System;
-using System.Collections.Generic;
-using QL_Grammar.Expr;
-using QL_Grammar.Value;
+﻿using System.Collections.Generic;
+using QL_Grammar.AST.Expr;
+using QL_Grammar.AST.Stmnt;
+using QL_Grammar.AST.Types;
+using QL_Grammar.AST.Value;
 
 namespace QL_Grammar.Factory
 {
-	public class BaseFactory<T> : IFactory<IExpr, IExpr>
-	{
-		private readonly Dictionary<String, IValue> variables;
+    public abstract class BaseFactory<E, S> : IFactory<E, S>
+        where E : IExprNode
+        where S : IStmntNode
+    {
+        protected Dictionary<string, E> Variables { get; private set; }
+        protected Dictionary<string, S> Forms { get; private set; }
 
-		public BaseFactory()
-		{
-			variables = new Dictionary<string, IValue>();
-		}
+        public BaseFactory()
+        {
+            Variables = new Dictionary<string, E>();
+            Forms = new Dictionary<string, S>();
+        }
 
-		public IExpr String(string s)
-		{
-			return new LiteralExpr(new StringValue(s));
-		}
+        public E String(string s)
+        {
+            return Literal(new StringValue(s));
+        }
 
-		public IExpr Int(int i)
-		{
-			return new LiteralExpr(new IntValue(i));
-		}
+        public E Int(int i)
+        {
+            return Literal(new IntValue(i));
+        }
 
-		public IExpr Real(double d)
-		{
-			return new LiteralExpr(new RealValue(d));
-		}
+        public E Real(double d)
+        {
+            return Literal(new RealValue(d));
+        }
 
-		public IExpr Bool(bool b)
-		{
-			return new LiteralExpr(new BoolValue(b));
-		}
+        public E Bool(bool b)
+        {
+            return Literal(new BoolValue(b));
+        }
 
-		public IExpr IfElse(IExpr toEval, IExpr ifTrue, IExpr ifFalse)
-		{
-			return new IfElseExpr<T>(toEval, ifTrue, ifFalse);
-		}
+        public E Variable(string var)
+        {
+            if(!Variables.ContainsKey(var))
+            {
+                Variables[var] = VarDecl(var, UnknownType.Instance);
+            }
 
-		public IExpr Or(IExpr a, IExpr b)
-		{
-			return new OrExpr(a, b);
-		}
+            return Variables[var];
+        }
 
-		public IExpr And(IExpr a, IExpr b)
-		{
-			return new AndExpr(a, b);
-		}
+        public abstract E Literal(IValue value);
+        
+        public abstract E Or(E l, E r);
+        public abstract E And(E l, E r);
+        public abstract E Eq(E l, E r);
+        public abstract E NotEq(E l, E r);
+        public abstract E LessThen(E l, E r);
+        public abstract E GreaterThen(E l, E r);
+        public abstract E LessOrEqualTo(E l, E r);
+        public abstract E GreaterOrEqualTo(E l, E r);
 
-		public IExpr Eq(IExpr a, IExpr b)
-		{
-			return new EqualsExpr(a, b);
-		}
+        public abstract E Add(E l, E r);
+        public abstract E Subtract(E l, E r);
+        public abstract E Multiply(E l, E r);
+        public abstract E Divide(E l, E r);
 
-		public IExpr NotEq(IExpr a, IExpr b)
-		{
-			return new NotEqualExpr(a, b);
-		}
+        public abstract E Negate(E e);
 
-		public IExpr LessThen(IExpr a, IExpr b)
-		{
-			return new LessThenExpr(a, b);
-		}
+        public virtual E VarDecl(string var, IType t)
+        {
+            return VarAssign(var, t, Literal(t.DefaultValue));
+        }
 
-		public IExpr GreaterThen(IExpr a, IExpr b)
-		{
-			return new GreaterThenExpr(a, b);
-		}
+        public abstract E VarAssign(string var, IType t, E e);
 
-		public IExpr LessOrEqualTo(IExpr a, IExpr b)
-		{
-			return new LessOrEqualToExpr(a, b);
-		}
+        public abstract E IfElse(E toEval, E ifTrue, E ifFalse);
 
-		public IExpr GreaterOrEqualTo(IExpr a, IExpr b)
-		{
-			return new GreaterOrEqualToExpr(a, b);
-		}
+        public abstract S Form(string var, S s);
+        public abstract S Goto(string var);
 
-		public IExpr Add(IExpr a, IExpr b)
-		{
-			return new AddExpr(a, b);
-		}
-
-		public IExpr Subtract(IExpr a, IExpr b)
-		{
-			return new SubtractExpr(a, b);
-		}
-
-		public IExpr Multiply(IExpr a, IExpr b)
-		{
-			return new MultiplyExpr(a, b);
-		}
-
-		public IExpr Divide(IExpr a, IExpr b)
-		{
-			return new DivideExpr(a, b);
-		}
-
-		public IExpr Negate(IExpr a)
-		{
-			return new NegateExpr(a);
-		}
-
-		public IExpr Variable(string var)
-		{
-			return new LiteralExpr(variables[var]);
-		}
-
-		public IExpr Assign(string var, IExpr a)
-		{
-			IValue value = a.Eval();
-			variables.Add(var, value);
-			return new LiteralExpr(value);
-		}
-
-		//public IExpr ExprToStmnt(IExpr expr);
-		//public IExpr Composition(IExpr a, IExpr b);
-	}
+        public abstract S Comp(S l, S r);
+        public abstract S Question(string s, bool b, E e);
+        public abstract S If(E toEval, S ifTrue);
+        public abstract S IfElse(E toEval, S ifTrue, S ifFalse);
+    }
 }

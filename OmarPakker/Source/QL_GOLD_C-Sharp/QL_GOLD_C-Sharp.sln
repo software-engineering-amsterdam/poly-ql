@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30110.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleParser", "ConsoleParser\ConsoleParser.csproj", "{464B390C-7DDC-4C69-9361-6E7748836886}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Grammar", "Grammar", "{A69D1AB6-7987-41A7-975E-F8312DA5869A}"
@@ -8,6 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Grammar", "Grammar", "{A69D
 		..\..\Grammar\C-Sharp - Omar Edit Free.pgt = ..\..\Grammar\C-Sharp - Omar Edit Free.pgt
 		..\..\Grammar\QL_Grammar.grm = ..\..\Grammar\QL_Grammar.grm
 		..\..\Grammar\QL_Test.txt = ..\..\Grammar\QL_Test.txt
+		..\..\Grammar\TestLog.txt = ..\..\Grammar\TestLog.txt
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QL_Grammar", "QL_Grammar\QL_Grammar.csproj", "{ADEF29ED-B350-451A-A0C7-5E7AE04609A5}"
