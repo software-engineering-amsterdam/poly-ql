@@ -1,4 +1,6 @@
-﻿using QL_Grammar.AST.Stmnt;
+﻿using System;
+using System.Collections.Generic;
+using QL_Grammar.AST.Stmnt;
 using QL_Grammar.TypeCheck.Expr;
 
 namespace QL_Grammar.TypeCheck.Stmnt
@@ -11,10 +13,9 @@ namespace QL_Grammar.TypeCheck.Stmnt
 
         }
 
-        public bool CheckTypesValid(out string msg)
+        public IEnumerable<Tuple<string, bool>> CheckTypesValid()
         {
-            msg = null;
-            return true;
+            return null;
         }
     }
 }

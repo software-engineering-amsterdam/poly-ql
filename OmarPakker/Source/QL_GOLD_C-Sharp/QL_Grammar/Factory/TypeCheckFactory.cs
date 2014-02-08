@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.Generic;
 using QL_Grammar.AST.Types;
 using QL_Grammar.AST.Value;
 using QL_Grammar.TypeCheck.Expr;
@@ -10,15 +10,15 @@ namespace QL_Grammar.Factory
     public class TypeCheckFactory : BaseFactory<ITypeCheckExpr, ITypeCheckStmnt>
     {
         private Dictionary<string, ITypeCheckStmnt> forms;
-        private Dictionary<string, bool> errorMsgs;
+        private List<Tuple<string, bool>> errorMsgs;
 
         public bool HasErrors { get { return errorMsgs.Count > 0; } }
-        public ReadOnlyDictionary<string, bool> ErrorMsgs
+        public List<Tuple<string, bool>> ErrorMsgs
         {
             get
             {
-                var result = new ReadOnlyDictionary<string, bool>(errorMsgs);
-                errorMsgs = new Dictionary<string, bool>();
+                var result = new List<Tuple<string, bool>>(errorMsgs);
+                errorMsgs.Clear();
                 return result;
             }
         }
@@ -27,7 +27,7 @@ namespace QL_Grammar.Factory
             : base()
         {
             forms = new Dictionary<string, ITypeCheckStmnt>();
-            errorMsgs = new Dictionary<string, bool>();
+            errorMsgs = new List<Tuple<string, bool>>();
         }
 
         public override ITypeCheckExpr Literal(IValue value)
@@ -106,12 +106,12 @@ namespace QL_Grammar.Factory
             {
                 if(Variables[var].ExprType.Equals(t))
                 {
-                    errorMsgs.Add(System.String.Format("Re-using variable '{0}'. Are you sure you want to write to the same variable?", var), false);
+                    errorMsgs.Add(new Tuple<string, bool>(System.String.Format("Re-using variable '{0}'. Are you sure you want to write to the same variable?", var), false));
                 }
                 else
                 {
-                    errorMsgs.Add(System.String.Format("Variable '{0}' is already defined as '{1}'. Redefining as '{2}'. You cannot redefine variables.",
-                        var, ((VarExpr)Variables[var]).Type.ToString(), t.ToString()), true);
+                    errorMsgs.Add(new Tuple<string, bool>(System.String.Format("Variable '{0}' is already defined as '{1}'. Redefining as '{2}'. You cannot redefine variables.",
+                        var, ((VarExpr)Variables[var]).Type.ToString(), t.ToString()), true));
                 }
             }
 

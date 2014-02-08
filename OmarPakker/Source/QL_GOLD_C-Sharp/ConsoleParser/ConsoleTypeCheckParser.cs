@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using com.OPCreations.GoldParser;
 using GOLD;
 using QL_Grammar;
@@ -39,11 +38,7 @@ namespace QL_GOLD_C_Sharp
 
             if(factory.HasErrors)
             {
-                ReadOnlyDictionary<string, bool> errorMsgs = factory.ErrorMsgs;
-                foreach(KeyValuePair<string, bool> error in errorMsgs)
-                {
-                    CreateErrorMsgEntry(error.Value, error.Key);
-                }
+                CreateErrorMsgEntries(factory.ErrorMsgs);
             }
 
             return result;
@@ -51,27 +46,28 @@ namespace QL_GOLD_C_Sharp
 
         protected override void OnObjectCreated(ITypeCheckExpr exprObj)
         {
-            string msg;
-            bool error = exprObj.CheckTypesValid(out msg);
-            CreateErrorMsgEntry(error, msg);
+            CreateErrorMsgEntries(exprObj.CheckTypesValid());
         }
 
         protected override void OnObjectCreated(ITypeCheckStmnt stmntObj)
         {
-            string msg;
-            bool error = stmntObj.CheckTypesValid(out msg);
-            CreateErrorMsgEntry(error, msg);
+            CreateErrorMsgEntries(stmntObj.CheckTypesValid());
         }
 
-        private void CreateErrorMsgEntry(bool error, string msg)
+        private void CreateErrorMsgEntries(IEnumerable<Tuple<string, bool>> errors)
         {
-            if (!String.IsNullOrEmpty(msg))
+            if (errors == null)
+            {
+                return;
+            }
+
+            foreach (Tuple<string, bool> error in errors)
             {
                 Position pPos = ParserPosition;
-                msgs.Add(String.Format("{0} on line {1} column {2}. ", error ? "ERROR" : "WARNING",
+                msgs.Add(String.Format("{0} on line {1} column {2}. {3}", error.Item2 ? "ERROR" : "WARNING",
                     //Line property starts on 0 so offset it to correct that.
                     //Column will point to the end of the statement.
-                    pPos.Line + 1, pPos.Column) + msg, error);
+                    pPos.Line + 1, pPos.Column, error.Item1), error.Item2);
             }
         }
 

@@ -40,7 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AST\Expr\DoubleExprNode.cs" />
-    <Compile Include="AST\Expr\IfElseExprNode.cs" />
+    <Compile Include="AST\Expr\TripleExprNode.cs" />
     <Compile Include="AST\Stmnt\CompStmntNode.cs" />
     <Compile Include="AST\Stmnt\FormStmntNode.cs" />
     <Compile Include="AST\Expr\IExprNode.cs" />
