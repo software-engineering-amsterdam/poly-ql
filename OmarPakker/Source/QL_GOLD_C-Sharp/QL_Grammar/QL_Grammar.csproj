@@ -39,32 +39,89 @@
     <EmbeddedResource Include="Grammar\QL_Grammar.egt" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AST\Expr\DoubleExprNode.cs" />
+    <Compile Include="AST\Expr\IfElseExprNode.cs" />
+    <Compile Include="AST\Stmnt\CompStmntNode.cs" />
+    <Compile Include="AST\Stmnt\FormStmntNode.cs" />
+    <Compile Include="AST\Expr\IExprNode.cs" />
+    <Compile Include="AST\Stmnt\GotoStmntNode.cs" />
+    <Compile Include="AST\Stmnt\IfElseStmntNode.cs" />
+    <Compile Include="AST\Stmnt\IfStmntNode.cs" />
+    <Compile Include="AST\Stmnt\IStmntNode.cs" />
+    <Compile Include="AST\Expr\SingleExprNode.cs" />
+    <Compile Include="AST\Expr\VarExprNode.cs" />
+    <Compile Include="AST\Stmnt\QuestionStmntNode.cs" />
+    <Compile Include="AST\Types\UnknownType.cs" />
+    <Compile Include="AST\Value\UnknownValue.cs" />
     <Compile Include="BaseParser.cs" />
-    <Compile Include="Expr\AddExpr.cs" />
-    <Compile Include="Expr\AndExpr.cs" />
-    <Compile Include="Expr\NotEqualExpr.cs" />
-    <Compile Include="Expr\LiteralExpr.cs" />
-    <Compile Include="Expr\MultiplyExpr.cs" />
-    <Compile Include="Expr\DivideExpr.cs" />
-    <Compile Include="Expr\LessOrEqualToExpr.cs" />
-    <Compile Include="Expr\GreaterOrEqualToExpr.cs" />
-    <Compile Include="Expr\GreaterThenExpr.cs" />
-    <Compile Include="Expr\EqualsExpr.cs" />
-    <Compile Include="Expr\IfElseExpr.cs" />
-    <Compile Include="Expr\LessThenExpr.cs" />
-    <Compile Include="Expr\NegateExpr.cs" />
-    <Compile Include="Expr\OrExpr.cs" />
-    <Compile Include="Value\IValue.cs" />
-    <Compile Include="Value\RealValue.cs" />
-    <Compile Include="Value\IntValue.cs" />
-    <Compile Include="Value\BoolValue.cs" />
-    <Compile Include="Expr\IExpr.cs" />
-    <Compile Include="Value\StringValue.cs" />
-    <Compile Include="Expr\SubtractExpr.cs" />
-    <Compile Include="Factory\IFactory.cs" />
+    <Compile Include="Eval\Expr\IfElseExpr.cs" />
+    <Compile Include="TypeCheck\Expr\IfElseExpr.cs" />
+    <Compile Include="Factory\TypeCheckFactory.cs" />
+    <Compile Include="TypeCheck\Expr\AddExpr.cs" />
+    <Compile Include="TypeCheck\Expr\AndExpr.cs" />
+    <Compile Include="TypeCheck\Expr\DivideExpr.cs" />
+    <Compile Include="TypeCheck\Expr\EqualsExpr.cs" />
+    <Compile Include="TypeCheck\Expr\GreaterOrEqualToExpr.cs" />
+    <Compile Include="TypeCheck\Expr\GreaterThenExpr.cs" />
+    <Compile Include="TypeCheck\Expr\ITypeCheckExpr.cs" />
+    <Compile Include="TypeCheck\Expr\LessOrEqualToExpr.cs" />
+    <Compile Include="TypeCheck\Expr\LessThenExpr.cs" />
+    <Compile Include="TypeCheck\Expr\LiteralExpr.cs" />
+    <Compile Include="TypeCheck\Expr\MultiplyExpr.cs" />
+    <Compile Include="TypeCheck\Expr\NegateExpr.cs" />
+    <Compile Include="TypeCheck\Expr\NotEqualExpr.cs" />
+    <Compile Include="TypeCheck\Expr\OrExpr.cs" />
+    <Compile Include="TypeCheck\Expr\SubtractExpr.cs" />
+    <Compile Include="TypeCheck\Expr\VarExpr.cs" />
+    <Compile Include="TypeCheck\Stmnt\CompStmnt.cs" />
+    <Compile Include="TypeCheck\Stmnt\FormStmnt.cs" />
+    <Compile Include="TypeCheck\Stmnt\GotoStmnt.cs" />
+    <Compile Include="TypeCheck\Stmnt\ITypeCheckStmnt.cs" />
+    <Compile Include="TypeCheck\Stmnt\IfElseStmnt.cs" />
+    <Compile Include="TypeCheck\Stmnt\IfStmnt.cs" />
+    <Compile Include="TypeCheck\Stmnt\QuestionStmnt.cs" />
+    <Compile Include="Eval\Expr\AddExpr.cs" />
     <Compile Include="Factory\BaseFactory.cs" />
+    <Compile Include="Eval\Expr\AndExpr.cs" />
+    <Compile Include="Eval\Expr\LiteralExpr.cs" />
+    <Compile Include="Eval\Expr\VarExpr.cs" />
+    <Compile Include="Factory\ASTFactory.cs" />
+    <Compile Include="Eval\Stmnt\FormStmnt.cs" />
+    <Compile Include="Eval\Stmnt\GotoStmnt.cs" />
+    <Compile Include="Eval\Stmnt\CompStmnt.cs" />
+    <Compile Include="Eval\Stmnt\IfStmnt.cs" />
+    <Compile Include="Eval\Stmnt\IEvalStmnt.cs" />
+    <Compile Include="Eval\Expr\NotEqualExpr.cs" />
+    <Compile Include="AST\Expr\LiteralExprNode.cs" />
+    <Compile Include="Eval\Expr\MultiplyExpr.cs" />
+    <Compile Include="Eval\Expr\DivideExpr.cs" />
+    <Compile Include="Eval\Expr\LessOrEqualToExpr.cs" />
+    <Compile Include="Eval\Expr\GreaterOrEqualToExpr.cs" />
+    <Compile Include="Eval\Expr\GreaterThenExpr.cs" />
+    <Compile Include="Eval\Expr\EqualsExpr.cs" />
+    <Compile Include="Eval\Stmnt\IfElseStmnt.cs" />
+    <Compile Include="Eval\Expr\LessThenExpr.cs" />
+    <Compile Include="Eval\Expr\NegateExpr.cs" />
+    <Compile Include="Eval\Expr\OrExpr.cs" />
+    <Compile Include="QLParser.cs" />
+    <Compile Include="Eval\Stmnt\QuestionStmnt.cs" />
+    <Compile Include="AST\Types\BoolType.cs" />
+    <Compile Include="AST\Types\IntType.cs" />
+    <Compile Include="AST\Types\IType.cs" />
+    <Compile Include="AST\Types\NumericType.cs" />
+    <Compile Include="AST\Types\RealType.cs" />
+    <Compile Include="AST\Types\StringType.cs" />
+    <Compile Include="AST\Value\IValue.cs" />
+    <Compile Include="AST\Value\RealValue.cs" />
+    <Compile Include="AST\Value\IntValue.cs" />
+    <Compile Include="AST\Value\BoolValue.cs" />
+    <Compile Include="Eval\Expr\IEvalExpr.cs" />
+    <Compile Include="AST\Value\StringValue.cs" />
+    <Compile Include="Eval\Expr\SubtractExpr.cs" />
+    <Compile Include="Factory\IFactory.cs" />
+    <Compile Include="Factory\EvalFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Value\BaseValue.cs" />
+    <Compile Include="AST\Value\BaseValue.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="GOLD Engine">
@@ -75,9 +132,9 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>"$(SolutionDir)tools\GOLDbuild.exe" "$(ProjectDir)..\..\..\Grammar\QL_Grammar.grm" "$(ProjectDir)Grammar\QL_Grammar.egt"
-"$(SolutionDir)tools\GOLDtest.exe" "$(ProjectDir)Grammar\QL_Grammar.egt" "$(ProjectDir)..\..\..\Grammar\QL_Test.txt"
-"$(SolutionDir)tools\GOLDprog.exe" "$(ProjectDir)Grammar\QL_Grammar.egt" "$(ProjectDir)..\..\..\Grammar\C-Sharp - Omar Edit Free.pgt" "$(ProjectDir)BaseParser.cs"</PreBuildEvent>
+    <PreBuildEvent>"$(SolutionDir)tools\GOLDbuild.exe" "$(SolutionDir)..\..\Grammar\QL_Grammar.grm" "$(ProjectDir)Grammar\QL_Grammar.egt"
+"$(SolutionDir)tools\GOLDtest.exe" "$(ProjectDir)Grammar\QL_Grammar.egt" "$(SolutionDir)..\..\Grammar\QL_Test.txt" "$(SolutionDir)..\..\Grammar\TestLog.txt"
+"$(SolutionDir)tools\GOLDprog.exe" "$(ProjectDir)Grammar\QL_Grammar.egt" "$(SolutionDir)..\..\Grammar\C-Sharp - Omar Edit Free.pgt" "$(ProjectDir)BaseParser.cs"</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,20 +1,25 @@
 form Form1
 {
-    "Boolean:" >> answer1:boolean;
+    "Bool:" >> answer1:bool;
     "Real:" >> answer2:real;
 
     if(answer1)
     {
-        "Sub 1, boolean:" >> answer3:boolean;
+        "Sub 1, bool:" >> answer3:bool;
         "Sub 2, real:" >> answer4:real;
     }
 
     "Final real:" << result:real = answer2 + answer4;
-    "No var assignment:" << answer1 || answer2;
+    "No var assignment:" << answer1 || answer3;
+	"Unknown var usage:" << bladiebla;
+	"Var re-definition:" >> answer3:string;
+	"Var re-use:" >> answer4:real;
+	"Incompatible types:" << answer1 * answer2;
+	"Inline if:" << answer3 ? answer1 : answer2;
 
     "Int:" << intValue:int = 500;
     "Real:" << realValue:real = .5;
-    "Boolean:" << boolValue:boolean = true;
+    "Boolean:" << boolValue:bool = true;
     
     //Line comment
     /*
@@ -26,4 +31,5 @@ form Form1
 
 form Form2
 {
+	"Bool:" >> answer1:bool;
 }

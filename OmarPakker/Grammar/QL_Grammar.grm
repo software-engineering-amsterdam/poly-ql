@@ -18,11 +18,11 @@
 ! -------------------------------------------------
 Identifier    = {ID Head}{ID Tail}*
 
-String = '"' ( {String Chars} | '\' {Printable} )* '"'
-Int    = {Digit}+
-Real   = {Digit}*'.'{Digit}+
-Bool   = 'true' | 'false'
-!Date   = (19|20)[0..9][0..9][- /.](0[1..9]|1[012])[- /.](0[1..9]|[12][0..9]|3[01])
+StringLit = '"' ( {String Chars} | '\' {Printable} )* '"'
+IntLit    = {Digit}+
+RealLit   = {Digit}*'.'{Digit}+
+BoolLit   = 'true' | 'false'
+!DateLit   = (19|20)[0..9][0..9][- /.](0[1..9]|1[012])[- /.](0[1..9]|[12][0..9]|3[01])
 
 Comment Line = '//'
 Comment Start = '/*'
@@ -34,7 +34,7 @@ Comment End   = '*/'
 <Type>        ::= string
                |  int
                |  real
-               |  boolean
+               |  bool
                !|  date
 
 ! -------------------------------------------------
@@ -45,28 +45,27 @@ Comment End   = '*/'
 
 <Form>        ::= form Identifier <Block>
 
-<VarDecl>     ::= Identifier ':' <Type>
-
-<VarAssign>   ::= Identifier ':' <Type> '=' <Expression>
-               |  <Expression>
-
-<Block>       ::= '{' '}'
-               |  '{' <Statements> '}'
+<Block>       ::= '{' <Statements> '}'
 
 <Statements>  ::= <Statement> <Statements>
                |  <Statement>
 
 <Statement>   ::= if '(' <Expression> ')' <Statement>
                |  if '(' <Expression> ')' <SubStmnt> else <Statement>
-               |  <ExprStmnt>
+               |  <QuestionStmnt>
                |  <Block>
 
 <SubStmnt>    ::= if '(' <Expression> ')' <SubStmnt> else <SubStmnt>
-               |  <ExprStmnt>
+               |  <QuestionStmnt>
                |  <Block>
 
-<ExprStmnt>   ::= String '>>' <VarDecl> ';'
-               |  String '<<' <VarAssign> ';'
+<VarDecl>     ::= Identifier ':' <Type>
+
+<VarAssign>   ::= Identifier ':' <Type> '=' <Expression>
+
+<QuestionStmnt>   ::= StringLit '>>' <VarDecl> ';'
+               |  StringLit '<<' <VarAssign> ';'
+			   |  StringLit '<<' <Expression> ';'
                |  goto Identifier ';'
 
 <Expression>  ::= <OrExpr> '?' <OrExpr> ':' <Expression>
@@ -104,9 +103,8 @@ Comment End   = '*/'
                |  <Literal>
                |  '(' <Expression> ')'
 
-<Literal>     ::= String
-               |  Int
-               |  Real
-               |  Bool
-               !|  Date
-
+<Literal>     ::= StringLit
+               |  IntLit
+               |  RealLit
+               |  BoolLit
+               !|  DateLit

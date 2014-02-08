@@ -39,7 +39,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
-    <Compile Include="ConsoleParser.cs" />
+    <Compile Include="ConsoleTypeCheckParser.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="GOLD Engine">

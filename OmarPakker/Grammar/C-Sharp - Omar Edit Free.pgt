@@ -11,10 +11,36 @@ are required. Instead, you should extend
 from it and work from there. This allows
 for regeneration without losing custom code.
 ##END-NOTES
-##ID-CASE Propercase
+##ID-CASE ProperCase
 ##ID-SEPARATOR '_'
 ##DELIMITER ','
-
+##PARAMETERS
+/*
+ * Grammar Information:
+ *
+ * Name            : %Name%
+ * Version         : %Version%
+ * Author          : %Author%
+ * About           : %About%
+ * Case Sensitive  : %CaseSensitive%
+ * Start Symbol    : %StartSymbol%
+ *
+ *
+ * Grammar Build Information:
+ *
+ * Output File Path : %OutputFilePath%
+ * Output Path      : %OutputPath%
+ * Output File      : %OutputFile%
+ * Output File Base : %OutputFileBase%
+ *
+##END-PARAMETERS
+##SYMBOL-TABLE
+ * Symbol Count : %Count%
+##END-SYMBOL-TABLE
+##RULE-TABLE
+ * Rule Count   : %Count%
+##END-RULE-TABLE
+ */
 using System.IO;
 using GOLD;
 
@@ -27,30 +53,31 @@ namespace com.OPCreations.GoldParser
 ##END-SYMBOLS
     };
 
-    public enum ProductionIndex
+    public enum RuleIndex
     {
-##PRODUCTIONS
+##RULES
         @%ID% = %Value%%Delimiter% %Col:50% // %Description%
-##END-PRODUCTIONS
+##END-RULES
     };
 
 	public abstract class BaseParser
 	{
 		private Parser parser;
 
-		public Reduction Root { get; private set; }
+		protected Position ParserPosition { get { return parser.CurrentPosition(); } }
 
-		public BaseParser()
+		public BaseParser(bool trimReductions)
 		{
 			parser = new GOLD.Parser();
+			parser.TrimReductions = trimReductions;
 		}
 
-		public bool LoadGrammar(string grammarFilePath)
+		protected bool LoadGrammar(string grammarFilePath)
 		{
 			return parser.LoadTables(grammarFilePath);
 		}
 
-		public bool LoadGrammar(BinaryReader reader)
+		protected bool LoadGrammar(BinaryReader reader)
 		{
 			return parser.LoadTables(reader);
 		}
@@ -71,12 +98,7 @@ namespace com.OPCreations.GoldParser
 
 		private bool DoParse()
 		{
-			parser.TrimReductions = false;
-
-			bool done = false;
-			bool accepted = false;
-
-			while (!done)
+			while (true)
 			{
 				switch (parser.Parse())
 				{
@@ -90,48 +112,40 @@ namespace com.OPCreations.GoldParser
 
 					case ParseMessage.Accept:
 						//All good!
-						Root = (Reduction)parser.CurrentReduction;
-						done = true;
-						accepted = true;
-						break;
+						OnCompletion(parser.CurrentReduction);
+                        return true;
 
 					case ParseMessage.GroupError:
 						//Unexpected end of file (EOF)
 						OnGroupError();
-						done = true;
-						break;
+                        return false;
 
 					case ParseMessage.InternalError:
 						//Something went wrong internally
 						OnInternalError();
-						done = true;
-						break;
+                        return false;
 
 					case ParseMessage.LexicalError:
 						//Token not recognized
 						OnLexicalError(parser.CurrentPosition().Line, parser.CurrentPosition().Column, parser.CurrentToken().Data);
-						done = true;
-						break;
+                        return false;
 
 					case ParseMessage.NotLoadedError:
 						//CGT wasn't loaded
 						OnNotLoadedError();
-						done = true;
-						break;
+                        return false;
 
 					case ParseMessage.SyntaxError:
 						//Expected a different token
 						OnSyntaxError(parser.CurrentPosition().Line, parser.CurrentPosition().Column,
 							parser.CurrentToken().Data, parser.ExpectedSymbols().Text());
-						done = true;
-						break;
+                        return false;
 				}
 			}
-
-			return accepted;
 		}
 
 		protected abstract object OnReduction(Reduction r);
+		protected abstract void OnCompletion(object root);
 
 		protected abstract void OnGroupError();
 		protected abstract void OnInternalError();
@@ -140,3 +154,20 @@ namespace com.OPCreations.GoldParser
 		protected abstract void OnSyntaxError(int line, int column, object token, string expected);
 	}
 }
+
+
+
+/*
+ * Pre-build switch covering all the rules
+ */
+#region Rules Switch
+//switch((RuleIndex)r.Parent.TableIndex())
+//{
+##RULES
+//	case RuleIndex.%ID%:
+//		// %Description%
+//		break;
+//
+##END-RULES
+//}
+#endregion
