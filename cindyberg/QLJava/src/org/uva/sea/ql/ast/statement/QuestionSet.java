@@ -3,7 +3,7 @@ package org.uva.sea.ql.ast.statement;
 import org.uva.sea.ql.ast.ASTNode;
 
 
-public class QuestionSet implements ASTNode {
+public class QuestionSet extends Statement {
 
 	public QuestionSet(ASTNode astNode, ASTNode astNode2) {
 		// TODO Auto-generated constructor stub

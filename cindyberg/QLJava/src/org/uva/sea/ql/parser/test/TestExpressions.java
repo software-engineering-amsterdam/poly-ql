@@ -1,16 +1,15 @@
 package org.uva.sea.ql.parser.test;
 
 import static org.junit.Assert.assertEquals;
-
 import org.junit.Test;
 import org.uva.sea.ql.ast.operators.arithmetic.*;
-import org.uva.sea.ql.ast.operators.booleans.*;
 import org.uva.sea.ql.ast.operators.comparison.*;
+import org.uva.sea.ql.ast.operators.logical.*;
 
 public class TestExpressions extends TestParser{
 	
 	@Test
-	public void TestArithmetic(){
+	public void testArithmetic(){
 		
 		assertEquals(parser.parser("a + b").getClass(), Add.class);
 		assertEquals(parser.parser("a - b").getClass(), Sub.class);
@@ -20,7 +19,7 @@ public class TestExpressions extends TestParser{
 	}
 	
 	@Test
-	public void TestBooleans(){
+	public void testLogical(){
 		
 		assertEquals(parser.parser("a && b").getClass(), And.class);
 		assertEquals(parser.parser("a || b").getClass(), Or.class);
@@ -28,10 +27,10 @@ public class TestExpressions extends TestParser{
 	}
 	
 	@Test
-	public void TestComparison(){
+	public void testComparison(){
 		
-		//assertEquals(parser.parser("a == b").getClass(), Eq.class);
-		//assertEquals(parser.parser("a != b").getClass(), NEq.class);
+		assertEquals(parser.parser("a == a").getClass(), Eq.class);
+		assertEquals(parser.parser("a != c").getClass(), NEq.class);
 		assertEquals(parser.parser("a >= b").getClass(), GEq.class);
 		assertEquals(parser.parser("a > b").getClass(), GT.class);
 		assertEquals(parser.parser("a <= b").getClass(), LEq.class);

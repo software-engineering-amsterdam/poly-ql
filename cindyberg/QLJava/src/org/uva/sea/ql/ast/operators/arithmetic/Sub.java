@@ -5,7 +5,7 @@ import org.uva.sea.ql.ast.Expression;
 
 public class Sub implements ASTNode {
 
-	public Sub(Expression expr, Expression expr2) {
+	public Sub(Expression left, Expression right) {
 		// TODO Auto-generated constructor stub
 	}
 

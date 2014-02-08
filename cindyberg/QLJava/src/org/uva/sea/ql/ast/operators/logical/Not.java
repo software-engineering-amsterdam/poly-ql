@@ -1,4 +1,4 @@
-package org.uva.sea.ql.ast.operators.booleans;
+package org.uva.sea.ql.ast.operators.logical;
 
 import org.uva.sea.ql.ast.ASTNode;
 import org.uva.sea.ql.ast.Expression;

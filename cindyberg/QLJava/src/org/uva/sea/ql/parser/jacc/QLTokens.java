@@ -1,4 +1,4 @@
-// Output created by jacc on Fri Feb 07 17:34:14 CET 2014
+// Output created by jacc on Sat Feb 08 18:33:40 CET 2014
 
 package org.uva.sea.ql.parser.jacc;
 
@@ -31,6 +31,7 @@ interface QLTokens {
     // '/' (code=47)
     // ':' (code=58)
     // '<' (code=60)
+    // '=' (code=61)
     // '>' (code=62)
     // '{' (code=123)
     // '}' (code=125)

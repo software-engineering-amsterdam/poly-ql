@@ -5,7 +5,7 @@ import org.uva.sea.ql.ast.Expression;
 
 public class GT implements ASTNode {
 
-	public GT(Expression expr, Expression expr2) {
+	public GT(Expression left, Expression right) {
 		// TODO Auto-generated constructor stub
 	}
 

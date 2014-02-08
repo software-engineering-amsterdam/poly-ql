@@ -5,7 +5,7 @@ import org.uva.sea.ql.ast.Expression;
 
 public class NEq implements ASTNode {
 
-	public NEq(Expression expr, Expression expr2) {
+	public NEq(Expression left, Expression right) {
 		// TODO Auto-generated constructor stub
 	}
 

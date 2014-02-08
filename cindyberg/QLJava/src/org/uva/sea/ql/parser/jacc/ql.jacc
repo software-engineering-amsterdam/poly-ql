@@ -1,7 +1,15 @@
-
-//TODO TRUE AND FALSE ARE BOOLEANS< NOT IDENTIFIERS
-
 %package org.uva.sea.ql.parser.jacc
+
+%{
+import org.uva.sea.ql.ast.*;
+import org.uva.sea.ql.ast.literal.*;
+import org.uva.sea.ql.ast.operators.arithmetic.*;
+import org.uva.sea.ql.ast.operators.logical.*;
+import org.uva.sea.ql.ast.operators.comparison.*;
+import org.uva.sea.ql.ast.statement.*;
+import org.uva.sea.ql.ast.type.*;
+%}
+
 %class QLParser
 %interface QLTokens
 %semantic org.uva.sea.ql.ast.ASTNode 
@@ -14,7 +22,7 @@
 %token <BoolLiteral> BOOLEAN
 
 //operators
-%token '*' '/' '+' '-' OR AND NEQ EQ '<' LEQ '>' GEQ '!'
+%token '*' '/' '+' '-' OR AND NEQ EQ '<' LEQ '>' GEQ '!' '='
 %token '(' ')' '{' '}' ':'
 
 //keywords
@@ -31,9 +39,13 @@
 //nonterminals
 %type <ASTNode> astnode
 %type <Form> form
+%type <QuestionSet> statements
+%type <Statement> statement
 %type <Question> question
+%type <If> ifThen
+%type <IfElse> ifThenElse
+%type <Expression> expression
 %type <Type> type
-%type <Expression> expr
 
 %{
 import org.uva.sea.ql.ast.*;
@@ -45,15 +57,15 @@ import org.uva.sea.ql.ast.*;
      ;
      
  astnode : form
-         | statements
- 		 | expr
+         | statement
+ 		 | expression
  		 ;
  
             
  form : FORM IDENTIFIER '{' statements '}' {$$ = new Form($2,$4);}
  	  ; 
 
- statements : statements statement {$$ = new QuestionSet($1,$2);}
+ statements : statement statements {$$ = new QuestionSet($1,$2);}
  		    | statement			   {$$ = new QuestionSet($1);}
  		    ;
  		    
@@ -62,23 +74,54 @@ import org.uva.sea.ql.ast.*;
        	   | ifThenElse
  		   ;
  		   
- question : IDENTIFIER ':' STRING type expr {$$ = new ExprQuestion($1,$2,$3,$4);}
- 		  | IDENTIFIER ':' STRING type      {$$ = new Question($1,$2,$3);}
+ question : IDENTIFIER ':' STRING type expression {$$ = new ExprQuestion($1,$3,$4,$5);}
+ 		  | IDENTIFIER ':' STRING type            {$$ = new Question($1,$3,$4);}
           ;
   
- ifThen : IF '(' expr ')' '{' statements '}' {$$ = new If($3,$6);}
+ ifThen : IF '(' expression ')' '{' statements '}' {$$ = new If($3,$6);}
  	    ;   
  	       
- ifThenElse : IF '(' expr ')' '{' statements '}' ELSE '{' statements '}'{$$ = new IfElse($3,$6,$10);} 
+ ifThenElse : IF '(' expression ')' '{' statements '}' ELSE '{' statements '}'{$$ = new IfElse($3,$6,$10);} 
  			;
  
+ expression : logical
+ 			| arithmetic
+ 			| comparison
+ 		    | '(' expression ')'		{ $$ = $2; }
+ 		    | IDENTIFIER     			{ $$ = $1; }
+		    | INTEGER					{ $$ = $1; }
+		    | BOOLEAN					{ $$ = $1; }
+		    | STRING					{ $$ = $1; }
+		    ;			
+ 			
+arithmetic : '+' expression	%prec UPLUS { $$ = new Pos($2); }
+		   | '-' expression	%prec UMIN  { $$ = new Neg($2); }
+		   | expression '*' expression	{ $$ = new Mul($1, $3); }
+		   | expression '/' expression 	{ $$ = new Div($1, $3); }
+		   | expression '+' expression	{ $$ = new Add($1, $3); }
+		   | expression '-' expression	{ $$ = new Sub($1, $3); } 
+		;			
+
+logical : '!' expression %prec UNOT  { $$ = new Not($2); }
+		| expression AND expression	 { $$ = new And($1, $3); }
+	    | expression OR expression   { $$ = new Or($1, $3); }
+		;
+		
+comparison : expression EQ expression 	{ $$ = new Eq($1, $3); }
+		   | expression NEQ expression	{ $$ = new NEq($1, $3); }
+		   | expression '>' expression	{ $$ = new GT($1, $3); }
+		   | expression '<' expression	{ $$ = new LT($1, $3); }
+		   | expression GEQ expression	{ $$ = new GEq($1, $3); }
+		   | expression LEQ expression  { $$ = new LEq($1, $3); }
+     	   ;
+		   
  type : STRING  { $$ = new StringType(); }
       | INTEGER { $$ = new IntType(); }
       | BOOLEAN { $$ = new BoolType(); }
       | MONEY   { $$ = new MoneyType(); }
       ;
  
- expr	 : '+' expr	%prec UPLUS { $$ = new Pos($2); }
+ /*expr	 : '+' expr	%prec UPLUS { $$ = new Pos($2); }
 		 | '-' expr	%prec UMIN  { $$ = new Neg($2); }
 		 | '!' expr %prec UNOT  { $$ = new Not($2); }
 		 | expr '*' expr		{ $$ = new Mul($1, $3); }
@@ -97,14 +140,14 @@ import org.uva.sea.ql.ast.*;
 		 | IDENTIFIER     		{ $$ = $1; }
 		 | '(' expr ')'			{ $$ = $2; }
 		 ;
-		 
+		 */
 
 %%
 private QLLexer lexer; 
 
 private ASTNode result;
 
-public Form getResult() {
+public ASTNode getResult() {
   return result;
 }
 

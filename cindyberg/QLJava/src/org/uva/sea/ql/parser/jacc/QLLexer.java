@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.uva.sea.ql.ast.*;
+import org.uva.sea.ql.ast.literal.StringLiteral;
 import org.uva.sea.ql.ast.type.IntType;
 
 public class QLLexer implements QLTokens {
@@ -89,6 +90,8 @@ public class QLLexer implements QLTokens {
 			    }
 			    case ')': nextChar(); return token = ')';
 			    case '(': nextChar(); return token = '(';
+			    case '}': nextChar(); return token = '}';
+			    case '{': nextChar(); return token = '{';
 			    case '*': {
 			    	nextChar();
 			    	if (inComment && c == '/') {
@@ -116,7 +119,15 @@ public class QLLexer implements QLTokens {
 			    	}
 			    	throw new RuntimeException("Unexpected character: " + (char)c);
 			    }
-			    case '!': nextChar(); return token = '!';
+			    case '!': {
+			    	nextChar();
+			    	if(c == '='){
+			    		nextChar();
+			    		return token = NEQ;
+			    	}
+			    	return token = '!';
+			    }
+			    
 			    case ':': nextChar(); return token = ':';
 			    case '<': {
 			    	nextChar();
@@ -124,15 +135,17 @@ public class QLLexer implements QLTokens {
 			    		nextChar();
 			    		return token = LEQ;
 			    	}
-			    	return '<';
+			    	return token = '<';
 			    }
 			    case '=': { 
 			    	nextChar(); 
 			    	if  (c == '=') {
+			    		nextChar();
 			    		return token = EQ;
 			    	}
 			    	throw new RuntimeException("Unexpected character: " + (char)c);
 			    }
+			    
 			    case '>': {
 			    	nextChar();
 			    	if (c == '=') {
@@ -141,6 +154,21 @@ public class QLLexer implements QLTokens {
 			    	}
 			    	return token = '>';
 			    }
+			    
+			    case '"':{
+			    	nextChar();
+			    	StringBuilder sb = new StringBuilder();
+			    	while(c != '"'){
+		    			sb.append((char)c);
+		    			nextChar();
+			    	}
+			    	String name = sb.toString();
+			    	yylval = new StringLiteral(name);
+			    	nextChar();
+			    	return token = STRING;
+			    }
+			   
+			
 			    default: {
 			    	if (Character.isDigit(c)) {
 			    		int n = 0; 

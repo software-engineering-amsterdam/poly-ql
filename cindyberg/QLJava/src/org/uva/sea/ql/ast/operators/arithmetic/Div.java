@@ -5,7 +5,7 @@ import org.uva.sea.ql.ast.Expression;
 
 public class Div implements ASTNode {
 
-	public Div(Expression expr, Expression expr2) {
+	public Div(ASTNode yysv, ASTNode yysv2) {
 		// TODO Auto-generated constructor stub
 	}
 

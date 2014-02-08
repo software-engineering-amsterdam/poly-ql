@@ -5,7 +5,7 @@ import org.uva.sea.ql.ast.Expression;
 
 public class Mul implements ASTNode {
 
-	public Mul(Expression expr, Expression expr2) {
+	public Mul(Expression left, Expression right) {
 		// TODO Auto-generated constructor stub
 	}
 

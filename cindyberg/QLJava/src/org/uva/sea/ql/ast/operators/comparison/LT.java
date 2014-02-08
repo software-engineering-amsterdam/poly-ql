@@ -5,8 +5,11 @@ import org.uva.sea.ql.ast.Expression;
 
 public class LT implements ASTNode {
 
-	public LT(Expression expr, Expression expr2) {
+	public LT(Expression left, Expression right)
+	{
 		// TODO Auto-generated constructor stub
 	}
 
+	
 }
+

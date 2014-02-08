@@ -23,3 +23,5 @@
 1391696917224	Delete element
 1391700025057	Rename type 'Expr'
 1391703281944	Rename type 'TestCases'
+1391874066073	Rename package 'org.uva.sea.ql.ast.operators.booleans'
+1391878883585	Rename type 'TestClass'
