@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using QL_Grammar.AST.Stmnt;
 
 namespace QL_Grammar.Eval.Stmnt
@@ -8,10 +7,10 @@ namespace QL_Grammar.Eval.Stmnt
     {
         public ReadOnlyDictionary<string, IEvalStmnt> Forms { get; private set; }
 
-        public GotoStmnt(string gotoName, Dictionary<string, IEvalStmnt> forms)
+        public GotoStmnt(string gotoName, ReadOnlyDictionary<string, IEvalStmnt> forms)
             : base(gotoName)
 		{
-            Forms = new ReadOnlyDictionary<string, IEvalStmnt>(forms);
+            Forms = forms;
 		}
 
         public void Eval()

@@ -19,6 +19,8 @@ namespace QL_Grammar.TypeCheck.Stmnt
         {
             if (!Forms.ContainsKey(GotoName))
             {
+                //TODO: Fix 'goto' statement. Always has an error now since the form is only parsed later.
+                //Revamp type checking to execute afterwards recursively instead of during parsing? All forms are known at the end.
                 msg = String.Format("'goto' not possible. Form '{0}' does not exist!", GotoName);
                 return true;
             }

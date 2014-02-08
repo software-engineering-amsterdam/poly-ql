@@ -1,4 +1,6 @@
-﻿using QL_Grammar.AST.Types;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using QL_Grammar.AST.Types;
 using QL_Grammar.AST.Value;
 using QL_Grammar.Eval.Expr;
 using QL_Grammar.Eval.Stmnt;
@@ -7,10 +9,12 @@ namespace QL_Grammar.Factory
 {
     public class EvalFactory : BaseFactory<IEvalExpr, IEvalStmnt>
 	{
+        private Dictionary<string, IEvalStmnt> forms;
+
 		public EvalFactory()
             : base()
 		{
-
+            forms = new Dictionary<string, IEvalStmnt>();
 		}
 
         public override IEvalExpr Literal(IValue value)
@@ -93,9 +97,9 @@ namespace QL_Grammar.Factory
         public override IEvalStmnt Form(string var, IEvalStmnt s)
         {
             Variables.Clear();
-            Forms.Add(var, new FormStmnt(var, s));
+            forms.Add(var, new FormStmnt(var, s));
 
-            return Forms[var];
+            return forms[var];
         }
 
         public override IEvalExpr IfElse(IEvalExpr toEval, IEvalExpr ifTrue, IEvalExpr ifFalse)
@@ -105,7 +109,7 @@ namespace QL_Grammar.Factory
 
         public override IEvalStmnt Goto(string var)
         {
-            return new GotoStmnt(var, Forms);
+            return new GotoStmnt(var, new ReadOnlyDictionary<string, IEvalStmnt>(forms));
         }
 
         public override IEvalStmnt Comp(IEvalStmnt l, IEvalStmnt r)

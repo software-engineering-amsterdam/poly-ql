@@ -98,9 +98,8 @@ namespace QL_Grammar.Factory
         public override IStmntNode Form(string var, IStmntNode s)
         {
             Variables.Clear();
-            Forms.Add(var, new FormStmntNode<IStmntNode>(var, s));
 
-            return Forms[var];
+            return new FormStmntNode<IStmntNode>(var, s);
         }
 
         public override IStmntNode Goto(string var)

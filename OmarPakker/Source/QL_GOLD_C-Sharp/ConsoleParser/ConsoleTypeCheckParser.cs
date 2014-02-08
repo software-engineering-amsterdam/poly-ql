@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using com.OPCreations.GoldParser;
 using GOLD;
 using QL_Grammar;
@@ -12,9 +13,11 @@ namespace QL_GOLD_C_Sharp
     public class ConsoleTypeCheckParser : QLParser<ITypeCheckExpr, ITypeCheckStmnt>
 	{
         private readonly Dictionary<string, bool> msgs;
+        private readonly TypeCheckFactory factory = new TypeCheckFactory();
+        protected override IFactory<ITypeCheckExpr, ITypeCheckStmnt> Factory { get { return factory; } }
 
         public ConsoleTypeCheckParser()
-            : base(new TypeCheckFactory())
+            : base()
         {
             msgs = new Dictionary<string, bool>();
         }
@@ -32,28 +35,43 @@ namespace QL_GOLD_C_Sharp
 
             Console.WriteLine(String.Format("R: {0}, C: {1}, D: {2}", rIndex, count, dataOutput));
 
-            return base.OnReduction(r);
+            object result = base.OnReduction(r);
+
+            if(factory.HasErrors)
+            {
+                ReadOnlyDictionary<string, bool> errorMsgs = factory.ErrorMsgs;
+                foreach(KeyValuePair<string, bool> error in errorMsgs)
+                {
+                    CreateErrorMsgEntry(error.Value, error.Key);
+                }
+            }
+
+            return result;
         }
 
         protected override void OnObjectCreated(ITypeCheckExpr exprObj)
         {
             string msg;
             bool error = exprObj.CheckTypesValid(out msg);
-            if (!String.IsNullOrEmpty(msg))
-            {
-                Position pPos = ParserPosition;
-                msgs.Add(String.Format("Invalid expression on line {0} column {1}. ", pPos.Line, pPos.Column) + msg, error);
-            }
+            CreateErrorMsgEntry(error, msg);
         }
 
         protected override void OnObjectCreated(ITypeCheckStmnt stmntObj)
         {
             string msg;
             bool error = stmntObj.CheckTypesValid(out msg);
+            CreateErrorMsgEntry(error, msg);
+        }
+
+        private void CreateErrorMsgEntry(bool error, string msg)
+        {
             if (!String.IsNullOrEmpty(msg))
             {
                 Position pPos = ParserPosition;
-                msgs.Add(String.Format("Invalid statement on line {0} column {1}. ", pPos.Line, pPos.Column) + msg, error);
+                msgs.Add(String.Format("{0} on line {1} column {2}. ", error ? "ERROR" : "WARNING",
+                    //Line property starts on 0 so offset it to correct that.
+                    //Column will point to the end of the statement.
+                    pPos.Line + 1, pPos.Column) + msg, error);
             }
         }
 

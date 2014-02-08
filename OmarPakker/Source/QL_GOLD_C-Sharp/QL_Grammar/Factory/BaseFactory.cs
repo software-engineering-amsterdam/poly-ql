@@ -11,12 +11,10 @@ namespace QL_Grammar.Factory
         where S : IStmntNode
     {
         protected Dictionary<string, E> Variables { get; private set; }
-        protected Dictionary<string, S> Forms { get; private set; }
 
         public BaseFactory()
         {
             Variables = new Dictionary<string, E>();
-            Forms = new Dictionary<string, S>();
         }
 
         public E String(string s)
