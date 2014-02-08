@@ -1,4 +1,6 @@
-﻿using QL_Grammar.AST.Expr;
+﻿using System;
+using System.Collections.Generic;
+using QL_Grammar.AST.Expr;
 using QL_Grammar.AST.Types;
 using QL_Grammar.AST.Value;
 
@@ -14,10 +16,9 @@ namespace QL_Grammar.TypeCheck.Expr
 
         public IType ExprType { get { return Value.Type; } }
 
-        public bool CheckTypesValid(out string msg)
+        public IEnumerable<Tuple<string, bool>> CheckTypesValid()
         {
-            msg = null;
-            return false;
+            return null;
         }
     }
 }

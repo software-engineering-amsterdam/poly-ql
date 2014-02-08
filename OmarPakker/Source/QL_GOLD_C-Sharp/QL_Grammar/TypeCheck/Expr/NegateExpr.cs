@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using QL_Grammar.AST.Expr;
 using QL_Grammar.AST.Types;
 
@@ -14,17 +15,13 @@ namespace QL_Grammar.TypeCheck.Expr
 
         public IType ExprType { get { return Expression.ExprType; } }
 
-        public bool CheckTypesValid(out string msg)
+        public IEnumerable<Tuple<string, bool>> CheckTypesValid()
         {
             if (!(Expression.ExprType is BoolType || Expression.ExprType is NumericType))
             {
-                msg = String.Format("Negation not possible. Incompatible type: '{0}', Only bool and numerical types are supported.",
-                    Expression.ExprType.ToString());
-                return true;
+                yield return new Tuple<string, bool>(String.Format("Negation not possible. Incompatible type: '{0}', Only bool and numerical types are supported.",
+                    Expression.ExprType.ToString()), true);
             }
-
-            msg = null;
-            return false;
         }
 	}
 }

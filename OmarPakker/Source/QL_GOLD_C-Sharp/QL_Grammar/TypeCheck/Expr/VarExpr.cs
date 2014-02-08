@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using QL_Grammar.AST.Expr;
 using QL_Grammar.AST.Types;
 
@@ -14,16 +15,12 @@ namespace QL_Grammar.TypeCheck.Expr
 
         public IType ExprType { get { return Value.ExprType; } }
 
-        public bool CheckTypesValid(out string msg)
+        public IEnumerable<Tuple<string, bool>> CheckTypesValid()
         {
-            if(Value.ExprType is UnknownType)
+            if (Value.ExprType is UnknownType)
             {
-                msg = String.Format("Undefined variable '{0}' used. Make sure the variable is defined.", Name);
-                return true;
+                yield return new Tuple<string, bool>(String.Format("Undefined variable '{0}' used. Make sure the variable is defined.", Name), true);
             }
-
-            msg = null;
-            return ExprType.CompatibleWith(Value.ExprType);
         }
     }
 }
