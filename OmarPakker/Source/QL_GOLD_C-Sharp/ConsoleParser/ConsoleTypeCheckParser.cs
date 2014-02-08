@@ -34,46 +34,80 @@ namespace QL_GOLD_C_Sharp
 
             Console.WriteLine(String.Format("R: {0}, C: {1}, D: {2}", rIndex, count, dataOutput));
 
-            object result = base.OnReduction(r);
+            return base.OnReduction(r);
+        }
 
-            if(factory.HasErrors)
+        protected override void OnObjectCreated(object obj)
+        {
+            //Factory handles variable expressions for us. Check for those errors now.
+            if (factory.HasErrors)
             {
-                CreateErrorMsgEntries(factory.ErrorMsgs);
+                Position pPos = ParserPosition;
+                foreach (var error in factory.ErrorMsgs)
+                {
+                    CreateErrorMsgEntry(new Tuple<string, bool, int, int>(error.Item1, error.Item2, pPos.Line, pPos.Column));
+                }
+                factory.ErrorMsgs.Clear();
             }
 
-            return result;
+            //Expressions can be verified during parsing! :D
+            if(obj is ITypeCheckExpr)
+            {
+                CreateErrorMsgEntries((ITypeCheckExpr)obj);
+            }
+            //Statements are evaluated afterwards so we need to store their position
+            //to be able to supply useful information to locate the error.
+            else if(obj is ITypeCheckStmnt)
+            {
+                ((ITypeCheckStmnt)obj).StatementSourcePosition = new Tuple<int, int>(ParserPosition.Line, ParserPosition.Column);
+            }
         }
 
-        protected override void OnObjectCreated(ITypeCheckExpr exprObj)
+        private void CreateErrorMsgEntries(ITypeCheckExpr expr)
         {
-            CreateErrorMsgEntries(exprObj.CheckTypesValid());
-        }
+            var errors = expr.CheckTypesValid();
 
-        protected override void OnObjectCreated(ITypeCheckStmnt stmntObj)
-        {
-            CreateErrorMsgEntries(stmntObj.CheckTypesValid());
-        }
-
-        private void CreateErrorMsgEntries(IEnumerable<Tuple<string, bool>> errors)
-        {
-            if (errors == null)
+            if(errors == null)
             {
                 return;
             }
 
-            foreach (Tuple<string, bool> error in errors)
+            Position pPos = ParserPosition;
+            foreach(var error in errors)
             {
-                Position pPos = ParserPosition;
-                msgs.Add(String.Format("{0} on line {1} column {2}. {3}", error.Item2 ? "ERROR" : "WARNING",
-                    //Line property starts on 0 so offset it to correct that.
-                    //Column will point to the end of the statement.
-                    pPos.Line + 1, pPos.Column, error.Item1), error.Item2);
+                CreateErrorMsgEntry(new Tuple<string, bool, int, int>(error.Item1, error.Item2, pPos.Line, pPos.Column));
             }
+        }
+
+        private void CreateErrorMsgEntries(ITypeCheckStmnt stmnt)
+        {
+            CreateErrorMsgEntries(stmnt.CheckTypesValid());
+        }
+
+        private void CreateErrorMsgEntries(IEnumerable<Tuple<string, bool, int, int>> errors)
+        {
+            foreach (var error in errors)
+            {
+                CreateErrorMsgEntry(error);
+            }
+        }
+
+        private void CreateErrorMsgEntry(Tuple<string, bool, int, int> error)
+        {
+            if (error == null)
+            {
+                return;
+            }
+
+            msgs.Add(String.Format("{0} on line {1} column {2}. {3}", error.Item2 ? "ERROR" : "WARNING",
+                //Line property starts on 0 so offset it to correct that.
+                //Column will point to the end of the statement.
+                error.Item3 + 1, error.Item4, error.Item1), error.Item2);
         }
 
         protected override void OnCompletion(object root)
         {
-            ITypeCheckStmnt evalRoot = (ITypeCheckStmnt)root;
+            CreateErrorMsgEntries(((ITypeCheckStmnt)root).CheckTypesValid());
 
             foreach(KeyValuePair<string, bool> msg in msgs)
             {

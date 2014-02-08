@@ -6,6 +6,8 @@ namespace QL_Grammar.TypeCheck.Stmnt
 {
     public interface ITypeCheckStmnt : IStmntNode
     {
-        IEnumerable<Tuple<string, bool>> CheckTypesValid();
+        Tuple<int, int> StatementSourcePosition { set; }
+
+        IEnumerable<Tuple<string, bool, int, int>> CheckTypesValid();
     }
 }

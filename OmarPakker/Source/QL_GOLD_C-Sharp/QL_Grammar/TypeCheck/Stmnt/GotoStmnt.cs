@@ -9,19 +9,21 @@ namespace QL_Grammar.TypeCheck.Stmnt
     {
         public ReadOnlyDictionary<string, ITypeCheckStmnt> Forms { get; private set; }
 
-        public GotoStmnt(string gotoName, Dictionary<string, ITypeCheckStmnt> forms)
+        public GotoStmnt(string gotoName, ReadOnlyDictionary<string, ITypeCheckStmnt> forms)
             : base(gotoName)
 		{
-            Forms = new ReadOnlyDictionary<string, ITypeCheckStmnt>(forms);
+            Forms = forms;
 		}
 
-        public IEnumerable<Tuple<string, bool>> CheckTypesValid()
+        public Tuple<int, int> StatementSourcePosition { get; set; }
+
+        public IEnumerable<Tuple<string, bool, int, int>> CheckTypesValid()
         {
             if (!Forms.ContainsKey(GotoName))
             {
-                //TODO: Fix 'goto' statement. Always has an error now since the form is only parsed later.
-                //Revamp type checking to execute afterwards recursively instead of during parsing? All forms are known at the end.
-                yield return new Tuple<string, bool>(String.Format("'goto' not possible. Form '{0}' does not exist!", GotoName), true);
+                yield return new Tuple<string, bool, int, int>(
+                    String.Format("'goto' not possible. Form '{0}' does not exist!", GotoName),
+                    true, StatementSourcePosition.Item1, StatementSourcePosition.Item2);
             }
         }
     }
