@@ -14,11 +14,25 @@ namespace QL_Grammar.TypeCheck.Stmnt
 
 		}
 
-        public IEnumerable<Tuple<string, bool>> CheckTypesValid()
+        public Tuple<int, int> StatementSourcePosition { get; set; }
+
+        public IEnumerable<Tuple<string, bool, int, int>> CheckTypesValid()
         {
             if (!(CheckExpression.ExprType is BoolType))
             {
-                yield return new Tuple<string, bool>("Unable to evaluate 'if/else'. Expression must be of type bool!", true);
+                yield return new Tuple<string, bool, int, int>(
+                    "Unable to evaluate 'if/else'. Expression must be of type bool!",
+                    true, StatementSourcePosition.Item1, StatementSourcePosition.Item2);
+            }
+
+            //Flatten errors
+            foreach (var error in IfTrueBody.CheckTypesValid())
+            {
+                yield return error;
+            }
+            foreach (var error in IfFalseBody.CheckTypesValid())
+            {
+                yield return error;
             }
         }
 	}

@@ -28,30 +28,9 @@ namespace QL_Grammar
         {
             object newObj = CreateObjectFor(r);
 
-            if (newObj is E)
-            {
-                OnObjectCreated((E)newObj);
-            }
-            else if (newObj is S)
-            {
-                OnObjectCreated((S)newObj);
-            }
-            else
-            {
-                OnObjectCreated(newObj);
-            }
+            OnObjectCreated(newObj);
 
             return newObj;
-        }
-
-        protected virtual void OnObjectCreated(E exprObj)
-        {
-
-        }
-
-        protected virtual void OnObjectCreated(S stmntObj)
-        {
-
         }
 
         protected virtual void OnObjectCreated(object obj)
@@ -61,7 +40,9 @@ namespace QL_Grammar
 
         private object CreateObjectFor(Reduction r)
         {
-            switch ((RuleIndex)r.Parent.TableIndex())
+            RuleIndex rIndex = (RuleIndex)r.Parent.TableIndex();
+
+            switch (rIndex)
             {
                 case RuleIndex.Type_String:
                     // <Type> ::= string
@@ -81,6 +62,8 @@ namespace QL_Grammar
 
                 case RuleIndex.Forms:
                     // <Forms> ::= <Form> <Forms>
+                case RuleIndex.Statements:
+                    // <Statements> ::= <Statement> <Statements>
                     return Factory.Comp((S)r.get_Data(0), (S)r.get_Data(1));
 
                 case RuleIndex.Forms2:
@@ -121,11 +104,9 @@ namespace QL_Grammar
 
                 case RuleIndex.Block_Lbrace_Rbrace:
                     // <Block> ::= '{' <Statements> '}'
+                case RuleIndex.Value_Lparen_Rparen:
+                    // <Value> ::= '(' <Expression> ')'
                     return r.get_Data(1);
-
-                case RuleIndex.Statements:
-                    // <Statements> ::= <Statement> <Statements>
-                    return Factory.Comp((S)r.get_Data(0), (S)r.get_Data(1));
 
                 case RuleIndex.Statement_If_Lparen_Rparen:
                     // <Statement> ::= if '(' <Expression> ')' <Statement>
@@ -221,10 +202,6 @@ namespace QL_Grammar
                     // <Value> ::= Identifier
                     return Factory.Variable((string)r.get_Data(0));
 
-                case RuleIndex.Value_Lparen_Rparen:
-                    // <Value> ::= '(' <Expression> ')'
-                    return r.get_Data(1);
-
                 case RuleIndex.Literal_Stringlit:
                     // <Literal> ::= StringLit
                     return Factory.String((string)r.get_Data(0));
@@ -240,8 +217,14 @@ namespace QL_Grammar
                 case RuleIndex.Literal_Boollit:
                     // <Literal> ::= BoolLit
                     return Factory.Bool(Boolean.Parse((string)r.get_Data(0)));
-            }
 
+                default:
+                    return CreateObjectFor(r, rIndex);
+            }
+        }
+
+        protected virtual object CreateObjectFor(Reduction r, RuleIndex rIndex)
+        {
             return null;
         }
     }

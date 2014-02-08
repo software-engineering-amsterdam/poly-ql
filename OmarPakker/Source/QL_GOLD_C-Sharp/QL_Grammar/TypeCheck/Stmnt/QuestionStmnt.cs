@@ -13,7 +13,9 @@ namespace QL_Grammar.TypeCheck.Stmnt
 
         }
 
-        public IEnumerable<Tuple<string, bool>> CheckTypesValid()
+        public Tuple<int, int> StatementSourcePosition { get; set; }
+
+        public IEnumerable<Tuple<string, bool, int, int>> CheckTypesValid()
         {
             return null;
         }
