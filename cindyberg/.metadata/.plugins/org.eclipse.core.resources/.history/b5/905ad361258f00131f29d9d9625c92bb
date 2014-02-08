@@ -1,7 +1,0 @@
-package org.uva.sea.ql.parser.jacc;
-
-import org.uva.sea.ql.ast.ASTNode;
-
-public class Or implements ASTNode {
-
-}
