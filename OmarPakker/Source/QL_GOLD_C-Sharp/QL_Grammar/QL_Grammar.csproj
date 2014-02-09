@@ -53,8 +53,9 @@
     <Compile Include="AST\Stmnt\QuestionStmntNode.cs" />
     <Compile Include="AST\Types\UnknownType.cs" />
     <Compile Include="AST\Value\UnknownValue.cs" />
-    <Compile Include="BaseParser.cs" />
+    <Compile Include="Grammar\AbstractParser.cs" />
     <Compile Include="Eval\Expr\IfElseExpr.cs" />
+    <Compile Include="Grammar\GrammarData.cs" />
     <Compile Include="TypeCheck\Expr\IfElseExpr.cs" />
     <Compile Include="Factory\TypeCheckFactory.cs" />
     <Compile Include="TypeCheck\Expr\AddExpr.cs" />
@@ -103,7 +104,7 @@
     <Compile Include="Eval\Expr\LessThenExpr.cs" />
     <Compile Include="Eval\Expr\NegateExpr.cs" />
     <Compile Include="Eval\Expr\OrExpr.cs" />
-    <Compile Include="QLParser.cs" />
+    <Compile Include="Grammar\QLParser.cs" />
     <Compile Include="Eval\Stmnt\QuestionStmnt.cs" />
     <Compile Include="AST\Types\BoolType.cs" />
     <Compile Include="AST\Types\IntType.cs" />
@@ -134,7 +135,7 @@
   <PropertyGroup>
     <PreBuildEvent>"$(SolutionDir)tools\GOLDbuild.exe" "$(SolutionDir)..\..\Grammar\QL_Grammar.grm" "$(ProjectDir)Grammar\QL_Grammar.egt"
 "$(SolutionDir)tools\GOLDtest.exe" "$(ProjectDir)Grammar\QL_Grammar.egt" "$(SolutionDir)..\..\Grammar\QL_Test.txt" "$(SolutionDir)..\..\Grammar\TestLog.txt"
-"$(SolutionDir)tools\GOLDprog.exe" "$(ProjectDir)Grammar\QL_Grammar.egt" "$(SolutionDir)..\..\Grammar\C-Sharp - Omar Edit Free.pgt" "$(ProjectDir)BaseParser.cs"</PreBuildEvent>
+"$(SolutionDir)tools\GOLDprog.exe" "$(ProjectDir)Grammar\QL_Grammar.egt" "$(SolutionDir)..\..\Grammar\C-Sharp - GrammarData.pgt" "$(ProjectDir)Grammar\GrammarData.cs"</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

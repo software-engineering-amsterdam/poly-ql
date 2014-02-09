@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{464B390C-7DDC-4C69-9361-6E7748836886}</ProjectGuid>
+    <ProjectGuid>{5CF4B5C1-853C-487F-9572-7F9A32447ADF}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>QL_GOLD_C_Sharp</RootNamespace>
-    <AssemblyName>QL_GOLD_C-Sharp</AssemblyName>
+    <RootNamespace>QL_ExtensionTest</RootNamespace>
+    <AssemblyName>QL_ExtensionTest</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,16 +31,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject>QL_GOLD_C_Sharp.Program</StartupObject>
-  </PropertyGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Program.cs" />
-    <Compile Include="ConsoleTypeChecker.cs" />
-  </ItemGroup>
   <ItemGroup>
     <Reference Include="GOLD Engine">
       <HintPath>..\lib\GOLD Engine.dll</HintPath>
@@ -48,19 +38,31 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Grammar\GrammarData.cs" />
+    <Compile Include="Mathematics\Expr\PowerExpr.cs" />
+    <Compile Include="Mathematics\Expr\ModuloExpr.cs" />
+    <Compile Include="Mathematics\Factory\IMathFactory.cs" />
+    <Compile Include="Mathematics\Factory\MathFactory.cs" />
+    <Compile Include="ConsoleMathTypeChecker.cs" />
+    <Compile Include="Grammar\MathParser.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <EmbeddedResource Include="Grammar\QL_Grammar.egt" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\QL_Grammar\QL_Grammar.csproj">
       <Project>{adef29ed-b350-451a-a0c7-5e7ae04609a5}</Project>
       <Name>QL_Grammar</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PreBuildEvent>"$(SolutionDir)tools\GOLDbuild.exe" "$(SolutionDir)..\..\Grammar\QL_Grammar_Extended.grm" "$(ProjectDir)Grammar\QL_Grammar.egt"
+"$(SolutionDir)tools\GOLDprog.exe" "$(ProjectDir)Grammar\QL_Grammar.egt" "$(SolutionDir)..\..\Grammar\C-Sharp - GrammarData.pgt" "$(ProjectDir)Grammar\GrammarData.cs"</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
