@@ -66,9 +66,14 @@
     </PreBuildEvent>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="..\..\README.md">
+      <Link>README.md</Link>
+    </None>
+    <None Include="..\..\AST.md">
+      <Link>AST.md</Link>
+    </None>
     <None Include="App.config" />
     <None Include="packages.config" />
-    <Content Include="AST.txt" />
     <Compile Include="QL_AST.fs" />
     <None Include="QL_Lexer.fsl" />
     <None Include="QL_Parser.fsp" />

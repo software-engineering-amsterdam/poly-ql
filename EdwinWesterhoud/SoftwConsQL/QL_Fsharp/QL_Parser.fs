@@ -3,13 +3,13 @@ module QL_Parser
 #nowarn "64";; // turn off warnings that type variables used in production annotations are instantiated to concrete type
 open Microsoft.FSharp.Text.Lexing
 open Microsoft.FSharp.Text.Parsing.ParseHelpers
-# 1 "Z:\UvA\Software Construction\SoftwConsQl\QL_Fsharp\QL_Parser.fsp"
+# 1 "D:\Mijn documenten\GitHub\poly-ql\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
 
 open System
 open QL_AST
 open Microsoft.FSharp.Collections
 
-# 12 "Z:\UvA\Software Construction\SoftwConsQl\QL_Fsharp\QL_Parser.fs"
+# 12 "D:\Mijn documenten\GitHub\poly-ql\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
 // This type is the type of tokens accepted by the parser
 type token = 
   | COLON
@@ -108,7 +108,7 @@ let _fsyacc_reductionSymbolCounts = [|1us; 2us; 1us; 1us; 1us; 4us; |]
 let _fsyacc_productionToNonTerminalTable = [|0us; 1us; 2us; 2us; 2us; 3us; |]
 let _fsyacc_immediateActions = [|65535us; 49152us; 65535us; 16385us; 16386us; 16387us; 16388us; 65535us; 65535us; 65535us; 16389us; |]
 let _fsyacc_reductions ()  =    [| 
-# 111 "Z:\UvA\Software Construction\SoftwConsQl\QL_Fsharp\QL_Parser.fs"
+# 111 "D:\Mijn documenten\GitHub\poly-ql\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : QL_AST.question)) in
             Microsoft.FSharp.Core.Operators.box
@@ -117,48 +117,48 @@ let _fsyacc_reductions ()  =    [|
                       raise (Microsoft.FSharp.Text.Parsing.Accept(Microsoft.FSharp.Core.Operators.box _1))
                    )
                  : '_startstart));
-# 120 "Z:\UvA\Software Construction\SoftwConsQl\QL_Fsharp\QL_Parser.fs"
+# 120 "D:\Mijn documenten\GitHub\poly-ql\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : 'StmtExpr)) in
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 16 "Z:\UvA\Software Construction\SoftwConsQl\QL_Fsharp\QL_Parser.fsp"
+# 16 "D:\Mijn documenten\GitHub\poly-ql\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
                                      _1 
                    )
-# 16 "Z:\UvA\Software Construction\SoftwConsQl\QL_Fsharp\QL_Parser.fsp"
+# 16 "D:\Mijn documenten\GitHub\poly-ql\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
                  : QL_AST.question));
-# 131 "Z:\UvA\Software Construction\SoftwConsQl\QL_Fsharp\QL_Parser.fs"
+# 131 "D:\Mijn documenten\GitHub\poly-ql\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 19 "Z:\UvA\Software Construction\SoftwConsQl\QL_Fsharp\QL_Parser.fsp"
+# 19 "D:\Mijn documenten\GitHub\poly-ql\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
                                Boolean 
                    )
-# 19 "Z:\UvA\Software Construction\SoftwConsQl\QL_Fsharp\QL_Parser.fsp"
+# 19 "D:\Mijn documenten\GitHub\poly-ql\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
                  : 'Qtype));
-# 141 "Z:\UvA\Software Construction\SoftwConsQl\QL_Fsharp\QL_Parser.fs"
+# 141 "D:\Mijn documenten\GitHub\poly-ql\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 20 "Z:\UvA\Software Construction\SoftwConsQl\QL_Fsharp\QL_Parser.fsp"
+# 20 "D:\Mijn documenten\GitHub\poly-ql\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
                                  String 
                    )
-# 20 "Z:\UvA\Software Construction\SoftwConsQl\QL_Fsharp\QL_Parser.fsp"
+# 20 "D:\Mijn documenten\GitHub\poly-ql\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
                  : 'Qtype));
-# 151 "Z:\UvA\Software Construction\SoftwConsQl\QL_Fsharp\QL_Parser.fs"
+# 151 "D:\Mijn documenten\GitHub\poly-ql\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 21 "Z:\UvA\Software Construction\SoftwConsQl\QL_Fsharp\QL_Parser.fsp"
+# 21 "D:\Mijn documenten\GitHub\poly-ql\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
                               Integer 
                    )
-# 21 "Z:\UvA\Software Construction\SoftwConsQl\QL_Fsharp\QL_Parser.fsp"
+# 21 "D:\Mijn documenten\GitHub\poly-ql\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
                  : 'Qtype));
-# 161 "Z:\UvA\Software Construction\SoftwConsQl\QL_Fsharp\QL_Parser.fs"
+# 161 "D:\Mijn documenten\GitHub\poly-ql\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : string)) in
             let _3 = (let data = parseState.GetInput(3) in (Microsoft.FSharp.Core.Operators.unbox data : string)) in
@@ -166,13 +166,13 @@ let _fsyacc_reductions ()  =    [|
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 24 "Z:\UvA\Software Construction\SoftwConsQl\QL_Fsharp\QL_Parser.fsp"
+# 24 "D:\Mijn documenten\GitHub\poly-ql\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
                                              Question(_1, _3, _4) 
                    )
-# 24 "Z:\UvA\Software Construction\SoftwConsQl\QL_Fsharp\QL_Parser.fsp"
+# 24 "D:\Mijn documenten\GitHub\poly-ql\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
                  : 'StmtExpr));
 |]
-# 175 "Z:\UvA\Software Construction\SoftwConsQl\QL_Fsharp\QL_Parser.fs"
+# 175 "D:\Mijn documenten\GitHub\poly-ql\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
 let tables () : Microsoft.FSharp.Text.Parsing.Tables<_> = 
   { reductions= _fsyacc_reductions ();
     endOfInputTag = _fsyacc_endOfInputTag;

@@ -2,19 +2,57 @@
 module QL_Lexer
 open System   
 open QL_Parser   
-open Microsoft.FSharp.Text.Lexing 
-}   
+open Microsoft.FSharp.Text.Lexing
 
-let whitespace	= ' ' | '\t'
-let colon		= ':'
-let text		= ['a'-'z'] | ['A'-'Z'] | whitespace | '?'
-let label		= '"' text+ '"'
-let b			= "boolean"
+let keywords =
+    [
+        "form", FORM;
+        "{", CB_OPEN;
+        "}", CB_CLOSE;
+        "(", B_OPEN;
+        ")", B_CLOSE;
+        ":", COLON;
+        "boolean", BOOL;
+        "string", STRING;
+        "date", DATE;
+        "money", MONEY;
+    ] |> Map.ofList
 
-rule tokenize = parse
-| whitespace			{ tokenize lexbuf }
-| ['a'-'z' 'A'-'Z']+	{ ID (LexBuffer<_>.LexemeString lexbuf) }
-| label					{ LABEL (LexBuffer<_>.LexemeString lexbuf) }
-| colon					{ COLON }
-| whitespace? b			{ BOOL }
-| eof					{ END }
+let ops =
+    [
+        "=",    EQ;
+        "!=",   NE;
+        "<",    LT;
+        "<=",   LE;
+        ">",    GT;
+        ">=",   GE;
+        "&&",   AND;
+        "||",   OR;
+        "!",    NOT;
+        "+",    PLUS;
+        "-",    MINUS;
+        "*",    MULT;
+        "/",    DIV;
+    ] |> Map.ofList
+}
+
+let char        = ['a'-'z' 'A'-'Z']
+let digit       = ['0'-'9']
+let int         = '-'?digit+
+let float       = '-'?digit+ '.' digit+
+let identifier  = char(char|digit|['-' '_' '.'])*
+let whitespace  = [' ' '\t']
+let newline     = "\n\r" | '\n' | '\r'
+let operator    = ">" | ">=" | "<" | "<=" | "=" | "!=" | "&&" | "||" | "!" | "+" | "-" | "*" | "/"
+
+rule tokenize = parse   
+| whitespace    { tokenize lexbuf }   
+| newline       { lexbuf.EndPos <- lexbuf.EndPos.NextLine; tokenize lexbuf; }   
+| int           { INT(Int32.Parse(LexBuffer<_>.LexemeString lexbuf)) }   
+| float         { DECIMAL(Double.Parse(LexBuffer<_>.LexemeString lexbuf)) }   
+| operator      { ops.[LexBuffer<_>.LexemeString lexbuf] }   
+| identifier    { match keywords.TryFind(LexBuffer<_>.LexemeString lexbuf) with   
+                  | Some(token) -> token   
+                  | None -> ID(LexBuffer<_>.LexemeString lexbuf) }     
+| eof           { END }
+
