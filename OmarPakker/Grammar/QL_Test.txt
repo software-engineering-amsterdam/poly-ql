@@ -16,10 +16,12 @@ form Form1
 	"Var re-use:" >> answer4:real;
 	"Incompatible types:" << answer1 * answer2;
 	"Inline if:" << answer3 ? answer1 : answer2;
+	"Incompatible literals:" << 500 + true;
 
-    "Int:" << intValue:int = 500;
+    "Int:" << intValue:int = 500 + 600;
     "Real:" << realValue:real = .5;
     "Boolean:" << boolValue:bool = true;
+	"Boolean2:" << false;
     
     //Line comment
     /*

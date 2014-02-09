@@ -4,14 +4,11 @@ namespace QL_GOLD_C_Sharp
 {
 	public class Program
 	{
-		static int Main(string[] args)
+		static void Main(string[] args)
 		{
-            ConsoleTypeCheckParser cp = new ConsoleTypeCheckParser();
-			bool parsed = cp.Parse(System.IO.File.OpenText(@"..\..\..\..\..\Grammar\QL_Test.txt"));
+            new ConsoleTypeChecker();
 
 			Console.ReadKey();
-
-			return parsed ? 0 : -1;
 		}
 	}
 }
