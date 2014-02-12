@@ -11,7 +11,7 @@ public class Compilert {
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 		// create a parser that feeds off the tokens buffer
 		NewqlParser parser = new NewqlParser(tokens);
-		ParseTree tree = parser.caller();// begin parsing
+		ParseTree tree = parser.form();// begin parsing
 		System.out.println(tree.toStringTree(parser));// print LISP-style tree
 	}
 }
