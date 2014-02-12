@@ -3,6 +3,10 @@
  * Ivan Plantevin, February 2014
  */
 
+/**
+ * Comlicated test expression: ! (bla == true && number < 10 + 1 / -5) || switch == true && input != "female"
+ */
+
 grammar QL;
 
 r2: 'hello' ID ;
@@ -13,23 +17,21 @@ form: 'form' ID block;
 
 block: '{' statement* '}';
 
-statement: computedQuestion
-         | regularQuestion;
-//         | if
-//         | ifElse
+statement: ID ':' STR type '(' expr ')'         # computation
+         | ID ':' STR type                      # question
+         ;
 
-computedQuestion: name ':' label type '(' expr ')';
-
-regularQuestion: name ':' label type;
-
-name: ID;
-
-label: STR;
-
-expr: expr ('*'|'/') expr
-    | expr ('+'|'-') expr
-    | ID
-    | INT;
+expr: op=('+'|'-'|'!') expr                     # unary
+    | expr op=('*'|'/') expr                    # multiplication
+    | expr op=('+'|'-') expr                    # addition
+    | expr op=('<'|'>'|'<='|'>='|'=='|'!=') expr# comparison
+    | expr op=('&&'|'||') expr                  # logical
+    | bool                                      # boolean
+    | ID                                        # identifier
+    | INT                                       # integer
+    | STR                                       # string
+    | '(' expr ')'                              # parantheses
+    ;
 
 type: 'boolean'
     | 'integer'
