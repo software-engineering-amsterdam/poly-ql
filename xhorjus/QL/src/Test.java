@@ -28,5 +28,6 @@ public class Test {
 	    
 	    // Print tree. Tada.
 	    System.out.println(tree.toStringTree(parser));
+
 	}
 }

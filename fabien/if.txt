@@ -1,0 +1,15 @@
+form Hello {
+  what is this?
+  boolean fu
+
+  what is this again?
+  string hello1
+
+  what is fu again?
+
+  if hello {
+    if fu {
+      mr dobo is not ok?
+    }
+  }
+}

@@ -1,7 +1,11 @@
 package org.uva.sea.ql.ast.type;
 
-import org.uva.sea.ql.ast.ASTNode;
 
-public class MoneyType extends Type implements ASTNode{
+public class MoneyType extends Type{
+
+	public void accept(ITypeVisitor visitor) {
+		visitor.visit(this);
+		
+	}
 
 }

@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using GOLD;
 using Grammar.Parser;
+using QL_ExtensionTest.Mathematics;
 using QL_ExtensionTest.Mathematics.Factory;
-using QL_Grammar.TypeCheck.Expr;
-using QL_Grammar.TypeCheck.Stmnt;
+using QL_Grammar.AST;
+using QL_Grammar.Check;
 
 namespace QL_ExtensionTest
 {
@@ -14,13 +14,11 @@ namespace QL_ExtensionTest
     {
         private readonly MathParser parser;
         private readonly MathFactory factory;
-        private readonly Dictionary<string, bool> msgs;
 
         public ConsoleMathTypeChecker()
         {
             parser = new MathParser();
             parser.Factory = factory = new MathFactory();
-            msgs = new Dictionary<string, bool>();
 
             parser.OnReduction += OnReduction;
             parser.OnCompletion += OnCompletion;
@@ -47,84 +45,28 @@ namespace QL_ExtensionTest
 
             Console.WriteLine(String.Format("R: {0}, C: {1}, D: {2}", r.Parent.Text(), count, dataOutput));
 
-            //Factory handles variable expressions for us. Check for those errors now.
-            if (factory.HasErrors)
+            if (newObj is IASTNode)
             {
-                Position pPos = parser.ParserPosition;
-                foreach (var error in factory.ErrorMsgs)
-                {
-                    CreateErrorMsgEntry(new Tuple<string, bool, int, int>(error.Item1, error.Item2, pPos.Line, pPos.Column));
-                }
-                factory.ErrorMsgs.Clear();
+				((IASTNode)newObj).SourcePosition = parser.ParserPosition;
             }
-
-            //Expressions can be verified during parsing! :D
-            if (newObj is ITypeCheckExpr)
-            {
-                CreateErrorMsgEntries((ITypeCheckExpr)newObj);
-            }
-            //Statements are evaluated afterwards so we need to store their position
-            //to be able to supply useful information to locate the error.
-            else if (newObj is ITypeCheckStmnt)
-            {
-                ((ITypeCheckStmnt)newObj).StatementSourcePosition = new Tuple<int, int>(
-                    parser.ParserPosition.Line, parser.ParserPosition.Column);
-            }
-        }
-
-        private void CreateErrorMsgEntries(ITypeCheckExpr expr)
-        {
-            var errors = expr.CheckTypesValid();
-
-            if(errors == null)
-            {
-                return;
-            }
-
-            Position pPos = parser.ParserPosition;
-            foreach(var error in errors)
-            {
-                CreateErrorMsgEntry(new Tuple<string, bool, int, int>(error.Item1, error.Item2, pPos.Line, pPos.Column));
-            }
-        }
-
-        private void CreateErrorMsgEntries(ITypeCheckStmnt stmnt)
-        {
-            CreateErrorMsgEntries(stmnt.CheckTypesValid());
-        }
-
-        private void CreateErrorMsgEntries(IEnumerable<Tuple<string, bool, int, int>> errors)
-        {
-            foreach (var error in errors)
-            {
-                CreateErrorMsgEntry(error);
-            }
-        }
-
-        private void CreateErrorMsgEntry(Tuple<string, bool, int, int> error)
-        {
-            if (error == null)
-            {
-                return;
-            }
-
-            msgs.Add(String.Format("{0} on line {1} column {2}. {3}", error.Item2 ? "ERROR" : "WARNING",
-                //Line property starts on 0 so offset it to correct that.
-                //Column will point to the end of the statement.
-                error.Item3 + 1, error.Item4, error.Item1), error.Item2);
         }
 
         private void OnCompletion(object root)
         {
-            CreateErrorMsgEntries(((ITypeCheckStmnt)root).CheckTypesValid());
+			TypeChecker<CheckMathExpressions, CheckStatements<CheckMathExpressions>> tc
+				= new TypeChecker<CheckMathExpressions, CheckStatements<CheckMathExpressions>>();
 
-            foreach(KeyValuePair<string, bool> msg in msgs)
-            {
-                Console.ForegroundColor = msg.Value ? ConsoleColor.Red : ConsoleColor.Yellow;
-                Console.WriteLine(msg.Key);
-            }
+            if (tc.Check((IASTNode)root))
+			{
+				foreach (Tuple<string, bool> msg in tc.Errors)
+				{
+					Console.ForegroundColor = msg.Item2 ? ConsoleColor.Red : ConsoleColor.Yellow;
+					Console.WriteLine(msg.Item1);
+				}
 
-            Console.ResetColor();
+				Console.ResetColor();
+			}
+
             Console.WriteLine("PARSING COMPLETED!");
         }
 

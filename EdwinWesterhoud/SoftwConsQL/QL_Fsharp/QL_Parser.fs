@@ -3,63 +3,184 @@ module QL_Parser
 #nowarn "64";; // turn off warnings that type variables used in production annotations are instantiated to concrete type
 open Microsoft.FSharp.Text.Lexing
 open Microsoft.FSharp.Text.Parsing.ParseHelpers
-# 1 "D:\Mijn documenten\GitHub\poly-ql\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+# 1 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
 
 open System
-open QL_AST
+open QL_Grammar
 open Microsoft.FSharp.Collections
 
-# 12 "D:\Mijn documenten\GitHub\poly-ql\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
+# 12 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
 // This type is the type of tokens accepted by the parser
 type token = 
-  | COLON
   | END
-  | INT
-  | STRING
-  | BOOL
+  | EQ
+  | NE
+  | LT
+  | LE
+  | GT
+  | GE
+  | AND
+  | OR
+  | NOT
+  | PLUS
+  | MINUS
+  | MULT
+  | DIV
+  | QLBOOL
+  | QLSTRING
+  | QLINT
+  | QLDATE
+  | QLDECIMAL
+  | QLMONEY
+  | MONEY of (float)
+  | DECIMAL of (float)
+  | DATE of (float)
+  | INT of (int)
+  | STRING of (string)
+  | BOOL of (bool)
   | LABEL of (string)
-  | ID of (string)
+  | IDENTIFIER of (string)
+  | COLON
+  | B_OPEN
+  | B_CLOSE
+  | CB_OPEN
+  | CB_CLOSE
+  | IF
+  | FORM
 // This type is used to give symbolic names to token indexes, useful for error messages
 type tokenId = 
-    | TOKEN_COLON
     | TOKEN_END
+    | TOKEN_EQ
+    | TOKEN_NE
+    | TOKEN_LT
+    | TOKEN_LE
+    | TOKEN_GT
+    | TOKEN_GE
+    | TOKEN_AND
+    | TOKEN_OR
+    | TOKEN_NOT
+    | TOKEN_PLUS
+    | TOKEN_MINUS
+    | TOKEN_MULT
+    | TOKEN_DIV
+    | TOKEN_QLBOOL
+    | TOKEN_QLSTRING
+    | TOKEN_QLINT
+    | TOKEN_QLDATE
+    | TOKEN_QLDECIMAL
+    | TOKEN_QLMONEY
+    | TOKEN_MONEY
+    | TOKEN_DECIMAL
+    | TOKEN_DATE
     | TOKEN_INT
     | TOKEN_STRING
     | TOKEN_BOOL
     | TOKEN_LABEL
-    | TOKEN_ID
+    | TOKEN_IDENTIFIER
+    | TOKEN_COLON
+    | TOKEN_B_OPEN
+    | TOKEN_B_CLOSE
+    | TOKEN_CB_OPEN
+    | TOKEN_CB_CLOSE
+    | TOKEN_IF
+    | TOKEN_FORM
     | TOKEN_end_of_input
     | TOKEN_error
 // This type is used to give symbolic names to token indexes, useful for error messages
 type nonTerminalId = 
     | NONTERM__startstart
     | NONTERM_start
-    | NONTERM_Qtype
-    | NONTERM_StmtExpr
+    | NONTERM_stmtList
+    | NONTERM_stmt
+    | NONTERM_assignment
+    | NONTERM_question
+    | NONTERM_conditional
+    | NONTERM_qlType
+    | NONTERM_expType
+    | NONTERM_arithmeticType
+    | NONTERM_expression
+    | NONTERM_booleanExpr
+    | NONTERM_arithmeticExpr
 
 // This function maps tokens to integers indexes
 let tagOfToken (t:token) = 
   match t with
-  | COLON  -> 0 
-  | END  -> 1 
-  | INT  -> 2 
-  | STRING  -> 3 
-  | BOOL  -> 4 
-  | LABEL _ -> 5 
-  | ID _ -> 6 
+  | END  -> 0 
+  | EQ  -> 1 
+  | NE  -> 2 
+  | LT  -> 3 
+  | LE  -> 4 
+  | GT  -> 5 
+  | GE  -> 6 
+  | AND  -> 7 
+  | OR  -> 8 
+  | NOT  -> 9 
+  | PLUS  -> 10 
+  | MINUS  -> 11 
+  | MULT  -> 12 
+  | DIV  -> 13 
+  | QLBOOL  -> 14 
+  | QLSTRING  -> 15 
+  | QLINT  -> 16 
+  | QLDATE  -> 17 
+  | QLDECIMAL  -> 18 
+  | QLMONEY  -> 19 
+  | MONEY _ -> 20 
+  | DECIMAL _ -> 21 
+  | DATE _ -> 22 
+  | INT _ -> 23 
+  | STRING _ -> 24 
+  | BOOL _ -> 25 
+  | LABEL _ -> 26 
+  | IDENTIFIER _ -> 27 
+  | COLON  -> 28 
+  | B_OPEN  -> 29 
+  | B_CLOSE  -> 30 
+  | CB_OPEN  -> 31 
+  | CB_CLOSE  -> 32 
+  | IF  -> 33 
+  | FORM  -> 34 
 
 // This function maps integers indexes to symbolic token ids
 let tokenTagToTokenId (tokenIdx:int) = 
   match tokenIdx with
-  | 0 -> TOKEN_COLON 
-  | 1 -> TOKEN_END 
-  | 2 -> TOKEN_INT 
-  | 3 -> TOKEN_STRING 
-  | 4 -> TOKEN_BOOL 
-  | 5 -> TOKEN_LABEL 
-  | 6 -> TOKEN_ID 
-  | 9 -> TOKEN_end_of_input
-  | 7 -> TOKEN_error
+  | 0 -> TOKEN_END 
+  | 1 -> TOKEN_EQ 
+  | 2 -> TOKEN_NE 
+  | 3 -> TOKEN_LT 
+  | 4 -> TOKEN_LE 
+  | 5 -> TOKEN_GT 
+  | 6 -> TOKEN_GE 
+  | 7 -> TOKEN_AND 
+  | 8 -> TOKEN_OR 
+  | 9 -> TOKEN_NOT 
+  | 10 -> TOKEN_PLUS 
+  | 11 -> TOKEN_MINUS 
+  | 12 -> TOKEN_MULT 
+  | 13 -> TOKEN_DIV 
+  | 14 -> TOKEN_QLBOOL 
+  | 15 -> TOKEN_QLSTRING 
+  | 16 -> TOKEN_QLINT 
+  | 17 -> TOKEN_QLDATE 
+  | 18 -> TOKEN_QLDECIMAL 
+  | 19 -> TOKEN_QLMONEY 
+  | 20 -> TOKEN_MONEY 
+  | 21 -> TOKEN_DECIMAL 
+  | 22 -> TOKEN_DATE 
+  | 23 -> TOKEN_INT 
+  | 24 -> TOKEN_STRING 
+  | 25 -> TOKEN_BOOL 
+  | 26 -> TOKEN_LABEL 
+  | 27 -> TOKEN_IDENTIFIER 
+  | 28 -> TOKEN_COLON 
+  | 29 -> TOKEN_B_OPEN 
+  | 30 -> TOKEN_B_CLOSE 
+  | 31 -> TOKEN_CB_OPEN 
+  | 32 -> TOKEN_CB_CLOSE 
+  | 33 -> TOKEN_IF 
+  | 34 -> TOKEN_FORM 
+  | 37 -> TOKEN_end_of_input
+  | 35 -> TOKEN_error
   | _ -> failwith "tokenTagToTokenId: bad token"
 
 /// This function maps production indexes returned in syntax errors to strings representing the non terminal that would be produced by that production
@@ -67,112 +188,612 @@ let prodIdxToNonTerminal (prodIdx:int) =
   match prodIdx with
     | 0 -> NONTERM__startstart 
     | 1 -> NONTERM_start 
-    | 2 -> NONTERM_Qtype 
-    | 3 -> NONTERM_Qtype 
-    | 4 -> NONTERM_Qtype 
-    | 5 -> NONTERM_StmtExpr 
+    | 2 -> NONTERM_stmtList 
+    | 3 -> NONTERM_stmtList 
+    | 4 -> NONTERM_stmtList 
+    | 5 -> NONTERM_stmt 
+    | 6 -> NONTERM_stmt 
+    | 7 -> NONTERM_stmt 
+    | 8 -> NONTERM_assignment 
+    | 9 -> NONTERM_question 
+    | 10 -> NONTERM_conditional 
+    | 11 -> NONTERM_qlType 
+    | 12 -> NONTERM_qlType 
+    | 13 -> NONTERM_qlType 
+    | 14 -> NONTERM_qlType 
+    | 15 -> NONTERM_qlType 
+    | 16 -> NONTERM_qlType 
+    | 17 -> NONTERM_expType 
+    | 18 -> NONTERM_expType 
+    | 19 -> NONTERM_expType 
+    | 20 -> NONTERM_arithmeticType 
+    | 21 -> NONTERM_arithmeticType 
+    | 22 -> NONTERM_arithmeticType 
+    | 23 -> NONTERM_arithmeticType 
+    | 24 -> NONTERM_expression 
+    | 25 -> NONTERM_expression 
+    | 26 -> NONTERM_booleanExpr 
+    | 27 -> NONTERM_booleanExpr 
+    | 28 -> NONTERM_booleanExpr 
+    | 29 -> NONTERM_booleanExpr 
+    | 30 -> NONTERM_booleanExpr 
+    | 31 -> NONTERM_booleanExpr 
+    | 32 -> NONTERM_booleanExpr 
+    | 33 -> NONTERM_booleanExpr 
+    | 34 -> NONTERM_booleanExpr 
+    | 35 -> NONTERM_booleanExpr 
+    | 36 -> NONTERM_arithmeticExpr 
+    | 37 -> NONTERM_arithmeticExpr 
+    | 38 -> NONTERM_arithmeticExpr 
+    | 39 -> NONTERM_arithmeticExpr 
+    | 40 -> NONTERM_arithmeticExpr 
     | _ -> failwith "prodIdxToNonTerminal: bad production index"
 
-let _fsyacc_endOfInputTag = 9 
-let _fsyacc_tagOfErrorTerminal = 7
+let _fsyacc_endOfInputTag = 37 
+let _fsyacc_tagOfErrorTerminal = 35
 
 // This function gets the name of a token as a string
 let token_to_string (t:token) = 
   match t with 
-  | COLON  -> "COLON" 
   | END  -> "END" 
-  | INT  -> "INT" 
-  | STRING  -> "STRING" 
-  | BOOL  -> "BOOL" 
+  | EQ  -> "EQ" 
+  | NE  -> "NE" 
+  | LT  -> "LT" 
+  | LE  -> "LE" 
+  | GT  -> "GT" 
+  | GE  -> "GE" 
+  | AND  -> "AND" 
+  | OR  -> "OR" 
+  | NOT  -> "NOT" 
+  | PLUS  -> "PLUS" 
+  | MINUS  -> "MINUS" 
+  | MULT  -> "MULT" 
+  | DIV  -> "DIV" 
+  | QLBOOL  -> "QLBOOL" 
+  | QLSTRING  -> "QLSTRING" 
+  | QLINT  -> "QLINT" 
+  | QLDATE  -> "QLDATE" 
+  | QLDECIMAL  -> "QLDECIMAL" 
+  | QLMONEY  -> "QLMONEY" 
+  | MONEY _ -> "MONEY" 
+  | DECIMAL _ -> "DECIMAL" 
+  | DATE _ -> "DATE" 
+  | INT _ -> "INT" 
+  | STRING _ -> "STRING" 
+  | BOOL _ -> "BOOL" 
   | LABEL _ -> "LABEL" 
-  | ID _ -> "ID" 
+  | IDENTIFIER _ -> "IDENTIFIER" 
+  | COLON  -> "COLON" 
+  | B_OPEN  -> "B_OPEN" 
+  | B_CLOSE  -> "B_CLOSE" 
+  | CB_OPEN  -> "CB_OPEN" 
+  | CB_CLOSE  -> "CB_CLOSE" 
+  | IF  -> "IF" 
+  | FORM  -> "FORM" 
 
 // This function gets the data carried by a token as an object
 let _fsyacc_dataOfToken (t:token) = 
   match t with 
-  | COLON  -> (null : System.Object) 
   | END  -> (null : System.Object) 
-  | INT  -> (null : System.Object) 
-  | STRING  -> (null : System.Object) 
-  | BOOL  -> (null : System.Object) 
+  | EQ  -> (null : System.Object) 
+  | NE  -> (null : System.Object) 
+  | LT  -> (null : System.Object) 
+  | LE  -> (null : System.Object) 
+  | GT  -> (null : System.Object) 
+  | GE  -> (null : System.Object) 
+  | AND  -> (null : System.Object) 
+  | OR  -> (null : System.Object) 
+  | NOT  -> (null : System.Object) 
+  | PLUS  -> (null : System.Object) 
+  | MINUS  -> (null : System.Object) 
+  | MULT  -> (null : System.Object) 
+  | DIV  -> (null : System.Object) 
+  | QLBOOL  -> (null : System.Object) 
+  | QLSTRING  -> (null : System.Object) 
+  | QLINT  -> (null : System.Object) 
+  | QLDATE  -> (null : System.Object) 
+  | QLDECIMAL  -> (null : System.Object) 
+  | QLMONEY  -> (null : System.Object) 
+  | MONEY _fsyacc_x -> Microsoft.FSharp.Core.Operators.box _fsyacc_x 
+  | DECIMAL _fsyacc_x -> Microsoft.FSharp.Core.Operators.box _fsyacc_x 
+  | DATE _fsyacc_x -> Microsoft.FSharp.Core.Operators.box _fsyacc_x 
+  | INT _fsyacc_x -> Microsoft.FSharp.Core.Operators.box _fsyacc_x 
+  | STRING _fsyacc_x -> Microsoft.FSharp.Core.Operators.box _fsyacc_x 
+  | BOOL _fsyacc_x -> Microsoft.FSharp.Core.Operators.box _fsyacc_x 
   | LABEL _fsyacc_x -> Microsoft.FSharp.Core.Operators.box _fsyacc_x 
-  | ID _fsyacc_x -> Microsoft.FSharp.Core.Operators.box _fsyacc_x 
-let _fsyacc_gotos = [| 0us; 65535us; 1us; 65535us; 0us; 1us; 1us; 65535us; 9us; 10us; 1us; 65535us; 0us; 2us; |]
-let _fsyacc_sparseGotoTableRowOffsets = [|0us; 1us; 3us; 5us; |]
-let _fsyacc_stateToProdIdxsTableElements = [| 1us; 0us; 1us; 0us; 1us; 1us; 1us; 1us; 1us; 2us; 1us; 3us; 1us; 4us; 1us; 5us; 1us; 5us; 1us; 5us; 1us; 5us; |]
-let _fsyacc_stateToProdIdxsTableRowOffsets = [|0us; 2us; 4us; 6us; 8us; 10us; 12us; 14us; 16us; 18us; 20us; |]
-let _fsyacc_action_rows = 11
-let _fsyacc_actionTableElements = [|1us; 32768us; 6us; 7us; 0us; 49152us; 1us; 32768us; 1us; 3us; 0us; 16385us; 0us; 16386us; 0us; 16387us; 0us; 16388us; 1us; 32768us; 0us; 8us; 1us; 32768us; 5us; 9us; 3us; 32768us; 2us; 6us; 3us; 5us; 4us; 4us; 0us; 16389us; |]
-let _fsyacc_actionTableRowOffsets = [|0us; 2us; 3us; 5us; 6us; 7us; 8us; 9us; 11us; 13us; 17us; |]
-let _fsyacc_reductionSymbolCounts = [|1us; 2us; 1us; 1us; 1us; 4us; |]
-let _fsyacc_productionToNonTerminalTable = [|0us; 1us; 2us; 2us; 2us; 3us; |]
-let _fsyacc_immediateActions = [|65535us; 49152us; 65535us; 16385us; 16386us; 16387us; 16388us; 65535us; 65535us; 65535us; 16389us; |]
+  | IDENTIFIER _fsyacc_x -> Microsoft.FSharp.Core.Operators.box _fsyacc_x 
+  | COLON  -> (null : System.Object) 
+  | B_OPEN  -> (null : System.Object) 
+  | B_CLOSE  -> (null : System.Object) 
+  | CB_OPEN  -> (null : System.Object) 
+  | CB_CLOSE  -> (null : System.Object) 
+  | IF  -> (null : System.Object) 
+  | FORM  -> (null : System.Object) 
+let _fsyacc_gotos = [| 0us; 65535us; 1us; 65535us; 0us; 1us; 0us; 65535us; 0us; 65535us; 0us; 65535us; 0us; 65535us; 0us; 65535us; 0us; 65535us; 0us; 65535us; 5us; 65535us; 0us; 7us; 12us; 7us; 13us; 7us; 14us; 7us; 15us; 7us; 0us; 65535us; 0us; 65535us; 5us; 65535us; 0us; 2us; 12us; 8us; 13us; 9us; 14us; 10us; 15us; 11us; |]
+let _fsyacc_sparseGotoTableRowOffsets = [|0us; 1us; 3us; 4us; 5us; 6us; 7us; 8us; 9us; 10us; 16us; 17us; 18us; |]
+let _fsyacc_stateToProdIdxsTableElements = [| 1us; 0us; 1us; 0us; 5us; 1us; 37us; 38us; 39us; 40us; 1us; 20us; 1us; 21us; 1us; 22us; 1us; 23us; 1us; 36us; 5us; 37us; 37us; 38us; 39us; 40us; 5us; 37us; 38us; 38us; 39us; 40us; 5us; 37us; 38us; 39us; 39us; 40us; 5us; 37us; 38us; 39us; 40us; 40us; 1us; 37us; 1us; 38us; 1us; 39us; 1us; 40us; |]
+let _fsyacc_stateToProdIdxsTableRowOffsets = [|0us; 2us; 4us; 10us; 12us; 14us; 16us; 18us; 20us; 26us; 32us; 38us; 44us; 46us; 48us; 50us; |]
+let _fsyacc_action_rows = 16
+let _fsyacc_actionTableElements = [|4us; 32768us; 20us; 6us; 21us; 5us; 22us; 4us; 23us; 3us; 0us; 49152us; 4us; 16385us; 10us; 12us; 11us; 13us; 12us; 14us; 13us; 15us; 0us; 16404us; 0us; 16405us; 0us; 16406us; 0us; 16407us; 0us; 16420us; 4us; 16421us; 10us; 12us; 11us; 13us; 12us; 14us; 13us; 15us; 4us; 16422us; 10us; 12us; 11us; 13us; 12us; 14us; 13us; 15us; 4us; 16423us; 10us; 12us; 11us; 13us; 12us; 14us; 13us; 15us; 4us; 16424us; 10us; 12us; 11us; 13us; 12us; 14us; 13us; 15us; 4us; 32768us; 20us; 6us; 21us; 5us; 22us; 4us; 23us; 3us; 4us; 32768us; 20us; 6us; 21us; 5us; 22us; 4us; 23us; 3us; 4us; 32768us; 20us; 6us; 21us; 5us; 22us; 4us; 23us; 3us; 4us; 32768us; 20us; 6us; 21us; 5us; 22us; 4us; 23us; 3us; |]
+let _fsyacc_actionTableRowOffsets = [|0us; 5us; 6us; 11us; 12us; 13us; 14us; 15us; 16us; 21us; 26us; 31us; 36us; 41us; 46us; 51us; |]
+let _fsyacc_reductionSymbolCounts = [|1us; 1us; 0us; 1us; 2us; 1us; 1us; 1us; 7us; 4us; 7us; 1us; 1us; 1us; 1us; 1us; 1us; 1us; 1us; 1us; 1us; 1us; 1us; 1us; 1us; 1us; 1us; 2us; 3us; 3us; 3us; 3us; 3us; 3us; 3us; 3us; 1us; 3us; 3us; 3us; 3us; |]
+let _fsyacc_productionToNonTerminalTable = [|0us; 1us; 2us; 2us; 2us; 3us; 3us; 3us; 4us; 5us; 6us; 7us; 7us; 7us; 7us; 7us; 7us; 8us; 8us; 8us; 9us; 9us; 9us; 9us; 10us; 10us; 11us; 11us; 11us; 11us; 11us; 11us; 11us; 11us; 11us; 11us; 12us; 12us; 12us; 12us; 12us; |]
+let _fsyacc_immediateActions = [|65535us; 49152us; 65535us; 16404us; 16405us; 16406us; 16407us; 16420us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; |]
 let _fsyacc_reductions ()  =    [| 
-# 111 "D:\Mijn documenten\GitHub\poly-ql\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
+# 323 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
-            let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : QL_AST.question)) in
+            let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : QL_Grammar.arithmeticExpr)) in
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
                       raise (Microsoft.FSharp.Text.Parsing.Accept(Microsoft.FSharp.Core.Operators.box _1))
                    )
                  : '_startstart));
-# 120 "D:\Mijn documenten\GitHub\poly-ql\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
+# 332 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
-            let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : 'StmtExpr)) in
+            let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : 'arithmeticExpr)) in
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 16 "D:\Mijn documenten\GitHub\poly-ql\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
-                                     _1 
+# 34 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                                                    
+                                                     _1
+                                                 
                    )
-# 16 "D:\Mijn documenten\GitHub\poly-ql\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
-                 : QL_AST.question));
-# 131 "D:\Mijn documenten\GitHub\poly-ql\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
-        (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
-            Microsoft.FSharp.Core.Operators.box
-                (
-                   (
-# 19 "D:\Mijn documenten\GitHub\poly-ql\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
-                               Boolean 
-                   )
-# 19 "D:\Mijn documenten\GitHub\poly-ql\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
-                 : 'Qtype));
-# 141 "D:\Mijn documenten\GitHub\poly-ql\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
+# 34 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                 : QL_Grammar.arithmeticExpr));
+# 345 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 20 "D:\Mijn documenten\GitHub\poly-ql\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
-                                 String 
+# 39 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                                                   [] 
                    )
-# 20 "D:\Mijn documenten\GitHub\poly-ql\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
-                 : 'Qtype));
-# 151 "D:\Mijn documenten\GitHub\poly-ql\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
+# 39 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                 : 'stmtList));
+# 355 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
+            let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : 'stmt)) in
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 21 "D:\Mijn documenten\GitHub\poly-ql\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
-                              Integer 
+# 40 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                                                   [_1] 
                    )
-# 21 "D:\Mijn documenten\GitHub\poly-ql\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
-                 : 'Qtype));
-# 161 "D:\Mijn documenten\GitHub\poly-ql\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
+# 40 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                 : 'stmtList));
+# 366 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
+        (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
+            let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : 'stmt)) in
+            let _2 = (let data = parseState.GetInput(2) in (Microsoft.FSharp.Core.Operators.unbox data : 'stmtList)) in
+            Microsoft.FSharp.Core.Operators.box
+                (
+                   (
+# 41 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                                                   _1 :: _2 
+                   )
+# 41 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                 : 'stmtList));
+# 378 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
+        (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
+            let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : 'assignment)) in
+            Microsoft.FSharp.Core.Operators.box
+                (
+                   (
+# 44 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                                           _1 
+                   )
+# 44 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                 : 'stmt));
+# 389 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
+        (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
+            let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : 'question)) in
+            Microsoft.FSharp.Core.Operators.box
+                (
+                   (
+# 45 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                                           _1 
+                   )
+# 45 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                 : 'stmt));
+# 400 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
+        (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
+            let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : 'conditional)) in
+            Microsoft.FSharp.Core.Operators.box
+                (
+                   (
+# 46 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                                           _1 
+                   )
+# 46 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                 : 'stmt));
+# 411 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : string)) in
             let _3 = (let data = parseState.GetInput(3) in (Microsoft.FSharp.Core.Operators.unbox data : string)) in
-            let _4 = (let data = parseState.GetInput(4) in (Microsoft.FSharp.Core.Operators.unbox data : 'Qtype)) in
+            let _4 = (let data = parseState.GetInput(4) in (Microsoft.FSharp.Core.Operators.unbox data : 'expType)) in
+            let _6 = (let data = parseState.GetInput(6) in (Microsoft.FSharp.Core.Operators.unbox data : 'expression)) in
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 24 "D:\Mijn documenten\GitHub\poly-ql\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
-                                             Question(_1, _3, _4) 
+# 49 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                                                                                    Assignment({
+                                                                                                 ID          = _1;
+                                                                                                 Label       = _3;
+                                                                                                 Type        = _4;
+                                                                                                 Expressions = _6;
+                                                                                             }) 
                    )
-# 24 "D:\Mijn documenten\GitHub\poly-ql\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
-                 : 'StmtExpr));
+# 49 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                 : 'assignment));
+# 430 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
+        (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
+            let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : string)) in
+            let _3 = (let data = parseState.GetInput(3) in (Microsoft.FSharp.Core.Operators.unbox data : string)) in
+            let _4 = (let data = parseState.GetInput(4) in (Microsoft.FSharp.Core.Operators.unbox data : 'qlType)) in
+            Microsoft.FSharp.Core.Operators.box
+                (
+                   (
+# 57 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                                                         Question({ 
+                                                                     ID      = _1;
+                                                                     Label   = _3;
+                                                                     Type    = _4;
+                                                                 }) 
+                   )
+# 57 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                 : 'question));
+# 447 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
+        (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
+            let _3 = (let data = parseState.GetInput(3) in (Microsoft.FSharp.Core.Operators.unbox data : 'booleanExpr)) in
+            let _6 = (let data = parseState.GetInput(6) in (Microsoft.FSharp.Core.Operators.unbox data : 'stmtList)) in
+            Microsoft.FSharp.Core.Operators.box
+                (
+                   (
+# 66 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                                    Conditional(_3, _6) 
+                   )
+# 66 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                 : 'conditional));
+# 459 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
+        (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
+            Microsoft.FSharp.Core.Operators.box
+                (
+                   (
+# 69 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                                       QLBool 
+                   )
+# 69 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                 : 'qlType));
+# 469 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
+        (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
+            Microsoft.FSharp.Core.Operators.box
+                (
+                   (
+# 70 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                                       QLString 
+                   )
+# 70 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                 : 'qlType));
+# 479 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
+        (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
+            Microsoft.FSharp.Core.Operators.box
+                (
+                   (
+# 71 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                                       QLInt 
+                   )
+# 71 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                 : 'qlType));
+# 489 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
+        (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
+            Microsoft.FSharp.Core.Operators.box
+                (
+                   (
+# 72 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                                       QLDate 
+                   )
+# 72 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                 : 'qlType));
+# 499 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
+        (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
+            Microsoft.FSharp.Core.Operators.box
+                (
+                   (
+# 73 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                                       QLDecimal 
+                   )
+# 73 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                 : 'qlType));
+# 509 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
+        (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
+            Microsoft.FSharp.Core.Operators.box
+                (
+                   (
+# 74 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                                       QLMoney 
+                   )
+# 74 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                 : 'qlType));
+# 519 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
+        (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
+            let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : string)) in
+            Microsoft.FSharp.Core.Operators.box
+                (
+                   (
+# 77 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                                               String(_1) 
+                   )
+# 77 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                 : 'expType));
+# 530 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
+        (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
+            let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : bool)) in
+            Microsoft.FSharp.Core.Operators.box
+                (
+                   (
+# 78 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                                               Bool(_1) 
+                   )
+# 78 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                 : 'expType));
+# 541 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
+        (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
+            let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : 'arithmeticType)) in
+            Microsoft.FSharp.Core.Operators.box
+                (
+                   (
+# 79 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                                               Arithmetic(_1) 
+                   )
+# 79 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                 : 'expType));
+# 552 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
+        (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
+            let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : int)) in
+            Microsoft.FSharp.Core.Operators.box
+                (
+                   (
+# 82 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                                               Int(_1) 
+                   )
+# 82 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                 : 'arithmeticType));
+# 563 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
+        (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
+            let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : float)) in
+            Microsoft.FSharp.Core.Operators.box
+                (
+                   (
+# 83 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                                               Date(_1) 
+                   )
+# 83 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                 : 'arithmeticType));
+# 574 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
+        (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
+            let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : float)) in
+            Microsoft.FSharp.Core.Operators.box
+                (
+                   (
+# 84 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                                               Decimal(_1) 
+                   )
+# 84 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                 : 'arithmeticType));
+# 585 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
+        (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
+            let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : float)) in
+            Microsoft.FSharp.Core.Operators.box
+                (
+                   (
+# 85 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                                               Money(_1) 
+                   )
+# 85 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                 : 'arithmeticType));
+# 596 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
+        (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
+            let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : 'booleanExpr)) in
+            Microsoft.FSharp.Core.Operators.box
+                (
+                   (
+# 88 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                                               BooleanExpr(_1) 
+                   )
+# 88 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                 : 'expression));
+# 607 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
+        (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
+            let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : 'arithmeticExpr)) in
+            Microsoft.FSharp.Core.Operators.box
+                (
+                   (
+# 89 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                                               ArithmeticExpr(_1) 
+                   )
+# 89 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                 : 'expression));
+# 618 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
+        (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
+            let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : bool)) in
+            Microsoft.FSharp.Core.Operators.box
+                (
+                   (
+# 92 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                                                           BoolVal(_1) 
+                   )
+# 92 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                 : 'booleanExpr));
+# 629 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
+        (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
+            let _2 = (let data = parseState.GetInput(2) in (Microsoft.FSharp.Core.Operators.unbox data : 'booleanExpr)) in
+            Microsoft.FSharp.Core.Operators.box
+                (
+                   (
+# 93 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                                                           Neg(_2) 
+                   )
+# 93 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                 : 'booleanExpr));
+# 640 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
+        (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
+            let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : 'booleanExpr)) in
+            let _3 = (let data = parseState.GetInput(3) in (Microsoft.FSharp.Core.Operators.unbox data : 'booleanExpr)) in
+            Microsoft.FSharp.Core.Operators.box
+                (
+                   (
+# 94 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                                                           Cond(_1, And, _3) 
+                   )
+# 94 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                 : 'booleanExpr));
+# 652 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
+        (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
+            let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : 'booleanExpr)) in
+            let _3 = (let data = parseState.GetInput(3) in (Microsoft.FSharp.Core.Operators.unbox data : 'booleanExpr)) in
+            Microsoft.FSharp.Core.Operators.box
+                (
+                   (
+# 95 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                                                           Cond(_1, Or, _3) 
+                   )
+# 95 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                 : 'booleanExpr));
+# 664 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
+        (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
+            let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : 'booleanExpr)) in
+            let _3 = (let data = parseState.GetInput(3) in (Microsoft.FSharp.Core.Operators.unbox data : 'booleanExpr)) in
+            Microsoft.FSharp.Core.Operators.box
+                (
+                   (
+# 96 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                                                           Cond(_1, Lt, _3) 
+                   )
+# 96 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                 : 'booleanExpr));
+# 676 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
+        (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
+            let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : 'booleanExpr)) in
+            let _3 = (let data = parseState.GetInput(3) in (Microsoft.FSharp.Core.Operators.unbox data : 'booleanExpr)) in
+            Microsoft.FSharp.Core.Operators.box
+                (
+                   (
+# 97 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                                                           Cond(_1, Gt, _3) 
+                   )
+# 97 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                 : 'booleanExpr));
+# 688 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
+        (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
+            let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : 'booleanExpr)) in
+            let _3 = (let data = parseState.GetInput(3) in (Microsoft.FSharp.Core.Operators.unbox data : 'booleanExpr)) in
+            Microsoft.FSharp.Core.Operators.box
+                (
+                   (
+# 98 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                                                           Cond(_1, Le, _3) 
+                   )
+# 98 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                 : 'booleanExpr));
+# 700 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
+        (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
+            let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : 'booleanExpr)) in
+            let _3 = (let data = parseState.GetInput(3) in (Microsoft.FSharp.Core.Operators.unbox data : 'booleanExpr)) in
+            Microsoft.FSharp.Core.Operators.box
+                (
+                   (
+# 99 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                                                           Cond(_1, Ge, _3) 
+                   )
+# 99 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                 : 'booleanExpr));
+# 712 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
+        (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
+            let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : 'booleanExpr)) in
+            let _3 = (let data = parseState.GetInput(3) in (Microsoft.FSharp.Core.Operators.unbox data : 'booleanExpr)) in
+            Microsoft.FSharp.Core.Operators.box
+                (
+                   (
+# 100 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                                                           Cond(_1, Eq, _3) 
+                   )
+# 100 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                 : 'booleanExpr));
+# 724 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
+        (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
+            let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : 'booleanExpr)) in
+            let _3 = (let data = parseState.GetInput(3) in (Microsoft.FSharp.Core.Operators.unbox data : 'booleanExpr)) in
+            Microsoft.FSharp.Core.Operators.box
+                (
+                   (
+# 101 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                                                           Cond(_1, Ne, _3) 
+                   )
+# 101 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                 : 'booleanExpr));
+# 736 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
+        (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
+            let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : 'arithmeticType)) in
+            Microsoft.FSharp.Core.Operators.box
+                (
+                   (
+# 104 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                                                                   ArithmeticType(_1) 
+                   )
+# 104 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                 : 'arithmeticExpr));
+# 747 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
+        (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
+            let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : 'arithmeticExpr)) in
+            let _3 = (let data = parseState.GetInput(3) in (Microsoft.FSharp.Core.Operators.unbox data : 'arithmeticExpr)) in
+            Microsoft.FSharp.Core.Operators.box
+                (
+                   (
+# 105 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                                                                   ArithmeticOp(_1, Plus, _3) 
+                   )
+# 105 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                 : 'arithmeticExpr));
+# 759 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
+        (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
+            let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : 'arithmeticExpr)) in
+            let _3 = (let data = parseState.GetInput(3) in (Microsoft.FSharp.Core.Operators.unbox data : 'arithmeticExpr)) in
+            Microsoft.FSharp.Core.Operators.box
+                (
+                   (
+# 106 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                                                                   ArithmeticOp(_1, Minus, _3) 
+                   )
+# 106 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                 : 'arithmeticExpr));
+# 771 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
+        (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
+            let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : 'arithmeticExpr)) in
+            let _3 = (let data = parseState.GetInput(3) in (Microsoft.FSharp.Core.Operators.unbox data : 'arithmeticExpr)) in
+            Microsoft.FSharp.Core.Operators.box
+                (
+                   (
+# 107 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                                                                   ArithmeticOp(_1, Mult, _3) 
+                   )
+# 107 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                 : 'arithmeticExpr));
+# 783 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
+        (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
+            let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : 'arithmeticExpr)) in
+            let _3 = (let data = parseState.GetInput(3) in (Microsoft.FSharp.Core.Operators.unbox data : 'arithmeticExpr)) in
+            Microsoft.FSharp.Core.Operators.box
+                (
+                   (
+# 108 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                                                                   ArithmeticOp(_1, Div, _3) 
+                   )
+# 108 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
+                 : 'arithmeticExpr));
 |]
-# 175 "D:\Mijn documenten\GitHub\poly-ql\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
+# 796 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs"
 let tables () : Microsoft.FSharp.Text.Parsing.Tables<_> = 
   { reductions= _fsyacc_reductions ();
     endOfInputTag = _fsyacc_endOfInputTag;
@@ -191,8 +812,8 @@ let tables () : Microsoft.FSharp.Text.Parsing.Tables<_> =
                               match parse_error_rich with 
                               | Some f -> f ctxt
                               | None -> parse_error ctxt.Message);
-    numTerminals = 10;
+    numTerminals = 38;
     productionToNonTerminalTable = _fsyacc_productionToNonTerminalTable  }
 let engine lexer lexbuf startState = (tables ()).Interpret(lexer, lexbuf, startState)
-let start lexer lexbuf : QL_AST.question =
+let start lexer lexbuf : QL_Grammar.arithmeticExpr =
     Microsoft.FSharp.Core.Operators.unbox ((tables ()).Interpret(lexer, lexbuf, 0))

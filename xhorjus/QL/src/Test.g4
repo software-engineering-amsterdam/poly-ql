@@ -3,17 +3,17 @@
  */
 grammar Test;
 
-questionnare    : 'form ' TITLE ' { ' question ' }' | question;
-question        : question '\r\n' question | QUESTION ;
+questionnare    : 'form ' title ' {' (question)+ '}';
+title           : TITLE;
+question		: qtitle ASSIGNMENT '"' qcontent '"' qtype;
+qtitle          : QUESTIONTITLE;
+qcontent        : (.+?);
+qtype           : 'boolean' | 'int' | 'string';
 
-TITLE           : [A-Z]([a-zA-Z0-9]*);
-
-QUESTION        : QUESTIONTITLE ': \"' QUESTIONCONTENT '\" ' TYPE;  
+TITLE           : [A-Z][a-zA-Z0-9]*;
 QUESTIONTITLE   : [a-z][a-zA-Z0-9]*;
-QUESTIONCONTENT : (.+?);
-TYPE            : 'boolean' | 'money' | 'int';
-
-WS              : [ \t\r]+ -> skip ; 
+ASSIGNMENT      : ':';
+WS              : [ \t\r\n]+ -> skip ; 
 
 /* 
 form Box1HouseOwning {

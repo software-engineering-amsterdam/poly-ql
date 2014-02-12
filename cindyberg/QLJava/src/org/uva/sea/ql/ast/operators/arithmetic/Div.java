@@ -1,12 +1,20 @@
 package org.uva.sea.ql.ast.operators.arithmetic;
 
-import org.uva.sea.ql.ast.ASTNode;
 import org.uva.sea.ql.ast.Expression;
+import org.uva.sea.ql.ast.operators.BinaryOperator;
+import org.uva.sea.ql.ast.operators.IOperatorVisitor;
 
-public class Div extends Expression {
+public class Div extends BinaryOperator {
+	
+	public Div(Expression left, Expression right) {
+		
+		super(left,right);
+	}
 
-	public Div(ASTNode yysv, ASTNode yysv2) {
-		// TODO Auto-generated constructor stub
+	public void accept(IOperatorVisitor visitor) {
+		
+		visitor.visit(this);
+		
 	}
 
 }
