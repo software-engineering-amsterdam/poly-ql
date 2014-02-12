@@ -23,55 +23,59 @@ from spark import GenericScanner, GenericParser, GenericASTTraversal
 from token import Token
 from ast import AST
 
+import argparse
+import sys
+import pprint
+
 #
 #	SCANNING
 #
 
 class SimpleScanner(GenericScanner):
-    def __init__(self):
-        GenericScanner.__init__(self)
-    
-    def tokenize(self, input):
-        self.rv = []
-        GenericScanner.tokenize(self, input)
-        return self.rv
-    
-    def t_whitespace(self, s):
-        r' \s+ '
-        pass
-        
-    def t_op(self, s):
-        r' \+ | \* '
-        self.rv.append(Token(type=s))
-        
-    def t_number(self, s):
-        r' \d+ '
-        t = Token(type='number', attr=s)
-        self.rv.append(t)
+	def __init__(self):
+		GenericScanner.__init__(self)
+	
+	def tokenize(self, input):
+		self.rv = []
+		GenericScanner.tokenize(self, input)
+		return self.rv
+	
+	def t_whitespace(self, s):
+		r' \s+ '
+		pass
+		
+	def t_op(self, s):
+		r' \+ | \* '
+		self.rv.append(Token(type=s))
+		
+	def t_number(self, s):
+		r' \d+ '
+		t = Token(type='number', attr=s)
+		self.rv.append(t)
 
-    # Implementation of "add" and "mod" tokens.
-    def t_add(self, s):
-        r' add '
-        self.rv.append(Token(type=s))
+	# Implementation of "add" and "mod" tokens.
+	def t_add(self, s):
+		r' add '
+		self.rv.append(Token(type=s))
 
-    def t_mod(self, s):
-        r' mod '
-        self.rv.append(Token(type=s))
+	def t_mod(self, s):
+		r' mod '
+		self.rv.append(Token(type=s))
 
 
 class FloatScanner(SimpleScanner):
-    def __init__(self):
-        SimpleScanner.__init__(self)
-        
-    def t_float(self, s):
-        r' \d+ \. \d+ '
-        t = Token(type='float', attr=s)
-        self.rv.append(t)
+	def __init__(self):
+		SimpleScanner.__init__(self)
+		
+	def t_float(self, s):
+		r' \d+ \. \d+ '
+		t = Token(type='float', attr=s)
+		self.rv.append(t)
 
 def scan(f):
-	input = f.read()
+	input_contents = f.read()
 	scanner = FloatScanner()
-	return scanner.tokenize(input)
+	return scanner.tokenize(input_contents)
 
 #
 #	PARSING
@@ -84,17 +88,10 @@ class AutoExprParser(GenericASTBuilder):
 		GenericASTBuilder.__init__(self, AST, start)
 
 	def p_expr(self, args):
-		'''
-			expr ::= expr add term
-			expr ::= expr mod term
-			expr ::= expr + term
-			expr ::= term
-			term ::= term * factor
-			term ::= factor
-			factor ::= number
-			factor ::= float
-		'''
-
+		"""
+		"""
+		# empty docstring, here is were the rules are defined
+		pass
 	def terminal(self, token):
 		#
 		#  Homogeneous AST.
@@ -112,8 +109,12 @@ class AutoExprParser(GenericASTBuilder):
 			return args[0]
 		return GenericASTBuilder.nonterminal(self, type, args)
 
-def parse(tokens):
+def parse(tokens,grammar=None):
 	parser = AutoExprParser(AST)
+	if grammar:
+		parser.p_expr.__func__.__doc__ = grammar
+		parser.collectRules()
+	pprint.pprint( parser.rules )
 	return parser.parse(tokens)
 
 #
@@ -121,32 +122,43 @@ def parse(tokens):
 #
 
 class TypeCheck(GenericASTTraversal):
-    def __init__(self, ast):
-        GenericASTTraversal.__init__(self, ast)
-        self.postorder()
-        
-    def n_number(self, node):
-        node.exprType = 'number'
-    def n_float(self, node):
-        node.exprType = 'float'
-        
-    def n_expr(self, node):
-        leftType = node[0].exprType
-        rightType = node[2].exprType
-	if leftType != rightType:
-		raise 'Type error.'
-        node.exprType = leftType
+	def __init__(self, ast):
+		GenericASTTraversal.__init__(self, ast)
+		self.postorder()
+		
+	def n_number(self, node):
+		node.exprType = 'number'
+	def n_float(self, node):
+		node.exprType = 'float'
+		
+	def n_expr(self, node):
+		leftType = node[0].exprType
+		rightType = node[2].exprType
 
-    n_term = n_expr
+		if leftType != rightType:
+			"""
+			We can sillently convert types if left or right type is one 
+			of the following:
+			float, int, "float", "int" -> float
+			"""
+			if leftType == 'number' and rightType == 'float':
+				leftType = 'float'
+			elif leftType == 'float' and rightType == 'number':
+				rightType = 'float'
+			else:
+				raise BaseException('Type error.')
+		node.exprType = leftType
+
+	n_term = n_expr
 
 def semantic(ast):
-    TypeCheck(ast)
-    #
-    #  Any other ASTTraversal classes
-    #  for semantic checking would be
-    #  instantiated here...
-    #
-    return ast
+	TypeCheck(ast)
+	#
+	#  Any other ASTTraversal classes
+	#  for semantic checking would be
+	#  instantiated here...
+	#
+	return ast
 
 #
 #	CODE GENERATION
@@ -206,20 +218,26 @@ def generate(ast):
 #
 
 if __name__ == '__main__':
-	import sys
-	filename = sys.argv[1]
-	f = open(filename)
-	
-	raw = f.read()
-	f.seek(0)
-	tokenized = scan(f)
-	parsed = parse(tokenized)
-	semantic_res = semantic(parsed)
-	generated = generate(semantic_res)
-	f.close()
+	p = argparse.ArgumentParser()
+	p.add_argument('-g', '--grammar', dest='grammar', type=str,
+		help='Yacc grammar')
+	p.add_argument('-c', '--content', dest='content', type=str,
+		help='Contents to parse')
+	args = p.parse_args()
 
-	# print raw.strip()
-	# print tokenized
-	# print parsed
-	# print semantic_res
-	print generated
+	empty_AST = AST
+	# Load grammar in yacc format
+	grammar = ''
+	with open(args.grammar,'r') as grammar_file:
+		grammar = grammar_file.read()
+
+	# Load contents to parse
+	
+	with open(args.content, 'r') as parseble_content:
+		tokenized = scan(parseble_content)
+		print tokenized
+		parsed = parse(tokenized, grammar)
+		semantic_res = semantic(parsed)
+		generated = generate(semantic_res)
+
+		print generated

@@ -1,6 +1,6 @@
 ﻿module Program
-open System   
-open QL_AST   
+open System
+open QL_Grammar
  
 let x = Console.ReadLine()
  

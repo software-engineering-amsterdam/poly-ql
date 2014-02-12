@@ -1,0 +1,5 @@
+form Swek {
+	q1: "HOI" boolean
+	q2: "BOI" boolean
+	q3: "HOI" boolean
+}

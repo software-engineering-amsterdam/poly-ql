@@ -4,7 +4,7 @@ using QL_Grammar.AST.Value;
 
 namespace QL_Grammar.Eval.Expr
 {
-    public class VarExpr : VarExprNode<IEvalExpr>, IEvalExpr
+    public class VarExpr : VarInitExprNode<IEvalExpr>, IEvalExpr
     {
         public VarExpr(string name, IType type, IEvalExpr value)
             : base(name, type, value)

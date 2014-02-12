@@ -5,15 +5,21 @@ options {
 	language = Java;
 }
 
-hallon: 'hallon';
+// Rules
+form: 'form' formname '{' qits '}';
+qits: qit+;
+qit: question identifier type | 'if('condition') {' qit '}';
+formname: FORMNAME;
+question: QUESTION;
+identifier: IDENTIFIER;
+type: TYPE;
+condition: CONDITION;
 
-caller: FORM;
-FORM: 'form ' [A-Z]+[a-zA-Z09]* ' { ' QITS ' }';
-QITS: QIT | QIT QIT;
-QIT: QUESTION ' ' IDENTIFIER ' ' TYPE;
-QUESTION: '"'[A-Z]+[a-zA-Z0-9 ]*'?"';
-IDENTIFIER: [a-z]+[a-zA-z0-9]*':';
+// Tokens
+FORMNAME: [A-Z][a-zA-Z09]*;
+QUESTION: '"'[A-Z][a-zA-Z0-9 ]*'?"';
+IDENTIFIER: [a-z][a-zA-Z0-9]*':';
 TYPE: 'boolean' | 'money';
+CONDITION: [a-z][a-zA-Z0-9]*;
 
-
-WS: [\r\n\t ] -> skip;
+WS: [ \n\t\r]+ -> skip;

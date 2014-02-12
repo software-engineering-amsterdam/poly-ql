@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using QL_Grammar.AST.Expr;
+﻿using QL_Grammar.AST.Expr;
 using QL_Grammar.AST.Stmnt;
 using QL_Grammar.AST.Types;
 using QL_Grammar.AST.Value;
@@ -10,11 +9,9 @@ namespace QL_Grammar.Factory
         where E : IExprNode
         where S : IStmntNode
     {
-        protected Dictionary<string, E> Variables { get; private set; }
-
         public BaseFactory()
         {
-            Variables = new Dictionary<string, E>();
+
         }
 
         public E String(string s)
@@ -37,17 +34,8 @@ namespace QL_Grammar.Factory
             return Literal(new BoolValue(b));
         }
 
-        public E Variable(string var)
-        {
-            if(!Variables.ContainsKey(var))
-            {
-                Variables[var] = VarDecl(var, UnknownType.Instance);
-            }
-
-            return Variables[var];
-        }
-
         public abstract E Literal(IValue value);
+		public abstract E Variable(string var);
         
         public abstract E Or(E l, E r);
         public abstract E And(E l, E r);

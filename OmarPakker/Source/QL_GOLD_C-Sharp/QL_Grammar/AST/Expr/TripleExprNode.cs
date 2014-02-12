@@ -11,5 +11,15 @@ namespace QL_Grammar.AST.Expr
         {
             Expr3 = e3;
         }
+
+		public override bool Equals(object obj)
+		{
+			if (!base.Equals(obj) || !(obj is TripleExprNode<E>))
+			{
+				return false;
+			}
+
+			return Expr3.Equals(((TripleExprNode<E>)obj).Expr3);
+		}
     }
 }
