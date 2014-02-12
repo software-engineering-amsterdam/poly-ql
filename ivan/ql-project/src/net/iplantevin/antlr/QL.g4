@@ -3,15 +3,13 @@
  * Ivan Plantevin, February 2014
  */
 
-/**
- * Comlicated test expression: ! (bla == true && number < 10 + 1 / -5) || switch == true && input != "female"
- */
+//Comlicated test expression: ! (bla == true && number < 10 + 1 / -5) || switch == true && input != "female"
 
 grammar QL;
 
 r2: 'hello' ID ;
 
-r: 'hello' STR;
+r: 'hello' STR+;
 
 form: 'form' ID block;
 
@@ -45,10 +43,10 @@ ID: [a-zA-Z][a-zA-Z0-9_]*;
 
 INT: [0-9]+;
 
-STR: '"' ~('"')* '"';
+STR: '"' .*? '"';
 
-COMMENT: '/*' .* '*/' -> skip; // Skip comments
+COMMENT:  '/*' .*? '*/' -> skip; // Skip comments
 
-//NEWLINE: [\r\n];
+COMMENT2: '//' .*? '\r'? '\n' -> skip; // Skip comments
 
 WS: [ \t\r\n]+ -> skip ; // Skip spaces and tabs
