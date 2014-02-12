@@ -6,7 +6,7 @@ namespace QL_Grammar.AST.Types
     {
         public static readonly UnknownType Instance = new UnknownType();
 
-        public IValue DefaultValue { get { return new UnknownValue(); } }
+        public IValue DefaultValue { get { return null; } }
 
         private UnknownType()
         {

@@ -1,27 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using GOLD;
 using Grammar;
+using QL_Grammar.AST;
+using QL_Grammar.AST.Expr;
+using QL_Grammar.AST.Stmnt;
+using QL_Grammar.Check;
 using QL_Grammar.Factory;
-using QL_Grammar.TypeCheck.Expr;
-using QL_Grammar.TypeCheck.Stmnt;
 
 namespace QL_GOLD_C_Sharp
 {
     public class ConsoleTypeChecker
 	{
-        private readonly QLParser<ITypeCheckExpr, ITypeCheckStmnt> parser;
-        private readonly TypeCheckFactory factory;
-        private readonly Dictionary<string, bool> msgs;
+        private readonly QLParser<IExprNode, IStmntNode> parser;
+        private readonly QLFactory factory;
 
         public ConsoleTypeChecker()
             : base()
         {
-            parser = new QLParser<ITypeCheckExpr, ITypeCheckStmnt>();
-            parser.Factory = factory = new TypeCheckFactory();
-            msgs = new Dictionary<string, bool>();
+            parser = new QLParser<IExprNode, IStmntNode>();
+            parser.Factory = factory = new QLFactory();
 
             parser.OnReduction += OnReduction;
             parser.OnCompletion += OnCompletion;
@@ -31,7 +30,7 @@ namespace QL_GOLD_C_Sharp
             parser.OnLexicalError += OnLexicalError;
             parser.OnSyntaxError += OnSyntaxError;
 
-            Assembly a = typeof(QLParser<ITypeCheckExpr, ITypeCheckStmnt>).Assembly;
+            Assembly a = typeof(QLParser<IExprNode, IStmntNode>).Assembly;
             parser.LoadGrammar(new BinaryReader(a.GetManifestResourceStream("QL_Grammar.Grammar.QL_Grammar.egt")));
             parser.Parse(System.IO.File.OpenText(@"..\..\..\..\..\Grammar\QL_Test.txt"));
         }
@@ -48,84 +47,28 @@ namespace QL_GOLD_C_Sharp
 
             Console.WriteLine(String.Format("R: {0}, C: {1}, D: {2}", r.Parent.Text(), count, dataOutput));
 
-            //Factory handles variable expressions for us. Check for those errors now.
-            if (factory.HasErrors)
-            {
-                Position pPos = parser.ParserPosition;
-                foreach (var error in factory.ErrorMsgs)
-                {
-                    CreateErrorMsgEntry(new Tuple<string, bool, int, int>(error.Item1, error.Item2, pPos.Line, pPos.Column));
-                }
-                factory.ErrorMsgs.Clear();
-            }
-
-            //Expressions can be verified during parsing! :D
-            if (newObj is ITypeCheckExpr)
-            {
-                CreateErrorMsgEntries((ITypeCheckExpr)newObj);
-            }
-            //Statements are evaluated afterwards so we need to store their position
-            //to be able to supply useful information to locate the error.
-            else if (newObj is ITypeCheckStmnt)
-            {
-                ((ITypeCheckStmnt)newObj).StatementSourcePosition = new Tuple<int, int>(
-                    parser.ParserPosition.Line, parser.ParserPosition.Column);
-            }
-        }
-
-        private void CreateErrorMsgEntries(ITypeCheckExpr expr)
-        {
-            var errors = expr.CheckTypesValid();
-
-            if(errors == null)
-            {
-                return;
-            }
-
-            Position pPos = parser.ParserPosition;
-            foreach(var error in errors)
-            {
-                CreateErrorMsgEntry(new Tuple<string, bool, int, int>(error.Item1, error.Item2, pPos.Line, pPos.Column));
-            }
-        }
-
-        private void CreateErrorMsgEntries(ITypeCheckStmnt stmnt)
-        {
-            CreateErrorMsgEntries(stmnt.CheckTypesValid());
-        }
-
-        private void CreateErrorMsgEntries(IEnumerable<Tuple<string, bool, int, int>> errors)
-        {
-            foreach (var error in errors)
-            {
-                CreateErrorMsgEntry(error);
-            }
-        }
-
-        private void CreateErrorMsgEntry(Tuple<string, bool, int, int> error)
-        {
-            if (error == null)
-            {
-                return;
-            }
-
-            msgs.Add(String.Format("{0} on line {1} column {2}. {3}", error.Item2 ? "ERROR" : "WARNING",
-                //Line property starts on 0 so offset it to correct that.
-                //Column will point to the end of the statement.
-                error.Item3 + 1, error.Item4, error.Item1), error.Item2);
+			if (newObj is IASTNode)
+			{
+				((IASTNode)newObj).SourcePosition = parser.ParserPosition;
+			}
         }
 
         private void OnCompletion(object root)
         {
-            CreateErrorMsgEntries(((ITypeCheckStmnt)root).CheckTypesValid());
+			TypeChecker<CheckExpressions, CheckStatements<CheckExpressions>> tc
+				= new TypeChecker<CheckExpressions, CheckStatements<CheckExpressions>>();
 
-            foreach(KeyValuePair<string, bool> msg in msgs)
-            {
-                Console.ForegroundColor = msg.Value ? ConsoleColor.Red : ConsoleColor.Yellow;
-                Console.WriteLine(msg.Key);
-            }
+			if (tc.Check((IASTNode)root))
+			{
+				foreach (Tuple<string, bool> msg in tc.Errors)
+				{
+					Console.ForegroundColor = msg.Item2 ? ConsoleColor.Red : ConsoleColor.Yellow;
+					Console.WriteLine(msg.Item1);
+				}
 
-            Console.ResetColor();
+				Console.ResetColor();
+			}
+
             Console.WriteLine("PARSING COMPLETED!");
         }
 

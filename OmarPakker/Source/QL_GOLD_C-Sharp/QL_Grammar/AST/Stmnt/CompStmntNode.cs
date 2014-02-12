@@ -1,12 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 
 namespace QL_Grammar.AST.Stmnt
 {
     public class CompStmntNode<S> : IStmntNode
         where S : IStmntNode
     {
+		public Tuple<int, int> SourcePosition { get; set; }
         public ReadOnlyCollection<S> Statements { get; private set; }
 
         public CompStmntNode(params S[] stmnts)
@@ -27,5 +28,30 @@ namespace QL_Grammar.AST.Stmnt
 
             Statements = statements.AsReadOnly();
         }
+
+		public override bool Equals(object obj)
+		{
+			if (!(obj is CompStmntNode<S>))
+			{
+				return false;
+			}
+
+			CompStmntNode<S> other = (CompStmntNode<S>)obj;
+
+			if (Statements.Count != other.Statements.Count)
+			{
+				return false;
+			}
+
+			foreach (S stmnt in other.Statements)
+			{
+				if (!Statements.Contains(stmnt))
+				{
+					return false;
+				}
+			}
+
+			return true;
+		}
     }
 }
