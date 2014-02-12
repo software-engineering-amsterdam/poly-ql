@@ -14,14 +14,27 @@ type_declaration :
 	;
 
 conditional_statement :
-	| IF condition L_BRACKET statement R_BRACKET
+	| if_statement else_statement?
 	;
 
-declarative_statement : 
-	| question 
+if_statement :
+	| IF L_HOOK condition R_HOOK code_block
+	;
 
+else_statement :
+	| ELSE  code_block
+	| ELSE if_statement
+	;
+
+code_block :
+	| L_BRACKET statement R_BRACKET
+	;
 
 statement :
 	| conditional_statement
 	| declarative_statement
+	;
+
+declarative_statement : 
+	| question 
 	;

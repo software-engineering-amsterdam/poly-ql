@@ -7,47 +7,83 @@ lexer grammar QSLexer;
 }
 
 
-
 IF :
-	| 'if' 
+	  'if' 
 	;
 
 ELSE : 
-	| 'else' 
+	  'else' 
 	;
 
 TYPE :
-	| 'String'
+	  'String'
 	| 'Integer'
 	| 'Boolean' 
 	;
 
 BOOL_VAL : 
-	| 'true'
+	  'true'
 	| 'false' 
 	;
 
 WORD :
-	| [a-zA-Z]+ 
+	  [a-zA-Z]+ 
 	;
 
 INTEGER_VAL :
-	| [0-9]+ 
+	  [0-9]+ 
 	;
 
 INTERPUNCT :
-	| ','
+	  ','
 	| '.'
 	| '?'
 	| '!'
 	;
 
+COMMENT :
+	  '\\\\'
+	;
+
+PLUS :
+	  '+'
+	;
+
+MINUS :
+	  '-'
+	;
+
+MULTIPLY : 
+	  '*'
+	;
+
+DIVIDE :
+	  '/'
+	;
+
+
 COLON :
-	| ':'
+	  ':'
 	;
 
 SQ :
-	| '\''
+	  '\''
+	;
+
+L_HOOK :
+	'('
+	;
+
+R_HOOK :
+	')'
+	;
+
+L_BRACKET :
+	'{'
+	;
+
+R_BRACKET :
+	'}'
 	;
 
 WS	: 
