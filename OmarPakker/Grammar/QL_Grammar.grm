@@ -1,6 +1,6 @@
 "Name"     = 'Questionaire Language'
 "Author"   = 'Omar Pakker'
-"Version"  = 'v0.1'
+"Version"  = 'v1'
 "About"    = 'A grammar for Questionaires.'
 
 "Start Symbol"   = <Forms>
@@ -18,11 +18,11 @@
 ! -------------------------------------------------
 Identifier    = {ID Head}{ID Tail}*
 
-StringLiteral = '"' ( {String Chars} | '\' {Printable} )* '"'
-IntLiteral    = {Digit}+
-RealLiteral   = {Digit}*'.'{Digit}+
-MoneyLiteral  = {Digit}+','{Digit}{Digit}
-!DateLiteral   = (19|20)[0..9][0..9][- /.](0[1..9]|1[012])[- /.](0[1..9]|[12][0..9]|3[01])
+StringLit = '"' ( {String Chars} | '\' {Printable} )* '"'
+IntLit    = {Digit}+
+RealLit   = {Digit}*'.'{Digit}+
+BoolLit   = 'true' | 'false'
+!DateLit   = (19|20)[0..9][0..9][- /.](0[1..9]|1[012])[- /.](0[1..9]|[12][0..9]|3[01])
 
 Comment Line = '//'
 Comment Start = '/*'
@@ -34,8 +34,7 @@ Comment End   = '*/'
 <Type>        ::= string
                |  int
                |  real
-               |  money
-               |  boolean
+               |  bool
                !|  date
 
 ! -------------------------------------------------
@@ -46,28 +45,27 @@ Comment End   = '*/'
 
 <Form>        ::= form Identifier <Block>
 
-<VarDecl>     ::= Identifier ':' <Type>
-
-<VarAssign>   ::= Identifier ':' <Type> '=' <Expression>
-               |  <Expression>
-
-<Block>       ::= '{' '}'
-               |  '{' <Statements> '}'
+<Block>       ::= '{' <Statements> '}'
 
 <Statements>  ::= <Statement> <Statements>
                |  <Statement>
 
 <Statement>   ::= if '(' <Expression> ')' <Statement>
                |  if '(' <Expression> ')' <SubStmnt> else <Statement>
-               |  <ExprStmnt>
+               |  <QuestionStmnt>
                |  <Block>
 
 <SubStmnt>    ::= if '(' <Expression> ')' <SubStmnt> else <SubStmnt>
-               |  <ExprStmnt>
+               |  <QuestionStmnt>
                |  <Block>
 
-<ExprStmnt>   ::= StringLiteral '>>' <VarDecl> ';'
-               |  StringLiteral '<<' <VarAssign> ';'
+<VarDecl>     ::= Identifier ':' <Type>
+
+<VarAssign>   ::= Identifier ':' <Type> '=' <Expression>
+
+<QuestionStmnt>   ::= StringLit '>>' <VarDecl> ';'
+               |  StringLit '<<' <VarAssign> ';'
+			   |  StringLit '<<' <Expression> ';'
                |  goto Identifier ';'
 
 <Expression>  ::= <OrExpr> '?' <OrExpr> ':' <Expression>
@@ -95,7 +93,7 @@ Comment End   = '*/'
 
 <MultExpr>    ::= <MultExpr> '*' <NegateExpr>
                |  <MultExpr> '/' <NegateExpr>
-               |  <NegateExpr> 
+               |  <NegateExpr>
 
 <NegateExpr>  ::= '-' <Value>
                |  '!' <Value>
@@ -105,11 +103,8 @@ Comment End   = '*/'
                |  <Literal>
                |  '(' <Expression> ')'
 
-<Literal>     ::= StringLiteral
-               |  IntLiteral
-               |  RealLiteral
-               |  MoneyLiteral
-               !|  DateLiteral
-               |  true
-               |  false
-
+<Literal>     ::= StringLit
+               |  IntLit
+               |  RealLit
+               |  BoolLit
+               !|  DateLit

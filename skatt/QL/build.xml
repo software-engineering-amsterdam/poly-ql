@@ -1,0 +1,41 @@
+<project name="QL"  basedir=".">
+	<!-- global properties -->
+    <property name="srcPath" location="src/org/uva/sea/ql/parser/antlr" />
+    <property name="genPath" location="gen" />
+	<property name="grammar" value="WordSeparation" />
+	<property name="interpreter" value="WordSeparation" />
+ 
+	<!-- library classpaths -->
+    <path id="classpath">
+        <pathelement location="lib/antlr-4.2-complete.jar" />
+        <pathelement location="bin" />
+    </path>
+ 
+	<!-- generate parser -->
+    <target name="generate" depends="clean">
+    	<mkdir dir="${genPath}/${grammar}" />
+        <java classname="org.antlr.v4.Tool" classpathref="classpath" fork="true">
+            <arg value="-o" />
+            <arg path="${genPath}/${grammar}" />
+        	<arg value="-lib" />
+        	<arg path="${srcPath}/${interpreter}" />
+            <arg value="grammar/${grammar}.g4" />
+        </java>
+    </target>
+ 
+	<!-- show the tree of a particular input file -->
+    <target name="showtree">
+        <input message="Enter Script To Test:" addproperty="test.script" defaultvalue="test/" />
+        <java classname="org.antlr.v4.runtime.misc.TestRig" classpathref="classpath" fork="true">
+            <arg value="${grammar}.${grammar}" />
+            <arg value="program" />
+            <arg value="-gui" />
+            <arg value="${test.script}" />
+        </java>
+    </target>
+	
+ 	<!-- clean up directories -->
+    <target name="clean">
+        <delete dir="${genPath}/${grammar}" includeemptydirs="true" />
+    </target>
+</project>

@@ -1,0 +1,114 @@
+"Name"     = 'Questionaire Language'
+"Author"   = 'Omar Pakker'
+"Version"  = 'v2'
+"About"    = 'A grammar for Questionaires.'
+
+"Start Symbol"   = <Forms>
+"Case Sensitive" = True
+
+! -------------------------------------------------
+! Character Sets
+! -------------------------------------------------
+{ID Head}      = {Letter} + [_]
+{ID Tail}      = {Alphanumeric} + [_]
+{String Chars} = {Printable} + {HT} - ["\]
+
+! -------------------------------------------------
+! Terminals
+! -------------------------------------------------
+Identifier    = {ID Head}{ID Tail}*
+
+StringLit = '"' ( {String Chars} | '\' {Printable} )* '"'
+IntLit    = {Digit}+
+RealLit   = {Digit}*'.'{Digit}+
+BoolLit   = 'true' | 'false'
+!DateLit   = (19|20)[0..9][0..9][- /.](0[1..9]|1[012])[- /.](0[1..9]|[12][0..9]|3[01])
+
+Comment Line = '//'
+Comment Start = '/*'
+Comment End   = '*/'
+
+! -------------------------------------------------
+! Types
+! -------------------------------------------------
+<Type>        ::= string
+               |  int
+               |  real
+               |  bool
+               !|  date
+
+! -------------------------------------------------
+! Rules
+! -------------------------------------------------
+<Forms>       ::= <Form> <Forms>
+               |  <Form>
+
+<Form>        ::= form Identifier <Block>
+
+<Block>       ::= '{' <Statements> '}'
+
+<Statements>  ::= <Statement> <Statements>
+               |  <Statement>
+
+<Statement>   ::= if '(' <Expression> ')' <Statement>
+               |  if '(' <Expression> ')' <SubStmnt> else <Statement>
+               |  <QuestionStmnt>
+               |  <Block>
+
+<SubStmnt>    ::= if '(' <Expression> ')' <SubStmnt> else <SubStmnt>
+               |  <QuestionStmnt>
+               |  <Block>
+
+<VarDecl>     ::= Identifier ':' <Type>
+
+<VarAssign>   ::= Identifier ':' <Type> '=' <Expression>
+
+<QuestionStmnt>   ::= StringLit '>>' <VarDecl> ';'
+               |  StringLit '<<' <VarAssign> ';'
+			   |  StringLit '<<' <Expression> ';'
+               |  goto Identifier ';'
+
+<Expression>  ::= <OrExpr> '?' <OrExpr> ':' <Expression>
+               |  <OrExpr>
+
+<OrExpr>      ::= <OrExpr> '||' <AndExpr>
+               |  <AndExpr>
+
+<AndExpr>     ::= <AndExpr> '&&' <EqExpr>
+               |  <EqExpr>
+
+<EqExpr>      ::= <EqExpr> '==' <CompExpr>
+               |  <EqExpr> '!=' <CompExpr>
+               |  <CompExpr>
+
+<CompExpr>    ::= <CompExpr> '<'  <AddExpr>
+               |  <CompExpr> '>'  <AddExpr>
+               |  <CompExpr> '<=' <AddExpr>
+               |  <CompExpr> '>=' <AddExpr>
+               |  <AddExpr>
+
+<AddExpr>     ::= <AddExpr> '+' <MultExpr>
+               |  <AddExpr> '-' <MultExpr>
+               |  <MultExpr>
+
+<MultExpr>    ::= <MultExpr> '*' <PowerExpr>
+               |  <MultExpr> '/' <PowerExpr>
+			   |  <MultExpr> '%' <PowerExpr>
+               |  <PowerExpr> 
+
+<PowerExpr>   ::= <PowerExpr> '^' <NegateExpr>
+               |  <NegateExpr>
+
+<NegateExpr>  ::= '-' <Value>
+               |  '!' <Value>
+               |  <Value>
+
+<Value>       ::= Identifier
+               |  <Literal>
+               |  '(' <Expression> ')'
+
+<Literal>     ::= StringLit
+               |  IntLit
+               |  RealLit
+               |  BoolLit
+               !|  DateLit

@@ -1,4 +1,0 @@
-INDEX VERSION 1.126+C:\Users\Cindy\Documents\Github\poly-ql\cindyberg\.metadata\.plugins\org.eclipse.jdt.core
-3718554711.index
-1265485967.index
-361139223.index
