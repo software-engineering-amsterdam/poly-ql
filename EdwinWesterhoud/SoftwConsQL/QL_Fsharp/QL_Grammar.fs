@@ -1,30 +1,33 @@
-﻿// (1) Define AST / syntax
-module QL_AST
+﻿module QL_Grammar
 
 
-// QL TYPES
-// TODO OF TYPES!
+// Question types
+type qlType = QLBool | QLString | QLInt | QLDate | QLDecimal | QLMoney
+
+// Expression types
+// TODO OF TYPES! ~
 type arithmeticType = 
     | Int       of int
-    | Date      of int
+    | Date      of float
     | Decimal   of float
     | Money     of float
-type qlType = 
+type expType = 
     | Bool              of bool
     | String            of string
-    | ArithmeticType    of arithmeticType
+    | Arithmetic        of arithmeticType
 
 
 // EXPRESSION
 type booleanOp = And | Or | Lt | Gt | Le | Ge | Eq | Ne
 type booleanExpr =
-    | Bool of bool
+    | BoolVal of bool
+    | Neg of booleanExpr
     | Cond of booleanExpr * booleanOp * booleanExpr
 
 type arithmeticOp = Plus | Minus | Mult | Div
 type arithmeticExpr =
     | ArithmeticType of arithmeticType
-    | ArithmeticExpr of arithmeticExpr * arithmeticOp * arithmeticExpr
+    | ArithmeticOp of arithmeticExpr * arithmeticOp * arithmeticExpr
 
 type expression =
     | BooleanExpr       of booleanExpr
@@ -34,7 +37,7 @@ type expression =
 type assignment = 
     {   ID          : string;
         Label       : string;
-        Type        : qlType;
+        Type        : expType;
         Expressions : expression }
 
 type question =
