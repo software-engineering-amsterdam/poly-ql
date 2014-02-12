@@ -41,6 +41,8 @@
   <ItemGroup>
     <Compile Include="AST\Expr\DoubleExprNode.cs" />
     <Compile Include="AST\Expr\TripleExprNode.cs" />
+    <Compile Include="AST\Expr\VarExprNode.cs" />
+    <Compile Include="AST\IASTNode.cs" />
     <Compile Include="AST\Stmnt\CompStmntNode.cs" />
     <Compile Include="AST\Stmnt\FormStmntNode.cs" />
     <Compile Include="AST\Expr\IExprNode.cs" />
@@ -49,38 +51,37 @@
     <Compile Include="AST\Stmnt\IfStmntNode.cs" />
     <Compile Include="AST\Stmnt\IStmntNode.cs" />
     <Compile Include="AST\Expr\SingleExprNode.cs" />
-    <Compile Include="AST\Expr\VarExprNode.cs" />
+    <Compile Include="AST\Expr\VarInitExprNode.cs" />
     <Compile Include="AST\Stmnt\QuestionStmntNode.cs" />
     <Compile Include="AST\Types\UnknownType.cs" />
-    <Compile Include="AST\Value\UnknownValue.cs" />
+    <Compile Include="Check\CheckExpressions.cs" />
+    <Compile Include="Check\CheckStatements.cs" />
+    <Compile Include="Check\TypeChecker.cs" />
     <Compile Include="Grammar\AbstractParser.cs" />
     <Compile Include="Eval\Expr\IfElseExpr.cs" />
     <Compile Include="Grammar\GrammarData.cs" />
-    <Compile Include="TypeCheck\Expr\IfElseExpr.cs" />
-    <Compile Include="Factory\TypeCheckFactory.cs" />
-    <Compile Include="TypeCheck\Expr\AddExpr.cs" />
-    <Compile Include="TypeCheck\Expr\AndExpr.cs" />
-    <Compile Include="TypeCheck\Expr\DivideExpr.cs" />
-    <Compile Include="TypeCheck\Expr\EqualsExpr.cs" />
-    <Compile Include="TypeCheck\Expr\GreaterOrEqualToExpr.cs" />
-    <Compile Include="TypeCheck\Expr\GreaterThenExpr.cs" />
-    <Compile Include="TypeCheck\Expr\ITypeCheckExpr.cs" />
-    <Compile Include="TypeCheck\Expr\LessOrEqualToExpr.cs" />
-    <Compile Include="TypeCheck\Expr\LessThenExpr.cs" />
-    <Compile Include="TypeCheck\Expr\LiteralExpr.cs" />
-    <Compile Include="TypeCheck\Expr\MultiplyExpr.cs" />
-    <Compile Include="TypeCheck\Expr\NegateExpr.cs" />
-    <Compile Include="TypeCheck\Expr\NotEqualExpr.cs" />
-    <Compile Include="TypeCheck\Expr\OrExpr.cs" />
-    <Compile Include="TypeCheck\Expr\SubtractExpr.cs" />
-    <Compile Include="TypeCheck\Expr\VarExpr.cs" />
-    <Compile Include="TypeCheck\Stmnt\CompStmnt.cs" />
-    <Compile Include="TypeCheck\Stmnt\FormStmnt.cs" />
-    <Compile Include="TypeCheck\Stmnt\GotoStmnt.cs" />
-    <Compile Include="TypeCheck\Stmnt\ITypeCheckStmnt.cs" />
-    <Compile Include="TypeCheck\Stmnt\IfElseStmnt.cs" />
-    <Compile Include="TypeCheck\Stmnt\IfStmnt.cs" />
-    <Compile Include="TypeCheck\Stmnt\QuestionStmnt.cs" />
+    <Compile Include="QL\Expr\IfElseExpr.cs" />
+    <Compile Include="Factory\QLFactory.cs" />
+    <Compile Include="QL\Expr\AddExpr.cs" />
+    <Compile Include="QL\Expr\AndExpr.cs" />
+    <Compile Include="QL\Expr\DivideExpr.cs" />
+    <Compile Include="QL\Expr\EqualsExpr.cs" />
+    <Compile Include="QL\Expr\GreaterOrEqualToExpr.cs" />
+    <Compile Include="QL\Expr\GreaterThenExpr.cs" />
+    <Compile Include="QL\Expr\LessOrEqualToExpr.cs" />
+    <Compile Include="QL\Expr\LessThenExpr.cs" />
+    <Compile Include="QL\Expr\MultiplyExpr.cs" />
+    <Compile Include="QL\Expr\NegateExpr.cs" />
+    <Compile Include="QL\Expr\NotEqualExpr.cs" />
+    <Compile Include="QL\Expr\OrExpr.cs" />
+    <Compile Include="QL\Expr\SubtractExpr.cs" />
+    <Compile Include="QL\Expr\VarInitExpr.cs" />
+    <Compile Include="QL\Stmnt\CompStmnt.cs" />
+    <Compile Include="QL\Stmnt\FormStmnt.cs" />
+    <Compile Include="QL\Stmnt\GotoStmnt.cs" />
+    <Compile Include="QL\Stmnt\IfElseStmnt.cs" />
+    <Compile Include="QL\Stmnt\IfStmnt.cs" />
+    <Compile Include="QL\Stmnt\QuestionStmnt.cs" />
     <Compile Include="Eval\Expr\AddExpr.cs" />
     <Compile Include="Factory\BaseFactory.cs" />
     <Compile Include="Eval\Expr\AndExpr.cs" />
@@ -120,7 +121,6 @@
     <Compile Include="AST\Value\StringValue.cs" />
     <Compile Include="Eval\Expr\SubtractExpr.cs" />
     <Compile Include="Factory\IFactory.cs" />
-    <Compile Include="Factory\EvalFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AST\Value\BaseValue.cs" />
   </ItemGroup>
@@ -128,6 +128,7 @@
     <Reference Include="GOLD Engine">
       <HintPath>..\lib\GOLD Engine.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup />

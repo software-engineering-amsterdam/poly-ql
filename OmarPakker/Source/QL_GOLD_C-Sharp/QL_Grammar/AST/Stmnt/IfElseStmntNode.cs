@@ -13,5 +13,15 @@ namespace QL_Grammar.AST.Stmnt
 		{
             IfFalseBody = ifFalse;
 		}
+
+		public override bool Equals(object obj)
+		{
+			if (!base.Equals(obj) || !(obj is IfElseStmntNode<E, S>))
+			{
+				return false;
+			}
+
+			return IfFalseBody.Equals(((IfElseStmntNode<E, S>)obj).IfFalseBody);
+		}
 	}
 }

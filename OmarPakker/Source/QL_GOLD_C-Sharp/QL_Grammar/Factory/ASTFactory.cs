@@ -18,6 +18,11 @@ namespace QL_Grammar.Factory
             return new LiteralExprNode(value);
         }
 
+		public override IExprNode Variable(string var)
+		{
+			return new VarExprNode(var);
+		}
+
         public override IExprNode Or(IExprNode l, IExprNode r)
         {
             return new DoubleExprNode<IExprNode>(l, r);
@@ -85,9 +90,7 @@ namespace QL_Grammar.Factory
 
         public override IExprNode VarAssign(string var, IType t, IExprNode e)
         {
-            Variables[var] = new VarExprNode<IExprNode>(var, t, e);
-
-            return Variables[var];
+			return new VarInitExprNode<IExprNode>(var, t, e);
         }
 
         public override IExprNode IfElse(IExprNode toEval, IExprNode ifTrue, IExprNode ifFalse)
@@ -97,8 +100,6 @@ namespace QL_Grammar.Factory
 
         public override IStmntNode Form(string var, IStmntNode s)
         {
-            Variables.Clear();
-
             return new FormStmntNode<IStmntNode>(var, s);
         }
 
