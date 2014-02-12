@@ -3,22 +3,20 @@
  * Ivan Plantevin, February 2014
  */
 
-//Comlicated test expression: ! (bla == true && number < 10 + 1 / -5) || switch == true && input != "female"
-
 grammar QL;
-
-r2: 'hello' ID ;
-
-r: 'hello' STR+;
 
 form: 'form' ID block;
 
-block: '{' statement* '}';
+block: '{' stat* '}';
 
-statement: ID ':' STR type '(' expr ')'         # computation
-         | ID ':' STR type                      # question
-         ;
+stat: 'if' '(' expr ')' stat 'else' stat        # ifElse
+    | 'if' '(' expr ')' stat                    # if
+    | block                                     # blockStat
+    | ID ':' STR type '(' expr ')'              # computation
+    | ID ':' STR type                           # question
+    ;
 
+// Antlr handles precedence. Highest precedence first.
 expr: op=('+'|'-'|'!') expr                     # unary
     | expr op=('*'|'/') expr                    # multiplication
     | expr op=('+'|'-') expr                    # addition
