@@ -1,12 +1,17 @@
-form ::= question
-form ::= questions
+form ::= form_name bracket_open form_body bracket_close
+form_body ::= question
+form_body ::= questions
 
+form_name ::= factor
 
+bracket_open ::= factor
+bracket_close ::= factor
 
-fields ::= label field
-field ::= field_label checkbox
-field ::= field_label radio
-field ::= field_label textbox
+fields ::= field field
+fields ::= field
+field ::= fieldlabel question checkbox
+field ::= fieldlabel question radio
+field ::= fieldlabel question textbox
 
 label ::= factor
 field_label ::= factor
@@ -14,8 +19,7 @@ radio ::= factor
 checkbox ::= factor
 textbox ::= factor
 
-question ::= fields
-questions ::= question devider question
+question ::= factor
 
 expr ::= expr expr 
 expr ::= term
@@ -25,4 +29,4 @@ term ::= factor
 
 factor ::= str
 factor ::= number
-factor ::= dev
+factor ::= boolean
