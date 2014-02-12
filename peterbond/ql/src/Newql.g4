@@ -5,16 +5,15 @@ options {
 	language = Java;
 }
 
-form: 'form ' NAME '{' FULLQUESTION+ '}';
-hallon: FULLQUESTION+;
-FULLQUESTION: QUESTION ID TYPE;
-NAME: [A-Z]+[a-zA-Z]+;
-QUESTION: STRING+;
-ID: [a-z]+[a-zA-Z]*':';
-TYPE: 'boolean' | 'money' | 'string';
+hallon: 'hallon';
 
-MONEY: INT ',' INT INT;
-BOOL: 'true' | 'false';
-INT: [0-9]+;
-STRING: [a-zA-Z0-9\?.!;,(): ];
-WS: [ \r\t\n]+ -> skip;
+caller: FORM;
+FORM: 'form ' [A-Z]+[a-zA-Z09]* ' { ' QITS ' }';
+QITS: QIT | QIT QIT;
+QIT: QUESTION ' ' IDENTIFIER ' ' TYPE;
+QUESTION: '"'[A-Z]+[a-zA-Z0-9 ]*'?"';
+IDENTIFIER: [a-z]+[a-zA-z0-9]*':';
+TYPE: 'boolean' | 'money';
+
+
+WS: [\r\n\t ] -> skip;
