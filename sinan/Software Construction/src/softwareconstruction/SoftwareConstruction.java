@@ -12,7 +12,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.ParseTree;
-import sun.applet.Main;
 
 /**
  *
@@ -33,7 +32,7 @@ public class SoftwareConstruction {
             ParseTree tree = parser.form();
 //            System.out.println(tree.toStringTree(parser));
         } catch (RecognitionException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SoftwareConstruction.class.getName()).log(Level.SEVERE, null, ex);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(SoftwareConstruction.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {

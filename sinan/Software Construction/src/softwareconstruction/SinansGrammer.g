@@ -5,20 +5,12 @@ grammar SinansGrammer;
     import java.util.HashMap;
 }
 
-form : 'form' KARAKTER+ '{' question+ '}' {System.out.println("Form name:"+$KARAKTER.text);};
+form : 'form' IDENTIFIER '{' question+ '}' {System.out.println("Form name:"+$IDENTIFIER.text);};
 
-question: KARAKTER+ ':' '"' KARAKTER+ '?' '"' QTYPE;
+question: IDENTIFIER {System.out.println("Question name: "+$IDENTIFIER.text);} ':' '"' IDENTIFIER+ {System.out.println("Question content: "+$IDENTIFIER.text);} '?' '"' IDENTIFIER {System.out.println("Question type: "+$IDENTIFIER.text + "\n---------------------");};
 
-KARAKTER  :   ('a'..'z'|'A'..'Z'|'0'..'9')+ ;
-QTYPE: ' boolean' ;
-WS  :   (' '|'\n')+ {skip();} ;
-
-//GETAL :   '0'..'9'+ ;
-
-//QOUTE: '\"' ;
-
-
-
+IDENTIFIER  :   ('a'..'z'|'A'..'Z'|'0'..'9')+ ;
+WS  :   (' '|'\n'|'\t')+ {skip();} ;
 
 //form Box1HouseOwning {
 //  "Did you sell a house in 2010?" hasSoldHouse: boolean
