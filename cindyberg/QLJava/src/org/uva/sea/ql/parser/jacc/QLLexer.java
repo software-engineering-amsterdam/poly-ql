@@ -53,9 +53,10 @@ public class QLLexer implements QLTokens {
 	}
 	
 	public int nextToken() {
-		boolean inComment = false;
+		boolean inCommentMultipleLines = false;
+		boolean inCommentSingleLine = false; 
 		for (;;) {
-			if (inComment) {
+			if (inCommentMultipleLines) {
 				while (c != '*' && c != -1) {
 					nextChar();
 				}
@@ -63,10 +64,25 @@ public class QLLexer implements QLTokens {
 					nextChar();
 					if (c == '/') {
 						nextChar();
-						inComment = false;
+						inCommentMultipleLines = false;
 					}
 					continue;
 				}
+			}
+			if(inCommentSingleLine){
+				while(c != '\n'&& c != -1){
+					nextChar();
+				}
+				if(c == '\n'){
+					nextChar();
+					inCommentSingleLine = false;
+				}
+				//if the comment is the last line (no \n)
+				else if(c < 0)
+				{
+					return token = ENDINPUT;
+				}
+				continue;
 			}
 			
 			while (c == ' ' || c == '\t' || c == '\n' || c == '\r') {
@@ -82,20 +98,28 @@ public class QLLexer implements QLTokens {
 			    case '/': {
 			    	nextChar();
 			    	if (c == '*') {
-			    		inComment = true;
+			    		inCommentMultipleLines = true;
+			    		nextChar();
+			    		continue;
+			    	}
+			    	else if(c == '/'){
+			    		inCommentSingleLine = true;
 			    		nextChar();
 			    		continue;
 			    	}
 			    	return token = '/'; 
 			    }
+			    
+			    case ':': nextChar(); return token = ':';
 			    case ')': nextChar(); return token = ')';
 			    case '(': nextChar(); return token = '(';
 			    case '}': nextChar(); return token = '}';
 			    case '{': nextChar(); return token = '{';
+			    
 			    case '*': {
 			    	nextChar();
-			    	if (inComment && c == '/') {
-			    		inComment = false;
+			    	if (inCommentMultipleLines && c == '/') {
+			    		inCommentMultipleLines = false;
 			    		nextChar();
 			    		continue;
 			    	}
@@ -103,6 +127,7 @@ public class QLLexer implements QLTokens {
 			    }
 			    case '+': nextChar(); return token = '+';
 			    case '-': nextChar(); return token = '-';
+			    
 			    case '&': {
 			    	nextChar(); 
 			    	if  (c == '&') {
@@ -128,7 +153,6 @@ public class QLLexer implements QLTokens {
 			    	return token = '!';
 			    }
 			    
-			    case ':': nextChar(); return token = ':';
 			    case '<': {
 			    	nextChar();
 			    	if (c == '=') {

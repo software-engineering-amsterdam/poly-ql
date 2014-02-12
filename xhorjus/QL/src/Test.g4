@@ -3,14 +3,28 @@
  */
 grammar Test;
 
-/** A rule called init that matches comma-separated values between {...}. */
-init  : '{' value (',' value)* '}' ;  // must match at least one value
+questionnare    : 'form ' TITLE ' { ' question ' }' | question;
+question        : question '\r\n' question | QUESTION ;
 
-/** A value can be either a nested array/struct or a simple integer (INT) */
-value : init
-      | INT
-      ;
+TITLE           : [A-Z]([a-zA-Z0-9]*);
 
-// parser rules start with lowercase letters, lexer rules with uppercase
-INT :   [0-9]+ ;             // Define token INT as one or more digits
-WS  :   [ \t\r\n]+ -> skip ;
+QUESTION        : QUESTIONTITLE ': \"' QUESTIONCONTENT '\" ' TYPE;  
+QUESTIONTITLE   : [a-z][a-zA-Z0-9]*;
+QUESTIONCONTENT : (.+?);
+TYPE            : 'boolean' | 'money' | 'int';
+
+WS              : [ \t\r]+ -> skip ; 
+
+/* 
+form Box1HouseOwning {
+ hasSoldHouse: “Did you sell a house in 2010?” boolean
+ hasBoughtHouse: “Did you by a house in 2010?” boolean
+ hasMaintLoan: “Did you enter a loan for maintenance/reconstruction?” 
+boolean
+ if (hasSoldHouse) {
+ sellingPrice: “Price the house was sold for:” money
+ privateDebt: “Private debts for the sold house:” money
+ valueResidue: “Value residue:” money(sellingPrice - privateDebt)
+ }
+}
+*/
