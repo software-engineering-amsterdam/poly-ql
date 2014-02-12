@@ -8,7 +8,7 @@ import org.uva.sea.ql.ast.type.*;
 public class ExprQuestion extends Statement implements ASTNode {
 
 	public ExprQuestion(Identifier identifier, ASTNode astNode,
-			Type yysv, Expression yysv2) {
+			Type yysv, Expression expr) {
 		// TODO Auto-generated constructor stub
 	}
 
