@@ -10,7 +10,6 @@ import org.uva.sea.ql.ast.operators.comparison.*;
 import org.uva.sea.ql.ast.statement.*;
 import org.uva.sea.ql.ast.type.*;
 
-import org.uva.sea.ql.ast.*;
 
 class QLParser implements QLTokens {
     private int yyss = 100;
