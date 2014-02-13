@@ -1,5 +1,0 @@
-package nl.uva.sc.parser;
-
-public class Token implements Comparable<T> {
-
-}

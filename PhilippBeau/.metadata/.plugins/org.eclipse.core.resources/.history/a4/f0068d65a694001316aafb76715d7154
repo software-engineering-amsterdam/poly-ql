@@ -1,7 +1,0 @@
-package nl.uva.sc;
-
-public interface BookParserSubscriber {
-
-    public void nextWord(String word);
-
-}

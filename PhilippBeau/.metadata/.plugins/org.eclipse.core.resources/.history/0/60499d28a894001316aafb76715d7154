@@ -1,5 +1,0 @@
-package nl.uva.sc.parser.subscriber;
-
-public class TermFrequency implements BookParserSubscriber {
-
-}
