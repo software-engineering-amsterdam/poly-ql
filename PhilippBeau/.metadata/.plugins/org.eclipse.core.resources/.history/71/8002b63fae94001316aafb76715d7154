@@ -1,0 +1,25 @@
+package nl.uva.sc.test;
+
+import static org.junit.Assert.fail;
+import nl.uva.sc.parser.subscriber.TermFrequency;
+
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+public class TestTF {
+
+    private final TermFrequency mIndex;
+
+    @BeforeClass
+    public static void setUpBeforeClass() throws Exception {}
+
+    @Before
+    public void setUp() throws Exception {}
+
+    @Test
+    public void test() {
+        fail("Not yet implemented");
+    }
+
+}

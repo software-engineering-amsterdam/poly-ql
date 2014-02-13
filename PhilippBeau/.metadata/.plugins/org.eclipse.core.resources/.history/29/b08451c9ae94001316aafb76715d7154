@@ -1,0 +1,31 @@
+package nl.uva.sc.test;
+
+import static org.junit.Assert.fail;
+
+import java.io.File;
+import java.io.IOException;
+
+import nl.uva.sc.parser.BookParser;
+import nl.uva.sc.parser.subscriber.TermFrequency;
+
+import org.junit.Test;
+
+public class TestTF {
+
+    public static final String BOOK_FILENAME = "pride-and-prejudice";
+
+    @Test
+    public void test() {
+
+        TermFrequency index = new TermFrequency();
+        BookParser bParser = new BookParser(new File(BOOK_FILENAME));
+        bParser.subscribe(index);
+
+        try {
+            bParser.parse();
+        } catch (IOException e) {
+            fail("The book parser could not parse the given file \"" + BOOK_FILENAME + "\"");
+        }
+
+    }
+}

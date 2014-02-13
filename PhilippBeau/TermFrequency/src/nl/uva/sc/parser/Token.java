@@ -24,4 +24,9 @@ public class Token implements Comparable<Token> {
         return mFrequency - o.mFrequency;
     }
 
+    @Override
+    public String toString() {
+        return mToken + " - " + mFrequency;
+    }
+
 }
