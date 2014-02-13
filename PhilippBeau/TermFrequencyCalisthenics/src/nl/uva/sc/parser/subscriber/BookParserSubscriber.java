@@ -1,5 +1,7 @@
 package nl.uva.sc.parser.subscriber;
 
+import nl.uva.sc.datatypes.Word;
+
 public interface BookParserSubscriber {
 
     /**
@@ -7,5 +9,5 @@ public interface BookParserSubscriber {
      * 
      * @param word
      */
-    public void nextWord(String word);
+    public void nextWord(Word word);
 }

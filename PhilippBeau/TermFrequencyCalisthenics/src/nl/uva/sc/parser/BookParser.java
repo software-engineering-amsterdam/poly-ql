@@ -5,7 +5,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
 
+import nl.uva.sc.datatypes.Word;
 import nl.uva.sc.parser.subscriber.BookParserSubscriber;
 import nl.uva.sc.parser.subscriber.ParserSubscribers;
 
@@ -32,7 +36,7 @@ public class BookParser {
      *             If the file is invalid or it cannot be parsed with UTF-8 encoding
      */
     public void parse() throws IOException {
-        parse("UTF-8");
+        parse(Charset.forName("UTF-8"));
     }
 
     /**
@@ -41,7 +45,7 @@ public class BookParser {
      * @throws IOException
      *             If the file is invalid or it cannot be parsed given the character encoding
      */
-    public void parse(final String encoding) throws IOException {
+    public void parse(final Charset encoding) throws IOException {
         FileInputStream fileInputStream = new FileInputStream(mBookFile);
         InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, encoding);
         BufferedReader reader = new BufferedReader(inputStreamReader);
@@ -52,10 +56,27 @@ public class BookParser {
             line = line.replaceAll("\\s+", " ");
 
             String[] lineArray = line.split(" ");
-            handleLine(lineArray);
+            List<Word> wordArray = generateWordList(lineArray);
+            handleLine(wordArray);
         }
 
         reader.close();
+    }
+
+    /**
+     * Generate a word list out of a line array
+     * 
+     * @param lineArray
+     *            The line array to generate the word list of
+     * @return A word list containing all words from the line array
+     */
+    private List<Word> generateWordList(final String[] lineArray) {
+        List<Word> wordList = new ArrayList<Word>();
+        for (String word : lineArray) {
+            wordList.add(new Word(word.toLowerCase()));
+        }
+
+        return wordList;
     }
 
     /**
@@ -64,8 +85,8 @@ public class BookParser {
      * @param line
      *            The line to get parsed
      */
-    private void handleLine(final String[] line) {
-        for (String word : line) {
+    private void handleLine(final List<Word> line) {
+        for (Word word : line) {
             handleWord(word);
         }
     }
@@ -76,12 +97,11 @@ public class BookParser {
      * @param word
      *            The word to get parsed
      */
-    private void handleWord(final String word) {
-        if (word.isEmpty() || word.length() == 1) {
-            return;
+    private void handleWord(final Word word) {
+        if (!word.isEmpty()) {
+            notifyListener(word);
         }
 
-        notifyListener(word.toLowerCase());
     }
 
     /**
@@ -89,7 +109,7 @@ public class BookParser {
      * 
      * @param word
      */
-    private void notifyListener(final String word) {
+    private void notifyListener(final Word word) {
         mSubscribers.notifyListener(word);
     }
 

@@ -1,30 +1,36 @@
 package nl.uva.sc.parser;
 
+import nl.uva.sc.datatypes.Frequency;
+import nl.uva.sc.datatypes.Word;
+
 public class Token implements Comparable<Token> {
 
-    private final String mWord;
+    private final Word mWord;
 
-    private int mFrequency = 0;
+    private final Frequency mFrequency;
 
-    public Token(final String word) {
+    public Token(final Word word) {
         mWord = word;
+        mFrequency = new Frequency();
     }
 
-    public Token(final String word, final int frequency) {
+    public Token(final Word word, final Frequency frequency) {
         mWord = word;
         mFrequency = frequency;
     }
 
     public void addFrequency() {
-        mFrequency++;
+        mFrequency.addFrequency();
     }
 
-    public String getWord() {
-        return mWord;
-    }
+    @Override
+    public boolean equals(final Object o) {
+        if (o instanceof Token) {
+            return ((mFrequency.compareTo(((Token) o).mFrequency) == 0) && mWord
+                    .equals(((Token) o).mWord));
+        }
 
-    public int getFrequency() {
-        return mFrequency;
+        return this.equals(o);
     }
 
     @Override
@@ -34,7 +40,7 @@ public class Token implements Comparable<Token> {
 
     @Override
     public int compareTo(final Token o) {
-        return mFrequency - o.mFrequency;
+        return mFrequency.compareTo(o.mFrequency);
     }
 
     @Override

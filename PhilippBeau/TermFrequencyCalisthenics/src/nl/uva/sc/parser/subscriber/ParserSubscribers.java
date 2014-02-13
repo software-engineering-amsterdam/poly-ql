@@ -3,6 +3,8 @@ package nl.uva.sc.parser.subscriber;
 import java.util.ArrayList;
 import java.util.List;
 
+import nl.uva.sc.datatypes.Word;
+
 public class ParserSubscribers {
 
     private final List<BookParserSubscriber> mSubscriber = new ArrayList<>();
@@ -12,7 +14,7 @@ public class ParserSubscribers {
      * 
      * @param word
      */
-    public void notifyListener(final String word) {
+    public void notifyListener(final Word word) {
         for (BookParserSubscriber subscriber : mSubscriber) {
             subscriber.nextWord(word);
         }

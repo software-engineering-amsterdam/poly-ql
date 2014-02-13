@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import nl.uva.sc.datatypes.Frequency;
+import nl.uva.sc.datatypes.Word;
 import nl.uva.sc.parser.BookParser;
 import nl.uva.sc.parser.Token;
 import nl.uva.sc.parser.subscriber.TermFrequency;
@@ -23,31 +25,31 @@ public class TestTF {
 
     @BeforeClass
     public static void startUp() {
-        mTrueIndex.add(new Token("mr", 786));
-        mTrueIndex.add(new Token("elizabeth", 635));
-        mTrueIndex.add(new Token("very", 488));
-        mTrueIndex.add(new Token("darcy", 418));
-        mTrueIndex.add(new Token("such", 395));
-        mTrueIndex.add(new Token("mrs", 343));
-        mTrueIndex.add(new Token("much", 329));
-        mTrueIndex.add(new Token("more", 327));
-        mTrueIndex.add(new Token("bennet", 323));
-        mTrueIndex.add(new Token("bingley", 306));
-        mTrueIndex.add(new Token("jane", 295));
-        mTrueIndex.add(new Token("miss", 283));
-        mTrueIndex.add(new Token("one", 275));
-        mTrueIndex.add(new Token("know", 239));
-        mTrueIndex.add(new Token("before", 229));
-        mTrueIndex.add(new Token("herself", 227));
-        mTrueIndex.add(new Token("though", 226));
-        mTrueIndex.add(new Token("well", 224));
-        mTrueIndex.add(new Token("never", 220));
-        mTrueIndex.add(new Token("sister", 218));
-        mTrueIndex.add(new Token("soon", 216));
-        mTrueIndex.add(new Token("think", 211));
-        mTrueIndex.add(new Token("now", 209));
-        mTrueIndex.add(new Token("time", 203));
-        mTrueIndex.add(new Token("good", 201));
+        mTrueIndex.add(new Token(new Word("mr"), new Frequency(786)));
+        mTrueIndex.add(new Token(new Word("elizabeth"), new Frequency(635)));
+        mTrueIndex.add(new Token(new Word("very"), new Frequency(488)));
+        mTrueIndex.add(new Token(new Word("darcy"), new Frequency(418)));
+        mTrueIndex.add(new Token(new Word("such"), new Frequency(395)));
+        mTrueIndex.add(new Token(new Word("mrs"), new Frequency(343)));
+        mTrueIndex.add(new Token(new Word("much"), new Frequency(329)));
+        mTrueIndex.add(new Token(new Word("more"), new Frequency(327)));
+        mTrueIndex.add(new Token(new Word("bennet"), new Frequency(323)));
+        mTrueIndex.add(new Token(new Word("bingley"), new Frequency(306)));
+        mTrueIndex.add(new Token(new Word("jane"), new Frequency(295)));
+        mTrueIndex.add(new Token(new Word("miss"), new Frequency(283)));
+        mTrueIndex.add(new Token(new Word("one"), new Frequency(275)));
+        mTrueIndex.add(new Token(new Word("know"), new Frequency(239)));
+        mTrueIndex.add(new Token(new Word("before"), new Frequency(229)));
+        mTrueIndex.add(new Token(new Word("herself"), new Frequency(227)));
+        mTrueIndex.add(new Token(new Word("though"), new Frequency(226)));
+        mTrueIndex.add(new Token(new Word("well"), new Frequency(224)));
+        mTrueIndex.add(new Token(new Word("never"), new Frequency(220)));
+        mTrueIndex.add(new Token(new Word("sister"), new Frequency(218)));
+        mTrueIndex.add(new Token(new Word("soon"), new Frequency(216)));
+        mTrueIndex.add(new Token(new Word("think"), new Frequency(211)));
+        mTrueIndex.add(new Token(new Word("now"), new Frequency(209)));
+        mTrueIndex.add(new Token(new Word("time"), new Frequency(203)));
+        mTrueIndex.add(new Token(new Word("good"), new Frequency(201)));
     }
 
     @Test
@@ -70,11 +72,7 @@ public class TestTF {
 
             System.out.println(current);
 
-            assertTrue("Wrong word at position " + i,
-                    current.getWord().equals(shouldBeSame.getWord()));
-
-            assertTrue("Wrong frequency at position " + i,
-                    current.getFrequency() == shouldBeSame.getFrequency());
+            assertTrue("Wrong Token at position " + i, current.equals(shouldBeSame));
         }
     }
 }
