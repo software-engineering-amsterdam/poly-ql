@@ -3,10 +3,10 @@ using System.Reflection;
 using Grammar;
 using QL_Grammar.AST.Expr;
 using QL_Grammar.AST.Stmnt;
-using QL_Grammar.AST.Value;
 using QL_Grammar.Factory;
 using QL_Grammar.QL.Expr;
 using QL_Grammar.QL.Stmnt;
+using QL_Grammar.QL.Value;
 using Xunit;
 
 namespace QL_Tests

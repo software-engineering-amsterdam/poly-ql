@@ -8,7 +8,7 @@ namespace QL_Grammar.Check
 {
 	public delegate void AddErrorDelegate(string msg, bool error, Tuple<int, int> pos);
 
-	public class TypeChecker<E, S>
+	public sealed class TypeChecker<E, S>
 		where E : CheckExpressions, new()
 		where S : CheckStatements<E>, new()
 	{
@@ -45,20 +45,14 @@ namespace QL_Grammar.Check
 		{
 			E exprChecker = new E();
 			exprChecker.AddError = AddError;
-			exprChecker.CheckExpr(expr);
+			exprChecker.Check(expr);
 		}
 
 		private void Check(IStmntNode stmnt)
 		{
 			S stmntChecker = new S();
 			stmntChecker.AddError = AddError;
-			stmntChecker.CheckStmnt(stmnt);
-
-			foreach (Tuple<string, GotoStmntNode> item in stmntChecker.Gotos)
-			{
-				AddError(String.Format("'goto' statement not possible. Form {0} does not exist!",
-					item.Item2.GotoName), true, item.Item2.SourcePosition);
-			}
+			stmntChecker.Check(stmnt);
 		}
 	}
 }

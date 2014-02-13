@@ -2,7 +2,7 @@
 
 namespace QL_Grammar.AST.Stmnt
 {
-    public class IfElseStmntNode<E, S> : IfStmntNode<E, S>
+    public abstract class IfElseStmntNode<E, S> : IfStmntNode<E, S>
         where E : IExprNode
         where S : IStmntNode
 	{

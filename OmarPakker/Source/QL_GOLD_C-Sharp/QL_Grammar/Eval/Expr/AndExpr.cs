@@ -1,6 +1,6 @@
-﻿using System;
-using QL_Grammar.AST.Expr;
+﻿using QL_Grammar.AST.Expr;
 using QL_Grammar.AST.Value;
+using QL_Grammar.QL.Value;
 
 namespace QL_Grammar.Eval.Expr
 {
@@ -14,15 +14,8 @@ namespace QL_Grammar.Eval.Expr
 
         public IValue Eval()
 		{
-			IValue lEval = Expr1.Eval();
-			IValue rEval = Expr2.Eval();
-
-			if (lEval is BoolValue && rEval is BoolValue)
-			{
-				return new BoolValue(((BoolValue)lEval).Value && ((BoolValue)rEval).Value);
-			}
-			
-			throw new InvalidOperationException("Unexpected Value in And.");
+			return new BoolValue(((BoolValue)Expr1.Eval()).Value
+				&& ((BoolValue)Expr2.Eval()).Value);
 		}
 	}
 }

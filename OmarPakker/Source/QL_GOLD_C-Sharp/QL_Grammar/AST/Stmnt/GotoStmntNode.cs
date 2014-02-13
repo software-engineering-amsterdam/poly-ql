@@ -2,7 +2,7 @@
 
 namespace QL_Grammar.AST.Stmnt
 {
-    public class GotoStmntNode : IStmntNode
+    public abstract class GotoStmntNode : IStmntNode
     {
 		public Tuple<int, int> SourcePosition { get; set; }
         public string GotoName { get; private set; }

@@ -3,7 +3,7 @@ using QL_Grammar.AST.Expr;
 
 namespace QL_Grammar.AST.Stmnt
 {
-    public class IfStmntNode<E, S> : IStmntNode
+    public abstract class IfStmntNode<E, S> : IStmntNode
         where E : IExprNode
         where S : IStmntNode
     {

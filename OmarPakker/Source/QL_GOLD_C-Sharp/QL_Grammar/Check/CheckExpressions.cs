@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using QL_Grammar.AST.Expr;
 using QL_Grammar.AST.Types;
 using QL_Grammar.QL.Expr;
+using QL_Grammar.QL.Types;
 
 namespace QL_Grammar.Check
 {
@@ -10,14 +11,24 @@ namespace QL_Grammar.Check
 	{
 		public AddErrorDelegate AddError { get; internal set; }
 
-		public Dictionary<string, VarInitExprNode<IExprNode>> Variables { get; private set; }
+		protected Dictionary<string, VarInitExprNode<IExprNode>> variables { get; private set; }
 
 		public CheckExpressions()
 		{
-			Variables = new Dictionary<string, VarInitExprNode<IExprNode>>();
+			variables = new Dictionary<string, VarInitExprNode<IExprNode>>();
 		}
 
-		public virtual IType CheckExpr(IExprNode expr)
+		public void ClearVariables()
+		{
+			variables.Clear();
+		}
+
+		public IType Check(IExprNode expr)
+		{
+			return CheckExpr(expr);
+		}
+
+		protected virtual IType CheckExpr(IExprNode expr)
 		{
 			return CheckExpr((dynamic)expr);
 		}
@@ -29,24 +40,24 @@ namespace QL_Grammar.Check
 
 		protected IType CheckExpr(VarExprNode expr)
 		{
-			if (!Variables.ContainsKey(expr.Name))
+			if (!variables.ContainsKey(expr.Name))
 			{
 				AddError(String.Format("Undefined variable '{0}' used. Make sure the variable is defined.",
 					expr.Name), true, expr.SourcePosition);
 				return UnknownType.Instance;
 			}
 
-			return Variables[expr.Name].Type;
+			return variables[expr.Name].Type;
 		}
 
 		protected IType CheckExpr(VarInitExpr expr)
 		{
-			if (Variables.ContainsKey(expr.Name))
+			if (variables.ContainsKey(expr.Name))
 			{
-				if (Variables[expr.Name].Type != expr.Type)
+				if (variables[expr.Name].Type != expr.Type)
 				{
 					AddError(String.Format("Variable '{0}' is already defined as '{1}'. Redefining as '{2}'. You cannot redefine variables.",
-						expr.Name, Variables[expr.Name].Type.ToString(), expr.Type.ToString()), true, expr.SourcePosition);
+						expr.Name, variables[expr.Name].Type.ToString(), expr.Type.ToString()), true, expr.SourcePosition);
 				}
 				else
 				{
@@ -56,7 +67,7 @@ namespace QL_Grammar.Check
 			}
 			else
 			{
-				Variables.Add(expr.Name, expr);
+				variables.Add(expr.Name, expr);
 			}
 
 			IType a = CheckExpr(expr.Value);

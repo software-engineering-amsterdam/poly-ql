@@ -2,7 +2,7 @@
 
 namespace QL_Grammar.AST.Expr
 {
-    public class SingleExprNode<E> : IExprNode
+    public abstract class SingleExprNode<E> : IExprNode
         where E : IExprNode
     {
 		public Tuple<int, int> SourcePosition { get; set; }

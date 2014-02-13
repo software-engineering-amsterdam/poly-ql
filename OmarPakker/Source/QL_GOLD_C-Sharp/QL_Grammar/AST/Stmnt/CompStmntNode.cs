@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 
 namespace QL_Grammar.AST.Stmnt
 {
-    public class CompStmntNode<S> : IStmntNode
+    public abstract class CompStmntNode<S> : IStmntNode
         where S : IStmntNode
     {
 		public Tuple<int, int> SourcePosition { get; set; }
