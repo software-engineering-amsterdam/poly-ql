@@ -90,9 +90,7 @@ public class BookParser {
      * @param word
      */
     private void notifyListener(final String word) {
-        for (BookParserSubscriber subscriber : mSubscriber) {
-            subscriber.nextWord(word);
-        }
+        mSubscribers.notifyListener(word);
     }
 
     /**
@@ -102,7 +100,7 @@ public class BookParser {
      * @return True if successful subscribed
      */
     public boolean subscribe(final BookParserSubscriber subscriber) {
-        return mSubscriber.add(subscriber);
+        return mSubscribers.subscribe(subscriber);
     }
 
     /**
@@ -112,7 +110,7 @@ public class BookParser {
      * @return True if successful unsubscribed
      */
     public boolean unsubscribe(final BookParserSubscriber subscriber) {
-        return mSubscriber.remove(subscriber);
+        return mSubscribers.unsubscribe(subscriber);
     }
 
 }

@@ -48,8 +48,4 @@ public class TermFrequency implements BookParserSubscriber {
 
         return tokens;
     }
-
-    @Override
-    public void newLine() {}
-
 }
