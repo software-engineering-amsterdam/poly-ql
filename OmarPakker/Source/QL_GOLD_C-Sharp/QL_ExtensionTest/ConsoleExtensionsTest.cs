@@ -4,8 +4,12 @@ using System.Reflection;
 using System.Text;
 using GOLD;
 using Grammar.Parser;
-using QL_ExtensionTest.Extensions.Check;
-using QL_ExtensionTest.Extensions.Factory;
+using QL_ExtensionTest.Check;
+using QL_ExtensionTest.Merged;
+using QL_ExtensionTest.QLEval;
+using QL_ExtensionTest.QLEval.Expr;
+using QL_ExtensionTest.QLEval.Stmnt;
+using QL_ExtensionTest.QLTypeCheckExtensions.Factory;
 using QL_Grammar.Check;
 using QL_Grammar.QLTypeCheck;
 using QL_Grammar.QLTypeCheck.Expr;
@@ -15,12 +19,12 @@ namespace QL_ExtensionTest
 {
     public class ConsoleExtensionsTest
     {
-        private readonly ExtensionsParser<ITypeCheckExpr, ITypeCheckStmnt, ExtensionsTypeCheckFactory> parser;
-
         public ConsoleExtensionsTest()
         {
-            parser = new ExtensionsParser<ITypeCheckExpr, ITypeCheckStmnt, ExtensionsTypeCheckFactory>();
-			parser.Factory = new ExtensionsTypeCheckFactory();
+            //var parser = new ExtensionsParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeCheckExtensionsFactory>();
+			//parser.Factory = new QLTypeCheckExtensionsFactory();
+            var parser = new ExtensionsParser<Tuple<ITypeCheckExpr, IEvalExpr>, Tuple<ITypeCheckStmnt, IEvalStmnt>, TypeCheckEvalFactory>();
+            parser.Factory = new TypeCheckEvalFactory();
 
             parser.OnReduction += OnReduction;
             parser.OnCompletion += OnCompletion;
@@ -41,7 +45,7 @@ namespace QL_ExtensionTest
 				.AppendLine("}").ToString());
         }
 
-        private void OnReduction(Reduction r, object newObj)
+        private void OnReduction(int line, int column, Reduction r, object newObj)
         {
             int count = r.Count();
             string dataOutput = String.Empty;
@@ -57,9 +61,17 @@ namespace QL_ExtensionTest
 
             Console.WriteLine(String.Format("R: {0}, C: {1}, D: {2}", r.Parent.Text(), count, dataOutput));
 
-            if (newObj is ITypeCheck)
+            //if (newObj is ITypeCheck)
+            //{
+            //    ((ITypeCheck)newObj).SourcePosition = new Tuple<int, int>(line, column);
+            //}
+            if (newObj is Tuple<ITypeCheckExpr, IEvalExpr>)
             {
-				((ITypeCheck)newObj).SourcePosition = parser.ParserPosition;
+                ((Tuple<ITypeCheckExpr, IEvalExpr>)newObj).Item1.SourcePosition = new Tuple<int, int>(line, column);
+            }
+            else if (newObj is Tuple<ITypeCheckStmnt, IEvalStmnt>)
+            {
+                ((Tuple<ITypeCheckStmnt, IEvalStmnt>)newObj).Item1.SourcePosition = new Tuple<int, int>(line, column);
             }
         }
 
@@ -68,16 +80,13 @@ namespace QL_ExtensionTest
 			TypeChecker<CheckExtensionsExpressions, CheckExtensionsStmnts> tc
 				= new TypeChecker<CheckExtensionsExpressions, CheckExtensionsStmnts>();
 
-			if (tc.Check((ITypeCheck)root))
-			{
-				foreach (Tuple<string, bool> msg in tc.Errors)
-				{
-					Console.ForegroundColor = msg.Item2 ? ConsoleColor.Red : ConsoleColor.Yellow;
-					Console.WriteLine(msg.Item1);
-				}
-
-				Console.ResetColor();
-			}
+            tc.OnTypeCheckError += (msg, error) =>
+            {
+                Console.ForegroundColor = error ? ConsoleColor.Red : ConsoleColor.Yellow;
+                Console.WriteLine(msg);
+                Console.ResetColor();
+            };
+            tc.Check(((Tuple<ITypeCheckStmnt, IEvalStmnt>)root).Item1);
 
             Console.WriteLine("PARSING COMPLETED!");
         }

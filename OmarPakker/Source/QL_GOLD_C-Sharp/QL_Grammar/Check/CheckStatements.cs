@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using QL_Grammar.QLAlgebra.Types;
+using QL_Grammar.QLTypeCheck.Helpers;
 using QL_Grammar.QLTypeCheck.Stmnt;
-using QL_Grammar.QLTypeCheck.Types;
 
 namespace QL_Grammar.Check
 {
 	public class CheckStatements<E>
 		where E : CheckExpressions, new()
 	{
-		private AddErrorDelegate addError;
-		public AddErrorDelegate AddError
+		private OnTypeCheckErrorEventHandler addError;
+        public OnTypeCheckErrorEventHandler ReportError
 		{
 			get { return addError; }
 			internal set
 			{
-				addError = exprChecker.AddError = value;
+                addError = exprChecker.ReportError = value;
 			}
 		}
 
@@ -37,8 +38,8 @@ namespace QL_Grammar.Check
 
 			foreach (GotoStmnt item in gotos)
 			{
-				AddError(String.Format("'goto' statement not possible. Form {0} does not exist!",
-					item.GotoName), true, item.SourcePosition);
+                ReportError(item.CreateTypeCheckError(String.Format("'goto' statement not possible. Form {0} does not exist!",
+					item.GotoName), true));
 			}
 		}
 
@@ -75,8 +76,8 @@ namespace QL_Grammar.Check
 		{
 			if (gotos.Exists((item) => item.GotoName.Equals(stmnt.GotoName)))
 			{
-				AddError(String.Format("You already defined a goto for Form {0}. Are you sure you want to go to the same form?",
-					stmnt.GotoName), false, stmnt.SourcePosition);
+                ReportError(stmnt.CreateTypeCheckError(String.Format("You already defined a goto for Form {0}. Are you sure you want to go to the same form?",
+					stmnt.GotoName), false));
 			}
 
 			gotos.Add(stmnt);
@@ -90,8 +91,8 @@ namespace QL_Grammar.Check
 
 			if (String.IsNullOrWhiteSpace(stmnt.QuestionText))
 			{
-				AddError("Empty question detected. Are you sure you want to leave this question blank?",
-					false, stmnt.SourcePosition);
+                ReportError(stmnt.CreateTypeCheckError("Empty question detected. Are you sure you want to leave this question blank?",
+					false));
 			}
 
 			return true;
@@ -103,8 +104,8 @@ namespace QL_Grammar.Check
 
 			if (!(exprChecker.Check(stmnt.CheckExpression) is BoolType))
 			{
-				AddError("Unable to evaluate 'if'. Expression must be of type bool!",
-					true, stmnt.SourcePosition);
+                ReportError(stmnt.CreateTypeCheckError("Unable to evaluate 'if'. Expression must be of type bool!",
+					true));
 				success = false;
 			}
 
@@ -117,8 +118,8 @@ namespace QL_Grammar.Check
 
 			if (!(exprChecker.Check(stmnt.CheckExpression) is BoolType))
 			{
-				AddError("Unable to evaluate 'if/else'. Expression must be of type bool!",
-					true, stmnt.SourcePosition);
+                ReportError(stmnt.CreateTypeCheckError("Unable to evaluate 'if/else'. Expression must be of type bool!",
+					true));
 				success = false;
 			}
 

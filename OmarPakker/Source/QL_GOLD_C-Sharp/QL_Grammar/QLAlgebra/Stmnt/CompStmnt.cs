@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using QL_Grammar.QLTypeCheck;
 
 namespace QL_Grammar.QLAlgebra.Stmnt
 {
@@ -14,11 +13,11 @@ namespace QL_Grammar.QLAlgebra.Stmnt
         {
             List<S> statements = new List<S>();
 
-			foreach (ITypeCheck stmnt in stmnts)
+			foreach (S stmnt in stmnts)
             {
                 if (stmnt is CompStmnt<S>)
                 {
-                    statements.AddRange(((CompStmnt<S>)stmnt).Statements);
+                    statements.AddRange((stmnt as CompStmnt<S>).Statements);
                 }
                 else
                 {
