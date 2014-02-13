@@ -43,10 +43,13 @@ ID: [a-zA-Z][a-zA-Z0-9_]*;
 
 INT: [0-9]+;
 
-STR: '"' .*? '"';
-
 COMMENT:  '/*' .*? '*/' -> skip; // Skip comments
 
 COMMENT2: '//' .*? '\r'? '\n' -> skip; // Skip comments
 
 WS: [ \t\r\n]+ -> skip ; // Skip spaces and tabs
+
+STR: '"' (ESC|.)*? '"' ;
+
+fragment
+ESC : '\\"' | '\\\\' ; // Allow escaped 2-char sequences \" and \\
