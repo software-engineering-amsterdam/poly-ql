@@ -2,6 +2,7 @@
 using QL_Grammar.AST.Stmnt;
 using QL_Grammar.AST.Types;
 using QL_Grammar.AST.Value;
+using QL_Grammar.QL.Value;
 
 namespace QL_Grammar.Factory
 {

@@ -1,6 +1,7 @@
-﻿using QL_Grammar.AST.Types;
+﻿using QL_Grammar.AST.Value;
+using QL_Grammar.QL.Types;
 
-namespace QL_Grammar.AST.Value
+namespace QL_Grammar.QL.Value
 {
 	public class BoolValue : BaseValue<bool>
 	{

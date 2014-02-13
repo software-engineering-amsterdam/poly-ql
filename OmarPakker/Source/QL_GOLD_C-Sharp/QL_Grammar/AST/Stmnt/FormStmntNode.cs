@@ -2,7 +2,7 @@
 
 namespace QL_Grammar.AST.Stmnt
 {
-    public class FormStmntNode<S> : IStmntNode
+    public abstract class FormStmntNode<S> : IStmntNode
         where S : IStmntNode
     {
 		public Tuple<int, int> SourcePosition { get; set; }

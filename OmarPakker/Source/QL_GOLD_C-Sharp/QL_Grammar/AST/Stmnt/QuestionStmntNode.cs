@@ -3,7 +3,7 @@ using QL_Grammar.AST.Expr;
 
 namespace QL_Grammar.AST.Stmnt
 {
-    public class QuestionStmntNode<E> : IStmntNode
+    public abstract class QuestionStmntNode<E> : IStmntNode
         where E : IExprNode
     {
 		public Tuple<int, int> SourcePosition { get; set; }

@@ -3,20 +3,21 @@ using QL_ExtensionTest.Mathematics.Expr;
 using QL_Grammar.AST.Expr;
 using QL_Grammar.AST.Types;
 using QL_Grammar.Check;
+using QL_Grammar.QL.Types;
 
 namespace QL_ExtensionTest.Mathematics
 {
 	public class CheckMathExpressions : CheckExpressions
 	{
-		public override IType CheckExpr(IExprNode expr)
+		protected override IType CheckExpr(IExprNode expr)
 		{
 			return CheckExpr((dynamic)expr);
 		}
 
 		protected IType CheckExpr(PowerExpr expr)
 		{
-			IType a = CheckExpr((dynamic)expr.Expr1);
-			IType b = CheckExpr((dynamic)expr.Expr2);
+			IType a = CheckExpr(expr.Expr1);
+			IType b = CheckExpr(expr.Expr2);
 
 			if (!(a is NumericType) || !a.CompatibleWith(b))
 			{
@@ -29,8 +30,8 @@ namespace QL_ExtensionTest.Mathematics
 
 		protected IType CheckExpr(ModuloExpr expr)
 		{
-			IType a = CheckExpr((dynamic)expr.Expr1);
-			IType b = CheckExpr((dynamic)expr.Expr2);
+			IType a = CheckExpr(expr.Expr1);
+			IType b = CheckExpr(expr.Expr2);
 
 			if (!(a is NumericType) || !a.CompatibleWith(b))
 			{

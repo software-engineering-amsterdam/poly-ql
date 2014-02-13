@@ -3,7 +3,7 @@ using QL_Grammar.AST.Types;
 
 namespace QL_Grammar.AST.Expr
 {
-    public class VarInitExprNode<E> : IExprNode
+    public abstract class VarInitExprNode<E> : IExprNode
         where E : IExprNode
     {
 		public Tuple<int, int> SourcePosition { get; set; }

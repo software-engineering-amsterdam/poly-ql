@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using QL_Grammar.AST.Stmnt;
-using QL_Grammar.AST.Types;
 using QL_Grammar.QL.Stmnt;
+using QL_Grammar.QL.Types;
 
 namespace QL_Grammar.Check
 {
@@ -19,16 +19,31 @@ namespace QL_Grammar.Check
 			}
 		}
 
-		public List<Tuple<string, GotoStmntNode>> Gotos { get; private set; }
+		protected HashSet<string> forms { get; private set; }
+		protected List<GotoStmntNode> gotos { get; private set; }
 		protected E exprChecker { get; private set; }
 
 		public CheckStatements()
 		{
-			Gotos = new List<Tuple<string, GotoStmntNode>>();
+			forms = new HashSet<string>();
+			gotos = new List<GotoStmntNode>();
 			exprChecker = new E();
 		}
 
-		public virtual bool CheckStmnt(IStmntNode stmnt)
+		public void Check(IStmntNode stmnt)
+		{
+			CheckStmnt(stmnt);
+
+			gotos.RemoveAll((item) => forms.Contains(item.GotoName));
+
+			foreach (GotoStmntNode item in gotos)
+			{
+				AddError(String.Format("'goto' statement not possible. Form {0} does not exist!",
+					item.GotoName), true, item.SourcePosition);
+			}
+		}
+
+		protected virtual bool CheckStmnt(IStmntNode stmnt)
 		{
 			return CheckStmnt((dynamic)stmnt);
 		}
@@ -50,29 +65,29 @@ namespace QL_Grammar.Check
 
 		protected bool CheckStmnt(FormStmnt stmnt)
 		{
-			Gotos.RemoveAll((item) => item.Item1.Equals(stmnt.Name));
-			
-			exprChecker.Variables.Clear();
+			forms.Add(stmnt.Name);
+
+			exprChecker.ClearVariables();
 
 			return CheckStmnt(stmnt.Body);
 		}
 
 		protected bool CheckStmnt(GotoStmnt stmnt)
 		{
-			if (Gotos.Exists((item) => item.Item1.Equals(stmnt.GotoName)))
+			if (gotos.Exists((item) => item.GotoName.Equals(stmnt.GotoName)))
 			{
 				AddError(String.Format("You already defined a goto for Form {0}. Are you sure you want to go to the same form?",
 					stmnt.GotoName), false, stmnt.SourcePosition);
 			}
 
-			Gotos.Add(new Tuple<string, GotoStmntNode>(stmnt.GotoName, stmnt));
+			gotos.Add(stmnt);
 
 			return true;
 		}
 
 		protected bool CheckStmnt(QuestionStmnt stmnt)
 		{
-			exprChecker.CheckExpr((dynamic)stmnt.Expression);
+			exprChecker.Check(stmnt.Expression);
 
 			if (String.IsNullOrWhiteSpace(stmnt.QuestionText))
 			{
@@ -87,7 +102,7 @@ namespace QL_Grammar.Check
 		{
 			bool success = true;
 
-			if (!(exprChecker.CheckExpr((dynamic)stmnt.CheckExpression) is BoolType))
+			if (!(exprChecker.Check(stmnt.CheckExpression) is BoolType))
 			{
 				AddError("Unable to evaluate 'if'. Expression must be of type bool!",
 					true, stmnt.SourcePosition);
@@ -101,7 +116,7 @@ namespace QL_Grammar.Check
 		{
 			bool success = true;
 
-			if (!(exprChecker.CheckExpr((dynamic)stmnt.CheckExpression) is BoolType))
+			if (!(exprChecker.Check(stmnt.CheckExpression) is BoolType))
 			{
 				AddError("Unable to evaluate 'if/else'. Expression must be of type bool!",
 					true, stmnt.SourcePosition);
