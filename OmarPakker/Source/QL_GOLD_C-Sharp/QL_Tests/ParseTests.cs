@@ -1,10 +1,10 @@
 ﻿using System.IO;
 using System.Reflection;
 using Grammar;
+using QL_Grammar.QLAlgebra.Value;
 using QL_Grammar.QLTypeCheck.Expr;
 using QL_Grammar.QLTypeCheck.Factory;
 using QL_Grammar.QLTypeCheck.Stmnt;
-using QL_Grammar.QLTypeCheck.Value;
 using Xunit;
 
 namespace QL_Tests

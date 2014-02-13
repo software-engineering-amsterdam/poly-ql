@@ -1,56 +1,47 @@
 ﻿using System;
-using System.Collections.Generic;
 using QL_Grammar.QLTypeCheck.Expr;
 using QL_Grammar.QLTypeCheck.Stmnt;
 
 namespace QL_Grammar.Check
 {
-	public delegate void AddErrorDelegate(string msg, bool error, Tuple<int, int> pos);
+    public delegate void OnTypeCheckErrorEventHandler(Tuple<string, bool> error);
 
 	public sealed class TypeChecker<E, S>
 		where E : CheckExpressions, new()
 		where S : CheckStatements<E>, new()
 	{
-		public bool HasErrors { get { return Errors.Count > 1; } }
-		public IReadOnlyList<Tuple<string, bool>> Errors { get { return errors; } }
-		private List<Tuple<string, bool>> errors;
+        public delegate void OnTypeCheckErrorEventHandler(string msg, bool error);
+        public event OnTypeCheckErrorEventHandler OnTypeCheckError;
 
 		public TypeChecker()
 		{
-			errors = new List<Tuple<string, bool>>();
+
 		}
 
-		public void AddError(string msg, bool error, Tuple<int, int> pos)
+		internal void ReportError(Tuple<string, bool> error)
 		{
-			string finalMsg = (error ? "ERROR! " : "WARNING! ") + msg;
-			if (pos != null)
-			{
-				finalMsg += String.Format(" (line {0} column {1}).",
-					//Line/column properties start on 0 so offset it to correct that.
-					//Column points to the character index at the end of the statement.
-					pos.Item1 + 1, pos.Item2 + 1);
-			}
-
-			errors.Add(new Tuple<string, bool>(finalMsg, error));
+			if(OnTypeCheckError != null)
+            {
+                OnTypeCheckError(error.Item1, error.Item2);
+            }
 		}
 
-		public bool Check(object root)
+		public void Check(object root)
 		{
 			Check((dynamic)root);
-			return HasErrors;
 		}
 
 		private void Check(ITypeCheckExpr expr)
 		{
 			E exprChecker = new E();
-			exprChecker.AddError = AddError;
+            exprChecker.ReportError = ReportError;
 			exprChecker.Check(expr);
 		}
 
 		private void Check(ITypeCheckStmnt stmnt)
 		{
 			S stmntChecker = new S();
-			stmntChecker.AddError = AddError;
+            stmntChecker.ReportError = ReportError;
 			stmntChecker.Check(stmnt);
 		}
 	}

@@ -1,12 +1,12 @@
 ﻿using System.Collections.ObjectModel;
 using GOLD;
 using Grammar.Generated.v2;
-using QL_ExtensionTest.Extensions.Factory;
+using QL_ExtensionTest.QLAlgebraExtensions.Factory;
 
 namespace Grammar.Parser
 {
     public class ExtensionsParser<E, S, F> : QLParser<E, S, F>
-		where F : IExtensionsFactory<E, S>
+		where F : IQLExtensionsFactory<E, S>
     {
         protected override ReadOnlyDictionary<string, short> Rules { get { return GrammarData.Rules; } }
 

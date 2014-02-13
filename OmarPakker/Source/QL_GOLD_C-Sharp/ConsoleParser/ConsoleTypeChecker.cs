@@ -13,12 +13,10 @@ namespace ConsoleParser
 {
     public class ConsoleTypeChecker
 	{
-        private readonly QLParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeCheckFactory> parser;
-
         public ConsoleTypeChecker()
             : base()
         {
-			parser = new QLParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeCheckFactory>();
+			var parser = new QLParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeCheckFactory>();
             parser.Factory = new QLTypeCheckFactory();
 
             parser.OnReduction += OnReduction;
@@ -34,7 +32,7 @@ namespace ConsoleParser
             parser.Parse(System.IO.File.OpenText(@"..\..\..\..\..\Grammar\QL_Test.txt"));
         }
 
-        private void OnReduction(Reduction r, object newObj)
+        private void OnReduction(int line, int column, Reduction r, object newObj)
         {
             int count = r.Count();
             string dataOutput = String.Empty;
@@ -52,7 +50,7 @@ namespace ConsoleParser
 
 			if (newObj is ITypeCheck)
 			{
-				((ITypeCheck)newObj).SourcePosition = parser.ParserPosition;
+                ((ITypeCheck)newObj).SourcePosition = new Tuple<int, int>(line, column);
 			}
         }
 
@@ -61,16 +59,13 @@ namespace ConsoleParser
 			TypeChecker<CheckExpressions, CheckStatements<CheckExpressions>> tc
 				= new TypeChecker<CheckExpressions, CheckStatements<CheckExpressions>>();
 
-			if (tc.Check((ITypeCheck)root))
-			{
-				foreach (Tuple<string, bool> msg in tc.Errors)
-				{
-					Console.ForegroundColor = msg.Item2 ? ConsoleColor.Red : ConsoleColor.Yellow;
-					Console.WriteLine(msg.Item1);
-				}
-
-				Console.ResetColor();
-			}
+            tc.OnTypeCheckError += (msg, error) =>
+            {
+                Console.ForegroundColor = error ? ConsoleColor.Red : ConsoleColor.Yellow;
+                Console.WriteLine(msg);
+                Console.ResetColor();
+            };
+            tc.Check((ITypeCheck)root);
 
             Console.WriteLine("PARSING COMPLETED!");
         }
