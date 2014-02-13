@@ -1,11 +1,32 @@
-form UserForm {
-  hello world?
-  boolean herald
+form Hello {
+  what is this?
+  boolean fu
 
-  Das is richtig?
+  what is this again?
+  string hello1
+
+  what is fu again?
+  money valu
+  error "Your money value seems to be below zero"
+  success "Congrats rich person"
+
+  if hello {
+    if fu {
+      mr dobo is not ok?
+      error "No text"
+    }
+  }
+
+  WHERE does this come from?
   string yes
-  error "there is an error"
-  required
+}
 
+form Another {
+  Is this a test?
+  boolean hello
 
+  if test {
+    this is not a test?
+    boolean yesok
+  }
 }
