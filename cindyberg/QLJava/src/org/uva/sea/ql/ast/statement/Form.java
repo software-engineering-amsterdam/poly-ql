@@ -1,9 +1,9 @@
 package org.uva.sea.ql.ast.statement;
 
-import org.uva.sea.ql.ast.ASTNode;
+import org.uva.sea.ql.ast.IVisitor;
 import org.uva.sea.ql.ast.Identifier;
 
-public class Form implements ASTNode{
+public class Form extends Statement{
 
 	private Identifier name;
 	private QuestionSet questionset;
@@ -22,7 +22,7 @@ public class Form implements ASTNode{
 		return this.questionset;
 	}
 	
-	public void accept(IStatementVisitor visitor) {
+	public void accept(IVisitor visitor) {
 		visitor.visit(this);
 		
 	}

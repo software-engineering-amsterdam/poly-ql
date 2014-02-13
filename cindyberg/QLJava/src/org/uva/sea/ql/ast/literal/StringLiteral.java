@@ -1,6 +1,6 @@
 package org.uva.sea.ql.ast.literal;
 
-import org.uva.sea.ql.ast.operators.IOperatorVisitor;
+import org.uva.sea.ql.ast.IVisitor;
 
 public class StringLiteral extends Literal<String>{
 
@@ -9,8 +9,8 @@ public class StringLiteral extends Literal<String>{
 	}
 
 	@Override
-	public void accept(IOperatorVisitor visitor) {
-		// TODO Auto-generated method stub
+	public void accept(IVisitor visitor) {
+		visitor.visit(this);
 		
 	}
 

@@ -1,8 +1,9 @@
 package org.uva.sea.ql.parser.test;
 
 import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
-import org.uva.sea.ql.ast.statement.*;
+import org.uva.sea.ql.ast.statement.Form;
 
 public class TestForm extends TestParser {
 	

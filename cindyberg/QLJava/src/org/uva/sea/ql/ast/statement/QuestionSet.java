@@ -1,5 +1,7 @@
 package org.uva.sea.ql.ast.statement;
 
+import org.uva.sea.ql.ast.IVisitor;
+
 
 
 public class QuestionSet extends Statement{
@@ -18,7 +20,7 @@ public class QuestionSet extends Statement{
 		this.single = single;
 	}
 
-	public void accept(IStatementVisitor visitor) {
+	public void accept(IVisitor visitor) {
 		visitor.visit(this);
 		
 	}

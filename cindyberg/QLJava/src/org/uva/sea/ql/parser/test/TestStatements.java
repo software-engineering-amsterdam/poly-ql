@@ -1,8 +1,12 @@
 package org.uva.sea.ql.parser.test;
 
 import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
-import org.uva.sea.ql.ast.statement.*;
+import org.uva.sea.ql.ast.statement.ExprQuestion;
+import org.uva.sea.ql.ast.statement.If;
+import org.uva.sea.ql.ast.statement.IfElse;
+import org.uva.sea.ql.ast.statement.Question;
 
 public class TestStatements extends TestParser{
 

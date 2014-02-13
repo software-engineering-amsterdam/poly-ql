@@ -1,5 +1,6 @@
 package org.uva.sea.ql.ast.statement;
 
+import org.uva.sea.ql.ast.IVisitor;
 import org.uva.sea.ql.ast.Identifier;
 import org.uva.sea.ql.ast.literal.StringLiteral;
 import org.uva.sea.ql.ast.type.Type;
@@ -34,7 +35,7 @@ public class Question extends Statement  {
 	}
 
 
-	public void accept(IStatementVisitor visitor) {
+	public void accept(IVisitor visitor) {
 		visitor.visit(this);
 		
 	}
