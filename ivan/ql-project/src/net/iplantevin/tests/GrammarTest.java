@@ -51,10 +51,26 @@ public class GrammarTest {
         // Holds all files to test for expression rule.
         String[] files = new String[]{"expr1", "expr2", "expr3", "expr4", "expr5"};
 
-        for( String file : files) {
+        for(String file : files) {
             parser = getParser(file);
             expected = getExpectedTree(file);
             actual = parser.expr().toStringTree(parser);
+            Assert.assertEquals(getMessage(file), expected, actual);
+        }
+    }
+
+    @Test
+    public void testCorrectForms() throws IOException {
+        QLParser parser;
+        String expected, actual;
+
+        // Holds all files to test for form rule.
+        String[] files = new String[]{"form1"};
+
+        for(String file : files) {
+            parser = getParser(file);
+            expected = getExpectedTree(file);
+            actual = parser.form().toStringTree(parser);
             Assert.assertEquals(getMessage(file), expected, actual);
         }
     }
