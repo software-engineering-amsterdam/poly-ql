@@ -5,16 +5,15 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 
 import nl.uva.sc.parser.subscriber.BookParserSubscriber;
+import nl.uva.sc.parser.subscriber.ParserSubscribers;
 
 public class BookParser {
 
     private final File mBookFile;
 
-    private final List<BookParserSubscriber> mSubscriber = new ArrayList<>();
+    private final ParserSubscribers mSubscribers = new ParserSubscribers();
 
     /**
      * Create a book parser
@@ -43,25 +42,46 @@ public class BookParser {
      *             If the file is invalid or it cannot be parsed given the character encoding
      */
     public void parse(final String encoding) throws IOException {
-
-        BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(
-                mBookFile), encoding));
+        FileInputStream fileInputStream = new FileInputStream(mBookFile);
+        InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, encoding);
+        BufferedReader reader = new BufferedReader(inputStreamReader);
 
         String line = null;
         while ((line = reader.readLine()) != null) {
             line = line.replaceAll("[^a-zA-Z\\s]", " ");
             line = line.replaceAll("\\s+", " ");
 
-            String[] words = line.split(" ");
-
-            for (String word : words) {
-                if (word.isEmpty() || word.length() == 1) continue;
-
-                notifyListener(word.toLowerCase());
-            }
+            String[] lineArray = line.split(" ");
+            handleLine(lineArray);
         }
 
         reader.close();
+    }
+
+    /**
+     * Parse a whole line
+     * 
+     * @param line
+     *            The line to get parsed
+     */
+    private void handleLine(final String[] line) {
+        for (String word : line) {
+            handleWord(word);
+        }
+    }
+
+    /**
+     * Parse a word
+     * 
+     * @param word
+     *            The word to get parsed
+     */
+    private void handleWord(final String word) {
+        if (word.isEmpty() || word.length() == 1) {
+            return;
+        }
+
+        notifyListener(word.toLowerCase());
     }
 
     /**

@@ -4,11 +4,10 @@ public class Token implements Comparable<Token> {
 
     private final String mWord;
 
-    private int mFrequency;
+    private int mFrequency = 0;
 
     public Token(final String word) {
         mWord = word;
-        mFrequency = 1;
     }
 
     public Token(final String word, final int frequency) {

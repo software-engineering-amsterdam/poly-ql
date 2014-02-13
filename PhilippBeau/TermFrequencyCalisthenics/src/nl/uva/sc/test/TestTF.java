@@ -68,7 +68,7 @@ public class TestTF {
             Token current = sortedTokenList.get(sortedTokenList.size() - i);
             Token shouldBeSame = mTrueIndex.get(i - 1);
 
-            System.out.println(sortedTokenList.get(sortedTokenList.size() - i));
+            System.out.println(current);
 
             assertTrue("Wrong word at position " + i,
                     current.getWord().equals(shouldBeSame.getWord()));
