@@ -7,18 +7,13 @@ open Microsoft.FSharp.Text.Lexing
 let keywords =
     [
         "form", FORM;
-        "{", CB_OPEN;
-        "}", CB_CLOSE;
-        "(", B_OPEN;
-        ")", B_CLOSE;
-        ":", COLON;
         "boolean", QLBOOL;
         "string", QLSTRING;
         "date", QLDATE;
         "money", QLMONEY;
     ] |> Map.ofList
 
-let ops =
+let symbols =
     [
         "=",    EQ;
         "!=",   NE;
@@ -33,6 +28,11 @@ let ops =
         "-",    MINUS;
         "*",    MULT;
         "/",    DIV;
+        "{",    CB_OPEN;
+        "}",    CB_CLOSE;
+        "(",    B_OPEN;
+        ")",    B_CLOSE;
+        ":",    COLON;
     ] |> Map.ofList
 }
 
@@ -43,14 +43,17 @@ let float       = '-'?digit+ '.' digit+
 let identifier  = char(char|digit|['-' '_' '.'])*
 let whitespace  = [' ' '\t']
 let newline     = "\n\r" | '\n' | '\r'
-let operator    = ">" | ">=" | "<" | "<=" | "=" | "!=" | "&&" | "||" | "!" | "+" | "-" | "*" | "/"
+let symbol      = ">" | ">=" | "<" | "<=" | "=" | "!=" | "&&" | "||" | "!"  // Boolean
+                | "+" | "-" | "*" | "/"                                     // Arithmetic
+                | "{" | "}" | "(" | ")"                                     // Brackets
+
 
 rule tokenize = parse   
 | whitespace    { tokenize lexbuf }   
 | newline       { lexbuf.EndPos <- lexbuf.EndPos.NextLine; tokenize lexbuf; }   
 | int           { INT(Int32.Parse(LexBuffer<_>.LexemeString lexbuf)) }   
 | float         { DECIMAL(Double.Parse(LexBuffer<_>.LexemeString lexbuf)) }
-| operator      { ops.[LexBuffer<_>.LexemeString lexbuf] }   
+| symbol      { symbols.[LexBuffer<_>.LexemeString lexbuf] }   
 | identifier    { match keywords.TryFind(LexBuffer<_>.LexemeString lexbuf) with   
                   | Some(token) -> token   
                   | None -> IDENTIFIER(LexBuffer<_>.LexemeString lexbuf) }     
