@@ -14,12 +14,9 @@ import org.antlr.v4.runtime.*;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 
 import net.iplantevin.antlr.*;
 
-import static java.util.Arrays.asList;
 
 public class GrammarTest {
     private static String basePath = "/Users/Ivan/Documents/Master SE/Software Construction/poly-ql/ivan/ql-project/src/net/iplantevin/tests/inputs/";
@@ -27,8 +24,7 @@ public class GrammarTest {
     private static String outExt = "_out.txt";
 
     private QLParser getParser(String fileName) throws IOException {
-        InputStream is = System.in;
-        is = new FileInputStream(basePath + fileName + ext);
+        InputStream is = new FileInputStream(basePath + fileName + ext);
 
         ANTLRInputStream input = new ANTLRInputStream(is);
         QLLexer lexer = new QLLexer(input);
@@ -38,7 +34,7 @@ public class GrammarTest {
         return parser;
     }
 
-    private String getExpected(String fileName) throws IOException {
+    private String getExpectedTree(String fileName) throws IOException {
         return new String(Files.readAllBytes(Paths.get(basePath + fileName + outExt)));
     }
 
@@ -50,14 +46,14 @@ public class GrammarTest {
     @Test
     public void testCorrectExpressions() throws IOException {
         QLParser parser;
-        String expected, actual, message;
+        String expected, actual;
 
         // Holds all files to test for expression rule.
         String[] files = new String[]{"expr1", "expr2", "expr3", "expr4"};
 
         for( String file : files) {
             parser = getParser(file);
-            expected = getExpected(file);
+            expected = getExpectedTree(file);
             actual = parser.expr().toStringTree(parser);
             Assert.assertEquals(getMessage(file), expected, actual);
         }
