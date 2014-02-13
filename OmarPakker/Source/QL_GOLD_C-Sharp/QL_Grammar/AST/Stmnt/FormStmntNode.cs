@@ -25,5 +25,10 @@ namespace QL_Grammar.AST.Stmnt
 			FormStmntNode<S> other = (FormStmntNode<S>)obj;
 			return Name.Equals(other.Name) && Body.Equals(other.Body);
 		}
+
+		public override int GetHashCode()
+		{
+			return Name.GetHashCode() + Body.GetHashCode();
+		}
     }
 }

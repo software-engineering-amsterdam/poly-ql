@@ -50,23 +50,21 @@ Comment End   = '*/'
 <Statements>  ::= <Statement> <Statements>
                |  <Statement>
 
-<Statement>   ::= if '(' <Expression> ')' <Statement>
-               |  if '(' <Expression> ')' <SubStmnt> else <Statement>
-               |  <QuestionStmnt>
+<Statement>   ::= if '(' <Expression> ')' <Statement> <OptElse>
                |  <Block>
+               |  <Question>
+               |  goto Identifier ';'
 
-<SubStmnt>    ::= if '(' <Expression> ')' <SubStmnt> else <SubStmnt>
-               |  <QuestionStmnt>
-               |  <Block>
+<OptElse>     ::= else <Statement>
+               |  <>
 
 <VarDecl>     ::= Identifier ':' <Type>
 
 <VarAssign>   ::= Identifier ':' <Type> '=' <Expression>
 
-<QuestionStmnt>   ::= StringLit '>>' <VarDecl> ';'
+<Question>    ::= StringLit '>>' <VarDecl> ';'
                |  StringLit '<<' <VarAssign> ';'
 			   |  StringLit '<<' <Expression> ';'
-               |  goto Identifier ';'
 
 <Expression>  ::= <OrExpr> '?' <OrExpr> ':' <Expression>
                |  <OrExpr>

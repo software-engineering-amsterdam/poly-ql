@@ -3,22 +3,23 @@ using System.IO;
 using System.Reflection;
 using GOLD;
 using Grammar.Parser;
-using QL_ExtensionTest.Mathematics;
-using QL_ExtensionTest.Mathematics.Factory;
+using QL_ExtensionTest.Extensions.Check;
+using QL_ExtensionTest.Extensions.Factory;
 using QL_Grammar.AST;
+using QL_Grammar.AST.Expr;
+using QL_Grammar.AST.Stmnt;
 using QL_Grammar.Check;
 
 namespace QL_ExtensionTest
 {
-    public class ConsoleMathTypeChecker
+    public class ConsoleExtensionsTest
     {
-        private readonly MathParser parser;
-        private readonly MathFactory factory;
+        private readonly ExtensionsParser<IExprNode, IStmntNode, ExtensionsFactory> parser;
 
-        public ConsoleMathTypeChecker()
+        public ConsoleExtensionsTest()
         {
-            parser = new MathParser();
-            parser.Factory = factory = new MathFactory();
+            parser = new ExtensionsParser<IExprNode, IStmntNode, ExtensionsFactory>();
+			parser.Factory = new ExtensionsFactory();
 
             parser.OnReduction += OnReduction;
             parser.OnCompletion += OnCompletion;
@@ -28,7 +29,7 @@ namespace QL_ExtensionTest
             parser.OnLexicalError += OnLexicalError;
             parser.OnSyntaxError += OnSyntaxError;
 
-            Assembly a = typeof(ConsoleMathTypeChecker).Assembly;
+            Assembly a = parser.Factory.GetType().Assembly;
             parser.LoadGrammar(new BinaryReader(a.GetManifestResourceStream("QL_ExtensionTest.Grammar.QL_Grammar.egt")));
             parser.Parse("form Form1 { \"Power:\" << answer1:int = 5 ^ 2; \"Modulo:\" << 10 % 5; \"Modulo2:\" << 10 % true; }");
         }
@@ -40,7 +41,11 @@ namespace QL_ExtensionTest
 
             for (int i = 0; i < count; i++)
             {
-                dataOutput += r.get_Data(i).ToString();
+				object data = r.get_Data(i);
+				if (data != null)
+				{
+					dataOutput += data.ToString();
+				}
             }
 
             Console.WriteLine(String.Format("R: {0}, C: {1}, D: {2}", r.Parent.Text(), count, dataOutput));
@@ -53,8 +58,8 @@ namespace QL_ExtensionTest
 
         private void OnCompletion(object root)
         {
-			TypeChecker<CheckMathExpressions, CheckStatements<CheckMathExpressions>> tc
-				= new TypeChecker<CheckMathExpressions, CheckStatements<CheckMathExpressions>>();
+			TypeChecker<CheckExtensionsExpressions, CheckExtensionsStmnts> tc
+				= new TypeChecker<CheckExtensionsExpressions, CheckExtensionsStmnts>();
 
             if (tc.Check((IASTNode)root))
 			{

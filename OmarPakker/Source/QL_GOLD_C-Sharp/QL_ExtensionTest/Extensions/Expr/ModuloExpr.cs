@@ -1,6 +1,6 @@
 ﻿using QL_Grammar.AST.Expr;
 
-namespace QL_ExtensionTest.Mathematics.Expr
+namespace QL_ExtensionTest.Extensions.Expr
 {
     public class ModuloExpr : DoubleExprNode<IExprNode>, IExprNode
     {

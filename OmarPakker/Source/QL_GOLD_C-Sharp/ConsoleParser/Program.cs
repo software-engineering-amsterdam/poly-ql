@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace QL_GOLD_C_Sharp
+namespace ConsoleParser
 {
 	public class Program
 	{

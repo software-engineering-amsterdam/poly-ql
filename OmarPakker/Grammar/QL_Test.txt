@@ -22,6 +22,7 @@ form Form1
     "Real:" << realValue:real = .5;
     "Boolean:" << boolValue:bool = true;
 	"Boolean2:" << false;
+	"Real into Int:" << myInt:int = realValue;
     
     //Line comment
     /*

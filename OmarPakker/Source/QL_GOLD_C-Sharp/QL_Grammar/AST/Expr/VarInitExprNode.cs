@@ -28,5 +28,10 @@ namespace QL_Grammar.AST.Expr
 			VarInitExprNode<E> other = (VarInitExprNode<E>)obj;
 			return Name.Equals(other.Name) && Type.Equals(other.Type) && Value.Equals(other.Value);
 		}
+
+		public override int GetHashCode()
+		{
+			return Name.GetHashCode() + Type.GetHashCode() + Value.GetHashCode();
+		}
     }
 }

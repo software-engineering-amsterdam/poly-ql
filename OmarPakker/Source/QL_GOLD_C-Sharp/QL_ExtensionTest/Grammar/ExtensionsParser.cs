@@ -1,21 +1,23 @@
 ﻿using System.Collections.ObjectModel;
 using GOLD;
 using Grammar.Generated.v2;
-using QL_ExtensionTest.Mathematics.Factory;
+using QL_ExtensionTest.Extensions.Factory;
 using QL_Grammar.AST.Expr;
 using QL_Grammar.AST.Stmnt;
 
 namespace Grammar.Parser
 {
-    public class MathParser : QLParser<IExprNode, IStmntNode>
+    public class ExtensionsParser<E, S, F> : QLParser<E, S, F>
+		where E : IExprNode
+		where S : IStmntNode
+		where F : IExtensionsFactory<E, S>
     {
         protected override ReadOnlyDictionary<string, short> Rules { get { return GrammarData.Rules; } }
-        private readonly MathFactory mFactory;
 
-        public MathParser()
+        public ExtensionsParser()
             : base()
         {
-            Factory = mFactory = new MathFactory();
+			
         }
 
         protected override object CreateObjectFor(Reduction r)
@@ -23,17 +25,22 @@ namespace Grammar.Parser
             //<MultExpr> ::= <MultExpr> '%' <NegateExpr>
             if (r.Parent.TableIndex() == Rules["Multexpr_Percent"])
             {
-                return mFactory.Modulo((IExprNode)r.get_Data(0), (IExprNode)r.get_Data(2));
+                return Factory.Modulo((E)r.get_Data(0), (E)r.get_Data(2));
             }
             // <PowerExpr> ::= <PowerExpr> '^' <NegateExpr>
             if (r.Parent.TableIndex() == Rules["Powerexpr_Caret"])
             {
-                return mFactory.Power((IExprNode)r.get_Data(0), (IExprNode)r.get_Data(2));
+                return Factory.Power((E)r.get_Data(0), (E)r.get_Data(2));
             }
             // <PowerExpr> ::= <NegateExpr>
             if (r.Parent.TableIndex() == Rules["Powerexpr"])
             {
-                return (IExprNode)r.get_Data(0);
+                return (E)r.get_Data(0);
+            }
+			// <Statement> ::= loop '(' <Expression> ')' <Statement>
+			if (r.Parent.TableIndex() == Rules["Statement_Loop_Lparen_Rparen"])
+            {
+                return Factory.Loop((E)r.get_Data(2), (S)r.get_Data(4));
             }
 
             return base.CreateObjectFor(r);

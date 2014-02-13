@@ -39,14 +39,16 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\Check\CheckExtensionsStmnts.cs" />
+    <Compile Include="Extensions\Stmnt\LoopStmnt.cs" />
     <Compile Include="Grammar\GrammarData.cs" />
-    <Compile Include="Mathematics\CheckMathExpressions.cs" />
-    <Compile Include="Mathematics\Expr\PowerExpr.cs" />
-    <Compile Include="Mathematics\Expr\ModuloExpr.cs" />
-    <Compile Include="Mathematics\Factory\IMathFactory.cs" />
-    <Compile Include="Mathematics\Factory\MathFactory.cs" />
-    <Compile Include="ConsoleMathTypeChecker.cs" />
-    <Compile Include="Grammar\MathParser.cs" />
+    <Compile Include="Extensions\Check\CheckExtensionsExpressions.cs" />
+    <Compile Include="Extensions\Expr\PowerExpr.cs" />
+    <Compile Include="Extensions\Expr\ModuloExpr.cs" />
+    <Compile Include="Extensions\Factory\IExtensionsFactory.cs" />
+    <Compile Include="Extensions\Factory\ExtensionsFactory.cs" />
+    <Compile Include="ConsoleExtensionsTest.cs" />
+    <Compile Include="Grammar\ExtensionsParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -23,5 +23,10 @@ namespace QL_Grammar.AST.Stmnt
 
 			return IfFalseBody.Equals(((IfElseStmntNode<E, S>)obj).IfFalseBody);
 		}
+
+		public override int GetHashCode()
+		{
+			return base.GetHashCode() + IfFalseBody.GetHashCode();
+		}
 	}
 }

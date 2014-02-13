@@ -21,5 +21,10 @@ namespace QL_Grammar.AST.Expr
 
 			return Expr3.Equals(((TripleExprNode<E>)obj).Expr3);
 		}
+
+		public override int GetHashCode()
+		{
+			return base.GetHashCode() + Expr3.GetHashCode();
+		}
     }
 }

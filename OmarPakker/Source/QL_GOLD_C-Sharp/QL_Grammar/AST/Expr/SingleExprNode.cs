@@ -22,5 +22,10 @@ namespace QL_Grammar.AST.Expr
 
 			return Expr1.Equals(((SingleExprNode<E>)obj).Expr1);
 		}
+
+		public override int GetHashCode()
+		{
+			return Expr1.GetHashCode();
+		}
     }
 }
