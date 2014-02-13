@@ -16,12 +16,6 @@ public class BookParser {
 
     private final List<BookParserSubscriber> mSubscriber = new ArrayList<>();
 
-    /**
-     * Create a book parser
-     * 
-     * @param bookFile
-     *            The book to parse
-     */
     public BookParser(final File bookFile) {
         mBookFile = bookFile;
     }
@@ -85,12 +79,6 @@ public class BookParser {
         return mSubscriber.add(subscriber);
     }
 
-    /**
-     * Unsubscribe the given subscriber from the listener list
-     * 
-     * @param subscriber
-     * @return True if successful unsubscribed
-     */
     public boolean unsubscribe(final BookParserSubscriber subscriber) {
         return mSubscriber.remove(subscriber);
     }

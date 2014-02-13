@@ -16,12 +16,6 @@ public class BookParser {
 
     private final List<BookParserSubscriber> mSubscriber = new ArrayList<>();
 
-    /**
-     * Create a book parser
-     * 
-     * @param bookFile
-     *            The book to parse
-     */
     public BookParser(final File bookFile) {
         mBookFile = bookFile;
     }

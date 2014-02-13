@@ -10,7 +10,7 @@ public interface BookParserSubscriber {
     public void nextWord(String word);
 
     /**
-     * Will in the future notify about newline events
+     * Will in the future notify for newline events
      */
     public void newLine();
 }

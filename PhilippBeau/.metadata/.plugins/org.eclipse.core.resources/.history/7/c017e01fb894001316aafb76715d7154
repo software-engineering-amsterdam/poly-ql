@@ -16,36 +16,20 @@ public class BookParser {
 
     private final List<BookParserSubscriber> mSubscriber = new ArrayList<>();
 
-    /**
-     * Create a book parser
-     * 
-     * @param bookFile
-     *            The book to parse
-     */
     public BookParser(final File bookFile) {
         mBookFile = bookFile;
-    }
-
-    /**
-     * Starts the parser with standard UTF-8 encoding
-     * 
-     * @throws IOException
-     *             If the file is invalid or it cannot be parsed with UTF-8 encoding
-     */
-    public void parse() throws IOException {
-        parse("UTF-8");
     }
 
     /**
      * Starts the parser
      * 
      * @throws IOException
-     *             If the file is invalid or it cannot be parsed given the character encoding
+     *             If the file is invalid or it cannot be parsed
      */
-    public void parse(final String encoding) throws IOException {
+    public void parse() throws IOException {
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(
-                mBookFile), encoding));
+                mBookFile), "UTF-8"));
 
         String line = null;
         while ((line = reader.readLine()) != null) {
@@ -64,33 +48,16 @@ public class BookParser {
         reader.close();
     }
 
-    /**
-     * Notify all listeners about the last parsed word
-     * 
-     * @param word
-     */
     private void notifyListener(final String word) {
         for (BookParserSubscriber subscriber : mSubscriber) {
             subscriber.nextWord(word);
         }
     }
 
-    /**
-     * Subscribe to the word listener list
-     * 
-     * @param subscriber
-     * @return True if successful subscribed
-     */
     public boolean subscribe(final BookParserSubscriber subscriber) {
         return mSubscriber.add(subscriber);
     }
 
-    /**
-     * Unsubscribe the given subscriber from the listener list
-     * 
-     * @param subscriber
-     * @return True if successful unsubscribed
-     */
     public boolean unsubscribe(final BookParserSubscriber subscriber) {
         return mSubscriber.remove(subscriber);
     }
