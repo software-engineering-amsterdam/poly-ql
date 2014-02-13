@@ -1,0 +1,111 @@
+﻿%{
+open System
+open QL_Grammar
+open Microsoft.FSharp.Collections
+%}
+
+%token FORM
+%token IF
+%token CB_OPEN CB_CLOSE
+%token B_OPEN B_CLOSE
+%token COLON
+
+%token <string> IDENTIFIER
+%token <string> LABEL
+
+%token <bool> BOOL
+%token <string> STRING
+%token <int> INT
+%token <float> DATE
+%token <float> DECIMAL
+%token <float> MONEY
+
+%token QLBOOL QLSTRING QLINT QLDATE QLDECIMAL QLMONEY
+%token EQ NE LT LE GT GE AND OR NOT PLUS MINUS MULT DIV
+
+%token END
+
+%start start
+%type <QL_Grammar.questionaire> start
+
+%%
+
+start:
+    FORM IDENTIFIER CB_OPEN
+        stmtList
+    CB_CLOSE END            {
+                                {   ID = $2;
+                                    Questions = $4 }
+                            }
+
+stmtList:
+    |                       { [] }
+    | stmt                  { [$1] }
+    | stmt stmtList         { $1 :: $2 }
+
+stmt:
+    | assignment    { $1 }
+    | question      { $1 }
+    | conditional   { $1 }
+
+assignment:
+    IDENTIFIER COLON LABEL expType B_OPEN expression B_CLOSE { Assignment({
+                                                                            ID          = $1;
+                                                                            Label       = $3;
+                                                                            Type        = $4;
+                                                                            Expressions = $6;
+                                                                        }) }
+
+question:
+    IDENTIFIER COLON LABEL qlType { Question({ 
+                                                ID      = $1;
+                                                Label   = $3;
+                                                Type    = $4;
+                                            }) }
+
+conditional:
+    IF B_OPEN booleanExpr B_CLOSE CB_OPEN
+        stmtList
+    CB_CLOSE { Conditional($3, $6) }
+
+qlType:
+    | QLBOOL    { QLBool }
+    | QLSTRING  { QLString }
+    | QLINT     { QLInt }
+    | QLDATE    { QLDate }
+    | QLDECIMAL { QLDecimal }
+    | QLMONEY   { QLMoney }
+
+expType:
+    | STRING            { String($1) }
+    | BOOL              { Bool($1) }
+    | arithmeticType    { Arithmetic($1) }
+
+arithmeticType:
+    | INT               { Int($1) }
+    | DATE              { Date($1) }
+    | DECIMAL           { Decimal($1) }
+    | MONEY             { Money($1) }
+
+expression:
+    | booleanExpr       { BooleanExpr($1) }
+    | arithmeticExpr    { ArithmeticExpr($1) }
+
+booleanExpr:
+    | BOOL                          { BoolVal($1) }
+    | NOT booleanExpr               { Neg($2) }
+    | booleanExpr AND booleanExpr   { Cond($1, And, $3) }
+    | booleanExpr OR booleanExpr    { Cond($1, Or, $3) }
+    | booleanExpr LT booleanExpr    { Cond($1, Lt, $3) }
+    | booleanExpr GT booleanExpr    { Cond($1, Gt, $3) }
+    | booleanExpr LE booleanExpr    { Cond($1, Le, $3) }
+    | booleanExpr GE booleanExpr    { Cond($1, Ge, $3) }
+    | booleanExpr EQ booleanExpr    { Cond($1, Eq, $3) }
+    | booleanExpr NE booleanExpr    { Cond($1, Ne, $3) }
+
+arithmeticExpr:
+    | arithmeticType                        { ArithmeticType($1) }
+    | arithmeticExpr PLUS arithmeticExpr    { ArithmeticOp($1, Plus, $3) }
+    | arithmeticExpr MINUS arithmeticExpr   { ArithmeticOp($1, Minus, $3) }
+    | arithmeticExpr MULT arithmeticExpr    { ArithmeticOp($1, Mult, $3) }
+    | arithmeticExpr DIV arithmeticExpr     { ArithmeticOp($1, Div, $3) }

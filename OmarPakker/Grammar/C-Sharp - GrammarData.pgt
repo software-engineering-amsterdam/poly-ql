@@ -1,0 +1,98 @@
+##LANGUAGE 'C#'
+##TEMPLATE-NAME 'Grammar data file'
+##ENGINE-NAME 'Grammar Data'
+##SYSTEM-VERSION '5.0'
+##AUTHOR 'Omar Pakker' 
+##FILE-EXTENSION 'cs'
+##NOTES
+This template creates the rule and symbol
+classes for the grammer. Each project that
+extends the grammar needs this file to be generated.
+##END-NOTES
+##ID-CASE ProperCase
+##ID-SEPARATOR '_'
+##DELIMITER ','
+##PARAMETERS
+/*
+ * Grammar Information:
+ *
+ * Name            : %Name%
+ * Version         : %Version%
+ * Author          : %Author%
+ * About           : %About%
+ * Case Sensitive  : %CaseSensitive%
+ * Start Symbol    : %StartSymbol%
+ *
+ *
+ * Grammar Build Information:
+ *
+ * Output File Path : %OutputFilePath%
+ * Output Path      : %OutputPath%
+ * Output File      : %OutputFile%
+ * Output File Base : %OutputFileBase%
+ *
+##END-PARAMETERS
+##SYMBOL-TABLE
+ * Symbol Count : %Count%
+##END-SYMBOL-TABLE
+##RULE-TABLE
+ * Rule Count   : %Count%
+##END-RULE-TABLE
+ */
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+
+##PARAMETERS
+namespace Grammar.Generated.%Version%
+##END-PARAMETERS
+{
+	public static class GrammarData
+    {
+##SYMBOL-TABLE
+        public const int SymbolCount = %Count%;
+##END-SYMBOL-TABLE
+##RULE-TABLE
+        public const int RuleCount = %Count%;
+##END-RULE-TABLE
+
+        public static readonly ReadOnlyDictionary<string, short> Rules = new ReadOnlyDictionary<string, short>(
+	        new Dictionary<string, short>()
+            {
+##RULES
+                { "%ID%", %Value% }%Delimiter% %Col:75% // %Description%
+##END-RULES
+            }
+		);
+    };
+}
+
+
+
+/*
+ * Pre-build if's covering all the rules
+ */
+#region Rules If
+##RULES
+////%Description%
+//if (r.Parent.TableIndex() == Rules["%ID%"])
+//{
+//    return;
+//}
+##END-RULES
+#endregion
+
+
+/*
+ * Pre-build switch covering all the rules
+ */
+#region Rules Switch
+//switch(r.Parent.TableIndex())
+//{
+##RULES
+//    case RuleIndices.%ID%:
+//        // %Description%
+//        break;
+//
+##END-RULES
+//}
+#endregion

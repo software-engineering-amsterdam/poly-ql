@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{ADEF29ED-B350-451A-A0C7-5E7AE04609A5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>QL_Grammar</RootNamespace>
+    <AssemblyName>QL_Grammar</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- A reference to the entire .NET Framework is automatically included -->
+    <EmbeddedResource Include="Grammar\QL_Grammar.egt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AST\Expr\DoubleExprNode.cs" />
+    <Compile Include="AST\Expr\TripleExprNode.cs" />
+    <Compile Include="AST\Expr\VarExprNode.cs" />
+    <Compile Include="AST\IASTNode.cs" />
+    <Compile Include="AST\Stmnt\CompStmntNode.cs" />
+    <Compile Include="AST\Stmnt\FormStmntNode.cs" />
+    <Compile Include="AST\Expr\IExprNode.cs" />
+    <Compile Include="AST\Stmnt\GotoStmntNode.cs" />
+    <Compile Include="AST\Stmnt\IfElseStmntNode.cs" />
+    <Compile Include="AST\Stmnt\IfStmntNode.cs" />
+    <Compile Include="AST\Stmnt\IStmntNode.cs" />
+    <Compile Include="AST\Expr\SingleExprNode.cs" />
+    <Compile Include="AST\Expr\VarInitExprNode.cs" />
+    <Compile Include="AST\Stmnt\QuestionStmntNode.cs" />
+    <Compile Include="AST\Types\UnknownType.cs" />
+    <Compile Include="Check\CheckExpressions.cs" />
+    <Compile Include="Check\CheckStatements.cs" />
+    <Compile Include="Check\TypeChecker.cs" />
+    <Compile Include="Grammar\AbstractParser.cs" />
+    <Compile Include="Eval\Expr\IfElseExpr.cs" />
+    <Compile Include="Grammar\GrammarData.cs" />
+    <Compile Include="QL\Expr\IfElseExpr.cs" />
+    <Compile Include="Factory\QLFactory.cs" />
+    <Compile Include="QL\Expr\AddExpr.cs" />
+    <Compile Include="QL\Expr\AndExpr.cs" />
+    <Compile Include="QL\Expr\DivideExpr.cs" />
+    <Compile Include="QL\Expr\EqualsExpr.cs" />
+    <Compile Include="QL\Expr\GreaterOrEqualToExpr.cs" />
+    <Compile Include="QL\Expr\GreaterThenExpr.cs" />
+    <Compile Include="QL\Expr\LessOrEqualToExpr.cs" />
+    <Compile Include="QL\Expr\LessThenExpr.cs" />
+    <Compile Include="QL\Expr\MultiplyExpr.cs" />
+    <Compile Include="QL\Expr\NegateExpr.cs" />
+    <Compile Include="QL\Expr\NotEqualExpr.cs" />
+    <Compile Include="QL\Expr\OrExpr.cs" />
+    <Compile Include="QL\Expr\SubtractExpr.cs" />
+    <Compile Include="QL\Expr\VarInitExpr.cs" />
+    <Compile Include="QL\Stmnt\CompStmnt.cs" />
+    <Compile Include="QL\Stmnt\FormStmnt.cs" />
+    <Compile Include="QL\Stmnt\GotoStmnt.cs" />
+    <Compile Include="QL\Stmnt\IfElseStmnt.cs" />
+    <Compile Include="QL\Stmnt\IfStmnt.cs" />
+    <Compile Include="QL\Stmnt\QuestionStmnt.cs" />
+    <Compile Include="Eval\Expr\AddExpr.cs" />
+    <Compile Include="Factory\BaseFactory.cs" />
+    <Compile Include="Eval\Expr\AndExpr.cs" />
+    <Compile Include="Eval\Expr\LiteralExpr.cs" />
+    <Compile Include="Eval\Expr\VarExpr.cs" />
+    <Compile Include="Eval\Stmnt\FormStmnt.cs" />
+    <Compile Include="Eval\Stmnt\GotoStmnt.cs" />
+    <Compile Include="Eval\Stmnt\CompStmnt.cs" />
+    <Compile Include="Eval\Stmnt\IfStmnt.cs" />
+    <Compile Include="Eval\Stmnt\IEvalStmnt.cs" />
+    <Compile Include="Eval\Expr\NotEqualExpr.cs" />
+    <Compile Include="AST\Expr\LiteralExprNode.cs" />
+    <Compile Include="Eval\Expr\MultiplyExpr.cs" />
+    <Compile Include="Eval\Expr\DivideExpr.cs" />
+    <Compile Include="Eval\Expr\LessOrEqualToExpr.cs" />
+    <Compile Include="Eval\Expr\GreaterOrEqualToExpr.cs" />
+    <Compile Include="Eval\Expr\GreaterThenExpr.cs" />
+    <Compile Include="Eval\Expr\EqualsExpr.cs" />
+    <Compile Include="Eval\Stmnt\IfElseStmnt.cs" />
+    <Compile Include="Eval\Expr\LessThenExpr.cs" />
+    <Compile Include="Eval\Expr\NegateExpr.cs" />
+    <Compile Include="Eval\Expr\OrExpr.cs" />
+    <Compile Include="Grammar\QLParser.cs" />
+    <Compile Include="Eval\Stmnt\QuestionStmnt.cs" />
+    <Compile Include="QL\Types\BoolType.cs" />
+    <Compile Include="QL\Types\IntType.cs" />
+    <Compile Include="AST\Types\IType.cs" />
+    <Compile Include="AST\Types\NumericType.cs" />
+    <Compile Include="QL\Types\RealType.cs" />
+    <Compile Include="QL\Types\StringType.cs" />
+    <Compile Include="AST\Value\IValue.cs" />
+    <Compile Include="QL\Value\RealValue.cs" />
+    <Compile Include="QL\Value\IntValue.cs" />
+    <Compile Include="QL\Value\BoolValue.cs" />
+    <Compile Include="Eval\Expr\IEvalExpr.cs" />
+    <Compile Include="QL\Value\StringValue.cs" />
+    <Compile Include="Eval\Expr\SubtractExpr.cs" />
+    <Compile Include="Factory\IFactory.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="AST\Value\BaseValue.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="GOLD Engine">
+      <HintPath>..\lib\GOLD Engine.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>"$(SolutionDir)tools\GOLDbuild.exe" "$(SolutionDir)..\..\Grammar\QL_Grammar.grm" "$(ProjectDir)Grammar\QL_Grammar.egt"
+"$(SolutionDir)tools\GOLDtest.exe" "$(ProjectDir)Grammar\QL_Grammar.egt" "$(SolutionDir)..\..\Grammar\QL_Test.txt" "$(SolutionDir)..\..\Grammar\TestLog.txt"
+"$(SolutionDir)tools\GOLDprog.exe" "$(ProjectDir)Grammar\QL_Grammar.egt" "$(SolutionDir)..\..\Grammar\C-Sharp - GrammarData.pgt" "$(ProjectDir)Grammar\GrammarData.cs"</PreBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

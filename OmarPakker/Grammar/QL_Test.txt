@@ -1,0 +1,37 @@
+form Form1
+{
+    "Bool:" >> answer1:bool;
+    "Real:" >> answer2:real;
+
+    if(answer1)
+    {
+        "Sub 1, bool:" >> answer3:bool;
+        "Sub 2, real:" >> answer4:real;
+    }
+
+    "Final real:" << result:real = answer2 + answer4;
+    "No var assignment:" << answer1 || answer3;
+	"Unknown var usage:" << bladiebla;
+	"Var re-definition:" >> answer3:string;
+	"Var re-use:" >> answer4:real;
+	"Incompatible types:" << answer1 * answer2;
+	"Inline if:" << answer3 ? answer1 : answer2;
+	"Incompatible literals:" << 500 + true;
+
+    "Int:" << intValue:int = 500 + 600;
+    "Real:" << realValue:real = .5;
+    "Boolean:" << boolValue:bool = true;
+	"Boolean2:" << false;
+    
+    //Line comment
+    /*
+    * Block comment
+    */
+
+    goto Form2;
+}
+
+form Form2
+{
+	"Bool:" >> answer1:bool;
+}
