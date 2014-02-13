@@ -43,24 +43,36 @@ class SimpleScanner(GenericScanner):
 	def t_whitespace(self, s):
 		r' \s+ '
 		pass
-		
-	def t_op(self, s):
-		r' \+ | \* '
-		self.rv.append(Token(type=s))
-		
-	def t_number(self, s):
-		r' \d+ '
-		t = Token(type='number', attr=s)
-		self.rv.append(t)
 
-	# Implementation of "add" and "mod" tokens.
-	def t_add(self, s):
-		r' add '
+	def t_fieldlabel(self, s):
+		r' [\w]+: '
 		self.rv.append(Token(type=s))
 
-	def t_mod(self, s):
-		r' mod '
+	def t_bracket_open(self, s):
+		r' { '
 		self.rv.append(Token(type=s))
+
+	def t_bracket_close(self, s):
+		r' [ ]?} '
+		self.rv.append(Token(type=s))
+
+	def t_form(self, s):
+		r' form '
+		self.rv.append(Token(type=s))
+
+	def t_question(self, s):
+		r' \'[\w\d\?/ ]+\' '
+		self.rv.append(Token(type=s))
+
+	def t_formname(self, s):
+		r' [\w\d]+ '
+		self.rv.append(Token(type=s))
+
+	def t_boolean(self, s):
+		r' boolean '
+		self.rv.append(Token(type=s))
+
+
 
 
 class FloatScanner(SimpleScanner):

@@ -2,12 +2,12 @@
 using GOLD;
 using Grammar.Generated.v2;
 using QL_ExtensionTest.Mathematics.Factory;
-using QL_Grammar.TypeCheck.Expr;
-using QL_Grammar.TypeCheck.Stmnt;
+using QL_Grammar.AST.Expr;
+using QL_Grammar.AST.Stmnt;
 
 namespace Grammar.Parser
 {
-    public class MathParser : QLParser<ITypeCheckExpr, ITypeCheckStmnt>
+    public class MathParser : QLParser<IExprNode, IStmntNode>
     {
         protected override ReadOnlyDictionary<string, short> Rules { get { return GrammarData.Rules; } }
         private readonly MathFactory mFactory;
@@ -23,17 +23,17 @@ namespace Grammar.Parser
             //<MultExpr> ::= <MultExpr> '%' <NegateExpr>
             if (r.Parent.TableIndex() == Rules["Multexpr_Percent"])
             {
-                return mFactory.Modulo((ITypeCheckExpr)r.get_Data(0), (ITypeCheckExpr)r.get_Data(2));
+                return mFactory.Modulo((IExprNode)r.get_Data(0), (IExprNode)r.get_Data(2));
             }
             // <PowerExpr> ::= <PowerExpr> '^' <NegateExpr>
             if (r.Parent.TableIndex() == Rules["Powerexpr_Caret"])
             {
-                return mFactory.Power((ITypeCheckExpr)r.get_Data(0), (ITypeCheckExpr)r.get_Data(2));
+                return mFactory.Power((IExprNode)r.get_Data(0), (IExprNode)r.get_Data(2));
             }
             // <PowerExpr> ::= <NegateExpr>
             if (r.Parent.TableIndex() == Rules["Powerexpr"])
             {
-                return (ITypeCheckExpr)r.get_Data(0);
+                return (IExprNode)r.get_Data(0);
             }
 
             return base.CreateObjectFor(r);

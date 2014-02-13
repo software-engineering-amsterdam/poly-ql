@@ -35,10 +35,12 @@
     <Reference Include="GOLD Engine">
       <HintPath>..\lib\GOLD Engine.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Grammar\GrammarData.cs" />
+    <Compile Include="Mathematics\CheckMathExpressions.cs" />
     <Compile Include="Mathematics\Expr\PowerExpr.cs" />
     <Compile Include="Mathematics\Expr\ModuloExpr.cs" />
     <Compile Include="Mathematics\Factory\IMathFactory.cs" />

@@ -1,7 +1,6 @@
-﻿using System;
-using QL_Grammar.AST.Stmnt;
-using QL_Grammar.AST.Value;
+﻿using QL_Grammar.AST.Stmnt;
 using QL_Grammar.Eval.Expr;
+using QL_Grammar.QL.Value;
 
 namespace QL_Grammar.Eval.Stmnt
 {
@@ -15,19 +14,10 @@ namespace QL_Grammar.Eval.Stmnt
 
 		public virtual void Eval()
 		{
-            IValue checkValue = CheckExpression.Eval();
-
-			if (checkValue is BoolValue)
+			if (((BoolValue)CheckExpression.Eval()).Value)
 			{
-				if(((BoolValue)checkValue).Value)
-                {
-                    IfTrueBody.Eval();
-                }
+				IfTrueBody.Eval();
 			}
-            else
-            {
-                throw new InvalidOperationException("Unexpected Value in If.");
-            }
 		}
     }
 }

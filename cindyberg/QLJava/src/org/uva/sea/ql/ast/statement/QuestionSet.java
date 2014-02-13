@@ -1,16 +1,26 @@
 package org.uva.sea.ql.ast.statement;
 
-import org.uva.sea.ql.ast.ASTNode;
 
 
-public class QuestionSet extends Statement {
+public class QuestionSet extends Statement{
 
-	public QuestionSet(ASTNode astNode, ASTNode astNode2) {
-		// TODO Auto-generated constructor stub
+	public Statement single;
+	public Statement multiple;
+	
+	public QuestionSet(Statement single, Statement multiple) {
+		
+		this.single = single;
+		this.multiple = multiple;
 	}
 
-	public QuestionSet(ASTNode astNode) {
-		// TODO Auto-generated constructor stub
+	public QuestionSet(Statement single) {
+		
+		this.single = single;
+	}
+
+	public void accept(IStatementVisitor visitor) {
+		visitor.visit(this);
+		
 	}
 
 }

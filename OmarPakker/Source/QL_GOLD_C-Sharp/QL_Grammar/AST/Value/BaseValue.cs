@@ -19,5 +19,20 @@ namespace QL_Grammar.AST.Value
             Type = type;
 			Value = value;
 		}
+
+		public override bool Equals(object obj)
+		{
+			if (!(obj is BaseValue<T>))
+			{
+				return false;
+			}
+
+			return ((BaseValue<T>)obj).Value.Equals(Value);
+		}
+
+		public override int GetHashCode()
+		{
+			return Value.GetHashCode();
+		}
 	}
 }

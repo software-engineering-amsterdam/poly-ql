@@ -24,7 +24,7 @@
     <WarningLevel>3</WarningLevel>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DocumentationFile>bin\Debug\SoftwConsTest.XML</DocumentationFile>
-    <Prefer32Bit>true</Prefer32Bit>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -69,12 +69,13 @@
     <None Include="..\..\README.md">
       <Link>README.md</Link>
     </None>
-    <None Include="..\..\AST.md">
-      <Link>AST.md</Link>
+    <None Include="..\..\GRAMMAR.md">
+      <Link>GRAMMAR.md</Link>
     </None>
+    <None Include="QL_Parser.fsyacc.output" />
     <None Include="App.config" />
     <None Include="packages.config" />
-    <Compile Include="QL_AST.fs" />
+    <Compile Include="QL_Grammar.fs" />
     <None Include="QL_Lexer.fsl" />
     <None Include="QL_Parser.fsp" />
     <Compile Include="QL_Parser.fs" />
@@ -107,8 +108,14 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <PropertyGroup>
-    <PreBuildEvent>"Z:\UvA\Software Construction\SoftwConsQl\packages\FSPowerPack.Community.3.0.0.0\Tools\fslex.exe" "$(ProjectDir)QL_Lexer.fsl" --unicode
-"Z:\UvA\Software Construction\SoftwConsQl\packages\FSPowerPack.Community.3.0.0.0\Tools\fsyacc.exe" "$(ProjectDir)QL_Parser.fsp" --module QL_Parser</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>if $(ConfigurationName) == Debug (
+"Z:\UvA\Software Construction\SoftwConsQl\packages\FSPowerPack.Community.3.0.0.0\Tools\fslex.exe" "$(ProjectDir)QL_Lexer.fsl" --unicode
+"Z:\UvA\Software Construction\SoftwConsQl\packages\FSPowerPack.Community.3.0.0.0\Tools\fsyacc.exe" "$(ProjectDir)QL_Parser.fsp" -v --module QL_Parser
+)</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,18 +1,18 @@
 ﻿using QL_ExtensionTest.Mathematics.Expr;
+using QL_Grammar.AST.Expr;
+using QL_Grammar.AST.Stmnt;
 using QL_Grammar.Factory;
-using QL_Grammar.TypeCheck.Expr;
-using QL_Grammar.TypeCheck.Stmnt;
 
 namespace QL_ExtensionTest.Mathematics.Factory
 {
-    public class MathFactory : TypeCheckFactory, IMathFactory<ITypeCheckExpr, ITypeCheckStmnt>
+    public class MathFactory : QLFactory, IMathFactory<IExprNode, IStmntNode>
     {
-        public ITypeCheckExpr Modulo(ITypeCheckExpr l, ITypeCheckExpr r)
+        public IExprNode Modulo(IExprNode l, IExprNode r)
         {
             return new ModuloExpr(l, r);
         }
 
-        public ITypeCheckExpr Power(ITypeCheckExpr l, ITypeCheckExpr r)
+        public IExprNode Power(IExprNode l, IExprNode r)
         {
             return new PowerExpr(l, r);
         }

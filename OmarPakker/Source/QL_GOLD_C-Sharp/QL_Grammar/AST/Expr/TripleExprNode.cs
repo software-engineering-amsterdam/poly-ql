@@ -1,7 +1,7 @@
 ﻿
 namespace QL_Grammar.AST.Expr
 {
-    public class TripleExprNode<E> : DoubleExprNode<E>
+    public abstract class TripleExprNode<E> : DoubleExprNode<E>
         where E : IExprNode
     {
         public E Expr3 { get; private set; }
@@ -11,5 +11,15 @@ namespace QL_Grammar.AST.Expr
         {
             Expr3 = e3;
         }
+
+		public override bool Equals(object obj)
+		{
+			if (!base.Equals(obj) || !(obj is TripleExprNode<E>))
+			{
+				return false;
+			}
+
+			return Expr3.Equals(((TripleExprNode<E>)obj).Expr3);
+		}
     }
 }

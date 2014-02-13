@@ -2,7 +2,7 @@
 
 namespace QL_Grammar.AST.Stmnt
 {
-    public class IfElseStmntNode<E, S> : IfStmntNode<E, S>
+    public abstract class IfElseStmntNode<E, S> : IfStmntNode<E, S>
         where E : IExprNode
         where S : IStmntNode
 	{
@@ -12,6 +12,16 @@ namespace QL_Grammar.AST.Stmnt
             : base(check, ifTrue)
 		{
             IfFalseBody = ifFalse;
+		}
+
+		public override bool Equals(object obj)
+		{
+			if (!base.Equals(obj) || !(obj is IfElseStmntNode<E, S>))
+			{
+				return false;
+			}
+
+			return IfFalseBody.Equals(((IfElseStmntNode<E, S>)obj).IfFalseBody);
 		}
 	}
 }
