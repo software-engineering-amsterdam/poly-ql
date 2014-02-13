@@ -7,6 +7,7 @@ using QL_Grammar.AST.Expr;
 using QL_Grammar.AST.Stmnt;
 using QL_Grammar.AST.Types;
 using QL_Grammar.Factory;
+using QL_Grammar.QL.Types;
 
 namespace Grammar
 {

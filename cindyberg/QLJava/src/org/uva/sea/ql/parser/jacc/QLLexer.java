@@ -6,8 +6,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.uva.sea.ql.ast.*;
+import org.uva.sea.ql.ast.literal.BoolLiteral;
+import org.uva.sea.ql.ast.literal.IntLiteral;
 import org.uva.sea.ql.ast.literal.StringLiteral;
-import org.uva.sea.ql.ast.type.IntType;
 
 public class QLLexer implements QLTokens {
 	private static final Map<String, Integer> KEYWORDS;
@@ -200,7 +201,7 @@ public class QLLexer implements QLTokens {
 			    			n = 10 * n + (c - '0');
 			    			nextChar(); 
 			    		} while (Character.isDigit(c)); 
-			    		yylval = new IntType(n);
+			    		yylval = new IntLiteral(n);
 			    		return token = INTEGER;
 			    	}
 			    	if (Character.isLetter(c)) {
@@ -211,6 +212,8 @@ public class QLLexer implements QLTokens {
 			    		}
 			    		while (Character.isLetterOrDigit(c));
 			    		String name = sb.toString();
+			    		if(name == "true"){new BoolLiteral(true);}
+			    		if(name == "false"){new BoolLiteral(false);}
 			    		if (KEYWORDS.containsKey(name)) {
 			    			return token = KEYWORDS.get(name);
 			    		}

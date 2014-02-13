@@ -12,6 +12,7 @@ using System.IO;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
 
+using QL.Components;
 
 namespace QL
 {
@@ -25,7 +26,7 @@ namespace QL
         private void btnParse_Click(object sender, EventArgs e)
         {
             txtOutput.Clear();
-            string inputString = txtInput.Text + "^z";
+            string inputString = txtInput.Text;
             MemoryStream inputStream = new MemoryStream(Encoding.UTF8.GetBytes(inputString ?? ""));
 
             AntlrInputStream input = new AntlrInputStream(inputStream);
@@ -39,16 +40,17 @@ namespace QL
             lexer.AddErrorListener(new LexerErrorListener(){OnError = WriteError});
             parser.AddErrorListener(new ParserErrorListener(){OnError = WriteError});
 
-            IParseTree tree = parser.prog();
+            IParseTree tree = parser.questionnaire();
 
-            if (parser.NumberOfSyntaxErrors > 0)
-                txtOutput.Text += string.Format("Parser errors found: {0}", parser.NumberOfSyntaxErrors);
+            //if (parser.NumberOfSyntaxErrors > 0)
+            //    txtOutput.Text += string.Format("Parser errors found: {0}", parser.NumberOfSyntaxErrors);
 
             QLVisitor visitor = new QLVisitor();
+            visitor.Visit(tree);
 
-            txtOutput.Text += string.Format(@" {0} Generated parse tree: 
-                                               {0} {1}
-                                               {0} {2}"
+            txtOutput.Text += string.Format(@"{0}{0} Generated parse tree: 
+                                              {0} {1}
+                                              {0} {2}"
                                                 , Environment.NewLine
                                                 , tree.ToStringTree(parser)
                                                 , visitor.Visit(tree));

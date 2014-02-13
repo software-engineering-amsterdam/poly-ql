@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using GOLD;
 
@@ -26,7 +27,14 @@ namespace Grammar
 
         private Parser parser;
 
-        public Position ParserPosition { get { return parser.CurrentPosition(); } }
+		public Tuple<int, int> ParserPosition
+		{
+			get
+			{
+				Position pPos = parser.CurrentPosition();
+				return new Tuple<int, int>(pPos.Line, pPos.Column);
+			}
+		}
         protected abstract ReadOnlyDictionary<string, short> Rules { get; }
 
         public AbstractParser(bool trimReductions)

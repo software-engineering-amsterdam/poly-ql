@@ -1,7 +1,7 @@
 ﻿
 namespace QL_Grammar.AST.Expr
 {
-    public interface IExprNode
+    public interface IExprNode : IASTNode
     {
 
     }
