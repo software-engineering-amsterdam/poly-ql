@@ -1,0 +1,5 @@
+package nl.uva.sc;
+
+public class BookParserSubscriber {
+
+}

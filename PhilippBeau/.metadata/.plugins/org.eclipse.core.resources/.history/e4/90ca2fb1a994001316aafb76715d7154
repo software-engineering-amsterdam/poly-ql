@@ -1,0 +1,23 @@
+package nl.uva.sc.parser.subscriber;
+
+import java.util.HashSet;
+import java.util.Map;
+import java.util.TreeSet;
+
+public class TermFrequency implements BookParserSubscriber {
+
+    Set<Token> mIndex = new HashSet<>();
+
+    @Override
+    public void nextWord(final String word) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void newLine() {
+        // TODO Auto-generated method stub
+
+    }
+
+}

@@ -1,0 +1,22 @@
+package nl.uva.sc.parser.subscriber;
+
+import java.util.HashMap;
+
+public class TermFrequency implements BookParserSubscriber {
+
+    HashMap<String, Token> mIndex = new HashMap<>();
+
+    @Override
+    public void nextWord(final String word) {
+        if (mIndex.containsKey(word)) {
+            mIndex.get(word)++;
+        }
+    }
+
+    @Override
+    public void newLine() {
+        // TODO Auto-generated method stub
+
+    }
+
+}

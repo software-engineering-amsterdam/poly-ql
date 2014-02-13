@@ -1,0 +1,22 @@
+package nl.uva.sc.parser;
+
+public class Token implements Comparable<Token> {
+
+    private String mToken;
+    
+    public Token(String token) {
+        mToken = token;
+    }
+    
+    public int hashCode() {
+        return 0;
+        
+    }
+    
+    @Override
+    public int compareTo(Token o) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+}

@@ -1,0 +1,17 @@
+package nl.uva.sc.parser.subscriber;
+
+public class TermFrequency implements BookParserSubscriber {
+
+    @Override
+    public void nextWord(final String word) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void newLine() {
+        // TODO Auto-generated method stub
+
+    }
+
+}

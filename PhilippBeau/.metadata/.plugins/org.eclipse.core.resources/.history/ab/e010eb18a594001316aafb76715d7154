@@ -1,0 +1,12 @@
+package nl.uva.sc;
+
+import java.io.File;
+
+public class BookParser {
+
+	public BookParser(File bookFile) {
+		
+	}
+	
+	
+}
