@@ -56,6 +56,9 @@ Comment End   = '*/'
                |  goto Identifier ';'
                |  loop '(' <Expression> ')' <Statement>
 
+! GOLD parser will choose 'shift' over 'reduce' for this,
+! which we want since we want the 'else' to associate with
+! the innermost 'if'.
 <OptElse>     ::= else <Statement>
                |  <>
 
