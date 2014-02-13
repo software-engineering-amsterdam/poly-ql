@@ -3,12 +3,18 @@
  */
 grammar Test;
 
-questionnare    : 'form ' title ' {' (question)+ '}';
+questionnare    : 'form' title '{' block+ '}';
+
 title           : TITLE;
-question		: qtitle ASSIGNMENT '"' qcontent '"' qtype;
-qtitle          : QUESTIONTITLE;
-qcontent        : (.+?);
+block           : ifblock | question; 
+
+question		: qid ASSIGNMENT '"' qcontent '"' qtype;
+qid             : QUESTIONTITLE;
+qcontent        : .+?;
 qtype           : 'boolean' | 'int' | 'string';
+
+ifblock         : 'if' condition '{' question+ '}';
+condition       : '(' (cond=.+?) ')' { System.out.println("Found condition: " + $cond.text); }; 
 
 TITLE           : [A-Z][a-zA-Z0-9]*;
 QUESTIONTITLE   : [a-z][a-zA-Z0-9]*;
