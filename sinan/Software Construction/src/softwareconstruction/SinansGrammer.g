@@ -2,14 +2,16 @@ grammar SinansGrammer;
 
 @header {
     package softwareconstruction;
-    import java.util.HashMap;
 }
 
-form : 'form' IDENTIFIER '{' question+ '}' {System.out.println("Form name:"+$IDENTIFIER.text);};
+form returns [Form fo] @init {$fo = new Form();}: 'form' IDENTIFIER '{' (question { System.out.println($question.qe.toString()); $fo.addQuestion($question.qe);})+ '}';
 
-question: IDENTIFIER {System.out.println("Question name: "+$IDENTIFIER.text);} ':' '"' IDENTIFIER+ {System.out.println("Question content: "+$IDENTIFIER.text);} '?' '"' IDENTIFIER {System.out.println("Question type: "+$IDENTIFIER.text + "\n---------------------");};
+question returns [Question qe] @init {$qe = new Question();} : IDENTIFIER { $qe.setQuestionName($IDENTIFIER.text); } ':' '"' IDENTIFIER+ { $qe.setQuestionContent($IDENTIFIER.text); } '?' '"' IDENTIFIER { $qe.setQuestionType($IDENTIFIER.text);};
 
-IDENTIFIER  :   ('a'..'z'|'A'..'Z'|'0'..'9')+ ;
+//IDENTIFIER  :   ('a'..'z'|'A'..'Z'|'0'..'9')+ ;
+IDENTIFIER : (LETTER | DIGIT)+;
+LETTER : ('a'..'z'|'A'..'Z');
+DIGIT : ('0'..'9');
 WS  :   (' '|'\n'|'\t')+ {skip();} ;
 
 //form Box1HouseOwning {

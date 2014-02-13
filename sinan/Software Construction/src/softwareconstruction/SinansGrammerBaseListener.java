@@ -1,7 +1,6 @@
 // Generated from /Users/Sinan/Documents/NetBeansProjects/Software Construction/sinan/Software Construction/src/softwareconstruction/SinansGrammer.g by ANTLR 4.2
 
     package softwareconstruction;
-    import java.util.HashMap;
 
 
 import org.antlr.v4.runtime.ParserRuleContext;

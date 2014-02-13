@@ -30,7 +30,7 @@ public class SoftwareConstruction {
             CommonTokenStream tokens = new CommonTokenStream(lexer);
             SinansGrammerParser parser = new SinansGrammerParser(tokens);
             ParseTree tree = parser.form();
-//            System.out.println(tree.toStringTree(parser));
+            System.out.println(tree.toStringTree(parser));
         } catch (RecognitionException ex) {
             Logger.getLogger(SoftwareConstruction.class.getName()).log(Level.SEVERE, null, ex);
         } catch (FileNotFoundException ex) {
