@@ -2,14 +2,10 @@
 using GOLD;
 using Grammar.Generated.v2;
 using QL_ExtensionTest.Extensions.Factory;
-using QL_Grammar.AST.Expr;
-using QL_Grammar.AST.Stmnt;
 
 namespace Grammar.Parser
 {
     public class ExtensionsParser<E, S, F> : QLParser<E, S, F>
-		where E : IExprNode
-		where S : IStmntNode
 		where F : IExtensionsFactory<E, S>
     {
         protected override ReadOnlyDictionary<string, short> Rules { get { return GrammarData.Rules; } }

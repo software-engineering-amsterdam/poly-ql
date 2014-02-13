@@ -1,7 +1,7 @@
 ﻿using QL_ExtensionTest.Extensions.Stmnt;
-using QL_Grammar.AST.Stmnt;
 using QL_Grammar.Check;
-using QL_Grammar.QL.Types;
+using QL_Grammar.QLTypeCheck.Stmnt;
+using QL_Grammar.QLTypeCheck.Types;
 
 namespace QL_ExtensionTest.Extensions.Check
 {
@@ -12,7 +12,7 @@ namespace QL_ExtensionTest.Extensions.Check
 
 		}
 
-		protected override bool CheckStmnt(IStmntNode stmnt)
+		protected override bool CheckStmnt(ITypeCheckStmnt stmnt)
 		{
 			return CheckStmnt((dynamic)stmnt);
 		}

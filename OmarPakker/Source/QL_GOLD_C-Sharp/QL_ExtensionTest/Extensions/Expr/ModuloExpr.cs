@@ -1,10 +1,11 @@
-﻿using QL_Grammar.AST.Expr;
+﻿using QL_Grammar.QLAlgebra.Expr;
+using QL_Grammar.QLTypeCheck.Expr;
 
 namespace QL_ExtensionTest.Extensions.Expr
 {
-    public class ModuloExpr : DoubleExprNode<IExprNode>, IExprNode
+    public class ModuloExpr : DoubleExpr<ITypeCheckExpr>, ITypeCheckExpr
     {
-        public ModuloExpr(IExprNode l, IExprNode r)
+        public ModuloExpr(ITypeCheckExpr l, ITypeCheckExpr r)
             : base(l, r)
         {
 

@@ -46,7 +46,7 @@
     <Compile Include="Extensions\Expr\PowerExpr.cs" />
     <Compile Include="Extensions\Expr\ModuloExpr.cs" />
     <Compile Include="Extensions\Factory\IExtensionsFactory.cs" />
-    <Compile Include="Extensions\Factory\ExtensionsFactory.cs" />
+    <Compile Include="Extensions\Factory\ExtensionsTypeCheckFactory.cs" />
     <Compile Include="ConsoleExtensionsTest.cs" />
     <Compile Include="Grammar\ExtensionsParser.cs" />
     <Compile Include="Program.cs" />

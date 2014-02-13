@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using QL_Grammar.AST.Expr;
-using QL_Grammar.AST.Types;
-using QL_Grammar.QL.Expr;
-using QL_Grammar.QL.Types;
+using QL_Grammar.Algebra.Type;
+using QL_Grammar.QLTypeCheck.Expr;
+using QL_Grammar.QLTypeCheck.Types;
 
 namespace QL_Grammar.Check
 {
@@ -11,11 +10,11 @@ namespace QL_Grammar.Check
 	{
 		public AddErrorDelegate AddError { get; internal set; }
 
-		protected Dictionary<string, VarInitExprNode<IExprNode>> variables { get; private set; }
+		protected Dictionary<string, VarInitExpr> variables { get; private set; }
 
 		public CheckExpressions()
 		{
-			variables = new Dictionary<string, VarInitExprNode<IExprNode>>();
+			variables = new Dictionary<string, VarInitExpr>();
 		}
 
 		public void ClearVariables()
@@ -23,22 +22,22 @@ namespace QL_Grammar.Check
 			variables.Clear();
 		}
 
-		public IType Check(IExprNode expr)
+		public IType Check(ITypeCheckExpr expr)
 		{
 			return CheckExpr(expr);
 		}
 
-		protected virtual IType CheckExpr(IExprNode expr)
+		protected virtual IType CheckExpr(ITypeCheckExpr expr)
 		{
 			return CheckExpr((dynamic)expr);
 		}
 
-		protected IType CheckExpr(LiteralExprNode expr)
+		protected IType CheckExpr(LiteralExpr expr)
 		{
 			return expr.Value.Type;
 		}
 
-		protected IType CheckExpr(VarExprNode expr)
+		protected IType CheckExpr(VarExpr expr)
 		{
 			if (!variables.ContainsKey(expr.Name))
 			{
