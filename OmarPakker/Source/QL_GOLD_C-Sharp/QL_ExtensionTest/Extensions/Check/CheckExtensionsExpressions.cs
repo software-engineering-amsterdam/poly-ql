@@ -1,15 +1,15 @@
 ﻿using System;
 using QL_ExtensionTest.Extensions.Expr;
-using QL_Grammar.AST.Expr;
-using QL_Grammar.AST.Types;
+using QL_Grammar.Algebra.Type;
 using QL_Grammar.Check;
-using QL_Grammar.QL.Types;
+using QL_Grammar.QLTypeCheck.Expr;
+using QL_Grammar.QLTypeCheck.Types;
 
 namespace QL_ExtensionTest.Extensions.Check
 {
 	public class CheckExtensionsExpressions : CheckExpressions
 	{
-		protected override IType CheckExpr(IExprNode expr)
+		protected override IType CheckExpr(ITypeCheckExpr expr)
 		{
 			return CheckExpr((dynamic)expr);
 		}

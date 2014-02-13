@@ -1,25 +1,26 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using System.Text;
 using GOLD;
 using Grammar.Parser;
 using QL_ExtensionTest.Extensions.Check;
 using QL_ExtensionTest.Extensions.Factory;
-using QL_Grammar.AST;
-using QL_Grammar.AST.Expr;
-using QL_Grammar.AST.Stmnt;
 using QL_Grammar.Check;
+using QL_Grammar.QLTypeCheck;
+using QL_Grammar.QLTypeCheck.Expr;
+using QL_Grammar.QLTypeCheck.Stmnt;
 
 namespace QL_ExtensionTest
 {
     public class ConsoleExtensionsTest
     {
-        private readonly ExtensionsParser<IExprNode, IStmntNode, ExtensionsFactory> parser;
+        private readonly ExtensionsParser<ITypeCheckExpr, ITypeCheckStmnt, ExtensionsTypeCheckFactory> parser;
 
         public ConsoleExtensionsTest()
         {
-            parser = new ExtensionsParser<IExprNode, IStmntNode, ExtensionsFactory>();
-			parser.Factory = new ExtensionsFactory();
+            parser = new ExtensionsParser<ITypeCheckExpr, ITypeCheckStmnt, ExtensionsTypeCheckFactory>();
+			parser.Factory = new ExtensionsTypeCheckFactory();
 
             parser.OnReduction += OnReduction;
             parser.OnCompletion += OnCompletion;
@@ -31,7 +32,13 @@ namespace QL_ExtensionTest
 
             Assembly a = parser.Factory.GetType().Assembly;
             parser.LoadGrammar(new BinaryReader(a.GetManifestResourceStream("QL_ExtensionTest.Grammar.QL_Grammar.egt")));
-            parser.Parse("form Form1 { \"Power:\" << answer1:int = 5 ^ 2; \"Modulo:\" << 10 % 5; \"Modulo2:\" << 10 % true; }");
+            parser.Parse(new StringBuilder().AppendLine("form Form1 {")
+				.AppendLine("\"Power:\" << answer1:int = 5 ^ 2;")
+				.AppendLine("\"Modulo:\" << 10 % 5;")
+				.AppendLine("\"Modulo2:\" << 10 % true;")
+				.AppendLine("loop(answer1)")
+				.AppendLine("\"In the loop:\" >> loopAnswer:int;")
+				.AppendLine("}").ToString());
         }
 
         private void OnReduction(Reduction r, object newObj)
@@ -50,9 +57,9 @@ namespace QL_ExtensionTest
 
             Console.WriteLine(String.Format("R: {0}, C: {1}, D: {2}", r.Parent.Text(), count, dataOutput));
 
-            if (newObj is IASTNode)
+            if (newObj is ITypeCheck)
             {
-				((IASTNode)newObj).SourcePosition = parser.ParserPosition;
+				((ITypeCheck)newObj).SourcePosition = parser.ParserPosition;
             }
         }
 
@@ -61,7 +68,7 @@ namespace QL_ExtensionTest
 			TypeChecker<CheckExtensionsExpressions, CheckExtensionsStmnts> tc
 				= new TypeChecker<CheckExtensionsExpressions, CheckExtensionsStmnts>();
 
-            if (tc.Check((IASTNode)root))
+			if (tc.Check((ITypeCheck)root))
 			{
 				foreach (Tuple<string, bool> msg in tc.Errors)
 				{

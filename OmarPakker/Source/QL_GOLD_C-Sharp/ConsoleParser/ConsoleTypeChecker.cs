@@ -3,23 +3,23 @@ using System.IO;
 using System.Reflection;
 using GOLD;
 using Grammar;
-using QL_Grammar.AST;
-using QL_Grammar.AST.Expr;
-using QL_Grammar.AST.Stmnt;
 using QL_Grammar.Check;
-using QL_Grammar.Factory;
+using QL_Grammar.QLTypeCheck;
+using QL_Grammar.QLTypeCheck.Expr;
+using QL_Grammar.QLTypeCheck.Factory;
+using QL_Grammar.QLTypeCheck.Stmnt;
 
 namespace ConsoleParser
 {
     public class ConsoleTypeChecker
 	{
-        private readonly QLParser<IExprNode, IStmntNode, QLFactory> parser;
+        private readonly QLParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeCheckFactory> parser;
 
         public ConsoleTypeChecker()
             : base()
         {
-            parser = new QLParser<IExprNode, IStmntNode, QLFactory>();
-            parser.Factory = new QLFactory();
+			parser = new QLParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeCheckFactory>();
+            parser.Factory = new QLTypeCheckFactory();
 
             parser.OnReduction += OnReduction;
             parser.OnCompletion += OnCompletion;
@@ -50,9 +50,9 @@ namespace ConsoleParser
 
             Console.WriteLine(String.Format("R: {0}, C: {1}, D: {2}", r.Parent.Text(), count, dataOutput));
 
-			if (newObj is IASTNode)
+			if (newObj is ITypeCheck)
 			{
-				((IASTNode)newObj).SourcePosition = parser.ParserPosition;
+				((ITypeCheck)newObj).SourcePosition = parser.ParserPosition;
 			}
         }
 
@@ -61,7 +61,7 @@ namespace ConsoleParser
 			TypeChecker<CheckExpressions, CheckStatements<CheckExpressions>> tc
 				= new TypeChecker<CheckExpressions, CheckStatements<CheckExpressions>>();
 
-			if (tc.Check((IASTNode)root))
+			if (tc.Check((ITypeCheck)root))
 			{
 				foreach (Tuple<string, bool> msg in tc.Errors)
 				{

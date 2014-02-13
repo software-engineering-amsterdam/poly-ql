@@ -3,18 +3,14 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using GOLD;
 using Grammar.Generated.v1;
-using QL_Grammar.AST.Expr;
-using QL_Grammar.AST.Stmnt;
-using QL_Grammar.AST.Types;
-using QL_Grammar.Factory;
-using QL_Grammar.QL.Types;
+using QL_Grammar.Algebra.Type;
+using QL_Grammar.QLAlgebra.Factory;
+using QL_Grammar.QLTypeCheck.Types;
 
 namespace Grammar
 {
 	public class QLParser<E, S, F> : AbstractParser
-		where E : IExprNode
-		where S : IStmntNode
-		where F : IFactory<E, S>
+		where F : IQLStmntFactory<E, S>
 	{
 		protected override ReadOnlyDictionary<string, short> Rules { get { return GrammarData.Rules; } }
 		public F Factory;

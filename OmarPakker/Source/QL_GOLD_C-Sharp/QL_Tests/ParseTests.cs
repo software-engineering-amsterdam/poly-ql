@@ -1,12 +1,10 @@
 ﻿using System.IO;
 using System.Reflection;
 using Grammar;
-using QL_Grammar.AST.Expr;
-using QL_Grammar.AST.Stmnt;
-using QL_Grammar.Factory;
-using QL_Grammar.QL.Expr;
-using QL_Grammar.QL.Stmnt;
-using QL_Grammar.QL.Value;
+using QL_Grammar.QLTypeCheck.Expr;
+using QL_Grammar.QLTypeCheck.Factory;
+using QL_Grammar.QLTypeCheck.Stmnt;
+using QL_Grammar.QLTypeCheck.Value;
 using Xunit;
 
 namespace QL_Tests
@@ -18,10 +16,10 @@ namespace QL_Tests
 			
 		}
 
-		private QLParser<IExprNode, IStmntNode, QLFactory> InitParser()
+		private QLParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeCheckFactory> InitParser()
 		{
-			QLParser<IExprNode, IStmntNode, QLFactory> parser = new QLParser<IExprNode, IStmntNode, QLFactory>();
-			parser.Factory = new QLFactory();
+			QLParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeCheckFactory> parser = new QLParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeCheckFactory>();
+			parser.Factory = new QLTypeCheckFactory();
 			Assembly a = parser.Factory.GetType().Assembly;
 			parser.LoadGrammar(new BinaryReader(a.GetManifestResourceStream("QL_Grammar.Grammar.QL_Grammar.egt")));
 			return parser;
@@ -30,7 +28,7 @@ namespace QL_Tests
 		[Fact]
 		public void AddAssociation()
 		{
-			QLParser<IExprNode, IStmntNode, QLFactory> parser = InitParser();
+			QLParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeCheckFactory> parser = InitParser();
 
 			parser.OnCompletion += (root) =>
 			{
@@ -38,9 +36,9 @@ namespace QL_Tests
 					new QuestionStmnt("\"Question 1:\"", false,
 						new AddExpr(
 							new AddExpr(
-								new LiteralExprNode(new IntValue(5)),
-								new LiteralExprNode(new IntValue(2))),
-							new LiteralExprNode(new IntValue(4))
+								new LiteralExpr(new IntValue(5)),
+								new LiteralExpr(new IntValue(2))),
+							new LiteralExpr(new IntValue(4))
 						)
 					)
 				);
@@ -55,17 +53,17 @@ namespace QL_Tests
 		[Fact]
 		public void MultiplicationPrecedence()
 		{
-			QLParser<IExprNode, IStmntNode, QLFactory> parser = InitParser();
+			QLParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeCheckFactory> parser = InitParser();
 
 			parser.OnCompletion += (root) =>
 			{
 				FormStmnt tree = new FormStmnt("Form1",
 					new QuestionStmnt("\"Question 1:\"", false,
 						new AddExpr(
-							new LiteralExprNode(new IntValue(5)),
+							new LiteralExpr(new IntValue(5)),
 							new MultiplyExpr(
-								new LiteralExprNode(new IntValue(2)),
-								new LiteralExprNode(new IntValue(4))
+								new LiteralExpr(new IntValue(2)),
+								new LiteralExpr(new IntValue(4))
 							)
 						)
 					)
@@ -81,23 +79,23 @@ namespace QL_Tests
 		[Fact]
 		public void CompStmntFlattened()
 		{
-			QLParser<IExprNode, IStmntNode, QLFactory> parser = InitParser();
+			QLParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeCheckFactory> parser = InitParser();
 
 			parser.OnCompletion += (root) =>
 			{
 				FormStmnt tree = new FormStmnt("Form1",
 					new CompStmnt(
 						new QuestionStmnt("\"Question 1:\"", false,
-							new LiteralExprNode(new IntValue(5))
+							new LiteralExpr(new IntValue(5))
 						),
 						new QuestionStmnt("\"Question 1:\"", false,
-							new LiteralExprNode(new IntValue(5))
+							new LiteralExpr(new IntValue(5))
 						),
 						new QuestionStmnt("\"Question 1:\"", false,
-							new LiteralExprNode(new IntValue(5))
+							new LiteralExpr(new IntValue(5))
 						),
 						new QuestionStmnt("\"Question 1:\"", false,
-							new LiteralExprNode(new IntValue(5))
+							new LiteralExpr(new IntValue(5))
 						)
 					)
 				);

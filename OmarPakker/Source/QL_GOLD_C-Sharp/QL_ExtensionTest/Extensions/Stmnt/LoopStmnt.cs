@@ -1,16 +1,16 @@
 ﻿using System;
-using QL_Grammar.AST.Expr;
-using QL_Grammar.AST.Stmnt;
+using QL_Grammar.QLTypeCheck.Expr;
+using QL_Grammar.QLTypeCheck.Stmnt;
 
 namespace QL_ExtensionTest.Extensions.Stmnt
 {
-	public class LoopStmnt : IStmntNode
+	public class LoopStmnt : ITypeCheckStmnt
 	{
 		public Tuple<int, int> SourcePosition { get; set; }
-		public IExprNode Expression { get; private set; }
-		public IStmntNode Body { get; private set; }
+		public ITypeCheckExpr Expression { get; private set; }
+		public ITypeCheckStmnt Body { get; private set; }
 
-		public LoopStmnt(IExprNode expr, IStmntNode body)
+		public LoopStmnt(ITypeCheckExpr expr, ITypeCheckStmnt body)
 		{
 			Expression = expr;
 			Body = body;
