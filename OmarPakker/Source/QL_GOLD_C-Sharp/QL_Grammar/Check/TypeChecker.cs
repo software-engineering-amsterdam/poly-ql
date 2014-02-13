@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using QL_Grammar.AST;
-using QL_Grammar.AST.Expr;
-using QL_Grammar.AST.Stmnt;
+using QL_Grammar.QLTypeCheck.Expr;
+using QL_Grammar.QLTypeCheck.Stmnt;
 
 namespace QL_Grammar.Check
 {
@@ -35,20 +34,20 @@ namespace QL_Grammar.Check
 			errors.Add(new Tuple<string, bool>(finalMsg, error));
 		}
 
-		public bool Check(IASTNode rootNode)
+		public bool Check(object root)
 		{
-			Check((dynamic)rootNode);
+			Check((dynamic)root);
 			return HasErrors;
 		}
 
-		private void Check(IExprNode expr)
+		private void Check(ITypeCheckExpr expr)
 		{
 			E exprChecker = new E();
 			exprChecker.AddError = AddError;
 			exprChecker.Check(expr);
 		}
 
-		private void Check(IStmntNode stmnt)
+		private void Check(ITypeCheckStmnt stmnt)
 		{
 			S stmntChecker = new S();
 			stmntChecker.AddError = AddError;

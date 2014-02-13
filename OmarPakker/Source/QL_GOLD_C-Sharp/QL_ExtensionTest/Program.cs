@@ -1,5 +1,4 @@
 ﻿using System;
-using QL_ExtensionTest.Mathematics;
 
 namespace QL_ExtensionTest
 {
@@ -7,7 +6,7 @@ namespace QL_ExtensionTest
     {
         static void Main(string[] args)
         {
-            new ConsoleMathTypeChecker();
+            new ConsoleExtensionsTest();
 
             Console.ReadKey();
         }

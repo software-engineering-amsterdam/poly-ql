@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using QL_Grammar.AST.Stmnt;
-using QL_Grammar.QL.Stmnt;
-using QL_Grammar.QL.Types;
+using QL_Grammar.QLTypeCheck.Stmnt;
+using QL_Grammar.QLTypeCheck.Types;
 
 namespace QL_Grammar.Check
 {
@@ -20,30 +19,30 @@ namespace QL_Grammar.Check
 		}
 
 		protected HashSet<string> forms { get; private set; }
-		protected List<GotoStmntNode> gotos { get; private set; }
+		protected List<GotoStmnt> gotos { get; private set; }
 		protected E exprChecker { get; private set; }
 
 		public CheckStatements()
 		{
 			forms = new HashSet<string>();
-			gotos = new List<GotoStmntNode>();
+			gotos = new List<GotoStmnt>();
 			exprChecker = new E();
 		}
 
-		public void Check(IStmntNode stmnt)
+		public void Check(ITypeCheckStmnt stmnt)
 		{
 			CheckStmnt(stmnt);
 
 			gotos.RemoveAll((item) => forms.Contains(item.GotoName));
 
-			foreach (GotoStmntNode item in gotos)
+			foreach (GotoStmnt item in gotos)
 			{
 				AddError(String.Format("'goto' statement not possible. Form {0} does not exist!",
 					item.GotoName), true, item.SourcePosition);
 			}
 		}
 
-		protected virtual bool CheckStmnt(IStmntNode stmnt)
+		protected virtual bool CheckStmnt(ITypeCheckStmnt stmnt)
 		{
 			return CheckStmnt((dynamic)stmnt);
 		}
@@ -52,7 +51,7 @@ namespace QL_Grammar.Check
 		{
 			bool success = true;
 
-			foreach (IStmntNode item in stmnt.Statements)
+			foreach (ITypeCheckStmnt item in stmnt.Statements)
 			{
 				if (!CheckStmnt(item))
 				{
