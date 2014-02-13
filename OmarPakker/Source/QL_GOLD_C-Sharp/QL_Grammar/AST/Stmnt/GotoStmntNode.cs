@@ -21,5 +21,10 @@ namespace QL_Grammar.AST.Stmnt
 
 			return GotoName.Equals(((GotoStmntNode)obj).GotoName);
 		}
+
+		public override int GetHashCode()
+		{
+			return GotoName.GetHashCode();
+		}
     }
 }

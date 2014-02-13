@@ -18,11 +18,11 @@ namespace QL_Tests
 			
 		}
 
-		private QLParser<IExprNode, IStmntNode> InitParser()
+		private QLParser<IExprNode, IStmntNode, QLFactory> InitParser()
 		{
-			QLParser<IExprNode, IStmntNode> parser = new QLParser<IExprNode, IStmntNode>();
+			QLParser<IExprNode, IStmntNode, QLFactory> parser = new QLParser<IExprNode, IStmntNode, QLFactory>();
 			parser.Factory = new QLFactory();
-			Assembly a = typeof(QLParser<IExprNode, IStmntNode>).Assembly;
+			Assembly a = parser.Factory.GetType().Assembly;
 			parser.LoadGrammar(new BinaryReader(a.GetManifestResourceStream("QL_Grammar.Grammar.QL_Grammar.egt")));
 			return parser;
 		}
@@ -30,7 +30,7 @@ namespace QL_Tests
 		[Fact]
 		public void AddAssociation()
 		{
-			QLParser<IExprNode, IStmntNode> parser = InitParser();
+			QLParser<IExprNode, IStmntNode, QLFactory> parser = InitParser();
 
 			parser.OnCompletion += (root) =>
 			{
@@ -55,7 +55,7 @@ namespace QL_Tests
 		[Fact]
 		public void MultiplicationPrecedence()
 		{
-			QLParser<IExprNode, IStmntNode> parser = InitParser();
+			QLParser<IExprNode, IStmntNode, QLFactory> parser = InitParser();
 
 			parser.OnCompletion += (root) =>
 			{
@@ -81,7 +81,7 @@ namespace QL_Tests
 		[Fact]
 		public void CompStmntFlattened()
 		{
-			QLParser<IExprNode, IStmntNode> parser = InitParser();
+			QLParser<IExprNode, IStmntNode, QLFactory> parser = InitParser();
 
 			parser.OnCompletion += (root) =>
 			{

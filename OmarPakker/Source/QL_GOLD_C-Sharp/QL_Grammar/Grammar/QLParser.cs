@@ -11,237 +11,232 @@ using QL_Grammar.QL.Types;
 
 namespace Grammar
 {
-    public class QLParser<E, S> : AbstractParser
-        where E : IExprNode
-        where S : IStmntNode
-    {
-        protected override ReadOnlyDictionary<string, short> Rules { get { return GrammarData.Rules; } }
+	public class QLParser<E, S, F> : AbstractParser
+		where E : IExprNode
+		where S : IStmntNode
+		where F : IFactory<E, S>
+	{
+		protected override ReadOnlyDictionary<string, short> Rules { get { return GrammarData.Rules; } }
+		public F Factory;
 
-        private IFactory<E, S> factory;
-        public IFactory<E, S> Factory
-        {
-            get { return factory; }
-            set { factory = factory == null ? value : factory; }
-        }
+		public QLParser()
+			: base(true)
+		{
 
-        public QLParser()
-            : base(true)
-        {
+		}
 
-        }
+		protected override object CreateObjectFor(Reduction r)
+		{
+			//<Type> ::= string
+			if (r.Parent.TableIndex() == Rules["Type_String"])
+			{
+				return StringType.Instance;
+			}
+			//<Type> ::= int
+			else if (r.Parent.TableIndex() == Rules["Type_Int"])
+			{
+				return IntType.Instance;
+			}
+			//<Type> ::= real
+			else if (r.Parent.TableIndex() == Rules["Type_Real"])
+			{
+				return RealType.Instance;
+			}
+			//<Type> ::= bool
+			else if (r.Parent.TableIndex() == Rules["Type_Bool"])
+			{
+				return BoolType.Instance;
+			}
+			//<Forms> ::= <Form> <Forms>
+			//<Statements> ::= <Statement> <Statements>
+			else if (r.Parent.TableIndex() == Rules["Forms"]
+				|| r.Parent.TableIndex() == Rules["Statements"])
+			{
+				return Factory.Comp((S)r.get_Data(0), (S)r.get_Data(1));
+			}
+			//<Forms> ::= <Form>
+			//<Statements> ::= <Statement>
+			//<Statement> ::= <Block>
+			//<Statement> ::= <Question>
+			//<Expression> ::= <OrExpr>
+			//<OrExpr> ::= <AndExpr>
+			//<AndExpr> ::= <EqExpr>
+			//<EqExpr> ::= <CompExpr>
+			//<CompExpr> ::= <AddExpr>
+			//<AddExpr> ::= <MultExpr>
+			//<MultExpr> ::= <NegateExpr>
+			//<NegateExpr> ::= <Value>
+			//<Value> ::= <Literal>
+			else if (r.Parent.TableIndex() == Rules["Forms2"]
+				|| r.Parent.TableIndex() == Rules["Statements2"]
+				|| r.Parent.TableIndex() == Rules["Statement"]
+				|| r.Parent.TableIndex() == Rules["Statement2"]
+				|| r.Parent.TableIndex() == Rules["Expression"]
+				|| r.Parent.TableIndex() == Rules["Orexpr"]
+				|| r.Parent.TableIndex() == Rules["Andexpr"]
+				|| r.Parent.TableIndex() == Rules["Eqexpr"]
+				|| r.Parent.TableIndex() == Rules["Compexpr"]
+				|| r.Parent.TableIndex() == Rules["Addexpr"]
+				|| r.Parent.TableIndex() == Rules["Multexpr"]
+				|| r.Parent.TableIndex() == Rules["Negateexpr"]
+				|| r.Parent.TableIndex() == Rules["Value"])
+			{
+				return r.get_Data(0);
+			}
+			//<Form> ::= form Identifier <Block>
+			else if (r.Parent.TableIndex() == Rules["Form_Form_Identifier"])
+			{
+				return Factory.Form((string)r.get_Data(1), (S)r.get_Data(2));
+			}
+			//<Block> ::= '{' <Statements> '}'
+			//<OptElse> ::= else <Statement>
+			//<Value> ::= '(' <Expression> ')'
+			else if (r.Parent.TableIndex() == Rules["Block_Lbrace_Rbrace"]
+				|| r.Parent.TableIndex() == Rules["Optelse_Else"]
+				|| r.Parent.TableIndex() == Rules["Value_Lparen_Rparen"])
+			{
+				return r.get_Data(1);
+			}
+			//<Statement> ::= if '(' <Expression> ')' <Statement> <OptElse>
+			else if (r.Parent.TableIndex() == Rules["Statement_If_Lparen_Rparen"])
+			{
+				if (r.get_Data(5) != null)
+				{
+					return Factory.IfElse((E)r.get_Data(2), (S)r.get_Data(4), (S)r.get_Data(5));
+				}
+				return Factory.If((E)r.get_Data(2), (S)r.get_Data(4));
+			}
+			//<Statement> ::= goto Identifier ';'
+			else if (r.Parent.TableIndex() == Rules["Statement_Goto_Identifier_Semi"])
+			{
+				return Factory.Goto((string)r.get_Data(1));
+			}
+			//<OptElse> ::= 
+			else if (r.Parent.TableIndex() == Rules["Optelse"])
+			{
+				return null;
+			}
+			//<VarDecl> ::= Identifier ':' <Type>
+			else if (r.Parent.TableIndex() == Rules["Vardecl_Identifier_Colon"])
+			{
+				return Factory.VarDecl((string)r.get_Data(0), (IType)r.get_Data(2));
+			}
+			//<VarAssign> ::= Identifier ':' <Type> '=' <Expression>
+			else if (r.Parent.TableIndex() == Rules["Varassign_Identifier_Colon_Eq"])
+			{
+				return Factory.VarAssign((string)r.get_Data(0), (IType)r.get_Data(2), (E)r.get_Data(4));
+			}
+			//<Question> ::= StringLit '>>' <VarDecl> ';'
+			else if (r.Parent.TableIndex() == Rules["Question_Stringlit_Gtgt_Semi"])
+			{
+				return Factory.Question((string)r.get_Data(0), true, (E)r.get_Data(2));
+			}
+			//<Question> ::= StringLit '<<' <VarAssign> ';'
+			//<Question> ::= StringLit '<<' <Expression> ';'
+			else if (r.Parent.TableIndex() == Rules["Question_Stringlit_Ltlt_Semi"]
+				|| r.Parent.TableIndex() == Rules["Question_Stringlit_Ltlt_Semi2"])
+			{
+				return Factory.Question((string)r.get_Data(0), false, (E)r.get_Data(2));
+			}
+			//<Expression> ::= <OrExpr> '?' <OrExpr> ':' <Expression>
+			else if (r.Parent.TableIndex() == Rules["Expression_Question_Colon"])
+			{
+				return Factory.IfElse((E)r.get_Data(0), (E)r.get_Data(2), (E)r.get_Data(4));
+			}
+			//<OrExpr> ::= <OrExpr> '||' <AndExpr>
+			else if (r.Parent.TableIndex() == Rules["Orexpr_Pipepipe"])
+			{
+				return Factory.Or((E)r.get_Data(0), (E)r.get_Data(2));
+			}
+			//<AndExpr> ::= <AndExpr> '&&' <EqExpr>
+			else if (r.Parent.TableIndex() == Rules["Andexpr_Ampamp"])
+			{
+				return Factory.And((E)r.get_Data(0), (E)r.get_Data(2));
+			}
+			//<EqExpr> ::= <EqExpr> '==' <CompExpr>
+			else if (r.Parent.TableIndex() == Rules["Eqexpr_Eqeq"])
+			{
+				return Factory.Eq((E)r.get_Data(0), (E)r.get_Data(2));
+			}
+			//<EqExpr> ::= <EqExpr> '!=' <CompExpr>
+			else if (r.Parent.TableIndex() == Rules["Eqexpr_Exclameq"])
+			{
+				return Factory.NotEq((E)r.get_Data(0), (E)r.get_Data(2));
+			}
+			//<CompExpr> ::= <CompExpr> '<' <AddExpr>
+			else if (r.Parent.TableIndex() == Rules["Compexpr_Lt"])
+			{
+				return Factory.LessThen((E)r.get_Data(0), (E)r.get_Data(2));
+			}
+			//<CompExpr> ::= <CompExpr> '>' <AddExpr>
+			else if (r.Parent.TableIndex() == Rules["Compexpr_Gt"])
+			{
+				return Factory.GreaterThen((E)r.get_Data(0), (E)r.get_Data(2));
+			}
+			//<CompExpr> ::= <CompExpr> '<=' <AddExpr>
+			else if (r.Parent.TableIndex() == Rules["Compexpr_Lteq"])
+			{
+				return Factory.LessOrEqualTo((E)r.get_Data(0), (E)r.get_Data(2));
+			}
+			//<CompExpr> ::= <CompExpr> '>=' <AddExpr>
+			else if (r.Parent.TableIndex() == Rules["Compexpr_Gteq"])
+			{
+				return Factory.GreaterOrEqualTo((E)r.get_Data(0), (E)r.get_Data(2));
+			}
+			//<AddExpr> ::= <AddExpr> '+' <MultExpr>
+			else if (r.Parent.TableIndex() == Rules["Addexpr_Plus"])
+			{
+				return Factory.Add((E)r.get_Data(0), (E)r.get_Data(2));
+			}
+			//<AddExpr> ::= <AddExpr> '-' <MultExpr>
+			else if (r.Parent.TableIndex() == Rules["Addexpr_Minus"])
+			{
+				return Factory.Subtract((E)r.get_Data(0), (E)r.get_Data(2));
+			}
+			//<MultExpr> ::= <MultExpr> '*' <NegateExpr>
+			else if (r.Parent.TableIndex() == Rules["Multexpr_Times"])
+			{
+				return Factory.Multiply((E)r.get_Data(0), (E)r.get_Data(2));
+			}
+			//<MultExpr> ::= <MultExpr> '/' <NegateExpr>
+			else if (r.Parent.TableIndex() == Rules["Multexpr_Div"])
+			{
+				return Factory.Divide((E)r.get_Data(0), (E)r.get_Data(2));
+			}
+			//<NegateExpr> ::= '-' <Value>
+			//<NegateExpr> ::= '!' <Value>
+			else if (r.Parent.TableIndex() == Rules["Negateexpr_Minus"]
+				|| r.Parent.TableIndex() == Rules["Negateexpr_Exclam"])
+			{
+				return Factory.Negate((E)r.get_Data(1));
+			}
+			//<Value> ::= Identifier
+			else if (r.Parent.TableIndex() == Rules["Value_Identifier"])
+			{
+				return Factory.Variable((string)r.get_Data(0));
+			}
+			//<Literal> ::= StringLit
+			else if (r.Parent.TableIndex() == Rules["Literal_Stringlit"])
+			{
+				return Factory.String((string)r.get_Data(0));
+			}
+			//<Literal> ::= IntLit
+			else if (r.Parent.TableIndex() == Rules["Literal_Intlit"])
+			{
+				return Factory.Int(Int32.Parse((string)r.get_Data(0)));
+			}
+			//<Literal> ::= RealLit
+			else if (r.Parent.TableIndex() == Rules["Literal_Reallit"])
+			{
+				return Factory.Real(Double.Parse((string)r.get_Data(0), CultureInfo.InvariantCulture));
+			}
+			//<Literal> ::= BoolLit
+			else if (r.Parent.TableIndex() == Rules["Literal_Boollit"])
+			{
+				return Factory.Bool(Boolean.Parse((string)r.get_Data(0)));
+			}
 
-        protected override object CreateObjectFor(Reduction r)
-        {
-            //<Type> ::= string
-            if (r.Parent.TableIndex() == Rules["Type_String"])
-            {
-                return StringType.Instance;
-            }
-            //<Type> ::= int
-            if (r.Parent.TableIndex() == Rules["Type_Int"])
-            {
-                return IntType.Instance;
-            }
-            //<Type> ::= real
-            if (r.Parent.TableIndex() == Rules["Type_Real"])
-            {
-                return RealType.Instance;
-            }
-            //<Type> ::= bool
-            if (r.Parent.TableIndex() == Rules["Type_Bool"])
-            {
-                return BoolType.Instance;
-            }
-            //<Forms> ::= <Form> <Forms>
-            //<Statements> ::= <Statement> <Statements>
-            if (r.Parent.TableIndex() == Rules["Forms"]
-                || r.Parent.TableIndex() == Rules["Statements"])
-            {
-                return factory.Comp((S)r.get_Data(0), (S)r.get_Data(1));
-            }
-            //<Forms> ::= <Form>
-            //<Statements> ::= <Statement>
-            //<Statement> ::= <QuestionStmnt>
-            //<Statement> ::= <Block>
-            //<SubStmnt> ::= <QuestionStmnt>
-            //<SubStmnt> ::= <Block>
-            //<Expression> ::= <OrExpr>
-            //<OrExpr> ::= <AndExpr>
-            //<AndExpr> ::= <EqExpr>
-            //<EqExpr> ::= <CompExpr>
-            //<CompExpr> ::= <AddExpr>
-            //<AddExpr> ::= <MultExpr>
-            //<MultExpr> ::= <NegateExpr>
-            //<NegateExpr> ::= <Value>
-            //<Value> ::= <Literal>
-            if (r.Parent.TableIndex() == Rules["Forms2"]
-                || r.Parent.TableIndex() == Rules["Statements2"]
-                || r.Parent.TableIndex() == Rules["Statement"]
-                || r.Parent.TableIndex() == Rules["Statement2"]
-                || r.Parent.TableIndex() == Rules["Substmnt"]
-                || r.Parent.TableIndex() == Rules["Substmnt2"]
-                || r.Parent.TableIndex() == Rules["Expression"]
-                || r.Parent.TableIndex() == Rules["Orexpr"]
-                || r.Parent.TableIndex() == Rules["Andexpr"]
-                || r.Parent.TableIndex() == Rules["Eqexpr"]
-                || r.Parent.TableIndex() == Rules["Compexpr"]
-                || r.Parent.TableIndex() == Rules["Addexpr"]
-                || r.Parent.TableIndex() == Rules["Multexpr"]
-                || r.Parent.TableIndex() == Rules["Negateexpr"]
-                || r.Parent.TableIndex() == Rules["Value"])
-            {
-                return r.get_Data(0);
-            }
-            //<Form> ::= form Identifier <Block>
-            if (r.Parent.TableIndex() == Rules["Form_Form_Identifier"])
-            {
-                return factory.Form((string)r.get_Data(1), (S)r.get_Data(2));
-            }
-            //<Block> ::= '{' <Statements> '}'
-            //<Value> ::= '(' <Expression> ')'
-            if (r.Parent.TableIndex() == Rules["Block_Lbrace_Rbrace"]
-                || r.Parent.TableIndex() == Rules["Value_Lparen_Rparen"])
-            {
-                return r.get_Data(1);
-            }
-            //<Statement> ::= if '(' <Expression> ')' <Statement>
-            if (r.Parent.TableIndex() == Rules["Statement_If_Lparen_Rparen"])
-            {
-                return factory.If((E)r.get_Data(2), (S)r.get_Data(4));
-            }
-            //<Statement> ::= if '(' <Expression> ')' <SubStmnt> else <Statement>
-            //<SubStmnt> ::= if '(' <Expression> ')' <SubStmnt> else <SubStmnt>
-            if (r.Parent.TableIndex() == Rules["Statement_If_Lparen_Rparen_Else"]
-                || r.Parent.TableIndex() == Rules["Substmnt_If_Lparen_Rparen_Else"])
-            {
-                return factory.IfElse((E)r.get_Data(2), (S)r.get_Data(4), (S)r.get_Data(6));
-            }
-            //<VarDecl> ::= Identifier ':' <Type>
-            if (r.Parent.TableIndex() == Rules["Vardecl_Identifier_Colon"])
-            {
-                return factory.VarDecl((string)r.get_Data(0), (IType)r.get_Data(2));
-            }
-            //<VarAssign> ::= Identifier ':' <Type> '=' <Expression>
-            if (r.Parent.TableIndex() == Rules["Varassign_Identifier_Colon_Eq"])
-            {
-                return factory.VarAssign((string)r.get_Data(0), (IType)r.get_Data(2), (E)r.get_Data(4));
-            }
-            //<QuestionStmnt> ::= StringLit '>>' <VarDecl> ';'
-            if (r.Parent.TableIndex() == Rules["Questionstmnt_Stringlit_Gtgt_Semi"])
-            {
-                return factory.Question((string)r.get_Data(0), true, (E)r.get_Data(2));
-            }
-            //<QuestionStmnt> ::= StringLit '<<' <VarAssign> ';'
-            //<QuestionStmnt> ::= StringLit '<<' <Expression> ';'
-            if (r.Parent.TableIndex() == Rules["Questionstmnt_Stringlit_Ltlt_Semi"]
-                || r.Parent.TableIndex() == Rules["Questionstmnt_Stringlit_Ltlt_Semi2"])
-            {
-                return factory.Question((string)r.get_Data(0), false, (E)r.get_Data(2));
-            }
-            //<QuestionStmnt> ::= goto Identifier ';'
-            if (r.Parent.TableIndex() == Rules["Questionstmnt_Goto_Identifier_Semi"])
-            {
-                return factory.Goto((string)r.get_Data(1));
-            }
-            //<Expression> ::= <OrExpr> '?' <OrExpr> ':' <Expression>
-            if (r.Parent.TableIndex() == Rules["Expression_Question_Colon"])
-            {
-                return factory.IfElse((E)r.get_Data(0), (E)r.get_Data(2), (E)r.get_Data(4));
-            }
-            //<OrExpr> ::= <OrExpr> '||' <AndExpr>
-            //<AndExpr> ::= <AndExpr> '&&' <EqExpr>
-            //<EqExpr> ::= <EqExpr> '==' <CompExpr>
-            //<EqExpr> ::= <EqExpr> '!=' <CompExpr>
-            //<CompExpr> ::= <CompExpr> '<' <AddExpr>
-            //<CompExpr> ::= <CompExpr> '>' <AddExpr>
-            //<CompExpr> ::= <CompExpr> '<=' <AddExpr>
-            //<CompExpr> ::= <CompExpr> '>=' <AddExpr>
-            //<AddExpr> ::= <AddExpr> '+' <MultExpr>
-            //<AddExpr> ::= <AddExpr> '-' <MultExpr>
-            //<MultExpr> ::= <MultExpr> '*' <NegateExpr>
-            //<MultExpr> ::= <MultExpr> '/' <NegateExpr>
-            if (r.Parent.TableIndex() == Rules["Orexpr_Pipepipe"])
-            {
-                return factory.Or((E)r.get_Data(0), (E)r.get_Data(2));
-            }
-            if (r.Parent.TableIndex() == Rules["Andexpr_Ampamp"])
-            {
-                return factory.And((E)r.get_Data(0), (E)r.get_Data(2));
-            }
-            if (r.Parent.TableIndex() == Rules["Eqexpr_Eqeq"])
-            {
-                return factory.Eq((E)r.get_Data(0), (E)r.get_Data(2));
-            }
-            if (r.Parent.TableIndex() == Rules["Eqexpr_Exclameq"])
-            {
-                return factory.NotEq((E)r.get_Data(0), (E)r.get_Data(2));
-            }
-            if (r.Parent.TableIndex() == Rules["Compexpr_Lt"])
-            {
-                return factory.LessThen((E)r.get_Data(0), (E)r.get_Data(2));
-            }
-            if (r.Parent.TableIndex() == Rules["Compexpr_Gt"])
-            {
-                return factory.GreaterThen((E)r.get_Data(0), (E)r.get_Data(2));
-            }
-            if (r.Parent.TableIndex() == Rules["Compexpr_Lteq"])
-            {
-                return factory.LessOrEqualTo((E)r.get_Data(0), (E)r.get_Data(2));
-            }
-            if (r.Parent.TableIndex() == Rules["Compexpr_Gteq"])
-            {
-                return factory.GreaterOrEqualTo((E)r.get_Data(0), (E)r.get_Data(2));
-            }
-            if (r.Parent.TableIndex() == Rules["Addexpr_Plus"])
-            {
-                return factory.Add((E)r.get_Data(0), (E)r.get_Data(2));
-            }
-            if (r.Parent.TableIndex() == Rules["Addexpr_Minus"])
-            {
-                return factory.Subtract((E)r.get_Data(0), (E)r.get_Data(2));
-            }
-            if (r.Parent.TableIndex() == Rules["Multexpr_Times"])
-            {
-                return factory.Multiply((E)r.get_Data(0), (E)r.get_Data(2));
-            }
-            if (r.Parent.TableIndex() == Rules["Multexpr_Div"])
-            {
-                return factory.Divide((E)r.get_Data(0), (E)r.get_Data(2));
-            }
-            //<NegateExpr> ::= '-' <Value>
-            //<NegateExpr> ::= '!' <Value>
-            if (r.Parent.TableIndex() == Rules["Negateexpr_Minus"]
-                || r.Parent.TableIndex() == Rules["Negateexpr_Exclam"])
-            {
-                return factory.Negate((E)r.get_Data(1));
-            }
-            //<Value> ::= Identifier
-            if (r.Parent.TableIndex() == Rules["Value_Identifier"])
-            {
-                return factory.Variable((string)r.get_Data(0));
-            }
-            //<Literal> ::= StringLit
-            if (r.Parent.TableIndex() == Rules["Literal_Stringlit"])
-            {
-                return factory.String((string)r.get_Data(0));
-            }
-            //<Literal> ::= IntLit
-            if (r.Parent.TableIndex() == Rules["Literal_Intlit"])
-            {
-                return factory.Int(Int32.Parse((string)r.get_Data(0)));
-            }
-            //<Literal> ::= RealLit
-            if (r.Parent.TableIndex() == Rules["Literal_Reallit"])
-            {
-                return factory.Real(Double.Parse((string)r.get_Data(0), CultureInfo.InvariantCulture));
-            }
-            //<Literal> ::= BoolLit
-            if (r.Parent.TableIndex() == Rules["Literal_Boollit"])
-            {
-                return factory.Bool(Boolean.Parse((string)r.get_Data(0)));
-            }
-
-            return null;
-        }
-    }
+			return null;
+		}
+	}
 }

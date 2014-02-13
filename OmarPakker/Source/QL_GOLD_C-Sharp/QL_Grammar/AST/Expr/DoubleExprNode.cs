@@ -21,5 +21,10 @@ namespace QL_Grammar.AST.Expr
 
 			return Expr2.Equals(((DoubleExprNode<E>)obj).Expr2);
 		}
+
+		public override int GetHashCode()
+		{
+			return base.GetHashCode() + Expr2.GetHashCode();
+		}
     }
 }

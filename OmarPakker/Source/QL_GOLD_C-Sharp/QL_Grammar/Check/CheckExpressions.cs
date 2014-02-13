@@ -76,6 +76,11 @@ namespace QL_Grammar.Check
 				AddError(String.Format("Can't assign value of {0} to variable of type {1}.",
 					a.ToString(), expr.Type.ToString()), true, expr.SourcePosition);
 			}
+			else if (expr.Type is IntType && a is RealType)
+			{
+				AddError("Assigning real value to an int variable. You'll lose decimal information.",
+					false, expr.SourcePosition);
+			}
 
 			return expr.Type;
 		}

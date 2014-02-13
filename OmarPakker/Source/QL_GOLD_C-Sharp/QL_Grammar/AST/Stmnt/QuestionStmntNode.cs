@@ -29,5 +29,10 @@ namespace QL_Grammar.AST.Stmnt
 			return QuestionText.Equals(other.QuestionText) && Editable.Equals(other.Editable)
 				&& Expression.Equals(other.Expression);
 		}
+
+		public override int GetHashCode()
+		{
+			return QuestionText.GetHashCode() + Editable.GetHashCode() + Expression.GetHashCode();
+		}
     }
 }

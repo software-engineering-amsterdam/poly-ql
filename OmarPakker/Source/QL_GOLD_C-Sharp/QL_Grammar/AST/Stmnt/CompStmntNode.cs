@@ -53,5 +53,15 @@ namespace QL_Grammar.AST.Stmnt
 
 			return true;
 		}
+
+		public override int GetHashCode()
+		{
+			int hash = Statements.Count;
+			foreach (S stmnt in Statements)
+			{
+				hash += stmnt.GetHashCode();
+			}
+			return hash;
+		}
     }
 }

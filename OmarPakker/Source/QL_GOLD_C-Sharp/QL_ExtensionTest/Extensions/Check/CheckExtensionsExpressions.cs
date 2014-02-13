@@ -1,13 +1,13 @@
 ﻿using System;
-using QL_ExtensionTest.Mathematics.Expr;
+using QL_ExtensionTest.Extensions.Expr;
 using QL_Grammar.AST.Expr;
 using QL_Grammar.AST.Types;
 using QL_Grammar.Check;
 using QL_Grammar.QL.Types;
 
-namespace QL_ExtensionTest.Mathematics
+namespace QL_ExtensionTest.Extensions.Check
 {
-	public class CheckMathExpressions : CheckExpressions
+	public class CheckExtensionsExpressions : CheckExpressions
 	{
 		protected override IType CheckExpr(IExprNode expr)
 		{

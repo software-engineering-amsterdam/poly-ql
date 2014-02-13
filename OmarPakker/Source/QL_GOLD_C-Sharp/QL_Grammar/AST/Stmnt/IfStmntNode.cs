@@ -27,5 +27,10 @@ namespace QL_Grammar.AST.Stmnt
 			IfStmntNode<E, S> other = (IfStmntNode<E, S>)obj;
 			return CheckExpression.Equals(other.CheckExpression) && IfTrueBody.Equals(other.IfTrueBody);
 		}
+
+		public override int GetHashCode()
+		{
+			return CheckExpression.GetHashCode() + IfTrueBody.GetHashCode();
+		}
     }
 }

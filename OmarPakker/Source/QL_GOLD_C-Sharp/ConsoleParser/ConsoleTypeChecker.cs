@@ -9,18 +9,17 @@ using QL_Grammar.AST.Stmnt;
 using QL_Grammar.Check;
 using QL_Grammar.Factory;
 
-namespace QL_GOLD_C_Sharp
+namespace ConsoleParser
 {
     public class ConsoleTypeChecker
 	{
-        private readonly QLParser<IExprNode, IStmntNode> parser;
-        private readonly QLFactory factory;
+        private readonly QLParser<IExprNode, IStmntNode, QLFactory> parser;
 
         public ConsoleTypeChecker()
             : base()
         {
-            parser = new QLParser<IExprNode, IStmntNode>();
-            parser.Factory = factory = new QLFactory();
+            parser = new QLParser<IExprNode, IStmntNode, QLFactory>();
+            parser.Factory = new QLFactory();
 
             parser.OnReduction += OnReduction;
             parser.OnCompletion += OnCompletion;
@@ -30,7 +29,7 @@ namespace QL_GOLD_C_Sharp
             parser.OnLexicalError += OnLexicalError;
             parser.OnSyntaxError += OnSyntaxError;
 
-            Assembly a = typeof(QLParser<IExprNode, IStmntNode>).Assembly;
+            Assembly a = parser.Factory.GetType().Assembly;
             parser.LoadGrammar(new BinaryReader(a.GetManifestResourceStream("QL_Grammar.Grammar.QL_Grammar.egt")));
             parser.Parse(System.IO.File.OpenText(@"..\..\..\..\..\Grammar\QL_Test.txt"));
         }
@@ -40,10 +39,14 @@ namespace QL_GOLD_C_Sharp
             int count = r.Count();
             string dataOutput = String.Empty;
 
-            for (int i = 0; i < count; i++)
-            {
-                dataOutput += r.get_Data(i).ToString();
-            }
+			for (int i = 0; i < count; i++)
+			{
+				object data = r.get_Data(i);
+				if (data != null)
+				{
+					dataOutput += data.ToString();
+				}
+			}
 
             Console.WriteLine(String.Format("R: {0}, C: {1}, D: {2}", r.Parent.Text(), count, dataOutput));
 
