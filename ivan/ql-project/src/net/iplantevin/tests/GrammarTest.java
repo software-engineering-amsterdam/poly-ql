@@ -49,7 +49,7 @@ public class GrammarTest {
         String expected, actual;
 
         // Holds all files to test for expression rule.
-        String[] files = new String[]{"expr1", "expr2", "expr3", "expr4"};
+        String[] files = new String[]{"expr1", "expr2", "expr3", "expr4", "expr5"};
 
         for( String file : files) {
             parser = getParser(file);

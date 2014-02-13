@@ -54,13 +54,6 @@ public interface QLVisitor<T> extends ParseTreeVisitor<T> {
 	T visitAddition(@NotNull QLParser.AdditionContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link QLParser#comparison}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitComparison(@NotNull QLParser.ComparisonContext ctx);
-
-	/**
 	 * Visit a parse tree produced by {@link QLParser#unary}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -68,11 +61,11 @@ public interface QLVisitor<T> extends ParseTreeVisitor<T> {
 	T visitUnary(@NotNull QLParser.UnaryContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link QLParser#logical}.
+	 * Visit a parse tree produced by {@link QLParser#equality}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitLogical(@NotNull QLParser.LogicalContext ctx);
+	T visitEquality(@NotNull QLParser.EqualityContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link QLParser#multiplication}.
@@ -94,6 +87,20 @@ public interface QLVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitString(@NotNull QLParser.StringContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link QLParser#relational}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRelational(@NotNull QLParser.RelationalContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link QLParser#logicalOr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLogicalOr(@NotNull QLParser.LogicalOrContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link QLParser#blockStat}.
@@ -136,6 +143,13 @@ public interface QLVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitIdentifier(@NotNull QLParser.IdentifierContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link QLParser#logicalAnd}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLogicalAnd(@NotNull QLParser.LogicalAndContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link QLParser#parantheses}.

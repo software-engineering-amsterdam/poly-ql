@@ -20,8 +20,10 @@ stat: 'if' '(' expr ')' stat 'else' stat        # ifElse
 expr: op=('+'|'-'|'!') expr                     # unary
     | expr op=('*'|'/') expr                    # multiplication
     | expr op=('+'|'-') expr                    # addition
-    | expr op=('<'|'>'|'<='|'>='|'=='|'!=') expr# comparison
-    | expr op=('&&'|'||') expr                  # logical
+    | expr op=('<'|'>'|'<='|'>=') expr          # relational
+    | expr op=('=='|'!=') expr                  # equality
+    | expr '&&' expr                            # logicalAnd
+    | expr '||' expr                            # logicalOr
     | bool                                      # boolean
     | ID                                        # identifier
     | INT                                       # integer

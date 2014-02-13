@@ -325,7 +325,7 @@ public class QLParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
-	public static class LogicalContext extends ExprContext {
+	public static class EqualityContext extends ExprContext {
 		public Token op;
 		public List<ExprContext> expr() {
 			return getRuleContexts(ExprContext.class);
@@ -333,10 +333,10 @@ public class QLParser extends Parser {
 		public ExprContext expr(int i) {
 			return getRuleContext(ExprContext.class,i);
 		}
-		public LogicalContext(ExprContext ctx) { copyFrom(ctx); }
+		public EqualityContext(ExprContext ctx) { copyFrom(ctx); }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitLogical(this);
+			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitEquality(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -370,6 +370,35 @@ public class QLParser extends Parser {
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitString(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class RelationalContext extends ExprContext {
+		public Token op;
+		public List<ExprContext> expr() {
+			return getRuleContexts(ExprContext.class);
+		}
+		public ExprContext expr(int i) {
+			return getRuleContext(ExprContext.class,i);
+		}
+		public RelationalContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitRelational(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class LogicalOrContext extends ExprContext {
+		public List<ExprContext> expr() {
+			return getRuleContexts(ExprContext.class);
+		}
+		public ExprContext expr(int i) {
+			return getRuleContext(ExprContext.class,i);
+		}
+		public LogicalOrContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitLogicalOr(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -408,21 +437,6 @@ public class QLParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
-	public static class ComparisonContext extends ExprContext {
-		public Token op;
-		public List<ExprContext> expr() {
-			return getRuleContexts(ExprContext.class);
-		}
-		public ExprContext expr(int i) {
-			return getRuleContext(ExprContext.class,i);
-		}
-		public ComparisonContext(ExprContext ctx) { copyFrom(ctx); }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitComparison(this);
-			else return visitor.visitChildren(this);
-		}
-	}
 	public static class ParanthesesContext extends ExprContext {
 		public ExprContext expr() {
 			return getRuleContext(ExprContext.class,0);
@@ -431,6 +445,20 @@ public class QLParser extends Parser {
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitParantheses(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class LogicalAndContext extends ExprContext {
+		public List<ExprContext> expr() {
+			return getRuleContexts(ExprContext.class);
+		}
+		public ExprContext expr(int i) {
+			return getRuleContext(ExprContext.class,i);
+		}
+		public LogicalAndContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QLVisitor ) return ((QLVisitor<? extends T>)visitor).visitLogicalAnd(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -468,7 +496,7 @@ public class QLParser extends Parser {
 					((UnaryContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 				}
 				consume();
-				setState(56); expr(10);
+				setState(56); expr(12);
 				}
 				break;
 			case 10:
@@ -518,7 +546,7 @@ public class QLParser extends Parser {
 				throw new NoViableAltException(this);
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(81);
+			setState(87);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,4,_ctx);
 			while ( _alt!=2 && _alt!=-1 ) {
@@ -526,14 +554,14 @@ public class QLParser extends Parser {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					setState(79);
+					setState(85);
 					switch ( getInterpreter().adaptivePredict(_input,3,_ctx) ) {
 					case 1:
 						{
 						_localctx = new MultiplicationContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(67);
-						if (!(precpred(_ctx, 9))) throw new FailedPredicateException(this, "precpred(_ctx, 9)");
+						if (!(precpred(_ctx, 11))) throw new FailedPredicateException(this, "precpred(_ctx, 11)");
 						setState(68);
 						((MultiplicationContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
@@ -541,7 +569,7 @@ public class QLParser extends Parser {
 							((MultiplicationContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 						}
 						consume();
-						setState(69); expr(10);
+						setState(69); expr(12);
 						}
 						break;
 
@@ -550,7 +578,7 @@ public class QLParser extends Parser {
 						_localctx = new AdditionContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(70);
-						if (!(precpred(_ctx, 8))) throw new FailedPredicateException(this, "precpred(_ctx, 8)");
+						if (!(precpred(_ctx, 10))) throw new FailedPredicateException(this, "precpred(_ctx, 10)");
 						setState(71);
 						((AdditionContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
@@ -558,47 +586,69 @@ public class QLParser extends Parser {
 							((AdditionContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 						}
 						consume();
-						setState(72); expr(9);
+						setState(72); expr(11);
 						}
 						break;
 
 					case 3:
 						{
-						_localctx = new ComparisonContext(new ExprContext(_parentctx, _parentState));
+						_localctx = new RelationalContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(73);
-						if (!(precpred(_ctx, 7))) throw new FailedPredicateException(this, "precpred(_ctx, 7)");
+						if (!(precpred(_ctx, 9))) throw new FailedPredicateException(this, "precpred(_ctx, 9)");
 						setState(74);
-						((ComparisonContext)_localctx).op = _input.LT(1);
+						((RelationalContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
-						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << 9) | (1L << 11) | (1L << 12) | (1L << 16) | (1L << 21) | (1L << 23))) != 0)) ) {
-							((ComparisonContext)_localctx).op = (Token)_errHandler.recoverInline(this);
+						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << 9) | (1L << 12) | (1L << 16) | (1L << 23))) != 0)) ) {
+							((RelationalContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 						}
 						consume();
-						setState(75); expr(8);
+						setState(75); expr(10);
 						}
 						break;
 
 					case 4:
 						{
-						_localctx = new LogicalContext(new ExprContext(_parentctx, _parentState));
+						_localctx = new EqualityContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(76);
-						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
+						if (!(precpred(_ctx, 8))) throw new FailedPredicateException(this, "precpred(_ctx, 8)");
 						setState(77);
-						((LogicalContext)_localctx).op = _input.LT(1);
+						((EqualityContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
-						if ( !(_la==13 || _la==14) ) {
-							((LogicalContext)_localctx).op = (Token)_errHandler.recoverInline(this);
+						if ( !(_la==11 || _la==21) ) {
+							((EqualityContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 						}
 						consume();
-						setState(78); expr(7);
+						setState(78); expr(9);
+						}
+						break;
+
+					case 5:
+						{
+						_localctx = new LogicalAndContext(new ExprContext(_parentctx, _parentState));
+						pushNewRecursionContext(_localctx, _startState, RULE_expr);
+						setState(79);
+						if (!(precpred(_ctx, 7))) throw new FailedPredicateException(this, "precpred(_ctx, 7)");
+						setState(80); match(13);
+						setState(81); expr(8);
+						}
+						break;
+
+					case 6:
+						{
+						_localctx = new LogicalOrContext(new ExprContext(_parentctx, _parentState));
+						pushNewRecursionContext(_localctx, _startState, RULE_expr);
+						setState(82);
+						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
+						setState(83); match(14);
+						setState(84); expr(7);
 						}
 						break;
 					}
 					} 
 				}
-				setState(83);
+				setState(89);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,4,_ctx);
 			}
@@ -634,7 +684,7 @@ public class QLParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(84);
+			setState(90);
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << 17) | (1L << 18) | (1L << 24))) != 0)) ) {
 			_errHandler.recoverInline(this);
@@ -672,7 +722,7 @@ public class QLParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(86);
+			setState(92);
 			_la = _input.LA(1);
 			if ( !(_la==10 || _la==25) ) {
 			_errHandler.recoverInline(this);
@@ -699,43 +749,48 @@ public class QLParser extends Parser {
 	}
 	private boolean expr_sempred(ExprContext _localctx, int predIndex) {
 		switch (predIndex) {
-		case 0: return precpred(_ctx, 9);
+		case 0: return precpred(_ctx, 11);
 
-		case 1: return precpred(_ctx, 8);
+		case 1: return precpred(_ctx, 10);
 
-		case 2: return precpred(_ctx, 7);
+		case 2: return precpred(_ctx, 9);
 
-		case 3: return precpred(_ctx, 6);
+		case 3: return precpred(_ctx, 8);
+
+		case 4: return precpred(_ctx, 7);
+
+		case 5: return precpred(_ctx, 6);
 		}
 		return true;
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\"[\4\2\t\2\4\3\t"+
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\"a\4\2\t\2\4\3\t"+
 		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\3\2\3\2\3\2\3\2\3\3\3\3\7\3\25\n\3"+
 		"\f\3\16\3\30\13\3\3\3\3\3\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4"+
 		"\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\5\4\67"+
 		"\n\4\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\5\5D\n\5\3\5\3\5\3\5"+
-		"\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\7\5R\n\5\f\5\16\5U\13\5\3\6\3\6\3"+
-		"\7\3\7\3\7\2\3\b\b\2\4\6\b\n\f\2\t\5\2\5\5\7\7\34\34\4\2\6\6\26\26\4\2"+
-		"\5\5\7\7\7\2\13\13\r\16\22\22\27\27\31\31\3\2\17\20\4\2\23\24\32\32\4"+
-		"\2\f\f\33\33b\2\16\3\2\2\2\4\22\3\2\2\2\6\66\3\2\2\2\bC\3\2\2\2\nV\3\2"+
-		"\2\2\fX\3\2\2\2\16\17\7\3\2\2\17\20\7\35\2\2\20\21\5\4\3\2\21\3\3\2\2"+
-		"\2\22\26\7\21\2\2\23\25\5\6\4\2\24\23\3\2\2\2\25\30\3\2\2\2\26\24\3\2"+
-		"\2\2\26\27\3\2\2\2\27\31\3\2\2\2\30\26\3\2\2\2\31\32\7\30\2\2\32\5\3\2"+
-		"\2\2\33\34\7\n\2\2\34\35\7\t\2\2\35\36\5\b\5\2\36\37\7\4\2\2\37 \5\6\4"+
-		"\2 !\7\25\2\2!\"\5\6\4\2\"\67\3\2\2\2#$\7\n\2\2$%\7\t\2\2%&\5\b\5\2&\'"+
-		"\7\4\2\2\'(\5\6\4\2(\67\3\2\2\2)\67\5\4\3\2*+\7\35\2\2+,\7\b\2\2,-\7\37"+
-		"\2\2-.\5\n\6\2./\7\t\2\2/\60\5\b\5\2\60\61\7\4\2\2\61\67\3\2\2\2\62\63"+
-		"\7\35\2\2\63\64\7\b\2\2\64\65\7\37\2\2\65\67\5\n\6\2\66\33\3\2\2\2\66"+
-		"#\3\2\2\2\66)\3\2\2\2\66*\3\2\2\2\66\62\3\2\2\2\67\7\3\2\2\289\b\5\1\2"+
-		"9:\t\2\2\2:D\5\b\5\f;D\5\f\7\2<D\7\35\2\2=D\7\36\2\2>D\7\37\2\2?@\7\t"+
-		"\2\2@A\5\b\5\2AB\7\4\2\2BD\3\2\2\2C8\3\2\2\2C;\3\2\2\2C<\3\2\2\2C=\3\2"+
-		"\2\2C>\3\2\2\2C?\3\2\2\2DS\3\2\2\2EF\f\13\2\2FG\t\3\2\2GR\5\b\5\fHI\f"+
-		"\n\2\2IJ\t\4\2\2JR\5\b\5\13KL\f\t\2\2LM\t\5\2\2MR\5\b\5\nNO\f\b\2\2OP"+
-		"\t\6\2\2PR\5\b\5\tQE\3\2\2\2QH\3\2\2\2QK\3\2\2\2QN\3\2\2\2RU\3\2\2\2S"+
-		"Q\3\2\2\2ST\3\2\2\2T\t\3\2\2\2US\3\2\2\2VW\t\7\2\2W\13\3\2\2\2XY\t\b\2"+
-		"\2Y\r\3\2\2\2\7\26\66CQS";
+		"\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\7\5X\n\5"+
+		"\f\5\16\5[\13\5\3\6\3\6\3\7\3\7\3\7\2\3\b\b\2\4\6\b\n\f\2\t\5\2\5\5\7"+
+		"\7\34\34\4\2\6\6\26\26\4\2\5\5\7\7\6\2\13\13\16\16\22\22\31\31\4\2\r\r"+
+		"\27\27\4\2\23\24\32\32\4\2\f\f\33\33j\2\16\3\2\2\2\4\22\3\2\2\2\6\66\3"+
+		"\2\2\2\bC\3\2\2\2\n\\\3\2\2\2\f^\3\2\2\2\16\17\7\3\2\2\17\20\7\35\2\2"+
+		"\20\21\5\4\3\2\21\3\3\2\2\2\22\26\7\21\2\2\23\25\5\6\4\2\24\23\3\2\2\2"+
+		"\25\30\3\2\2\2\26\24\3\2\2\2\26\27\3\2\2\2\27\31\3\2\2\2\30\26\3\2\2\2"+
+		"\31\32\7\30\2\2\32\5\3\2\2\2\33\34\7\n\2\2\34\35\7\t\2\2\35\36\5\b\5\2"+
+		"\36\37\7\4\2\2\37 \5\6\4\2 !\7\25\2\2!\"\5\6\4\2\"\67\3\2\2\2#$\7\n\2"+
+		"\2$%\7\t\2\2%&\5\b\5\2&\'\7\4\2\2\'(\5\6\4\2(\67\3\2\2\2)\67\5\4\3\2*"+
+		"+\7\35\2\2+,\7\b\2\2,-\7\37\2\2-.\5\n\6\2./\7\t\2\2/\60\5\b\5\2\60\61"+
+		"\7\4\2\2\61\67\3\2\2\2\62\63\7\35\2\2\63\64\7\b\2\2\64\65\7\37\2\2\65"+
+		"\67\5\n\6\2\66\33\3\2\2\2\66#\3\2\2\2\66)\3\2\2\2\66*\3\2\2\2\66\62\3"+
+		"\2\2\2\67\7\3\2\2\289\b\5\1\29:\t\2\2\2:D\5\b\5\16;D\5\f\7\2<D\7\35\2"+
+		"\2=D\7\36\2\2>D\7\37\2\2?@\7\t\2\2@A\5\b\5\2AB\7\4\2\2BD\3\2\2\2C8\3\2"+
+		"\2\2C;\3\2\2\2C<\3\2\2\2C=\3\2\2\2C>\3\2\2\2C?\3\2\2\2DY\3\2\2\2EF\f\r"+
+		"\2\2FG\t\3\2\2GX\5\b\5\16HI\f\f\2\2IJ\t\4\2\2JX\5\b\5\rKL\f\13\2\2LM\t"+
+		"\5\2\2MX\5\b\5\fNO\f\n\2\2OP\t\6\2\2PX\5\b\5\13QR\f\t\2\2RS\7\17\2\2S"+
+		"X\5\b\5\nTU\f\b\2\2UV\7\20\2\2VX\5\b\5\tWE\3\2\2\2WH\3\2\2\2WK\3\2\2\2"+
+		"WN\3\2\2\2WQ\3\2\2\2WT\3\2\2\2X[\3\2\2\2YW\3\2\2\2YZ\3\2\2\2Z\t\3\2\2"+
+		"\2[Y\3\2\2\2\\]\t\7\2\2]\13\3\2\2\2^_\t\b\2\2_\r\3\2\2\2\7\26\66CWY";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
