@@ -30,7 +30,7 @@ public class TermFrequency implements BookParserSubscriber {
         if (token == null) {
             mIndex.put(word, new Token(word));
         } else {
-            token.addOccurrence();
+            token.addFrequency();
         }
     }
 

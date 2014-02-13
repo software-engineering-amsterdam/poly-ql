@@ -27,11 +27,14 @@ public class BookParser {
 
         String line = null;
         while ((line = reader.readLine()) != null) {
-            line.replaceAll("[^a-zA-Z0-9 -]", "");
+            line = line.replaceAll("[^a-zA-Z\\s]", " ");
+            line = line.replaceAll("\\s+", " ");
 
             String[] words = line.split(" ");
 
             for (String word : words) {
+                if (word.isEmpty() || word.length() == 1) continue;
+
                 notifyListener(word.toLowerCase());
             }
         }

@@ -1,0 +1,42 @@
+package nl.uva.sc.parser;
+
+public class Token implements Comparable<Token> {
+
+    private final String mWord;
+
+    private int mFrequency;
+
+    public Token(final String token) {
+        mWord = token;
+        mFrequency = 1;
+    }
+
+    public Token(final String token, final int occurrence) {
+        mWord = token;
+        mFrequency = occurrence;
+    }
+
+    public void addOccurrence() {
+        mFrequency++;
+    }
+
+    public String getWord() {
+        return mWord;
+    }
+
+    @Override
+    public int hashCode() {
+        return mWord.hashCode();
+    }
+
+    @Override
+    public int compareTo(final Token o) {
+        return mFrequency - o.mFrequency;
+    }
+
+    @Override
+    public String toString() {
+        return mWord + " - " + mFrequency;
+    }
+
+}

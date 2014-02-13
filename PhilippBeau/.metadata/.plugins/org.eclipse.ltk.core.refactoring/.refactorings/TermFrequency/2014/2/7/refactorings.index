@@ -3,3 +3,8 @@
 1392293089662	Move compilation unit
 1392295431994	Rename method 'addOccurence'
 1392296046109	Delete element
+1392299671155	Rename field 'mToken'
+1392299705203	Rename field 'mFrequency'
+1392299717979	Rename field 'mOccurrence'
+1392299736746	Rename method 'addOccurrence'
+1392299745048	Rename method 'getOccurrence'
