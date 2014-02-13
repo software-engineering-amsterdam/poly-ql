@@ -1,8 +1,8 @@
 package org.uva.sea.ql.ast.operators.comparison;
 
 import org.uva.sea.ql.ast.Expression;
+import org.uva.sea.ql.ast.IVisitor;
 import org.uva.sea.ql.ast.operators.BinaryOperator;
-import org.uva.sea.ql.ast.operators.IOperatorVisitor;
 
 public class GT extends BinaryOperator {
 
@@ -12,10 +12,14 @@ public class GT extends BinaryOperator {
 		
 		}
 
-	public void accept(IOperatorVisitor visitor) {
+	public void accept(IVisitor visitor) {
 		
 		visitor.visit(this);
 		
+	}
+	
+	public String show(){
+		return ">";
 	}
 
 }

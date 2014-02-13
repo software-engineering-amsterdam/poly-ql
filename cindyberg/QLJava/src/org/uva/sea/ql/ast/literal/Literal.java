@@ -2,6 +2,7 @@ package org.uva.sea.ql.ast.literal;
 
 import org.uva.sea.ql.ast.Expression;
 
+
 public abstract class Literal<T> extends Expression {
 
 	private T value;
@@ -14,4 +15,7 @@ public abstract class Literal<T> extends Expression {
 		return this.value;
 	}
 	
+	public String show(){
+		return value.toString();
+	}
 }

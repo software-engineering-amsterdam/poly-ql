@@ -3,7 +3,7 @@ package org.uva.sea.ql.parser.test;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-import org.uva.sea.ql.ast.statement.*;
+import org.uva.sea.ql.ast.statement.Question;
 
 public class TestTypes extends TestParser{
 

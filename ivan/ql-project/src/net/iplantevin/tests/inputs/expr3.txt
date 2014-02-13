@@ -1,0 +1,1 @@
+!(hasHouse || hasCar) && salary <= (2 * baseSalary - 5000)

@@ -20,8 +20,10 @@ stat: 'if' '(' expr ')' stat 'else' stat        # ifElse
 expr: op=('+'|'-'|'!') expr                     # unary
     | expr op=('*'|'/') expr                    # multiplication
     | expr op=('+'|'-') expr                    # addition
-    | expr op=('<'|'>'|'<='|'>='|'=='|'!=') expr# comparison
-    | expr op=('&&'|'||') expr                  # logical
+    | expr op=('<'|'>'|'<='|'>=') expr          # relational
+    | expr op=('=='|'!=') expr                  # equality
+    | expr '&&' expr                            # logicalAnd
+    | expr '||' expr                            # logicalOr
     | bool                                      # boolean
     | ID                                        # identifier
     | INT                                       # integer
@@ -41,10 +43,13 @@ ID: [a-zA-Z][a-zA-Z0-9_]*;
 
 INT: [0-9]+;
 
-STR: '"' .*? '"';
-
 COMMENT:  '/*' .*? '*/' -> skip; // Skip comments
 
 COMMENT2: '//' .*? '\r'? '\n' -> skip; // Skip comments
 
 WS: [ \t\r\n]+ -> skip ; // Skip spaces and tabs
+
+STR: '"' (ESC|.)*? '"' ;
+
+fragment
+ESC : '\\"' | '\\\\' ; // Allow escaped 2-char sequences \" and \\
