@@ -8,34 +8,26 @@ namespace QL_Grammar.QLTypeCheck.Expr
 {
 	public class AddExpr : DoubleExpr<ITypeCheckExpr>, ITypeCheckExpr
     {
-        //public event OnTypeCheckErrorEventHandler OnTypeCheckError;
-
 		public AddExpr(ITypeCheckExpr l, ITypeCheckExpr r)
             : base(l, r)
         {
 
         }
 
-        //public Tuple<IType, bool> TypeCheck()
-        //{
-        //    Expr1.OnTypeCheckError += OnTypeCheckError;
-        //    Expr2.OnTypeCheckError += OnTypeCheckError;
+        public IType TypeCheck(TypeCheckData data)
+        {
+            IType a = Expr1.TypeCheck(data);
+            IType b = Expr2.TypeCheck(data);
 
-        //    Tuple<IType, bool> a = Expr1.TypeCheck();
-        //    Tuple<IType, bool> b = Expr2.TypeCheck();
+            if (!(a is NumericType) || !a.CompatibleWith(b))
+            {
+                data.ReportError(String.Format("Addition not possible. Incompatible types: '{0}', '{1}'. Only numeric types are supported.",
+                    a.ToString(), b.ToString()), SourcePosition);
 
-        //    if (!(a.Item1 is NumericType) || !a.Item1.CompatibleWith(b.Item1))
-        //    {
-        //        AddError(String.Format("Addition not possible. Incompatible types: '{0}', '{1}'. Only numeric types are supported.",
-        //            a.ToString(), b.ToString()), true, SourcePosition);
+                return NumericType.Instance;
+            }
 
-        //        return NumericType.Instance;
-        //    }
-        //    var tmp = this.CreateTypeCheckError(String.Format("Addition not possible. Incompatible types: '{0}', '{1}'. Only numeric types are supported.",
-        //        a.ToString(), b.ToString()), true);
-        //    OnTypeCheckError(tmp.Item1, tmp.Item2);
-
-        //    return (a is RealType || b is RealType) ? (IType)RealType.Instance : (IType)IntType.Instance;
-        //}
+            return (a is RealType || b is RealType) ? (IType)RealType.Instance : (IType)IntType.Instance;
+        }
     }
 }

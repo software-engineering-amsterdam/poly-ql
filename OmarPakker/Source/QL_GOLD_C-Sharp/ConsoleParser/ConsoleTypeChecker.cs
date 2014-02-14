@@ -3,10 +3,10 @@ using System.IO;
 using System.Reflection;
 using GOLD;
 using Grammar;
-using QL_Grammar.Check;
 using QL_Grammar.QLTypeCheck;
 using QL_Grammar.QLTypeCheck.Expr;
 using QL_Grammar.QLTypeCheck.Factory;
+using QL_Grammar.QLTypeCheck.Helpers;
 using QL_Grammar.QLTypeCheck.Stmnt;
 
 namespace ConsoleParser
@@ -56,16 +56,19 @@ namespace ConsoleParser
 
         private void OnCompletion(object root)
         {
-			TypeChecker<CheckExpressions, CheckStatements<CheckExpressions>> tc
-				= new TypeChecker<CheckExpressions, CheckStatements<CheckExpressions>>();
+            TypeCheckData data = new TypeCheckData();
+            ((ITypeCheckStmnt)root).TypeCheck(data);
+            data.VerifyForms();
 
-            tc.OnTypeCheckError += (msg, error) =>
+            if (data.HasErrors)
             {
-                Console.ForegroundColor = error ? ConsoleColor.Red : ConsoleColor.Yellow;
-                Console.WriteLine(msg);
-                Console.ResetColor();
-            };
-            tc.Check((ITypeCheck)root);
+                foreach (Tuple<string, bool> error in data.Errors)
+                {
+                    Console.ForegroundColor = error.Item2 ? ConsoleColor.Red : ConsoleColor.Yellow;
+                    Console.WriteLine(error.Item1);
+                    Console.ResetColor();
+                }
+            }
 
             Console.WriteLine("PARSING COMPLETED!");
         }
