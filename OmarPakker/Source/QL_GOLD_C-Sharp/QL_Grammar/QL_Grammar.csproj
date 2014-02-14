@@ -57,7 +57,7 @@
     <Compile Include="QLTypeCheck\Expr\ITypeCheckExpr.cs" />
     <Compile Include="QLTypeCheck\Expr\LiteralExpr.cs" />
     <Compile Include="QLTypeCheck\Expr\VarExpr.cs" />
-    <Compile Include="QLTypeCheck\Helpers\ErrorHelpers.cs" />
+    <Compile Include="QLTypeCheck\Helpers\TypeCheckData.cs" />
     <Compile Include="QLTypeCheck\Stmnt\CompStmnt.cs" />
     <Compile Include="QLTypeCheck\Stmnt\FormStmnt.cs" />
     <Compile Include="QLTypeCheck\Stmnt\GotoStmnt.cs" />
@@ -66,9 +66,6 @@
     <Compile Include="QLTypeCheck\Stmnt\ITypeCheckStmnt.cs" />
     <Compile Include="QLAlgebra\Stmnt\QuestionStmnt.cs" />
     <Compile Include="Algebra\Type\UnknownType.cs" />
-    <Compile Include="Check\CheckExpressions.cs" />
-    <Compile Include="Check\CheckStatements.cs" />
-    <Compile Include="Check\TypeChecker.cs" />
     <Compile Include="Grammar\AbstractParser.cs" />
     <Compile Include="QLTypeCheck\ITypeCheck.cs" />
     <Compile Include="QLTypeCheck\Stmnt\QuestionStmnt.cs" />

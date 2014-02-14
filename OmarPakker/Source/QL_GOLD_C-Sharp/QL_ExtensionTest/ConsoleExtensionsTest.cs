@@ -4,15 +4,11 @@ using System.Reflection;
 using System.Text;
 using GOLD;
 using Grammar.Parser;
-using QL_ExtensionTest.Check;
 using QL_ExtensionTest.Merged;
-using QL_ExtensionTest.QLEval;
 using QL_ExtensionTest.QLEval.Expr;
 using QL_ExtensionTest.QLEval.Stmnt;
-using QL_ExtensionTest.QLTypeCheckExtensions.Factory;
-using QL_Grammar.Check;
-using QL_Grammar.QLTypeCheck;
 using QL_Grammar.QLTypeCheck.Expr;
+using QL_Grammar.QLTypeCheck.Helpers;
 using QL_Grammar.QLTypeCheck.Stmnt;
 
 namespace QL_ExtensionTest
@@ -77,16 +73,19 @@ namespace QL_ExtensionTest
 
         private void OnCompletion(object root)
         {
-			TypeChecker<CheckExtensionsExpressions, CheckExtensionsStmnts> tc
-				= new TypeChecker<CheckExtensionsExpressions, CheckExtensionsStmnts>();
+            TypeCheckData data = new TypeCheckData();
+            ((Tuple<ITypeCheckStmnt, IEvalStmnt>)root).Item1.TypeCheck(data);
+            data.VerifyForms();
 
-            tc.OnTypeCheckError += (msg, error) =>
+            if (data.HasErrors)
             {
-                Console.ForegroundColor = error ? ConsoleColor.Red : ConsoleColor.Yellow;
-                Console.WriteLine(msg);
-                Console.ResetColor();
-            };
-            tc.Check(((Tuple<ITypeCheckStmnt, IEvalStmnt>)root).Item1);
+                foreach (Tuple<string, bool> error in data.Errors)
+                {
+                    Console.ForegroundColor = error.Item2 ? ConsoleColor.Red : ConsoleColor.Yellow;
+                    Console.WriteLine(error.Item1);
+                    Console.ResetColor();
+                }
+            }
 
             Console.WriteLine("PARSING COMPLETED!");
         }

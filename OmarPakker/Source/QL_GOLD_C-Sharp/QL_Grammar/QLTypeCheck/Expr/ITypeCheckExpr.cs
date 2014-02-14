@@ -1,11 +1,10 @@
-﻿using System;
-using QL_Grammar.Algebra.Type;
+﻿using QL_Grammar.Algebra.Type;
+using QL_Grammar.QLTypeCheck.Helpers;
 
 namespace QL_Grammar.QLTypeCheck.Expr
 {
 	public interface ITypeCheckExpr : ITypeCheck
 	{
-        //Type of expression, Any errors?
-		//Tuple<IType, bool> TypeCheck();
+		IType TypeCheck(TypeCheckData data);
 	}
 }

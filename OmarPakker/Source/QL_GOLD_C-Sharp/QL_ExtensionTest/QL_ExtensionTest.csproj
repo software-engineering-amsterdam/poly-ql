@@ -39,7 +39,6 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Check\CheckExtensionsStmnts.cs" />
     <Compile Include="QLAlgebraExtensions\Factory\QLExtensionsFactoryCombination.cs" />
     <Compile Include="QLEval\Expr\ModuloExpr.cs" />
     <Compile Include="QLEval\Expr\PowerExpr.cs" />
@@ -49,7 +48,6 @@
     <Compile Include="QLEval\Stmnt\LoopStmnt.cs" />
     <Compile Include="QLTypeCheckExtensions\Stmnt\LoopStmnt.cs" />
     <Compile Include="Grammar\GrammarData.cs" />
-    <Compile Include="Check\CheckExtensionsExpressions.cs" />
     <Compile Include="QLTypeCheckExtensions\Expr\PowerExpr.cs" />
     <Compile Include="QLTypeCheckExtensions\Expr\ModuloExpr.cs" />
     <Compile Include="QLAlgebraExtensions\Factory\IQLExtensionsFactory.cs" />

@@ -1,4 +1,5 @@
 ﻿using QL_Grammar.QLAlgebra.Stmnt;
+using QL_Grammar.QLTypeCheck.Helpers;
 
 namespace QL_Grammar.QLTypeCheck.Stmnt
 {
@@ -8,6 +9,14 @@ namespace QL_Grammar.QLTypeCheck.Stmnt
             : base(stmnts)
         {
 
+        }
+
+        public void TypeCheck(TypeCheckData data)
+        {
+            foreach (ITypeCheckStmnt item in Statements)
+            {
+                item.TypeCheck(data);
+            }
         }
     }
 }
