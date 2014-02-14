@@ -7,15 +7,18 @@ open Microsoft.FSharp.Text.Lexing
 let keywords =
     [
         "form", FORM;
+        "if", IF;
         "boolean", QLBOOL;
         "string", QLSTRING;
+        "integer", QLINT;
+        "decimal", QLDECIMAL;
         "date", QLDATE;
         "money", QLMONEY;
     ] |> Map.ofList
 
 let symbols =
     [
-        "=",    EQ;
+        "==",    EQ;
         "!=",   NE;
         "<",    LT;
         "<=",   LE;
@@ -43,19 +46,29 @@ let float       = '-'?digit+ '.' digit+
 let identifier  = char(char|digit|['-' '_' '.'])*
 let whitespace  = [' ' '\t']
 let newline     = "\n\r" | '\n' | '\r'
-let symbol      = ">" | ">=" | "<" | "<=" | "=" | "!=" | "&&" | "||" | "!"  // Boolean
+let symbol      = ">" | ">=" | "<" | "<=" | "==" | "!=" | "&&" | "||" | "!" // Boolean
                 | "+" | "-" | "*" | "/"                                     // Arithmetic
-                | "{" | "}" | "(" | ")"                                     // Brackets
+                | "{" | "}" | "(" | ")" | ":"                               // Structural
 
 
 rule tokenize = parse   
 | whitespace    { tokenize lexbuf }   
-| newline       { lexbuf.EndPos <- lexbuf.EndPos.NextLine; tokenize lexbuf; }   
-| int           { INT(Int32.Parse(LexBuffer<_>.LexemeString lexbuf)) }   
+| newline       { lexbuf.EndPos <- lexbuf.EndPos.NextLine; tokenize lexbuf; }
+| int           { INT(Int32.Parse(LexBuffer<_>.LexemeString lexbuf)) }
 | float         { DECIMAL(Double.Parse(LexBuffer<_>.LexemeString lexbuf)) }
-| symbol      { symbols.[LexBuffer<_>.LexemeString lexbuf] }   
-| identifier    { match keywords.TryFind(LexBuffer<_>.LexemeString lexbuf) with   
-                  | Some(token) -> token   
-                  | None -> IDENTIFIER(LexBuffer<_>.LexemeString lexbuf) }     
+| "\""			{ LABEL(string lexbuf.StartPos "" lexbuf) }
+| "true"		{ BOOL(true) }
+| "false"		{ BOOL(false) }
+| symbol		{ symbols.[LexBuffer<_>.LexemeString lexbuf] }
+| identifier    { match keywords.TryFind(LexBuffer<_>.LexemeString lexbuf) with
+                  | Some(token) -> token
+                  | None -> IDENTIFIER(LexBuffer<_>.LexemeString lexbuf) }
 | eof           { END }
+and string pos res = parse
+| "\\\""		{ string pos (res + "\\\"") lexbuf }
+| "\""			{ res }
+| newline       { lexbuf.EndPos <- lexbuf.EndPos.NextLine; string pos (res + "\n") lexbuf; }
+| eof			{ failwithf "Unterminated string" }
+| _				{ string pos (res + (LexBuffer<_>.LexemeString lexbuf)) lexbuf }
+
 

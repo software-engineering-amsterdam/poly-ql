@@ -72,7 +72,6 @@
     <None Include="..\..\GRAMMAR.md">
       <Link>GRAMMAR.md</Link>
     </None>
-    <None Include="QL_Parser.fsyacc.output" />
     <None Include="App.config" />
     <None Include="packages.config" />
     <Compile Include="QL_Grammar.fs" />
@@ -114,7 +113,7 @@
   <PropertyGroup>
     <PreBuildEvent>if $(ConfigurationName) == Debug (
 "Z:\UvA\Software Construction\SoftwConsQl\packages\FSPowerPack.Community.3.0.0.0\Tools\fslex.exe" "$(ProjectDir)QL_Lexer.fsl" --unicode
-"Z:\UvA\Software Construction\SoftwConsQl\packages\FSPowerPack.Community.3.0.0.0\Tools\fsyacc.exe" "$(ProjectDir)QL_Parser.fsp" -v --module QL_Parser
+"Z:\UvA\Software Construction\SoftwConsQl\packages\FSPowerPack.Community.3.0.0.0\Tools\fsyacc.exe" "$(ProjectDir)QL_Parser.fsp" --module QL_Parser
 )</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
