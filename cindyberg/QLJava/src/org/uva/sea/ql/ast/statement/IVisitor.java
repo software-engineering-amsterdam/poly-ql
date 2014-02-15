@@ -1,11 +1,5 @@
 package org.uva.sea.ql.ast.statement;
 
-import org.uva.sea.ql.ast.statement.ExprQuestion;
-import org.uva.sea.ql.ast.statement.Form;
-import org.uva.sea.ql.ast.statement.If;
-import org.uva.sea.ql.ast.statement.IfElse;
-import org.uva.sea.ql.ast.statement.Question;
-import org.uva.sea.ql.ast.statement.QuestionSet;
 
 public interface IVisitor {
 	

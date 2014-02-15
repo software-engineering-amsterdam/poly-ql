@@ -1,6 +1,7 @@
 package org.uva.sea.ql.ast.operators.arithmetic;
 
 import org.uva.sea.ql.ast.Expression;
+import org.uva.sea.ql.ast.ExpressionVisitor;
 import org.uva.sea.ql.ast.IVisitor;
 import org.uva.sea.ql.ast.operators.BinaryOperator;
 
@@ -11,8 +12,7 @@ public class Div extends BinaryOperator {
 		super(left,right);
 	}
 
-	public void accept(IVisitor visitor) {
-		
+	public <T> void accept(ExpressionVisitor<T> visitor) {
 		visitor.visit(this);
 		
 	}
