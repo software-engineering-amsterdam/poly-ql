@@ -1,9 +1,17 @@
 package org.uva.sea.ql.ast.literal;
 
-public class StringLiteral extends Literal{
+import org.uva.sea.ql.ast.IVisitor;
+
+public class StringLiteral extends Literal<String>{
 
 	public StringLiteral(String name) {
-		// TODO Auto-generated constructor stub
+		super(name);
+	}
+
+	@Override
+	public void accept(IVisitor visitor) {
+		visitor.visit(this);
+		
 	}
 
 }

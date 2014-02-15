@@ -1,0 +1,1 @@
+!(hasHouse || hasCar) /* A comment */ && salary <= (2 * /* Other comment */ baseSalary - 5000) // Third comment

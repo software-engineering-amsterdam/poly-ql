@@ -1,15 +1,17 @@
 package org.uva.sea.ql.ast.type;
 
-import org.uva.sea.ql.ast.ASTNode;
+import org.uva.sea.ql.ast.IVisitor;
 
-public class IntType extends Type implements ASTNode{
+public class IntType extends Type{
 
-	public IntType(int n) {
-		// TODO Auto-generated constructor stub
+
+	public void accept(IVisitor visitor) {
+		visitor.visit(this);
+		
 	}
-
-	public IntType() {
-		// TODO Auto-generated constructor stub
+	
+	public String show(){
+		return "int";
 	}
 
 }

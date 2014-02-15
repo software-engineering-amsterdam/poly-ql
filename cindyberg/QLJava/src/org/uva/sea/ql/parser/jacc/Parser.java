@@ -12,7 +12,13 @@ public class Parser {
 		lexer.nextToken();
 		QLParser parser = new QLParser(lexer);
 		
-		parser.parse();
+		try{
+			parser.parse(); 
+		}
+		catch(NullPointerException e){
+			throw e;		
+		}
+		
 		return parser.getResult();
 		
 		}

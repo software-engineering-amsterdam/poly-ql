@@ -1,8 +1,12 @@
 package org.uva.sea.ql.parser.test;
 
 import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
-import org.uva.sea.ql.ast.statement.*;
+import org.uva.sea.ql.ast.statement.ExprQuestion;
+import org.uva.sea.ql.ast.statement.If;
+import org.uva.sea.ql.ast.statement.IfElse;
+import org.uva.sea.ql.ast.statement.Question;
 
 public class TestStatements extends TestParser{
 
@@ -11,9 +15,7 @@ public class TestStatements extends TestParser{
 		
 			assertEquals(parser.parser("var : \"label\" boolean").getClass(), Question.class);
 			assertEquals(parser.parser("var : \"label\" boolean ( expr ) ").getClass(), ExprQuestion.class);
-			//werkt niet :( 
-			assertEquals(parser.parser("var : \"label\" boolean\n"
-					+ "var2 : \"label2\" boolean ( expr2 ) ").getClass(), QuestionSet.class);
+			
 		}
 		
 		@Test

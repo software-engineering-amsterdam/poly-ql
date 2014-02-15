@@ -1,0 +1,1 @@
+(expr (expr (expr hasHouse) == (expr (bool true))) && (expr (expr salary) > (expr 30000)))

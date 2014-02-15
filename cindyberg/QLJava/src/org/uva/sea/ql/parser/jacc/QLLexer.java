@@ -6,8 +6,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.uva.sea.ql.ast.*;
+import org.uva.sea.ql.ast.literal.BoolLiteral;
+import org.uva.sea.ql.ast.literal.IntLiteral;
 import org.uva.sea.ql.ast.literal.StringLiteral;
-import org.uva.sea.ql.ast.type.IntType;
 
 public class QLLexer implements QLTokens {
 	private static final Map<String, Integer> KEYWORDS;
@@ -53,9 +54,10 @@ public class QLLexer implements QLTokens {
 	}
 	
 	public int nextToken() {
-		boolean inComment = false;
+		boolean inCommentMultipleLines = false;
+		boolean inCommentSingleLine = false; 
 		for (;;) {
-			if (inComment) {
+			if (inCommentMultipleLines) {
 				while (c != '*' && c != -1) {
 					nextChar();
 				}
@@ -63,10 +65,25 @@ public class QLLexer implements QLTokens {
 					nextChar();
 					if (c == '/') {
 						nextChar();
-						inComment = false;
+						inCommentMultipleLines = false;
 					}
 					continue;
 				}
+			}
+			if(inCommentSingleLine){
+				while(c != '\n'&& c != -1){
+					nextChar();
+				}
+				if(c == '\n'){
+					nextChar();
+					inCommentSingleLine = false;
+				}
+				//if the comment is the last line (no \n)
+				else if(c < 0)
+				{
+					return token = ENDINPUT;
+				}
+				continue;
 			}
 			
 			while (c == ' ' || c == '\t' || c == '\n' || c == '\r') {
@@ -82,20 +99,28 @@ public class QLLexer implements QLTokens {
 			    case '/': {
 			    	nextChar();
 			    	if (c == '*') {
-			    		inComment = true;
+			    		inCommentMultipleLines = true;
+			    		nextChar();
+			    		continue;
+			    	}
+			    	else if(c == '/'){
+			    		inCommentSingleLine = true;
 			    		nextChar();
 			    		continue;
 			    	}
 			    	return token = '/'; 
 			    }
+			    
+			    case ':': nextChar(); return token = ':';
 			    case ')': nextChar(); return token = ')';
 			    case '(': nextChar(); return token = '(';
 			    case '}': nextChar(); return token = '}';
 			    case '{': nextChar(); return token = '{';
+			    
 			    case '*': {
 			    	nextChar();
-			    	if (inComment && c == '/') {
-			    		inComment = false;
+			    	if (inCommentMultipleLines && c == '/') {
+			    		inCommentMultipleLines = false;
 			    		nextChar();
 			    		continue;
 			    	}
@@ -103,6 +128,7 @@ public class QLLexer implements QLTokens {
 			    }
 			    case '+': nextChar(); return token = '+';
 			    case '-': nextChar(); return token = '-';
+			    
 			    case '&': {
 			    	nextChar(); 
 			    	if  (c == '&') {
@@ -128,7 +154,6 @@ public class QLLexer implements QLTokens {
 			    	return token = '!';
 			    }
 			    
-			    case ':': nextChar(); return token = ':';
 			    case '<': {
 			    	nextChar();
 			    	if (c == '=') {
@@ -176,7 +201,7 @@ public class QLLexer implements QLTokens {
 			    			n = 10 * n + (c - '0');
 			    			nextChar(); 
 			    		} while (Character.isDigit(c)); 
-			    		yylval = new IntType(n);
+			    		yylval = new IntLiteral(n);
 			    		return token = INTEGER;
 			    	}
 			    	if (Character.isLetter(c)) {
@@ -187,6 +212,8 @@ public class QLLexer implements QLTokens {
 			    		}
 			    		while (Character.isLetterOrDigit(c));
 			    		String name = sb.toString();
+			    		if(name == "true"){new BoolLiteral(true);}
+			    		if(name == "false"){new BoolLiteral(false);}
 			    		if (KEYWORDS.containsKey(name)) {
 			    			return token = KEYWORDS.get(name);
 			    		}

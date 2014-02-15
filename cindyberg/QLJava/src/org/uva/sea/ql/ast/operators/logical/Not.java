@@ -1,12 +1,23 @@
 package org.uva.sea.ql.ast.operators.logical;
 
-import org.uva.sea.ql.ast.ASTNode;
 import org.uva.sea.ql.ast.Expression;
+import org.uva.sea.ql.ast.IVisitor;
+import org.uva.sea.ql.ast.operators.UnaryOperator;
 
-public class Not implements ASTNode {
+public class Not extends UnaryOperator {
 
 	public Not(Expression expr) {
-		// TODO Auto-generated constructor stub
+		
+		super(expr);
+	}
+
+	public void accept(IVisitor visitor) {
+		visitor.visit(this);
+		
+	}
+	
+	public String show(){
+		return "!";
 	}
 
 }

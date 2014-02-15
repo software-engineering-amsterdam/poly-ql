@@ -1,12 +1,23 @@
 package org.uva.sea.ql.ast.operators.logical;
 
-import org.uva.sea.ql.ast.ASTNode;
 import org.uva.sea.ql.ast.Expression;
+import org.uva.sea.ql.ast.IVisitor;
+import org.uva.sea.ql.ast.operators.BinaryOperator;
 
-public class Or implements ASTNode {
+public class Or extends BinaryOperator {
 
 	public Or(Expression left,Expression right) {
-		// TODO Auto-generated constructor stub
+		super(left,right);
+	}
+
+	public void accept(IVisitor visitor) {
+		
+		visitor.visit(this);
+		
+	}
+	
+	public String show(){
+		return "||";
 	}
 
 }

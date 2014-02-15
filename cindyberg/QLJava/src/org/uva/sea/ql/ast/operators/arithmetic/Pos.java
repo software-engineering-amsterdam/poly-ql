@@ -1,12 +1,26 @@
 package org.uva.sea.ql.ast.operators.arithmetic;
 
-import org.uva.sea.ql.ast.ASTNode;
 import org.uva.sea.ql.ast.Expression;
+import org.uva.sea.ql.ast.IVisitor;
+import org.uva.sea.ql.ast.operators.UnaryOperator;
 
-public class Pos implements ASTNode {
+public class Pos extends UnaryOperator {
 
 	public Pos(Expression expr) {
-		// TODO Auto-generated constructor stub
+		
+		super(expr);
 	}
+
+	public void accept(IVisitor visitor) {
+		visitor.visit(this);
+		
+	}
+
+	@Override
+	public String show() {
+		return "";
+	}
+	
+	
 
 }

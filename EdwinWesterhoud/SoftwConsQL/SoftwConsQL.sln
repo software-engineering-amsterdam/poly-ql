@@ -5,6 +5,13 @@ VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "QL_Fsharp", "QL_Fsharp\QL_Fsharp.fsproj", "{E944629A-9346-4BD8-95CC-36DFE896B233}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{3ADC501D-3224-421B-BD4F-50D23E69F05A}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "QL_Fsharp_Test", "QL_Fsharp_Test\QL_Fsharp_Test.fsproj", "{5FFB63D9-05BE-42BB-9037-358D399E074C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +22,10 @@ Global
 		{E944629A-9346-4BD8-95CC-36DFE896B233}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E944629A-9346-4BD8-95CC-36DFE896B233}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E944629A-9346-4BD8-95CC-36DFE896B233}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FFB63D9-05BE-42BB-9037-358D399E074C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FFB63D9-05BE-42BB-9037-358D399E074C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FFB63D9-05BE-42BB-9037-358D399E074C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FFB63D9-05BE-42BB-9037-358D399E074C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

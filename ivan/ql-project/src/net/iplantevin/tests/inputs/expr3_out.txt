@@ -1,0 +1,1 @@
+(expr (expr ! (expr ( (expr (expr hasHouse) || (expr hasCar)) ))) && (expr (expr salary) <= (expr ( (expr (expr (expr 2) * (expr baseSalary)) - (expr 5000)) ))))

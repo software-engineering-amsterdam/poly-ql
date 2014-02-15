@@ -3,14 +3,34 @@
  */
 grammar Test;
 
-/** A rule called init that matches comma-separated values between {...}. */
-init  : '{' value (',' value)* '}' ;  // must match at least one value
+questionnare    : 'form' title '{' block+ '}';
 
-/** A value can be either a nested array/struct or a simple integer (INT) */
-value : init
-      | INT
-      ;
+title           : TITLE;
+block           : ifblock | question; 
 
-// parser rules start with lowercase letters, lexer rules with uppercase
-INT :   [0-9]+ ;             // Define token INT as one or more digits
-WS  :   [ \t\r\n]+ -> skip ;
+question		: qid ASSIGNMENT '"' qcontent '"' qtype;
+qid             : QUESTIONTITLE;
+qcontent        : .+?;
+qtype           : 'boolean' | 'int' | 'string';
+
+ifblock         : 'if' condition '{' question+ '}';
+condition       : '(' (cond=.+?) ')' { System.out.println("Found condition: " + $cond.text); }; 
+
+TITLE           : [A-Z][a-zA-Z0-9]*;
+QUESTIONTITLE   : [a-z][a-zA-Z0-9]*;
+ASSIGNMENT      : ':';
+WS              : [ \t\r\n]+ -> skip ; 
+
+/* 
+form Box1HouseOwning {
+ hasSoldHouse: “Did you sell a house in 2010?” boolean
+ hasBoughtHouse: “Did you by a house in 2010?” boolean
+ hasMaintLoan: “Did you enter a loan for maintenance/reconstruction?” 
+boolean
+ if (hasSoldHouse) {
+ sellingPrice: “Price the house was sold for:” money
+ privateDebt: “Private debts for the sold house:” money
+ valueResidue: “Value residue:” money(sellingPrice - privateDebt)
+ }
+}
+*/

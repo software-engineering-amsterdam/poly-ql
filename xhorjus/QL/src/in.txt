@@ -1,0 +1,11 @@
+form Herp {
+	q1: "herp" int
+	
+	if(someCondition) {
+		q2: "derp" boolean
+	}
+	
+	if(otherCondition) {
+		q3: "zurrr" boolean
+	}
+}

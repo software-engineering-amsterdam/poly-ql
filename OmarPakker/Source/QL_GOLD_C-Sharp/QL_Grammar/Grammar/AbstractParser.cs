@@ -7,7 +7,7 @@ namespace Grammar
     public abstract class AbstractParser
     {
         //Delegates
-        public delegate void OnReductionEventHandler(Reduction r, object newObj);
+        public delegate void OnReductionEventHandler(int line, int column, Reduction r, object newObj);
         public delegate void OnCompletionEventHandler(object root);
         public delegate void OnGroupErrorEventHandler();
         public delegate void OnInternalErrorEventHandler();
@@ -26,12 +26,11 @@ namespace Grammar
 
         private Parser parser;
 
-        public Position ParserPosition { get { return parser.CurrentPosition(); } }
         protected abstract ReadOnlyDictionary<string, short> Rules { get; }
 
         public AbstractParser(bool trimReductions)
         {
-            parser = new GOLD.Parser();
+            parser = new Parser();
             parser.TrimReductions = trimReductions;
         }
 
@@ -76,7 +75,7 @@ namespace Grammar
 
                         if (OnReduction != null)
                         {
-                            OnReduction(r, newObj);
+                            OnReduction(parser.CurrentPosition().Line, parser.CurrentPosition().Column, r, newObj);
                         }
                         break;
 
