@@ -19,10 +19,14 @@ FORM :
 	  'form'
 	;
 
-TYPE :
+TYPE_STRING :
 	  'String'
-	| 'Integer'
-	| 'Boolean' 
+	;
+TYPE_INTEGER :
+	 'Integer'
+	;
+TYPE_BOOL :
+	  'Boolean' 
 	;
 
 BOOL_VAL : 
@@ -30,23 +34,26 @@ BOOL_VAL :
 	| 'false' 
 	;
 
-MULTDIV :
-	  '*'
-	| '/'
-	;
-
-PLUSMIN :
-      '+'
-    | '-'
-	;
-
-COMPARE :
+LARGEREQUALS :
 	  '>='
-	| '<='
-	| '!='
-	| '=='
-	| '<'
-	| '>'
+	;
+SMALLEREQUALS :
+	  '<='
+	;
+
+NOTEQUALS :
+	  '!='
+	;
+
+EQUALS :
+	  '=='
+	;
+
+SMALLER :
+	  '<'
+	;
+LARGER :
+	  '>'
 	;
 
 ASSIGN :

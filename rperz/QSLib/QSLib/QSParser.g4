@@ -2,11 +2,7 @@ parser grammar QSParser;
 
 @header
 {
-	using QSLib.Classes.Expression.Conditions.Binary;
-	using QSLib.Classes.Expression.Conditions.Comparison;
-	using QSLib.Classes.Math;
-	using QSLib.Classes.Expression.Conditions;
-	using QSLib.Classes.Types;
+	using QSLib.Expressions;
 }
 
 @members
@@ -42,13 +38,15 @@ question
 
 type_declaration 
 	:
-	  assignment COLON TYPE
+	  assignment COLON TYPE_STRING 
+	| assignment COLON TYPE_BOOL
+	| assignment COLON TYPE_INTEGER
 	;
 
 assignment 
 	:
-	  WORD ASSIGN expression
-	| WORD
+	  id=WORD ASSIGN v=expression { $e = new OutputVariable($id, $v); }
+	| WORD	{ $e = new InputVariable($id); }
 	;
 
 expression 
@@ -57,34 +55,40 @@ expression
 	| boolean_expression
 	| comparative_expression
 	;
-	
-math_expression 
-	: 
-	  math_expression MULTDIV math_expression // multiply and divide have higher precedence 
-	| math_expression PLUSMIN math_expression // than plus and minus
-	| NUMBER
-	| WORD
-	;
 
+math_expression returns [Expression e]
+	: 
+	  l=math_expression MULTIPLY r=math_expression { $e = new Multiply($l, $r) } // multiply and divide have higher precedence
+	| l=math_expression DIVIDE r=math_expression { $e = new Divide($l, $r); } 
+	| l=math_expression PLUS r=math_expression { $e = new Add($l, $r); }
+	| l=math_expression MINUS r=math_expression { $e = new Subtract($l, $r); } // than plus and minus
+	| NUMBER
+	| WORD	  
+	;
+	
 condition 
 	:
 	  boolean_expression
 	| comparative_expression
 	;
 
-boolean_expression returns [Boolean_Expression e]
+boolean_expression returns [Expression e]
 	: 
-	  NOT boolean_expression					 { $e = new Not(); } // not has highest precedence but
-	| boolean_expression AND boolean_expression  { $e = new And(); } // and has higher precedence
-	| boolean_expression OR boolean_expression   { $e = new Or(); } // than or
-	| v=BOOL_VAL  { $e = new BooleanValue(); }
+	  NOT v=boolean_expression					 { $e = new Not($v); } // not has highest precedence but
+	| l=boolean_expression AND r=boolean_expression  { $e = new And($l, $r); } // and has higher precedence
+	| l=boolean_expression OR r=boolean_expression   { $e = new Or($l, $r); } // than or
+	| c=comparative_expression { $e=$c; }
+	| v=BOOL_VAL  { $e = new Bool($v); }
 	;
 
-comparative_expression 
+comparative_expression returns [Expression e]
 	:
-	  comparative_expression COMPARE comparative_expression
-	| NUMBER
-	| WORD
+	   l=value SMALLER r=value { $e = new SmallerThan($l, $r); }
+	 | l=value SMALLEREQUALS r=value { $e = new SmallerThan_Equals($l, $r); }
+	 | l=value EQUALS r=value { $e = new Equals($l, $r); }
+	 | l=value NOTEQUALS r=value { $e = new NotEquals($l, $r); }
+	 | l=value LARGEREQUALS r=value { $e = new LargerThan_Equals($l, $r); }
+	 | l=value LARGER r=value { $e = new LargerThan($l, $r); }
 	;
 	 
 conditional_statement 
@@ -104,4 +108,8 @@ else_statement
 	;
 
 
-
+value  :
+	  WORD 
+	| NUMBER
+	| BOOL_VAL
+	;
