@@ -2,7 +2,6 @@ package org.uva.sea.ql.ast.operators.comparison;
 
 import org.uva.sea.ql.ast.Expression;
 import org.uva.sea.ql.ast.ExpressionVisitor;
-import org.uva.sea.ql.ast.IVisitor;
 import org.uva.sea.ql.ast.operators.BinaryOperator;
 
 public class Eq extends BinaryOperator {

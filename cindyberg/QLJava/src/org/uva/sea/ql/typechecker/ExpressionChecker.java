@@ -125,4 +125,9 @@ public class ExpressionChecker implements ExpressionVisitor<Boolean> {
 		return true;
 	}
 
+	public Boolean visit(Identifier identifier) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

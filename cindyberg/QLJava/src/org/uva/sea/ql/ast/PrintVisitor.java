@@ -187,9 +187,8 @@ public class PrintVisitor implements IVisitor{
 	}
 
 	public void visit(QuestionSet questionset) {
-		visit(questionset.single);
-		if(questionset.multiple != null){
-		visit(questionset.multiple);
+		for(Statement s: questionset.getQuestionset()){
+			s.accept(this);
 		}
 		
 	}

@@ -29,5 +29,6 @@ public interface ExpressionVisitor<T>{
 	T visit(IntLiteral intLiteral);
 	T visit(BoolLiteral boolLiteral);
 	T visit(StringLiteral stringLiteral);
+	T visit(Identifier identifier);
 	
 }
