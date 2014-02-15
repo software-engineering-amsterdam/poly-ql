@@ -15,6 +15,10 @@ ELSE :
 	  'else' 
 	;
 
+FORM :
+	  'form'
+	;
+
 TYPE :
 	  'String'
 	| 'Integer'
@@ -24,6 +28,29 @@ TYPE :
 BOOL_VAL : 
 	  'true'
 	| 'false' 
+	;
+
+MULTDIV :
+	  '*'
+	| '/'
+	;
+
+PLUSMIN :
+      '+'
+    | '-'
+	;
+
+COMPARE :
+	  '>='
+	| '<='
+	| '!='
+	| '=='
+	| '<'
+	| '>'
+	;
+
+ASSIGN :
+	  '='
 	;
 
 WORD :
