@@ -15,5 +15,4 @@ public interface StatementVisitor {
 	 void visit(IfElse ifelseconditional);
 	 void visit(Form form);
 	 void visit(QuestionSet questionset);
-	 void visit(Expression expression);
 }

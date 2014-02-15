@@ -5,6 +5,9 @@ import java.util.List;
 import org.uva.sea.ql.ast.Expression;
 import org.uva.sea.ql.ast.ExpressionVisitor;
 import org.uva.sea.ql.ast.Identifier;
+import org.uva.sea.ql.ast.literal.BoolLiteral;
+import org.uva.sea.ql.ast.literal.IntLiteral;
+import org.uva.sea.ql.ast.literal.StringLiteral;
 import org.uva.sea.ql.ast.operators.arithmetic.*;
 import org.uva.sea.ql.ast.operators.comparison.*;
 import org.uva.sea.ql.ast.operators.logical.*;
@@ -14,14 +17,27 @@ public class ExpressionChecker implements ExpressionVisitor<Boolean> {
 	public Environment environment;
 	public List<Error> errors;
 	
-	public ExpressionChecker(Environment environment, List<Error> errorlist) {
+	public ExpressionChecker(Environment environment, List<Error> errorlist, Expression expression) {
 		this.environment = environment;
 		this.errors = errorlist;
+		expression.accept(this);
+	}
+	
+	public Boolean checkArithmetic(Expression side){
+		return true;
 	}
 
-	public Boolean visit(Add add) {
-		// TODO Auto-generated method stub
+	public Boolean visit(Expression expression) {
 		return null;
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public Boolean visit(Add add) {
+		boolean left = checkArithmetic(add.returnLeft());
+		boolean right = checkArithmetic(add.returnRight());
+		return left && right;
 	}
 
 	public Boolean visit(Sub sub) {
@@ -92,6 +108,21 @@ public class ExpressionChecker implements ExpressionVisitor<Boolean> {
 	public Boolean visit(Not not) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+	public Boolean visit(IntLiteral intLiteral) {
+		return true;
+	}
+
+
+	public Boolean visit(BoolLiteral boolLiteral) {
+		return true;
+	}
+
+
+	public Boolean visit(StringLiteral stringLiteral) {
+		return true;
 	}
 
 }

@@ -19,9 +19,10 @@ public class StatementChecker implements StatementVisitor {
 	public Environment environment;
 	public List<Error> errorlist;
 	
-	public StatementChecker(){
+	public StatementChecker(Environment environment, List<Error> errorlist){
 		
-		environment = new Environment();
+		this.environment = environment;
+		this.errorlist = errorlist;
 	}
 	
 	public void visit(ExprQuestion exprquestion) {
@@ -35,7 +36,7 @@ public class StatementChecker implements StatementVisitor {
 		}
 		
 		environment.addIdentifier(id, type);
-		visit(expression);
+		new ExpressionChecker(environment,errorlist, expression);
 		
 		
 	}
@@ -57,10 +58,8 @@ public class StatementChecker implements StatementVisitor {
 		Expression condition = ifconditional.getConditional();
 		QuestionSet questionset = ifconditional.getQuestionSet();
 		
-		
-		
 		this.visit(questionset);
-		
+		new ExpressionChecker(environment, errorlist, condition);
 		
 	}
 
@@ -69,7 +68,7 @@ public class StatementChecker implements StatementVisitor {
 		QuestionSet ifset = ifelseconditional.getIfQuestionSet();
 		QuestionSet elseset = ifelseconditional.getElseQuestionSet();
 
-		
+		new ExpressionChecker(environment,errorlist,condition);
 		this.visit(ifset);
 		this.visit(elseset);
 		

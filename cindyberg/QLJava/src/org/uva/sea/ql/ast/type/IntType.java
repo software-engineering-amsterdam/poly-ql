@@ -13,5 +13,10 @@ public class IntType extends Type{
 	public String show(){
 		return "int";
 	}
+	
+	@Override
+	public boolean isCompatibleWithNumeric(){
+		return true;
+	}
 
 }

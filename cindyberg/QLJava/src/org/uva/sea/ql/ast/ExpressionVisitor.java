@@ -1,20 +1,9 @@
 package org.uva.sea.ql.ast;
 
-import org.uva.sea.ql.ast.operators.arithmetic.Add;
-import org.uva.sea.ql.ast.operators.arithmetic.Div;
-import org.uva.sea.ql.ast.operators.arithmetic.Mul;
-import org.uva.sea.ql.ast.operators.arithmetic.Neg;
-import org.uva.sea.ql.ast.operators.arithmetic.Pos;
-import org.uva.sea.ql.ast.operators.arithmetic.Sub;
-import org.uva.sea.ql.ast.operators.comparison.Eq;
-import org.uva.sea.ql.ast.operators.comparison.GEq;
-import org.uva.sea.ql.ast.operators.comparison.GT;
-import org.uva.sea.ql.ast.operators.comparison.LEq;
-import org.uva.sea.ql.ast.operators.comparison.LT;
-import org.uva.sea.ql.ast.operators.comparison.NEq;
-import org.uva.sea.ql.ast.operators.logical.And;
-import org.uva.sea.ql.ast.operators.logical.Not;
-import org.uva.sea.ql.ast.operators.logical.Or;
+import org.uva.sea.ql.ast.literal.*;
+import org.uva.sea.ql.ast.operators.arithmetic.*;
+import org.uva.sea.ql.ast.operators.comparison.*;
+import org.uva.sea.ql.ast.operators.logical.*;
 
 public interface ExpressionVisitor<T>{
 
@@ -36,5 +25,9 @@ public interface ExpressionVisitor<T>{
 	T visit(And and);
 	T visit(Or or);
 	T visit(Not not);
+	
+	T visit(IntLiteral intLiteral);
+	T visit(BoolLiteral boolLiteral);
+	T visit(StringLiteral stringLiteral);
 	
 }

@@ -1,6 +1,8 @@
 package org.uva.sea.ql.ast.literal;
 
-import org.uva.sea.ql.ast.IVisitor;
+import org.uva.sea.ql.ast.ExpressionVisitor;
+import org.uva.sea.ql.ast.type.*;
+import org.uva.sea.ql.typechecker.Environment;
 
 public class StringLiteral extends Literal<String>{
 
@@ -9,7 +11,12 @@ public class StringLiteral extends Literal<String>{
 	}
 
 	@Override
-	public void accept(IVisitor visitor) {
+	public Type typeOf() {
+		return new StringType();
+	}
+
+	@Override
+	public <T> void accept(ExpressionVisitor<T> visitor) {
 		visitor.visit(this);
 		
 	}
