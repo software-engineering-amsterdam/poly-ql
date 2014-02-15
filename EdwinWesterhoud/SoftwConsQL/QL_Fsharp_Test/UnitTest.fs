@@ -12,7 +12,7 @@ type FormTests() =
     member x.EmptyForm () = 
         let text = "form formName { }"
         let tree = { ID = "formName"; Questions = [] }
-        let result = parse text
+        let result = parse_str text
         Assert.AreEqual(tree, result)
 
 // Questions
@@ -29,7 +29,7 @@ type QuestionTests() =
                                                     Label = "Does it work?";
                                                     Type = QLBool })
                                         ]; }
-        let result = parse text
+        let result = parse_str text
         Assert.AreEqual(tree, result)
     [<TestMethod>]
     member x.BoolQuestion2 () = 
@@ -47,7 +47,7 @@ type QuestionTests() =
                                                     Label = "And with two questions?";
                                                     Type = QLBool })
                                         ]; }
-        let result = parse text
+        let result = parse_str text
         Assert.AreEqual(tree, result)
 
 // Conditionals
@@ -74,7 +74,7 @@ type ConditionalTests() =
                                                         })
                                                     ])
                                     ]; }
-        let result = parse text
+        let result = parse_str text
         Assert.AreEqual(tree, result)
     [<TestMethod>]
     member x.ConditialBool () = 
@@ -92,7 +92,7 @@ type ConditionalTests() =
                                                         })
                                                     ])
                                     ]; }
-        let result = parse text
+        let result = parse_str text
         Assert.AreEqual(tree, result)
     [<TestMethod>]
     member x.ConditialComp () = 
@@ -115,7 +115,7 @@ type ConditionalTests() =
                                                         })
                                                     ])
                                     ]; }
-        let result = parse text
+        let result = parse_str text
         Assert.AreEqual(tree, result)
 
 
@@ -126,5 +126,5 @@ type ConditionalTests() =
 //    member x.ArithPlus () = 
 //        let text = "form formName { 1+1 }"
 //        let tree = { ID = "formName"; Questions = []}
-//        let result = parse text
+//        let result = parse_str text
 //        Assert.AreEqual(tree, result)
