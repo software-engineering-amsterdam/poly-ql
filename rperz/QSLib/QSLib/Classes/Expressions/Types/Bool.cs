@@ -5,10 +5,10 @@ using System.Text;
 
 namespace QSLib.Expressions.Types
 {
-    class Boolean : BaseType
+    class Bool : BaseType
     {
         private bool _value;
-        private Identifier _id;
+        private string _id;
 
         public override Type GetType()
         {

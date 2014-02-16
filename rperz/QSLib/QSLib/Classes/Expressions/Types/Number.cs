@@ -8,7 +8,7 @@ namespace QSLib.Expressions.Types
     class Number : BaseType
     {
         private int _value;
-        private Identifier _id;
+        private String _id;
 
         public override Type GetType()
         {

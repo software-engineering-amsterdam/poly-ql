@@ -332,8 +332,8 @@ let _fsyacc_reductions ()  =    [|
                    (
 # 36 "D:\Mijn documenten\GitHub\poly-ql\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
                                                   
-                                                     {   ID = _2;
-                                                         Questions = _4 }
+                                                     {   ID          = _2;
+                                                         Statements  = _4 }
                                                  
                    )
 # 36 "D:\Mijn documenten\GitHub\poly-ql\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
@@ -418,7 +418,7 @@ let _fsyacc_reductions ()  =    [|
                                                          ID          = _1;
                                                          Label       = _3;
                                                          Type        = _4;
-                                                         Expressions = _6;
+                                                         Expression  = _6;
                                                      } 
                    )
 # 53 "D:\Mijn documenten\GitHub\poly-ql\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"

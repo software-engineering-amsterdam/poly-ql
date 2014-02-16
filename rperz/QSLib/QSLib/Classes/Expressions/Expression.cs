@@ -5,7 +5,7 @@ using System.Text;
 
 namespace QSLib.Expressions
 {
-    class Expression
+    public class Expression
     {
     }
 }

@@ -13,5 +13,10 @@ public class StringType extends Type{
 	public String show(){
 		return "string";
 	}
+	
+	@Override
+	public boolean isCompatibleWithString() {
+		return true;
+	}
 
 }

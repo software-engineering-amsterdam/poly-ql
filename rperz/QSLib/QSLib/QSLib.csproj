@@ -44,11 +44,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Errors\TypeError.cs" />
     <Compile Include="Classes\Expressions\Conditions\Binary\And.cs" />
-    <Compile Include="Classes\Expressions\Conditions\Binary\Boolean_Expression.cs" />
+    <Compile Include="Classes\Expressions\Binary_Expression.cs" />
+    <Compile Include="Classes\Expressions\Unary_Expression.cs" />
     <Compile Include="Classes\Expressions\Expression.cs" />
     <Compile Include="Classes\Expressions\Types\BaseType.cs" />
-    <Compile Include="Classes\Expressions\Types\Boolean.cs" />
+    <Compile Include="Classes\Expressions\Types\Bool.cs" />
     <Compile Include="Classes\Expressions\Conditions\Comparison\Compare_Expression.cs" />
     <Compile Include="Classes\Expressions\Conditions\Comparison\Equals.cs" />
     <Compile Include="Classes\Expressions\Conditions\Comparison\LargerThan.cs" />

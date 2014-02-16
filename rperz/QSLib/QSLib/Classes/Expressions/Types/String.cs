@@ -9,7 +9,7 @@ namespace QSLib.Expressions.Types
     class Str : BaseType
     {
         private String _value;
-        private Identifier _id;
+        private String _id;
 
         public override Type GetType()
         {

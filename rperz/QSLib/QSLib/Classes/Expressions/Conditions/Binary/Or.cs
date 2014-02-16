@@ -5,7 +5,7 @@ using System.Text;
 
 namespace QSLib.Expressions.Conditions.Binary
 {
-    class Or : Boolean_Expression 
+    class Or : Binary_Expression 
     {
     }
 }
