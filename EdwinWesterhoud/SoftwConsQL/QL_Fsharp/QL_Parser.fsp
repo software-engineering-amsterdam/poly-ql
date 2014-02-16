@@ -34,8 +34,8 @@ start:
     FORM IDENTIFIER CB_OPEN
         stmtList
     CB_CLOSE END            {
-                                {   ID = $2;
-                                    Questions = $4 }
+                                {   ID          = $2;
+                                    Statements  = $4 }
                             }
 
 stmtList:
@@ -54,7 +54,7 @@ assignment:
                                     ID          = $1;
                                     Label       = $3;
                                     Type        = $4;
-                                    Expressions = $6;
+                                    Expression  = $6;
                                 } }
 
 question:

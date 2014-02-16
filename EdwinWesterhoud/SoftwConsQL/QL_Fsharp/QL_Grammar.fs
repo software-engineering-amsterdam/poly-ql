@@ -1,12 +1,18 @@
 ﻿module QL_Grammar
+open System
 
+// Exception type for error reporting
+type public ParseErrorExceptionMessage(message : string, line : int, column : int) = 
+    member public x.Message = message
+    member public x.Line    = line
+    member public x.Column  = column
+exception ParseErrorException of ParseErrorExceptionMessage
 
 // Question types
 type qlType = QLBool | QLString | QLInt | QLDate | QLDecimal | QLMoney
 
 // Expression types
 // TODO OF TYPES! ~
-
 type exprType =
     | Bool      of bool
     | String    of string
@@ -30,7 +36,7 @@ type assignment =
     {   ID          : string;
         Label       : string;
         Type        : exprType;
-        Expressions : expression }
+        Expression  : expression }
 
 type question =
     {   ID      : string;
@@ -44,4 +50,5 @@ type statement =
 
 type questionaire = 
     {   ID          : string;
-        Questions   : statement list } // Rename to statements
+        Statements  : statement list }
+    override m.ToString() = sprintf "%+A" m
