@@ -19,7 +19,9 @@ grammar QL;
 @header {
 	using System;
 	using System.Collections.Generic;
+	using System.Linq;
 	using QL.Components;
+	using QL.Components.Statements;
 }
 
 
@@ -27,62 +29,97 @@ grammar QL;
  * Parser Rules
  */
  
-questionnaire
-	: 'form' ID ASSIGN STRING LBRACKET expression+ RBRACKET SEMICOLON 
+questionnaire returns [Questionnaire qst]
+	: 'form' ID ASSIGN STRING LBRACKET statement* RBRACKET 
 	{
-		string text = $ID.text;
-		if(IDExists(text))
-			NotifyErrorListeners(string.Format("identifier '{0}' already defined", text));
+		string id = $ID.text;
+		if(IDExists(id))
+			NotifyErrorListeners(string.Format("identifier '{0}' already defined", id));
 		
-		CreateID(text);
-		theQuestionnaire.ID = text; theQuestionnaire.Title = $STRING.text;
+		CreateID(id);
+
+		//theQuestionnaire.ID = id; theQuestionnaire.Title = $STRING.text;
+		$qst = new Questionnaire{ID = id, Title = $STRING.text};
 	}
 	;
 
-expression 
-	: question_stmt
+statement 
+	: (question_stmt| question_ref) SEMICOLON
 	| if_stmt;
 
-question_stmt
-	: ID ASSIGN STRING TYPE SEMICOLON 
+question_stmt returns [Question qst]
+	: ID ASSIGN STRING t=type v=value 
 	{
-		string text = $ID.text;
-		if(IDExists(text))
-			NotifyErrorListeners(string.Format("identifier '{0}' already defined", text));
+		string id = $ID.text;
+		if(IDExists(id))
+			NotifyErrorListeners(string.Format("identifier '{0}' already defined", id));
 		
-		CreateID($ID.text);
-		theQuestionnaire.Questions.Add(new Question(){ID = $ID.text, Label = $STRING.text, Type = $TYPE.text});
+		CreateID(id);
+		//theQuestionnaire.Questions.Add(new Question(){ID = id, Label = $STRING.text, Type = $t.text});
+		//$qst = new Question(){ID = id, Label = $STRING.text, Type = typeof($t.text)};
+	};
+
+question_ref returns [Question qst]
+	: ID
+	{
+		string id = $ID.text;
+		if(!IDExists(id))
+		{
+			NotifyErrorListeners(string.Format("question '{0}' does not exist!", id));
+			$qst = null;
+		}
+		else
+		{
+			$qst = theQuestionnaire.Questions.Single((q) => q.ID == id);
+		}
 	};
 
 if_stmt
-	: IF LPARENS boolean_expr RPARENS LBRACKET expression* RBRACKET SEMICOLON;
+	: IF boolean_expr LBRACKET statement* RBRACKET else_stmt?;
+
+else_stmt
+	: ELSE LBRACKET statement* RBRACKET
+	| ELSE if_stmt;
 
 boolean_expr
 	: boolean_expr AND boolean_expr 
 	| boolean_expr OR boolean_expr 
-	| (BOOL | compare_expr);
+	| LPARENS (BOOL | compare_expr) RPARENS;
 
 compare_expr
-	: compare_expr compare_operator compare_expr
+	: int_compare
+	| string_compare;
+
+int_compare
+	: int_compare (EQ | compare_operator) int_compare
 	| INT;
 
+string_compare
+	: string_compare EQ string_compare
+	| STRING;
+
 compare_operator
-	: EQ
-	| GT
+	: GT
 	| GTE
 	| ST
 	| STE;
+
+type : (BOOLType | INTType | STRINGType);
+value: (BOOL | INT | STRING);
 
 /*
  * Lexer Rules
  */
 
 ID : ([a-z][A-Z0-9]*);	
-TYPE: ('bool' | 'string' | 'int');
+
+BOOLType: 'bool';
+INTType: 'int';
+STRINGType: 'string';
 
 BOOL: 'true' | 'false';
-STRING: '"'.*?'"';
 INT : [0-9]+;
+STRING: '"'.*?'"';
 
 LPARENS: '(';
 RPARENS: ')';
@@ -93,6 +130,7 @@ ASSIGN: '=';
 SEMICOLON: ';';
 
 IF: 'if';
+ELSE : 'else';
 
 AND: '&&';
 OR: '||';
@@ -104,4 +142,5 @@ GTE: '>=';
 ST: '<';
 STE: '=<';
 
-WS  : (' ' | '\r' | '\n' | '\t' | ('\\\\'.*( '\r' | '\n' )))-> channel(HIDDEN);
+WS  : (' ' | '\r' | '\n' | '\t' | )-> channel(HIDDEN);
+SL_COMMENT : '//' ~[\r\n]* -> channel(HIDDEN);
