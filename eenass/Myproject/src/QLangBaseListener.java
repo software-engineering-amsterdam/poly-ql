@@ -1,5 +1,12 @@
 // Generated from QLang.g4 by ANTLR 4.2
 
+import ast.expr.Expr;
+import ast.expr.unExpression.*;
+import ast.expr.binExpr.*;
+import ast.expr.literal.*;
+import ast.types.*;
+
+
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ErrorNode;

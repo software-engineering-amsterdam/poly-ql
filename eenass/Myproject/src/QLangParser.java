@@ -1,4 +1,11 @@
 // Generated from QLang.g4 by ANTLR 4.2
+
+import ast.expr.Expr;
+import ast.expr.unExpression.*;
+import ast.expr.binExpr.*;
+import ast.expr.literal.*;
+import ast.types.*;
+
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -15,12 +22,12 @@ public class QLangParser extends Parser {
 		new PredictionContextCache();
 	public static final int
 		T__12=1, T__11=2, T__10=3, T__9=4, T__8=5, T__7=6, T__6=7, T__5=8, T__4=9, 
-		T__3=10, T__2=11, T__1=12, T__0=13, WS=14, COMMENT=15, Ident=16, Int=17, 
-		Str=18;
+		T__3=10, T__2=11, T__1=12, T__0=13, WS=14, COMMENT=15, NewLine=16, Ident=17, 
+		Int=18, Money=19, Str=20, Bool=21;
 	public static final String[] tokenNames = {
 		"<INVALID>", "'||'", "'>'", "'+'", "'-'", "'*'", "'/'", "'<'", "'=='", 
-		"'>='", "'!='", "'!'", "'<='", "'&&'", "WS", "COMMENT", "Ident", "Int", 
-		"Str"
+		"'>='", "'!='", "'!'", "'<='", "'&&'", "WS", "COMMENT", "NewLine", "Ident", 
+		"Int", "Money", "Str", "Bool"
 	};
 	public static final int
 		RULE_unExpr = 0, RULE_mulExpr = 1, RULE_addExpr = 2, RULE_relExpr = 3, 
@@ -76,8 +83,8 @@ public class QLangParser extends Parser {
 		enterRule(_localctx, 0, RULE_unExpr);
 		try {
 			setState(29);
-			switch ( getInterpreter().adaptivePredict(_input,0,_ctx) ) {
-			case 1:
+			switch (_input.LA(1)) {
+			case 3:
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(14); match(3);
@@ -85,8 +92,7 @@ public class QLangParser extends Parser {
 				 ((UnExprContext)_localctx).result =  new Pos(((UnExprContext)_localctx).x.result); 
 				}
 				break;
-
-			case 2:
+			case 4:
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(18); match(4);
@@ -94,8 +100,7 @@ public class QLangParser extends Parser {
 				 ((UnExprContext)_localctx).result =  new Neg(((UnExprContext)_localctx).x.result); 
 				}
 				break;
-
-			case 3:
+			case 11:
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(22); match(11);
@@ -103,14 +108,19 @@ public class QLangParser extends Parser {
 				 ((UnExprContext)_localctx).result =  new Not(((UnExprContext)_localctx).x.result); 
 				}
 				break;
-
-			case 4:
+			case Ident:
+			case Int:
+			case Money:
+			case Str:
+			case Bool:
 				enterOuterAlt(_localctx, 4);
 				{
 				setState(26); ((UnExprContext)_localctx).x = primary();
 				 ((UnExprContext)_localctx).result =  ((UnExprContext)_localctx).x.result; 
 				}
 				break;
+			default:
+				throw new NoViableAltException(this);
 			}
 		}
 		catch (RecognitionException re) {
@@ -485,6 +495,16 @@ public class QLangParser extends Parser {
 
 	public static class PrimaryContext extends ParserRuleContext {
 		public Expr result;
+		public Token Bool;
+		public Token Int;
+		public Token Money;
+		public Token Ident;
+		public Token Str;
+		public TerminalNode Ident() { return getToken(QLangParser.Ident, 0); }
+		public TerminalNode Bool() { return getToken(QLangParser.Bool, 0); }
+		public TerminalNode Money() { return getToken(QLangParser.Money, 0); }
+		public TerminalNode Str() { return getToken(QLangParser.Str, 0); }
+		public TerminalNode Int() { return getToken(QLangParser.Int, 0); }
 		public PrimaryContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -503,8 +523,45 @@ public class QLangParser extends Parser {
 		PrimaryContext _localctx = new PrimaryContext(_ctx, getState());
 		enterRule(_localctx, 12, RULE_primary);
 		try {
-			enterOuterAlt(_localctx, 1);
-			{
+			setState(96);
+			switch (_input.LA(1)) {
+			case Bool:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(86); ((PrimaryContext)_localctx).Bool = match(Bool);
+				 ((PrimaryContext)_localctx).result =  new BoolLiteral((((PrimaryContext)_localctx).Bool!=null?((PrimaryContext)_localctx).Bool.getText():null));
+				}
+				break;
+			case Int:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(88); ((PrimaryContext)_localctx).Int = match(Int);
+				((PrimaryContext)_localctx).result =  new IntLiteral((((PrimaryContext)_localctx).Int!=null?((PrimaryContext)_localctx).Int.getText():null));
+				}
+				break;
+			case Money:
+				enterOuterAlt(_localctx, 3);
+				{
+				setState(90); ((PrimaryContext)_localctx).Money = match(Money);
+				_localctx.result = new MoneyLiteral((((PrimaryContext)_localctx).Money!=null?((PrimaryContext)_localctx).Money.getText():null))
+				}
+				break;
+			case Ident:
+				enterOuterAlt(_localctx, 4);
+				{
+				setState(92); ((PrimaryContext)_localctx).Ident = match(Ident);
+				((PrimaryContext)_localctx).result =  new IdentLiteral((((PrimaryContext)_localctx).Ident!=null?((PrimaryContext)_localctx).Ident.getText():null));
+				}
+				break;
+			case Str:
+				enterOuterAlt(_localctx, 5);
+				{
+				setState(94); ((PrimaryContext)_localctx).Str = match(Str);
+				((PrimaryContext)_localctx).result =  new StrLiteral((((PrimaryContext)_localctx).Str!=null?((PrimaryContext)_localctx).Str.getText():null));
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
 			}
 		}
 		catch (RecognitionException re) {
@@ -519,28 +576,31 @@ public class QLangParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\24[\4\2\t\2\4\3\t"+
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\27e\4\2\t\2\4\3\t"+
 		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\3\2\3\2\3\2\3\2\3\2\3\2\3\2"+
 		"\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\5\2 \n\2\3\3\3\3\3\3\3\3\3\3\3\3\7\3"+
 		"(\n\3\f\3\16\3+\13\3\3\4\3\4\3\4\3\4\3\4\3\4\7\4\63\n\4\f\4\16\4\66\13"+
 		"\4\3\5\3\5\3\5\3\5\3\5\3\5\7\5>\n\5\f\5\16\5A\13\5\3\6\3\6\3\6\3\6\3\6"+
 		"\3\6\7\6I\n\6\f\6\16\6L\13\6\3\7\3\7\3\7\3\7\3\7\3\7\7\7T\n\7\f\7\16\7"+
-		"W\13\7\3\b\3\b\3\b\2\2\t\2\4\6\b\n\f\16\2\5\3\2\7\b\3\2\5\6\5\2\4\4\t"+
-		"\f\16\16[\2\37\3\2\2\2\4!\3\2\2\2\6,\3\2\2\2\b\67\3\2\2\2\nB\3\2\2\2\f"+
-		"M\3\2\2\2\16X\3\2\2\2\20\21\7\5\2\2\21\22\5\2\2\2\22\23\b\2\1\2\23 \3"+
-		"\2\2\2\24\25\7\6\2\2\25\26\5\2\2\2\26\27\b\2\1\2\27 \3\2\2\2\30\31\7\r"+
-		"\2\2\31\32\5\2\2\2\32\33\b\2\1\2\33 \3\2\2\2\34\35\5\16\b\2\35\36\b\2"+
-		"\1\2\36 \3\2\2\2\37\20\3\2\2\2\37\24\3\2\2\2\37\30\3\2\2\2\37\34\3\2\2"+
-		"\2 \3\3\2\2\2!\"\5\2\2\2\")\b\3\1\2#$\t\2\2\2$%\5\2\2\2%&\b\3\1\2&(\3"+
-		"\2\2\2\'#\3\2\2\2(+\3\2\2\2)\'\3\2\2\2)*\3\2\2\2*\5\3\2\2\2+)\3\2\2\2"+
-		",-\5\4\3\2-\64\b\4\1\2./\t\3\2\2/\60\5\4\3\2\60\61\b\4\1\2\61\63\3\2\2"+
-		"\2\62.\3\2\2\2\63\66\3\2\2\2\64\62\3\2\2\2\64\65\3\2\2\2\65\7\3\2\2\2"+
-		"\66\64\3\2\2\2\678\5\6\4\28?\b\5\1\29:\t\4\2\2:;\5\6\4\2;<\b\5\1\2<>\3"+
-		"\2\2\2=9\3\2\2\2>A\3\2\2\2?=\3\2\2\2?@\3\2\2\2@\t\3\2\2\2A?\3\2\2\2BC"+
-		"\5\b\5\2CJ\b\6\1\2DE\7\17\2\2EF\5\b\5\2FG\b\6\1\2GI\3\2\2\2HD\3\2\2\2"+
-		"IL\3\2\2\2JH\3\2\2\2JK\3\2\2\2K\13\3\2\2\2LJ\3\2\2\2MN\5\n\6\2NU\b\7\1"+
-		"\2OP\7\3\2\2PQ\5\n\6\2QR\b\7\1\2RT\3\2\2\2SO\3\2\2\2TW\3\2\2\2US\3\2\2"+
-		"\2UV\3\2\2\2V\r\3\2\2\2WU\3\2\2\2XY\3\2\2\2Y\17\3\2\2\2\b\37)\64?JU";
+		"W\13\7\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\5\bc\n\b\3\b\2\2\t\2\4"+
+		"\6\b\n\f\16\2\5\3\2\7\b\3\2\5\6\5\2\4\4\t\f\16\16i\2\37\3\2\2\2\4!\3\2"+
+		"\2\2\6,\3\2\2\2\b\67\3\2\2\2\nB\3\2\2\2\fM\3\2\2\2\16b\3\2\2\2\20\21\7"+
+		"\5\2\2\21\22\5\2\2\2\22\23\b\2\1\2\23 \3\2\2\2\24\25\7\6\2\2\25\26\5\2"+
+		"\2\2\26\27\b\2\1\2\27 \3\2\2\2\30\31\7\r\2\2\31\32\5\2\2\2\32\33\b\2\1"+
+		"\2\33 \3\2\2\2\34\35\5\16\b\2\35\36\b\2\1\2\36 \3\2\2\2\37\20\3\2\2\2"+
+		"\37\24\3\2\2\2\37\30\3\2\2\2\37\34\3\2\2\2 \3\3\2\2\2!\"\5\2\2\2\")\b"+
+		"\3\1\2#$\t\2\2\2$%\5\2\2\2%&\b\3\1\2&(\3\2\2\2\'#\3\2\2\2(+\3\2\2\2)\'"+
+		"\3\2\2\2)*\3\2\2\2*\5\3\2\2\2+)\3\2\2\2,-\5\4\3\2-\64\b\4\1\2./\t\3\2"+
+		"\2/\60\5\4\3\2\60\61\b\4\1\2\61\63\3\2\2\2\62.\3\2\2\2\63\66\3\2\2\2\64"+
+		"\62\3\2\2\2\64\65\3\2\2\2\65\7\3\2\2\2\66\64\3\2\2\2\678\5\6\4\28?\b\5"+
+		"\1\29:\t\4\2\2:;\5\6\4\2;<\b\5\1\2<>\3\2\2\2=9\3\2\2\2>A\3\2\2\2?=\3\2"+
+		"\2\2?@\3\2\2\2@\t\3\2\2\2A?\3\2\2\2BC\5\b\5\2CJ\b\6\1\2DE\7\17\2\2EF\5"+
+		"\b\5\2FG\b\6\1\2GI\3\2\2\2HD\3\2\2\2IL\3\2\2\2JH\3\2\2\2JK\3\2\2\2K\13"+
+		"\3\2\2\2LJ\3\2\2\2MN\5\n\6\2NU\b\7\1\2OP\7\3\2\2PQ\5\n\6\2QR\b\7\1\2R"+
+		"T\3\2\2\2SO\3\2\2\2TW\3\2\2\2US\3\2\2\2UV\3\2\2\2V\r\3\2\2\2WU\3\2\2\2"+
+		"XY\7\27\2\2Yc\b\b\1\2Z[\7\24\2\2[c\b\b\1\2\\]\7\25\2\2]c\b\b\1\2^_\7\23"+
+		"\2\2_c\b\b\1\2`a\7\26\2\2ac\b\b\1\2bX\3\2\2\2bZ\3\2\2\2b\\\3\2\2\2b^\3"+
+		"\2\2\2b`\3\2\2\2c\17\3\2\2\2\t\37)\64?JUb";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

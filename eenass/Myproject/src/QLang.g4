@@ -1,5 +1,11 @@
 grammar QLang;
 
+@parser::header
+{
+import ast.*;
+}
+
+
 unExpr returns [Expr result]
     :  '+' x=unExpr { $result = new Pos($x.result); }
     |  '-' x=unExpr { $result = new Neg($x.result); }
@@ -66,7 +72,11 @@ orExpr returns [Expr result]
     ;
 
 primary returns [Expr result]
-	: Int 
+	: Bool { $result = new BoolLiteral($Bool.text);}
+	| Int {$result = new IntLiteral($Int.text);}
+	| Money {$result = new MoneyLiteral($Money.text)}
+	| Ident {$result = new IdentLiteral($Ident.text);}
+	| Str {$result = new StrLiteral($Str.text);}
 	;
     
 // Tokens
@@ -74,13 +84,16 @@ WS  :	(' ' | '\t' | '\n' | '\r')
     ;
 
 COMMENT 
-     : '/*' .* '*/' 
+     : '/*' (.)*? '*/' | '//' (.)*? | '//' (NewLine)*?
     ;
+NewLine: '\n' | '\r\n';
 
 Ident:   ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*;
 
 Int: ('0'..'9')+;
 
-Str: '"' .* '"';
+Money: Int '.' Int;
 
-Expr: 
+Str: '"' (.)*? '"';
+
+Bool: 'true' | 'false';
