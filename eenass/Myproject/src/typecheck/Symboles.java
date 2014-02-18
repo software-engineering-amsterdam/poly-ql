@@ -1,7 +1,8 @@
 package typecheck;
 
 import java.util.HashMap;
-import ast.types.Types;
+
+import ast.expr.types.Types;
 
 public class Symboles {
 	private final HashMap<String, Types> symboles;

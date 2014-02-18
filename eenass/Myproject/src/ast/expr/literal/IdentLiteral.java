@@ -2,7 +2,7 @@ package ast.expr.literal;
 
 import typecheck.Symboles;
 import ast.Visitor;
-import ast.types.Types;
+import ast.expr.types.Types;
 
 public class IdentLiteral extends Literals{
 	

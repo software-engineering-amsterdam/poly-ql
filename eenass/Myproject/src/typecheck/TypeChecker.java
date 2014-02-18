@@ -5,8 +5,8 @@ import ast.Visitor;
 import ast.expr.Expr;
 import ast.expr.binExpr.*;
 import ast.expr.literal.*;
+import ast.expr.types.*;
 import ast.expr.unExpression.*;
-import ast.types.*;
 
 public class TypeChecker implements Visitor<Boolean>{
 	
@@ -59,22 +59,6 @@ public class TypeChecker implements Visitor<Boolean>{
 		return (isValid_lhs && isValid_rhs);
 	}	
 
-	private boolean isValidMoney(Expr exp){
-		if (isValidExpr(exp)){
-			Types type = exp.typeof(symb_map);
-			if((type != null) && (type.isCompatableToMoney())){
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	private boolean isValidMoney(Expr lhs, Expr rhs){
-		boolean isValid_lhs = isValidMoney(lhs);
-		boolean isValid_rhs = isValidMoney(rhs);
-		
-		return (isValid_lhs && isValid_rhs);
-	}
 	
 	private boolean Equel_types(Expr lhs, Expr rhs){
 		boolean isValid_lhs = isValidExpr(lhs);
@@ -94,12 +78,12 @@ public class TypeChecker implements Visitor<Boolean>{
 	
 	@Override
 	public Boolean visit(Pos node) {
-		return isValidInt(node.getOperand()) || isValidMoney(node.getOperand());
+		return isValidInt(node.getOperand());
 	}
 
 	@Override
 	public Boolean visit(Neg node) {
-		return isValidInt(node.getOperand()) || isValidMoney(node.getOperand());
+		return isValidInt(node.getOperand());
 	}
 
 	@Override
@@ -109,7 +93,7 @@ public class TypeChecker implements Visitor<Boolean>{
 
 	@Override
 	public Boolean visit(Add node) {
-		return isValidInt(node.get_lhs(), node.get_rhs()) || isValidMoney(node.get_lhs(), node.get_rhs());
+		return isValidInt(node.get_lhs(), node.get_rhs());
 	}
 
 	@Override
@@ -119,7 +103,7 @@ public class TypeChecker implements Visitor<Boolean>{
 
 	@Override
 	public Boolean visit(Div node) {
-		return isValidInt(node.get_lhs(), node.get_rhs()) || isValidMoney(node.get_lhs(), node.get_rhs());
+		return isValidInt(node.get_lhs(), node.get_rhs());
 	}
 
 	@Override
@@ -144,7 +128,7 @@ public class TypeChecker implements Visitor<Boolean>{
 
 	@Override
 	public Boolean visit(Mul node) {
-		return isValidInt(node.get_lhs(), node.get_rhs()) || isValidMoney(node.get_lhs(), node.get_rhs());
+		return isValidInt(node.get_lhs(), node.get_rhs());
 	}
 
 	@Override
@@ -159,7 +143,7 @@ public class TypeChecker implements Visitor<Boolean>{
 
 	@Override
 	public Boolean visit(Sub node) {
-		return isValidInt(node.get_lhs(), node.get_rhs()) || isValidMoney(node.get_lhs(), node.get_rhs());
+		return isValidInt(node.get_lhs(), node.get_rhs());
 	}
 
 	@Override
@@ -181,11 +165,6 @@ public class TypeChecker implements Visitor<Boolean>{
 	}
 
 	@Override
-	public Boolean visit(MoneyLiteral node) {
-		return true;
-	}
-
-	@Override
 	public Boolean visit(StrLiteral node) {
 		return true;
 	}
@@ -197,11 +176,6 @@ public class TypeChecker implements Visitor<Boolean>{
 
 	@Override
 	public Boolean visit(IntType node) {
-		return true;
-	}
-
-	@Override
-	public Boolean visit(MoneyType node) {
 		return true;
 	}
 

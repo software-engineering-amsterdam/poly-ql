@@ -2,8 +2,8 @@ package ast;
 
 import ast.expr.binExpr.*;
 import ast.expr.literal.*;
+import ast.expr.types.*;
 import ast.expr.unExpression.*;
-import ast.types.*;
 
 public interface Visitor<T> {
 	T visit(Pos node);
@@ -23,11 +23,9 @@ public interface Visitor<T> {
 	T visit(BoolLiteral node);
 	T visit(IdentLiteral node);
 	T visit(IntLiteral node);
-	T visit(MoneyLiteral node);
 	T visit(StrLiteral node);
 	T visit(BoolType node);
 	T visit(IntType node);
-	T visit(MoneyType node);
 	T visit(StrType nodde);	
 
 }

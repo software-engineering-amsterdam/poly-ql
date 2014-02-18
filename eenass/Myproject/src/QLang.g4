@@ -2,7 +2,11 @@ grammar QLang;
 
 @parser::header
 {
-import ast.*;
+import ast.expr.Expr;
+import ast.expr.binExpr.*;
+import ast.expr.unExpression.*;
+import ast.expr.literal.*;
+import ast.expr.types.*;
 }
 
 
@@ -74,7 +78,6 @@ orExpr returns [Expr result]
 primary returns [Expr result]
 	: Bool { $result = new BoolLiteral($Bool.text);}
 	| Int {$result = new IntLiteral($Int.text);}
-	| Money {$result = new MoneyLiteral($Money.text)}
 	| Ident {$result = new IdentLiteral($Ident.text);}
 	| Str {$result = new StrLiteral($Str.text);}
 	;
@@ -91,8 +94,6 @@ NewLine: '\n' | '\r\n';
 Ident:   ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*;
 
 Int: ('0'..'9')+;
-
-Money: Int '.' Int;
 
 Str: '"' (.)*? '"';
 

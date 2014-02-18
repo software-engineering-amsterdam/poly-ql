@@ -3,7 +3,8 @@ package ast.expr.binExpr;
 import typecheck.Symboles;
 import ast.Visitor;
 import ast.expr.Expr;
-import ast.types.*;
+import ast.expr.types.IntType;
+import ast.expr.types.Types;
 
 public class Add extends BinExpr{
 
@@ -17,13 +18,8 @@ public class Add extends BinExpr{
 
 	@Override
 	public Types typeof(Symboles symb) {
-		if(typeof(symb).isCompatableToInt()){
-			return new IntType();
-		}	
-		else if(typeof(symb).isCompatableToMoney()){
-			return new MoneyType();
-		}
-		return null;
+		return new IntType();
+		
 	}
 
 }

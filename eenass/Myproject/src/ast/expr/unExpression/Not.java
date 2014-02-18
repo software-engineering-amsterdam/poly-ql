@@ -3,8 +3,8 @@ package ast.expr.unExpression;
 import typecheck.Symboles;
 import ast.Visitor;
 import ast.expr.Expr;
-import ast.types.BoolType;
-import ast.types.Types;
+import ast.expr.types.BoolType;
+import ast.expr.types.Types;
 
 public class Not extends UnExpr{
 	public Not(Expr operand){

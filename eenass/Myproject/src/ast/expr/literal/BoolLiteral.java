@@ -2,8 +2,8 @@ package ast.expr.literal;
 
 import typecheck.Symboles;
 import ast.Visitor;
-import ast.types.BoolType;
-import ast.types.Types;
+import ast.expr.types.BoolType;
+import ast.expr.types.Types;
 
 public class BoolLiteral extends Literals{
 	private final boolean val;

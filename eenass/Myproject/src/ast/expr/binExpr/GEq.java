@@ -3,8 +3,8 @@ package ast.expr.binExpr;
 import typecheck.Symboles;
 import ast.Visitor;
 import ast.expr.Expr;
-import ast.types.BoolType;
-import ast.types.Types;
+import ast.expr.types.BoolType;
+import ast.expr.types.Types;
 
 public class GEq extends BinExpr{
 

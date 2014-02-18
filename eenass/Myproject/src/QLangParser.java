@@ -1,10 +1,10 @@
 // Generated from QLang.g4 by ANTLR 4.2
 
 import ast.expr.Expr;
-import ast.expr.unExpression.*;
 import ast.expr.binExpr.*;
+import ast.expr.unExpression.*;
 import ast.expr.literal.*;
-import ast.types.*;
+import ast.expr.types.*;
 
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
