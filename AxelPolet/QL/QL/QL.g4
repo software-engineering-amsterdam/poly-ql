@@ -3,11 +3,11 @@ grammar QL;
 @parser::members
 {
 	protected const int EOF = Eof;
-	public Questionnaire theQuestionnaire = new Questionnaire();
+	public Questionnaire theQuestionnaire;
 
-	private List<string> definedIDs = new List<string>();
-	private bool IDExists(string name){return definedIDs.Contains(name);}
-	private void CreateID(string name){definedIDs.Add(name);}
+	private Dictionary<string, Question> definedQuestions = new Dictionary<string, Question>();
+	private bool IDExists(string name){return definedQuestions.ContainsKey(name);}
+	private void CreateID(string name, Question question){definedQuestions.Add(name, question);}
 }
 
 @lexer::members
@@ -21,91 +21,130 @@ grammar QL;
 	using System.Collections.Generic;
 	using System.Linq;
 	using QL.Components;
+	using QL.Components.Conditions;
+	using QL.Components.Conditions.BinaryExpressions;
+	using QL.Components.Conditions.BinaryExpressions.Operators;
 	using QL.Components.Statements;
+	using QL.Components.Types;
 }
-
 
 /*
  * Parser Rules
  */
  
 questionnaire returns [Questionnaire qst]
-	: 'form' ID ASSIGN STRING LBRACKET statement* RBRACKET 
+	@init{ List<StatementBase> statements = new List<StatementBase>(); }
+	: 'form' ASSIGN title=STRING LBRACKET (sts=statement{statements.Add($sts.result);})* RBRACKET 
 	{
-		string id = $ID.text;
-		if(IDExists(id))
-			NotifyErrorListeners(string.Format("identifier '{0}' already defined", id));
-		
-		CreateID(id);
+		Questionnaire newQuestionnaire = new Questionnaire{Title = $title.text, Body = statements};
+		theQuestionnaire = newQuestionnaire;
 
-		//theQuestionnaire.ID = id; theQuestionnaire.Title = $STRING.text;
-		$qst = new Questionnaire{ID = id, Title = $STRING.text};
+		$qst = newQuestionnaire;
 	}
 	;
 
-statement 
-	: (question_stmt| question_ref) SEMICOLON
-	| if_stmt;
+statement returns [StatementBase result]
+	: qs_st=question_stmt SEMICOLON		{$result = $qs_st.result;}
+	| if_st=if_stmt						{$result = $if_st.result;}
+	;
 
-question_stmt returns [Question qst]
-	: ID ASSIGN STRING t=type v=value 
+question_stmt returns [Question result]
+	: id=ID ASSIGN lbl=STRING tp=type
 	{
-		string id = $ID.text;
-		if(IDExists(id))
-			NotifyErrorListeners(string.Format("identifier '{0}' already defined", id));
-		
-		CreateID(id);
-		//theQuestionnaire.Questions.Add(new Question(){ID = id, Label = $STRING.text, Type = $t.text});
-		//$qst = new Question(){ID = id, Label = $STRING.text, Type = typeof($t.text)};
-	};
-
-question_ref returns [Question qst]
-	: ID
-	{
-		string id = $ID.text;
-		if(!IDExists(id))
+		string identifier = $id.text;
+		if(IDExists(identifier))
 		{
-			NotifyErrorListeners(string.Format("question '{0}' does not exist!", id));
-			$qst = null;
+			NotifyErrorListeners(string.Format("identifier '{0}' already defined", identifier));
 		}
 		else
 		{
-			$qst = theQuestionnaire.Questions.Single((q) => q.ID == id);
+			Question newQuestion = new Question(){ID = identifier, Label = $lbl.text, Type = $tp.result, Token = $id};
+			CreateID(identifier, newQuestion);
+			$result = newQuestion;
 		}
-	};
+	}
+	;
 
-if_stmt
-	: IF boolean_expr LBRACKET statement* RBRACKET else_stmt?;
+if_stmt returns [StatementIf result]
+@init{ List<StatementBase> statements = new List<StatementBase>(); }
+	: IF LPARENS cond=boolean_expr RPARENS 
+		LBRACKET 
+			(sts=statement{statements.Add($sts.result);})* 
+		RBRACKET 
+		elif_st=else_stmt?									{$result = new StatementIf(){Condition = $cond.result, Body = statements, ElseIfStatement = $elif_st.result};}																		
+	;													
 
-else_stmt
-	: ELSE LBRACKET statement* RBRACKET
-	| ELSE if_stmt;
+else_stmt returns [StatementIf result]
+@init{ List<StatementBase> statements = new List<StatementBase>(); }
+	: ELSE elif=if_stmt												{$result = $elif.result;}							//else if
+	| ELSE												
+		LBRACKET 
+			(sts=statement{statements.Add($sts.result);})* 									
+		RBRACKET													{$result = new StatementIf(){Body = statements};}	//else
+	;													
 
-boolean_expr
-	: boolean_expr AND boolean_expr 
-	| boolean_expr OR boolean_expr 
-	| LPARENS (BOOL | compare_expr) RPARENS;
+boolean_expr returns [ConditionalExpression result]
+	: lhs=boolean_expr AND rhs=boolean_expr				{$result = new And(){LeftValue = $lhs.result, RightValue = $rhs.result};}
+	| lhs=boolean_expr OR rhs=boolean_expr				{$result = new Or(){LeftValue = $lhs.result, RightValue = $rhs.result};}
+	| un=unary_expr 									{$result = ($un.result as ConditionalExpression);}
+	| cm=compare_expr 									{$result = ($cm.result as ConditionalExpression);}
+	;			
 
-compare_expr
-	: int_compare
-	| string_compare;
+unary_expr returns [UnaryExpression result]
+	: id=ID												{
+															string id = $id.text;
+															if(!IDExists(id))
+																NotifyErrorListeners(string.Format("identifier '{0}' not defined", id));
+															else
+															{
+																Question q = definedQuestions[id];
 
-int_compare
-	: int_compare (EQ | compare_operator) int_compare
-	| INT;
+																//if(!(q.Type is TypeBool))
+																//	NotifyErrorListeners(string.Format("question '{0}' not of type bool", id));
 
-string_compare
-	: string_compare EQ string_compare
-	| STRING;
+																$result = new UnaryExpression(){Value = q.Type, Token = $id};
+															}
+														}
+	| val=BOOL											{$result = new UnaryExpression(){Value = new TypeBool($val.text)};}
+	;
 
-compare_operator
-	: GT
-	| GTE
-	| ST
-	| STE;
+compare_expr returns [CompareExpression result]
+	: ic=int_compare									{$result = $ic.result;}		
+	| sc=string_compare									{$result = $sc.result;}
+	;
 
-type : (BOOLType | INTType | STRINGType);
-value: (BOOL | INT | STRING);
+int_compare returns [CompareExpression result]
+	: lhs=INT op=compare_operator rhs=INT				{$result = new CompareExpression(){LeftValue = new TypeInt($lhs.text), RightValue = new TypeInt($rhs.text), CompareOperator = $op.result};}
+	;
+
+string_compare returns [CompareExpression result]
+	: lhs=STRING op=EQ rhs=STRING						{$result = new CompareExpression(){LeftValue = new TypeString($lhs.text), RightValue = new TypeString($rhs.text), CompareOperator = new Equals()};}
+	;	
+
+compare_operator returns [OperatorBase result]
+	: EQ												{$result = new Equals();}
+	| GT												{$result = new GrTh();}
+	| GTE												{$result = new GrThEq();}
+	| ST												{$result = new SmTh();}
+	| STE												{$result = new SmThEq();}
+	;
+
+type returns [TypeBase result]
+	: TYPE_BOOL											{$result = new TypeBool("false");}											
+	| TYPE_INT											{$result = new TypeInt("0");}
+	| TYPE_STRING										{$result = new TypeString("");}
+	;
+
+value
+	: BOOL 
+	| INT 
+	| STRING
+	;
+
+questionValue
+	:
+	ID
+	;
 
 /*
  * Lexer Rules
@@ -113,9 +152,9 @@ value: (BOOL | INT | STRING);
 
 ID : ([a-z][A-Z0-9]*);	
 
-BOOLType: 'bool';
-INTType: 'int';
-STRINGType: 'string';
+TYPE_BOOL: 'bool';
+TYPE_INT: 'int';
+TYPE_STRING: 'string';
 
 BOOL: 'true' | 'false';
 INT : [0-9]+;

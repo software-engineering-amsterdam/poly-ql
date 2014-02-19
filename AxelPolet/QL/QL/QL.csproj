@@ -23,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -32,6 +33,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Antlr4.Runtime.v4.5">
@@ -49,21 +51,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Components\Statements\Conditions\BooleanCondition.cs" />
-    <Compile Include="Components\Statements\Conditions\CompareCondition.cs" />
-    <Compile Include="Components\Statements\Conditions\Condition.cs" />
-    <Compile Include="Components\Statements\Conditions\Operators\Equals.cs" />
-    <Compile Include="Components\Statements\Conditions\Operators\SmThEq.cs" />
-    <Compile Include="Components\Statements\Conditions\Operators\GrThEq.cs" />
-    <Compile Include="Components\Statements\Conditions\Operators\SmTh.cs" />
-    <Compile Include="Components\Statements\Conditions\Operators\GrTh.cs" />
-    <Compile Include="Components\Statements\IfStatement.cs" />
-    <Compile Include="Components\Statements\Conditions\Operators\AND.cs" />
-    <Compile Include="Components\Statements\Conditions\Operators\OR.cs" />
-    <Compile Include="Components\Statements\Conditions\Operators\Operator.cs" />
+    <Compile Include="Components\Expression.cs" />
+    <Compile Include="Components\Conditions\UnaryExpression.cs" />
+    <Compile Include="Components\Conditions\BinaryExpressions\CompareExpression.cs" />
+    <Compile Include="Components\Conditions\ConditionalExpression.cs" />
+    <Compile Include="Components\Conditions\BinaryExpression.cs" />
+    <Compile Include="Components\Conditions\BinaryExpressions\Operators\Equals.cs" />
+    <Compile Include="Components\Conditions\BinaryExpressions\Operators\SmThEq.cs" />
+    <Compile Include="Components\Conditions\BinaryExpressions\Operators\GrThEq.cs" />
+    <Compile Include="Components\Conditions\BinaryExpressions\Operators\SmTh.cs" />
+    <Compile Include="Components\Conditions\BinaryExpressions\Operators\GrTh.cs" />
+    <Compile Include="Components\Interfaces\IExpression.cs" />
+    <Compile Include="Components\Interfaces\ITypeChecker.cs" />
+    <Compile Include="Components\Statements\StatementIf.cs" />
+    <Compile Include="Components\Conditions\BinaryExpressions\And.cs" />
+    <Compile Include="Components\Conditions\BinaryExpressions\Or.cs" />
+    <Compile Include="Components\Conditions\BinaryExpressions\Operators\OperatorBase.cs" />
     <Compile Include="Components\Statements\Question.cs" />
     <Compile Include="Components\Questionnaire.cs" />
-    <Compile Include="Components\Statements\Statement.cs" />
+    <Compile Include="Components\Statement.cs" />
+    <Compile Include="Components\Types\TypeBool.cs" />
+    <Compile Include="Components\Types\TypeInt.cs" />
+    <Compile Include="Components\Types\TypeString.cs" />
+    <Compile Include="Components\Types\TypeBase.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
