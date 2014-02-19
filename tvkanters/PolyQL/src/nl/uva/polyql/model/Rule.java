@@ -1,6 +1,6 @@
 package nl.uva.polyql.model;
 
-public interface IRule {
+public interface Rule {
 
     /**
      * Retrieves the ID of the rule if it's available.

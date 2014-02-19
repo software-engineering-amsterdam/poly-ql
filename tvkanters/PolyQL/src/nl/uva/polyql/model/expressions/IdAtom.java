@@ -1,20 +1,31 @@
 package nl.uva.polyql.model.expressions;
 
-public class IdAtom implements IAtom {
+import nl.uva.polyql.model.Question;
+import nl.uva.polyql.model.Type;
 
-    private final String mId;
-    
+public class IdAtom extends Expression {
+
+    private final Question mQuestion;
+
     public IdAtom(final String id) {
-        mId = id;
+        mQuestion = new Question();
+        mQuestion.setId(id);
+        mQuestion.setContent("foo");
+        mQuestion.setType(Type.BOOLEAN);
     }
 
     @Override
-    public boolean validate() {
-        return false;
+    public Type getReturnType() {
+        return mQuestion.getType();
     }
 
     @Override
-    public double getValue() {
-        return 0;
+    protected Object getValue() {
+        return mQuestion.getValue();
+    }
+
+    @Override
+    public String toString() {
+        return "QVAL";
     }
 }

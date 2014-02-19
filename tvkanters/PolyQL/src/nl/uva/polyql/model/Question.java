@@ -1,6 +1,6 @@
 package nl.uva.polyql.model;
 
-public class Question implements IRule {
+public class Question implements Rule {
 
     public String mId;
     public String mContent;
@@ -35,6 +35,11 @@ public class Question implements IRule {
         setType(Type.valueOf(type.toUpperCase()));
     }
 
+    public Object getValue() {
+        return null;
+    }
+
+    @Override
     public String toString() {
         return mId + ": " + mContent + " " + mType;
     }

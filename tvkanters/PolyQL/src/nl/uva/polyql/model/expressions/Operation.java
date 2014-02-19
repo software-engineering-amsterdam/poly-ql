@@ -1,34 +1,70 @@
 package nl.uva.polyql.model.expressions;
 
-import nl.uva.polyql.model.expressions.operators.BooleanOperatorManager;
+import nl.uva.polyql.model.Type;
+import nl.uva.polyql.model.expressions.operators.Operator;
+import nl.uva.polyql.model.expressions.operators.OperatorManager;
 
-public class Operation implements IExpression {
+public abstract class Operation<T> extends Expression {
 
-    private IExpression mLeft;
-    private BooleanOperatorManager mOperator;
-    private IExpression mRight;
+    private final Type mOperandType;
+    private final Expression mLeft;
+    private final Operator<T> mOperator;
+    private final Expression mRight;
 
-    public Operation(final IExpression left) {
-        setLeft(left);
-    }
+    public Operation(final Expression left, final String operator, final Expression right) {
 
-    public void setLeft(final IExpression left) {
+        final Type leftType = left.getReturnType();
+        final Type rightType = right.getReturnType();
+        if (leftType != rightType) {
+            throw new RuntimeException("Operand types " + leftType + " and " + rightType + " are not equal!");
+        }
+        mOperandType = leftType;
+
         mLeft = left;
+        mOperator = getOperator(operator);
+        mRight = right;
+
+        System.out.println(this);
     }
 
-    public void setOperation(final BooleanOperatorManager operator, final IExpression right) {
-        mOperator = operator;
-        mRight = right;
+    public T getValue() {
+        return mOperator.performOperation(this);
     }
 
-    public void setOperation(final String operator, final IExpression right) {
-        mOperator = BooleanOperatorManager.valueOf(operator);
-        mRight = right;
+    @SuppressWarnings("unchecked")
+    protected Operator<T> getOperator(final String operatorSyntax) {
+        final Operator<?> operator;
+
+        switch (getReturnType()) {
+        case BOOLEAN:
+            operator = OperatorManager.getBooleanOperator(operatorSyntax);
+            break;
+
+        case NUMBER:
+            operator = OperatorManager.getNumberOperator(operatorSyntax);
+            break;
+
+        default:
+            throw new RuntimeException("Invalid return type");
+        }
+
+        return (Operator<T>) operator;
+    }
+
+    public Type getOperandType() {
+        return mOperandType;
+    }
+
+    public Expression getLeft() {
+        return mLeft;
+    }
+
+    public Expression getRight() {
+        return mRight;
     }
 
     @Override
-    public boolean validate() {
-        return false;
+    public String toString() {
+        return "(" + mLeft + " " + mOperator + " " + mRight + ")";
     }
-
 }

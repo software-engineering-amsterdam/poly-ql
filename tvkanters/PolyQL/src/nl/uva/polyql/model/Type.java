@@ -1,5 +1,5 @@
 package nl.uva.polyql.model;
 
 public enum Type {
-    BOOLEAN, MONEY;
+    BOOLEAN, NUMBER;
 }

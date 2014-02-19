@@ -7,10 +7,10 @@ import java.util.Map;
 
 public class Form {
 
-    public List<IRule> mRules = new ArrayList<>();
-    public Map<String, IRule> mIdRules = new HashMap<>();
+    public List<Rule> mRules = new ArrayList<>();
+    public Map<String, Rule> mIdRules = new HashMap<>();
 
-    public void addRule(final IRule rule) {
+    public void addRule(final Rule rule) {
         final String id = rule.getId();
         if (id != null) {
             if (mIdRules.containsKey(id)) {
@@ -23,7 +23,7 @@ public class Form {
         mRules.add(rule);
     }
 
-    public List<IRule> getRules() {
+    public List<Rule> getRules() {
         return mRules;
     }
 

@@ -3,23 +3,23 @@ package nl.uva.polyql.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import nl.uva.polyql.model.expressions.IExpression;
+import nl.uva.polyql.model.expressions.Expression;
 
-public class IfStatement implements IRule {
+public class IfStatement implements Rule {
 
-    public IExpression mExpression;
+    public Expression mExpression;
 
-    public List<IRule> mRules = new ArrayList<>();
+    public List<Rule> mRules = new ArrayList<>();
 
-    public void setExpression(final IExpression expression) {
+    public void setExpression(final Expression expression) {
 
     }
 
-    public void addRule(final IRule rule) {
+    public void addRule(final Rule rule) {
         mRules.add(rule);
     }
 
-    public List<IRule> getRules() {
+    public List<Rule> getRules() {
         return mRules;
     }
     
