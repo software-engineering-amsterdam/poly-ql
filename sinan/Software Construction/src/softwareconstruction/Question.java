@@ -67,7 +67,7 @@ public class Question {
     }
     
     public String toString(){
-        return "Question name: "+questionName+"\nQuestion content: "+questionContent+"\nQuestion type: "+questionType+"\n";
+        return "Question name: "+questionName+" Question content: "+questionContent+" Question type: "+questionType+"";
     }
 
 }
