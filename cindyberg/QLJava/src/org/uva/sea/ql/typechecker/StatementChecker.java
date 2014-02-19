@@ -1,8 +1,6 @@
 package org.uva.sea.ql.typechecker;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import org.uva.sea.ql.ast.Expression;
 import org.uva.sea.ql.ast.Identifier;
 import org.uva.sea.ql.ast.StatementVisitor;
@@ -58,10 +56,11 @@ public class StatementChecker implements StatementVisitor {
 		Identifier id = question.getIdentifier();
 		Type type = question.getType();
 		
-		System.out.println("question");
+		//System.out.println("question");
 		if(environment.isDeclared(id) != null){
 			newError(id.show() + " already declared");
 		}
+		System.out.println("question");
 		
 		environment.addIdentifier(id, type);
 		
@@ -71,10 +70,7 @@ public class StatementChecker implements StatementVisitor {
 		Expression condition = ifconditional.getConditional();
 		QuestionSet questionset = ifconditional.getQuestionSet();
 		
-		if(questionset == null){
-			newError(condition.show() + " empty body of if statement");
-		}
-		else if(!condition.typeOf(environment).isCompatibleWithBoolean()){
+		if(!condition.typeOf(environment).isCompatibleWithBoolean()){
 			newError(condition.show() + " is not compatible with booleanType");
 		}		
 		else{ 
@@ -89,23 +85,15 @@ public class StatementChecker implements StatementVisitor {
 		QuestionSet elseset = ifelseconditional.getElseQuestionSet();
 
 		new ExpressionChecker(environment,errorlist);
-		if(ifset == null){
-			newError(condition.show() + " empty body of if statement");
-		}
-		else if(!condition.typeOf(environment).isCompatibleWithBoolean()){
+		if(!condition.typeOf(environment).isCompatibleWithBoolean()){
 			newError(condition.show() + " is not compatible with booleanType");
 		}
 		else{
 			this.visit(ifset);
+			this.visit(elseset);
 		}
 		
-		if(elseset == null){
 		
-			newError(condition.show() + " empty body of else statement");
-		}
-		else{
-		this.visit(elseset);
-		}
 	}
 
 	public void visit(Form form) {

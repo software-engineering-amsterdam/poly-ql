@@ -20,19 +20,20 @@ public class TypeChecker {
 	
 	@Test
 	public void checkDSL(){
-		String inputDSL = "form F { Woopsiedosie : \"lala\" integer (1+2) }";
+		String inputDSL = "form F { NieuwVar : \"lala\" boolean \n"
+				+ "if(NieuwVar){HasMoney : \"ILIKEMONEY\" integer } }";
 		Form tree = (Form) parser.parser(inputDSL);
 		
 		errorlist = new ArrayList<Error>();
 		StatementChecker statementchecker = new StatementChecker(new TypeEnvironment(), errorlist);
-		statementchecker.visit(tree);
+		tree.accept(statementchecker);
 		
 		if(errorlist != null){
-			System.out.println("Aantal fouten gevonden: " + errorlist.size());
+			System.out.println("Aantal fouten gevonden: [" + errorlist.size() + "]");
 			printErrors();
 		}
 		else{
-			System.out.println("Aantal fouten gevonden: 0");
+			System.out.println("Aantal fouten gevonden: [0]");
 			System.out.println("no errors in file!");
 		}
 	}
