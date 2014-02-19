@@ -18,7 +18,7 @@ public class Identifier extends Expression {
 		return name;};
 
 	@Override
-	public void accept(IVisitor visitor) {
+	public <T> void accept(ExpressionVisitor<T> visitor) {
 		visitor.visit(this);
 		
 	}

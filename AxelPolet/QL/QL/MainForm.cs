@@ -41,19 +41,22 @@ namespace QL
             parser.AddErrorListener(new ParserErrorListener(){OnError = WriteError});
 
             IParseTree tree = parser.questionnaire();
-
+            Questionnaire q = parser.theQuestionnaire;
             //if (parser.NumberOfSyntaxErrors > 0)
             //    txtOutput.Text += string.Format("Parser errors found: {0}", parser.NumberOfSyntaxErrors);
 
-            QLVisitor visitor = new QLVisitor();
-            visitor.Visit(tree);
+            //QLVisitor visitor = new QLVisitor();
+            //visitor.Visit(tree);
 
             txtOutput.Text += string.Format(@"{0}{0} Generated parse tree: 
                                               {0} {1}
-                                              {0} {2}"
+                                              {0} {2}
+                                              {0} {3}"
                                                 , Environment.NewLine
                                                 , tree.ToStringTree(parser)
-                                                , visitor.Visit(tree));
+                                                , q.ID
+                                                , q.Title);
+                                                /*, visitor.Visit(tree)*/
         }
             
         public void WriteError(string error)

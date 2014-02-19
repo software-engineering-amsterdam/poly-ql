@@ -137,7 +137,7 @@ public class PrintVisitor implements IVisitor{
 	}
 
 	public void visit(ExprQuestion exprquestion) {
-		visit(exprquestion.getName()); System.out.print(" : ");
+		visit(exprquestion.getIdentifier()); System.out.print(" : ");
 		visit(exprquestion.getLabel());
 		visit(exprquestion.getType()); System.out.print(" ");
 		visit(exprquestion.getExpression());
@@ -150,7 +150,7 @@ public class PrintVisitor implements IVisitor{
 	}
 
 	public void visit(Question question) {
-		visit(question.getName()); System.out.print(" : ");
+		visit(question.getIdentifier()); System.out.print(" : ");
 		System.out.print(question.getLabel() +" ");
 		visit(question.getType());
 		System.out.print('\n');
@@ -187,9 +187,8 @@ public class PrintVisitor implements IVisitor{
 	}
 
 	public void visit(QuestionSet questionset) {
-		visit(questionset.single);
-		if(questionset.multiple != null){
-		visit(questionset.multiple);
+		for(Statement s: questionset.getQuestionset()){
+			s.accept(this);
 		}
 		
 	}

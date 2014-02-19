@@ -1,6 +1,7 @@
 package org.uva.sea.ql.ast.operators.logical;
 
 import org.uva.sea.ql.ast.Expression;
+import org.uva.sea.ql.ast.ExpressionVisitor;
 import org.uva.sea.ql.ast.IVisitor;
 import org.uva.sea.ql.ast.operators.BinaryOperator;
 
@@ -10,8 +11,7 @@ public class Or extends BinaryOperator {
 		super(left,right);
 	}
 
-	public void accept(IVisitor visitor) {
-		
+	public <T> void accept(ExpressionVisitor<T> visitor) {
 		visitor.visit(this);
 		
 	}

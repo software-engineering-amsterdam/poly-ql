@@ -1,10 +1,10 @@
 package org.uva.sea.ql.ast.statement;
 
 import org.uva.sea.ql.ast.Expression;
-import org.uva.sea.ql.ast.IVisitor;
 import org.uva.sea.ql.ast.Identifier;
+import org.uva.sea.ql.ast.StatementVisitor;
 import org.uva.sea.ql.ast.literal.StringLiteral;
-import org.uva.sea.ql.ast.type.*;
+import org.uva.sea.ql.ast.type.Type;
 
 public class ExprQuestion extends Statement{
 	
@@ -23,7 +23,7 @@ public class ExprQuestion extends Statement{
 		
 	}
 	
-	public Identifier getName(){
+	public Identifier getIdentifier(){
 		return this.name;
 	}
 	
@@ -40,7 +40,7 @@ public class ExprQuestion extends Statement{
 	}
 
 
-	public void accept(IVisitor visitor) {
+	public void accept(StatementVisitor visitor) {
 		visitor.visit(this);
 		
 	}

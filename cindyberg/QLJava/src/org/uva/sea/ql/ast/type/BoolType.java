@@ -13,4 +13,8 @@ public class BoolType extends Type{
 		return "boolean";
 	}
 
+	
+	public boolean isCompatibleWithBoolean() {
+		return true;
+	}
 }

@@ -9,10 +9,12 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>SoftwConsTest</RootNamespace>
     <AssemblyName>QL_Fsharp</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <TargetFSharpCoreVersion>4.3.1.0</TargetFSharpCoreVersion>
+    <TargetFSharpCoreVersion>4.3.0.0</TargetFSharpCoreVersion>
     <Name>QL_Fsharp</Name>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -79,7 +81,7 @@
     <None Include="QL_Parser.fsp" />
     <Compile Include="QL_Parser.fs" />
     <Compile Include="QL_Lexer.fs" />
-    <Compile Include="Program.fs" />
+    <Compile Include="QL_Main.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.PowerPack">

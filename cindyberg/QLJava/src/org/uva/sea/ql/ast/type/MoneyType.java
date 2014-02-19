@@ -13,5 +13,9 @@ public class MoneyType extends Type{
 	public String show(){
 		return "money";
 	}
+	
+	public boolean isCompatibleWithNumeric() {
+		return true;
+	}
 
 }
