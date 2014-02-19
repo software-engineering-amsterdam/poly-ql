@@ -202,3 +202,5 @@ Desktop.ini
 
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
+/sinan/Software Construction/nbproject/private/
+/sinan/Software Construction/dist/
