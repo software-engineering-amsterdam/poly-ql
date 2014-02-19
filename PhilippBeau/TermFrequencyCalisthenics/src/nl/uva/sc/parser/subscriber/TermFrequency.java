@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+import nl.uva.sc.datatypes.Frequency;
 import nl.uva.sc.datatypes.StopWord;
 import nl.uva.sc.datatypes.Word;
 import nl.uva.sc.parser.Token;
@@ -22,7 +23,7 @@ public class TermFrequency implements BookParserSubscriber {
         Token token = mIndex.get(word);
 
         if (token == null) {
-            token = new Token(word);
+            token = new Token(word, new Frequency());
             mIndex.put(word, token);
         }
 
