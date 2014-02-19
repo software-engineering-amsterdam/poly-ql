@@ -5,6 +5,7 @@ import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,11 +57,11 @@ public class TestTF {
     public void test() {
 
         TermFrequency index = new TermFrequency();
-        BookParser bParser = new BookParser(new File(BOOK_FILENAME));
+        BookParser bParser = new BookParser();
         bParser.subscribe(index);
 
         try {
-            bParser.parse();
+            bParser.parse(new File(BOOK_FILENAME).toPath(), Charset.forName("UTF-8"));
         } catch (IOException e) {
             fail("The book parser could not parse the given file \"" + BOOK_FILENAME + "\"");
         }
