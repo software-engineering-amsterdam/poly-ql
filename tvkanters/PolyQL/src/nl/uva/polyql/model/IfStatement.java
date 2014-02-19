@@ -3,16 +3,29 @@ package nl.uva.polyql.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IfStatement extends Rule {
+import nl.uva.polyql.model.expressions.IExpression;
 
-    public List<Rule> mRules = new ArrayList<>();
+public class IfStatement implements IRule {
 
-    public void addQuestion(final Rule rule) {
+    public IExpression mExpression;
+
+    public List<IRule> mRules = new ArrayList<>();
+
+    public void setExpression(final IExpression expression) {
+
+    }
+
+    public void addRule(final IRule rule) {
         mRules.add(rule);
     }
 
-    public List<Rule> getRules() {
+    public List<IRule> getRules() {
         return mRules;
+    }
+    
+    @Override
+    public String getId() {
+        return null;
     }
 
 }

@@ -1,11 +1,12 @@
 package nl.uva.polyql.model;
 
-public class Question extends Rule {
+public class Question implements IRule {
 
     public String mId;
     public String mContent;
     public Type mType;
 
+    @Override
     public String getId() {
         return mId;
     }
@@ -28,6 +29,10 @@ public class Question extends Rule {
 
     public void setType(final Type type) {
         mType = type;
+    }
+
+    public void setType(final String type) {
+        setType(Type.valueOf(type.toUpperCase()));
     }
 
     public String toString() {
