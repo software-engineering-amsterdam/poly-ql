@@ -17,7 +17,7 @@
  * Output File Base : 
  *
  * Symbol Count : 64
- * Rule Count   : 53
+ * Rule Count   : 51
  */
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -27,7 +27,7 @@ namespace Grammar.Generated.v1
 	public static class GrammarData
     {
         public const int SymbolCount = 64;
-        public const int RuleCount = 53;
+        public const int RuleCount = 51;
 
         public static readonly ReadOnlyDictionary<string, short> Rules = new ReadOnlyDictionary<string, short>(
 	        new Dictionary<string, short>()
@@ -42,49 +42,47 @@ namespace Grammar.Generated.v1
                 { "Block_Lbrace_Rbrace", 7 },                               // <Block> ::= '{' <Statements> '}'
                 { "Statements", 8 },                                        // <Statements> ::= <Statement> <Statements>
                 { "Statements2", 9 },                                       // <Statements> ::= <Statement>
-                { "Statement_If_Lparen_Rparen", 10 },                       // <Statement> ::= if '(' <Expression> ')' <Statement>
-                { "Statement_If_Lparen_Rparen_Else", 11 },                  // <Statement> ::= if '(' <Expression> ')' <SubStmnt> else <Statement>
-                { "Statement", 12 },                                        // <Statement> ::= <QuestionStmnt>
-                { "Statement2", 13 },                                       // <Statement> ::= <Block>
-                { "Substmnt_If_Lparen_Rparen_Else", 14 },                   // <SubStmnt> ::= if '(' <Expression> ')' <SubStmnt> else <SubStmnt>
-                { "Substmnt", 15 },                                         // <SubStmnt> ::= <QuestionStmnt>
-                { "Substmnt2", 16 },                                        // <SubStmnt> ::= <Block>
-                { "Vardecl_Identifier_Colon", 17 },                         // <VarDecl> ::= Identifier ':' <Type>
-                { "Varassign_Identifier_Colon_Eq", 18 },                    // <VarAssign> ::= Identifier ':' <Type> '=' <Expression>
-                { "Questionstmnt_Stringlit_Gtgt_Semi", 19 },                // <QuestionStmnt> ::= StringLit '>>' <VarDecl> ';'
-                { "Questionstmnt_Stringlit_Ltlt_Semi", 20 },                // <QuestionStmnt> ::= StringLit '<<' <VarAssign> ';'
-                { "Questionstmnt_Stringlit_Ltlt_Semi2", 21 },               // <QuestionStmnt> ::= StringLit '<<' <Expression> ';'
-                { "Questionstmnt_Goto_Identifier_Semi", 22 },               // <QuestionStmnt> ::= goto Identifier ';'
-                { "Expression_Question_Colon", 23 },                        // <Expression> ::= <OrExpr> '?' <OrExpr> ':' <Expression>
-                { "Expression", 24 },                                       // <Expression> ::= <OrExpr>
-                { "Orexpr_Pipepipe", 25 },                                  // <OrExpr> ::= <OrExpr> '||' <AndExpr>
-                { "Orexpr", 26 },                                           // <OrExpr> ::= <AndExpr>
-                { "Andexpr_Ampamp", 27 },                                   // <AndExpr> ::= <AndExpr> '&&' <EqExpr>
-                { "Andexpr", 28 },                                          // <AndExpr> ::= <EqExpr>
-                { "Eqexpr_Eqeq", 29 },                                      // <EqExpr> ::= <EqExpr> '==' <CompExpr>
-                { "Eqexpr_Exclameq", 30 },                                  // <EqExpr> ::= <EqExpr> '!=' <CompExpr>
-                { "Eqexpr", 31 },                                           // <EqExpr> ::= <CompExpr>
-                { "Compexpr_Lt", 32 },                                      // <CompExpr> ::= <CompExpr> '<' <AddExpr>
-                { "Compexpr_Gt", 33 },                                      // <CompExpr> ::= <CompExpr> '>' <AddExpr>
-                { "Compexpr_Lteq", 34 },                                    // <CompExpr> ::= <CompExpr> '<=' <AddExpr>
-                { "Compexpr_Gteq", 35 },                                    // <CompExpr> ::= <CompExpr> '>=' <AddExpr>
-                { "Compexpr", 36 },                                         // <CompExpr> ::= <AddExpr>
-                { "Addexpr_Plus", 37 },                                     // <AddExpr> ::= <AddExpr> '+' <MultExpr>
-                { "Addexpr_Minus", 38 },                                    // <AddExpr> ::= <AddExpr> '-' <MultExpr>
-                { "Addexpr", 39 },                                          // <AddExpr> ::= <MultExpr>
-                { "Multexpr_Times", 40 },                                   // <MultExpr> ::= <MultExpr> '*' <NegateExpr>
-                { "Multexpr_Div", 41 },                                     // <MultExpr> ::= <MultExpr> '/' <NegateExpr>
-                { "Multexpr", 42 },                                         // <MultExpr> ::= <NegateExpr>
-                { "Negateexpr_Minus", 43 },                                 // <NegateExpr> ::= '-' <Value>
-                { "Negateexpr_Exclam", 44 },                                // <NegateExpr> ::= '!' <Value>
-                { "Negateexpr", 45 },                                       // <NegateExpr> ::= <Value>
-                { "Value_Identifier", 46 },                                 // <Value> ::= Identifier
-                { "Value", 47 },                                            // <Value> ::= <Literal>
-                { "Value_Lparen_Rparen", 48 },                              // <Value> ::= '(' <Expression> ')'
-                { "Literal_Stringlit", 49 },                                // <Literal> ::= StringLit
-                { "Literal_Intlit", 50 },                                   // <Literal> ::= IntLit
-                { "Literal_Reallit", 51 },                                  // <Literal> ::= RealLit
-                { "Literal_Boollit", 52 }                                   // <Literal> ::= BoolLit
+                { "Statement_If_Lparen_Rparen", 10 },                       // <Statement> ::= if '(' <Expression> ')' <Statement> <OptElse>
+                { "Statement", 11 },                                        // <Statement> ::= <Block>
+                { "Statement2", 12 },                                       // <Statement> ::= <Question>
+                { "Statement_Goto_Identifier_Semi", 13 },                   // <Statement> ::= goto Identifier ';'
+                { "Optelse_Else", 14 },                                     // <OptElse> ::= else <Statement>
+                { "Optelse", 15 },                                          // <OptElse> ::= 
+                { "Vardecl_Identifier_Colon", 16 },                         // <VarDecl> ::= Identifier ':' <Type>
+                { "Varassign_Identifier_Colon_Eq", 17 },                    // <VarAssign> ::= Identifier ':' <Type> '=' <Expression>
+                { "Question_Stringlit_Gtgt_Semi", 18 },                     // <Question> ::= StringLit '>>' <VarDecl> ';'
+                { "Question_Stringlit_Ltlt_Semi", 19 },                     // <Question> ::= StringLit '<<' <VarAssign> ';'
+                { "Question_Stringlit_Ltlt_Semi2", 20 },                    // <Question> ::= StringLit '<<' <Expression> ';'
+                { "Expression_Question_Colon", 21 },                        // <Expression> ::= <OrExpr> '?' <OrExpr> ':' <Expression>
+                { "Expression", 22 },                                       // <Expression> ::= <OrExpr>
+                { "Orexpr_Pipepipe", 23 },                                  // <OrExpr> ::= <OrExpr> '||' <AndExpr>
+                { "Orexpr", 24 },                                           // <OrExpr> ::= <AndExpr>
+                { "Andexpr_Ampamp", 25 },                                   // <AndExpr> ::= <AndExpr> '&&' <EqExpr>
+                { "Andexpr", 26 },                                          // <AndExpr> ::= <EqExpr>
+                { "Eqexpr_Eqeq", 27 },                                      // <EqExpr> ::= <EqExpr> '==' <CompExpr>
+                { "Eqexpr_Exclameq", 28 },                                  // <EqExpr> ::= <EqExpr> '!=' <CompExpr>
+                { "Eqexpr", 29 },                                           // <EqExpr> ::= <CompExpr>
+                { "Compexpr_Lt", 30 },                                      // <CompExpr> ::= <CompExpr> '<' <AddExpr>
+                { "Compexpr_Gt", 31 },                                      // <CompExpr> ::= <CompExpr> '>' <AddExpr>
+                { "Compexpr_Lteq", 32 },                                    // <CompExpr> ::= <CompExpr> '<=' <AddExpr>
+                { "Compexpr_Gteq", 33 },                                    // <CompExpr> ::= <CompExpr> '>=' <AddExpr>
+                { "Compexpr", 34 },                                         // <CompExpr> ::= <AddExpr>
+                { "Addexpr_Plus", 35 },                                     // <AddExpr> ::= <AddExpr> '+' <MultExpr>
+                { "Addexpr_Minus", 36 },                                    // <AddExpr> ::= <AddExpr> '-' <MultExpr>
+                { "Addexpr", 37 },                                          // <AddExpr> ::= <MultExpr>
+                { "Multexpr_Times", 38 },                                   // <MultExpr> ::= <MultExpr> '*' <NegateExpr>
+                { "Multexpr_Div", 39 },                                     // <MultExpr> ::= <MultExpr> '/' <NegateExpr>
+                { "Multexpr", 40 },                                         // <MultExpr> ::= <NegateExpr>
+                { "Negateexpr_Minus", 41 },                                 // <NegateExpr> ::= '-' <Value>
+                { "Negateexpr_Exclam", 42 },                                // <NegateExpr> ::= '!' <Value>
+                { "Negateexpr", 43 },                                       // <NegateExpr> ::= <Value>
+                { "Value_Identifier", 44 },                                 // <Value> ::= Identifier
+                { "Value", 45 },                                            // <Value> ::= <Literal>
+                { "Value_Lparen_Rparen", 46 },                              // <Value> ::= '(' <Expression> ')'
+                { "Literal_Stringlit", 47 },                                // <Literal> ::= StringLit
+                { "Literal_Intlit", 48 },                                   // <Literal> ::= IntLit
+                { "Literal_Reallit", 49 },                                  // <Literal> ::= RealLit
+                { "Literal_Boollit", 50 }                                   // <Literal> ::= BoolLit
             }
 		);
     };
@@ -146,38 +144,33 @@ namespace Grammar.Generated.v1
 //{
 //    return;
 //}
-////<Statement> ::= if '(' <Expression> ')' <Statement>
+////<Statement> ::= if '(' <Expression> ')' <Statement> <OptElse>
 //if (r.Parent.TableIndex() == Rules["Statement_If_Lparen_Rparen"])
 //{
 //    return;
 //}
-////<Statement> ::= if '(' <Expression> ')' <SubStmnt> else <Statement>
-//if (r.Parent.TableIndex() == Rules["Statement_If_Lparen_Rparen_Else"])
-//{
-//    return;
-//}
-////<Statement> ::= <QuestionStmnt>
+////<Statement> ::= <Block>
 //if (r.Parent.TableIndex() == Rules["Statement"])
 //{
 //    return;
 //}
-////<Statement> ::= <Block>
+////<Statement> ::= <Question>
 //if (r.Parent.TableIndex() == Rules["Statement2"])
 //{
 //    return;
 //}
-////<SubStmnt> ::= if '(' <Expression> ')' <SubStmnt> else <SubStmnt>
-//if (r.Parent.TableIndex() == Rules["Substmnt_If_Lparen_Rparen_Else"])
+////<Statement> ::= goto Identifier ';'
+//if (r.Parent.TableIndex() == Rules["Statement_Goto_Identifier_Semi"])
 //{
 //    return;
 //}
-////<SubStmnt> ::= <QuestionStmnt>
-//if (r.Parent.TableIndex() == Rules["Substmnt"])
+////<OptElse> ::= else <Statement>
+//if (r.Parent.TableIndex() == Rules["Optelse_Else"])
 //{
 //    return;
 //}
-////<SubStmnt> ::= <Block>
-//if (r.Parent.TableIndex() == Rules["Substmnt2"])
+////<OptElse> ::= 
+//if (r.Parent.TableIndex() == Rules["Optelse"])
 //{
 //    return;
 //}
@@ -191,23 +184,18 @@ namespace Grammar.Generated.v1
 //{
 //    return;
 //}
-////<QuestionStmnt> ::= StringLit '>>' <VarDecl> ';'
-//if (r.Parent.TableIndex() == Rules["Questionstmnt_Stringlit_Gtgt_Semi"])
+////<Question> ::= StringLit '>>' <VarDecl> ';'
+//if (r.Parent.TableIndex() == Rules["Question_Stringlit_Gtgt_Semi"])
 //{
 //    return;
 //}
-////<QuestionStmnt> ::= StringLit '<<' <VarAssign> ';'
-//if (r.Parent.TableIndex() == Rules["Questionstmnt_Stringlit_Ltlt_Semi"])
+////<Question> ::= StringLit '<<' <VarAssign> ';'
+//if (r.Parent.TableIndex() == Rules["Question_Stringlit_Ltlt_Semi"])
 //{
 //    return;
 //}
-////<QuestionStmnt> ::= StringLit '<<' <Expression> ';'
-//if (r.Parent.TableIndex() == Rules["Questionstmnt_Stringlit_Ltlt_Semi2"])
-//{
-//    return;
-//}
-////<QuestionStmnt> ::= goto Identifier ';'
-//if (r.Parent.TableIndex() == Rules["Questionstmnt_Goto_Identifier_Semi"])
+////<Question> ::= StringLit '<<' <Expression> ';'
+//if (r.Parent.TableIndex() == Rules["Question_Stringlit_Ltlt_Semi2"])
 //{
 //    return;
 //}
@@ -411,31 +399,27 @@ namespace Grammar.Generated.v1
 //        break;
 //
 //    case RuleIndices.Statement_If_Lparen_Rparen:
-//        // <Statement> ::= if '(' <Expression> ')' <Statement>
-//        break;
-//
-//    case RuleIndices.Statement_If_Lparen_Rparen_Else:
-//        // <Statement> ::= if '(' <Expression> ')' <SubStmnt> else <Statement>
+//        // <Statement> ::= if '(' <Expression> ')' <Statement> <OptElse>
 //        break;
 //
 //    case RuleIndices.Statement:
-//        // <Statement> ::= <QuestionStmnt>
-//        break;
-//
-//    case RuleIndices.Statement2:
 //        // <Statement> ::= <Block>
 //        break;
 //
-//    case RuleIndices.Substmnt_If_Lparen_Rparen_Else:
-//        // <SubStmnt> ::= if '(' <Expression> ')' <SubStmnt> else <SubStmnt>
+//    case RuleIndices.Statement2:
+//        // <Statement> ::= <Question>
 //        break;
 //
-//    case RuleIndices.Substmnt:
-//        // <SubStmnt> ::= <QuestionStmnt>
+//    case RuleIndices.Statement_Goto_Identifier_Semi:
+//        // <Statement> ::= goto Identifier ';'
 //        break;
 //
-//    case RuleIndices.Substmnt2:
-//        // <SubStmnt> ::= <Block>
+//    case RuleIndices.Optelse_Else:
+//        // <OptElse> ::= else <Statement>
+//        break;
+//
+//    case RuleIndices.Optelse:
+//        // <OptElse> ::= 
 //        break;
 //
 //    case RuleIndices.Vardecl_Identifier_Colon:
@@ -446,20 +430,16 @@ namespace Grammar.Generated.v1
 //        // <VarAssign> ::= Identifier ':' <Type> '=' <Expression>
 //        break;
 //
-//    case RuleIndices.Questionstmnt_Stringlit_Gtgt_Semi:
-//        // <QuestionStmnt> ::= StringLit '>>' <VarDecl> ';'
+//    case RuleIndices.Question_Stringlit_Gtgt_Semi:
+//        // <Question> ::= StringLit '>>' <VarDecl> ';'
 //        break;
 //
-//    case RuleIndices.Questionstmnt_Stringlit_Ltlt_Semi:
-//        // <QuestionStmnt> ::= StringLit '<<' <VarAssign> ';'
+//    case RuleIndices.Question_Stringlit_Ltlt_Semi:
+//        // <Question> ::= StringLit '<<' <VarAssign> ';'
 //        break;
 //
-//    case RuleIndices.Questionstmnt_Stringlit_Ltlt_Semi2:
-//        // <QuestionStmnt> ::= StringLit '<<' <Expression> ';'
-//        break;
-//
-//    case RuleIndices.Questionstmnt_Goto_Identifier_Semi:
-//        // <QuestionStmnt> ::= goto Identifier ';'
+//    case RuleIndices.Question_Stringlit_Ltlt_Semi2:
+//        // <Question> ::= StringLit '<<' <Expression> ';'
 //        break;
 //
 //    case RuleIndices.Expression_Question_Colon:

@@ -1,6 +1,7 @@
 package org.uva.sea.ql.ast.statement;
 
 import org.uva.sea.ql.ast.Expression;
+import org.uva.sea.ql.ast.StatementVisitor;
 
 public class If extends Statement{
 
@@ -23,7 +24,7 @@ public class If extends Statement{
 		return this.questionset;
 	}
 
-	public void accept(IStatementVisitor visitor) {
+	public void accept(StatementVisitor visitor) {
 		visitor.visit(this);
 	}
 

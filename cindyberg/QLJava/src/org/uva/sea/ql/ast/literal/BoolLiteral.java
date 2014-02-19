@@ -1,6 +1,10 @@
 package org.uva.sea.ql.ast.literal;
 
-import org.uva.sea.ql.ast.operators.IOperatorVisitor;
+import org.uva.sea.ql.ast.ExpressionVisitor;
+import org.uva.sea.ql.ast.type.BoolType;
+import org.uva.sea.ql.ast.type.Type;
+import org.uva.sea.ql.typechecker.Environment;
+
 
 public class BoolLiteral extends Literal<Boolean> {
 	
@@ -10,10 +14,17 @@ public class BoolLiteral extends Literal<Boolean> {
 		super(b);
 	}
 
+
 	@Override
-	public void accept(IOperatorVisitor visitor) {
-		// TODO Auto-generated method stub
+	public <T> void accept(ExpressionVisitor<T> visitor) {
+		visitor.visit(this);
 		
+	}
+
+
+	@Override
+	public Type typeOf() {
+		return new BoolType();
 	}
 	
 

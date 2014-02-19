@@ -3,24 +3,21 @@ using System.IO;
 using System.Reflection;
 using GOLD;
 using Grammar;
-using QL_Grammar.AST;
-using QL_Grammar.AST.Expr;
-using QL_Grammar.AST.Stmnt;
-using QL_Grammar.Check;
-using QL_Grammar.Factory;
+using QL_Grammar.QLTypeCheck;
+using QL_Grammar.QLTypeCheck.Expr;
+using QL_Grammar.QLTypeCheck.Factory;
+using QL_Grammar.QLTypeCheck.Helpers;
+using QL_Grammar.QLTypeCheck.Stmnt;
 
-namespace QL_GOLD_C_Sharp
+namespace ConsoleParser
 {
     public class ConsoleTypeChecker
 	{
-        private readonly QLParser<IExprNode, IStmntNode> parser;
-        private readonly QLFactory factory;
-
         public ConsoleTypeChecker()
             : base()
         {
-            parser = new QLParser<IExprNode, IStmntNode>();
-            parser.Factory = factory = new QLFactory();
+			var parser = new QLParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeCheckFactory>();
+            parser.Factory = new QLTypeCheckFactory();
 
             parser.OnReduction += OnReduction;
             parser.OnCompletion += OnCompletion;
@@ -30,44 +27,48 @@ namespace QL_GOLD_C_Sharp
             parser.OnLexicalError += OnLexicalError;
             parser.OnSyntaxError += OnSyntaxError;
 
-            Assembly a = typeof(QLParser<IExprNode, IStmntNode>).Assembly;
+            Assembly a = parser.Factory.GetType().Assembly;
             parser.LoadGrammar(new BinaryReader(a.GetManifestResourceStream("QL_Grammar.Grammar.QL_Grammar.egt")));
             parser.Parse(System.IO.File.OpenText(@"..\..\..\..\..\Grammar\QL_Test.txt"));
         }
 
-        private void OnReduction(Reduction r, object newObj)
+        private void OnReduction(int line, int column, Reduction r, object newObj)
         {
             int count = r.Count();
             string dataOutput = String.Empty;
 
-            for (int i = 0; i < count; i++)
-            {
-                dataOutput += r.get_Data(i).ToString();
-            }
+			for (int i = 0; i < count; i++)
+			{
+				object data = r.get_Data(i);
+				if (data != null)
+				{
+					dataOutput += data.ToString();
+				}
+			}
 
             Console.WriteLine(String.Format("R: {0}, C: {1}, D: {2}", r.Parent.Text(), count, dataOutput));
 
-			if (newObj is IASTNode)
+			if (newObj is ITypeCheck)
 			{
-				((IASTNode)newObj).SourcePosition = parser.ParserPosition;
+                ((ITypeCheck)newObj).SourcePosition = new Tuple<int, int>(line, column);
 			}
         }
 
         private void OnCompletion(object root)
         {
-			TypeChecker<CheckExpressions, CheckStatements<CheckExpressions>> tc
-				= new TypeChecker<CheckExpressions, CheckStatements<CheckExpressions>>();
+            TypeCheckData data = new TypeCheckData();
+            ((ITypeCheckStmnt)root).TypeCheck(data);
+            data.VerifyForms();
 
-			if (tc.Check((IASTNode)root))
-			{
-				foreach (Tuple<string, bool> msg in tc.Errors)
-				{
-					Console.ForegroundColor = msg.Item2 ? ConsoleColor.Red : ConsoleColor.Yellow;
-					Console.WriteLine(msg.Item1);
-				}
-
-				Console.ResetColor();
-			}
+            if (data.HasErrors)
+            {
+                foreach (Tuple<string, bool> error in data.Errors)
+                {
+                    Console.ForegroundColor = error.Item2 ? ConsoleColor.Red : ConsoleColor.Yellow;
+                    Console.WriteLine(error.Item1);
+                    Console.ResetColor();
+                }
+            }
 
             Console.WriteLine("PARSING COMPLETED!");
         }

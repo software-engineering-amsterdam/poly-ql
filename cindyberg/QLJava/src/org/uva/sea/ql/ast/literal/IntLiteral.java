@@ -1,6 +1,8 @@
 package org.uva.sea.ql.ast.literal;
 
-import org.uva.sea.ql.ast.operators.IOperatorVisitor;
+import org.uva.sea.ql.ast.ExpressionVisitor;
+import org.uva.sea.ql.ast.type.*;
+import org.uva.sea.ql.typechecker.Environment;
 
 
 public class IntLiteral extends Literal<Integer> {
@@ -10,9 +12,14 @@ public class IntLiteral extends Literal<Integer> {
 	}
 
 	@Override
-	public void accept(IOperatorVisitor visitor) {
-		// TODO Auto-generated method stub
+	public <T> void accept(ExpressionVisitor<T> visitor) {
+		visitor.visit(this);
 		
+	}
+
+	@Override
+	public Type typeOf() {
+		return new IntType();
 	}
 
 }

@@ -1,4 +1,6 @@
-﻿namespace QSLib
+﻿
+
+namespace QSLib
 {
     partial class QSParser
     {

@@ -1,5 +1,9 @@
 package org.uva.sea.ql.ast;
 
-public interface ASTNode {
 
+public class ASTNode {
+
+	public void accept(IVisitor visitor){
+		visitor.visit(this);
+	}
 }

@@ -15,15 +15,49 @@ ELSE :
 	  'else' 
 	;
 
-TYPE :
+FORM :
+	  'form'
+	;
+
+TYPE_STRING :
 	  'String'
-	| 'Integer'
-	| 'Boolean' 
+	;
+TYPE_INTEGER :
+	 'Integer'
+	;
+TYPE_BOOL :
+	  'Boolean' 
 	;
 
 BOOL_VAL : 
 	  'true'
 	| 'false' 
+	;
+
+LARGEREQUALS :
+	  '>='
+	;
+SMALLEREQUALS :
+	  '<='
+	;
+
+NOTEQUALS :
+	  '!='
+	;
+
+EQUALS :
+	  '=='
+	;
+
+SMALLER :
+	  '<'
+	;
+LARGER :
+	  '>'
+	;
+
+ASSIGN :
+	  '='
 	;
 
 WORD :

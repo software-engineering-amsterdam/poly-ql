@@ -1,20 +1,25 @@
 package org.uva.sea.ql.ast;
 
-import org.uva.sea.ql.ast.operators.IOperatorVisitor;
-
 public class Identifier extends Expression {
 
-	String name;
+	private String name;
 	
 	public Identifier(String name) {
 		
 		this.name = name;
 
 	}
+	
+	public String getIdentifier(){
+		return this.name;
+	}
+	
+	public String show(){
+		return name;};
 
 	@Override
-	public void accept(IOperatorVisitor visitor) {
-		//visitor.visit(this);
+	public <T> void accept(ExpressionVisitor<T> visitor) {
+		visitor.visit(this);
 		
 	}
 

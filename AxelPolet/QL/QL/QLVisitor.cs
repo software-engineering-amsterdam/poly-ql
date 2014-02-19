@@ -11,12 +11,12 @@ namespace QL
     {
         public Questionnaire Quest { get; private set; }
         
-        public override Questionnaire VisitQuestionnaire(QLParser.QuestionnaireContext context)
-        {
-            base.VisitQuestionnaire(context);
-            Quest = context.newQuest;
-            return Quest;
-        }
+        //public override Questionnaire VisitQuestionnaire(QLParser.QuestionnaireContext context)
+        //{
+        //    base.VisitQuestionnaire(context);
+        //    Quest = context.newQuest;
+        //    return Quest;
+        //}
         //public override int VisitInt(QLParser.IntContext context)
         //{
         //    return int.Parse(context.INT().GetText());

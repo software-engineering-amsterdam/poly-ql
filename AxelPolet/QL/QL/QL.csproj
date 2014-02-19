@@ -49,7 +49,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\Statements\Conditions\BooleanCondition.cs" />
+    <Compile Include="Components\Statements\Conditions\CompareCondition.cs" />
+    <Compile Include="Components\Statements\Conditions\Condition.cs" />
+    <Compile Include="Components\Statements\Conditions\Operators\Equals.cs" />
+    <Compile Include="Components\Statements\Conditions\Operators\SmThEq.cs" />
+    <Compile Include="Components\Statements\Conditions\Operators\GrThEq.cs" />
+    <Compile Include="Components\Statements\Conditions\Operators\SmTh.cs" />
+    <Compile Include="Components\Statements\Conditions\Operators\GrTh.cs" />
+    <Compile Include="Components\Statements\IfStatement.cs" />
+    <Compile Include="Components\Statements\Conditions\Operators\AND.cs" />
+    <Compile Include="Components\Statements\Conditions\Operators\OR.cs" />
+    <Compile Include="Components\Statements\Conditions\Operators\Operator.cs" />
+    <Compile Include="Components\Statements\Question.cs" />
     <Compile Include="Components\Questionnaire.cs" />
+    <Compile Include="Components\Statements\Statement.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

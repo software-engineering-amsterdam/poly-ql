@@ -17,11 +17,11 @@ public class SinansGrammerParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__5=1, T__4=2, T__3=3, T__2=4, T__1=5, T__0=6, IDENTIFIER=7, LETTER=8, 
-		DIGIT=9, WS=10;
+		T__3=1, T__2=2, T__1=3, T__0=4, IDENTIFIER=5, STRING=6, LETTER=7, DIGIT=8, 
+		WS=9;
 	public static final String[] tokenNames = {
-		"<INVALID>", "'form'", "'{'", "':'", "'}'", "'\"'", "'?'", "IDENTIFIER", 
-		"LETTER", "DIGIT", "WS"
+		"<INVALID>", "'form'", "'{'", "':'", "'}'", "IDENTIFIER", "STRING", "LETTER", 
+		"DIGIT", "WS"
 	};
 	public static final int
 		RULE_form = 0, RULE_question = 1;
@@ -114,10 +114,12 @@ public class SinansGrammerParser extends Parser {
 	public static class QuestionContext extends ParserRuleContext {
 		public Question qe;
 		public Token IDENTIFIER;
+		public Token STRING;
 		public TerminalNode IDENTIFIER(int i) {
 			return getToken(SinansGrammerParser.IDENTIFIER, i);
 		}
 		public List<TerminalNode> IDENTIFIER() { return getTokens(SinansGrammerParser.IDENTIFIER); }
+		public TerminalNode STRING() { return getToken(SinansGrammerParser.STRING, 0); }
 		public QuestionContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -136,31 +138,15 @@ public class SinansGrammerParser extends Parser {
 		QuestionContext _localctx = new QuestionContext(_ctx, getState());
 		enterRule(_localctx, 2, RULE_question);
 		((QuestionContext)_localctx).qe =  new Question();
-		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(16); ((QuestionContext)_localctx).IDENTIFIER = match(IDENTIFIER);
 			 _localctx.qe.setQuestionName((((QuestionContext)_localctx).IDENTIFIER!=null?((QuestionContext)_localctx).IDENTIFIER.getText():null)); 
 			setState(18); match(3);
-			setState(19); match(5);
-			setState(21); 
-			_errHandler.sync(this);
-			_la = _input.LA(1);
-			do {
-				{
-				{
-				setState(20); ((QuestionContext)_localctx).IDENTIFIER = match(IDENTIFIER);
-				}
-				}
-				setState(23); 
-				_errHandler.sync(this);
-				_la = _input.LA(1);
-			} while ( _la==IDENTIFIER );
-			 _localctx.qe.setQuestionContent((((QuestionContext)_localctx).IDENTIFIER!=null?((QuestionContext)_localctx).IDENTIFIER.getText():null)); 
-			setState(26); match(6);
-			setState(27); match(5);
-			setState(28); ((QuestionContext)_localctx).IDENTIFIER = match(IDENTIFIER);
+			setState(19); ((QuestionContext)_localctx).STRING = match(STRING);
+			 _localctx.qe.setQuestionContent((((QuestionContext)_localctx).STRING!=null?((QuestionContext)_localctx).STRING.getText():null)); 
+			setState(21); ((QuestionContext)_localctx).IDENTIFIER = match(IDENTIFIER);
 			 _localctx.qe.setQuestionType((((QuestionContext)_localctx).IDENTIFIER!=null?((QuestionContext)_localctx).IDENTIFIER.getText():null));
 			}
 		}
@@ -176,16 +162,13 @@ public class SinansGrammerParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\f\"\4\2\t\2\4\3\t"+
-		"\3\3\2\3\2\3\2\3\2\3\2\3\2\6\2\r\n\2\r\2\16\2\16\3\2\3\2\3\3\3\3\3\3\3"+
-		"\3\3\3\6\3\30\n\3\r\3\16\3\31\3\3\3\3\3\3\3\3\3\3\3\3\3\3\2\2\4\2\4\2"+
-		"\2!\2\6\3\2\2\2\4\22\3\2\2\2\6\7\7\3\2\2\7\b\7\t\2\2\b\f\7\4\2\2\t\n\5"+
-		"\4\3\2\n\13\b\2\1\2\13\r\3\2\2\2\f\t\3\2\2\2\r\16\3\2\2\2\16\f\3\2\2\2"+
-		"\16\17\3\2\2\2\17\20\3\2\2\2\20\21\7\6\2\2\21\3\3\2\2\2\22\23\7\t\2\2"+
-		"\23\24\b\3\1\2\24\25\7\5\2\2\25\27\7\7\2\2\26\30\7\t\2\2\27\26\3\2\2\2"+
-		"\30\31\3\2\2\2\31\27\3\2\2\2\31\32\3\2\2\2\32\33\3\2\2\2\33\34\b\3\1\2"+
-		"\34\35\7\b\2\2\35\36\7\7\2\2\36\37\7\t\2\2\37 \b\3\1\2 \5\3\2\2\2\4\16"+
-		"\31";
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\13\33\4\2\t\2\4\3"+
+		"\t\3\3\2\3\2\3\2\3\2\3\2\3\2\6\2\r\n\2\r\2\16\2\16\3\2\3\2\3\3\3\3\3\3"+
+		"\3\3\3\3\3\3\3\3\3\3\3\3\2\2\4\2\4\2\2\31\2\6\3\2\2\2\4\22\3\2\2\2\6\7"+
+		"\7\3\2\2\7\b\7\7\2\2\b\f\7\4\2\2\t\n\5\4\3\2\n\13\b\2\1\2\13\r\3\2\2\2"+
+		"\f\t\3\2\2\2\r\16\3\2\2\2\16\f\3\2\2\2\16\17\3\2\2\2\17\20\3\2\2\2\20"+
+		"\21\7\6\2\2\21\3\3\2\2\2\22\23\7\7\2\2\23\24\b\3\1\2\24\25\7\5\2\2\25"+
+		"\26\7\b\2\2\26\27\b\3\1\2\27\30\7\7\2\2\30\31\b\3\1\2\31\5\3\2\2\2\3\16";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
