@@ -17,4 +17,8 @@ public class BoolType extends Type{
 	public boolean isCompatibleWithBoolean() {
 		return true;
 	}
+	
+	public boolean isCompatibleWith(Type t){
+		return t.isCompatibleWithBoolean();
+	}
 }

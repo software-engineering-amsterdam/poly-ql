@@ -5,7 +5,8 @@ import java.io.Reader;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.uva.sea.ql.ast.*;
+import org.uva.sea.ql.ast.ASTNode;
+import org.uva.sea.ql.ast.Identifier;
 import org.uva.sea.ql.ast.literal.BoolLiteral;
 import org.uva.sea.ql.ast.literal.IntLiteral;
 import org.uva.sea.ql.ast.literal.StringLiteral;

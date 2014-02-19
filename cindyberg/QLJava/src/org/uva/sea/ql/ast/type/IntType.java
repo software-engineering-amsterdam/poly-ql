@@ -15,8 +15,13 @@ public class IntType extends Type{
 	}
 	
 	@Override
-	public boolean isCompatibleWithNumeric(){
+	public boolean isCompatibleWithInteger(){
 		return true;
 	}
+	
+	public boolean isCompatibleWith(Type t){
+		return t.isCompatibleWithInteger();
+	}
+	
 
 }

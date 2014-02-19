@@ -15,11 +15,11 @@ public class Form extends Statement{
 	}
 
 	public Identifier getFormName(){
-		return this.name;
+		return name;
 	}
 	
 	public QuestionSet getQuestionSet(){
-		return this.questionset;
+		return questionset;
 	}
 	
 	public void accept(StatementVisitor visitor) {
