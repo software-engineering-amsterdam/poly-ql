@@ -13,5 +13,10 @@ public class MoneyType extends Type{
 	public String show(){
 		return "money";
 	}
+	
+	
+	public boolean isCompatibleWith(Type t){
+		return t.isCompatibleWithInteger();
+	}
 
 }

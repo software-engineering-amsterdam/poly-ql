@@ -2,69 +2,32 @@ grammar SinansGrammer;
 
 @header {
     package softwareconstruction;
+    import java.util.ArrayList;
 }
 
-form returns [Form fo] @init {$fo = new Form();}: 'form' IDENTIFIER '{' (question { System.out.println($question.qe.toString()); $fo.addQuestion($question.qe);})+ '}';
+form returns [Form fo] @init {$fo = new Form();}: 'form' IDENTIFIER {$fo.setFormName($IDENTIFIER.text);} '{' (item { $fo.addQuestion($item.object);})+ '}';
 
-question returns [Question qe] @init {$qe = new Question();} : IDENTIFIER { $qe.setQuestionName($IDENTIFIER.text); } ':' '"' IDENTIFIER+ { $qe.setQuestionContent($IDENTIFIER.text); } '?' '"' IDENTIFIER { $qe.setQuestionType($IDENTIFIER.text);};
+item returns [Object object] @init {$object = new Object();}: conditional {$object = $conditional.cqe;} | question {$object = $question.qe;};
 
-//IDENTIFIER  :   ('a'..'z'|'A'..'Z'|'0'..'9')+ ;
+question returns [Question qe] @init {$qe = new Question();} : IDENTIFIER { $qe.setQuestionName($IDENTIFIER.text); } ':' STRING { $qe.setQuestionContent($STRING.text); } TYPE { $qe.setQuestionType($TYPE.text);};
+
+conditional returns [ConditionalQuestion cqe] @init {$cqe = new ConditionalQuestion();} : 'if' '(' IDENTIFIER ')' '{' (item { $cqe.add($item.object); })+ '}';
+
+TYPE : 'boolean' | 'money';
+
 IDENTIFIER : (LETTER | DIGIT)+;
-LETTER : ('a'..'z'|'A'..'Z');
+STRING : '"' (LETTER | DIGIT | ' ')+ '"';
+LETTER : ('a'..'z'|'A'..'Z'|'?');
 DIGIT : ('0'..'9');
 WS  :   (' '|'\n'|'\t')+ {skip();} ;
 
 //form Box1HouseOwning {
-//  "Did you sell a house in 2010?" hasSoldHouse: boolean
-//  "Did you by a house in 2010?" hasBoughtHouse: boolean
-//  "Did you enter a loan for maintenance/reconstruction?"
-//hasMaintLoan: boolean
-//  if (hasSoldHouse) {
-//    "Private debts for the sold house:" privateDebt: money
-//    "Price the house was sold for:" sellingPrice: money
-//    "Value residue:" valueResidue = sellingPrice - privateDebt
-//} }
-
-//@lexer::header{
-//    package myantlrproject;
+// hasSoldHouse: “Did you sell a house in 2010?” boolean
+// hasBoughtHouse: “Did you by a house in 2010?” boolean
+// hasMaintLoan: “Did you enter a loan for maintenance/reconstruction?” boolean
+// if (hasSoldHouse) {
+// sellingPrice: “Price the house was sold for:” money
+// privateDebt: “Private debts for the sold house:” money
+// valueResidue: “Value residue:” money(sellingPrice - privateDebt)
+// }
 //}
-
-//@members {
-///** Map variable name to Integer object holding value */
-//HashMap memory = new HashMap();
-//}
-//
-//prog:   stat+ ;
-//                
-//stat:   expr NEWLINE {System.out.println($expr.value);}
-//    |   ID '=' expr NEWLINE
-//        {memory.put($ID.text, new Integer($expr.value));}
-//    |   NEWLINE
-//    ;
-//
-//expr returns [int value]
-//    :   e=multExpr {$value = $e.value;}
-//        (   '+' e=multExpr {$value += $e.value;}
-//        |   '-' e=multExpr {$value -= $e.value;}
-//        )*
-//    ;
-//
-//multExpr returns [int value]
-//    :   e=atom {$value = $e.value;} ('*' e=atom {$value *= $e.value;})*
-//    ; 
-//
-//atom returns [int value]
-//    :   INT {$value = Integer.parseInt($INT.text);}
-//    |   ID
-//        {
-//        Integer v = (Integer)memory.get($ID.text);
-//        if ( v!=null ) $value = v.intValue();
-//        else System.err.println("undefined variable "+$ID.text);
-//        }
-//    |   '(' expr ')' {$value = $expr.value;}
-//    ;
-//
-//ID  :   ('a'..'z'|'A'..'Z')+ ;
-//INT :   '0'..'9'+ ;
-//NEWLINE:'\r'? '\n' ;
-//WS  :   (' '|'\t')+ {skip();} ;

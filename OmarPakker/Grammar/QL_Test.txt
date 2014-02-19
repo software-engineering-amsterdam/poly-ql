@@ -35,4 +35,6 @@ form Form1
 form Form2
 {
 	"Bool:" >> answer1:bool;
+
+	goto Form3;
 }

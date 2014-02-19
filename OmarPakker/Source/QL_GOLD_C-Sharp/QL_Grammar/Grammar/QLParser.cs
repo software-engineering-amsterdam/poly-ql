@@ -5,7 +5,7 @@ using GOLD;
 using Grammar.Generated.v1;
 using QL_Grammar.Algebra.Type;
 using QL_Grammar.QLAlgebra.Factory;
-using QL_Grammar.QLTypeCheck.Types;
+using QL_Grammar.QLAlgebra.Types;
 
 namespace Grammar
 {

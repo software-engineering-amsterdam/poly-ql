@@ -1,9 +1,9 @@
 ﻿using QL_Grammar.Algebra.Type;
 using QL_Grammar.Algebra.Value;
 using QL_Grammar.QLAlgebra.Factory;
+using QL_Grammar.QLAlgebra.Value;
 using QL_Grammar.QLTypeCheck.Expr;
 using QL_Grammar.QLTypeCheck.Stmnt;
-using QL_Grammar.QLTypeCheck.Value;
 
 namespace QL_Grammar.QLTypeCheck.Factory
 {

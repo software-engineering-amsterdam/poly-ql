@@ -1,6 +1,7 @@
 // Generated from /Users/Sinan/Documents/NetBeansProjects/Software Construction/sinan/Software Construction/src/softwareconstruction/SinansGrammer.g by ANTLR 4.2
 
     package softwareconstruction;
+    import java.util.ArrayList;
 
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
@@ -20,6 +21,28 @@ public interface SinansGrammerListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitForm(@NotNull SinansGrammerParser.FormContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link SinansGrammerParser#item}.
+	 * @param ctx the parse tree
+	 */
+	void enterItem(@NotNull SinansGrammerParser.ItemContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SinansGrammerParser#item}.
+	 * @param ctx the parse tree
+	 */
+	void exitItem(@NotNull SinansGrammerParser.ItemContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link SinansGrammerParser#conditional}.
+	 * @param ctx the parse tree
+	 */
+	void enterConditional(@NotNull SinansGrammerParser.ConditionalContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SinansGrammerParser#conditional}.
+	 * @param ctx the parse tree
+	 */
+	void exitConditional(@NotNull SinansGrammerParser.ConditionalContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link SinansGrammerParser#question}.

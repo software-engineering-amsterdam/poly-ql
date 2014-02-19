@@ -34,39 +34,40 @@ start:
     FORM IDENTIFIER CB_OPEN
         stmtList
     CB_CLOSE END            {
-                                {   ID = $2;
-                                    Questions = $4 }
+                                {   ID          = $2;
+                                    Statements  = $4 }
                             }
 
 stmtList:
-    |                       { [] }
-    | stmt                  { [$1] }
-    | stmt stmtList         { $1 :: $2 }
+    |               { [] }
+    | stmt          { [$1] }
+    | stmt stmtList { $1 :: $2 }
 
 stmt:
-    | assignment    { $1 }
-    | question      { $1 }
+    | assignment    { Assignment($1) }
+    | question      { Question($1) }
     | conditional   { $1 }
 
 assignment:
-    IDENTIFIER COLON LABEL expType B_OPEN expression B_CLOSE { Assignment({
-                                                                            ID          = $1;
-                                                                            Label       = $3;
-                                                                            Type        = $4;
-                                                                            Expressions = $6;
-                                                                        }) }
+    IDENTIFIER COLON LABEL exprType
+    B_OPEN expression B_CLOSE   { {
+                                    ID          = $1;
+                                    Label       = $3;
+                                    Type        = $4;
+                                    Expression  = $6;
+                                } }
 
 question:
-    IDENTIFIER COLON LABEL qlType { Question({ 
-                                                ID      = $1;
-                                                Label   = $3;
-                                                Type    = $4;
-                                            }) }
+    IDENTIFIER COLON LABEL qlType   { { 
+                                        ID      = $1;
+                                        Label   = $3;
+                                        Type    = $4;
+                                    } }
 
 conditional:
-    IF B_OPEN booleanExpr B_CLOSE CB_OPEN
+    IF B_OPEN expression B_CLOSE CB_OPEN
         stmtList
-    CB_CLOSE { Conditional($3, $6) }
+    CB_CLOSE                    { Conditional($3, $6) }
 
 qlType:
     | QLBOOL    { QLBool }
@@ -76,36 +77,29 @@ qlType:
     | QLDECIMAL { QLDecimal }
     | QLMONEY   { QLMoney }
 
-expType:
+exprType:
     | STRING            { String($1) }
     | BOOL              { Bool($1) }
-    | arithmeticType    { Arithmetic($1) }
-
-arithmeticType:
     | INT               { Int($1) }
     | DATE              { Date($1) }
     | DECIMAL           { Decimal($1) }
     | MONEY             { Money($1) }
 
+
+
 expression:
-    | booleanExpr       { BooleanExpr($1) }
-    | arithmeticExpr    { ArithmeticExpr($1) }
-
-booleanExpr:
-    | BOOL                          { BoolVal($1) }
-    | NOT booleanExpr               { Neg($2) }
-    | booleanExpr AND booleanExpr   { Cond($1, And, $3) }
-    | booleanExpr OR booleanExpr    { Cond($1, Or, $3) }
-    | booleanExpr LT booleanExpr    { Cond($1, Lt, $3) }
-    | booleanExpr GT booleanExpr    { Cond($1, Gt, $3) }
-    | booleanExpr LE booleanExpr    { Cond($1, Le, $3) }
-    | booleanExpr GE booleanExpr    { Cond($1, Ge, $3) }
-    | booleanExpr EQ booleanExpr    { Cond($1, Eq, $3) }
-    | booleanExpr NE booleanExpr    { Cond($1, Ne, $3) }
-
-arithmeticExpr:
-    | arithmeticType                        { ArithmeticType($1) }
-    | arithmeticExpr PLUS arithmeticExpr    { ArithmeticOp($1, Plus, $3) }
-    | arithmeticExpr MINUS arithmeticExpr   { ArithmeticOp($1, Minus, $3) }
-    | arithmeticExpr MULT arithmeticExpr    { ArithmeticOp($1, Mult, $3) }
-    | arithmeticExpr DIV arithmeticExpr     { ArithmeticOp($1, Div, $3) }
+    | IDENTIFIER                    { ID($1) }
+    | exprType                      { Expr($1) }
+    | NOT expression                { Neg($2) }
+    | expression AND expression     { BooleanOp($1, And, $3) }
+    | expression OR expression      { BooleanOp($1, Or, $3) }
+    | expression LT expression      { BooleanOp($1, Lt, $3) }
+    | expression GT expression      { BooleanOp($1, Gt, $3) }
+    | expression LE expression      { BooleanOp($1, Le, $3) }
+    | expression GE expression      { BooleanOp($1, Ge, $3) }
+    | expression EQ expression      { BooleanOp($1, Eq, $3) }
+    | expression NE expression      { BooleanOp($1, Ne, $3) }
+    | expression PLUS expression    { ArithmeticOp($1, Plus, $3) }
+    | expression MINUS expression   { ArithmeticOp($1, Minus, $3) }
+    | expression MULT expression    { ArithmeticOp($1, Mult, $3) }
+    | expression DIV expression     { ArithmeticOp($1, Div, $3) }

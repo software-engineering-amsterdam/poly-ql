@@ -1,0 +1,3 @@
+form exampleForm {
+ "Is it true?" truth : boolean
+}

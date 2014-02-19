@@ -1,7 +1,7 @@
 package org.uva.sea.ql.ast.statement;
 
-import org.uva.sea.ql.ast.IVisitor;
 import org.uva.sea.ql.ast.Identifier;
+import org.uva.sea.ql.ast.StatementVisitor;
 
 public class Form extends Statement{
 
@@ -15,14 +15,14 @@ public class Form extends Statement{
 	}
 
 	public Identifier getFormName(){
-		return this.name;
+		return name;
 	}
 	
 	public QuestionSet getQuestionSet(){
-		return this.questionset;
+		return questionset;
 	}
 	
-	public void accept(IVisitor visitor) {
+	public void accept(StatementVisitor visitor) {
 		visitor.visit(this);
 		
 	}

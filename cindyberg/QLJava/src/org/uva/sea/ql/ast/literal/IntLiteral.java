@@ -1,6 +1,9 @@
 package org.uva.sea.ql.ast.literal;
 
-import org.uva.sea.ql.ast.IVisitor;
+import org.uva.sea.ql.ast.ExpressionVisitor;
+import org.uva.sea.ql.ast.type.IntType;
+import org.uva.sea.ql.ast.type.Type;
+import org.uva.sea.ql.typechecker.TypeEnvironment;
 
 
 public class IntLiteral extends Literal<Integer> {
@@ -10,9 +13,14 @@ public class IntLiteral extends Literal<Integer> {
 	}
 
 	@Override
-	public void accept(IVisitor visitor) {
-		visitor.visit(this);
+	public <T> T accept(ExpressionVisitor<T> visitor) {
+		return visitor.visit(this);
 		
+	}
+
+	@Override
+	public Type typeOf(TypeEnvironment environment) {
+		return new IntType();
 	}
 
 }

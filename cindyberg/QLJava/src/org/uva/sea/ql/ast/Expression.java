@@ -1,8 +1,13 @@
 package org.uva.sea.ql.ast;
 
+import org.uva.sea.ql.ast.type.Type;
+import org.uva.sea.ql.typechecker.TypeEnvironment;
+
 
 public abstract class Expression extends ASTNode {
 
-	public abstract void accept(IVisitor visitor);
+	public abstract <T> T accept(ExpressionVisitor<T> visitor);
 	public abstract String show();
+	public abstract Type typeOf(TypeEnvironment environment);
+
 }

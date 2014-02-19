@@ -3,22 +3,20 @@ using System.IO;
 using System.Reflection;
 using GOLD;
 using Grammar;
-using QL_Grammar.Check;
 using QL_Grammar.QLTypeCheck;
 using QL_Grammar.QLTypeCheck.Expr;
 using QL_Grammar.QLTypeCheck.Factory;
+using QL_Grammar.QLTypeCheck.Helpers;
 using QL_Grammar.QLTypeCheck.Stmnt;
 
 namespace ConsoleParser
 {
     public class ConsoleTypeChecker
 	{
-        private readonly QLParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeCheckFactory> parser;
-
         public ConsoleTypeChecker()
             : base()
         {
-			parser = new QLParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeCheckFactory>();
+			var parser = new QLParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeCheckFactory>();
             parser.Factory = new QLTypeCheckFactory();
 
             parser.OnReduction += OnReduction;
@@ -34,7 +32,7 @@ namespace ConsoleParser
             parser.Parse(System.IO.File.OpenText(@"..\..\..\..\..\Grammar\QL_Test.txt"));
         }
 
-        private void OnReduction(Reduction r, object newObj)
+        private void OnReduction(int line, int column, Reduction r, object newObj)
         {
             int count = r.Count();
             string dataOutput = String.Empty;
@@ -52,25 +50,25 @@ namespace ConsoleParser
 
 			if (newObj is ITypeCheck)
 			{
-				((ITypeCheck)newObj).SourcePosition = parser.ParserPosition;
+                ((ITypeCheck)newObj).SourcePosition = new Tuple<int, int>(line, column);
 			}
         }
 
         private void OnCompletion(object root)
         {
-			TypeChecker<CheckExpressions, CheckStatements<CheckExpressions>> tc
-				= new TypeChecker<CheckExpressions, CheckStatements<CheckExpressions>>();
+            TypeCheckData data = new TypeCheckData();
+            ((ITypeCheckStmnt)root).TypeCheck(data);
+            data.VerifyForms();
 
-			if (tc.Check((ITypeCheck)root))
-			{
-				foreach (Tuple<string, bool> msg in tc.Errors)
-				{
-					Console.ForegroundColor = msg.Item2 ? ConsoleColor.Red : ConsoleColor.Yellow;
-					Console.WriteLine(msg.Item1);
-				}
-
-				Console.ResetColor();
-			}
+            if (data.HasErrors)
+            {
+                foreach (Tuple<string, bool> error in data.Errors)
+                {
+                    Console.ForegroundColor = error.Item2 ? ConsoleColor.Red : ConsoleColor.Yellow;
+                    Console.WriteLine(error.Item1);
+                    Console.ResetColor();
+                }
+            }
 
             Console.WriteLine("PARSING COMPLETED!");
         }

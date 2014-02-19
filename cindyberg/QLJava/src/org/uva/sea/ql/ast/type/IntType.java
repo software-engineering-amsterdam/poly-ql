@@ -13,5 +13,15 @@ public class IntType extends Type{
 	public String show(){
 		return "int";
 	}
+	
+	@Override
+	public boolean isCompatibleWithInteger(){
+		return true;
+	}
+	
+	public boolean isCompatibleWith(Type t){
+		return t.isCompatibleWithInteger();
+	}
+	
 
 }

@@ -13,5 +13,14 @@ public class StringType extends Type{
 	public String show(){
 		return "string";
 	}
+	
+	public boolean isCompatibleWith(Type t) {
+		return t.isCompatibleWithString();
+	}
+	
+	public boolean isCompatibleWithString(){
+		return true;
+	}
+	
 
 }
