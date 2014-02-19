@@ -91,22 +91,56 @@ orExpr returns [Expr result]
     :   lhs=andExpr { $result = $lhs.result; } ( '||' rhs=andExpr { $result = new Or($result, rhs); } )*
     ;
     
-type
-    : 'boolean'
-    | 'string'
-    | 'integer'
-    | 'date'
-    | 'decimal'
-    | 'money'
+type returns [Expr result]
+    : 'boolean' {$result = new Bool(false); }
+    | 'string' {$result = new Str(""); }
+    | 'integer' {$result = new Int(0); }
+//    | 'date'
+    | 'decimal' {$result = new Decimal(Float.parseFloat("0,00")); }
+    | 'money' {$result = new Money(Float.parseFloat("0,00")); }
+    ;
+    
+statement returns [Statement result]
+    : conditionalQestion { $result = $conditionalQestion.result; }
+    | computedQuestion { $result = $computedQuestion.result; }
+    | answerableQuestion { $result = $answerableQuestion.result; }
+    ;
+    
+answerableQuestion returns [Statement result]
+    : Ident ':' Str type { $result = new AnswerableQuestion(new Ident($Ident.text), $Str.text, $type.result); }
+    ;
+
+computedQuestion returns [Statement result]
+    : Ident ':' Str type '(' addExpr ')' { $result = new ComputedQuestion(new Ident($Ident.text), $Str.text, $type.result, $addExpr.result); }
+    ;
+    
+conditionalQestion returns [Statement result]
+    : 'if' '(' condition=orExpr ')' '{' block '}' { $result = new ConditionalQuestion($orExpr.result, $block.result); }
+    ;
+    
+block returns [Block result]
+    @init
+    {
+      $result = new Block();
+    }
+    : (statement { $result.addStmt($statement.result); })*
+    ;
+    
+form returns [Form result]
+    : 'form' Ident '{' block '}' { $result = new Form(new Ident($Ident.text), $block.result); }
     ;
     
 // Tokens
 WS  :	(' ' | '\t' | '\n' | '\r') { $channel=HIDDEN; }
     ;
 
-COMMENT 
-     : '/*' .* '*/' {$channel=HIDDEN;}
-     ;
+SLComment
+    : '//'(.)*('\r')*'\n' {$channel=HIDDEN;}
+    ;
+  
+ MLCOMMENT 
+    : '/*' .* '*/' {$channel=HIDDEN;}
+    ;
 
 Bool
     : 'true'
