@@ -14,63 +14,18 @@ import org.uva.sea.ql.ast.form.*;
 package org.uva.sea.ql.parser.antlr;
 }
 
-form
-    : 'form' fIdent '{' block '}'
-    ;
-
-block
-    : (question|ifThenElse)*
-    ;
-    
-question
-    : qIdent ':' qLabel qType (computation)?
-    ;
-    
-fIdent
-    : Ident
-    ;
-    
-qIdent
-    : Ident
-    ;
-    
-qLabel
-    : Str
-    ;
-qType
-    : 'boolean'
-    | 'string'
-    | 'integer'
-    | 'date'
-    | 'decimal'
-    | 'money'
-    ;
-    
-computation
-    : '(' addExpr ')'
-    ;
-    
-ifThenElse
-    : 'if' ifCondition '{' thenBlock '}'
-      ('else' '{' elseBlock '}')?
-    ;
-    
-ifCondition
-    : '(' orExpr ')'
-    ;
-    
-thenBlock
-    : block
-    ;
-
-elseBlock
-    : block
-    ;
-        
-primary
-    : Int
-    : Str
-    : Ident
+primary returns [Expr result]
+    : Bool {
+        if($Bool.text.equals("true")){
+          $result = new Bool(true);
+        }else{
+          $result = new Bool(false);
+        }
+      }
+    | Decimal {$result = new Decimal(Float.parseFloat($Decimal.text));}
+    | Int {$result = new Int(Integer.parseInt($Int.text));}
+    | Str {$result = new Str($Str.text);}
+    | Ident {$result = new Ident($Ident.text);}
     ;
     
 unExpr returns [Expr result]
@@ -92,7 +47,6 @@ mulExpr returns [Expr result]
     })*
     ;
     
-  
 addExpr returns [Expr result]
     :   lhs=mulExpr { $result=$lhs.result; } ( op=('+' | '-') rhs=mulExpr
     { 
@@ -133,22 +87,78 @@ andExpr returns [Expr result]
     :   lhs=relExpr { $result=$lhs.result; } ( '&&' rhs=relExpr { $result = new And($result, rhs); } )*
     ;
     
-
 orExpr returns [Expr result]
     :   lhs=andExpr { $result = $lhs.result; } ( '||' rhs=andExpr { $result = new Or($result, rhs); } )*
     ;
+    
+type returns [Expr result]
+    : 'boolean' {$result = new Bool(false); }
+    | 'string' {$result = new Str(""); }
+    | 'integer' {$result = new Int(0); }
+//    | 'date'
+    | 'decimal' {$result = new Decimal(Float.parseFloat("0,00")); }
+    | 'money' {$result = new Money(Float.parseFloat("0,00")); }
+    ;
+    
+statement returns [Statement result]
+    : conditionalQestion { $result = $conditionalQestion.result; }
+    | computedQuestion { $result = $computedQuestion.result; }
+    | answerableQuestion { $result = $answerableQuestion.result; }
+    ;
+    
+answerableQuestion returns [Statement result]
+    : Ident ':' Str type { $result = new AnswerableQuestion(new Ident($Ident.text), $Str.text, $type.result); }
+    ;
 
+computedQuestion returns [Statement result]
+    : Ident ':' Str type '(' addExpr ')' { $result = new ComputedQuestion(new Ident($Ident.text), $Str.text, $type.result, $addExpr.result); }
+    ;
+    
+conditionalQestion returns [Statement result]
+    : 'if' '(' condition=orExpr ')' '{' block '}' { $result = new ConditionalQuestion($orExpr.result, $block.result); }
+    ;
+    
+block returns [Block result]
+    @init
+    {
+      $result = new Block();
+    }
+    : (statement { $result.addStmt($statement.result); })*
+    ;
+    
+form returns [Form result]
+    : 'form' Ident '{' block '}' { $result = new Form(new Ident($Ident.text), $block.result); }
+    ;
     
 // Tokens
 WS  :	(' ' | '\t' | '\n' | '\r') { $channel=HIDDEN; }
     ;
 
-COMMENT 
-     : '/*' .* '*/' {$channel=HIDDEN;}
+SLComment
+    : '//'(.)*('\r')*'\n' {$channel=HIDDEN;}
+    ;
+  
+ MLCOMMENT 
+    : '/*' .* '*/' {$channel=HIDDEN;}
     ;
 
-Ident:   ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*;
+Bool
+    : 'true'
+    | 'false'
+    ;
+    
+Ident
+    :   ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*
+    ;
 
-Int: ('0'..'9')+;
+Str
+    : '"' .* '"'
+    ;
 
-Str: '"' .* '"';
+Int
+    : ('0'..'9')+
+    ;
+    
+Decimal
+    : Int ',' Int
+    ;

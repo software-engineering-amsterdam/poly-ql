@@ -6,10 +6,11 @@ grammar SinansGrammer;
 
 form returns [Form fo] @init {$fo = new Form();}: 'form' IDENTIFIER '{' (question { System.out.println($question.qe.toString()); $fo.addQuestion($question.qe);})+ '}';
 
-question returns [Question qe] @init {$qe = new Question();} : IDENTIFIER { $qe.setQuestionName($IDENTIFIER.text); } ':' '"' IDENTIFIER+ { $qe.setQuestionContent($IDENTIFIER.text); } '?' '"' IDENTIFIER { $qe.setQuestionType($IDENTIFIER.text);};
+question returns [Question qe] @init {$qe = new Question();} : IDENTIFIER { $qe.setQuestionName($IDENTIFIER.text); } ':' STRING { $qe.setQuestionContent($STRING.text); } IDENTIFIER { $qe.setQuestionType($IDENTIFIER.text);};
 
 //IDENTIFIER  :   ('a'..'z'|'A'..'Z'|'0'..'9')+ ;
 IDENTIFIER : (LETTER | DIGIT)+;
+STRING : '"' (LETTER | DIGIT | ' ')+ '?' '"';
 LETTER : ('a'..'z'|'A'..'Z');
 DIGIT : ('0'..'9');
 WS  :   (' '|'\n'|'\t')+ {skip();} ;
