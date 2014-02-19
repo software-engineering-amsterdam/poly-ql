@@ -14,63 +14,18 @@ import org.uva.sea.ql.ast.form.*;
 package org.uva.sea.ql.parser.antlr;
 }
 
-form
-    : 'form' fIdent '{' block '}'
-    ;
-
-block
-    : (question|ifThenElse)*
-    ;
-    
-question
-    : qIdent ':' qLabel qType (computation)?
-    ;
-    
-fIdent
-    : Ident
-    ;
-    
-qIdent
-    : Ident
-    ;
-    
-qLabel
-    : Str
-    ;
-qType
-    : 'boolean'
-    | 'string'
-    | 'integer'
-    | 'date'
-    | 'decimal'
-    | 'money'
-    ;
-    
-computation
-    : '(' addExpr ')'
-    ;
-    
-ifThenElse
-    : 'if' ifCondition '{' thenBlock '}'
-      ('else' '{' elseBlock '}')?
-    ;
-    
-ifCondition
-    : '(' orExpr ')'
-    ;
-    
-thenBlock
-    : block
-    ;
-
-elseBlock
-    : block
-    ;
-        
-primary
-    : Int
-    : Str
-    : Ident
+primary returns [Expr result]
+    : Bool {
+        if($Bool.text.equals("true")){
+          $result = new Bool(true);
+        }else{
+          $result = new Bool(false);
+        }
+      }
+    | Decimal {$result = new Decimal(Float.parseFloat($Decimal.text));}
+    | Int {$result = new Int(Integer.parseInt($Int.text));}
+    | Str {$result = new Str($Str.text);}
+    | Ident {$result = new Ident($Ident.text);}
     ;
     
 unExpr returns [Expr result]
@@ -92,7 +47,6 @@ mulExpr returns [Expr result]
     })*
     ;
     
-  
 addExpr returns [Expr result]
     :   lhs=mulExpr { $result=$lhs.result; } ( op=('+' | '-') rhs=mulExpr
     { 
@@ -133,11 +87,18 @@ andExpr returns [Expr result]
     :   lhs=relExpr { $result=$lhs.result; } ( '&&' rhs=relExpr { $result = new And($result, rhs); } )*
     ;
     
-
 orExpr returns [Expr result]
     :   lhs=andExpr { $result = $lhs.result; } ( '||' rhs=andExpr { $result = new Or($result, rhs); } )*
     ;
-
+    
+type
+    : 'boolean'
+    | 'string'
+    | 'integer'
+    | 'date'
+    | 'decimal'
+    | 'money'
+    ;
     
 // Tokens
 WS  :	(' ' | '\t' | '\n' | '\r') { $channel=HIDDEN; }
@@ -145,10 +106,25 @@ WS  :	(' ' | '\t' | '\n' | '\r') { $channel=HIDDEN; }
 
 COMMENT 
      : '/*' .* '*/' {$channel=HIDDEN;}
+     ;
+
+Bool
+    : 'true'
+    | 'false'
+    ;
+    
+Ident
+    :   ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*
     ;
 
-Ident:   ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*;
+Str
+    : '"' .* '"'
+    ;
 
-Int: ('0'..'9')+;
-
-Str: '"' .* '"';
+Int
+    : ('0'..'9')+
+    ;
+    
+Decimal
+    : Int ',' Int
+    ;
