@@ -1,3 +1,10 @@
 form exampleForm {
- "Is it true?" truth : boolean
+    truth: "Is it true?" boolean
+    truth2: "Is it still true?" boolean
+    if (truth) {
+    	wonga: "How much is it worth?" money
+	    if (truth2) {
+	    	wonga2: "What's the price of pie?" money
+	    }
+    }
 }
