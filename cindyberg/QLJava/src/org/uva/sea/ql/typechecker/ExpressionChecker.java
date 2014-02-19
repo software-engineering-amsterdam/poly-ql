@@ -8,61 +8,105 @@ import org.uva.sea.ql.ast.Identifier;
 import org.uva.sea.ql.ast.literal.BoolLiteral;
 import org.uva.sea.ql.ast.literal.IntLiteral;
 import org.uva.sea.ql.ast.literal.StringLiteral;
-import org.uva.sea.ql.ast.operators.arithmetic.*;
-import org.uva.sea.ql.ast.operators.comparison.*;
-import org.uva.sea.ql.ast.operators.logical.*;
+import org.uva.sea.ql.ast.operators.arithmetic.Add;
+import org.uva.sea.ql.ast.operators.arithmetic.Div;
+import org.uva.sea.ql.ast.operators.arithmetic.Mul;
+import org.uva.sea.ql.ast.operators.arithmetic.Neg;
+import org.uva.sea.ql.ast.operators.arithmetic.Pos;
+import org.uva.sea.ql.ast.operators.arithmetic.Sub;
+import org.uva.sea.ql.ast.operators.comparison.Eq;
+import org.uva.sea.ql.ast.operators.comparison.GEq;
+import org.uva.sea.ql.ast.operators.comparison.GT;
+import org.uva.sea.ql.ast.operators.comparison.LEq;
+import org.uva.sea.ql.ast.operators.comparison.LT;
+import org.uva.sea.ql.ast.operators.comparison.NEq;
+import org.uva.sea.ql.ast.operators.logical.And;
+import org.uva.sea.ql.ast.operators.logical.Not;
+import org.uva.sea.ql.ast.operators.logical.Or;
+import org.uva.sea.ql.ast.type.Type;
 
 public class ExpressionChecker implements ExpressionVisitor<Boolean> {
 
-	public Environment environment;
-	public List<Error> errors;
+	private TypeEnvironment environment;
+	private List<Error> errorlist;
 	
-	public ExpressionChecker(Environment environment, List<Error> errorlist, Expression expression) {
+	public ExpressionChecker(TypeEnvironment environment, List<Error> errorlist) {
 		this.environment = environment;
-		this.errors = errorlist;
-		expression.accept(this);
+		this.errorlist = errorlist;
 	}
 	
-	public Boolean checkArithmetic(Expression side){
-		return true;
+	public static Boolean checkExpression(TypeEnvironment environment, List<Error> errorlist, Expression expression){
+
+		ExpressionChecker checker = new ExpressionChecker(environment,errorlist);
+		return expression.accept(checker);
+	}
+	
+	public Boolean checkNormalExpression(Type type, Expression side){
+
+		if(!(side.typeOf(environment).show() == type.show()))
+		{
+			newError(side.show() + " is not of type " + type.show());
+			return false;
+		}
+		return(checkExpression(environment,errorlist,side));
+	}
+	
+	public Boolean checkComparison(Type type, Expression left, Expression right){
+		if(!left.typeOf(environment).isCompatibleWith(right.typeOf(environment))){
+			newError(left.show() + " cannot be compared with " + right.show());
+			return false;
+		}
+		
+		if(!(left.typeOf(environment) == type)){
+			newError(left.show() + " is not of type " + type);
+			return false;
+		}
+		
+		if(!(right.typeOf(environment) == type)){
+			newError(right.show() + " is no of type " + type);
+			return false;
+		}
+		
+		return checkExpression(environment,errorlist,left) && checkExpression(environment,errorlist,right);
+		
 	}
 
 	public Boolean visit(Expression expression) {
-		return null;
-		// TODO Auto-generated method stub
-		
+		return expression.accept(this);		
 	}
 
 
 	public Boolean visit(Add add) {
-		boolean left = checkArithmetic(add.returnLeft());
-		boolean right = checkArithmetic(add.returnRight());
+		
+		boolean left = checkNormalExpression(add.typeOf(environment), add.returnLeft());
+		boolean right = checkNormalExpression(add.typeOf(environment), add.returnRight());
 		return left && right;
 	}
 
 	public Boolean visit(Sub sub) {
-		// TODO Auto-generated method stub
-		return null;
+		boolean left = checkNormalExpression(sub.typeOf(environment), sub.returnLeft());
+		boolean right = checkNormalExpression(sub.typeOf(environment), sub.returnRight());
+		return left && right;
 	}
 
 	public Boolean visit(Div div) {
-		// TODO Auto-generated method stub
-		return null;
+		boolean left = checkNormalExpression(div.typeOf(environment), div.returnLeft());
+		boolean right = checkNormalExpression(div.typeOf(environment), div.returnRight());
+		return left && right;
 	}
 
 	public Boolean visit(Mul mul) {
-		// TODO Auto-generated method stub
-		return null;
+		boolean left = checkNormalExpression(mul.typeOf(environment), mul.returnLeft());
+		boolean right = checkNormalExpression(mul.typeOf(environment), mul.returnRight());
+		return left && right;
 	}
 
 	public Boolean visit(Neg neg) {
-		// TODO Auto-generated method stub
-		return null;
+		return checkNormalExpression(neg.typeOf(environment), neg.returnExpr());
 	}
 
 	public Boolean visit(Pos pos) {
-		// TODO Auto-generated method stub
-		return null;
+		return checkNormalExpression(pos.typeOf(environment), pos.returnExpr());
 	}
 
 	public Boolean visit(Eq eq) {
@@ -96,18 +140,19 @@ public class ExpressionChecker implements ExpressionVisitor<Boolean> {
 	}
 
 	public Boolean visit(And and) {
-		// TODO Auto-generated method stub
-		return null;
+		boolean left = checkNormalExpression(and.typeOf(environment), and.returnLeft());
+		boolean right = checkNormalExpression(and.typeOf(environment), and.returnRight());
+		return left && right;
 	}
 
 	public Boolean visit(Or or) {
-		// TODO Auto-generated method stub
-		return null;
+		boolean left = checkNormalExpression(or.typeOf(environment), or.returnLeft());
+		boolean right = checkNormalExpression(or.typeOf(environment), or.returnRight());
+		return left && right;
 	}
 
 	public Boolean visit(Not not) {
-		// TODO Auto-generated method stub
-		return null;
+		return checkNormalExpression(not.typeOf(environment),not.returnExpr());
 	}
 
 
@@ -126,8 +171,11 @@ public class ExpressionChecker implements ExpressionVisitor<Boolean> {
 	}
 
 	public Boolean visit(Identifier identifier) {
-		// TODO Auto-generated method stub
-		return null;
+		return true;
+	}
+	
+	private void newError(String error) {
+		errorlist.add(new Error(error));
 	}
 
 }

@@ -6,14 +6,14 @@ import java.util.List;
 import org.uva.sea.ql.ast.StatementVisitor;
 
 
-
 public class QuestionSet extends Statement{
 
 	private List<Statement> questions = new ArrayList<Statement>();
 	
 	public QuestionSet(Statement single) {
+
+		questions.add(single);
 		
-		this.questions.add(single);
 	}
 	
 	public QuestionSet(Statement single, QuestionSet multiple) {

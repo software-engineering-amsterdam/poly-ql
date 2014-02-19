@@ -1,0 +1,3 @@
+form FORM1 {
+	variable : "dit is een label" : boolean
+}

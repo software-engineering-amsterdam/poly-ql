@@ -14,8 +14,9 @@ public class MoneyType extends Type{
 		return "money";
 	}
 	
-	public boolean isCompatibleWithNumeric() {
-		return true;
+	
+	public boolean isCompatibleWith(Type t){
+		return t.isCompatibleWithInteger();
 	}
 
 }
