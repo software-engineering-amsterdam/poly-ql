@@ -14,6 +14,7 @@ public interface Visitor<T> {
 	T visit(Div node);
 	T visit(Eq node);
 	T visit(GEq node);
+	T visit(GT node);
 	T visit(LEq node);
 	T visit(LT node);
 	T visit(Mul node);
@@ -26,6 +27,6 @@ public interface Visitor<T> {
 	T visit(StrLiteral node);
 	T visit(BoolType node);
 	T visit(IntType node);
-	T visit(StrType nodde);	
-
+	T visit(StrType node);
+	
 }

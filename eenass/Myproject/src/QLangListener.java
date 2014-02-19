@@ -1,4 +1,4 @@
-// Generated from QLang.g4 by ANTLR 4.2
+// Generated from QLang.g4 by ANTLR 4.1
 
 import ast.expr.Expr;
 import ast.expr.binExpr.*;

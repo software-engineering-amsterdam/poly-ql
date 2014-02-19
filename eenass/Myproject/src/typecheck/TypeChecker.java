@@ -115,6 +115,11 @@ public class TypeChecker implements Visitor<Boolean>{
 	public Boolean visit(GEq node) {
 		return isValidBool(node.get_lhs(), node.get_rhs());
 	}
+	
+	@Override
+	public Boolean visit(GT node) {
+		return true;
+	}
 
 	@Override
 	public Boolean visit(LEq node) {
