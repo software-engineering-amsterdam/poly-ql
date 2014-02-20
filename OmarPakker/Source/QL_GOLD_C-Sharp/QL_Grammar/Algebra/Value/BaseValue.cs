@@ -4,19 +4,13 @@ namespace QL_Grammar.Algebra.Value
 {
 	public abstract class BaseValue<T> : IValue
 	{
+		public IType Type { get; private set; }
+		object IValue.Value { get { return Value; } }
         public T Value { get; private set; }
-        object IValue.Value { get { return Value; } }
-        public IType Type { get; private set; }
-
-        public BaseValue(IType type)
-            : this(type, default(T))
-        {
-
-        }
 
 		public BaseValue(IType type, T value)
 		{
-            Type = type;
+			Type = type;
 			Value = value;
 		}
 

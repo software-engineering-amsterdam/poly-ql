@@ -2,25 +2,24 @@
 
 namespace QL_Grammar.Algebra.Type
 {
-    public class UnknownType : IType
-    {
-        public static readonly UnknownType Instance = new UnknownType();
+	//TODO: Can we get rid of UnknownType & UnknownValue?
+	public sealed class UnknownType : IType
+	{
+		public IValue DefaultValue { get { return null; } }
 
-        public IValue DefaultValue { get { return null; } }
+		public IType GetLeastUpperBound(IType other)
+		{
+			return this;
+		}
 
-        private UnknownType()
-        {
+		public bool CompatibleWith(IType other)
+		{
+			return false;
+		}
 
-        }
-
-        public bool CompatibleWith(IType other)
-        {
-            return false;
-        }
-
-        public override string ToString()
-        {
-            return "unknown";
-        }
-    }
+		public override string ToString()
+		{
+			return "unknown";
+		}
+	}
 }

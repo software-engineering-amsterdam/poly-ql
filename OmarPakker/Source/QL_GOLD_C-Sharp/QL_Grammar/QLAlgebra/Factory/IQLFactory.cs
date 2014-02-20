@@ -4,8 +4,17 @@ using QL_Grammar.Algebra.Value;
 
 namespace QL_Grammar.QLAlgebra.Factory
 {
-	public interface IQLExprFactory<E> : IQLValueFactory<E>, IExprFactory<E>
+	public interface IQLFactory<E, S> : IFactory<E, S>
 	{
+		IType StringType();
+		IType IntType();
+		IType RealType();
+		IType BoolType();
+
+		E String(string s);
+		E Int(int i);
+		E Real(double d);
+		E Bool(bool b);
 		E Literal(IValue value);
 		E Variable(string var);
 
@@ -29,5 +38,13 @@ namespace QL_Grammar.QLAlgebra.Factory
 		E VarAssign(string var, IType t, E e);
 
 		E IfElse(E toEval, E ifTrue, E ifFalse);
+
+		S Form(string var, S s);
+		S Goto(string var);
+
+		S Comp(S l, S r);
+		S Question(string s, bool b, E e);
+		S If(E toEval, S ifTrue);
+		S IfElse(E toEval, S ifTrue, S ifFalse);
 	}
 }

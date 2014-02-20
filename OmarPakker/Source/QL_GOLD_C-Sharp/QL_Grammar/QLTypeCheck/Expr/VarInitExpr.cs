@@ -1,7 +1,6 @@
 ﻿using System;
 using QL_Grammar.Algebra.Type;
 using QL_Grammar.QLAlgebra.Expr;
-using QL_Grammar.QLAlgebra.Types;
 using QL_Grammar.QLTypeCheck.Helpers;
 
 namespace QL_Grammar.QLTypeCheck.Expr
@@ -18,10 +17,10 @@ namespace QL_Grammar.QLTypeCheck.Expr
         {
             if (data.Variables.ContainsKey(Name))
 			{
-				if (data.Variables[Name].Type != Type)
+				if (!data.Variables[Name].Type.Equals(Type))
 				{
                     data.ReportError(String.Format("Variable '{0}' is already defined as '{1}'. Redefining as '{2}'. You cannot redefine variables.",
-						Name, data.Variables[Name].Type.ToString(), Type.ToString()), SourcePosition);
+						Name, data.Variables[Name].Type, Type), SourcePosition);
 				}
 				else
 				{
@@ -38,12 +37,12 @@ namespace QL_Grammar.QLTypeCheck.Expr
 			if (!Type.CompatibleWith(a))
 			{
                 data.ReportError(String.Format("Can't assign value of {0} to variable of type {1}.",
-					a.ToString(), Type.ToString()), SourcePosition);
+					a, Type), SourcePosition);
 			}
-			else if (Type is IntType && a is RealType)
+			else if (!Type.GetLeastUpperBound(a).Equals(Type))
 			{
-                data.ReportError("Assigning real value to an int variable. You'll lose decimal information.",
-					SourcePosition);
+                data.ReportWarning(String.Format("Assigning value of type {0} to a variable of type {1}. You may lose some information.",
+					a, Type), SourcePosition);
 			}
 
 			return Type;

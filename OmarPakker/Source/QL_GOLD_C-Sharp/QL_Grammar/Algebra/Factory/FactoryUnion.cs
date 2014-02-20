@@ -1,9 +1,9 @@
 ﻿
 namespace QL_Grammar.Algebra.Factory
 {
-	public abstract class FactoryUnion<E, S, F1, F2> : IStmntFactory<E, S>
-		where F1 : IStmntFactory<E, S>
-		where F2 : IStmntFactory<E, S>
+	public abstract class FactoryUnion<E, S, F1, F2> : IFactory<E, S>
+		where F1 : IFactory<E, S>
+		where F2 : IFactory<E, S>
 	{
 		protected F1 Factory1 { get; private set; }
 		protected F2 Factory2 { get; private set; }

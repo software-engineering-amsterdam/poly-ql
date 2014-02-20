@@ -7,13 +7,13 @@ namespace QL_Grammar.QLAlgebra.Expr
     {
 		public Tuple<int, int> SourcePosition { get; set; }
         public string Name { get; private set; }
-        public IType Type { get; private set; }
+		public IType Type { get; private set; }
         public E Value { get; private set; }
 
         public VarInitExpr(string name, IType type, E value)
 		{
             Name = name;
-            Type = type;
+			Type = type;
             Value = value;
 		}
 
@@ -25,12 +25,12 @@ namespace QL_Grammar.QLAlgebra.Expr
 			}
 
 			VarInitExpr<E> other = (VarInitExpr<E>)obj;
-			return Name.Equals(other.Name) && Type.Equals(other.Type) && Value.Equals(other.Value);
+			return Name.Equals(other.Name) && Value.Equals(other.Value);
 		}
 
 		public override int GetHashCode()
 		{
-			return Name.GetHashCode() + Type.GetHashCode() + Value.GetHashCode();
+			return Name.GetHashCode() + Value.GetHashCode();
 		}
     }
 }

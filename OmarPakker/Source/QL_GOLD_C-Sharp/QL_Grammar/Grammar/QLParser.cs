@@ -5,12 +5,11 @@ using GOLD;
 using Grammar.Generated.v1;
 using QL_Grammar.Algebra.Type;
 using QL_Grammar.QLAlgebra.Factory;
-using QL_Grammar.QLAlgebra.Types;
 
 namespace Grammar
 {
 	public class QLParser<E, S, F> : AbstractParser
-		where F : IQLStmntFactory<E, S>
+		where F : IQLFactory<E, S>
 	{
 		protected override ReadOnlyDictionary<string, short> Rules { get { return GrammarData.Rules; } }
 		public F Factory;
@@ -26,22 +25,22 @@ namespace Grammar
 			//<Type> ::= string
 			if (r.Parent.TableIndex() == Rules["Type_String"])
 			{
-				return StringType.Instance;
+				return Factory.StringType();
 			}
 			//<Type> ::= int
 			else if (r.Parent.TableIndex() == Rules["Type_Int"])
 			{
-				return IntType.Instance;
+				return Factory.IntType();
 			}
 			//<Type> ::= real
 			else if (r.Parent.TableIndex() == Rules["Type_Real"])
 			{
-				return RealType.Instance;
+				return Factory.RealType();
 			}
 			//<Type> ::= bool
 			else if (r.Parent.TableIndex() == Rules["Type_Bool"])
 			{
-				return BoolType.Instance;
+				return Factory.BoolType();
 			}
 			//<Forms> ::= <Form> <Forms>
 			//<Statements> ::= <Statement> <Statements>

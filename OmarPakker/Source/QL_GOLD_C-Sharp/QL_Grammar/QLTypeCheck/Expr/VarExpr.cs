@@ -18,7 +18,8 @@ namespace QL_Grammar.QLTypeCheck.Expr
             {
                 data.ReportError(String.Format("Undefined variable '{0}' used. Make sure the variable is defined.",
                     Name), SourcePosition);
-                return UnknownType.Instance;
+
+                return new UnknownType();
             }
 
             return data.Variables[Name].Type;

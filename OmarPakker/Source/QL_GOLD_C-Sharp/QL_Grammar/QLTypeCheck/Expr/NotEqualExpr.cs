@@ -1,7 +1,7 @@
 ﻿using System;
 using QL_Grammar.Algebra.Type;
 using QL_Grammar.QLAlgebra.Expr;
-using QL_Grammar.QLAlgebra.Types;
+using QL_Grammar.QLAlgebra.Type;
 using QL_Grammar.QLTypeCheck.Helpers;
 
 namespace QL_Grammar.QLTypeCheck.Expr
@@ -22,10 +22,10 @@ namespace QL_Grammar.QLTypeCheck.Expr
             if (!a.CompatibleWith(b))
             {
                 data.ReportError(String.Format("Comparison using '!=' not possible. Incompatible types: '{0}', '{1}'.",
-                    a.ToString(), b.ToString()), SourcePosition);
+                    a, b), SourcePosition);
             }
 
-            return BoolType.Instance;
+            return new BoolType();
         }
     }
 }

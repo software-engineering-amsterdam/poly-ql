@@ -7,43 +7,46 @@ namespace QL_Grammar.QLTypeCheck.Helpers
 {
     public class TypeCheckData
     {
+		public delegate void OnTypeCheckErrorEventHandler(string msg, bool error);
+		public event OnTypeCheckErrorEventHandler OnTypeCheckError;
+
         public HashSet<string> Forms { get; private set; }
         public List<GotoStmnt> Gotos { get; private set; }
         public Dictionary<string, VarInitExpr> Variables { get; private set; }
-        public List<Tuple<string, bool>> Errors { get; private set; }
-        public bool HasErrors { get { return Errors.Count > 0; } }
 
         public TypeCheckData()
         {
             Forms = new HashSet<string>();
             Gotos = new List<GotoStmnt>();
             Variables = new Dictionary<string, VarInitExpr>();
-            Errors = new List<Tuple<string, bool>>();
         }
 
-        public void VerifyForms()
-        {
-            Gotos.RemoveAll((item) => Forms.Contains(item.GotoName));
+		//TODO: Do a Breadth-First traversal instead? No need to check stuff afterwards (statements like 'goto' create this problem)
+		public void VerifyTopDownDependencies()
+		{
+			Gotos.RemoveAll((item) => Forms.Contains(item.GotoName));
 
-            foreach (GotoStmnt item in Gotos)
-            {
-                ReportError(String.Format("'goto' statement not possible. Form '{0}' does not exist!",
-                    item.GotoName), item.SourcePosition);
-            }
-        }
+			foreach (GotoStmnt item in Gotos)
+			{
+				ReportError(String.Format("'goto' statement not possible. Form '{0}' does not exist!",
+					item.GotoName), item.SourcePosition);
+			}
+		}
 
         public void ReportError(string msg, Tuple<int, int> pos)
         {
-            string finalMsg = ConstructMessage("ERROR! " + msg, pos);
-            
-            Errors.Add(new Tuple<string, bool>(finalMsg, true));
+			if (OnTypeCheckError != null)
+			{
+				OnTypeCheckError(ConstructMessage("ERROR! " + msg, pos), true);
+			}
         }
 
         public void ReportWarning(string msg, Tuple<int, int> pos)
         {
-            string finalMsg = ConstructMessage("WARNING! " + msg, pos);
-
-            Errors.Add(new Tuple<string, bool>(finalMsg, false));
+			if (OnTypeCheckError != null)
+			{
+				OnTypeCheckError(ConstructMessage("WARNING! " + msg, pos), false);
+			}
         }
 
         private string ConstructMessage(string msg, Tuple<int, int> pos)

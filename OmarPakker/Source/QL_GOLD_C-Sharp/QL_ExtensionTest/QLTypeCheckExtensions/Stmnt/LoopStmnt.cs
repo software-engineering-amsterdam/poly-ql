@@ -1,5 +1,6 @@
 ﻿using System;
-using QL_Grammar.QLAlgebra.Types;
+using QL_Grammar.Algebra.Type;
+using QL_Grammar.QLAlgebra.Type;
 using QL_Grammar.QLTypeCheck.Expr;
 using QL_Grammar.QLTypeCheck.Helpers;
 using QL_Grammar.QLTypeCheck.Stmnt;
@@ -8,6 +9,7 @@ namespace QL_ExtensionTest.QLTypeCheckExtensions.Stmnt
 {
 	public class LoopStmnt : ITypeCheckStmnt
 	{
+		private readonly IType ExpressionType = new IntType();
 		public Tuple<int, int> SourcePosition { get; set; }
 		public ITypeCheckExpr Expression { get; private set; }
 		public ITypeCheckStmnt Body { get; private set; }
@@ -20,7 +22,7 @@ namespace QL_ExtensionTest.QLTypeCheckExtensions.Stmnt
 
         public void TypeCheck(TypeCheckData data)
         {
-            if (!(Expression.TypeCheck(data) is IntType))
+			if (!Expression.TypeCheck(data).CompatibleWith(ExpressionType))
             {
                 data.ReportError("Unable to evaluate 'loop'. Expression must be a integral type!",
                     SourcePosition);
