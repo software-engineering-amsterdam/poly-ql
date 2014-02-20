@@ -1,4 +1,4 @@
-package nl.uva.sc.datatypes;
+package nl.uva.sc.test;
 
 public class Frequency implements Comparable<Frequency> {
 

@@ -5,8 +5,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-import nl.uva.sc.datatypes.Word;
-import nl.uva.sc.parser.Token;
+import nl.uva.sc.test.Token;
+import nl.uva.sc.test.Word;
 
 public class TermFrequency implements BookParserSubscriber {
 

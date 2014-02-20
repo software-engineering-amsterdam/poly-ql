@@ -7,11 +7,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-import nl.uva.sc.datatypes.Frequency;
-import nl.uva.sc.datatypes.Word;
 import nl.uva.sc.parser.BookParser;
-import nl.uva.sc.parser.Token;
 import nl.uva.sc.parser.subscriber.TermFrequency;
 
 import org.junit.BeforeClass;
@@ -59,20 +57,21 @@ public class TestTF {
         BookParser bParser = new BookParser(new File(BOOK_FILENAME));
         bParser.subscribe(index);
 
+        List<Map.Entry<String, Integer>> result = null;
         try {
-            bParser.parse();
+            result = bParser.parse();
         } catch (IOException e) {
             fail("The book parser could not parse the given file \"" + BOOK_FILENAME + "\"");
         }
 
-        List<Token> sortedTokenList = index.getSortedTokens();
         for (int i = 1; i < 26; ++i) {
-            Token current = sortedTokenList.get(sortedTokenList.size() - i);
+            Map.Entry<String, Integer> entry = result.get(result.size() - i);
             Token shouldBeSame = mTrueIndex.get(i - 1);
 
-            System.out.println(current);
+            System.out.println(entry.getKey() + " - " + entry.getValue());
 
-            assertTrue("Wrong Token at position " + i, current.equals(shouldBeSame));
+            assertTrue("Wrong Token at position " + i, new Token(new Word(entry.getKey()),
+                    new Frequency(entry.getValue())).equals(shouldBeSame));
         }
     }
 }

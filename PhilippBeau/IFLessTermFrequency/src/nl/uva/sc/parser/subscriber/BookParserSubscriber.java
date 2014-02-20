@@ -1,6 +1,6 @@
 package nl.uva.sc.parser.subscriber;
 
-import nl.uva.sc.datatypes.Word;
+import nl.uva.sc.test.Word;
 
 public interface BookParserSubscriber {
 

@@ -1,7 +1,5 @@
-package nl.uva.sc.parser;
+package nl.uva.sc.test;
 
-import nl.uva.sc.datatypes.Frequency;
-import nl.uva.sc.datatypes.Word;
 
 public class Token implements Comparable<Token> {
 
