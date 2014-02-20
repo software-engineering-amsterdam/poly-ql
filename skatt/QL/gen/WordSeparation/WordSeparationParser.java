@@ -22,9 +22,9 @@ public class WordSeparationParser extends Parser {
 		"<INVALID>", "':'", "WORD", "WS"
 	};
 	public static final int
-		RULE_program = 0, RULE_part = 1;
+		RULE_program = 0, RULE_part = 1, RULE_end = 2;
 	public static final String[] ruleNames = {
-		"program", "part"
+		"program", "part", "end"
 	};
 
 	@Override
@@ -53,6 +53,9 @@ public class WordSeparationParser extends Parser {
 		public List<PartContext> part() {
 			return getRuleContexts(PartContext.class);
 		}
+		public EndContext end() {
+			return getRuleContext(EndContext.class,0);
+		}
 		public ProgramContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -70,23 +73,30 @@ public class WordSeparationParser extends Parser {
 	public final ProgramContext program() throws RecognitionException {
 		ProgramContext _localctx = new ProgramContext(_ctx, getState());
 		enterRule(_localctx, 0, RULE_program);
-		int _la;
 		try {
+			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(5); 
+			setState(7); 
 			_errHandler.sync(this);
-			_la = _input.LA(1);
+			_alt = getInterpreter().adaptivePredict(_input,0,_ctx);
 			do {
-				{
-				{
-				setState(4); part();
+				switch (_alt) {
+				case 1:
+					{
+					{
+					setState(6); part();
+					}
+					}
+					break;
+				default:
+					throw new NoViableAltException(this);
 				}
-				}
-				setState(7); 
+				setState(9); 
 				_errHandler.sync(this);
-				_la = _input.LA(1);
-			} while ( _la==WORD );
+				_alt = getInterpreter().adaptivePredict(_input,0,_ctx);
+			} while ( _alt!=2 && _alt!=-1 );
+			setState(11); end();
 			}
 		}
 		catch (RecognitionException re) {
@@ -120,22 +130,46 @@ public class WordSeparationParser extends Parser {
 		PartContext _localctx = new PartContext(_ctx, getState());
 		enterRule(_localctx, 2, RULE_part);
 		try {
-			setState(12);
-			switch ( getInterpreter().adaptivePredict(_input,1,_ctx) ) {
-			case 1:
-				enterOuterAlt(_localctx, 1);
-				{
-				setState(9); match(WORD);
-				}
-				break;
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(13); match(WORD);
+			setState(14); match(1);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
 
-			case 2:
-				enterOuterAlt(_localctx, 2);
-				{
-				setState(10); match(WORD);
-				setState(11); match(1);
-				}
-				break;
+	public static class EndContext extends ParserRuleContext {
+		public TerminalNode WORD() { return getToken(WordSeparationParser.WORD, 0); }
+		public EndContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_end; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof WordSeparationListener ) ((WordSeparationListener)listener).enterEnd(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof WordSeparationListener ) ((WordSeparationListener)listener).exitEnd(this);
+		}
+	}
+
+	public final EndContext end() throws RecognitionException {
+		EndContext _localctx = new EndContext(_ctx, getState());
+		enterRule(_localctx, 4, RULE_end);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(16); match(WORD);
 			}
 		}
 		catch (RecognitionException re) {
@@ -150,11 +184,12 @@ public class WordSeparationParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\5\21\4\2\t\2\4\3"+
-		"\t\3\3\2\6\2\b\n\2\r\2\16\2\t\3\3\3\3\3\3\5\3\17\n\3\3\3\2\2\4\2\4\2\2"+
-		"\20\2\7\3\2\2\2\4\16\3\2\2\2\6\b\5\4\3\2\7\6\3\2\2\2\b\t\3\2\2\2\t\7\3"+
-		"\2\2\2\t\n\3\2\2\2\n\3\3\2\2\2\13\17\7\4\2\2\f\r\7\4\2\2\r\17\7\3\2\2"+
-		"\16\13\3\2\2\2\16\f\3\2\2\2\17\5\3\2\2\2\4\t\16";
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\5\25\4\2\t\2\4\3"+
+		"\t\3\4\4\t\4\3\2\6\2\n\n\2\r\2\16\2\13\3\2\3\2\3\3\3\3\3\3\3\4\3\4\3\4"+
+		"\2\2\5\2\4\6\2\2\22\2\t\3\2\2\2\4\17\3\2\2\2\6\22\3\2\2\2\b\n\5\4\3\2"+
+		"\t\b\3\2\2\2\n\13\3\2\2\2\13\t\3\2\2\2\13\f\3\2\2\2\f\r\3\2\2\2\r\16\5"+
+		"\6\4\2\16\3\3\2\2\2\17\20\7\4\2\2\20\21\7\3\2\2\21\5\3\2\2\2\22\23\7\4"+
+		"\2\2\23\7\3\2\2\2\3\13";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

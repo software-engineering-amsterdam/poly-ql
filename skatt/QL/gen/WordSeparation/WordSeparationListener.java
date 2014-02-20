@@ -31,4 +31,15 @@ public interface WordSeparationListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitPart(@NotNull WordSeparationParser.PartContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link WordSeparationParser#end}.
+	 * @param ctx the parse tree
+	 */
+	void enterEnd(@NotNull WordSeparationParser.EndContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link WordSeparationParser#end}.
+	 * @param ctx the parse tree
+	 */
+	void exitEnd(@NotNull WordSeparationParser.EndContext ctx);
 }
