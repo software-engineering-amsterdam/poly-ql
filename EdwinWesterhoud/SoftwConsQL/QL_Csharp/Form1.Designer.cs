@@ -45,6 +45,7 @@
             // textBoxSource
             // 
             this.textBoxSource.AcceptsReturn = true;
+            this.textBoxSource.AcceptsTab = true;
             this.textBoxSource.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textBoxSource.Font = new System.Drawing.Font("Lucida Console", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxSource.Location = new System.Drawing.Point(3, 16);
@@ -52,6 +53,7 @@
             this.textBoxSource.Name = "textBoxSource";
             this.textBoxSource.Size = new System.Drawing.Size(665, 218);
             this.textBoxSource.TabIndex = 0;
+            this.textBoxSource.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxSource_KeyDown);
             // 
             // splitContainer1
             // 

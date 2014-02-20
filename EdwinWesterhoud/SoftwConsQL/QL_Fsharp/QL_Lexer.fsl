@@ -45,7 +45,7 @@ let int         = '-'?digit+
 let float       = '-'?digit+ '.' digit+
 let identifier  = char(char|digit|['-' '_' '.'])*
 let whitespace  = [' ' '\t']
-let newline     = "\n\r" | '\n' | '\r'
+let newline     = "\n\r" | "\r\n" | '\n' | '\r'
 let symbol      = ">" | ">=" | "<" | "<=" | "==" | "!=" | "&&" | "||" | "!" // Boolean
                 | "+" | "-" | "*" | "/"                                     // Arithmetic
                 | "{" | "}" | "(" | ")" | ":"                               // Structural
