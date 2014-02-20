@@ -12,6 +12,4 @@ public abstract class Rule {
         return mParent;
     }
 
-    public abstract Question getQuestion(String id);
-
 }

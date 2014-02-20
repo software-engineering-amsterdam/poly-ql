@@ -3,7 +3,8 @@ form exampleForm {
     truth2: "Is it still true?" boolean
     if (truth || (2 + 6 * 3 * 9 - 4 - (4 + 5)) > 2) {
     	wonga: "How much is it worth?" number
-	    if (truth2 == truth) {
+    	morethandoublewonga: "WHY THAT'S ALMOST DOUBLE!" number(wonga * 2 + 1)
+	    if (wonga > 4) {
 	    	wonga2: "What's the price of pie?" number
 	    }
     }

@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import nl.uva.polyql.model.expressions.Expression;
+
 public abstract class RuleContainer extends Rule {
 
     private final List<Rule> mRules = new ArrayList<>();
@@ -21,8 +23,15 @@ public abstract class RuleContainer extends Rule {
         return question;
     }
 
-    public IfStatement addIfStatement() {
-        final IfStatement child = new IfStatement(this);
+    public Field addField(final String id, final String content, final String type, final Expression expression) {
+        final Field field = new Field(this, id, content, type, expression);
+        mQuestions.put(id, field);
+        mRules.add(field);
+        return field;
+    }
+
+    public IfStatement addIfStatement(final Expression expression) {
+        final IfStatement child = new IfStatement(this, expression);
         mRules.add(child);
         return child;
     }
@@ -31,7 +40,6 @@ public abstract class RuleContainer extends Rule {
         return mRules;
     }
 
-    @Override
     public Question getQuestion(final String id) {
         if (mQuestions.containsKey(id)) {
             return mQuestions.get(id);

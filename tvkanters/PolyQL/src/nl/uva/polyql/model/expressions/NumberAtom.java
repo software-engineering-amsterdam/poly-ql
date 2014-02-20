@@ -1,15 +1,16 @@
 package nl.uva.polyql.model.expressions;
 
-import nl.uva.polyql.model.Rule;
+import java.util.HashSet;
+import java.util.Set;
+
+import nl.uva.polyql.model.Question;
 import nl.uva.polyql.model.Type;
 
 public class NumberAtom extends Expression {
 
     private final double mValue;
 
-    public NumberAtom(final Rule parentRule, final String value) {
-        super(parentRule);
-
+    public NumberAtom(final String value) {
         mValue = Double.parseDouble(value);
     }
 
@@ -19,13 +20,18 @@ public class NumberAtom extends Expression {
     }
 
     @Override
-    protected Double getValue() {
+    public Double getValue() {
         return mValue;
     }
 
     @Override
     public String toString() {
         return getValue().toString();
+    }
+    
+    @Override
+    public Set<Question> getReferencedQuestions() {
+        return new HashSet<>();
     }
 
 }

@@ -2,16 +2,28 @@ package nl.uva.polyql.model;
 
 import nl.uva.polyql.model.expressions.Expression;
 
-public class IfStatement extends RuleContainer {
+public class IfStatement extends RuleContainer implements QuestionUpdatedListener {
 
-    private Expression mExpression;
+    private final Expression mExpression;
 
-    protected IfStatement(final RuleContainer parent) {
+    protected IfStatement(final RuleContainer parent, final Expression expression) {
         super(parent);
+
+        mExpression = expression;
+
+        for (final Question question : mExpression.getReferencedQuestions()) {
+            question.addUpdateListener(this);
+        }
     }
 
-    public void setExpression(final Expression expression) {
-        mExpression = expression;
+    @Override
+    public void onQuestionUpdate(Question question) {
+        // TODO: Update visibility of the statement
+    }
+    
+    @Override
+    public String toString() {
+        return "IF " + mExpression;
     }
 
 }

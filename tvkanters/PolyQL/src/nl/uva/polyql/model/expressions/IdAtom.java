@@ -1,7 +1,10 @@
 package nl.uva.polyql.model.expressions;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import nl.uva.polyql.model.Question;
-import nl.uva.polyql.model.Rule;
+import nl.uva.polyql.model.RuleContainer;
 import nl.uva.polyql.model.Type;
 
 public class IdAtom extends Expression {
@@ -9,12 +12,10 @@ public class IdAtom extends Expression {
     private Question mQuestion;
     private final String mId;
 
-    public IdAtom(final Rule parentRule, final String id, final String modifier) {
-        super(parentRule);
-        
+    public IdAtom(final RuleContainer parentRuleContainer, final String id, final String modifier) {
         mId = id;
 
-        mQuestion = parentRule.getQuestion(mId);
+        mQuestion = parentRuleContainer.getQuestion(mId);
         if (mQuestion == null) {
             throw new RuntimeException("Unknown question ID " + mId);
         }
@@ -26,17 +27,19 @@ public class IdAtom extends Expression {
     }
 
     @Override
-    protected Object getValue() {
+    public Object getValue() {
         return mQuestion.getValue();
     }
 
     @Override
     public String toString() {
-        return "QVAL";
+        return mQuestion.toString();
     }
 
-    private enum Modifier {
-        INVERSE,
-        NEGATIVE;
+    @Override
+    public Set<Question> getReferencedQuestions() {
+        final Set<Question> questions = new HashSet<>();
+        questions.add(mQuestion);
+        return questions;
     }
 }

@@ -1,19 +1,15 @@
 package nl.uva.polyql.model.expressions;
 
-import nl.uva.polyql.model.Rule;
+import java.util.Set;
+
+import nl.uva.polyql.model.Question;
 import nl.uva.polyql.model.Type;
 
 public abstract class Expression {
 
-    private final Rule mParentRule;
-
-    public Expression(final Rule parentRule) {
-        mParentRule = parentRule;
-    }
-
     public abstract Type getReturnType();
 
-    protected abstract Object getValue();
+    public abstract Object getValue();
 
     public boolean getBooleanValue() {
         return (Boolean) getValue();
@@ -23,7 +19,5 @@ public abstract class Expression {
         return (Double) getValue();
     }
 
-    public Rule getParent() {
-        return mParentRule;
-    }
+    public abstract Set<Question> getReferencedQuestions();
 }
