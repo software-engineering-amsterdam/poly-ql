@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 import nl.uva.sc.parser.BookParser;
-import nl.uva.sc.parser.subscriber.TermFrequency;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -52,14 +51,11 @@ public class TestTF {
 
     @Test
     public void test() {
-
-        TermFrequency index = new TermFrequency();
-        BookParser bParser = new BookParser(new File(BOOK_FILENAME));
-        bParser.subscribe(index);
+        BookParser bParser = new BookParser();
 
         List<Map.Entry<String, Integer>> result = null;
         try {
-            result = bParser.parse();
+            result = bParser.parse(new File(BOOK_FILENAME));
         } catch (IOException e) {
             fail("The book parser could not parse the given file \"" + BOOK_FILENAME + "\"");
         }

@@ -17,25 +17,8 @@ import java.util.Map;
 import nl.uva.sc.datatypes.Deeper;
 import nl.uva.sc.datatypes.Recursive;
 import nl.uva.sc.datatypes.Stop;
-import nl.uva.sc.parser.subscriber.BookParserSubscriber;
-import nl.uva.sc.parser.subscriber.ParserSubscribers;
-import nl.uva.sc.test.Word;
 
 public class BookParser {
-
-    private final File mBookFile;
-
-    private final ParserSubscribers mSubscribers = new ParserSubscribers();
-
-    /**
-     * Create a book parser
-     * 
-     * @param bookFile
-     *            The book to parse
-     */
-    public BookParser(final File bookFile) {
-        mBookFile = bookFile;
-    }
 
     /**
      * Starts the parser with standard UTF-8 encoding
@@ -43,8 +26,8 @@ public class BookParser {
      * @throws IOException
      *             If the file is invalid or it cannot be parsed with UTF-8 encoding
      */
-    public List<Map.Entry<String, Integer>> parse() throws IOException {
-        return parse(Charset.forName("UTF-8"));
+    public List<Map.Entry<String, Integer>> parse(final File bookFile) throws IOException {
+        return parse(Charset.forName("UTF-8"), bookFile);
     }
 
     /**
@@ -53,9 +36,10 @@ public class BookParser {
      * @throws IOException
      *             If the file is invalid or it cannot be parsed given the character encoding
      */
-    public List<Map.Entry<String, Integer>> parse(final Charset encoding) throws IOException {
+    public List<Map.Entry<String, Integer>> parse(final Charset encoding, final File bookFile)
+            throws IOException {
         return generateWordList(new ArrayList<>(Arrays.asList(encoding
-                .decode(ByteBuffer.wrap(Files.readAllBytes(mBookFile.toPath()))).toString()
+                .decode(ByteBuffer.wrap(Files.readAllBytes(bookFile.toPath()))).toString()
                 .toLowerCase().replaceAll("[^a-zA-Z\\s]", " ").replaceAll("\\s+", " ").split(" "))));
     }
 
@@ -87,59 +71,4 @@ public class BookParser {
         return recList.get(0)
                 .doSomeThing(recList, uniqueWords, uniqueWords.next(), allWords, index);
     }
-
-    /**
-     * Parse a whole line
-     * 
-     * @param line
-     *            The line to get parsed
-     */
-    private void handleLine(final List<Word> line) {
-        for (Word word : line) {
-            handleWord(word);
-        }
-    }
-
-    /**
-     * Parse a word
-     * 
-     * @param word
-     *            The word to get parsed
-     */
-    private void handleWord(final Word word) {
-        if (!word.isEmpty()) {
-            notifyListener(word);
-        }
-
-    }
-
-    /**
-     * Notify all listeners about the last parsed word
-     * 
-     * @param word
-     */
-    private void notifyListener(final Word word) {
-        mSubscribers.notifyListener(word);
-    }
-
-    /**
-     * Subscribe to the word listener list
-     * 
-     * @param subscriber
-     * @return True if successful subscribed
-     */
-    public boolean subscribe(final BookParserSubscriber subscriber) {
-        return mSubscribers.subscribe(subscriber);
-    }
-
-    /**
-     * Unsubscribe the given subscriber from the listener list
-     * 
-     * @param subscriber
-     * @return True if successful unsubscribed
-     */
-    public boolean unsubscribe(final BookParserSubscriber subscriber) {
-        return mSubscribers.unsubscribe(subscriber);
-    }
-
 }
