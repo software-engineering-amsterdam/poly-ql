@@ -5,7 +5,7 @@ options {backtrack=false; memoize=true;}
 {
 package org.uva.sea.ql.parser.antlr;
 import org.uva.sea.ql.ast.expr.*;
-import org.uva.sea.ql.ast.stat.*;
+import org.uva.sea.ql.ast.stmt.*;
 import org.uva.sea.ql.ast.form.*;
 }
 
@@ -96,25 +96,25 @@ type returns [Expr result]
     | 'string' {$result = new Str(""); }
     | 'integer' {$result = new Int(0); }
 //    | 'date'
-    | 'decimal' {$result = new Decimal(Float.parseFloat("0,00")); }
-    | 'money' {$result = new Money(Float.parseFloat("0,00")); }
+    | 'decimal' {$result = new Decimal(Float.parseFloat("0")); }
+    | 'money' {$result = new Money(Float.parseFloat("0.00")); }
     ;
     
-statement returns [Statement result]
+stmt returns [Stmt result]
     : conditionalQestion { $result = $conditionalQestion.result; }
     | computedQuestion { $result = $computedQuestion.result; }
     | answerableQuestion { $result = $answerableQuestion.result; }
     ;
     
-answerableQuestion returns [Statement result]
+answerableQuestion returns [Stmt result]
     : Ident ':' Str type { $result = new AnswerableQuestion(new Ident($Ident.text), $Str.text, $type.result); }
     ;
 
-computedQuestion returns [Statement result]
-    : Ident ':' Str type '(' addExpr ')' { $result = new ComputedQuestion(new Ident($Ident.text), $Str.text, $type.result, $addExpr.result); }
+computedQuestion returns [Stmt result]
+    : Ident ':' Str type '(' computation = orExpr ')' { $result = new ComputedQuestion(new Ident($Ident.text), $Str.text, $type.result, $computation.result); }
     ;
     
-conditionalQestion returns [Statement result]
+conditionalQestion returns [Stmt result]
     : 'if' '(' condition=orExpr ')' '{' block '}' { $result = new ConditionalQuestion($orExpr.result, $block.result); }
     ;
     
@@ -123,7 +123,7 @@ block returns [Block result]
     {
       $result = new Block();
     }
-    : (statement { $result.addStmt($statement.result); })*
+    : (stmt { $result.addStmt($stmt.result); })*
     ;
     
 form returns [Form result]
