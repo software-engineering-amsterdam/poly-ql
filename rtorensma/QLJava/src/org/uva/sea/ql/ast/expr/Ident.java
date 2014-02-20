@@ -30,4 +30,22 @@ public class Ident extends Expr {
 	     }
 	     return new org.uva.sea.ql.ast.types.Undefined();
 	}
+	
+	@Override
+	public int hashCode() {
+		return name.hashCode();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof Ident)) {
+			return false;
+		}
+		return name.equals(((Ident)obj).name);
+	}
+	
+	@Override
+	public String toString() {
+		return this.name;
+	}
 }

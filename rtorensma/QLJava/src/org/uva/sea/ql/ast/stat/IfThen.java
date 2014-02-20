@@ -1,6 +1,7 @@
 package org.uva.sea.ql.ast.stat;
 
 import org.uva.sea.ql.ast.expr.Expr;
+import org.uva.sea.ql.checker.FormVisitor;
 
 public class IfThen extends Stat {
 	private final Expr cond;
@@ -17,5 +18,10 @@ public class IfThen extends Stat {
 	
 	public Stat getBody() {
 		return body;
+	}
+	
+	@Override
+	public <T> T accept(FormVisitor<T> visitor) {
+		return visitor.visit(this);
 	}
 }

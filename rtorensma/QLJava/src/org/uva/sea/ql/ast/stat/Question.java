@@ -2,6 +2,7 @@ package org.uva.sea.ql.ast.stat;
 
 import org.uva.sea.ql.ast.expr.Ident;
 import org.uva.sea.ql.ast.types.Type;
+import org.uva.sea.ql.checker.FormVisitor;
 
 public class Question extends Stat {
 	private final Ident name;
@@ -24,5 +25,10 @@ public class Question extends Stat {
 	
 	public Type getType() {
 		return type;
+	}
+	
+	@Override
+	public <T> T accept(FormVisitor<T> visitor) {
+		return visitor.visit(this);
 	}
 }

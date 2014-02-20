@@ -3,6 +3,7 @@ package org.uva.sea.ql.ast.form;
 import org.uva.sea.ql.ast.ASTNode;
 import org.uva.sea.ql.ast.expr.Ident;
 import org.uva.sea.ql.ast.stat.Block;
+import org.uva.sea.ql.checker.FormVisitor;
 
 public class Form implements ASTNode {
 
@@ -14,6 +15,10 @@ public class Form implements ASTNode {
 		this.body = body;
 	}
 	
+	public <T> T accept(FormVisitor<T> visitor) {
+		return visitor.visit(this);
+	}
+	
 	public Block getBody() {
 		return body;
 	}
@@ -21,5 +26,4 @@ public class Form implements ASTNode {
 	public Ident getName() {
 		return name;
 	}
-
 }
