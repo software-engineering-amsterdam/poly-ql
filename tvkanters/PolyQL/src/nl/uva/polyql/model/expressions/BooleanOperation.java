@@ -2,7 +2,7 @@ package nl.uva.polyql.model.expressions;
 
 import nl.uva.polyql.model.Type;
 import nl.uva.polyql.model.expressions.operators.Operator;
-import nl.uva.polyql.model.expressions.operators.OperatorManager;
+import nl.uva.polyql.model.expressions.operators.OperatorHelper;
 
 public class BooleanOperation extends Operation<Boolean> {
 
@@ -17,6 +17,6 @@ public class BooleanOperation extends Operation<Boolean> {
 
     @Override
     protected Operator<Boolean> getOperator(final String operator) {
-        return OperatorManager.getBooleanOperator(operator);
+        return OperatorHelper.getBooleanOperator(operator);
     }
 }

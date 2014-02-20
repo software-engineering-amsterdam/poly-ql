@@ -3,7 +3,7 @@ package nl.uva.polyql.model.expressions.operators;
 import nl.uva.polyql.model.expressions.operators.bool.*;
 import nl.uva.polyql.model.expressions.operators.number.*;
 
-public class OperatorManager {
+public class OperatorHelper {
 
     private final static OperatorMap<Boolean> sBooleanSyntaxMap = new OperatorMap<>();
     private final static OperatorMap<Double> sNumberSyntaxMap = new OperatorMap<>();

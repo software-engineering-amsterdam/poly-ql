@@ -1,13 +1,17 @@
 package nl.uva.polyql.model.expressions.operators.number;
 
-import nl.uva.polyql.model.Type;
 import nl.uva.polyql.model.expressions.operators.Operator;
-import nl.uva.polyql.model.expressions.operators.UnsupportedOperandTypeException;
 
 public abstract class NumberOperator extends Operator<Double> {
 
     @Override
-    protected Double performOperation(boolean left, boolean right) {
-        throw new UnsupportedOperandTypeException(Type.BOOLEAN);
+    protected Double performOperation(final Object left, final Object right) {
+        if (left instanceof Double) {
+            return performOperation((double) left, (double) right);
+        }
+
+        throw new RuntimeException("Invalid operand value " + left.getClass().getName());
     }
+
+    protected abstract Double performOperation(final double left, final double right);
 }

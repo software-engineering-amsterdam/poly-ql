@@ -4,7 +4,7 @@ import nl.uva.polyql.model.Type;
 
 public class OperationHelper {
 
-    public static Operation<?> getOperationForOperands(final Expression left, final String operator,
+    public static Operation<?> getSameTypeOperation(final Expression left, final String operator,
             final Expression right) {
         final Type type = getOperandType(left, right);
         switch (type) {

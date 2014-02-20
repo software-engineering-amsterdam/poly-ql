@@ -2,7 +2,7 @@ package nl.uva.polyql.model.expressions;
 
 import nl.uva.polyql.model.Type;
 import nl.uva.polyql.model.expressions.operators.Operator;
-import nl.uva.polyql.model.expressions.operators.OperatorManager;
+import nl.uva.polyql.model.expressions.operators.OperatorHelper;
 
 public class NumberOperation extends Operation<Double> {
 
@@ -17,7 +17,7 @@ public class NumberOperation extends Operation<Double> {
 
     @Override
     protected Operator<Double> getOperator(final String operator) {
-        return OperatorManager.getNumberOperator(operator);
+        return OperatorHelper.getNumberOperator(operator);
     }
 
 }
