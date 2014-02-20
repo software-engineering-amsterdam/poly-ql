@@ -1,17 +1,23 @@
 package nl.uva.polyql.model.expressions;
 
 import nl.uva.polyql.model.Question;
+import nl.uva.polyql.model.Rule;
 import nl.uva.polyql.model.Type;
 
 public class IdAtom extends Expression {
 
-    private final Question mQuestion;
+    private Question mQuestion;
+    private final String mId;
 
-    public IdAtom(final String id) {
-        mQuestion = new Question();
-        mQuestion.setId(id);
-        mQuestion.setContent("foo");
-        mQuestion.setType(Type.BOOLEAN);
+    public IdAtom(final Rule parentRule, final String id, final String modifier) {
+        super(parentRule);
+        
+        mId = id;
+
+        mQuestion = parentRule.getQuestion(mId);
+        if (mQuestion == null) {
+            throw new RuntimeException("Unknown question ID " + mId);
+        }
     }
 
     @Override
@@ -27,5 +33,10 @@ public class IdAtom extends Expression {
     @Override
     public String toString() {
         return "QVAL";
+    }
+
+    private enum Modifier {
+        INVERSE,
+        NEGATIVE;
     }
 }

@@ -1,11 +1,17 @@
 package nl.uva.polyql.model;
 
-public interface Rule {
+public abstract class Rule {
 
-    /**
-     * Retrieves the ID of the rule if it's available.
-     * 
-     * @return The rule's ID or null if it doesn't have any
-     */
-    public String getId();
+    private final RuleContainer mParent;
+
+    protected Rule(final RuleContainer parent) {
+        mParent = parent;
+    }
+
+    public RuleContainer getParent() {
+        return mParent;
+    }
+
+    public abstract Question getQuestion(String id);
+
 }

@@ -1,31 +1,17 @@
 package nl.uva.polyql.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import nl.uva.polyql.model.expressions.Expression;
 
-public class IfStatement implements Rule {
+public class IfStatement extends RuleContainer {
 
-    public Expression mExpression;
+    private Expression mExpression;
 
-    public List<Rule> mRules = new ArrayList<>();
+    protected IfStatement(final RuleContainer parent) {
+        super(parent);
+    }
 
     public void setExpression(final Expression expression) {
-
-    }
-
-    public void addRule(final Rule rule) {
-        mRules.add(rule);
-    }
-
-    public List<Rule> getRules() {
-        return mRules;
-    }
-    
-    @Override
-    public String getId() {
-        return null;
+        mExpression = expression;
     }
 
 }

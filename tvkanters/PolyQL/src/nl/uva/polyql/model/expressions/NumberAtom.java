@@ -1,16 +1,15 @@
 package nl.uva.polyql.model.expressions;
 
+import nl.uva.polyql.model.Rule;
 import nl.uva.polyql.model.Type;
 
 public class NumberAtom extends Expression {
 
     private final double mValue;
 
-    public NumberAtom(final double value) {
-        mValue = value;
-    }
+    public NumberAtom(final Rule parentRule, final String value) {
+        super(parentRule);
 
-    public NumberAtom(final String value) {
         mValue = Double.parseDouble(value);
     }
 

@@ -1,39 +1,41 @@
 package nl.uva.polyql.model;
 
-public class Question implements Rule {
+public class Question extends Rule {
 
-    public String mId;
-    public String mContent;
-    public Type mType;
+    private final String mId;
+    private final String mContent;
+    private final Type mType;
 
-    @Override
-    public String getId() {
-        return mId;
+    protected Question(final RuleContainer parent, final String id, final String content, final String type) {
+        super(parent);
+
+        if (parent.getQuestion(id) != null) {
+            throw new RuntimeException("Duplicate rule ID");
+        }
+
+        mId = id;
+        mContent = content;
+        mType = Type.valueOf(type.toUpperCase());
     }
 
-    public void setId(final String name) {
-        mId = name;
+    /**
+     * Retrieves the ID of the rule.
+     * 
+     * @return The rule's ID
+     */
+    public String getId() {
+        return mId;
     }
 
     public String getContent() {
         return mContent;
     }
 
-    public void setContent(final String content) {
-        mContent = content;
-    }
-
     public Type getType() {
         return mType;
     }
 
-    public void setType(final Type type) {
-        mType = type;
-    }
-
-    public void setType(final String type) {
-        setType(Type.valueOf(type.toUpperCase()));
-    }
+    public void setType(final String type) {}
 
     public Object getValue() {
         return null;
@@ -42,6 +44,11 @@ public class Question implements Rule {
     @Override
     public String toString() {
         return mId + ": " + mContent + " " + mType;
+    }
+
+    @Override
+    public Question getQuestion(final String id) {
+        return getParent().getQuestion(id);
     }
 
 }
