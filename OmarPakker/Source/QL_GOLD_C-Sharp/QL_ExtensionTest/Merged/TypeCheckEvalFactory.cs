@@ -8,7 +8,8 @@ using QL_Grammar.QLTypeCheck.Stmnt;
 
 namespace QL_ExtensionTest.Merged
 {
-    public class TypeCheckEvalFactory : QLExtensionsFactoryCombination<ITypeCheckExpr, ITypeCheckStmnt, IEvalExpr, IEvalStmnt, QLTypeCheckExtensionsFactory, QLEvalFactory>
+    public class TypeCheckEvalFactory
+		: QLExtensionsFactoryCombination<ITypeCheckExpr, ITypeCheckStmnt, IEvalExpr, IEvalStmnt, QLTypeCheckExtensionsFactory, QLEvalFactory>
     {
         public TypeCheckEvalFactory()
             : base(new QLTypeCheckExtensionsFactory(), new QLEvalFactory())

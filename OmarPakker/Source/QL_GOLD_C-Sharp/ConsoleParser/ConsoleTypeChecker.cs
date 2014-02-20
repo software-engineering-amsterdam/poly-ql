@@ -42,7 +42,7 @@ namespace ConsoleParser
 				object data = r.get_Data(i);
 				if (data != null)
 				{
-					dataOutput += data.ToString();
+					dataOutput += data;
 				}
 			}
 
@@ -57,46 +57,53 @@ namespace ConsoleParser
         private void OnCompletion(object root)
         {
             TypeCheckData data = new TypeCheckData();
-            ((ITypeCheckStmnt)root).TypeCheck(data);
-            data.VerifyForms();
+			data.OnTypeCheckError += (msg, error) =>
+			{
+				Console.ForegroundColor = error ? ConsoleColor.Red : ConsoleColor.Yellow;
+				Console.WriteLine(msg);
+				Console.ResetColor();
+			};
 
-            if (data.HasErrors)
-            {
-                foreach (Tuple<string, bool> error in data.Errors)
-                {
-                    Console.ForegroundColor = error.Item2 ? ConsoleColor.Red : ConsoleColor.Yellow;
-                    Console.WriteLine(error.Item1);
-                    Console.ResetColor();
-                }
-            }
+			((ITypeCheckStmnt)root).TypeCheck(data);
+			data.VerifyTopDownDependencies();
 
             Console.WriteLine("PARSING COMPLETED!");
         }
 
 		private void OnGroupError()
 		{
+			Console.ForegroundColor = ConsoleColor.Red;
 			Console.WriteLine("ERROR: Unexpected EOF. (Group Error)");
+			Console.ResetColor();
 		}
 
-        private void OnInternalError()
+		private void OnInternalError()
 		{
+			Console.ForegroundColor = ConsoleColor.Red;
 			Console.WriteLine("ERROR: INTERNAL ERROR");
+			Console.ResetColor();
 		}
 
-        private void OnNotLoadedError()
+		private void OnNotLoadedError()
 		{
+			Console.ForegroundColor = ConsoleColor.Red;
 			Console.WriteLine("ERROR: Grammar file was not loaded");
+			Console.ResetColor();
 		}
 
-        private void OnLexicalError(int line, int column, object token)
+		private void OnLexicalError(int line, int column, object token)
 		{
+			Console.ForegroundColor = ConsoleColor.Red;
 			Console.WriteLine(String.Format("ERROR: Unknown token '{0}' found on line {1} column {2}", token, line, column));
+			Console.ResetColor();
 		}
 
-        private void OnSyntaxError(int line, int column, object token, string expected)
+		private void OnSyntaxError(int line, int column, object token, string expected)
 		{
+			Console.ForegroundColor = ConsoleColor.Red;
 			Console.WriteLine(String.Format("ERROR: Unexpected token '{0}' on line {1} column {2}. Expected: {3}",
 				token, line, column, expected));
+			Console.ResetColor();
 		}
 	}
 }

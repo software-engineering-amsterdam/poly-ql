@@ -2,10 +2,11 @@
 
 namespace QL_Grammar.Algebra.Type
 {
-    public interface IType
-    {
-        IValue DefaultValue { get; }
+	public interface IType
+	{
+		IValue DefaultValue { get; }
 
-        bool CompatibleWith(IType other);
-    }
+		IType GetLeastUpperBound(IType other);
+		bool CompatibleWith(IType other);
+	}
 }

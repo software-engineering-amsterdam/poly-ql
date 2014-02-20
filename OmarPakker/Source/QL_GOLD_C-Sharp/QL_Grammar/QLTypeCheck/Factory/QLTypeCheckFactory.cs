@@ -1,19 +1,40 @@
 ﻿using QL_Grammar.Algebra.Type;
 using QL_Grammar.Algebra.Value;
 using QL_Grammar.QLAlgebra.Factory;
+using QL_Grammar.QLAlgebra.Type;
 using QL_Grammar.QLAlgebra.Value;
 using QL_Grammar.QLTypeCheck.Expr;
 using QL_Grammar.QLTypeCheck.Stmnt;
 
 namespace QL_Grammar.QLTypeCheck.Factory
 {
-	public class QLTypeCheckFactory : IQLStmntFactory<ITypeCheckExpr, ITypeCheckStmnt>
+	public class QLTypeCheckFactory : IQLFactory<ITypeCheckExpr, ITypeCheckStmnt>
     {
         public QLTypeCheckFactory()
             : base()
         {
 
         }
+
+		public IType StringType()
+		{
+			return new StringType();
+		}
+
+		public IType IntType()
+		{
+			return new IntType();
+		}
+
+		public IType RealType()
+		{
+			return new RealType();
+		}
+
+		public IType BoolType()
+		{
+			return new BoolType();
+		}
 
 		public ITypeCheckExpr String(string s)
 		{
@@ -154,5 +175,5 @@ namespace QL_Grammar.QLTypeCheck.Factory
         {
             return new IfElseStmnt(toEval, ifTrue, ifFalse);
         }
-    }
+	}
 }

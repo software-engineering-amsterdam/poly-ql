@@ -14,7 +14,6 @@ namespace QL_Grammar.QLTypeCheck.Stmnt
         public void TypeCheck(TypeCheckData data)
         {
             data.Forms.Add(Name);
-
             data.Variables.Clear();
 
             Body.TypeCheck(data);

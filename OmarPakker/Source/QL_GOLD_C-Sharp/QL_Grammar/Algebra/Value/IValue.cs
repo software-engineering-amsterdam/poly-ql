@@ -4,7 +4,8 @@ namespace QL_Grammar.Algebra.Value
 {
 	public interface IValue
 	{
+		IType Type { get; }
+
 		object Value { get; }
-        IType Type { get; }
 	}
 }

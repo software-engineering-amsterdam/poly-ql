@@ -22,7 +22,9 @@ StringLit = '"' ( {String Chars} | '\' {Printable} )* '"'
 IntLit    = {Digit}+
 RealLit   = {Digit}*'.'{Digit}+
 BoolLit   = 'true' | 'false'
-!DateLit   = (19|20)[0..9][0..9][- /.](0[1..9]|1[012])[- /.](0[1..9]|[12][0..9]|3[01])
+!2014-02-20T08:32:08+00:00
+!2014-02-20T08:32:08Z
+DateLit   = {Digit}{Digit}{Digit}{Digit}'-'[01]{Digit}'-'[0123]{Digit}'T'[012]{Digit}':'[012345]{Digit}':'[012345]{Digit}([+-][012]{Digit}':'[012345]{Digit}|'Z')
 
 Comment Line = '//'
 Comment Start = '/*'
@@ -35,7 +37,7 @@ Comment End   = '*/'
                |  int
                |  real
                |  bool
-               !|  date
+               |  date
 
 ! -------------------------------------------------
 ! Rules
@@ -113,4 +115,4 @@ Comment End   = '*/'
                |  IntLit
                |  RealLit
                |  BoolLit
-               !|  DateLit
+               |  DateLit
