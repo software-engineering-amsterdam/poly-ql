@@ -7,7 +7,7 @@ import java.util.Map.Entry;
 public class PrinterStop implements RecursivePrinter {
 
     @Override
-    public void doSomeThing(final List<RecursivePrinter> r,
+    public void print(final List<RecursivePrinter> r,
             final Entry<String, Integer> currentEntry,
             final Iterator<Entry<String, Integer>> iterator) {
 

@@ -19,7 +19,7 @@ public class TestTF {
     public static final String DESIRED_OUTPUT = "mr - 786\nelizabeth - 635\nvery - 488\ndarcy - 418\nsuch - 395\nmrs - 343\nmuch - 329\nmore - 327\nbennet - 323\nbingley - 306\njane - 295\nmiss - 283\none - 275\nknow - 239\nbefore - 229\nherself - 227\nthough - 226\nwell - 224\nnever - 220\nsister - 218\nsoon - 216\nthink - 211\nnow - 209\ntime - 203\ngood - 201\n";
 
     @Test
-    public void test() {
+    public void testOutput() {
         ByteArrayOutputStream bOutput = new ByteArrayOutputStream();
         System.setOut(new PrintStream(bOutput));
 

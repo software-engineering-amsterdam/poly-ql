@@ -6,6 +6,6 @@ import java.util.Map;
 
 public interface RecursiveIndexGenerator {
 
-    public void doSomeThing(List<RecursiveIndexGenerator> r, Iterator<String> wordIterator,
+    public void generateIndex(List<RecursiveIndexGenerator> r, Iterator<String> wordIterator,
             final String currentWord, List<String> allWords, Map<String, Integer> index);
 }

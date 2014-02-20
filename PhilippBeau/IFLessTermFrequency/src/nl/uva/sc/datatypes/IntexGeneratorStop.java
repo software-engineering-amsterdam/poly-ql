@@ -11,7 +11,7 @@ import java.util.Map.Entry;
 public class IntexGeneratorStop implements RecursiveIndexGenerator {
 
     @Override
-    public void doSomeThing(final List<RecursiveIndexGenerator> r,
+    public void generateIndex(final List<RecursiveIndexGenerator> r,
             final Iterator<String> wordIterator, final String currentWord,
             final List<String> allWords, final Map<String, Integer> index) {
 
@@ -36,6 +36,6 @@ public class IntexGeneratorStop implements RecursiveIndexGenerator {
             final Iterator<Map.Entry<String, Integer>> iterator) {
 
         recList.add(new PrinterStop());
-        recList.remove(0).doSomeThing(recList, iterator.next(), iterator);
+        recList.remove(0).print(recList, iterator.next(), iterator);
     }
 }
