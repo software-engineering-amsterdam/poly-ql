@@ -5,6 +5,7 @@
   words, ordered by decreasing frequency
 */
 
+
 /**
   Dependencies
 */
@@ -24,23 +25,24 @@ var amount   = argv['c'] || argv['count'] || 25;
 // Get stop words to skip
 var skipwords = stopwords.get(language);
 
+
+function textToWords(text) {
+  
+  return text
+    .toLowerCase()                        // From buffer to lowercase string
+    .replace(/[\t\r\n\,\.\!\'\"]/g, '')   // Remove non letter characters
+    .split(' ');                          // Split to get words from line
+
+}
+
 function getTerms(err, text) {
 
-  var terms = [];
-
-  // Error occures while reading the file
+  // If an error occures while reading the file
   if (err)
     throw err;
   
-  // From buffer to lowercase string
-  text = text.toLowerCase();
-
-  // Remove non letter characters
-  // TODO Find a better way to replace all characters, but keep accented  letters
-  text = text.replace(/[\t\r\n\,\.\!\'\"]/g, '');
-
-  // Split to get words from line
-  words = text.split(' ');
+  var terms = [];
+  var words = textToWords(text);
 
   for (i in words) {
     // Skip empty lines
