@@ -49,6 +49,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="ExtensionsTest.cs" />
     <Compile Include="ParseTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -56,6 +57,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\QL_ExtensionTest\QL_ExtensionTest.csproj">
+      <Project>{5cf4b5c1-853c-487f-9572-7f9a32447adf}</Project>
+      <Name>QL_ExtensionTest</Name>
+    </ProjectReference>
     <ProjectReference Include="..\QL_Grammar\QL_Grammar.csproj">
       <Project>{adef29ed-b350-451a-a0c7-5e7ae04609a5}</Project>
       <Name>QL_Grammar</Name>

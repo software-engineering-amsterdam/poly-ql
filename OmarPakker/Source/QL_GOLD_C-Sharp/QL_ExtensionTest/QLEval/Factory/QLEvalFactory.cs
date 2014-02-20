@@ -23,7 +23,8 @@ namespace QL_ExtensionTest.QLEval.Factory
 			return new DateType();
 		}
 
-		//TODO See if we can change this so you don't have to cover for types that stay the same
+		//TODO: See if we can change this so you don't have to cover for types that stay the same
+        //Probably need to seperate types into its own factory to be able to do this.
 		#region Type duplication
 		public IType StringType()
 		{
