@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class Stop implements Recursive {
+public class IntexGeneratorStop implements Recursive {
 
     @Override
     public List<Map.Entry<String, Integer>> doSomeThing(final List<Recursive> r,

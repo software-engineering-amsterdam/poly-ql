@@ -14,9 +14,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import nl.uva.sc.datatypes.Deeper;
+import nl.uva.sc.datatypes.IndexGenerator;
 import nl.uva.sc.datatypes.Recursive;
-import nl.uva.sc.datatypes.Stop;
+import nl.uva.sc.datatypes.IntexGeneratorStop;
 
 public class BookParser {
 
@@ -60,7 +60,7 @@ public class BookParser {
 
         return further(
                 new ArrayList<Recursive>(Collections.nCopies(new HashSet<>(lineArray).size() - 2,
-                        new Deeper())), new HashSet<>(lineArray).iterator(), lineArray,
+                        new IndexGenerator())), new HashSet<>(lineArray).iterator(), lineArray,
                 new HashMap<String, Integer>());
     }
 
@@ -68,7 +68,7 @@ public class BookParser {
             final Iterator<String> uniqueWords, final List<String> allWords,
             final Map<String, Integer> index) {
 
-        recList.add(new Stop());
+        recList.add(new IntexGeneratorStop());
         return recList.get(0)
                 .doSomeThing(recList, uniqueWords, uniqueWords.next(), allWords, index);
     }

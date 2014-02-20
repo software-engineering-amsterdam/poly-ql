@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-public class Deeper implements Recursive {
+public class IndexGenerator implements Recursive {
 
     @Override
     public List<Map.Entry<String, Integer>> doSomeThing(final List<Recursive> r,
