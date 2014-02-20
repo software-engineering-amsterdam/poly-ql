@@ -13,6 +13,8 @@ public class TestForm extends TestParser {
 		 
 		assertEquals(parser.parser("form fName { "
 				+ "hasName : \"label\" money }").getClass(),Form.class);
+		//assertEquals(parser.parser("form fName { "
+		//		+ "hasName : \"label\" boolean (true && false)}").getClass(),Form.class);
 		assertEquals(parser.parser("form fName { "
 				+ "hasName : \"label\" money "
 				+ "if(BLA){hasName : \"label\" money} }").getClass(),Form.class);

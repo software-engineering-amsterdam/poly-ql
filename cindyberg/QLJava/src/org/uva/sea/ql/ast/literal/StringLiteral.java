@@ -21,5 +21,18 @@ public class StringLiteral extends Literal<String>{
 		return visitor.visit(this);
 		
 	}
+	
+	/*@Override
+	public boolean equals(Object other){
+		if(other instanceof Literal){
+			return value.equals(((StringLiteral) other).getLiteral());
+		}
+		return false;
+	}
+	
+	@Override
+	public int hashCode(){
+		return value.hashCode();
+	}*/
 
 }

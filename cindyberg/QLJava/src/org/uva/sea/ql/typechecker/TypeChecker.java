@@ -7,6 +7,15 @@ import org.junit.Test;
 import org.uva.sea.ql.ast.statement.Form;
 import org.uva.sea.ql.parser.jacc.Parser;
 
+/* 
+??reference to undefined questions
+   !!duplicate question declarations with different types
+   !!conditions that are not of the type boolean
+   !!operands of invalid type to operators
+??references to questions with an undefined value
+cyclic dependencies between questions
+   !!duplicate labels (warning)
+*/
 public class TypeChecker {
 	
 	List<Error> errorlist; 

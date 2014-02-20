@@ -5,7 +5,7 @@ import org.uva.sea.ql.ast.Expression;
 
 public abstract class Literal<T> extends Expression {
 
-	private T value;
+	protected T value;
 	
 	public Literal(T n) {
 		this.value = n;

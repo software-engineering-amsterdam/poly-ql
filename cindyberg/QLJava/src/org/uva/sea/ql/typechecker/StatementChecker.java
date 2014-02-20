@@ -1,10 +1,12 @@
 package org.uva.sea.ql.typechecker;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.uva.sea.ql.ast.Expression;
 import org.uva.sea.ql.ast.Identifier;
 import org.uva.sea.ql.ast.StatementVisitor;
+import org.uva.sea.ql.ast.literal.StringLiteral;
 import org.uva.sea.ql.ast.statement.ExprQuestion;
 import org.uva.sea.ql.ast.statement.Form;
 import org.uva.sea.ql.ast.statement.If;
@@ -18,11 +20,13 @@ public class StatementChecker implements StatementVisitor {
 
 	private TypeEnvironment environment;
 	private List<Error> errorlist;
+	private List<String> labels;
 	
 	public StatementChecker(TypeEnvironment environment, List<Error> errorlist){
 		
 		this.environment = environment;
 		this.errorlist = errorlist;
+		labels = new ArrayList<String>();
 	}
 	
 	private Boolean expressionCheck(TypeEnvironment environment,
@@ -32,19 +36,40 @@ public class StatementChecker implements StatementVisitor {
 		
 	}
 	
+	private void declareIdentifier(Identifier id, Type type) {
+		if(environment.isDeclared(id)){
+			if(environment.getType(id).show() == type.show()){
+				newError("Redeclaration of variable " +  id.show());
+			}
+			else{
+				newError("Variable " + id.show() + " is already declared with type " + environment.getType(id).show());
+			}
+		}
+		else{
+		environment.addIdentifier(id, type);
+		}
+	}
+	
+	private void checkLabel(StringLiteral label){
+		if(labels.contains(label.show())){
+			System.out.println("??");
+			newError("Warning: question [" + label.show() + "] already exists");
+		}
+		else{
+			labels.add(label.show());
+		}
+	}
+	
 	public void visit(ExprQuestion exprquestion) {
 	
 		Identifier id = exprquestion.getIdentifier();
 		Type type = exprquestion.getType();
 		Expression expression = exprquestion.getExpression();
+		StringLiteral label = exprquestion.getLabel();
 		
-		if(environment.isDeclared(id)){
-			newError("Variable " + id.show() + " already declared");
-		}
-		else{
-	
-		environment.addIdentifier(id, type);
-		}
+		checkLabel(label);
+		declareIdentifier(id,type);
+		
 		expressionCheck(environment,errorlist, expression);
 		
 		if(!expression.typeOf(environment).isCompatibleWith(id.typeOf(environment))){
@@ -58,13 +83,10 @@ public class StatementChecker implements StatementVisitor {
 	public void visit(Question question) {
 		Identifier id = question.getIdentifier();
 		Type type = question.getType();
+		StringLiteral label = question.getLabel();
 
-		if(environment.isDeclared(id)){
-			newError("Variable " + id.show() + " already declared");
-		}
-		else{
-		environment.addIdentifier(id, type);
-		}
+		checkLabel(label);
+		declareIdentifier(id, type);
 		
 		
 	}
