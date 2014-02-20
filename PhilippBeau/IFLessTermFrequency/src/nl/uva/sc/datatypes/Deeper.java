@@ -12,8 +12,7 @@ public class Deeper implements Recursive {
             final Iterator<String> wordIterator, final String currentWord,
             final List<String> allWords, final Map<String, Integer> index) {
 
-        if (currentWord.length() > 1)
-            index.put(currentWord, Collections.frequency(allWords, currentWord));
+        index.put(currentWord, Collections.frequency(allWords, currentWord));
         return r.remove(0).doSomeThing(r, wordIterator, wordIterator.next(), allWords, index);
     }
 }

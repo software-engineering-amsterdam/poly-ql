@@ -40,7 +40,8 @@ public class BookParser {
             throws IOException {
         return generateWordList(new ArrayList<>(Arrays.asList(encoding
                 .decode(ByteBuffer.wrap(Files.readAllBytes(bookFile.toPath()))).toString()
-                .toLowerCase().replaceAll("[^a-zA-Z\\s]", " ").replaceAll("\\s+", " ").split(" "))));
+                .toLowerCase().replaceAll("[^a-z\\s]", " ").replaceAll("(\\s[a-z]\\s)", " ")
+                .replaceAll("\\s+", " ").split(" "))));
     }
 
     /**
