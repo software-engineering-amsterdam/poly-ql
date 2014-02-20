@@ -43,9 +43,10 @@ public class ExpressionChecker implements ExpressionVisitor<Boolean> {
 	
 	public Boolean checkNormalExpression(Type type, Expression side){
 
+		System.out.println("type of stat: " + type.show() + " expr: " + side.show() + " expr type: " + side.typeOf(environment).show());
 		if(!(side.typeOf(environment).show() == type.show()))
 		{
-			newError(side.show() + " is not of type " + type.show());
+			newError(side.show() + " is not of type " + type.show()); //find a way to get left + right here
 			return false;
 		}
 		return(checkExpression(environment,errorlist,side));
@@ -63,7 +64,7 @@ public class ExpressionChecker implements ExpressionVisitor<Boolean> {
 		}
 		
 		if(!(right.typeOf(environment) == type)){
-			newError(right.show() + " is no of type " + type);
+			newError(right.show() + " is not of type " + type);
 			return false;
 		}
 		

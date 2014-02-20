@@ -1,6 +1,7 @@
 package org.uva.sea.ql.typechecker;
 
 import java.util.List;
+
 import org.uva.sea.ql.ast.Expression;
 import org.uva.sea.ql.ast.Identifier;
 import org.uva.sea.ql.ast.StatementVisitor;
@@ -37,16 +38,18 @@ public class StatementChecker implements StatementVisitor {
 		Type type = exprquestion.getType();
 		Expression expression = exprquestion.getExpression();
 		
-		System.out.println("Expr question");
-		if(environment.isDeclared(id) != null){
-			newError(id.show() + " already declared");
+		if(environment.isDeclared(id)){
+			newError("Variable " + id.show() + " already declared");
 		}
+		else{
 	
 		environment.addIdentifier(id, type);
+		}
 		expressionCheck(environment,errorlist, expression);
 		
 		if(!expression.typeOf(environment).isCompatibleWith(id.typeOf(environment))){
-			newError(expression.typeOf(environment).show() + " is not compatible with " + id.show());
+			newError("Variable " + id.show() + " is not compatible with the expression type " 
+					+ expression.typeOf(environment).show());
 		}
 		
 		
@@ -55,26 +58,29 @@ public class StatementChecker implements StatementVisitor {
 	public void visit(Question question) {
 		Identifier id = question.getIdentifier();
 		Type type = question.getType();
-		
-		//System.out.println("question");
-		if(environment.isDeclared(id) != null){
-			newError(id.show() + " already declared");
+
+		if(environment.isDeclared(id)){
+			newError("Variable " + id.show() + " already declared");
 		}
-		System.out.println("question");
-		
+		else{
 		environment.addIdentifier(id, type);
+		}
+		
 		
 	}
 
 	public void visit(If ifconditional) {
 		Expression condition = ifconditional.getConditional();
+	
 		QuestionSet questionset = ifconditional.getQuestionSet();
 		
 		if(!condition.typeOf(environment).isCompatibleWithBoolean()){
-			newError(condition.show() + " is not compatible with booleanType");
+			newError("The condition " + condition.show() + " is not of type boolean");
 		}		
-		else{ 
-			this.visit(questionset);}
+
+		this.visit(questionset);
+		
+		
 		expressionCheck(environment, errorlist, condition);
 		
 	}
@@ -88,17 +94,17 @@ public class StatementChecker implements StatementVisitor {
 		if(!condition.typeOf(environment).isCompatibleWithBoolean()){
 			newError(condition.show() + " is not compatible with booleanType");
 		}
-		else{
-			this.visit(ifset);
-			this.visit(elseset);
-		}
+		
+		this.visit(ifset);
+		this.visit(elseset);
+		
 		
 		
 	}
 
 	public void visit(Form form) {
 		QuestionSet questionset = form.getQuestionSet();
-		visit(questionset);
+		this.visit(questionset);
 		
 	}
 
