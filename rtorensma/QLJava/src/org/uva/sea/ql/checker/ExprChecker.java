@@ -1,5 +1,7 @@
 package org.uva.sea.ql.checker;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,12 +30,17 @@ import org.uva.sea.ql.ast.expr.UnaryExpr;
 import org.uva.sea.ql.ast.types.Type;
 
 public class ExprChecker implements ExprVisitor<Boolean> {
+	
 	private final Map<Ident, Type> typeEnv;
 	private final List<String> errors;
 	
 	private ExprChecker(Map<Ident, Type> env, List<String> errors) {
 		this.typeEnv = env;
 		this.errors = errors;
+	}
+	
+	public static boolean check(Expr expr) {
+		return ExprChecker.check(expr, new HashMap<Ident, Type>(), new ArrayList<String>());
 	}
 	
 	public static boolean check(Expr expr, Map<Ident, Type> env, List<String> errors)
