@@ -8,24 +8,34 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class IntexGeneratorStop implements Recursive {
+public class IntexGeneratorStop implements RecursiveIndexGenerator {
 
     @Override
-    public List<Map.Entry<String, Integer>> doSomeThing(final List<Recursive> r,
+    public void doSomeThing(final List<RecursiveIndexGenerator> r,
             final Iterator<String> wordIterator, final String currentWord,
             final List<String> allWords, final Map<String, Integer> index) {
 
-        return sort(new ArrayList<>(index.entrySet()));
+        sort(new ArrayList<>(index.entrySet()));
     }
 
-    private List<Map.Entry<String, Integer>> sort(final ArrayList<Map.Entry<String, Integer>> toSort) {
+    private void sort(final ArrayList<Map.Entry<String, Integer>> toSort) {
         Collections.sort(toSort, new Comparator<Map.Entry<String, Integer>>() {
 
             @Override
             public int compare(final Entry<String, Integer> o1, final Entry<String, Integer> o2) {
-                return o1.getValue().compareTo(o2.getValue());
+                return o2.getValue().compareTo(o1.getValue());
             }
         });
-        return toSort;
+
+        // Print the result
+        further(new ArrayList<RecursivePrinter>(Collections.nCopies(25, new Printer())),
+                toSort.iterator());
+    }
+
+    private void further(final List<RecursivePrinter> recList,
+            final Iterator<Map.Entry<String, Integer>> iterator) {
+
+        recList.add(new PrinterStop());
+        recList.remove(0).doSomeThing(recList, iterator.next(), iterator);
     }
 }
