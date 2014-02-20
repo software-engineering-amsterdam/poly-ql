@@ -1,7 +1,7 @@
 form exampleForm {
     truth: "Is it true?" boolean
     truth2: "Is it still true?" boolean
-    if (truth || (2 + 6 * 3 * 9 - 4 - 4 + 5) > 2) {
+    if (truth || (2 + 6 * 3 * 9 - 4 - (4 + 5)) > 2) {
     	wonga: "How much is it worth?" number
 	    if (truth2 == truth) {
 	    	wonga2: "What's the price of pie?" number

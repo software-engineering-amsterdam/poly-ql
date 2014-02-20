@@ -2,7 +2,6 @@ package nl.uva.polyql.model.expressions;
 
 import nl.uva.polyql.model.Type;
 import nl.uva.polyql.model.expressions.operators.Operator;
-import nl.uva.polyql.model.expressions.operators.OperatorManager;
 
 public abstract class Operation<T> extends Expression {
 
@@ -31,25 +30,7 @@ public abstract class Operation<T> extends Expression {
         return mOperator.performOperation(this);
     }
 
-    @SuppressWarnings("unchecked")
-    protected Operator<T> getOperator(final String operatorSyntax) {
-        final Operator<?> operator;
-
-        switch (getReturnType()) {
-        case BOOLEAN:
-            operator = OperatorManager.getBooleanOperator(operatorSyntax);
-            break;
-
-        case NUMBER:
-            operator = OperatorManager.getNumberOperator(operatorSyntax);
-            break;
-
-        default:
-            throw new RuntimeException("Invalid return type");
-        }
-
-        return (Operator<T>) operator;
-    }
+    protected abstract Operator<T> getOperator(final String operator);
 
     public Type getOperandType() {
         return mOperandType;
