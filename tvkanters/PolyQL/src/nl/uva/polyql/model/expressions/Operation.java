@@ -14,13 +14,7 @@ public abstract class Operation<T> extends Expression {
     private final Expression mRight;
 
     public Operation(final Expression left, final String operator, final Expression right) {
-        final Type leftType = left.getReturnType();
-        final Type rightType = right.getReturnType();
-        if (leftType != rightType) {
-            throw new RuntimeException("Operand types " + leftType + " and " + rightType + " are not equal");
-        }
-
-        mOperandType = leftType;
+        mOperandType = OperationHelper.getOperandType(left, right);
         mLeft = left;
         mOperator = getOperator(operator);
         mRight = right;
