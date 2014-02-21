@@ -39,11 +39,14 @@
     <EmbeddedResource Include="Grammar\QL_Grammar.egt" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Algebra\Factory\IExprFactory.cs" />
-    <Compile Include="Algebra\Factory\IStmntFactory.cs" />
-    <Compile Include="Algebra\Factory\IValueFactory.cs" />
+    <Compile Include="Algebra\Factory\IFactory.cs" />
     <Compile Include="Algebra\Factory\FactoryCombination.cs" />
     <Compile Include="Algebra\Factory\FactoryUnion.cs" />
+    <Compile Include="Algebra\Type\BaseType.cs" />
+    <Compile Include="Algebra\Type\IType.cs" />
+    <Compile Include="Algebra\Type\UnknownType.cs" />
+    <Compile Include="Algebra\Value\IValue.cs" />
+    <Compile Include="Algebra\Value\UnknownValue.cs" />
     <Compile Include="QLAlgebra\Expr\DoubleExpr.cs" />
     <Compile Include="QLAlgebra\Expr\TripleExpr.cs" />
     <Compile Include="QLAlgebra\Expr\VarExpr.cs" />
@@ -54,6 +57,10 @@
     <Compile Include="QLAlgebra\Stmnt\IfStmnt.cs" />
     <Compile Include="QLAlgebra\Expr\SingleExpr.cs" />
     <Compile Include="QLAlgebra\Expr\VarInitExpr.cs" />
+    <Compile Include="QLAlgebra\Type\BoolType.cs" />
+    <Compile Include="QLAlgebra\Type\IntType.cs" />
+    <Compile Include="QLAlgebra\Type\StringType.cs" />
+    <Compile Include="QLAlgebra\Type\RealType.cs" />
     <Compile Include="QLTypeCheck\Expr\ITypeCheckExpr.cs" />
     <Compile Include="QLTypeCheck\Expr\LiteralExpr.cs" />
     <Compile Include="QLTypeCheck\Expr\VarExpr.cs" />
@@ -65,15 +72,12 @@
     <Compile Include="QLTypeCheck\Stmnt\IfStmnt.cs" />
     <Compile Include="QLTypeCheck\Stmnt\ITypeCheckStmnt.cs" />
     <Compile Include="QLAlgebra\Stmnt\QuestionStmnt.cs" />
-    <Compile Include="Algebra\Type\UnknownType.cs" />
     <Compile Include="Grammar\AbstractParser.cs" />
     <Compile Include="QLTypeCheck\ITypeCheck.cs" />
     <Compile Include="QLTypeCheck\Stmnt\QuestionStmnt.cs" />
     <Compile Include="Grammar\GrammarData.cs" />
-    <Compile Include="QLAlgebra\Factory\IQLExprFactory.cs" />
+    <Compile Include="QLAlgebra\Factory\IQLFactory.cs" />
     <Compile Include="QLAlgebra\Factory\QLFactoryCombination.cs" />
-    <Compile Include="QLAlgebra\Factory\IQLStmntFactory.cs" />
-    <Compile Include="QLAlgebra\Factory\IQLValueFactory.cs" />
     <Compile Include="QLTypeCheck\Expr\IfElseExpr.cs" />
     <Compile Include="QLTypeCheck\Factory\QLTypeCheckFactory.cs" />
     <Compile Include="QLTypeCheck\Expr\AddExpr.cs" />
@@ -92,13 +96,6 @@
     <Compile Include="QLTypeCheck\Expr\VarInitExpr.cs" />
     <Compile Include="QLAlgebra\Expr\LiteralExpr.cs" />
     <Compile Include="Grammar\QLParser.cs" />
-    <Compile Include="QLAlgebra\Types\BoolType.cs" />
-    <Compile Include="QLAlgebra\Types\IntType.cs" />
-    <Compile Include="Algebra\Type\IType.cs" />
-    <Compile Include="QLAlgebra\Types\NumericType.cs" />
-    <Compile Include="QLAlgebra\Types\RealType.cs" />
-    <Compile Include="QLAlgebra\Types\StringType.cs" />
-    <Compile Include="Algebra\Value\IValue.cs" />
     <Compile Include="QLAlgebra\Value\RealValue.cs" />
     <Compile Include="QLAlgebra\Value\IntValue.cs" />
     <Compile Include="QLAlgebra\Value\BoolValue.cs" />

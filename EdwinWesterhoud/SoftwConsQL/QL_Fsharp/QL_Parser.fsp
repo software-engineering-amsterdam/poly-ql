@@ -49,13 +49,10 @@ stmt:
     | conditional   { $1 }
 
 assignment:
-    IDENTIFIER COLON LABEL exprType
-    B_OPEN expression B_CLOSE   { {
-                                    ID          = $1;
-                                    Label       = $3;
-                                    Type        = $4;
-                                    Expression  = $6;
-                                } }
+    LABEL expression { {
+                         Label      = $1;
+                         Expression = $2;
+                     } }
 
 question:
     IDENTIFIER COLON LABEL qlType   { { 
@@ -79,13 +76,12 @@ qlType:
 
 exprType:
     | STRING            { String($1) }
+    | LABEL             { String($1) }
     | BOOL              { Bool($1) }
     | INT               { Int($1) }
     | DATE              { Date($1) }
     | DECIMAL           { Decimal($1) }
     | MONEY             { Money($1) }
-
-
 
 expression:
     | IDENTIFIER                    { ID($1) }

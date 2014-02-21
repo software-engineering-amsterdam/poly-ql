@@ -1,8 +1,13 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using System.Text;
 using GOLD;
 using Grammar;
+using Grammar.Parser;
+using QL_ExtensionTest.Merged;
+using QL_ExtensionTest.QLEval.Expr;
+using QL_ExtensionTest.QLEval.Stmnt;
 using QL_Grammar.QLTypeCheck;
 using QL_Grammar.QLTypeCheck.Expr;
 using QL_Grammar.QLTypeCheck.Factory;
@@ -16,7 +21,12 @@ namespace ConsoleParser
         public ConsoleTypeChecker()
             : base()
         {
-			var parser = new QLParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeCheckFactory>();
+			
+        }
+
+        public void RunDefaultParser()
+        {
+            var parser = new QLParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeCheckFactory>();
             parser.Factory = new QLTypeCheckFactory();
 
             parser.OnReduction += OnReduction;
@@ -29,7 +39,42 @@ namespace ConsoleParser
 
             Assembly a = parser.Factory.GetType().Assembly;
             parser.LoadGrammar(new BinaryReader(a.GetManifestResourceStream("QL_Grammar.Grammar.QL_Grammar.egt")));
-            parser.Parse(System.IO.File.OpenText(@"..\..\..\..\..\Grammar\QL_Test.txt"));
+            parser.Parse(File.OpenText(@"..\..\..\..\..\Grammar\QL_Test.txt"));
+        }
+
+        public void RunExtensionsParser()
+        {
+            //var parser = new ExtensionsParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeCheckExtensionsFactory>();
+            //parser.Factory = new QLTypeCheckExtensionsFactory();
+            var parser = new ExtensionsParser<Tuple<ITypeCheckExpr, IEvalExpr>, Tuple<ITypeCheckStmnt, IEvalStmnt>, TypeCheckEvalFactory>();
+            parser.Factory = new TypeCheckEvalFactory();
+
+            parser.OnReduction += OnReduction;
+            parser.OnCompletion += OnCompletion;
+            parser.OnGroupError += OnGroupError;
+            parser.OnInternalError += OnInternalError;
+            parser.OnNotLoadedError += OnNotLoadedError;
+            parser.OnLexicalError += OnLexicalError;
+            parser.OnSyntaxError += OnSyntaxError;
+
+            Assembly a = parser.Factory.GetType().Assembly;
+            parser.LoadGrammar(new BinaryReader(a.GetManifestResourceStream("QL_ExtensionTest.Grammar.QL_Grammar.egt")));
+            parser.Parse(new StringBuilder().AppendLine("form Form1 {")
+                .AppendLine("\"Power:\" << answer1:int = 5 ^ 2;")
+                .AppendLine("\"Modulo:\" << 10 % 5;")
+                .AppendLine("\"Modulo2:\" << 10 % true;")
+                .AppendLine("\"Date Type:\" >> dateVar:date;")
+                .AppendLine("\"Date:\" << 2014-02-20T16:22:00+01:00;")
+                .AppendLine("loop(answer1)")
+                .AppendLine("\"In the loop:\" >> loopAnswer:int;")
+                .AppendLine("}").ToString());
+        }
+
+        private void PrintErrorToConsole(string msg, bool error)
+        {
+            Console.ForegroundColor = error ? ConsoleColor.Red : ConsoleColor.Yellow;
+            Console.WriteLine(msg);
+            Console.ResetColor();
         }
 
         private void OnReduction(int line, int column, Reduction r, object newObj)
@@ -42,7 +87,7 @@ namespace ConsoleParser
 				object data = r.get_Data(i);
 				if (data != null)
 				{
-					dataOutput += data.ToString();
+					dataOutput += data;
 				}
 			}
 
@@ -57,46 +102,46 @@ namespace ConsoleParser
         private void OnCompletion(object root)
         {
             TypeCheckData data = new TypeCheckData();
-            ((ITypeCheckStmnt)root).TypeCheck(data);
-            data.VerifyForms();
+            data.OnTypeCheckError += PrintErrorToConsole;
 
-            if (data.HasErrors)
+            if (root is ITypeCheckStmnt)
             {
-                foreach (Tuple<string, bool> error in data.Errors)
-                {
-                    Console.ForegroundColor = error.Item2 ? ConsoleColor.Red : ConsoleColor.Yellow;
-                    Console.WriteLine(error.Item1);
-                    Console.ResetColor();
-                }
+                ((ITypeCheckStmnt)root).TypeCheck(data);
             }
+            else if (root is Tuple<ITypeCheckStmnt, IEvalStmnt>)
+            {
+                ((Tuple<ITypeCheckStmnt, IEvalStmnt>)root).Item1.TypeCheck(data);
+            }
+
+			data.VerifyTopDownDependencies();
 
             Console.WriteLine("PARSING COMPLETED!");
         }
 
 		private void OnGroupError()
 		{
-			Console.WriteLine("ERROR: Unexpected EOF. (Group Error)");
+            PrintErrorToConsole("ERROR: Unexpected EOF. (Group Error)", true);
 		}
 
-        private void OnInternalError()
+		private void OnInternalError()
 		{
-			Console.WriteLine("ERROR: INTERNAL ERROR");
+            PrintErrorToConsole("ERROR: INTERNAL ERROR", true);
 		}
 
-        private void OnNotLoadedError()
+		private void OnNotLoadedError()
 		{
-			Console.WriteLine("ERROR: Grammar file was not loaded");
+            PrintErrorToConsole("ERROR: Grammar file was not loaded", true);
 		}
 
-        private void OnLexicalError(int line, int column, object token)
+		private void OnLexicalError(int line, int column, object token)
 		{
-			Console.WriteLine(String.Format("ERROR: Unknown token '{0}' found on line {1} column {2}", token, line, column));
+            PrintErrorToConsole(String.Format("ERROR: Unknown token '{0}' found on line {1} column {2}", token, line, column), true);
 		}
 
-        private void OnSyntaxError(int line, int column, object token, string expected)
+		private void OnSyntaxError(int line, int column, object token, string expected)
 		{
-			Console.WriteLine(String.Format("ERROR: Unexpected token '{0}' on line {1} column {2}. Expected: {3}",
-				token, line, column, expected));
+            PrintErrorToConsole(String.Format("ERROR: Unexpected token '{0}' on line {1} column {2}. Expected: {3}",
+                token, line, column, expected), true);
 		}
 	}
 }

@@ -1,8 +1,12 @@
-﻿using QL_ExtensionTest.QLAlgebraExtensions.Factory;
+﻿using System;
+using QL_ExtensionTest.QLAlgebraExtensions.Factory;
+using QL_ExtensionTest.QLAlgebraExtensions.Type;
+using QL_ExtensionTest.QLAlgebraExtensions.Value;
 using QL_ExtensionTest.QLEval.Expr;
 using QL_ExtensionTest.QLEval.Stmnt;
 using QL_Grammar.Algebra.Type;
 using QL_Grammar.Algebra.Value;
+using QL_Grammar.QLAlgebra.Type;
 using QL_Grammar.QLAlgebra.Value;
 
 namespace QL_ExtensionTest.QLEval.Factory
@@ -13,6 +17,40 @@ namespace QL_ExtensionTest.QLEval.Factory
         {
 
         }
+
+		public IType DateType()
+		{
+			return new DateType();
+		}
+
+		//TODO: See if we can change this so you don't have to cover for types that stay the same
+        //Probably need to seperate types into its own factory to be able to do this.
+		#region Type duplication
+		public IType StringType()
+		{
+			return new StringType();
+		}
+
+		public IType IntType()
+		{
+			return new IntType();
+		}
+
+		public IType RealType()
+		{
+			return new RealType();
+		}
+
+		public IType BoolType()
+		{
+			return new BoolType();
+		}
+		#endregion
+
+		public IEvalExpr Date(DateTime date)
+		{
+			return Literal(new DateValue(date));
+		}
 
         public IEvalExpr String(string s)
         {
@@ -104,7 +142,7 @@ namespace QL_ExtensionTest.QLEval.Factory
             return new DivideExpr(l, r);
         }
 
-        public IEvalExpr Negate(IEvalExpr e)
+        public IEvalExpr Negate(IType t, IEvalExpr e)
         {
             return new NegateExpr(e);
         }
@@ -169,5 +207,5 @@ namespace QL_ExtensionTest.QLEval.Factory
         {
             return new LoopStmnt(e, s);
         }
-    }
+	}
 }

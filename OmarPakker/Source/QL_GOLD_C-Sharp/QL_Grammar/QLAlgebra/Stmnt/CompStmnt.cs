@@ -11,6 +11,7 @@ namespace QL_Grammar.QLAlgebra.Stmnt
 
         public CompStmnt(params S[] stmnts)
         {
+			//TODO: Don't flatten gotos? Doing so requires 'is CompStmnt<S>'...
             List<S> statements = new List<S>();
 
 			foreach (S stmnt in stmnts)

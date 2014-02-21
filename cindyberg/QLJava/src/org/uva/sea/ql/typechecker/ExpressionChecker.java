@@ -45,7 +45,7 @@ public class ExpressionChecker implements ExpressionVisitor<Boolean> {
 
 		if(!(side.typeOf(environment).show() == type.show()))
 		{
-			newError(side.show() + " is not of type " + type.show());
+			newError(side.show() + " is not of type " + type.show()); //find a way to get left + right here
 			return false;
 		}
 		return(checkExpression(environment,errorlist,side));
@@ -56,17 +56,7 @@ public class ExpressionChecker implements ExpressionVisitor<Boolean> {
 			newError(left.show() + " cannot be compared with " + right.show());
 			return false;
 		}
-		
-		if(!(left.typeOf(environment) == type)){
-			newError(left.show() + " is not of type " + type);
-			return false;
-		}
-		
-		if(!(right.typeOf(environment) == type)){
-			newError(right.show() + " is no of type " + type);
-			return false;
-		}
-		
+
 		return checkExpression(environment,errorlist,left) && checkExpression(environment,errorlist,right);
 		
 	}
@@ -110,33 +100,27 @@ public class ExpressionChecker implements ExpressionVisitor<Boolean> {
 	}
 
 	public Boolean visit(Eq eq) {
-		// TODO Auto-generated method stub
-		return null;
+		return checkComparison(eq.typeOf(environment), eq.returnLeft(), eq.returnRight());
 	}
 
 	public Boolean visit(GEq geq) {
-		// TODO Auto-generated method stub
-		return null;
+		return checkComparison(geq.typeOf(environment), geq.returnLeft(), geq.returnRight());
 	}
 
 	public Boolean visit(GT gt) {
-		// TODO Auto-generated method stub
-		return null;
+		return checkComparison(gt.typeOf(environment), gt.returnLeft(), gt.returnRight());
 	}
 
 	public Boolean visit(LEq leq) {
-		// TODO Auto-generated method stub
-		return null;
+		return checkComparison(leq.typeOf(environment), leq.returnLeft(), leq.returnRight());
 	}
 
 	public Boolean visit(LT lt) {
-		// TODO Auto-generated method stub
-		return null;
+		return checkComparison(lt.typeOf(environment), lt.returnLeft(), lt.returnRight());
 	}
 
 	public Boolean visit(NEq neq) {
-		// TODO Auto-generated method stub
-		return null;
+		return checkComparison(neq.typeOf(environment), neq.returnLeft(), neq.returnRight());
 	}
 
 	public Boolean visit(And and) {

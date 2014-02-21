@@ -5,7 +5,6 @@ import javax.swing.JFileChooser;
 import org.antlr.v4.runtime.ANTLRFileStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.ParserRuleContext;
-import org.uva.sea.ql.parser.antlr.Calculator4.CalculatorListener;
 
 import WordSeparation.*;
 
@@ -28,6 +27,7 @@ public class WordSeparation {
 		WordSeparationLexer lexer = new WordSeparationLexer(
 				new ANTLRFileStream(testFile));
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
+		System.out.println(tokens);
 		WordSeparationParser p = new WordSeparationParser(tokens);
 		p.setBuildParseTree(true);
 		p.addParseListener(new WordSeparationListener());

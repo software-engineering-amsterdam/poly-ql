@@ -11,8 +11,7 @@ public class TypeEnvironment {
 	private HashMap<Identifier, Type> types = new HashMap<Identifier,Type>();
 	
 	public Boolean isDeclared(Identifier id){
-	
-		return(types.containsKey(id));
+		return types.containsKey(id);
 	}
 	
 	public Type getType(Identifier id){
@@ -25,7 +24,6 @@ public class TypeEnvironment {
 	}
 	
 	public void addIdentifier(Identifier id, Type type){
-		
 		types.put(id,type);
 	}
 	

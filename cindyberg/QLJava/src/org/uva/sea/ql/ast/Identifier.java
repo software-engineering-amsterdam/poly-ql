@@ -13,7 +13,7 @@ public class Identifier extends Expression {
 
 	}
 	
-	public String getIdentifier(){
+	public String getName(){
 		return this.name;
 	}
 	
@@ -32,9 +32,8 @@ public class Identifier extends Expression {
 	
 	@Override
 	public boolean equals(Object other) {
-		System.out.println("Comparing...");
 	    if (other instanceof Identifier) {
-	        name.equals(((Identifier) other).getIdentifier());
+	        return name.equals(((Identifier) other).getName());
 	    }
 	    
 	    return false;

@@ -2,10 +2,12 @@
 
 namespace QL_Grammar.Algebra.Type
 {
-    public interface IType
-    {
-        IValue DefaultValue { get; }
+    //TODO: this interface probably doesn't really have any use as all types extend from BaseType anyway
+	public interface IType
+	{
+		IValue DefaultValue { get; }
 
-        bool CompatibleWith(IType other);
-    }
+		IType GetLeastUpperBound(IType other);
+		bool CompatibleWith(IType other);
+	}
 }

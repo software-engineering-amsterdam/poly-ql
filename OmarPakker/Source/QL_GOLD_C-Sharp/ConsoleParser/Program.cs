@@ -6,9 +6,14 @@ namespace ConsoleParser
 	{
 		static void Main(string[] args)
 		{
-            new ConsoleTypeChecker();
+            ConsoleTypeChecker obj = new ConsoleTypeChecker();
+            obj.RunDefaultParser();
 
 			Console.ReadKey();
+
+            obj.RunExtensionsParser();
+
+            Console.ReadKey();
 		}
 	}
 }

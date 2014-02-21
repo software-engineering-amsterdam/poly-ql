@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Reflection;
+using System.Text;
 using Grammar;
 using QL_Grammar.QLAlgebra.Value;
 using QL_Grammar.QLTypeCheck.Expr;
@@ -11,25 +12,19 @@ namespace QL_Tests
 {
 	public class ParseTests
 	{
+        private QLParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeCheckFactory> parser;
+
 		public ParseTests()
 		{
-			
-		}
-
-		private QLParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeCheckFactory> InitParser()
-		{
-			QLParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeCheckFactory> parser = new QLParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeCheckFactory>();
-			parser.Factory = new QLTypeCheckFactory();
-			Assembly a = parser.Factory.GetType().Assembly;
-			parser.LoadGrammar(new BinaryReader(a.GetManifestResourceStream("QL_Grammar.Grammar.QL_Grammar.egt")));
-			return parser;
+            parser = new QLParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeCheckFactory>();
+            parser.Factory = new QLTypeCheckFactory();
+            Assembly a = parser.Factory.GetType().Assembly;
+            parser.LoadGrammar(new BinaryReader(a.GetManifestResourceStream("QL_Grammar.Grammar.QL_Grammar.egt")));
 		}
 
 		[Fact]
 		public void AddAssociation()
 		{
-			QLParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeCheckFactory> parser = InitParser();
-
 			parser.OnCompletion += (root) =>
 			{
 				FormStmnt tree = new FormStmnt("Form1",
@@ -53,8 +48,6 @@ namespace QL_Tests
 		[Fact]
 		public void MultiplicationPrecedence()
 		{
-			QLParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeCheckFactory> parser = InitParser();
-
 			parser.OnCompletion += (root) =>
 			{
 				FormStmnt tree = new FormStmnt("Form1",
@@ -79,8 +72,6 @@ namespace QL_Tests
 		[Fact]
 		public void CompStmntFlattened()
 		{
-			QLParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeCheckFactory> parser = InitParser();
-
 			parser.OnCompletion += (root) =>
 			{
 				FormStmnt tree = new FormStmnt("Form1",
@@ -103,8 +94,48 @@ namespace QL_Tests
 				Assert.Equal(root, tree);
 			};
 
-			bool parseOk = parser.Parse("form Form1 { \"Question 1:\" << 5; \"Question 1:\" << 5; \"Question 1:\" << 5; \"Question 1:\" << 5; }");
+			bool parseOk = parser.Parse(new StringBuilder().AppendLine("form Form1 {")
+                .AppendLine("\"Question 1:\" << 5;")
+                .AppendLine("\"Question 1:\" << 5;")
+                .AppendLine("\"Question 1:\" << 5;")
+                .AppendLine("\"Question 1:\" << 5;")
+                .AppendLine("}").ToString());
+
 			Assert.True(parseOk);
 		}
+
+        [Fact]
+        public void AssociatesElseCorrectly()
+        {
+            parser.OnCompletion += (root) =>
+            {
+                FormStmnt tree = new FormStmnt("Form1",
+                    new IfStmnt(
+                        new LiteralExpr(new BoolValue(true)),
+                        new IfElseStmnt(
+                            new LiteralExpr(new BoolValue(false)),
+                            new QuestionStmnt("\"Question 1:\"", false,
+                                new LiteralExpr(new IntValue(7))
+                            ),
+                            new QuestionStmnt("\"Question 2:\"", false,
+                                new LiteralExpr(new IntValue(13))
+                            )
+                        )
+                    )
+                );
+                Assert.NotNull(root);
+                Assert.Equal(root, tree);
+            };
+
+            bool parseOk = parser.Parse(new StringBuilder().AppendLine("form Form1 {")
+                .AppendLine("if (true)")
+                .AppendLine("if (false)")
+                .AppendLine("\"Question 1:\" << 7;")
+                .AppendLine("else")
+                .AppendLine("\"Question 2:\" << 13;")
+                .AppendLine("}").ToString());
+
+            Assert.True(parseOk);
+        }
 	}
 }
