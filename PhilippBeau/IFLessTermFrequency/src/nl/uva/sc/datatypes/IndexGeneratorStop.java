@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class IntexGeneratorStop implements RecursiveIndexGenerator {
+public class IndexGeneratorStop implements RecursiveIndexGenerator {
 
     @Override
     public void generateIndex(final List<RecursiveIndexGenerator> r,
