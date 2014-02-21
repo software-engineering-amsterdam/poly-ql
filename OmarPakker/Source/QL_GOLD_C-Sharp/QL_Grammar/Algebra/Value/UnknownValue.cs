@@ -2,6 +2,7 @@
 
 namespace QL_Grammar.Algebra.Value
 {
+    //TODO: Get rid of UnknownValue?
 	public sealed class UnknownValue : IValue
 	{
 		private readonly IType type;

@@ -1,32 +1,30 @@
 ﻿using System;
-using System.Linq;
 using QL_Grammar.Algebra.Type;
 using QL_Grammar.QLAlgebra.Expr;
-using QL_Grammar.QLAlgebra.Type;
 using QL_Grammar.QLTypeCheck.Helpers;
 
 namespace QL_Grammar.QLTypeCheck.Expr
 {
 	public class NegateExpr : SingleExpr<ITypeCheckExpr>, ITypeCheckExpr
 	{
-		private readonly IType[] NegationUpperBoundTypes = { new BoolType(), new RealType() };
+        private readonly IType NegationUpperBound;
 
-		public NegateExpr(ITypeCheckExpr e)
+		public NegateExpr(IType negationUpperBound, ITypeCheckExpr e)
             : base(e)
 		{
-            
+            NegationUpperBound = negationUpperBound;
 		}
 
         public IType TypeCheck(TypeCheckData data)
         {
             IType a = Expr1.TypeCheck(data);
 
-            if (!NegationUpperBoundTypes.Any(t => a.CompatibleWith(t)))
+            if (!a.CompatibleWith(NegationUpperBound))
             {
                 data.ReportError(String.Format("Negation not possible. Incompatible type: '{0}'. Only bool and numerical types are supported.",
                     a), SourcePosition);
 
-                return new UnknownType();
+                return NegationUpperBound;
             }
 
             return a;

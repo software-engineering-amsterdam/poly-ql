@@ -126,9 +126,9 @@ namespace QL_Grammar.QLTypeCheck.Factory
 			return new DivideExpr(l, r);
 		}
 
-        public ITypeCheckExpr Negate(ITypeCheckExpr e)
+        public ITypeCheckExpr Negate(IType t, ITypeCheckExpr e)
 		{
-			return new NegateExpr(e);
+			return new NegateExpr(t, e);
 		}
 
 		public ITypeCheckExpr VarDecl(string var, IType t)

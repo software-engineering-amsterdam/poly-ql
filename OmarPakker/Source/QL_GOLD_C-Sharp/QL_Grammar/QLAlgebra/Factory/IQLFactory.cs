@@ -32,7 +32,7 @@ namespace QL_Grammar.QLAlgebra.Factory
 		E Multiply(E l, E r);
 		E Divide(E l, E r);
 
-		E Negate(E e);
+		E Negate(IType t, E e);
 
 		E VarDecl(string var, IType t);
 		E VarAssign(string var, IType t, E e);
