@@ -142,7 +142,7 @@ namespace QL_ExtensionTest.QLEval.Factory
             return new DivideExpr(l, r);
         }
 
-        public IEvalExpr Negate(IEvalExpr e)
+        public IEvalExpr Negate(IType t, IEvalExpr e)
         {
             return new NegateExpr(e);
         }

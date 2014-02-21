@@ -2,7 +2,7 @@
 
 namespace QL_Grammar.Algebra.Type
 {
-	//TODO: Can we get rid of UnknownType & UnknownValue?
+	//TODO: Get rid of UnknownType?
 	public sealed class UnknownType : IType
 	{
 		public IValue DefaultValue { get { return null; } }

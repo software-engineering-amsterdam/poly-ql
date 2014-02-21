@@ -4,6 +4,7 @@ using QL_Grammar.Algebra.Value;
 namespace QL_Grammar.Algebra.Type
 {
 	//TODO: Abstract instead?
+    //TODO: Move away from reflection? If so, use some other way to handle type inheritance as actual inheritance info needs reflection.
 	public class BaseType : IType
 	{
 		public virtual IValue DefaultValue { get { return new UnknownValue(); } }
@@ -24,15 +25,12 @@ namespace QL_Grammar.Algebra.Type
 				return other;
 			}
 
-			for (System.Type myType = GetType(); myType != typeof(object); myType = myType.BaseType)
+			for (System.Type baseType = GetType().BaseType; baseType != typeof(object); baseType = baseType.BaseType)
 			{
-				for (System.Type otherType = other.GetType(); otherType != typeof(object); otherType = otherType.BaseType)
-				{
-					if (myType.Equals(otherType))
-					{
-						return (IType)Activator.CreateInstance(myType);
-					}
-				}
+                if (other.GetType().IsSubclassOf(baseType))
+                {
+                    return (IType)Activator.CreateInstance(baseType);
+                }
 			}
 
 			throw new InvalidOperationException("No least upper bound in existence...");

@@ -127,9 +127,9 @@ namespace QL_Grammar.QLAlgebra.Factory
 			return new Tuple<E1, E2>(Factory1.Divide(l.Item1, r.Item1), Factory2.Divide(l.Item2, r.Item2));
 		}
 
-		public Tuple<E1, E2> Negate(Tuple<E1, E2> e)
+		public Tuple<E1, E2> Negate(IType t, Tuple<E1, E2> e)
 		{
-			return new Tuple<E1, E2>(Factory1.Negate(e.Item1), Factory2.Negate(e.Item2));
+			return new Tuple<E1, E2>(Factory1.Negate(t, e.Item1), Factory2.Negate(t, e.Item2));
 		}
 
 		public Tuple<E1, E2> VarDecl(string var, IType t)

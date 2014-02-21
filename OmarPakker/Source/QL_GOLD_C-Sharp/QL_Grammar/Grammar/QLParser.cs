@@ -199,37 +199,40 @@ namespace Grammar
 				return Factory.Divide((E)r.get_Data(0), (E)r.get_Data(2));
 			}
 			//<NegateExpr> ::= '-' <Value>
-			//<NegateExpr> ::= '!' <Value>
-			else if (r.Parent.TableIndex() == Rules["Negateexpr_Minus"]
-				|| r.Parent.TableIndex() == Rules["Negateexpr_Exclam"])
+			else if (r.Parent.TableIndex() == Rules["Negateexpr_Minus"])
 			{
-				return Factory.Negate((E)r.get_Data(1));
+				return Factory.Negate(Factory.RealType(), (E)r.get_Data(1));
 			}
-			//<Value> ::= Identifier
-			else if (r.Parent.TableIndex() == Rules["Value_Identifier"])
-			{
-				return Factory.Variable((string)r.get_Data(0));
-			}
-			//<Literal> ::= StringLit
-			else if (r.Parent.TableIndex() == Rules["Literal_Stringlit"])
-			{
-				return Factory.String((string)r.get_Data(0));
-			}
-			//<Literal> ::= IntLit
-			else if (r.Parent.TableIndex() == Rules["Literal_Intlit"])
-			{
-				return Factory.Int(Int32.Parse((string)r.get_Data(0)));
-			}
-			//<Literal> ::= RealLit
-			else if (r.Parent.TableIndex() == Rules["Literal_Reallit"])
-			{
-				return Factory.Real(Double.Parse((string)r.get_Data(0), CultureInfo.InvariantCulture));
-			}
-			//<Literal> ::= BoolLit
-			else if (r.Parent.TableIndex() == Rules["Literal_Boollit"])
-			{
-				return Factory.Bool(Boolean.Parse((string)r.get_Data(0)));
-			}
+            //<NegateExpr> ::= '!' <Value>
+            else if (r.Parent.TableIndex() == Rules["Negateexpr_Exclam"])
+            {
+                return Factory.Negate(Factory.BoolType(), (E)r.get_Data(1));
+            }
+            //<Value> ::= Identifier
+            else if (r.Parent.TableIndex() == Rules["Value_Identifier"])
+            {
+                return Factory.Variable((string)r.get_Data(0));
+            }
+            //<Literal> ::= StringLit
+            else if (r.Parent.TableIndex() == Rules["Literal_Stringlit"])
+            {
+                return Factory.String((string)r.get_Data(0));
+            }
+            //<Literal> ::= IntLit
+            else if (r.Parent.TableIndex() == Rules["Literal_Intlit"])
+            {
+                return Factory.Int(Int32.Parse((string)r.get_Data(0)));
+            }
+            //<Literal> ::= RealLit
+            else if (r.Parent.TableIndex() == Rules["Literal_Reallit"])
+            {
+                return Factory.Real(Double.Parse((string)r.get_Data(0), CultureInfo.InvariantCulture));
+            }
+            //<Literal> ::= BoolLit
+            else if (r.Parent.TableIndex() == Rules["Literal_Boollit"])
+            {
+                return Factory.Bool(Boolean.Parse((string)r.get_Data(0)));
+            }
 
 			return null;
 		}
