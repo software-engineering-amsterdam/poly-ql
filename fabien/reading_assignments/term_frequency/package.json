@@ -1,0 +1,15 @@
+{
+  "name": "word-frequency",
+  "description": "Count frequencies of (non stop) words in a given text",
+  "version": "0.0.1",
+  "maintainers": [
+    {
+      "name": "Fabiën Tesselaar",
+      "email": "fabientesselaar@gmail.com",
+      "web": "tessmore.nl"
+    }
+  ],
+  "dependencies": {
+    "minimist": "0.0.8"
+  }
+}
