@@ -1,0 +1,26 @@
+vraag1 : "Hoe werk jij" : boolean;
+if (vraag1 + 1) {
+  vraag2 : "Hoi werk jij" : boolean;
+  vraag1 : "Hoi werk jij" : boolean;
+  if true {
+    if (vraag1 + 1) {
+	  vraag2 : "Hoi werk jij" : boolean;
+	  vraag1 : "Hoi werk jij" : boolean;
+	  }
+	}
+}
+
+if (vraag1 + 1) {
+  if (true) {
+	vraag2 : "Hoi werk jij" : boolean;
+	vraag1 : "Hoi werk jij" : boolean;
+  }
+}
+vraag1 : "Hoe werk jij" : boolean;
+
+antwoord : "Totaal:" : string(vraag1 + vraag2);
+
+if (vraag1 + 1) {
+  vraag2 : "Hoi werk jij" : boolean;
+  vraag1 : "Hoi werk jij" : boolean;
+}
