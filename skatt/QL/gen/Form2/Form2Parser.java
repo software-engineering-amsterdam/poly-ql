@@ -73,6 +73,11 @@ public class Form2Parser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof Form2Listener ) ((Form2Listener)listener).exitForm(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof Form2Visitor ) return ((Form2Visitor<? extends T>)visitor).visitForm(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final FormContext form() throws RecognitionException {
@@ -144,6 +149,11 @@ public class Form2Parser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof Form2Listener ) ((Form2Listener)listener).exitStructure(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof Form2Visitor ) return ((Form2Visitor<? extends T>)visitor).visitStructure(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -376,6 +386,11 @@ public class Form2Parser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof Form2Listener ) ((Form2Listener)listener).exitIfcondition(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof Form2Visitor ) return ((Form2Visitor<? extends T>)visitor).visitIfcondition(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final IfconditionContext ifcondition() throws RecognitionException {
@@ -416,6 +431,11 @@ public class Form2Parser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof Form2Listener ) ((Form2Listener)listener).exitElseifcondition(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof Form2Visitor ) return ((Form2Visitor<? extends T>)visitor).visitElseifcondition(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final ElseifconditionContext elseifcondition() throws RecognitionException {
@@ -452,6 +472,11 @@ public class Form2Parser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof Form2Listener ) ((Form2Listener)listener).exitElsecondition(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof Form2Visitor ) return ((Form2Visitor<? extends T>)visitor).visitElsecondition(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -495,6 +520,11 @@ public class Form2Parser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof Form2Listener ) ((Form2Listener)listener).exitQuestion(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof Form2Visitor ) return ((Form2Visitor<? extends T>)visitor).visitQuestion(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -563,6 +593,11 @@ public class Form2Parser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof Form2Listener ) ((Form2Listener)listener).exitExpression(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof Form2Visitor ) return ((Form2Visitor<? extends T>)visitor).visitExpression(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -717,6 +752,11 @@ public class Form2Parser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof Form2Listener ) ((Form2Listener)listener).exitLabel(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof Form2Visitor ) return ((Form2Visitor<? extends T>)visitor).visitLabel(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 

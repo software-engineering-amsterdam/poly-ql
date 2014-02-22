@@ -5,6 +5,7 @@ import javax.swing.JFileChooser;
 import org.antlr.v4.runtime.ANTLRFileStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 import Form2.*;
 
@@ -24,13 +25,13 @@ public class Form2 {
 			System.exit(0);
 		}
 
-		Form2Lexer lexer = new Form2Lexer(
-				new ANTLRFileStream(testFile));
+		// create lexer and perser
+		Form2Lexer lexer = new Form2Lexer(new ANTLRFileStream(testFile));
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
-		System.out.println(tokens);
 		Form2Parser p = new Form2Parser(tokens);
-		p.setBuildParseTree(true);
-		p.addParseListener(new Form2Listener());
-		ParserRuleContext t = p.form();
+		//ParserRuleContext<Token> tree = p.compilationUnit();
+		ParseTreeWalker walker = new ParseTreeWalker(); // create standard walker
+		Form2BaseListener extractor = new Form2BaseListener();
+
 	}
 }
