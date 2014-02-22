@@ -10,15 +10,15 @@
   Dependencies
 */
 
-var argv = require("minimist")(process.argv.slice(2));
-var fs   = require("fs");
+var fs        = require("fs");
+var argv      = require("minimist")(process.argv.slice(2));
 var stopwords = require('./stop_words/main.js');
 
 /**
   Set input variables
 */
 
-var filename = argv['f'] || argv['file']  || 'input.txt';
+var filename = argv['f'] || argv['file']  || 'input_files/simple.txt';
 var language = argv['l'] || argv['lang']  || 'en';
 var amount   = argv['c'] || argv['count'] || 25;
 
