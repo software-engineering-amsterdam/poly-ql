@@ -5,15 +5,26 @@ using System.Text;
 using QSLib.Errors;
 namespace QSLib.Expressions
 {
-    public class Binary_Expression : Expression
+    public abstract class Binary_Expression : IExpression
     {
-        protected  Expression _left;
-        protected  Expression _right;
+        protected  IExpression _left;
+        protected  IExpression _right;
         protected  Type _type;
         protected  Type _typeLeft;
-        protected  Type _typeRight;
+        protected Type _typeRight;
+        protected String _operator = "Empty";
 
-        public  override Type GetType()
+        public Binary_Expression()
+        {
+        }
+
+        public Binary_Expression(IExpression a, IExpression b)
+        {
+            this._left = a;
+            this._right = b;
+        }
+
+        public Type CheckType()
         {
             if (this._type != null)
                 return this._type;
@@ -27,6 +38,11 @@ namespace QSLib.Expressions
             else
                 throw new TypeException("Type error: " + this._typeLeft.ToString() + 
                                         " is incompatible with " + this._typeRight.ToString());
+        }
+
+        public override string ToString()
+        {
+            return this._left.ToString() + this._operator + this._right.ToString();
         }
     }
 }

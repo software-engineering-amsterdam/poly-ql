@@ -6,14 +6,30 @@ using QSLib.Expressions;
 
 namespace QSLib.Expressions.Types
 {
-    class Str : BaseType
+    public class QSString : IExpression
     {
         private String _value;
         private String _id;
 
-        public override Type GetType()
+        public QSString(String id, String value)
+        {
+            this._id = id;
+            this._value = value;
+        }
+
+        public QSString(String value)
+        {
+            this._value = value;
+        }
+
+        public Type CheckType()
         {
             return "".GetType();
+        }
+
+        public override string ToString()
+        {
+            return "\"" + this._value.ToString() + "\"" ;
         }
     }
 }

@@ -5,7 +5,13 @@ using System.Text;
 
 namespace QSLib.Expressions.Conditions.Comparison
 {
-    class Equals : Compare_Expression 
+    class Equals : Binary_Expression  
     {
+        protected String _operator = "==";
+
+        public Equals(IExpression a, IExpression b)
+            : base(a, b)
+        {
+        }   
     }
 }

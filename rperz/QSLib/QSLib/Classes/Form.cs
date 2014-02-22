@@ -4,14 +4,19 @@ using System.Linq;
 using System.Text;
 using QSLib.Expressions;
 
-namespace QSLib.Classes
+namespace QSLib
 {
-    class Form
+    public class Form
     {
-        private List<Expression> _expList;
-        public Form(List<Expression> expList)
+        private CodeBlock _code;
+        public Form(CodeBlock code)
         {
-            this._expList = expList;
+            this._code = code;
+        }
+
+        public override string ToString()
+        {
+            return "form \r\n { \r\n" + this._code.ToString() + "\r\n }";
         }
     }
 }

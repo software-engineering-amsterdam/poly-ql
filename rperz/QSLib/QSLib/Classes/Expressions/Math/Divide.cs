@@ -5,7 +5,12 @@ using System.Text;
 
 namespace QSLib.Expressions.Math
 {
-    class Divide
+    class Divide : Binary_Expression 
     {
+        protected String _operator = "/";
+        public Divide(IExpression a, IExpression b)
+            : base(a, b)
+        {
+        }
     }
 }

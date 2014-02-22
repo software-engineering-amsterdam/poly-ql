@@ -5,12 +5,17 @@ using System.Text;
 
 namespace QSLib.Expressions
 {
-    public class Unary_Expression : Expression
+    public class Unary_Expression : IExpression
     {
-        protected Expression _left;
+        protected IExpression _left;
         protected Type _typeLeft;
 
-        public override Type GetType()
+        public Unary_Expression(IExpression left)
+        {
+            this._left = left;
+        }
+
+        public Type CheckType()
         {
             if (this._typeLeft != null)
                 return this._typeLeft;

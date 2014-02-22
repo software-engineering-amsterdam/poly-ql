@@ -5,7 +5,13 @@ using System.Text;
 
 namespace QSLib.Expressions.Conditions.Comparison
 {
-    class NotEquals : Compare_Expression 
+    class NotEquals : Binary_Expression 
     {
+        protected String _operator = "!=";
+
+        public NotEquals(IExpression a, IExpression b)
+            : base(a, b)
+        {
+        }   
     }
 }
