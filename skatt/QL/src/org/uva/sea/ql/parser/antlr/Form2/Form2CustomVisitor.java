@@ -110,22 +110,55 @@ public class Form2CustomVisitor extends Form2BaseVisitor {
 	}
 	
 	/////////// Code for handling expressions 
-	public Object visitExpression(Form2Parser.ExpressionContext ctx) {
+	
+	public Object visitWrapExpr(Form2Parser.WrapExprContext ctx) {
 		if (verbose)
-			System.out.println("Expression visited");
+			System.out.println("Wrap Expression visited");
 		
-		System.err.println(ctx.getChild(0).toString());
-		// if expression is wrapped in (), visit the expression inside
-		if (ctx.getChild(0).toString() == "(") {
-			if (verbose)
-				System.out.println("Expression wrapped in ()");
-			
-			return this.visit(ctx.expression(0));
-		} else {
-			if (verbose)
-				System.out.println("Expression not wrapped in ()");
-			
-			return ctx.getText();
-		}
+		return this.visit(ctx.expression());
+	}
+	
+	public Integer visitMultExpr(Form2Parser.MultExprContext ctx) {
+		if (verbose)
+			System.out.println("Mult Expression visited");
+		
+		return 1;
+	}
+	
+	public Integer visitPlusExpr(Form2Parser.PlusExprContext ctx) {
+		if (verbose)
+			System.out.println("Plus Expression visited");
+		
+		return 1;
+	}
+	
+	public Boolean visitNegExpr(Form2Parser.NegExprContext ctx) {
+		if (verbose)
+			System.out.println("Neg Expression visited");
+		
+		return false;
+	}
+	public Integer visitLogExpr(Form2Parser.LogExprContext ctx) {
+		if (verbose)
+			System.out.println("Log Expression visited");
+		
+		return 1;
+	}
+	public Integer visitCompExpr(Form2Parser.CompExprContext ctx) {
+		if (verbose)
+			System.out.println("Comp Expression visited");
+		
+		return 1;
+	}
+	public Integer visitIntExpr(Form2Parser.IntExprContext ctx) {
+		if (verbose)
+			System.out.println("Int Expression visited");
+		
+		return 1;
+	}
+	
+	public void visitidentExpr(Form2Parser.IdentExprContext ctx) {
+		if (verbose)
+			System.out.println("Ident Expression visited");
 	}
 }
