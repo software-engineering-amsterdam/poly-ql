@@ -7,12 +7,17 @@ public class Question extends Rule {
 
     private final String mId;
     private final String mContent;
-    private final Type mType;
+    private final Types mType;
     private Object mValue;
+    private boolean mValueValid = true;
 
-    private final Set<QuestionUpdatedListener> mUpdateListeners = new HashSet<>();
+    private final Set<OnUpdateListener> mUpdateListeners = new HashSet<>();
 
     protected Question(final RuleContainer parent, final String id, final String content, final String type) {
+        this(parent, id, content, Types.valueOf(type.toUpperCase()));
+    }
+
+    protected Question(final RuleContainer parent, final String id, final String content, final Types type) {
         super(parent);
 
         if (parent.getQuestion(id) != null) {
@@ -21,28 +26,11 @@ public class Question extends Rule {
 
         mId = id;
         mContent = content;
-        mType = Type.valueOf(type.toUpperCase());
+        mType = type;
 
-        // Set default value
-        switch (mType) {
-        case BOOLEAN:
-            mValue = false;
-            break;
-
-        case NUMBER:
-            mValue = 0.0;
-            break;
-
-        default:
-            throw new RuntimeException("Invalid type " + mType);
-        }
+        setValue(mType.getDefaultValue());
     }
 
-    /**
-     * Retrieves the ID of the rule.
-     * 
-     * @return The rule's ID
-     */
     public String getId() {
         return mId;
     }
@@ -51,23 +39,33 @@ public class Question extends Rule {
         return mContent;
     }
 
-    public Type getType() {
+    public Types getType() {
         return mType;
     }
 
     public void setValue(final Object value) {
         mValue = value;
 
-        for (final QuestionUpdatedListener valueListener : mUpdateListeners) {
+        for (final OnUpdateListener valueListener : mUpdateListeners) {
             valueListener.onQuestionUpdate(this);
         }
+    }
+
+    public void setValueFromInput(final String input) {
+        final Object value = mType.parseInput(input);
+        mValueValid = value != null;
+        setValue(value);
     }
 
     public Object getValue() {
         return mValue;
     }
 
-    public void addUpdateListener(final QuestionUpdatedListener listener) {
+    public boolean isValueValid() {
+        return mValueValid;
+    }
+
+    public void addUpdateListener(final OnUpdateListener listener) {
         System.out.println("LISTENER " + listener + " ADDED TO " + this);
         mUpdateListeners.add(listener);
     }
@@ -77,4 +75,8 @@ public class Question extends Rule {
         return mId + " = " + mValue;
     }
 
+    public interface OnUpdateListener {
+
+        public void onQuestionUpdate(final Question question);
+    }
 }

@@ -1,9 +1,10 @@
 form exampleForm {
     truth: "Is it true?" boolean
-    truth2: "Is it still true?" boolean
+    truthwhy: "Why is(n't) it true?" string
+    truthwhydouble: "Because: " (truthwhy + " " + truthwhy)
     if (truth || (2 + 6 * 3 * 9 - 4 - (4 + 5)) > 2) {
     	wonga: "How much is it worth?" number
-    	morethandoublewonga: "WHY THAT'S ALMOST DOUBLE!" number(wonga * 2 + 1)
+    	morethandoublewonga: "WHY THAT'S ALMOST DOUBLE!" (wonga * 2 + 1)
 	    if (wonga > 4) {
 	    	wonga2: "What's the price of pie?" number
 	    }

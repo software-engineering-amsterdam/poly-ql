@@ -15,7 +15,7 @@ formrule[RuleContainer rc] :
 	field[$rc] | question[$rc] | ifstatement[$rc];
 	
 field[RuleContainer rc] : 
-	id=ID ':' content=STRING type=TYPE'(' e=expr_main[$rc] ')' { $rc.addField($id.text, $content.text, $type.text, $e.e); };
+	id=ID ':' content=STRING '(' e=expr_main[$rc] ')' { $rc.addField($id.text, $content.text, $e.e); };
 
 question[RuleContainer rc] : 
 	id=ID ':' content=STRING type=TYPE { $rc.addQuestion($id.text, $content.text, $type.text); };
@@ -45,8 +45,9 @@ expr_prod[RuleContainer rc] returns [Expression e] :
 	(left=expr_atom[$rc]{$e = $left.e;}) (op=OP_PROD right=expr_atom[$rc]{$e = OperationHelper.getSameTypeOperation($e, $op.text, $right.e);})* ;
 
 expr_atom[RuleContainer rc] returns [Expression e] :
-	mod=MODIFIER?ID { $e = new IdAtom($rc, $ID.text, $mod.text); }
+	mod=MODIFIER?ID { $e = new QuestionAtom($rc, $ID.text, $mod.text); }
 	| NUMBER { $e = new NumberAtom($NUMBER.text); }
+	| STRING { $e = new StringAtom($STRING.text); }
 	| '(' expr=expr_main[$rc]{ $e = $expr.e; } ')' ;
 
 
@@ -58,11 +59,11 @@ OP_SUM : ('+'|'-');
 OP_PROD : ('*'|'/');
 MODIFIER : ('!'|'-');
 
-TYPE : ('boolean'|'number');
+TYPE : ('boolean'|'number'|'string');
 ID : LETTER (LETTER | DIGIT)*;
 STRING : '"' (LETTER | DIGIT | PUNCTUATION)+ '"';
 LETTER : ('a'..'z'|'A'..'Z');
 NUMBER : '-'?DIGIT+('.'DIGIT+)?;
 DIGIT : ('0'..'9');
 WS : (' '|'\n'|'\r'|'\t')+ {skip();} ;
-PUNCTUATION : ('\''|','|'.'|'?'|'!'|' ');
+PUNCTUATION : ('\''|','|'.'|'?'|'!'|' '|'('|')'|':'|';');

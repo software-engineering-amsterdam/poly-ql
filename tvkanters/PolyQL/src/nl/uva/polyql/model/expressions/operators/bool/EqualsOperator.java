@@ -19,4 +19,9 @@ public class EqualsOperator extends BooleanOperator {
         return left == right;
     }
 
+    @Override
+    protected Boolean performOperation(String left, String right) {
+        return left.equals(right);
+    }
+
 }

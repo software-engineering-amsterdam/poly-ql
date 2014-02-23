@@ -1,6 +1,6 @@
 package nl.uva.polyql.model.expressions.operators.bool;
 
-import nl.uva.polyql.model.Type;
+import nl.uva.polyql.model.Types;
 import nl.uva.polyql.model.expressions.operators.UnsupportedOperandTypeException;
 
 public class XorOperator extends BooleanOperator {
@@ -19,7 +19,12 @@ public class XorOperator extends BooleanOperator {
 
     @Override
     protected Boolean performOperation(double left, double right) {
-        throw new UnsupportedOperandTypeException(Type.NUMBER);
+        throw new UnsupportedOperandTypeException(Types.NUMBER);
+    }
+
+    @Override
+    protected Boolean performOperation(String left, String right) {
+        throw new UnsupportedOperandTypeException(Types.STRING);
     }
 
 }

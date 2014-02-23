@@ -5,24 +5,21 @@ import java.util.Set;
 
 import nl.uva.polyql.model.Question;
 import nl.uva.polyql.model.RuleContainer;
-import nl.uva.polyql.model.Type;
+import nl.uva.polyql.model.Types;
 
-public class IdAtom extends Expression {
+public class QuestionAtom extends Expression {
 
     private Question mQuestion;
-    private final String mId;
 
-    public IdAtom(final RuleContainer parentRuleContainer, final String id, final String modifier) {
-        mId = id;
-
-        mQuestion = parentRuleContainer.getQuestion(mId);
+    public QuestionAtom(final RuleContainer parentRuleContainer, final String id, final String modifier) {
+        mQuestion = parentRuleContainer.getQuestion(id);
         if (mQuestion == null) {
-            throw new RuntimeException("Unknown question ID " + mId);
+            throw new RuntimeException("Unknown question ID " + id);
         }
     }
 
     @Override
-    public Type getReturnType() {
+    public Types getReturnType() {
         return mQuestion.getType();
     }
 

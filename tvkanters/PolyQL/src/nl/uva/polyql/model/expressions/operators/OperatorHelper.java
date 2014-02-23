@@ -7,6 +7,7 @@ public class OperatorHelper {
 
     private final static OperatorMap<Boolean> sBooleanSyntaxMap = new OperatorMap<>();
     private final static OperatorMap<Double> sNumberSyntaxMap = new OperatorMap<>();
+    private final static OperatorMap<String> sStringSyntaxMap = new OperatorMap<>();
 
     static {
         sBooleanSyntaxMap.put(new EqualsOperator());
@@ -23,6 +24,8 @@ public class OperatorHelper {
         sNumberSyntaxMap.put(new SubtractOperator());
         sNumberSyntaxMap.put(new MultiplyOperator());
         sNumberSyntaxMap.put(new DivideOperator());
+
+        sStringSyntaxMap.put(new nl.uva.polyql.model.expressions.operators.string.AddOperator());
     }
 
     public static Operator<Boolean> getBooleanOperator(final String operator) {
@@ -31,5 +34,9 @@ public class OperatorHelper {
 
     public static Operator<Double> getNumberOperator(final String operator) {
         return sNumberSyntaxMap.get(operator);
+    }
+
+    public static Operator<String> getStringOperator(final String operator) {
+        return sStringSyntaxMap.get(operator);
     }
 }

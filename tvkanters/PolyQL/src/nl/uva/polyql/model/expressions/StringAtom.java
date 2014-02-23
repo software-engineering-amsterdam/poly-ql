@@ -6,21 +6,22 @@ import java.util.Set;
 import nl.uva.polyql.model.Question;
 import nl.uva.polyql.model.Types;
 
-public class NumberAtom extends Expression {
+public class StringAtom extends Expression {
 
-    private final double mValue;
+    private final String mValue;
 
-    public NumberAtom(final String value) {
-        mValue = Double.parseDouble(value);
+    public StringAtom(final String value) {
+        // Strip out the quotes
+        mValue = value.substring(1, value.length() - 1);
     }
 
     @Override
     public Types getReturnType() {
-        return Types.NUMBER;
+        return Types.STRING;
     }
 
     @Override
-    public Double getValue() {
+    public String getValue() {
         return mValue;
     }
 
@@ -28,7 +29,7 @@ public class NumberAtom extends Expression {
     public String toString() {
         return getValue().toString();
     }
-    
+
     @Override
     public Set<Question> getReferencedQuestions() {
         return new HashSet<>();

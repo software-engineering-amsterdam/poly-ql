@@ -1,14 +1,17 @@
 package nl.uva.polyql.model.expressions.operators;
 
-import nl.uva.polyql.model.expressions.Operation;
+import nl.uva.polyql.model.Types;
+import nl.uva.polyql.model.expressions.operations.Operation;
 
 public abstract class Operator<T> {
 
     public T performOperation(final Operation<T> operation) {
-        return performOperation(operation.getLeft().getValue(), operation.getRight().getValue());
+        final Object leftValue = operation.getLeft().getValue();
+        final Object rightValue = operation.getRight().getValue();
+        return performOperation(operation.getOperandType(), leftValue, rightValue);
     }
 
-    protected abstract T performOperation(final Object left, final Object right);
+    protected abstract T performOperation(final Types operandType, final Object left, final Object right);
 
     public abstract String getSyntax();
 

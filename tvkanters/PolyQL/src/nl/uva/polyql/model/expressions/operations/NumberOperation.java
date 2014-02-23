@@ -1,6 +1,7 @@
-package nl.uva.polyql.model.expressions;
+package nl.uva.polyql.model.expressions.operations;
 
-import nl.uva.polyql.model.Type;
+import nl.uva.polyql.model.Types;
+import nl.uva.polyql.model.expressions.Expression;
 import nl.uva.polyql.model.expressions.operators.Operator;
 import nl.uva.polyql.model.expressions.operators.OperatorHelper;
 
@@ -11,8 +12,8 @@ public class NumberOperation extends Operation<Double> {
     }
 
     @Override
-    public Type getReturnType() {
-        return Type.NUMBER;
+    public Types getReturnType() {
+        return Types.NUMBER;
     }
 
     @Override

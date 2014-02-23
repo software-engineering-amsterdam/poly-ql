@@ -1,14 +1,15 @@
-package nl.uva.polyql.model.expressions;
+package nl.uva.polyql.model.expressions.operations;
 
 import java.util.Set;
 
 import nl.uva.polyql.model.Question;
-import nl.uva.polyql.model.Type;
+import nl.uva.polyql.model.Types;
+import nl.uva.polyql.model.expressions.Expression;
 import nl.uva.polyql.model.expressions.operators.Operator;
 
 public abstract class Operation<T> extends Expression {
 
-    private final Type mOperandType;
+    private final Types mOperandType;
     private final Expression mLeft;
     private final Operator<T> mOperator;
     private final Expression mRight;
@@ -28,7 +29,7 @@ public abstract class Operation<T> extends Expression {
 
     protected abstract Operator<T> getOperator(final String operator);
 
-    public Type getOperandType() {
+    public Types getOperandType() {
         return mOperandType;
     }
 

@@ -1,6 +1,7 @@
-package nl.uva.polyql.model.expressions;
+package nl.uva.polyql.model.expressions.operations;
 
-import nl.uva.polyql.model.Type;
+import nl.uva.polyql.model.Types;
+import nl.uva.polyql.model.expressions.Expression;
 import nl.uva.polyql.model.expressions.operators.Operator;
 import nl.uva.polyql.model.expressions.operators.OperatorHelper;
 
@@ -11,8 +12,8 @@ public class BooleanOperation extends Operation<Boolean> {
     }
 
     @Override
-    public Type getReturnType() {
-        return Type.BOOLEAN;
+    public Types getReturnType() {
+        return Types.BOOLEAN;
     }
 
     @Override

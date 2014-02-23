@@ -23,8 +23,8 @@ public abstract class RuleContainer extends Rule {
         return question;
     }
 
-    public Field addField(final String id, final String content, final String type, final Expression expression) {
-        final Field field = new Field(this, id, content, type, expression);
+    public Field addField(final String id, final String content, final Expression expression) {
+        final Field field = new Field(this, id, content, expression);
         mQuestions.put(id, field);
         mRules.add(field);
         return field;

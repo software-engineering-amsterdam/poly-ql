@@ -2,7 +2,7 @@ package nl.uva.polyql.model;
 
 import nl.uva.polyql.model.expressions.Expression;
 
-public class IfStatement extends RuleContainer implements QuestionUpdatedListener {
+public class IfStatement extends RuleContainer implements Question.OnUpdateListener {
 
     private final Expression mExpression;
 
@@ -20,7 +20,7 @@ public class IfStatement extends RuleContainer implements QuestionUpdatedListene
     public void onQuestionUpdate(Question question) {
         // TODO: Update visibility of the statement
     }
-    
+
     @Override
     public String toString() {
         return "IF " + mExpression;

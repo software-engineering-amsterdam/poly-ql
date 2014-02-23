@@ -1,6 +1,6 @@
 package nl.uva.polyql.model.expressions.operators.bool;
 
-import nl.uva.polyql.model.Type;
+import nl.uva.polyql.model.Types;
 import nl.uva.polyql.model.expressions.operators.UnsupportedOperandTypeException;
 
 public class GreaterThanOrEqualsOperator extends BooleanOperator {
@@ -14,12 +14,17 @@ public class GreaterThanOrEqualsOperator extends BooleanOperator {
 
     @Override
     protected Boolean performOperation(boolean left, boolean right) {
-        throw new UnsupportedOperandTypeException(Type.BOOLEAN);
+        throw new UnsupportedOperandTypeException(Types.BOOLEAN);
     }
 
     @Override
     protected Boolean performOperation(double left, double right) {
         return left >= right;
+    }
+
+    @Override
+    protected Boolean performOperation(String left, String right) {
+        throw new UnsupportedOperandTypeException(Types.STRING);
     }
 
 }
