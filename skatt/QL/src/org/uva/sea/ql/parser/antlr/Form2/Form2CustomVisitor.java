@@ -3,14 +3,9 @@ package org.uva.sea.ql.parser.antlr.Form2;
 import java.security.InvalidParameterException;
 import java.util.List;
 
-import org.antlr.v4.runtime.tree.ParseTree;
 
 import Form2.Form2BaseVisitor;
 import Form2.Form2Parser;
-import Form2.Form2Parser.ElseconditionContext;
-import Form2.Form2Parser.ElseifconditionContext;
-import Form2.Form2Parser.QuestionContext;
-import Form2.Form2Parser.StructuresContext;
 
 public class Form2CustomVisitor extends Form2BaseVisitor {
 	
@@ -27,7 +22,7 @@ public class Form2CustomVisitor extends Form2BaseVisitor {
 		if (ctx.getChildCount() == 1) { 
 			
 			// the question in structure
-			QuestionContext qctx = ctx.question();
+			Form2Parser.QuestionContext qctx = ctx.question();
 			if (qctx != null) { // if no question
 				if (verbose) 
 					System.out.println("Found a question in structure");
@@ -44,7 +39,7 @@ public class Form2CustomVisitor extends Form2BaseVisitor {
 			if (verbose)
 				System.out.println("If statement found in structure");
 			
-			if ((boolean) this.visit(ctx.ifcondition())) {
+			if (convertToBool(this.visit(ctx.ifcondition()))) {
 				if (verbose)
 					System.out.println("If statement in structure is true");
 				this.visit(ctx.structures(0));	
@@ -57,12 +52,12 @@ public class Form2CustomVisitor extends Form2BaseVisitor {
 				boolean visitElse = true; // whether to visit an optional else statement
 				
 				// check for each elseif statement if its true, if so visit question
-				List<ElseifconditionContext> elifctxs = ctx.elseifcondition();
+				List<Form2Parser.ElseifconditionContext> elifctxs = ctx.elseifcondition();
 				if (elifctxs != null) {
 					for (int i = 0; i < elifctxs.size(); i++) {
 						if (verbose)
 							System.out.println("Checking elif statement");
-						if ((boolean) this.visit(elifctxs.get(i))) {
+						if (convertToBool(this.visit(elifctxs.get(i)))) {
 							// if elseif statement is true
 							if (verbose)
 								System.out.println("Elif statement is true");
@@ -90,13 +85,14 @@ public class Form2CustomVisitor extends Form2BaseVisitor {
 	public Boolean visitIfcondition(Form2Parser.IfconditionContext ctx) {
 		if (verbose)
 			System.out.println("If condition visited");
-		return 1 == Integer.parseInt((String) this.visit(ctx.expression()));
+
+		return convertToBool(this.visit(ctx.expression()));
 	}
 	
 	public Boolean visitElseifcondition(Form2Parser.ElseifconditionContext ctx) {
 		if (verbose)
 			System.out.println("Elseif condition visited");
-		return 1 == Integer.parseInt((String) this.visit(ctx.expression()));
+		return convertToBool(this.visit(ctx.expression()));
 	}
 	
 	/////////// Code for handling visited questions
@@ -119,18 +115,45 @@ public class Form2CustomVisitor extends Form2BaseVisitor {
 		return this.visit(ctx.expression());
 	}
 	
-	public Integer visitMultExpr(Form2Parser.MultExprContext ctx) {
+	/**
+	 * Returns the mathematical result of the expression, depending on the actual mathematical operator
+	 * @param ctx is the context to evaluate 
+	 * @return is the evaluation of the expression
+	 * @throws invalidparameter if operator is not * or /
+	 */
+	public Double visitMultExpr(Form2Parser.MultExprContext ctx) {
 		if (verbose)
 			System.out.println("Mult Expression visited");
 		
-		return 1;
+		// the operator used in the expression (either + or -)
+		String op = ctx.getChild(1).getText();
+		
+		// if + operator
+		if (op == "*") {
+			if (verbose)
+				System.out.println("Mult expression contains *");
+			
+			return (convertToNumber(this.visit(ctx.expression(0))) *
+					convertToNumber(this.visit(ctx.expression(1))));
+			
+		} else if (op == "/") { // if - operator
+			if (verbose)
+				System.out.println("Mult expression contains /");
+			
+			return (convertToNumber(this.visit(ctx.expression(0))) /
+					convertToNumber(this.visit(ctx.expression(1))));
+			
+		} else { // error if neither - or +
+			System.err.println("Invalid operator for visitMultExpr...");
+			throw new InvalidParameterException();
+		}
 	}
 	
 	/**
-	 * Returns the logical result of the expression, depending on the actual logical operator
+	 * Returns the mathematical result of the expression, depending on the actual mathematical operator
 	 * @param ctx is the context to evaluate 
 	 * @return is the evaluation of the expression
-	 * @throws invalidparameter if operator is not && or ||
+	 * @throws invalidparameter if operator is not + or -
 	 */
 	public Double visitPlusExpr(Form2Parser.PlusExprContext ctx) {
 		if (verbose)
@@ -139,6 +162,7 @@ public class Form2CustomVisitor extends Form2BaseVisitor {
 		// the operator used in the expression (either + or -)
 		String op = ctx.getChild(1).getText();
 		
+		// if + operator
 		if (op == "+") {
 			if (verbose)
 				System.out.println("PLus expression contains +");
@@ -146,13 +170,14 @@ public class Form2CustomVisitor extends Form2BaseVisitor {
 			return (convertToNumber(this.visit(ctx.expression(0))) + 
 					convertToNumber(this.visit(ctx.expression(1))));
 			
-		} else if (op == "-") {
+		} else if (op == "-") { // if - operator
 			if (verbose)
 				System.out.println("PLus expression contains -");
 			
 			return (convertToNumber(this.visit(ctx.expression(0))) -
 					convertToNumber(this.visit(ctx.expression(1))));
-		} else {
+			
+		} else { // error if neither - or +
 			System.err.println("Invalid operator for visitPlusExpr...");
 			throw new InvalidParameterException();
 		}
@@ -274,6 +299,12 @@ public class Form2CustomVisitor extends Form2BaseVisitor {
 	 * @return the converted value (boolean)
 	 */
 	private boolean convertToBool(Object obj) {
+		if (obj.getClass() == new Integer(1).getClass())
+			return (int) obj == 1;
+		
+		if (obj.getClass() == new Boolean(true).getClass())
+			return (boolean) obj;
+		
 		return (obj.toString() == "true" || obj.toString() == "1");
 	}
 	

@@ -1,16 +1,5 @@
-vraag0 : "Hoe werk jij" : boolean;
-if (1) {
-  vraag1 : "Hoi werk jij" : boolean;
-  vraag2 : "Hoi werk jij" : boolean;
-  if 1 {
-    if (0) {
-	  vraagifif1 : "Hoi werk jij" : boolean;
-	  vraagifif2 : "Hoi werk jij" : boolean;
-	} elseif 0 {
-	  vraagelseif : "Hoi" : string;	
-	}
-	else {
-	  vraagelse : "else statement" : string;
-	}
-  }
+makkelijk : "Ik ben een makkelijke vraag" : string;
+
+if 0 {
+  makkelijkif : "Ik ben een makkelijke if vraag" : boolean;
 }
