@@ -1,5 +1,6 @@
 package org.uva.sea.ql.parser.antlr.Form2;
 
+import java.security.InvalidParameterException;
 import java.util.List;
 
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -139,43 +140,104 @@ public class Form2CustomVisitor extends Form2BaseVisitor {
 		return false;
 	}
 	
-	public Integer visitLogExpr(Form2Parser.LogExprContext ctx) {
+	/**
+	 * Returns the logical result of the expression, depending on the actual logical operator
+	 * @param ctx is the context to evaluate 
+	 * @return is the evaluation of the expression
+	 */
+	public Boolean visitLogExpr(Form2Parser.LogExprContext ctx) {
 		if (verbose)
 			System.out.println("Log Expression visited");
 		
-		return 1;
+		// if && logical expression
+		if (ctx.getChild(1).getText() == "&&") {
+			if (verbose) 
+				System.out.println("Log expression is a &&");
+			
+			// return the && combination of the two inner expressions
+			return convertToBool(this.visit(ctx.expression(0))) && 
+					convertToBool(this.visit(ctx.expression(1)));
+			
+		} else if(ctx.getChild(1).getText() == "||") { // if || logical expression
+			if (verbose) 
+				System.out.println("Log expression is a ||");
+			
+			// return the || combination of the two inner expressions
+			return convertToBool(this.visit(ctx.expression(0))) || 
+					convertToBool(this.visit(ctx.expression(1)));	
+		} else { // if somehow this expression does not contain && or ||, throw error
+			System.err.println("Invalid log expression...");
+            throw new InvalidParameterException();
+		}
 	}
 	
+	/**
+	 * Returns the compared result of the expression, depending on the actual comparison method
+	 * @param ctx is the context to be compared expression
+	 * @return is the evaluation of the expression
+	 */
 	public Integer visitCompExpr(Form2Parser.CompExprContext ctx) {
 		if (verbose)
 			System.out.println("Comp Expression visited");
 		
+		// TODO
+		System.err.println("Still need to implement the compare expression visitor");
 		return 1;
 	}
 	
-	public boolean visitIntExpr(Form2Parser.BoolExprContext ctx) {
+	/**
+	 * Returns the boolean value of the visited ctx
+	 * @param ctx the boolean being visited
+	 * @return the value of the boolean (true or false, casted from string)
+	 */
+	public Boolean visitBoolExpr(Form2Parser.BoolExprContext ctx) {
 		if (verbose)
 			System.out.println("Boolean Expression visited");
 		
 		return true;
 	}
 	
-	public Double visitIntExpr(Form2Parser.DecExprContext ctx) {
+	/**
+	 * Returns the value of the double being visited
+	 * @param ctx is the double being visited
+	 * @return the value of the ctx (cast to double)
+	 */
+	public Double visitDecExpr(Form2Parser.DecExprContext ctx) {
 		if (verbose)
 			System.out.println("Int Expression visited");
 		
-		return 1.0;
+		return Double.valueOf(ctx.getText());
 	}
-	
+
+	/**
+	 * Returns the integer being visited
+	 * @param ctx is the integer being visited
+	 * @return the value of ctx cast to int
+	 */
 	public Integer visitIntExpr(Form2Parser.IntExprContext ctx) {
 		if (verbose)
 			System.out.println("Int Expression visited");
 		
-		return 1;
+		return Integer.valueOf(ctx.getText());
 	}
 	
-	public void visitidentExpr(Form2Parser.IdentExprContext ctx) {
+	/**
+	 * Returns the value of the identifier being visited, or null if not set yet
+	 * @param ctx the identifier
+	 * @return the value (object)
+	 */
+	public Object visitIdentExpr(Form2Parser.IdentExprContext ctx) {
 		if (verbose)
 			System.out.println("Ident Expression visited");
+		
+		// TODO: return from a map where al identifiers and their values are stored
+		System.err.println("Still need to implement the compare expression visitor");
+		return ctx.getText();
 	}
+	
+	///////////////// parsing / casting / converting functions
+	private boolean convertToBool(Object obj) {
+		return (obj.toString() == "true" || obj.toString() == "1");
+	}
+	
 }
