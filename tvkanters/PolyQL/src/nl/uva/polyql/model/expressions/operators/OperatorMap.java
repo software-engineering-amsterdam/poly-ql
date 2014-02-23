@@ -15,4 +15,8 @@ public class OperatorMap<T> {
         return sSyntaxMap.get(syntax);
     }
 
+    public boolean contains(final String syntax) {
+        return sSyntaxMap.containsKey(syntax);
+    }
+
 }

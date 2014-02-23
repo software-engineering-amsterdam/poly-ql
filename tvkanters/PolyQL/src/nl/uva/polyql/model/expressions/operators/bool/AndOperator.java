@@ -19,12 +19,17 @@ public class AndOperator extends BooleanOperator {
 
     @Override
     protected Boolean performOperation(double left, double right) {
-        throw new UnsupportedOperandTypeException(Types.NUMBER);
+        throw new UnsupportedOperandTypeException(Types.NUMBER, SYNTAX);
     }
 
     @Override
     protected Boolean performOperation(String left, String right) {
-        throw new UnsupportedOperandTypeException(Types.STRING);
+        throw new UnsupportedOperandTypeException(Types.STRING, SYNTAX);
+    }
+
+    @Override
+    public boolean isValidForImplementedType(final Types type) {
+        return type == Types.BOOLEAN;
     }
 
 }

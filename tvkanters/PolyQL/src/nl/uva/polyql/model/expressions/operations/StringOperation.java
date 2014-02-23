@@ -21,4 +21,8 @@ public class StringOperation extends Operation<String> {
         return OperatorHelper.getStringOperator(operator);
     }
 
+    public static boolean isValid(final Types leftType, final String operator, final Types rightType) {
+        return Operation.isValid(leftType, OperatorHelper.getStringOperator(operator), rightType);
+    }
+
 }

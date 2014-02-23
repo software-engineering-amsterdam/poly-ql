@@ -20,4 +20,8 @@ public class BooleanOperation extends Operation<Boolean> {
     protected Operator<Boolean> getOperator(final String operator) {
         return OperatorHelper.getBooleanOperator(operator);
     }
+
+    public static boolean isValid(final Types leftType, final String operator, final Types rightType) {
+        return Operation.isValid(leftType, OperatorHelper.getBooleanOperator(operator), rightType);
+    }
 }

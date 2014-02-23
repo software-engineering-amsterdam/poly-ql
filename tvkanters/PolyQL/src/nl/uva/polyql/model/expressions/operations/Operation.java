@@ -6,19 +6,22 @@ import nl.uva.polyql.model.Question;
 import nl.uva.polyql.model.Types;
 import nl.uva.polyql.model.expressions.Expression;
 import nl.uva.polyql.model.expressions.operators.Operator;
+import nl.uva.polyql.model.expressions.operators.UnsupportedOperandTypeException;
 
 public abstract class Operation<T> extends Expression {
 
-    private final Types mOperandType;
     private final Expression mLeft;
     private final Operator<T> mOperator;
     private final Expression mRight;
 
     public Operation(final Expression left, final String operator, final Expression right) {
-        mOperandType = OperationHelper.getOperandType(left, right);
         mLeft = left;
         mOperator = getOperator(operator);
         mRight = right;
+
+        if (mOperator == null) {
+            throw new UnsupportedOperandTypeException(left, operator, right);
+        }
 
         System.out.println("OPERATION " + this);
     }
@@ -28,10 +31,6 @@ public abstract class Operation<T> extends Expression {
     }
 
     protected abstract Operator<T> getOperator(final String operator);
-
-    public Types getOperandType() {
-        return mOperandType;
-    }
 
     public Expression getLeft() {
         return mLeft;
@@ -51,5 +50,9 @@ public abstract class Operation<T> extends Expression {
         final Set<Question> questions = mLeft.getReferencedQuestions();
         questions.addAll(mRight.getReferencedQuestions());
         return questions;
+    }
+
+    public static boolean isValid(final Types leftType, final Operator<?> operator, final Types rightType) {
+        return operator != null && operator.isValid(leftType, rightType);
     }
 }

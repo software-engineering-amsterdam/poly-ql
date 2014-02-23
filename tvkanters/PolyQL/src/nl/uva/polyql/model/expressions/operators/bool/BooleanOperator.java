@@ -1,25 +1,25 @@
 package nl.uva.polyql.model.expressions.operators.bool;
 
 import nl.uva.polyql.model.Types;
-import nl.uva.polyql.model.expressions.operators.Operator;
+import nl.uva.polyql.model.expressions.operators.SameOperandOperator;
 import nl.uva.polyql.model.expressions.operators.UnsupportedOperandTypeException;
 
-public abstract class BooleanOperator extends Operator<Boolean> {
+public abstract class BooleanOperator extends SameOperandOperator<Boolean> {
 
     @Override
-    protected Boolean performOperation(final Types operandType, final Object left, final Object right) {
+    protected Boolean performOperation(final Types operandType, final Object leftValue, final Object rightValue) {
         switch (operandType) {
         case BOOLEAN:
-            return performOperation((boolean) left, (boolean) right);
+            return performOperation((boolean) leftValue, (boolean) rightValue);
 
         case NUMBER:
-            return performOperation((double) left, (double) right);
+            return performOperation((double) leftValue, (double) rightValue);
 
         case STRING:
-            return performOperation((String) left, (String) right);
+            return performOperation((String) leftValue, (String) rightValue);
 
         default:
-            throw new UnsupportedOperandTypeException(operandType);
+            throw new UnsupportedOperandTypeException(operandType, getSyntax());
         }
     }
 
@@ -28,4 +28,18 @@ public abstract class BooleanOperator extends Operator<Boolean> {
     protected abstract Boolean performOperation(final double left, final double right);
 
     protected abstract Boolean performOperation(final String left, final String right);
+
+    @Override
+    public boolean isValid(final Types type) {
+        switch (type) {
+        case BOOLEAN:
+        case NUMBER:
+        case STRING:
+            return isValidForImplementedType(type);
+        default:
+            return false;
+        }
+    }
+
+    public abstract boolean isValidForImplementedType(final Types type);
 }

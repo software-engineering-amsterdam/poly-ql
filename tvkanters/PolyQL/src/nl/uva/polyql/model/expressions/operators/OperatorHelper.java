@@ -39,4 +39,16 @@ public class OperatorHelper {
     public static Operator<String> getStringOperator(final String operator) {
         return sStringSyntaxMap.get(operator);
     }
+
+    public static boolean hasBooleanOperator(final String operator) {
+        return sBooleanSyntaxMap.contains(operator);
+    }
+
+    public static boolean hasNumberOperator(final String operator) {
+        return sNumberSyntaxMap.contains(operator);
+    }
+
+    public static boolean hasStringOperator(final String operator) {
+        return sStringSyntaxMap.contains(operator);
+    }
 }

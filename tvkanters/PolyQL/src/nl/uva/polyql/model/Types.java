@@ -3,7 +3,7 @@ package nl.uva.polyql.model;
 public enum Types {
     BOOLEAN(false),
     NUMBER(0.0),
-    STRING("bob");
+    STRING("");
 
     public static final String BOOLEAN_TRUE = "1";
 

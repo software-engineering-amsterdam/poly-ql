@@ -2,22 +2,26 @@ package nl.uva.polyql.model.expressions.operations;
 
 import nl.uva.polyql.model.Types;
 import nl.uva.polyql.model.expressions.Expression;
+import nl.uva.polyql.model.expressions.operators.UnsupportedOperandTypeException;
 
 public class OperationHelper {
 
-    public static Operation<?> getSameTypeOperation(final Expression left, final String operator,
-            final Expression right) {
-        final Types type = getOperandType(left, right);
-        switch (type) {
-        case BOOLEAN:
+    public static Operation<?> getOperation(final Expression left, final String operator, final Expression right) {
+
+        final Types leftType = left.getReturnType();
+        final Types rightType = right.getReturnType();
+
+        if (BooleanOperation.isValid(leftType, operator, rightType)) {
             return new BooleanOperation(left, operator, right);
-        case NUMBER:
-            return new NumberOperation(left, operator, right);
-        case STRING:
-            return new StringOperation(left, operator, right);
-        default:
-            throw new RuntimeException("Invalid operand type " + type);
         }
+        if (NumberOperation.isValid(leftType, operator, rightType)) {
+            return new NumberOperation(left, operator, right);
+        }
+        if (StringOperation.isValid(leftType, operator, rightType)) {
+            return new StringOperation(left, operator, right);
+        }
+
+        throw new UnsupportedOperandTypeException(leftType, operator, rightType);
     }
 
     public static Types getOperandType(final Expression left, final Expression right) {

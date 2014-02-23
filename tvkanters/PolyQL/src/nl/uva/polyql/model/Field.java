@@ -10,6 +10,7 @@ public class Field extends Question implements Question.OnUpdateListener {
         super(parent, id, content, expression.getReturnType());
 
         mExpression = expression;
+        setValue(expression.getValue());
 
         for (final Question question : mExpression.getReferencedQuestions()) {
             question.addUpdateListener(this);

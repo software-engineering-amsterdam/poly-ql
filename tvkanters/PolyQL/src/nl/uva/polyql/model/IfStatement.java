@@ -9,6 +9,10 @@ public class IfStatement extends RuleContainer implements Question.OnUpdateListe
     protected IfStatement(final RuleContainer parent, final Expression expression) {
         super(parent);
 
+        if (expression.getReturnType() != Types.BOOLEAN) {
+            throw new RuntimeException("Invalid if-statement expression type: " + expression.getReturnType());
+        }
+
         mExpression = expression;
 
         for (final Question question : mExpression.getReferencedQuestions()) {

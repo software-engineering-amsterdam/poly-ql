@@ -14,7 +14,7 @@ public class GreaterThanOperator extends BooleanOperator {
 
     @Override
     protected Boolean performOperation(boolean left, boolean right) {
-        throw new UnsupportedOperandTypeException(Types.BOOLEAN);
+        throw new UnsupportedOperandTypeException(Types.BOOLEAN, SYNTAX);
     }
 
     @Override
@@ -24,7 +24,12 @@ public class GreaterThanOperator extends BooleanOperator {
 
     @Override
     protected Boolean performOperation(String left, String right) {
-        throw new UnsupportedOperandTypeException(Types.STRING);
+        throw new UnsupportedOperandTypeException(Types.STRING, SYNTAX);
+    }
+
+    @Override
+    public boolean isValidForImplementedType(final Types type) {
+        return type == Types.NUMBER;
     }
 
 }

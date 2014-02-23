@@ -1,17 +1,18 @@
 package nl.uva.polyql.model.expressions.operators;
 
 import nl.uva.polyql.model.Types;
+import nl.uva.polyql.model.expressions.Expression;
 import nl.uva.polyql.model.expressions.operations.Operation;
 
 public abstract class Operator<T> {
 
     public T performOperation(final Operation<T> operation) {
-        final Object leftValue = operation.getLeft().getValue();
-        final Object rightValue = operation.getRight().getValue();
-        return performOperation(operation.getOperandType(), leftValue, rightValue);
+        return performOperation(operation.getLeft(), operation.getRight());
     }
 
-    protected abstract T performOperation(final Types operandType, final Object left, final Object right);
+    protected abstract T performOperation(final Expression left, final Expression right);
+
+    public abstract boolean isValid(final Types leftType, final Types rightType);
 
     public abstract String getSyntax();
 

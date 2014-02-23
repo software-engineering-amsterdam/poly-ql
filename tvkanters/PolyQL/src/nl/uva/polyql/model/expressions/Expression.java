@@ -11,13 +11,5 @@ public abstract class Expression {
 
     public abstract Object getValue();
 
-    public boolean getBooleanValue() {
-        return (Boolean) getValue();
-    }
-
-    public double getNumberValue() {
-        return (Double) getValue();
-    }
-
     public abstract Set<Question> getReferencedQuestions();
 }

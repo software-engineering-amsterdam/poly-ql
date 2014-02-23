@@ -1,5 +1,7 @@
 package nl.uva.polyql.model.expressions.operators.bool;
 
+import nl.uva.polyql.model.Types;
+
 public class EqualsOperator extends BooleanOperator {
 
     public static final String SYNTAX = "==";
@@ -24,4 +26,8 @@ public class EqualsOperator extends BooleanOperator {
         return left.equals(right);
     }
 
+    @Override
+    public boolean isValidForImplementedType(final Types type) {
+        return true;
+    }
 }

@@ -4,6 +4,7 @@ grammar Questionnaire;
     package nl.uva.polyql.antlr4;
     import nl.uva.polyql.model.*;
     import nl.uva.polyql.model.expressions.*;
+    import nl.uva.polyql.model.expressions.operations.*;
 }
 
 
@@ -27,22 +28,22 @@ expr_main[RuleContainer rc] returns [Expression e] :
 	expr=expr_or[$rc]{ $e = $expr.e; } ;
 
 expr_or[RuleContainer rc] returns [Expression e] :
-	(left=expr_and[$rc]{$e = $left.e;}) (op=OP_OR right=expr_and[$rc]{$e = new BooleanOperation($e, $op.text, $right.e);})* ;
+	(left=expr_and[$rc]{$e = $left.e;}) (op=OP_OR right=expr_and[$rc]{$e = OperationHelper.getOperation($e, $op.text, $right.e);})* ;
 
 expr_and[RuleContainer rc] returns [Expression e] :
-	(left=expr_eq[$rc]{$e = $left.e;}) (op=OP_AND right=expr_eq[$rc]{$e = new BooleanOperation($e, $op.text, $right.e);})* ;
+	(left=expr_eq[$rc]{$e = $left.e;}) (op=OP_AND right=expr_eq[$rc]{$e = OperationHelper.getOperation($e, $op.text, $right.e);})* ;
 
 expr_eq[RuleContainer rc] returns [Expression e] :
-	(left=expr_num[$rc]{$e = $left.e;}) (op=OP_EQ right=expr_num[$rc]{$e = new BooleanOperation($e, $op.text, $right.e);})* ;
+	(left=expr_num[$rc]{$e = $left.e;}) (op=OP_EQ right=expr_num[$rc]{$e = OperationHelper.getOperation($e, $op.text, $right.e);})* ;
 
 expr_num[RuleContainer rc] returns [Expression e] :
-	(left=expr_sum[$rc]{$e = $left.e;}) (op=OP_NUM right=expr_sum[$rc]{$e = new BooleanOperation($e, $op.text, $right.e);})* ;
+	(left=expr_sum[$rc]{$e = $left.e;}) (op=OP_NUM right=expr_sum[$rc]{$e = OperationHelper.getOperation($e, $op.text, $right.e);})* ;
 
 expr_sum[RuleContainer rc] returns [Expression e] :
-	(left=expr_prod[$rc]{$e = $left.e;}) (op=OP_SUM right=expr_prod[$rc]{$e = OperationHelper.getSameTypeOperation($e, $op.text, $right.e);})* ;
+	(left=expr_prod[$rc]{$e = $left.e;}) (op=OP_SUM right=expr_prod[$rc]{$e = OperationHelper.getOperation($e, $op.text, $right.e);})* ;
 
 expr_prod[RuleContainer rc] returns [Expression e] :
-	(left=expr_atom[$rc]{$e = $left.e;}) (op=OP_PROD right=expr_atom[$rc]{$e = OperationHelper.getSameTypeOperation($e, $op.text, $right.e);})* ;
+	(left=expr_atom[$rc]{$e = $left.e;}) (op=OP_PROD right=expr_atom[$rc]{$e = OperationHelper.getOperation($e, $op.text, $right.e);})* ;
 
 expr_atom[RuleContainer rc] returns [Expression e] :
 	mod=MODIFIER?ID { $e = new QuestionAtom($rc, $ID.text, $mod.text); }
