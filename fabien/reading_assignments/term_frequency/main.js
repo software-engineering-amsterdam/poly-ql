@@ -1,8 +1,10 @@
+"use strict";
+
 /**
   Word Frequency
 
-  Given a text file, output a list of the 25 most frequently-occurring non stop, 
-  words, ordered by decreasing frequency
+  Given a name of a textfile on the users machine, output a list of the 25 most 
+  frequently-occurring (non stop) words ordered by decreasing frequency
 */
 
 
@@ -10,95 +12,53 @@
   Dependencies
 */
 
-var fs        = require("fs");
-var argv      = require("minimist")(process.argv.slice(2));
-var stopwords = require('./stop_words/main.js');
+var argv     = require("minimist")(process.argv.slice(2));
+var fs       = require('fs');
+
+var string   = require("./src/String.js");
+var stopword = require('./src/Stopword.js');
+var term     = require("./src/Term.js");
 
 /**
-  Set input variables
+  Set input variables using argv command line support
 */
 
-var filename = argv['f'] || argv['file']  || 'input_files/simple.txt';
-var language = argv['l'] || argv['lang']  || 'en';
-var amount   = argv['c'] || argv['count'] || 25;
+var filename = argv.f || argv.file;
+var language = argv.l || argv.lang  || 'en';
+var amount   = argv.c || argv.count || 25;
 
-// Get stop words to skip
-var skipwords = stopwords.get(language);
+/**
+  Check if help command is issued
+  (or if no filename is set)
+*/
 
+if (!filename || argv.h || argv.help) {
+    var help = "Usage node main.js [options]. You can specify options:\n";
+    help += "\t-f [filename] / for example input_files/pride_prejudice.txt\n";
+    help += "\t-l [language] / Use a comma to split multiple languages.\n";
+    help += "\t-c [number]   / Amount of words displayed (default is 25).";
 
-function textToWords(text) {
-  
-  return text
-    .toLowerCase()                        // From buffer to lowercase string
-    .replace(/[\t\r\n\,\.\!\'\"]/g, '')   // Remove non letter characters
-    .split(' ');                          // Split to get words from line
-
-}
-
-function getTerms(err, text) {
-
-  // If an error occures while reading the file
-  if (err)
-    throw err;
-  
-  var terms = [];
-  var words = textToWords(text);
-
-  for (i in words) {
-    // Skip empty lines
-    if (words[i] == "")
-      continue;
-
-    // Only accept non stop words
-    if (skipwords.indexOf(words[i]) < 0)
-      terms.push(words[i]);
-  }
-
-  countFrequency(terms);
-
-}
-
-function countFrequency(terms) {
-
-  var result = [];
-
-  for (i in terms)
-    result[terms[i]] = result[terms[i]] ? result[terms[i]]+1 : 1;
-
-  // Show final result
-  groupFrequency(result);
-
-}
-
-function groupFrequency(terms) {
-
-  var result = [];
-
-  for (term in terms)
-    result.push({term : term, frequency: terms[term]});
-
-  // Sorted terms by frequency
-  result = result.sort(sortByFrequency);
-
-  display(result);
-
-}
-
-// Display top Amount (default = 25) occurences
-function display(terms) {
-
-  // Splice returns the rest result
-  var rest = terms.splice(amount);
-  console.log(terms);
-
+    console.log(help);
+    process.exit(0);
 }
 
 
-function sortByFrequency(a, b) { 
-  return b.frequency - a.frequency; 
-}
+/**
+  Create file reader and count terms
+*/
+var result    = [];
+var skipwords = stopword.get(language); // Get stop words to skip
+var reader    = fs.createReadStream(filename);
 
-// readFile loads the entire file into memory, so it should not be used on
-// big files!
-fs.readFile(filename, 'utf8', getTerms);
+reader.on('data', function (data) {
+    var terms = term.getTerms(data.toString(), skipwords);
 
+    // Concat to get a single list of terms
+    result = result.concat(terms);
+});
+
+// If file reader reaches the end of the file => print result
+reader.on('end', function () {
+    var sorted = term.countFrequency(result);
+    console.log(term.limit(sorted, amount));
+});

@@ -4,12 +4,20 @@
   "version": "0.0.1",
   "maintainers": [
     {
-      "name": "Fabiën Tesselaar",
-      "email": "fabientesselaar@gmail.com",
-      "web": "tessmore.nl"
+      "name"  : "Fabiën Tesselaar",
+      "email" : "fabientesselaar@gmail.com",
+      "web"   : "tessmore.nl"
     }
   ],
   "dependencies": {
-    "minimist": "0.0.8"
+    "minimist" : "0.0.8"
+  },
+  "devDependencies" : {
+    "jslint" : "~0.2.11",
+    "mocha"  : "~1.15.0"
+  },
+  "scripts" : {
+    "start" : "node main.js -f input_files/test.txt",
+    "test"  : "mocha -R spec"
   }
 }

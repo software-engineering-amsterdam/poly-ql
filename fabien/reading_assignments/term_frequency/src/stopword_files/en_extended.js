@@ -1,4 +1,5 @@
-exports.en = [
+// Contains stop-words, but also many words that have low information value
+exports.en_extended = [
   "able",
   "about",
   "above",
