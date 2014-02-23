@@ -20,12 +20,12 @@ public class Form2Parser extends Parser {
 		T__18=1, T__17=2, T__16=3, T__15=4, T__14=5, T__13=6, T__12=7, T__11=8, 
 		T__10=9, T__9=10, T__8=11, T__7=12, T__6=13, T__5=14, T__4=15, T__3=16, 
 		T__2=17, T__1=18, T__0=19, TYPE=20, IF=21, ELSEIF=22, ELSE=23, BOOLEAN=24, 
-		IDENTIFIER=25, STRING=26, INT=27, DEC=28, WS=29;
+		IDENTIFIER=25, STRING=26, DEC=27, INT=28, WS=29;
 	public static final String[] tokenNames = {
 		"<INVALID>", "')'", "'+'", "'-'", "'*'", "'('", "':'", "'<'", "'!='", 
 		"';'", "'<='", "'&&'", "'||'", "'{'", "'>'", "'/'", "'=='", "'}'", "'>='", 
 		"'!'", "TYPE", "'if'", "'elseif'", "'else'", "BOOLEAN", "IDENTIFIER", 
-		"STRING", "INT", "DEC", "WS"
+		"STRING", "DEC", "INT", "WS"
 	};
 	public static final int
 		RULE_form = 0, RULE_structures = 1, RULE_structure = 2, RULE_ifcondition = 3, 
@@ -968,7 +968,7 @@ public class Form2Parser extends Parser {
 		"\\\7\b\2\2\\]\5\22\n\2]^\7\b\2\2^_\7\26\2\2_`\7\7\2\2`a\5\20\t\2ab\7\3"+
 		"\2\2bc\7\13\2\2ce\3\2\2\2dS\3\2\2\2dZ\3\2\2\2e\17\3\2\2\2fg\b\t\1\2gh"+
 		"\7\25\2\2hr\5\20\t\tij\7\7\2\2jk\5\20\t\2kl\7\3\2\2lr\3\2\2\2mr\7\32\2"+
-		"\2nr\7\36\2\2or\7\35\2\2pr\7\33\2\2qf\3\2\2\2qi\3\2\2\2qm\3\2\2\2qn\3"+
+		"\2nr\7\35\2\2or\7\36\2\2pr\7\33\2\2qf\3\2\2\2qi\3\2\2\2qm\3\2\2\2qn\3"+
 		"\2\2\2qo\3\2\2\2qp\3\2\2\2r\u0081\3\2\2\2st\f\13\2\2tu\t\2\2\2u\u0080"+
 		"\5\20\t\fvw\f\n\2\2wx\t\3\2\2x\u0080\5\20\t\13yz\f\b\2\2z{\t\4\2\2{\u0080"+
 		"\5\20\t\t|}\f\7\2\2}~\t\5\2\2~\u0080\5\20\t\b\177s\3\2\2\2\177v\3\2\2"+
