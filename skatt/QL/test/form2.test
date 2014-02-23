@@ -1,5 +1,5 @@
 makkelijk : "Ik ben een makkelijke vraag" : string;
 
-if 0.5 * 2 - 1 + 1 {
+if (false == 1) {
   makkelijkif : "Ik ben een makkelijke if vraag" : boolean;
 }

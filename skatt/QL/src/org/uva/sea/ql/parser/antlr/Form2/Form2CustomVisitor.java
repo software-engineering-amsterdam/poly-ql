@@ -11,6 +11,7 @@ public class Form2CustomVisitor extends Form2BaseVisitor {
 	
 	// set for workflow prints
 	boolean verbose = true;
+	
 	//////////// code for handling if/else structure
 	
 	public Object visitStructure(Form2Parser.StructureContext ctx) {
@@ -233,13 +234,40 @@ public class Form2CustomVisitor extends Form2BaseVisitor {
 	 * @param ctx is the context to be compared expression
 	 * @return is the evaluation of the expression
 	 */
-	public Integer visitCompExpr(Form2Parser.CompExprContext ctx) {
+	public Boolean visitCompExpr(Form2Parser.CompExprContext ctx) {
 		if (verbose)
 			System.out.println("Comp Expression visited");
+
+		// contains the operator used in this comparative expression
+		String op = ctx.getChild(1).getText();
+
+		// contains our left- and righthand values
+		Object righthand = this.visit(ctx.expression(0));
+		Object lefthand = this.visit(ctx.expression(1));
 		
-		// TODO
-		System.err.println("Still need to implement the compare expression visitor");
-		return 1;
+		switch (op) {
+		case "==":
+			return righthand.equals(lefthand);
+			
+		case ">=":
+			return (double) righthand >= (double) lefthand;
+			
+		case "<=":
+			return (double) righthand <= (double) lefthand;
+			
+		case "<":
+			return (double) righthand < (double) lefthand;
+			
+		case ">":
+			return (double) righthand > (double) lefthand;
+			
+		case "!=":
+			return !righthand.equals(lefthand);
+		}
+		
+		// if operator is differen, throw an error
+		System.err.println("Error in visitCompExpr, unexpected operator");
+		throw new InvalidParameterException();
 	}
 	
 	/**
