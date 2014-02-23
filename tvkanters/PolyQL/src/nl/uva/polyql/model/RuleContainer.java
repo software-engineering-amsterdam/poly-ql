@@ -41,6 +41,12 @@ public abstract class RuleContainer extends Rule {
         return child;
     }
 
+    public IfStatement addElseStatement(final Expression expression) {
+        final IfStatement child = new ElseStatement(this, expression);
+        mRules.add(child);
+        return child;
+    }
+
     public List<Rule> getRules() {
         return mRules;
     }

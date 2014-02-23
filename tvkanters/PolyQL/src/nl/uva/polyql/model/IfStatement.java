@@ -4,7 +4,7 @@ import nl.uva.polyql.model.expressions.Expression;
 
 public class IfStatement extends RuleContainer implements Question.OnUpdateListener {
 
-    private final Expression mExpression;
+    protected final Expression mExpression;
 
     protected IfStatement(final RuleContainer parent, final Expression expression) {
         super(parent);
@@ -25,7 +25,7 @@ public class IfStatement extends RuleContainer implements Question.OnUpdateListe
     }
 
     @Override
-    public void onQuestionUpdate(Question question) {
+    public void onQuestionUpdate(final Question question) {
         // TODO: Update visibility of the statement
     }
 
@@ -35,7 +35,7 @@ public class IfStatement extends RuleContainer implements Question.OnUpdateListe
     }
 
     @Override
-    public boolean addLabel(String label) {
+    public boolean addLabel(final String label) {
         return getParent().addLabel(label);
     }
 

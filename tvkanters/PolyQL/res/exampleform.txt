@@ -10,6 +10,8 @@ form exampleForm {
     	morethandoublewonga: "WHY THAT'S ROUGHLY DOUBLE!" (wonga * 2 + 1)
 	    if (-wonga > -4 - -morethandoublewonga) {
 	    	wonga2: "What's the price of pie?" number
+	    } else {
+	    	elsequestion: "Or else?" string
 	    }
     }
 }

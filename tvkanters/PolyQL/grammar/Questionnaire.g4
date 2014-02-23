@@ -21,8 +21,9 @@ field[RuleContainer rc] :
 question[RuleContainer rc] : 
 	id=ID ':' label=STRING type=TYPE { $rc.addQuestion($id.text, $label.text, $type.text); };
 
-ifstatement[RuleContainer rc] : 
-	'if' '(' e=expr_main[$rc] { $rc.addIfStatement($e.e); } ')' '{' (r = formrule[$rc])+ '}';
+ifstatement[RuleContainer rc] returns [RuleContainer is, RuleContainer es] :
+	'if' '(' e=expr_main[$rc] { $is = $rc.addIfStatement($e.e); } ')' '{' formrule[$is]+ '}'
+	('else' { $es = $rc.addElseStatement($e.e); } '{' formrule[$es]+ '}' )?;
 
 expr_main[RuleContainer rc] returns [Expression e] :
 	expr=expr_or[$rc]{ $e = $expr.e; };
