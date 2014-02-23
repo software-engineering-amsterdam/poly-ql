@@ -30,19 +30,24 @@ expression: '(' expression ')' #wrapExpr
 		  | '!' expression #negExpr
 		  | expression ('&&' | '||') expression #logExpr 
 		  | expression ('==' | '>=' | '<=' | '<' | '>' | '!=' ) expression #compExpr
+		  | BOOLEAN #boolExpr
+		  | DEC #decExpr
 		  | INT #intExpr 
 		  | IDENTIFIER #identExpr
 		  ;
 
 // lower level components
 label: STRING;
+TYPE: 'boolean' | 'string' | 'integer' | 'date' | 'decimal' | 'currency';
 
 ////////// lexer
-TYPE: 'boolean' | 'string' | 'integer' | 'date' | 'decimal' | 'currency';
+
 IF: 'if';
 ELSEIF: 'elseif';
 ELSE: 'else'; 
 IDENTIFIER:   ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*;
 STRING : '"' (' '..'~')* '"';
-INT    : '0'..'9'+;
+INT    : ('1'..'9') ('0'..'9')+;
+BOOLEAN : 'true' | 'false';
+DEC : ('1'..'9') ('0'..'9')+ '.' ('0'..'9')+;
 WS     : [ \t\n\r]+ -> skip ;
