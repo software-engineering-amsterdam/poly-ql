@@ -13,7 +13,7 @@ form returns [Form f]
 	'form' ID '{' (r = formrule[$f])+ '}';
 
 formrule[RuleContainer rc] : 
-	field[$rc] | question[$rc] | ifstatement[$rc];
+	COMMENT | (field[$rc] | question[$rc] | ifstatement[$rc]) COMMENT?;
 	
 field[RuleContainer rc] : 
 	id=ID ':' label=STRING '(' e=expr_main[$rc] ')' { $rc.addField($id.text, $label.text, $e.e); };
@@ -61,6 +61,7 @@ op_num : ('<'|'>'|'>='|'<=');
 op_sum : ('+'|'-');
 op_prod : ('*'|'/');
 
+COMMENT : '//' ~('\n'|'\r')*;
 TYPE : ('boolean'|'number'|'string');
 BOOLEAN : ('true'|'false');
 ID : LETTER (LETTER | DIGIT)*;
