@@ -77,4 +77,12 @@ public class Form2BaseVisitor<T> extends AbstractParseTreeVisitor<T> implements 
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitElsecondition(@NotNull Form2Parser.ElseconditionContext ctx) { return visitChildren(ctx); }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitStructures(@NotNull Form2Parser.StructuresContext ctx) { return visitChildren(ctx); }
 }

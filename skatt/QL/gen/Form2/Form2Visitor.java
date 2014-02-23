@@ -68,4 +68,11 @@ public interface Form2Visitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitElsecondition(@NotNull Form2Parser.ElseconditionContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link Form2Parser#structures}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStructures(@NotNull Form2Parser.StructuresContext ctx);
 }

@@ -97,4 +97,15 @@ public interface Form2Listener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitElsecondition(@NotNull Form2Parser.ElseconditionContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link Form2Parser#structures}.
+	 * @param ctx the parse tree
+	 */
+	void enterStructures(@NotNull Form2Parser.StructuresContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Form2Parser#structures}.
+	 * @param ctx the parse tree
+	 */
+	void exitStructures(@NotNull Form2Parser.StructuresContext ctx);
 }
