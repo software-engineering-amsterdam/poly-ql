@@ -251,7 +251,7 @@ public class Form2CustomVisitor extends Form2BaseVisitor {
 		if (verbose)
 			System.out.println("Boolean Expression visited");
 		
-		return true;
+		return convertToBool(ctx.getText());
 	}
 	
 	/**
