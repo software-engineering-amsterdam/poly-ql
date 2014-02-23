@@ -1,4 +1,0 @@
-Hello 
-this is my file. 
-I don't think it works very well, 
-but we will see. The file contains words and the frequency counter will only include words that have a frequency bigger than one!

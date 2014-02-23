@@ -1,0 +1,5 @@
+makkelijk : "Ik ben een makkelijke vraag" : string;
+
+if (2.0 !=  1.99) {
+  makkelijkif : "Ik ben een makkelijke if vraag" : boolean;
+}

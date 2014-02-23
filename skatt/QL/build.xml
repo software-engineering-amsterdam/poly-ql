@@ -26,6 +26,7 @@
             <arg path="${genPath}/${grammar}" />
         	<arg value="-lib" />
         	<arg path="${srcPath}/${interpreter}" />
+        	<arg value="-visitor" />
             <arg value="grammar/${grammar}.g4" />
         </java>
     </target>

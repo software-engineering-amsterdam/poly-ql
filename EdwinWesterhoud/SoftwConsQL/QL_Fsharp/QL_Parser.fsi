@@ -10,11 +10,11 @@ type token =
   | GE
   | AND
   | OR
-  | NOT
   | PLUS
   | MINUS
   | MULT
   | DIV
+  | NOT
   | QLBOOL
   | QLSTRING
   | QLINT
@@ -29,6 +29,7 @@ type token =
   | BOOL of (bool)
   | LABEL of (string)
   | IDENTIFIER of (string)
+  | ASSIGN
   | COLON
   | B_OPEN
   | B_CLOSE
@@ -46,11 +47,11 @@ type tokenId =
     | TOKEN_GE
     | TOKEN_AND
     | TOKEN_OR
-    | TOKEN_NOT
     | TOKEN_PLUS
     | TOKEN_MINUS
     | TOKEN_MULT
     | TOKEN_DIV
+    | TOKEN_NOT
     | TOKEN_QLBOOL
     | TOKEN_QLSTRING
     | TOKEN_QLINT
@@ -65,6 +66,7 @@ type tokenId =
     | TOKEN_BOOL
     | TOKEN_LABEL
     | TOKEN_IDENTIFIER
+    | TOKEN_ASSIGN
     | TOKEN_COLON
     | TOKEN_B_OPEN
     | TOKEN_B_CLOSE

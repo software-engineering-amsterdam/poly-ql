@@ -3,25 +3,28 @@ open System
 open QL_Grammar
 open QL_Checker
 
-let parse lexbuf = 
-    let res = QL_Parser.start QL_Lexer.tokenize lexbuf
-    res
-let parse_str str = let lexbuf = Lexing.LexBuffer<_>.FromString str
-                    try 
-                        parse lexbuf
-                    with err ->
-                            let message = err.Message
-                            let s_pos = lexbuf.StartPos
-                            let e_pos = lexbuf.EndPos
-                            let startPos = Position(s_pos.Line, s_pos.Column)
-                            let endPos = Position(e_pos.Line, e_pos.Column)
-                            //let lastToken = new System.String(lexbuf.Lexeme)
-                            raise << ParseErrorException <| ParseErrorExceptionMessage(message, startPos, endPos)
+let parse lexbuf = QL_Parser.start QL_Lexer.tokenize lexbuf
+
+let parse_str str checkTypes = let lexbuf = Lexing.LexBuffer<_>.FromString str
+                               try 
+                                   let ast = parse lexbuf
+                                   if checkTypes then
+                                        typeCheck ast
+                                   else
+                                        ast
+                               with err ->
+                                       let message = err.Message
+                                       let s_pos = lexbuf.StartPos
+                                       let e_pos = lexbuf.EndPos
+                                       let startPos = Position(s_pos.Line, s_pos.Column)
+                                       let endPos = Position(e_pos.Line, e_pos.Column)
+                                       //let lastToken = new System.String(lexbuf.Lexeme)
+                                       raise << ParseErrorException <| ParseErrorExceptionMessage(message, startPos, endPos)
 
 // Test type checker
-let t = BooleanOp(Expr(Bool(true)), Eq, Expr(Int(5)))
-let check = checkExpr t
-printfn "%A" check
+//let t = ArithmeticOp(Expr(Bool(true)), arithmeticOp.Div, BooleanOp())
+//let check = getTypeExpr t
+//printfn "%A" check
 
 
 // Used for direct input in console
@@ -43,6 +46,10 @@ let y = let lexbuf = Lexing.LexBuffer<_>.FromString x
                 exit 1;
 
 printfn "%A" y
+
+Console.WriteLine();
+let check = typeCheck y
+printfn "%A" check
 
 Console.WriteLine("(press any key)")
 Console.ReadKey(true) |> ignore
