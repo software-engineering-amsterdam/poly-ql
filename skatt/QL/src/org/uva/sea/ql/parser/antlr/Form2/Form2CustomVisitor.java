@@ -14,7 +14,7 @@ import Form2.Form2Parser.StructuresContext;
 public class Form2CustomVisitor extends Form2BaseVisitor {
 	
 	// set for workflow prints
-	boolean verbose = 0;
+	boolean verbose = false;
 	//////////// code for handling if/else structure
 	
 	public Object visitStructure(Form2Parser.StructureContext ctx) {
@@ -66,7 +66,7 @@ public class Form2CustomVisitor extends Form2BaseVisitor {
 							if (verbose)
 								System.out.println("Elif statement is true");
 							visitElse = false; // do not check else statement anymore
-							this.visit(ctx.structures(i)); // visit the structure of the elseif statement
+							this.visit(ctx.structures(i + 1)); // visit the structure of the elseif statement 
 							break; // do not check other elseif statements anymore by breaking out of loop
 						}
 					}
