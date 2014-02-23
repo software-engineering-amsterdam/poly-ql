@@ -9,6 +9,10 @@ public class IfStatement extends RuleContainer implements Question.OnUpdateListe
     protected IfStatement(final RuleContainer parent, final Expression expression) {
         super(parent);
 
+        if (parent == null) {
+            throw new RuntimeException("If-statements must have a parent");
+        }
+
         if (expression.getReturnType() != Types.BOOLEAN) {
             throw new RuntimeException("Invalid if-statement expression type: " + expression.getReturnType());
         }
@@ -28,6 +32,11 @@ public class IfStatement extends RuleContainer implements Question.OnUpdateListe
     @Override
     public String toString() {
         return "IF " + mExpression;
+    }
+
+    @Override
+    public boolean addLabel(String label) {
+        return getParent().addLabel(label);
     }
 
 }

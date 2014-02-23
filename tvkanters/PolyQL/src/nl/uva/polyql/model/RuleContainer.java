@@ -18,16 +18,21 @@ public abstract class RuleContainer extends Rule {
 
     public Question addQuestion(final String id, final String content, final String type) {
         final Question question = new Question(this, id, content, type);
-        mQuestions.put(id, question);
-        mRules.add(question);
+        addQuestion(question);
         return question;
     }
 
     public Field addField(final String id, final String content, final Expression expression) {
         final Field field = new Field(this, id, content, expression);
-        mQuestions.put(id, field);
-        mRules.add(field);
+        addQuestion(field);
         return field;
+    }
+
+    private void addQuestion(final Question question) {
+        mQuestions.put(question.getId(), question);
+        mRules.add(question);
+
+        addLabel(question.getContent());
     }
 
     public IfStatement addIfStatement(final Expression expression) {
@@ -52,5 +57,7 @@ public abstract class RuleContainer extends Rule {
 
         return null;
     }
+
+    public abstract boolean addLabel(String label);
 
 }

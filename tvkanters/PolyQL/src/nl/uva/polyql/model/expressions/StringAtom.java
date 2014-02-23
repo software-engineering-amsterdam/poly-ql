@@ -12,7 +12,7 @@ public class StringAtom extends Expression {
 
     public StringAtom(final String value) {
         // Strip out the quotes
-        mValue = value.substring(1, value.length() - 1);
+        mValue = (String) Types.STRING.parseInput(value);
     }
 
     @Override

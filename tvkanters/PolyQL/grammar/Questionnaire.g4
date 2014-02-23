@@ -16,10 +16,10 @@ formrule[RuleContainer rc] :
 	field[$rc] | question[$rc] | ifstatement[$rc];
 	
 field[RuleContainer rc] : 
-	id=ID ':' content=STRING '(' e=expr_main[$rc] ')' { $rc.addField($id.text, $content.text, $e.e); };
+	id=ID ':' label=STRING '(' e=expr_main[$rc] ')' { $rc.addField($id.text, $label.text, $e.e); };
 
 question[RuleContainer rc] : 
-	id=ID ':' content=STRING type=TYPE { $rc.addQuestion($id.text, $content.text, $type.text); };
+	id=ID ':' label=STRING type=TYPE { $rc.addQuestion($id.text, $label.text, $type.text); };
 
 ifstatement[RuleContainer rc] : 
 	'if' '(' e=expr_main[$rc] { $rc.addIfStatement($e.e); } ')' '{' (r = formrule[$rc])+ '}';

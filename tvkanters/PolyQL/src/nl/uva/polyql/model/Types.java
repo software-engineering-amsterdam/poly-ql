@@ -32,7 +32,7 @@ public enum Types {
                 return null;
             }
         case STRING:
-            return input;
+            return input.substring(1, input.length() - 1);
         default:
             throw new RuntimeException("Unsupported type");
         }
