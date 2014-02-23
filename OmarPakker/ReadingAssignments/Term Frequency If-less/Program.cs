@@ -9,9 +9,9 @@ namespace Term_Frequency_If_less
 		{
 			StreamReader[] readers =
 			{
-				File.OpenText("./Input/input.txt"),
-				File.OpenText("./Input/pride-and-prejudice.txt"),
-				File.OpenText("./Input/test.txt")
+				File.OpenText("../../../Input/input.txt"),
+				File.OpenText("../../../Input/pride-and-prejudice.txt"),
+				File.OpenText("../../../Input/test.txt")
 			};
 
 			TermFrequency m = new TermFrequency();

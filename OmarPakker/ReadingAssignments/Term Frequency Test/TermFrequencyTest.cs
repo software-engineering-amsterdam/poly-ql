@@ -1,74 +1,79 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using TermFrequency;
+using Term_Frequency;
 using Xunit;
 
 namespace Term_Frequency_Test
 {
-	public class TermFrequencyTest
-	{
-		private readonly TermFrequency main;
-		private readonly StreamReader[] readers;
-		private readonly HashSet<string> stopWords;
+    public class TermFrequencyTest
+    {
+        private readonly TermFrequency tf;
+        private readonly string[] testInputs;
+        private readonly HashSet<string> stopWords;
 
-		public TermFrequencyTest()
-		{
-			main = new TermFrequency();
-			readers = new[]
+        public TermFrequencyTest()
+        {
+            tf = new TermFrequency();
+            testInputs = new[]
 			{
-				File.OpenText("./Input/input.txt"),
-				File.OpenText("./Input/pride-and-prejudice.txt"),
-				File.OpenText("./Input/test.txt")
+				File.OpenText("../../../Input/input.txt").ReadToEnd(),
+				File.OpenText("../../../Input/pride-and-prejudice.txt").ReadToEnd(),
+				File.OpenText("../../../Input/test.txt").ReadToEnd(),
+                "Casing casing CASING",
+                "a able about among problem"
 			};
-			stopWords = new HashSet<string>(File.OpenText("./Input/stop_words.txt").ReadToEnd().Split(','));
-		}
+            stopWords = new HashSet<string>(File.OpenText("../../../Input/stop_words.txt").ReadToEnd().Split(','));
+        }
 
-		[Fact]
-		public void NoStopWords()
-		{
-			foreach (StreamReader reader in readers)
-			{
-				foreach (string word in main.CountWordOccurences(reader).Select(kv => kv.Key))
-				{
-					Assert.DoesNotContain(word, stopWords);
-				}
-			}
-		}
+        [Fact]
+        public void NoStopWords()
+        {
+            foreach (string input in testInputs)
+            {
+                foreach (string word in tf.RemoveStopWordsFromList(tf.ToFilteredWords(input)))
+                {
+                    Assert.DoesNotContain(word, stopWords);
+                }
+            }
+        }
 
-		[Fact]
-		public void CorrectNumberOfEntries()
-		{
-			Assert.Equal(main.CountWordOccurences(readers[0], 25).Count(), 8);
-			Assert.Equal(main.CountWordOccurences(readers[1], 25).Count(), 25);
-			Assert.Equal(main.CountWordOccurences(readers[2], 25).Count(), 4);
-		}
+        [Fact]
+        public void CorrectNumberOfEntries()
+        {
+            int[] expectedResults = new[] { 8, 25, 4, 1, 1 };
 
-		[Fact]
-		public void CaseInsensitive()
-		{
-			foreach(StreamReader reader in readers)
-			{
-				IEnumerable<string> words = main.CountWordOccurences(reader).Select(kv => kv.Key);
-				Assert.Equal(new HashSet<string>(words.Select(w => w.ToLowerInvariant())), words);
-			}
-		}
+            for (int i = 0; i < testInputs.Length; i++)
+            {
+                Assert.Equal(tf.CountWordOccurences(testInputs[i], 25).Count(), expectedResults[i]);
+            }
+        }
 
-		[Fact]
-		public void DecreasingOrder()
-		{
-			foreach (StreamReader reader in readers)
-			{
-				KeyValuePair<string, int>[] entries = main.CountWordOccurences(reader).ToArray();
+        [Fact]
+        public void CaseInsensitive()
+        {
+            foreach (string input in testInputs)
+            {
+                IEnumerable<string> words = tf.ToFilteredWords(input);
+                Assert.Equal(new List<string>(words.Select(w => w.ToLowerInvariant())), words);
+            }
+        }
 
-				for (int i = entries.Length - 1; i > 0; i--)
-				{
-					for (int j = i - 1; j >= 0; j--)
-					{
-						Assert.True(entries[i].Value <= entries[j].Value);
-					}
-				}
-			}
-		}
-	}
+        [Fact]
+        public void DecreasingOrder()
+        {
+            foreach (string input in testInputs)
+            {
+                KeyValuePair<string, int>[] entries = tf.CountWordOccurences(input).ToArray();
+
+                for (int i = entries.Length - 1; i > 0; i--)
+                {
+                    for (int j = i - 1; j >= 0; j--)
+                    {
+                        Assert.True(entries[i].Value <= entries[j].Value);
+                    }
+                }
+            }
+        }
+    }
 }

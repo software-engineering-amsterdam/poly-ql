@@ -10,7 +10,7 @@ namespace Term_Frequency_If_less
 	public class TermFrequency
 	{
 		private static readonly HashSet<string> StopWords
-			= new HashSet<string>(File.OpenText("./Input/stop_words.txt").ReadToEnd().Split(','));
+			= new HashSet<string>(File.OpenText("../../../Input/stop_words.txt").ReadToEnd().Split(','));
 
 		public TermFrequency()
 		{
