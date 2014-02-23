@@ -13,7 +13,16 @@ public class Form2CustomVisitor extends Form2BaseVisitor {
 	boolean verbose = true;
 	
 	//////////// code for handling if/else structure
-	
+	/**
+	 * Inspects a structure, whenever visited. May contain:
+	 * - single question
+	 * - more structures (recursively)
+	 * - (if statement) (structures) (elseif statements with structures) (else statement) (structures)
+	 * 
+	 * Depending on the structure, the structure is visited
+	 * @param ctx is the structure context
+	 * @returns null 
+	 **/
 	public Object visitStructure(Form2Parser.StructureContext ctx) {
 		
 		if (verbose)
@@ -82,7 +91,11 @@ public class Form2CustomVisitor extends Form2BaseVisitor {
 		return null;
 	}
 	
-
+	/**
+	 * Returns the boolean value of the expression in a if statement
+	 * @param ctx is the if context, containing the expression
+	 * @return whether or not the expression in the if statement is true
+	 */
 	public Boolean visitIfcondition(Form2Parser.IfconditionContext ctx) {
 		if (verbose)
 			System.out.println("If condition visited");
@@ -90,6 +103,11 @@ public class Form2CustomVisitor extends Form2BaseVisitor {
 		return convertToBool(this.visit(ctx.expression()));
 	}
 	
+	/**
+	 * Returns the boolean value of the expression in a elseif statement
+	 * @param ctx is the elseif context, containing the expression
+	 * @return whether or not the expression in the elseif statement is true
+	 */
 	public Boolean visitElseifcondition(Form2Parser.ElseifconditionContext ctx) {
 		if (verbose)
 			System.out.println("Elseif condition visited");
@@ -98,17 +116,31 @@ public class Form2CustomVisitor extends Form2BaseVisitor {
 	
 	/////////// Code for handling visited questions
 	
+	/**
+	 * Prints out the question when visited
+	 * @param ctx is the question context to extract the information from
+	 * @return null
+	 */
 	public Object visitQuestion(Form2Parser.QuestionContext ctx) {
 		System.out.println("The question " + ctx.IDENTIFIER() + " of type " + ctx.TYPE() + " is:");
 		System.out.println(this.visit(ctx.label()));
 		return null;
 	}
+	
+	/**
+	 * Returns the text of the label when visited
+	 * @param ctx is the label context to extract the text from
+	 * @return the text of the label
+	 */
 	public Object visitLabel(Form2Parser.LabelContext ctx) {
 		return ctx.getText();
 	}
 	
 	/////////// Code for handling expressions 
 	
+	/**
+	 * 
+	 */
 	public Object visitWrapExpr(Form2Parser.WrapExprContext ctx) {
 		if (verbose)
 			System.out.println("Wrap Expression visited");
@@ -233,6 +265,7 @@ public class Form2CustomVisitor extends Form2BaseVisitor {
 	 * Returns the compared result of the expression, depending on the actual comparison method
 	 * @param ctx is the context to be compared expression
 	 * @return is the evaluation of the expression
+	 * 	 * @throws invalidparameter if operator is not == < > >= <= or !=
 	 */
 	public Boolean visitCompExpr(Form2Parser.CompExprContext ctx) {
 		if (verbose)
