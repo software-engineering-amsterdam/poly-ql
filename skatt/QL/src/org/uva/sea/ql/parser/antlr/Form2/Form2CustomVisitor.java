@@ -126,24 +126,52 @@ public class Form2CustomVisitor extends Form2BaseVisitor {
 		return 1;
 	}
 	
+	/**
+	 * Returns the logical result of the expression, depending on the actual logical operator
+	 * @param ctx is the context to evaluate 
+	 * @return is the evaluation of the expression
+	 * @throws invalidparameter if operator is not && or ||
+	 */
 	public Integer visitPlusExpr(Form2Parser.PlusExprContext ctx) {
 		if (verbose)
 			System.out.println("Plus Expression visited");
 		
+		// the operator used in the expression (either + or -)
+		String op = ctx.getChild(1);
+		
+		if (op == "+") {
+			if (verbose)
+				System.out.println("PLus expression contains +");
+			
+			return (this.visit(ctx.expression(0)) + this.visit(ctx.expression(1)));
+			
+		} else if (op == "-") {
+			if (verbose)
+				System.out.println("PLus expression contains -");
+		} else {
+			System.err.println("Invalid operator for visitPlusExpr...")
+			throw new InvalidParameterException();
+		}
 		return 1;
 	}
 	
+	/**
+	 * Returns the negative of the expression
+	 * @param ctx is the expression to be negated
+	 * @return is the negation of the expression
+	 */
 	public Boolean visitNegExpr(Form2Parser.NegExprContext ctx) {
 		if (verbose)
 			System.out.println("Neg Expression visited");
 		
-		return false;
+		return !(convertToBool(this.visit(ctx.expression())));
 	}
 	
 	/**
 	 * Returns the logical result of the expression, depending on the actual logical operator
 	 * @param ctx is the context to evaluate 
 	 * @return is the evaluation of the expression
+	 * @throws invalidparameter if operator is not && or ||
 	 */
 	public Boolean visitLogExpr(Form2Parser.LogExprContext ctx) {
 		if (verbose)
@@ -236,8 +264,22 @@ public class Form2CustomVisitor extends Form2BaseVisitor {
 	}
 	
 	///////////////// parsing / casting / converting functions
+	/**
+	 * Converts any object of an expression to a boolean 
+	 * "1" or "true" will return true, the rest will return false
+	 * @param obj the object to convert
+	 * @return the converted value (boolean)
+	 */
 	private boolean convertToBool(Object obj) {
 		return (obj.toString() == "true" || obj.toString() == "1");
 	}
 	
+	/**
+	 * Converts any object of an expression to a integer
+	 * @param obj the object to convert
+	 * @return the converted value (int)
+	 */
+	private int convertToInteger(Object obj) {
+		return (Integer.valueOf(obj.toString()));
+	}
 }
