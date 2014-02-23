@@ -1,11 +1,23 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30110.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Term Frequency", "Term Frequency\Term Frequency.csproj", "{51B81895-911F-4A6A-9E33-DF914D9212C1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Term Frequency Test", "Term Frequency Test\Term Frequency Test.csproj", "{B39CF6DA-4F4D-443B-A834-D2F9FD15788F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Term Frequency If-less", "Term Frequency If-less\Term Frequency If-less.csproj", "{52C155F3-D837-4FD3-900F-D91BBD1D5054}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Term Frequency Callisthenics", "Term Frequency Callisthenics\Term Frequency Callisthenics.csproj", "{0DAE185E-9A9B-4DAB-A5DF-EFD809D871AE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Input", "Input", "{6E9A0345-7FB1-455C-8E3E-5FE5124EF4E8}"
+	ProjectSection(SolutionItems) = preProject
+		Input\input.txt = Input\input.txt
+		Input\pride-and-prejudice.txt = Input\pride-and-prejudice.txt
+		Input\stop_words.txt = Input\stop_words.txt
+		Input\test.txt = Input\test.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,6 +37,10 @@ Global
 		{52C155F3-D837-4FD3-900F-D91BBD1D5054}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52C155F3-D837-4FD3-900F-D91BBD1D5054}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52C155F3-D837-4FD3-900F-D91BBD1D5054}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DAE185E-9A9B-4DAB-A5DF-EFD809D871AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DAE185E-9A9B-4DAB-A5DF-EFD809D871AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DAE185E-9A9B-4DAB-A5DF-EFD809D871AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DAE185E-9A9B-4DAB-A5DF-EFD809D871AE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
