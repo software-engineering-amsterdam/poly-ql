@@ -288,7 +288,7 @@ public class Form2CustomVisitor extends Form2BaseVisitor {
 			System.out.println("Ident Expression visited");
 		
 		// TODO: return from a map where al identifiers and their values are stored
-		System.err.println("Still need to implement the compare expression visitor");
+		System.err.println("Still need to implement the visitIdent expression visitor");
 		return ctx.getText();
 	}
 	
