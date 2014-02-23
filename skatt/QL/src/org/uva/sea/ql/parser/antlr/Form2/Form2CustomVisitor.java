@@ -205,8 +205,9 @@ public class Form2CustomVisitor extends Form2BaseVisitor {
 		if (verbose)
 			System.out.println("Log Expression visited");
 		
+		String op = ctx.getChild(1).getText();
 		// if && logical expression
-		if (ctx.getChild(1).getText() == "&&") {
+		if (op.equals("&&")) {
 			if (verbose) 
 				System.out.println("Log expression is a &&");
 			
@@ -214,7 +215,7 @@ public class Form2CustomVisitor extends Form2BaseVisitor {
 			return convertToBool(this.visit(ctx.expression(0))) && 
 					convertToBool(this.visit(ctx.expression(1)));
 			
-		} else if(ctx.getChild(1).getText() == "||") { // if || logical expression
+		} else if(op.equals("||")) { // if || logical expression
 			if (verbose) 
 				System.out.println("Log expression is a ||");
 			
@@ -294,7 +295,7 @@ public class Form2CustomVisitor extends Form2BaseVisitor {
 	///////////////// parsing / casting / converting functions
 	/**
 	 * Converts any object of an expression to a boolean 
-	 * "1", "1.0" or "true" will return true, the rest will return false
+	 * "1", "1.0"  or "true" will return true, the rest will return false
 	 * @param obj the object to convert
 	 * @return the converted value (boolean)
 	 */
