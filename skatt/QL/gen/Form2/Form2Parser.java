@@ -507,29 +507,173 @@ public class Form2Parser extends Parser {
 	}
 
 	public static class ExpressionContext extends ParserRuleContext {
-		public ExpressionContext expression(int i) {
-			return getRuleContext(ExpressionContext.class,i);
-		}
-		public TerminalNode INT() { return getToken(Form2Parser.INT, 0); }
-		public TerminalNode IDENTIFIER() { return getToken(Form2Parser.IDENTIFIER, 0); }
-		public List<ExpressionContext> expression() {
-			return getRuleContexts(ExpressionContext.class);
-		}
 		public ExpressionContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_expression; }
+	 
+		public ExpressionContext() { }
+		public void copyFrom(ExpressionContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class MultExprContext extends ExpressionContext {
+		public ExpressionContext expression(int i) {
+			return getRuleContext(ExpressionContext.class,i);
+		}
+		public List<ExpressionContext> expression() {
+			return getRuleContexts(ExpressionContext.class);
+		}
+		public MultExprContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof Form2Listener ) ((Form2Listener)listener).enterExpression(this);
+			if ( listener instanceof Form2Listener ) ((Form2Listener)listener).enterMultExpr(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof Form2Listener ) ((Form2Listener)listener).exitExpression(this);
+			if ( listener instanceof Form2Listener ) ((Form2Listener)listener).exitMultExpr(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof Form2Visitor ) return ((Form2Visitor<? extends T>)visitor).visitExpression(this);
+			if ( visitor instanceof Form2Visitor ) return ((Form2Visitor<? extends T>)visitor).visitMultExpr(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class IntExprContext extends ExpressionContext {
+		public TerminalNode INT() { return getToken(Form2Parser.INT, 0); }
+		public IntExprContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof Form2Listener ) ((Form2Listener)listener).enterIntExpr(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof Form2Listener ) ((Form2Listener)listener).exitIntExpr(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof Form2Visitor ) return ((Form2Visitor<? extends T>)visitor).visitIntExpr(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class WrapExprContext extends ExpressionContext {
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
+		}
+		public WrapExprContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof Form2Listener ) ((Form2Listener)listener).enterWrapExpr(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof Form2Listener ) ((Form2Listener)listener).exitWrapExpr(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof Form2Visitor ) return ((Form2Visitor<? extends T>)visitor).visitWrapExpr(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class IdentExprContext extends ExpressionContext {
+		public TerminalNode IDENTIFIER() { return getToken(Form2Parser.IDENTIFIER, 0); }
+		public IdentExprContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof Form2Listener ) ((Form2Listener)listener).enterIdentExpr(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof Form2Listener ) ((Form2Listener)listener).exitIdentExpr(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof Form2Visitor ) return ((Form2Visitor<? extends T>)visitor).visitIdentExpr(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class LogExprContext extends ExpressionContext {
+		public ExpressionContext expression(int i) {
+			return getRuleContext(ExpressionContext.class,i);
+		}
+		public List<ExpressionContext> expression() {
+			return getRuleContexts(ExpressionContext.class);
+		}
+		public LogExprContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof Form2Listener ) ((Form2Listener)listener).enterLogExpr(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof Form2Listener ) ((Form2Listener)listener).exitLogExpr(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof Form2Visitor ) return ((Form2Visitor<? extends T>)visitor).visitLogExpr(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class NegExprContext extends ExpressionContext {
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
+		}
+		public NegExprContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof Form2Listener ) ((Form2Listener)listener).enterNegExpr(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof Form2Listener ) ((Form2Listener)listener).exitNegExpr(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof Form2Visitor ) return ((Form2Visitor<? extends T>)visitor).visitNegExpr(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class PlusExprContext extends ExpressionContext {
+		public ExpressionContext expression(int i) {
+			return getRuleContext(ExpressionContext.class,i);
+		}
+		public List<ExpressionContext> expression() {
+			return getRuleContexts(ExpressionContext.class);
+		}
+		public PlusExprContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof Form2Listener ) ((Form2Listener)listener).enterPlusExpr(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof Form2Listener ) ((Form2Listener)listener).exitPlusExpr(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof Form2Visitor ) return ((Form2Visitor<? extends T>)visitor).visitPlusExpr(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class CompExprContext extends ExpressionContext {
+		public ExpressionContext expression(int i) {
+			return getRuleContext(ExpressionContext.class,i);
+		}
+		public List<ExpressionContext> expression() {
+			return getRuleContexts(ExpressionContext.class);
+		}
+		public CompExprContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof Form2Listener ) ((Form2Listener)listener).enterCompExpr(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof Form2Listener ) ((Form2Listener)listener).exitCompExpr(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof Form2Visitor ) return ((Form2Visitor<? extends T>)visitor).visitCompExpr(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -554,12 +698,19 @@ public class Form2Parser extends Parser {
 			switch (_input.LA(1)) {
 			case 19:
 				{
+				_localctx = new NegExprContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+
 				setState(101); match(19);
 				setState(102); expression(5);
 				}
 				break;
 			case 5:
 				{
+				_localctx = new WrapExprContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(103); match(5);
 				setState(104); expression(0);
 				setState(105); match(1);
@@ -567,11 +718,17 @@ public class Form2Parser extends Parser {
 				break;
 			case INT:
 				{
+				_localctx = new IntExprContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(107); match(INT);
 				}
 				break;
 			case IDENTIFIER:
 				{
+				_localctx = new IdentExprContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(108); match(IDENTIFIER);
 				}
 				break;
@@ -591,7 +748,7 @@ public class Form2Parser extends Parser {
 					switch ( getInterpreter().adaptivePredict(_input,6,_ctx) ) {
 					case 1:
 						{
-						_localctx = new ExpressionContext(_parentctx, _parentState);
+						_localctx = new MultExprContext(new ExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(111);
 						if (!(precpred(_ctx, 7))) throw new FailedPredicateException(this, "precpred(_ctx, 7)");
@@ -607,7 +764,7 @@ public class Form2Parser extends Parser {
 
 					case 2:
 						{
-						_localctx = new ExpressionContext(_parentctx, _parentState);
+						_localctx = new PlusExprContext(new ExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(114);
 						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
@@ -623,7 +780,7 @@ public class Form2Parser extends Parser {
 
 					case 3:
 						{
-						_localctx = new ExpressionContext(_parentctx, _parentState);
+						_localctx = new LogExprContext(new ExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(117);
 						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
@@ -639,7 +796,7 @@ public class Form2Parser extends Parser {
 
 					case 4:
 						{
-						_localctx = new ExpressionContext(_parentctx, _parentState);
+						_localctx = new CompExprContext(new ExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(120);
 						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");

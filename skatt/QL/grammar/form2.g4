@@ -24,13 +24,15 @@ question: IDENTIFIER ':' label ':' TYPE ';'
 		  | IDENTIFIER ':' label ':' TYPE '('expression')' ';'; 
 
 // expressions
-expression: '(' expression ')'  
-		  | expression ('*'|'/') expression
-		  | expression ('+'|'-') expression
-		  | '!' expression
-		  | expression ('&&' | '||') expression 
-		  | expression ('==' | '>=' | '<=' | '<' | '>' | '!=' ) expression
-		  | INT | IDENTIFIER;
+expression: '(' expression ')' #wrapExpr  
+		  | expression ('*'|'/') expression #multExpr
+		  | expression ('+'|'-') expression #plusExpr
+		  | '!' expression #negExpr
+		  | expression ('&&' | '||') expression #logExpr 
+		  | expression ('==' | '>=' | '<=' | '<' | '>' | '!=' ) expression #compExpr
+		  | INT #intExpr 
+		  | IDENTIFIER #identExpr
+		  ;
 
 // lower level components
 label: STRING;

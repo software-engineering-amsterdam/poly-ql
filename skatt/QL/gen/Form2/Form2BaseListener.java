@@ -19,13 +19,13 @@ public class Form2BaseListener implements Form2Listener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExpression(@NotNull Form2Parser.ExpressionContext ctx) { }
+	@Override public void enterMultExpr(@NotNull Form2Parser.MultExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExpression(@NotNull Form2Parser.ExpressionContext ctx) { }
+	@Override public void exitMultExpr(@NotNull Form2Parser.MultExprContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
@@ -39,6 +39,32 @@ public class Form2BaseListener implements Form2Listener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitStructure(@NotNull Form2Parser.StructureContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIdentExpr(@NotNull Form2Parser.IdentExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIdentExpr(@NotNull Form2Parser.IdentExprContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterLogExpr(@NotNull Form2Parser.LogExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLogExpr(@NotNull Form2Parser.LogExprContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
@@ -84,13 +110,13 @@ public class Form2BaseListener implements Form2Listener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterQuestion(@NotNull Form2Parser.QuestionContext ctx) { }
+	@Override public void enterPlusExpr(@NotNull Form2Parser.PlusExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitQuestion(@NotNull Form2Parser.QuestionContext ctx) { }
+	@Override public void exitPlusExpr(@NotNull Form2Parser.PlusExprContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
@@ -110,13 +136,13 @@ public class Form2BaseListener implements Form2Listener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterElsecondition(@NotNull Form2Parser.ElseconditionContext ctx) { }
+	@Override public void enterCompExpr(@NotNull Form2Parser.CompExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitElsecondition(@NotNull Form2Parser.ElseconditionContext ctx) { }
+	@Override public void exitCompExpr(@NotNull Form2Parser.CompExprContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
@@ -130,6 +156,71 @@ public class Form2BaseListener implements Form2Listener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitStructures(@NotNull Form2Parser.StructuresContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIntExpr(@NotNull Form2Parser.IntExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIntExpr(@NotNull Form2Parser.IntExprContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterWrapExpr(@NotNull Form2Parser.WrapExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitWrapExpr(@NotNull Form2Parser.WrapExprContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterNegExpr(@NotNull Form2Parser.NegExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNegExpr(@NotNull Form2Parser.NegExprContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterQuestion(@NotNull Form2Parser.QuestionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitQuestion(@NotNull Form2Parser.QuestionContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterElsecondition(@NotNull Form2Parser.ElseconditionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitElsecondition(@NotNull Form2Parser.ElseconditionContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

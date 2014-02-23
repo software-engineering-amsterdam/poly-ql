@@ -14,11 +14,11 @@ import org.antlr.v4.runtime.tree.ParseTreeVisitor;
  */
 public interface Form2Visitor<T> extends ParseTreeVisitor<T> {
 	/**
-	 * Visit a parse tree produced by {@link Form2Parser#expression}.
+	 * Visit a parse tree produced by {@link Form2Parser#multExpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitExpression(@NotNull Form2Parser.ExpressionContext ctx);
+	T visitMultExpr(@NotNull Form2Parser.MultExprContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link Form2Parser#structure}.
@@ -26,6 +26,20 @@ public interface Form2Visitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitStructure(@NotNull Form2Parser.StructureContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link Form2Parser#identExpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIdentExpr(@NotNull Form2Parser.IdentExprContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link Form2Parser#logExpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLogExpr(@NotNull Form2Parser.LogExprContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link Form2Parser#form}.
@@ -49,11 +63,11 @@ public interface Form2Visitor<T> extends ParseTreeVisitor<T> {
 	T visitLabel(@NotNull Form2Parser.LabelContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link Form2Parser#question}.
+	 * Visit a parse tree produced by {@link Form2Parser#plusExpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitQuestion(@NotNull Form2Parser.QuestionContext ctx);
+	T visitPlusExpr(@NotNull Form2Parser.PlusExprContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link Form2Parser#ifcondition}.
@@ -63,11 +77,11 @@ public interface Form2Visitor<T> extends ParseTreeVisitor<T> {
 	T visitIfcondition(@NotNull Form2Parser.IfconditionContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link Form2Parser#elsecondition}.
+	 * Visit a parse tree produced by {@link Form2Parser#compExpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitElsecondition(@NotNull Form2Parser.ElseconditionContext ctx);
+	T visitCompExpr(@NotNull Form2Parser.CompExprContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link Form2Parser#structures}.
@@ -75,4 +89,39 @@ public interface Form2Visitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitStructures(@NotNull Form2Parser.StructuresContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link Form2Parser#intExpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIntExpr(@NotNull Form2Parser.IntExprContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link Form2Parser#wrapExpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitWrapExpr(@NotNull Form2Parser.WrapExprContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link Form2Parser#negExpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNegExpr(@NotNull Form2Parser.NegExprContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link Form2Parser#question}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitQuestion(@NotNull Form2Parser.QuestionContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link Form2Parser#elsecondition}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitElsecondition(@NotNull Form2Parser.ElseconditionContext ctx);
 }

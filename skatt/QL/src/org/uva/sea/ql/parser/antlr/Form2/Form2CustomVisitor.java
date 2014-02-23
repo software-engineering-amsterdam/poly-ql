@@ -14,7 +14,7 @@ import Form2.Form2Parser.StructuresContext;
 public class Form2CustomVisitor extends Form2BaseVisitor {
 	
 	// set for workflow prints
-	boolean verbose = false;
+	boolean verbose = true;
 	//////////// code for handling if/else structure
 	
 	public Object visitStructure(Form2Parser.StructureContext ctx) {
@@ -113,6 +113,19 @@ public class Form2CustomVisitor extends Form2BaseVisitor {
 	public Object visitExpression(Form2Parser.ExpressionContext ctx) {
 		if (verbose)
 			System.out.println("Expression visited");
-		return ctx.getText();
+		
+		System.err.println(ctx.getChild(0).toString());
+		// if expression is wrapped in (), visit the expression inside
+		if (ctx.getChild(0).toString() == "(") {
+			if (verbose)
+				System.out.println("Expression wrapped in ()");
+			
+			return this.visit(ctx.expression(0));
+		} else {
+			if (verbose)
+				System.out.println("Expression not wrapped in ()");
+			
+			return ctx.getText();
+		}
 	}
 }

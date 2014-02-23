@@ -11,15 +11,15 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface Form2Listener extends ParseTreeListener {
 	/**
-	 * Enter a parse tree produced by {@link Form2Parser#expression}.
+	 * Enter a parse tree produced by {@link Form2Parser#multExpr}.
 	 * @param ctx the parse tree
 	 */
-	void enterExpression(@NotNull Form2Parser.ExpressionContext ctx);
+	void enterMultExpr(@NotNull Form2Parser.MultExprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link Form2Parser#expression}.
+	 * Exit a parse tree produced by {@link Form2Parser#multExpr}.
 	 * @param ctx the parse tree
 	 */
-	void exitExpression(@NotNull Form2Parser.ExpressionContext ctx);
+	void exitMultExpr(@NotNull Form2Parser.MultExprContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link Form2Parser#structure}.
@@ -31,6 +31,28 @@ public interface Form2Listener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitStructure(@NotNull Form2Parser.StructureContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link Form2Parser#identExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterIdentExpr(@NotNull Form2Parser.IdentExprContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Form2Parser#identExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitIdentExpr(@NotNull Form2Parser.IdentExprContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link Form2Parser#logExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterLogExpr(@NotNull Form2Parser.LogExprContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Form2Parser#logExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitLogExpr(@NotNull Form2Parser.LogExprContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link Form2Parser#form}.
@@ -66,15 +88,15 @@ public interface Form2Listener extends ParseTreeListener {
 	void exitLabel(@NotNull Form2Parser.LabelContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link Form2Parser#question}.
+	 * Enter a parse tree produced by {@link Form2Parser#plusExpr}.
 	 * @param ctx the parse tree
 	 */
-	void enterQuestion(@NotNull Form2Parser.QuestionContext ctx);
+	void enterPlusExpr(@NotNull Form2Parser.PlusExprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link Form2Parser#question}.
+	 * Exit a parse tree produced by {@link Form2Parser#plusExpr}.
 	 * @param ctx the parse tree
 	 */
-	void exitQuestion(@NotNull Form2Parser.QuestionContext ctx);
+	void exitPlusExpr(@NotNull Form2Parser.PlusExprContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link Form2Parser#ifcondition}.
@@ -88,15 +110,15 @@ public interface Form2Listener extends ParseTreeListener {
 	void exitIfcondition(@NotNull Form2Parser.IfconditionContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link Form2Parser#elsecondition}.
+	 * Enter a parse tree produced by {@link Form2Parser#compExpr}.
 	 * @param ctx the parse tree
 	 */
-	void enterElsecondition(@NotNull Form2Parser.ElseconditionContext ctx);
+	void enterCompExpr(@NotNull Form2Parser.CompExprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link Form2Parser#elsecondition}.
+	 * Exit a parse tree produced by {@link Form2Parser#compExpr}.
 	 * @param ctx the parse tree
 	 */
-	void exitElsecondition(@NotNull Form2Parser.ElseconditionContext ctx);
+	void exitCompExpr(@NotNull Form2Parser.CompExprContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link Form2Parser#structures}.
@@ -108,4 +130,59 @@ public interface Form2Listener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitStructures(@NotNull Form2Parser.StructuresContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link Form2Parser#intExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterIntExpr(@NotNull Form2Parser.IntExprContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Form2Parser#intExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitIntExpr(@NotNull Form2Parser.IntExprContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link Form2Parser#wrapExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterWrapExpr(@NotNull Form2Parser.WrapExprContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Form2Parser#wrapExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitWrapExpr(@NotNull Form2Parser.WrapExprContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link Form2Parser#negExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterNegExpr(@NotNull Form2Parser.NegExprContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Form2Parser#negExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitNegExpr(@NotNull Form2Parser.NegExprContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link Form2Parser#question}.
+	 * @param ctx the parse tree
+	 */
+	void enterQuestion(@NotNull Form2Parser.QuestionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Form2Parser#question}.
+	 * @param ctx the parse tree
+	 */
+	void exitQuestion(@NotNull Form2Parser.QuestionContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link Form2Parser#elsecondition}.
+	 * @param ctx the parse tree
+	 */
+	void enterElsecondition(@NotNull Form2Parser.ElseconditionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Form2Parser#elsecondition}.
+	 * @param ctx the parse tree
+	 */
+	void exitElsecondition(@NotNull Form2Parser.ElseconditionContext ctx);
 }
