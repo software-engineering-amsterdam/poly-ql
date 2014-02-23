@@ -138,18 +138,35 @@ public class Form2CustomVisitor extends Form2BaseVisitor {
 		
 		return false;
 	}
+	
 	public Integer visitLogExpr(Form2Parser.LogExprContext ctx) {
 		if (verbose)
 			System.out.println("Log Expression visited");
 		
 		return 1;
 	}
+	
 	public Integer visitCompExpr(Form2Parser.CompExprContext ctx) {
 		if (verbose)
 			System.out.println("Comp Expression visited");
 		
 		return 1;
 	}
+	
+	public boolean visitIntExpr(Form2Parser.BoolExprContext ctx) {
+		if (verbose)
+			System.out.println("Boolean Expression visited");
+		
+		return true;
+	}
+	
+	public Double visitIntExpr(Form2Parser.DecExprContext ctx) {
+		if (verbose)
+			System.out.println("Int Expression visited");
+		
+		return 1.0;
+	}
+	
 	public Integer visitIntExpr(Form2Parser.IntExprContext ctx) {
 		if (verbose)
 			System.out.println("Int Expression visited");

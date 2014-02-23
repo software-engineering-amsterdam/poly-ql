@@ -21,6 +21,13 @@ public interface Form2Visitor<T> extends ParseTreeVisitor<T> {
 	T visitMultExpr(@NotNull Form2Parser.MultExprContext ctx);
 
 	/**
+	 * Visit a parse tree produced by {@link Form2Parser#decExpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDecExpr(@NotNull Form2Parser.DecExprContext ctx);
+
+	/**
 	 * Visit a parse tree produced by {@link Form2Parser#structure}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -75,6 +82,13 @@ public interface Form2Visitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitIfcondition(@NotNull Form2Parser.IfconditionContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link Form2Parser#boolExpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBoolExpr(@NotNull Form2Parser.BoolExprContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link Form2Parser#compExpr}.

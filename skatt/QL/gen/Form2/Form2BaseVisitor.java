@@ -28,6 +28,14 @@ public class Form2BaseVisitor<T> extends AbstractParseTreeVisitor<T> implements 
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitDecExpr(@NotNull Form2Parser.DecExprContext ctx) { return visitChildren(ctx); }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitStructure(@NotNull Form2Parser.StructureContext ctx) { return visitChildren(ctx); }
 
 	/**
@@ -85,6 +93,14 @@ public class Form2BaseVisitor<T> extends AbstractParseTreeVisitor<T> implements 
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitIfcondition(@NotNull Form2Parser.IfconditionContext ctx) { return visitChildren(ctx); }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitBoolExpr(@NotNull Form2Parser.BoolExprContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}

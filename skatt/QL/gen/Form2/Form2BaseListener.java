@@ -32,6 +32,19 @@ public class Form2BaseListener implements Form2Listener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterDecExpr(@NotNull Form2Parser.DecExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDecExpr(@NotNull Form2Parser.DecExprContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterStructure(@NotNull Form2Parser.StructureContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -130,6 +143,19 @@ public class Form2BaseListener implements Form2Listener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitIfcondition(@NotNull Form2Parser.IfconditionContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterBoolExpr(@NotNull Form2Parser.BoolExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBoolExpr(@NotNull Form2Parser.BoolExprContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

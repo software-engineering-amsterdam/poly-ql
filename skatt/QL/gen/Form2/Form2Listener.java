@@ -22,6 +22,17 @@ public interface Form2Listener extends ParseTreeListener {
 	void exitMultExpr(@NotNull Form2Parser.MultExprContext ctx);
 
 	/**
+	 * Enter a parse tree produced by {@link Form2Parser#decExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterDecExpr(@NotNull Form2Parser.DecExprContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Form2Parser#decExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitDecExpr(@NotNull Form2Parser.DecExprContext ctx);
+
+	/**
 	 * Enter a parse tree produced by {@link Form2Parser#structure}.
 	 * @param ctx the parse tree
 	 */
@@ -108,6 +119,17 @@ public interface Form2Listener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitIfcondition(@NotNull Form2Parser.IfconditionContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link Form2Parser#boolExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterBoolExpr(@NotNull Form2Parser.BoolExprContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Form2Parser#boolExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitBoolExpr(@NotNull Form2Parser.BoolExprContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link Form2Parser#compExpr}.
