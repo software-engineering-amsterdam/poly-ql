@@ -5,25 +5,31 @@ using System.Text;
 
 namespace QSLib.Expressions.Types
 {
-    class QSNumber : IExpression
+    class QSNumber : Primary
     {
         private int _value;
         private String _id;
+        private int _linenr;
 
-        public QSNumber(String id, int value)
+        public QSNumber(String id, int value, int linenr)
         {
             this._id = id;
             this._value = value;
+            this._linenr = linenr;
         }
 
-        public QSNumber(int value)
+        public QSNumber(int value, int linenr)
         {
             this._value = value;
+            this._linenr = linenr;
         }
 
-        public Type CheckType()
+        public override Type Type
         {
-            return 1.GetType();
+            get
+            {
+                return 1.GetType();
+            }
         }
 
         public override string ToString()

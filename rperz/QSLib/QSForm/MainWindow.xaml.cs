@@ -26,6 +26,7 @@ namespace QSForm
         public MainWindow()
         {
             InitializeComponent();
+            tbInput.Text = "form { \"Dit is een vraag \" bAntwoord : Boolean if(bAntwoord) { \"Deze vraag moet ook gesteld\" bTest : Boolean } }";
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -34,8 +35,12 @@ namespace QSForm
             QSLexer lex = new QSLexer(stream);
             CommonTokenStream tokens = new CommonTokenStream(lex);
             QSParser parser = new QSParser(tokens);
+            IParseTree tree = parser.form();
+            MyListener listener = new MyListener(parser);
+            ParseTreeWalker walker = new ParseTreeWalker();
+            walker.Walk(listener, tree);
 
-            parser.root.ToString();
+            tbOutput.Text = listener.root.ToString();
         }
 
     }

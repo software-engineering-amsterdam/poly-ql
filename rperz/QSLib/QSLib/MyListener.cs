@@ -5,7 +5,7 @@ using System.Text;
 
 namespace QSLib
 {
-    public class MyListener : QSParserBaseListener
+    public class MyListener : QSBaseListener
     {
         private QSParser parser;
         public delegate void Print(String text);
@@ -19,25 +19,9 @@ namespace QSLib
             this.parser = parser;
         }
 
-        public override void EnterForm(QSParser.FormContext context)
-        {
-            base.EnterForm(context);
-        }
-
         public override void ExitForm(QSParser.FormContext context)
         {
             root = context.f;
-        }
-
-        public override void EnterQuestion(QSParser.QuestionContext context)
-        {
-            base.EnterQuestion(context);
-        }
-
-        public override void ExitAssignment(QSParser.AssignmentContext context)
-        {
-            base.ExitAssignment(context);
- 
         }
     }
 }

@@ -5,12 +5,12 @@ using System.Text;
 
 namespace QSLib.Expressions.Conditions.Comparison
 {
-    class SmallerThan : Binary_Expression 
+    class SmallerThan : Condition
     {
-        protected String _operator = "<";
-        public SmallerThan(IExpression a, IExpression b)
-            : base(a, b)
+        public SmallerThan(IExpression a, IExpression b, int linenr)
+            : base(a, b, linenr)
         {
+            base._operator = "<";
         }   
     }
 }

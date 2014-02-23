@@ -48,7 +48,12 @@
     <Compile Include="Classes\Errors\TypeError.cs" />
     <Compile Include="Classes\Expressions\Conditions\Binary\And.cs" />
     <Compile Include="Classes\Expressions\Binary_Expression.cs" />
+    <Compile Include="Classes\Expressions\Conditions\Binary\BoolValue.cs" />
+    <Compile Include="Classes\Expressions\Conditions\Condition.cs" />
+    <Compile Include="Classes\Expressions\ElseStatement.cs" />
+    <Compile Include="Classes\Expressions\IfStatement.cs" />
     <Compile Include="Classes\Expressions\Types\Identifier.cs" />
+    <Compile Include="Classes\Expressions\Types\Primary.cs" />
     <Compile Include="Classes\Expressions\Unary_Expression.cs" />
     <Compile Include="Classes\Expressions\IExpression.cs" />
     <Compile Include="Classes\Expressions\Types\Bool.cs" />
@@ -69,24 +74,18 @@
     <Compile Include="Classes\IStatement.cs" />
     <Compile Include="Classes\Question.cs" />
     <Compile Include="Classes\Expressions\Types\String.cs" />
+    <Compile Include="Classes\TypeChecker.cs" />
     <Compile Include="MyListener.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QSLexer.g4.cs">
-      <DependentUpon>QSLexer.g4</DependentUpon>
-    </Compile>
     <Compile Include="QSParser.g4.cs">
-      <DependentUpon>QSParser.g4</DependentUpon>
+      <DependentUpon>QS.g4</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
-    <Antlr4 Include="QSLexer.g4">
-      <Generator>MSBuild:Compile</Generator>
-      <CustomToolNamespace>QSLib</CustomToolNamespace>
-    </Antlr4>
-    <Antlr4 Include="QSParser.g4">
+    <Antlr4 Include="QS.g4">
       <Generator>MSBuild:Compile</Generator>
       <CustomToolNamespace>QSLib</CustomToolNamespace>
     </Antlr4>

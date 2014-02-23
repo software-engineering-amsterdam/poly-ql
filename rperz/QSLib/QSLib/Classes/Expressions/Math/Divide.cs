@@ -7,10 +7,10 @@ namespace QSLib.Expressions.Math
 {
     class Divide : Binary_Expression 
     {
-        protected String _operator = "/";
-        public Divide(IExpression a, IExpression b)
-            : base(a, b)
+        public Divide(IExpression a, IExpression b, int linenr)
+            : base(a, b, linenr)
         {
+            base._operator = "/";
         }
     }
 }

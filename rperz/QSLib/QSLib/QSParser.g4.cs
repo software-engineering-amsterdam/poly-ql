@@ -7,7 +7,7 @@ using Antlr4.Runtime.Atn;
 
 namespace QSLib
 {
-    partial class QSParser
+    partial class QS
     {
 
     }

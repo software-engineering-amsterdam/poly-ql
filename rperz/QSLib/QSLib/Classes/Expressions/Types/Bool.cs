@@ -2,28 +2,35 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using QSLib.Expressions.Conditions;
 
 namespace QSLib.Expressions.Types
 {
-    class QSBoolean : IExpression
+    class QSBoolean : Primary 
     {
         private bool _value;
         private string _id;
+        private int _linenr;
 
-        public QSBoolean(String id, bool value)
+        public QSBoolean(String id, bool value, int linenr)
         {
             this._id = id;
             this._value = value;
+            this._linenr = linenr;
         }
 
-        public QSBoolean(bool value)
+        public QSBoolean(bool value, int linenr)
         {
             this._value = value;
+            this._linenr = linenr;
         }
 
-        public Type CheckType()
+        public override Type Type
         {
-            return true.GetType();
+            get
+            {
+                return true.GetType();
+            }
         }
 
         public override string ToString()
