@@ -132,27 +132,30 @@ public class Form2CustomVisitor extends Form2BaseVisitor {
 	 * @return is the evaluation of the expression
 	 * @throws invalidparameter if operator is not && or ||
 	 */
-	public Integer visitPlusExpr(Form2Parser.PlusExprContext ctx) {
+	public Double visitPlusExpr(Form2Parser.PlusExprContext ctx) {
 		if (verbose)
 			System.out.println("Plus Expression visited");
 		
 		// the operator used in the expression (either + or -)
-		String op = ctx.getChild(1);
+		String op = ctx.getChild(1).getText();
 		
 		if (op == "+") {
 			if (verbose)
 				System.out.println("PLus expression contains +");
 			
-			return (this.visit(ctx.expression(0)) + this.visit(ctx.expression(1)));
+			return (convertToNumber(this.visit(ctx.expression(0))) + 
+					convertToNumber(this.visit(ctx.expression(1))));
 			
 		} else if (op == "-") {
 			if (verbose)
 				System.out.println("PLus expression contains -");
+			
+			return (convertToNumber(this.visit(ctx.expression(0))) -
+					convertToNumber(this.visit(ctx.expression(1))));
 		} else {
-			System.err.println("Invalid operator for visitPlusExpr...")
+			System.err.println("Invalid operator for visitPlusExpr...");
 			throw new InvalidParameterException();
 		}
-		return 1;
 	}
 	
 	/**
@@ -279,7 +282,7 @@ public class Form2CustomVisitor extends Form2BaseVisitor {
 	 * @param obj the object to convert
 	 * @return the converted value (int)
 	 */
-	private int convertToInteger(Object obj) {
-		return (Integer.valueOf(obj.toString()));
+	private double convertToNumber(Object obj) {
+		return (Double.valueOf(obj.toString()));
 	}
 }
