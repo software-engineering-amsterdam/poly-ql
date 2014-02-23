@@ -8,13 +8,13 @@ namespace Term_Frequency_Test
 {
 	public class TermFrequencyTest
 	{
-		private readonly Main main;
+		private readonly TermFrequency main;
 		private readonly StreamReader[] readers;
 		private readonly HashSet<string> stopWords;
 
 		public TermFrequencyTest()
 		{
-			main = new Main();
+			main = new TermFrequency();
 			readers = new[]
 			{
 				File.OpenText("./Input/input.txt"),
@@ -29,7 +29,7 @@ namespace Term_Frequency_Test
 		{
 			foreach (StreamReader reader in readers)
 			{
-				foreach (string word in main.Process(reader).Select(kv => kv.Key))
+				foreach (string word in main.CountWordOccurences(reader).Select(kv => kv.Key))
 				{
 					Assert.DoesNotContain(word, stopWords);
 				}
@@ -39,9 +39,9 @@ namespace Term_Frequency_Test
 		[Fact]
 		public void CorrectNumberOfEntries()
 		{
-			Assert.Equal(main.Process(readers[0], 25).Count(), 8);
-			Assert.Equal(main.Process(readers[1], 25).Count(), 25);
-			Assert.Equal(main.Process(readers[2], 25).Count(), 4);
+			Assert.Equal(main.CountWordOccurences(readers[0], 25).Count(), 8);
+			Assert.Equal(main.CountWordOccurences(readers[1], 25).Count(), 25);
+			Assert.Equal(main.CountWordOccurences(readers[2], 25).Count(), 4);
 		}
 
 		[Fact]
@@ -49,7 +49,7 @@ namespace Term_Frequency_Test
 		{
 			foreach(StreamReader reader in readers)
 			{
-				IEnumerable<string> words = main.Process(reader).Select(kv => kv.Key);
+				IEnumerable<string> words = main.CountWordOccurences(reader).Select(kv => kv.Key);
 				Assert.Equal(new HashSet<string>(words.Select(w => w.ToLowerInvariant())), words);
 			}
 		}
@@ -59,7 +59,7 @@ namespace Term_Frequency_Test
 		{
 			foreach (StreamReader reader in readers)
 			{
-				KeyValuePair<string, int>[] entries = main.Process(reader).ToArray();
+				KeyValuePair<string, int>[] entries = main.CountWordOccurences(reader).ToArray();
 
 				for (int i = entries.Length - 1; i > 0; i--)
 				{

@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace TermFrequency
+namespace Term_Frequency
 {
-	public class Main
+	public class TermFrequency
 	{
 		private static readonly HashSet<string> StopWords
 			= new HashSet<string>(File.OpenText("./Input/stop_words.txt").ReadToEnd().Split(','));
 
-		public Main()
+		public TermFrequency()
 		{
 
 		}
@@ -22,12 +22,12 @@ namespace TermFrequency
 				.Where(w => !StopWords.Contains(w));
 		}
 
-		public IEnumerable<KeyValuePair<string, int>> Process(StreamReader reader, int maxEntries)
+		public IEnumerable<KeyValuePair<string, int>> CountWordOccurences(StreamReader reader, int maxEntries)
 		{
-			return Process(reader).Take(maxEntries);
+			return CountWordOccurences(reader).Take(maxEntries);
 		}
 
-		public IEnumerable<KeyValuePair<string, int>> Process(StreamReader reader)
+		public IEnumerable<KeyValuePair<string, int>> CountWordOccurences(StreamReader reader)
 		{
 			Dictionary<string, int> entries = new Dictionary<string, int>();
 
@@ -46,12 +46,12 @@ namespace TermFrequency
 			return entries.OrderByDescending(kv => kv.Value);
 		}
 
-		public IEnumerable<KeyValuePair<string, HashSet<int>>> ProcessPages(StreamReader reader, int maxEntries)
+		public IEnumerable<KeyValuePair<string, HashSet<int>>> GetPagesForWords(StreamReader reader, int maxEntries)
 		{
-			return ProcessPages(reader).Take(maxEntries);
+			return GetPagesForWords(reader).Take(maxEntries);
 		}
 
-		public IEnumerable<KeyValuePair<string, HashSet<int>>> ProcessPages(StreamReader reader)
+		public IEnumerable<KeyValuePair<string, HashSet<int>>> GetPagesForWords(StreamReader reader)
 		{
 			Dictionary<string, HashSet<int>> entries = new Dictionary<string, HashSet<int>>();
 			int lineCounter = 1;

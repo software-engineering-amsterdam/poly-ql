@@ -56,7 +56,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ReadingAssignments\Term Frequency.csproj">
+    <ProjectReference Include="..\Term Frequency\Term Frequency.csproj">
       <Project>{51b81895-911f-4a6a-9e33-df914d9212c1}</Project>
       <Name>Term Frequency</Name>
     </ProjectReference>
