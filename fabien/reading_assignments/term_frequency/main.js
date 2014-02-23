@@ -46,12 +46,14 @@ if (!filename || argv.h || argv.help) {
 /**
   Create file reader and count terms
 */
+
 var result    = [];
-var skipwords = stopword.get(language); // Get stop words to skip
+var skipwords = stopword.get(language);         // Get stop words to skip
 var reader    = fs.createReadStream(filename);
 
 reader.on('data', function (data) {
-    var terms = term.getTerms(data.toString(), skipwords);
+    var line  = data.toString(),
+        terms = term.getTerms(line, skipwords);
 
     // Concat to get a single list of terms
     result = result.concat(terms);
@@ -59,6 +61,8 @@ reader.on('data', function (data) {
 
 // If file reader reaches the end of the file => print result
 reader.on('end', function () {
-    var sorted = term.countFrequency(result);
-    console.log(term.limit(sorted, amount));
+    var sorted  = term.countFrequency(result),
+        limited = term.limit(sorted, amount);
+    
+    console.log(limited);
 });

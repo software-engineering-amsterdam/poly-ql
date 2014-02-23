@@ -42,7 +42,12 @@ exports.countFrequency = function (terms) {
 
     // Count the term frequencies
     for (i in terms) {
-        frequencies[terms[i]] = frequencies[terms[i]] ? frequencies[terms[i]] + 1 : 1;
+        if (frequencies[terms[i]]) {
+            frequencies[terms[i]]++;
+            continue;
+        }
+
+        frequencies[terms[i]] = 1;
     }
 
     // Create a sortable list 

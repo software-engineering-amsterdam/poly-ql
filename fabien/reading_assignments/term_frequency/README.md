@@ -1,19 +1,32 @@
 Term Frequency
 ==============
 
-Given a text file, output a list of the 25 most frequently-occurring non stop, 
-words, ordered by decreasing frequency
+A nodeJS program to output a list of the N (default 25) most 
+frequently-occurring (non stop) words (ordered by decreasing frequency), 
+given an english text file.
+
+## Dependencies
+
+`Minimist` is used for easier command line argument support. Mocha / lint for testing and
+development. Everything can be installed using:
+
+`npm install`
 
 
-## Language of choice
+## Usage
 
-I have decided to write a solution for term frequency problem in javascript (using node JS). First I looked into `gramophone` and `natural` libraries. They provide decent NLP support, however "terms" in the libraries where defined using n-grams. Thus term frequencies would not be a single word. Another problem was multiple language support, which is lacking in most libraries and I only encountered later on.
+The program can be run using the following command:
+`node main.js -f input_files/test.txt`
 
-## Style
+The amount can be set. The following command limits it to the top ten frequent words:
+`node main.js -f input_files/test.txt -c 10`
 
-I started using code similar to "code golf". Including a few libraries that almost got the solution in a couple of lines. Then I figured the assignment did not actually meant "terms" but just word frequencies. So I switched to a more "Candy Factory" approach as javascript is asynchrounous.
+Additional language is supported, but for now only dutch/english stop words exist. 
+The following works for dutch:
+`node main.js -f input_files/test.txt -l nl`
 
 
-## Conclusion
+## Notes
 
-Now that I have seen other programming styles, I would consider the data stream as an option for bigger files. Currently I use a blocking function to read the entire file at once. This is because most node streams had memory leaking problems. With more time this seems as a reasonable improvement, but it should be implemented more readable than the exercise style.
+This program is created for the Software Construction course. It is adjusted to
+comply to the "Object Calisthenics" rules.
