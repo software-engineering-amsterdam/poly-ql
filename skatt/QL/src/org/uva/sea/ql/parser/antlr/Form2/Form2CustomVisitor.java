@@ -129,14 +129,14 @@ public class Form2CustomVisitor extends Form2BaseVisitor {
 		String op = ctx.getChild(1).getText();
 		
 		// if + operator
-		if (op == "*") {
+		if (op.equals("*")) {
 			if (verbose)
 				System.out.println("Mult expression contains *");
 			
 			return (convertToNumber(this.visit(ctx.expression(0))) *
 					convertToNumber(this.visit(ctx.expression(1))));
 			
-		} else if (op == "/") { // if - operator
+		} else if (op.equals("/")) { // if - operator
 			if (verbose)
 				System.out.println("Mult expression contains /");
 			
