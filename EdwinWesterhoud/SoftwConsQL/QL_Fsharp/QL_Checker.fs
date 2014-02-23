@@ -1,11 +1,23 @@
 ﻿module QL_Checker
+#nowarn "40"
 
+open System.Collections.Generic
 open System
 open QL_Grammar
 
 let contains x = Seq.exists ((=) x)
 
-type expressionType = TBool | TString | TInt | TDate | TDecimal | TMoney | TIdentifier | TError
+type expressionType = TBool | TString | TInt | TDate | TDecimal | TMoney | TIdentifier | TError | TForm
+
+let mapQLType qlType = match qlType with
+                       | QLBool -> TBool
+                       | QLString -> TString
+                       | QLInt -> TInt
+                       | QLDate -> TDate
+                       | QLDecimal -> TDecimal
+                       | QLMoney -> TMoney
+
+let identifiers = new Dictionary<string, expressionType>()
 
 let getPrimitiveType exprType = 
     match exprType with
@@ -16,7 +28,7 @@ let getPrimitiveType exprType =
     | Decimal(_) -> TDecimal, exprType
     | Money(_) -> TMoney, exprType
 
-let rec getTypeExpr expression =
+let rec checkExpression expression =
     match expression with
     | ID(_) -> TIdentifier, expression
     | Expr(e) -> (fst <| getPrimitiveType e), expression
@@ -25,16 +37,16 @@ let rec getTypeExpr expression =
     | Neg(_) -> TError, TypeError(expression, "err1")
 
     | BooleanOp(b1, booleanOp.Eq, b2)
-    | BooleanOp(b1, booleanOp.Ne, b2) -> let t1,_ = getTypeExpr b1
-                                         let t2,_ = getTypeExpr b2
+    | BooleanOp(b1, booleanOp.Ne, b2) -> let t1,_ = checkExpression b1
+                                         let t2,_ = checkExpression b2
                                          let accepted = seq [TIdentifier ; TError]
                                          if t1.Equals(t2) || contains t1 accepted || contains t2 accepted then
                                             TBool, expression
                                          else
                                             TError, TypeError(expression, "err2")
     | BooleanOp(b1, booleanOp.And, b2)
-    | BooleanOp(b1, booleanOp.Or, b2) -> let t1,_ = getTypeExpr b1
-                                         let t2,_ = getTypeExpr b2
+    | BooleanOp(b1, booleanOp.Or, b2) -> let t1,_ = checkExpression b1
+                                         let t2,_ = checkExpression b2
                                          let accepted = seq [TBool ; TIdentifier ; TError]
                                          if contains t1 accepted && contains t2 accepted then
                                             TBool, expression
@@ -43,8 +55,8 @@ let rec getTypeExpr expression =
     | BooleanOp(b1, booleanOp.Lt, b2)
     | BooleanOp(b1, booleanOp.Le, b2)
     | BooleanOp(b1, booleanOp.Gt, b2)
-    | BooleanOp(b1, booleanOp.Ge, b2) -> let t1,_ = getTypeExpr b1
-                                         let t2,_ = getTypeExpr b2
+    | BooleanOp(b1, booleanOp.Ge, b2) -> let t1,_ = checkExpression b1
+                                         let t2,_ = checkExpression b2
                                          let valid = seq [TInt ; TDate ; TDecimal ; TMoney ]
                                          let accepted = seq [TIdentifier ; TError]
                                          match t1 with
@@ -52,8 +64,8 @@ let rec getTypeExpr expression =
                                             | TIdentifier | TError when contains t2 valid || contains t2 accepted -> TBool, expression
                                             | _ -> TError, TypeError(expression, "err4")
 
-    | ArithmeticOp(a1, op, a2) -> let t1,_ = getTypeExpr a1
-                                  let t2,_ = getTypeExpr a1
+    | ArithmeticOp(a1, op, a2) -> let t1,_ = checkExpression a1
+                                  let t2,_ = checkExpression a1
                                   let accepted = seq [TInt ; TDate ; TDecimal ; TMoney ; TIdentifier ; TError]
                                   if t1.Equals(t2) && contains t1 accepted then
                                     t1, expression
@@ -65,29 +77,28 @@ let rec getTypeExpr expression =
                                   else TError, TypeError(expression, "err5")
                                   
 
-/////
+let rec checkStmts = 
+    let checkAssignment ass = let exprType, expr = checkExpression ass.Expression
+                              identifiers.Add(ass.ID, exprType)
+                              Assignment(ass)
 
-let checkExpr expression =
-    match expression with
-    | BooleanOp(Expr(Bool(_)), _, Expr(Bool(_))) as orig -> orig
-    | BooleanOp(ID(name), _, Expr(Bool(_))) as orig -> orig //check id
-    | BooleanOp(Expr(Bool(_)), _, ID(name)) as orig -> orig //check id
+    let checkQuestion (ques:question) = identifiers.Add(ques.ID, mapQLType ques.Type)
+                                        Question(ques)
 
-    | _ -> failwithf "test"
+    let checkConditional cond stmts = let exprType, expr = checkExpression cond
+                                      Conditional(cond, checkStmts stmts)
 
+    let checkStmt stmt = 
+        match stmt with
+        | Assignment(ass) -> checkAssignment ass
+        | Question(ques) -> checkQuestion ques
+        | Conditional(cond, stmts) -> checkConditional cond stmts
+        
+    List.map checkStmt
 
-let checkAssignment ass = Assignment(ass)
-let checkQuestion ques = Question(ques)
-let checkConditional cond stmts = Conditional(cond, stmts)
-
-let checkStmt stmt = 
-    match stmt with
-    | Assignment(ass) -> checkAssignment ass
-    | Question(ques) -> checkQuestion ques
-    | Conditional(cond, stmts) -> checkConditional cond stmts
-
-let checkStmts = List.map checkStmt
-
-
-let typeCheck ast = checkStmts ast.Statements
+let typeCheck ast = identifiers.Clear()
+                    identifiers.Add(ast.ID, TForm)
+                    {   ID = ast.ID;
+                        Statements = checkStmts ast.Statements 
+                    }
 

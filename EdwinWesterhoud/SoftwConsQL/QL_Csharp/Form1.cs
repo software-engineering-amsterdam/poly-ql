@@ -14,7 +14,7 @@ namespace QL_Csharp
         {
             try
             {
-                var output = QL_Main.parse_str(textBoxSource.Text);
+                var output = QL_Main.parse_str(textBoxSource.Text, checkBoxTypeCheck.Enabled);
                 textBoxOutput.Text = output.ToString().Replace(";", Environment.NewLine);
             }
             catch (QL_Grammar.ParseErrorException exception)

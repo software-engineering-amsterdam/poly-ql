@@ -34,6 +34,7 @@
             this.buttonGenerate = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.textBoxOutput = new System.Windows.Forms.TextBox();
+            this.checkBoxTypeCheck = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -64,6 +65,7 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.checkBoxTypeCheck);
             this.splitContainer1.Panel1.Controls.Add(this.groupBox1);
             this.splitContainer1.Panel1.Controls.Add(this.buttonGenerate);
             // 
@@ -120,6 +122,18 @@
             this.textBoxOutput.Size = new System.Drawing.Size(689, 190);
             this.textBoxOutput.TabIndex = 0;
             // 
+            // checkBoxTypeCheck
+            // 
+            this.checkBoxTypeCheck.AutoSize = true;
+            this.checkBoxTypeCheck.Checked = true;
+            this.checkBoxTypeCheck.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxTypeCheck.Location = new System.Drawing.Point(96, 259);
+            this.checkBoxTypeCheck.Name = "checkBoxTypeCheck";
+            this.checkBoxTypeCheck.Size = new System.Drawing.Size(129, 17);
+            this.checkBoxTypeCheck.TabIndex = 2;
+            this.checkBoxTypeCheck.Text = "Enable Type Checker";
+            this.checkBoxTypeCheck.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -129,6 +143,7 @@
             this.Name = "Form1";
             this.Text = "QL Form";
             this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
@@ -148,6 +163,7 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button buttonGenerate;
+        private System.Windows.Forms.CheckBox checkBoxTypeCheck;
     }
 }
 
