@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace TermFrequency
+namespace Term_Frequency
 {
 	class Program
 	{
@@ -16,11 +16,11 @@ namespace TermFrequency
 				File.OpenText("./Input/test.txt")
 			};
 
-			Main m = new Main();
+			TermFrequency m = new TermFrequency();
 
 			foreach (StreamReader reader in readers)
 			{
-				IEnumerable<KeyValuePair<string, int>> entries = m.Process(reader, 25);
+				IEnumerable<KeyValuePair<string, int>> entries = m.CountWordOccurences(reader, 25);
 				foreach (string entry in entries.Select(kv => kv.Key + " => " + kv.Value))
 				{
 					Console.WriteLine(entry);
@@ -29,7 +29,7 @@ namespace TermFrequency
 				Console.WriteLine();
 				reader.BaseStream.Position = 0;
 
-				IEnumerable<KeyValuePair<string, HashSet<int>>> pages = m.ProcessPages(reader, 25);
+				IEnumerable<KeyValuePair<string, HashSet<int>>> pages = m.GetPagesForWords(reader, 25);
 				foreach (string entry in pages.Select(kv => kv.Key + " => " + String.Join(", ", kv.Value)))
 				{
 					Console.WriteLine(entry);

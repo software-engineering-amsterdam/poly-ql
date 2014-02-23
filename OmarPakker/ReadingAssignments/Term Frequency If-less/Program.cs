@@ -14,7 +14,7 @@ namespace Term_Frequency_If_less
 				File.OpenText("./Input/test.txt")
 			};
 
-			Main m = new Main();
+			TermFrequency m = new TermFrequency();
 
 			foreach (StreamReader reader in readers)
 			{

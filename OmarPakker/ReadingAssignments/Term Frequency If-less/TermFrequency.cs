@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Term_Frequency_If_less
 {
-	public class Main
+	public class TermFrequency
 	{
 		private static readonly HashSet<string> StopWords
 			= new HashSet<string>(File.OpenText("./Input/stop_words.txt").ReadToEnd().Split(','));
 
-		public Main()
+		public TermFrequency()
 		{
 
 		}
@@ -24,10 +24,10 @@ namespace Term_Frequency_If_less
 
 		private void ExtractWords(string input)
 		{
-			RemoveStopWords(input.Split(new[] { ' ', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries));
+			RemoveStopWords(new List<string>(input.Split(new[] { ' ', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)));
 		}
 
-		private void RemoveStopWords(string[] words)
+		private void RemoveStopWords(List<string> words)
 		{
 			
 		}
