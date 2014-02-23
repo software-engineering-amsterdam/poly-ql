@@ -10,11 +10,11 @@ type token =
   | GE
   | AND
   | OR
-  | NOT
   | PLUS
   | MINUS
   | MULT
   | DIV
+  | NOT
   | QLBOOL
   | QLSTRING
   | QLINT
@@ -47,11 +47,11 @@ type tokenId =
     | TOKEN_GE
     | TOKEN_AND
     | TOKEN_OR
-    | TOKEN_NOT
     | TOKEN_PLUS
     | TOKEN_MINUS
     | TOKEN_MULT
     | TOKEN_DIV
+    | TOKEN_NOT
     | TOKEN_QLBOOL
     | TOKEN_QLSTRING
     | TOKEN_QLINT
@@ -98,4 +98,4 @@ val prodIdxToNonTerminal: int -> nonTerminalId
 
 /// This function gets the name of a token as a string
 val token_to_string: token -> string
-val start : (Microsoft.FSharp.Text.Lexing.LexBuffer<'cty> -> token) -> Microsoft.FSharp.Text.Lexing.LexBuffer<'cty> -> (QL_Grammar.statement) 
+val start : (Microsoft.FSharp.Text.Lexing.LexBuffer<'cty> -> token) -> Microsoft.FSharp.Text.Lexing.LexBuffer<'cty> -> (QL_Grammar.expression) 

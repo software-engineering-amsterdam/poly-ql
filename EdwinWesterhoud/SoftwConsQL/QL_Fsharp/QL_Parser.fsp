@@ -22,7 +22,15 @@ open Microsoft.FSharp.Collections
 %token <float> MONEY
 
 %token QLBOOL QLSTRING QLINT QLDATE QLDECIMAL QLMONEY
-%token EQ NE LT LE GT GE AND OR NOT PLUS MINUS MULT DIV
+%token EQ NE LT LE GT GE AND OR PLUS MINUS MULT DIV NOT
+
+%left EQ NE
+%left LT LE GT GE
+%left AND OR
+%right NOT
+
+%left PLUS MINUS
+%left MULT DIV
 
 %token END
 
