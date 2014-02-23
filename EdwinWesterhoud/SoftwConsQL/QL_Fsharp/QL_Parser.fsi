@@ -29,6 +29,7 @@ type token =
   | BOOL of (bool)
   | LABEL of (string)
   | IDENTIFIER of (string)
+  | ASSIGN
   | COLON
   | B_OPEN
   | B_CLOSE
@@ -65,6 +66,7 @@ type tokenId =
     | TOKEN_BOOL
     | TOKEN_LABEL
     | TOKEN_IDENTIFIER
+    | TOKEN_ASSIGN
     | TOKEN_COLON
     | TOKEN_B_OPEN
     | TOKEN_B_CLOSE
@@ -96,4 +98,4 @@ val prodIdxToNonTerminal: int -> nonTerminalId
 
 /// This function gets the name of a token as a string
 val token_to_string: token -> string
-val start : (Microsoft.FSharp.Text.Lexing.LexBuffer<'cty> -> token) -> Microsoft.FSharp.Text.Lexing.LexBuffer<'cty> -> (QL_Grammar.expression) 
+val start : (Microsoft.FSharp.Text.Lexing.LexBuffer<'cty> -> token) -> Microsoft.FSharp.Text.Lexing.LexBuffer<'cty> -> (QL_Grammar.statement) 

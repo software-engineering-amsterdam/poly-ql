@@ -45,8 +45,8 @@ let y = let lexbuf = Lexing.LexBuffer<_>.FromString x
 printfn "%A" y
 
 Console.WriteLine();
-let check = getTypeExpr y
-printfn "%A" check
+//let check = getTypeExpr y
+//printfn "%A" check
 
 Console.WriteLine("(press any key)")
 Console.ReadKey(true) |> ignore
