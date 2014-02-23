@@ -1,13 +1,13 @@
 package nl.uva.polyql.model.expressions.operators;
 
-import nl.uva.polyql.model.Types;
+import nl.uva.polyql.model.Type;
 import nl.uva.polyql.model.expressions.Expression;
 
 public class UnsupportedOperandTypeException extends UnsupportedOperationException {
 
     private static final long serialVersionUID = 8634412238170543338L;
 
-    public UnsupportedOperandTypeException(final Types left, final String operatorSyntax, final Types right) {
+    public UnsupportedOperandTypeException(final Type left, final String operatorSyntax, final Type right) {
         super("Operand types " + left + "-" + right + " unsupported for operator " + operatorSyntax);
     }
 
@@ -15,7 +15,7 @@ public class UnsupportedOperandTypeException extends UnsupportedOperationExcepti
         this(left.getReturnType(), operatorSyntax, right.getReturnType());
     }
 
-    public UnsupportedOperandTypeException(final Types typeLeftRight, final String operatorSyntax) {
+    public UnsupportedOperandTypeException(final Type typeLeftRight, final String operatorSyntax) {
         this(typeLeftRight, operatorSyntax, typeLeftRight);
     }
 

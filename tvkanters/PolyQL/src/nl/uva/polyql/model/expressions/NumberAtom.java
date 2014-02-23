@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import nl.uva.polyql.model.Question;
-import nl.uva.polyql.model.Types;
+import nl.uva.polyql.model.Type;
 
 public class NumberAtom extends Expression {
 
@@ -15,8 +15,8 @@ public class NumberAtom extends Expression {
     }
 
     @Override
-    public Types getReturnType() {
-        return Types.NUMBER;
+    public Type getReturnType() {
+        return Type.NUMBER;
     }
 
     @Override

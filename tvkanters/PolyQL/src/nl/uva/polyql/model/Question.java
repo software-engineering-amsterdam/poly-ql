@@ -7,17 +7,17 @@ public class Question extends Rule {
 
     private final String mId;
     private final String mLabel;
-    private final Types mType;
+    private final Type mType;
     private Object mValue;
     private boolean mValueValid = true;
 
     private final Set<OnUpdateListener> mUpdateListeners = new HashSet<>();
 
     protected Question(final RuleContainer parent, final String id, final String label, final String type) {
-        this(parent, id, label, Types.valueOf(type.toUpperCase()));
+        this(parent, id, label, Type.valueOf(type.toUpperCase()));
     }
 
-    protected Question(final RuleContainer parent, final String id, final String label, final Types type) {
+    protected Question(final RuleContainer parent, final String id, final String label, final Type type) {
         super(parent);
 
         if (parent.getQuestion(id) != null) {
@@ -25,7 +25,7 @@ public class Question extends Rule {
         }
 
         mId = id;
-        mLabel = (String) Types.STRING.parseInput(label);
+        mLabel = (String) Type.STRING.parseInput(label);
         mType = type;
 
         setValue(mType.getDefaultValue());
@@ -39,7 +39,7 @@ public class Question extends Rule {
         return mLabel;
     }
 
-    public Types getType() {
+    public Type getType() {
         return mType;
     }
 

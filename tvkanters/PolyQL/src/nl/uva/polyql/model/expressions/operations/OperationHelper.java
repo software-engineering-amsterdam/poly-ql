@@ -1,6 +1,6 @@
 package nl.uva.polyql.model.expressions.operations;
 
-import nl.uva.polyql.model.Types;
+import nl.uva.polyql.model.Type;
 import nl.uva.polyql.model.expressions.Expression;
 import nl.uva.polyql.model.expressions.operators.UnsupportedOperandTypeException;
 
@@ -8,8 +8,8 @@ public class OperationHelper {
 
     public static Operation<?> getOperation(final Expression left, final String operator, final Expression right) {
 
-        final Types leftType = left.getReturnType();
-        final Types rightType = right.getReturnType();
+        final Type leftType = left.getReturnType();
+        final Type rightType = right.getReturnType();
 
         if (BooleanOperation.isValid(leftType, operator, rightType)) {
             return new BooleanOperation(left, operator, right);
@@ -24,9 +24,9 @@ public class OperationHelper {
         throw new UnsupportedOperandTypeException(leftType, operator, rightType);
     }
 
-    public static Types getOperandType(final Expression left, final Expression right) {
-        final Types leftType = left.getReturnType();
-        final Types rightType = right.getReturnType();
+    public static Type getOperandType(final Expression left, final Expression right) {
+        final Type leftType = left.getReturnType();
+        final Type rightType = right.getReturnType();
         if (leftType != rightType) {
             throw new RuntimeException("Operand types " + leftType + " and " + rightType + " are not equal");
         }

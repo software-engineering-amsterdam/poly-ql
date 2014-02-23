@@ -1,6 +1,6 @@
 package nl.uva.polyql.model.expressions.operators.string;
 
-import nl.uva.polyql.model.Types;
+import nl.uva.polyql.model.Type;
 import nl.uva.polyql.model.expressions.Expression;
 import nl.uva.polyql.model.expressions.operators.Operator;
 import nl.uva.polyql.model.expressions.operators.UnsupportedOperandTypeException;
@@ -9,8 +9,8 @@ public abstract class StringOperator extends Operator<String> {
 
     @Override
     protected String performOperation(final Expression left, final Expression right) {
-        final Types leftType = left.getReturnType();
-        final Types rightType = right.getReturnType();
+        final Type leftType = left.getReturnType();
+        final Type rightType = right.getReturnType();
 
         final String leftValue;
         final String rightValue;
@@ -39,7 +39,7 @@ public abstract class StringOperator extends Operator<String> {
     protected abstract String performOperation(final String left, final String right);
 
     @Override
-    public boolean isValid(final Types leftType, final Types rightType) {
+    public boolean isValid(final Type leftType, final Type rightType) {
         boolean valid = true;
 
         switch (leftType) {

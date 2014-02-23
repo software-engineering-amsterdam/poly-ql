@@ -1,6 +1,6 @@
 package nl.uva.polyql.model.expressions.operators;
 
-import nl.uva.polyql.model.Types;
+import nl.uva.polyql.model.Type;
 import nl.uva.polyql.model.expressions.Expression;
 import nl.uva.polyql.model.expressions.operations.OperationHelper;
 import nl.uva.polyql.model.expressions.operators.Operator;
@@ -12,11 +12,11 @@ public abstract class SameOperandOperator<T> extends Operator<T> {
         return performOperation(OperationHelper.getOperandType(left, right), left.getValue(), right.getValue());
     }
 
-    protected abstract T performOperation(final Types operandType, final Object leftValue, final Object rightValue);
+    protected abstract T performOperation(final Type operandType, final Object leftValue, final Object rightValue);
 
-    public boolean isValid(final Types leftType, final Types rightType) {
+    public boolean isValid(final Type leftType, final Type rightType) {
         return leftType == rightType && isValid(leftType);
     }
 
-    public abstract boolean isValid(final Types type);
+    public abstract boolean isValid(final Type type);
 }

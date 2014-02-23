@@ -1,13 +1,13 @@
 package nl.uva.polyql.model.expressions.operators.bool;
 
-import nl.uva.polyql.model.Types;
+import nl.uva.polyql.model.Type;
 import nl.uva.polyql.model.expressions.operators.SameOperandOperator;
 import nl.uva.polyql.model.expressions.operators.UnsupportedOperandTypeException;
 
 public abstract class BooleanOperator extends SameOperandOperator<Boolean> {
 
     @Override
-    protected Boolean performOperation(final Types operandType, final Object leftValue, final Object rightValue) {
+    protected Boolean performOperation(final Type operandType, final Object leftValue, final Object rightValue) {
         switch (operandType) {
         case BOOLEAN:
             return performOperation((boolean) leftValue, (boolean) rightValue);
@@ -30,7 +30,7 @@ public abstract class BooleanOperator extends SameOperandOperator<Boolean> {
     protected abstract Boolean performOperation(final String left, final String right);
 
     @Override
-    public boolean isValid(final Types type) {
+    public boolean isValid(final Type type) {
         switch (type) {
         case BOOLEAN:
         case NUMBER:
@@ -41,5 +41,5 @@ public abstract class BooleanOperator extends SameOperandOperator<Boolean> {
         }
     }
 
-    public abstract boolean isValidForImplementedType(final Types type);
+    public abstract boolean isValidForImplementedType(final Type type);
 }

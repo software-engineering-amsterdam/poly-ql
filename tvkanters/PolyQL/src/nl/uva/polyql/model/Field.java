@@ -6,8 +6,8 @@ public class Field extends Question implements Question.OnUpdateListener {
 
     private Expression mExpression;
 
-    protected Field(final RuleContainer parent, final String id, final String content, final Expression expression) {
-        super(parent, id, content, expression.getReturnType());
+    protected Field(final RuleContainer parent, final String id, final String label, final Expression expression) {
+        super(parent, id, label, expression.getReturnType());
 
         mExpression = expression;
         setValue(expression.getValue());

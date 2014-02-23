@@ -3,7 +3,7 @@ package nl.uva.polyql.model.expressions.operations;
 import java.util.Set;
 
 import nl.uva.polyql.model.Question;
-import nl.uva.polyql.model.Types;
+import nl.uva.polyql.model.Type;
 import nl.uva.polyql.model.expressions.Expression;
 import nl.uva.polyql.model.expressions.operators.Operator;
 import nl.uva.polyql.model.expressions.operators.UnsupportedOperandTypeException;
@@ -52,7 +52,7 @@ public abstract class Operation<T> extends Expression {
         return questions;
     }
 
-    public static boolean isValid(final Types leftType, final Operator<?> operator, final Types rightType) {
+    public static boolean isValid(final Type leftType, final Operator<?> operator, final Type rightType) {
         return operator != null && operator.isValid(leftType, rightType);
     }
 }

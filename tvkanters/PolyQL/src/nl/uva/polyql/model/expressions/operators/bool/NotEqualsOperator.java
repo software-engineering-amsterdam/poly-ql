@@ -1,6 +1,6 @@
 package nl.uva.polyql.model.expressions.operators.bool;
 
-import nl.uva.polyql.model.Types;
+import nl.uva.polyql.model.Type;
 
 public class NotEqualsOperator extends BooleanOperator {
 
@@ -27,7 +27,7 @@ public class NotEqualsOperator extends BooleanOperator {
     }
 
     @Override
-    public boolean isValidForImplementedType(final Types type) {
+    public boolean isValidForImplementedType(final Type type) {
         return true;
     }
 

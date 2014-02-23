@@ -3,10 +3,10 @@ form exampleForm {
     truthwhy: "Why is(n't) it true?" ("bob")
     truthwhy2: "Why is(n't) it true?" ("bob")
     truthwhydouble: "Because: " (truthwhy == " " + truthwhy + 123)
-    if (truth || (2 + 6 * 3 * 9 - 4 - (4 + 5)) > 2) {
-    	wonga: "How much is it worth?" number
-    	morethandoublewonga: "WHY THAT'S ALMOST DOUBLE!" (wonga * 2 + 1)
-	    if (wonga > 4) {
+    if (!truth || (2 + 6 * 3 * 9 - 4 - (4 + 5)) > 2) {
+    	wonga: "How much is it worth?" (10)
+    	morethandoublewonga: "WHY THAT'S ROUGHLY DOUBLE!" (wonga * 2 + 1)
+	    if (-wonga > -4 - -morethandoublewonga) {
 	    	wonga2: "What's the price of pie?" number
 	    }
     }

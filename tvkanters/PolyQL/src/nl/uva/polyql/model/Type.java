@@ -1,6 +1,6 @@
 package nl.uva.polyql.model;
 
-public enum Types {
+public enum Type {
     BOOLEAN(false),
     NUMBER(0.0),
     STRING("");
@@ -9,7 +9,7 @@ public enum Types {
 
     private final Object mDefaultValue;
 
-    private Types(final Object defaultValue) {
+    private Type(final Object defaultValue) {
         mDefaultValue = defaultValue;
     }
 

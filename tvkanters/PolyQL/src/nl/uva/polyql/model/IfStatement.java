@@ -13,7 +13,7 @@ public class IfStatement extends RuleContainer implements Question.OnUpdateListe
             throw new RuntimeException("If-statements must have a parent");
         }
 
-        if (expression.getReturnType() != Types.BOOLEAN) {
+        if (expression.getReturnType() != Type.BOOLEAN) {
             throw new RuntimeException("Invalid if-statement expression type: " + expression.getReturnType());
         }
 

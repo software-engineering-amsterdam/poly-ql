@@ -1,6 +1,6 @@
 package nl.uva.polyql.model.expressions.operations;
 
-import nl.uva.polyql.model.Types;
+import nl.uva.polyql.model.Type;
 import nl.uva.polyql.model.expressions.Expression;
 import nl.uva.polyql.model.expressions.operators.Operator;
 import nl.uva.polyql.model.expressions.operators.OperatorHelper;
@@ -12,8 +12,8 @@ public class StringOperation extends Operation<String> {
     }
 
     @Override
-    public Types getReturnType() {
-        return Types.STRING;
+    public Type getReturnType() {
+        return Type.STRING;
     }
 
     @Override
@@ -21,7 +21,7 @@ public class StringOperation extends Operation<String> {
         return OperatorHelper.getStringOperator(operator);
     }
 
-    public static boolean isValid(final Types leftType, final String operator, final Types rightType) {
+    public static boolean isValid(final Type leftType, final String operator, final Type rightType) {
         return Operation.isValid(leftType, OperatorHelper.getStringOperator(operator), rightType);
     }
 
