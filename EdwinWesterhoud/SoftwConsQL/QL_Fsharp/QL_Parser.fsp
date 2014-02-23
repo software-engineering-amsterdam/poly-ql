@@ -84,6 +84,7 @@ exprType:
     | MONEY             { Money($1) }
 
 expression:
+    | B_OPEN expression B_CLOSE     { $2 }
     | IDENTIFIER                    { ID($1) }
     | exprType                      { Expr($1) }
     | NOT expression                { Neg($2) }

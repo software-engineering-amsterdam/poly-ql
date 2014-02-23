@@ -19,9 +19,9 @@ let parse_str str = let lexbuf = Lexing.LexBuffer<_>.FromString str
                             raise << ParseErrorException <| ParseErrorExceptionMessage(message, startPos, endPos)
 
 // Test type checker
-let t = BooleanOp(Expr(Bool(true)), Eq, Expr(Int(5)))
-let check = checkExpr t
-printfn "%A" check
+//let t = ArithmeticOp(Expr(Bool(true)), arithmeticOp.Div, BooleanOp())
+//let check = getTypeExpr t
+//printfn "%A" check
 
 
 // Used for direct input in console
@@ -43,6 +43,10 @@ let y = let lexbuf = Lexing.LexBuffer<_>.FromString x
                 exit 1;
 
 printfn "%A" y
+
+Console.WriteLine();
+let check = getTypeExpr y
+printfn "%A" check
 
 Console.WriteLine("(press any key)")
 Console.ReadKey(true) |> ignore
