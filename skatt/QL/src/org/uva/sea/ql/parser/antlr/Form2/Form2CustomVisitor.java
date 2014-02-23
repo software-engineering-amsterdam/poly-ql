@@ -163,14 +163,14 @@ public class Form2CustomVisitor extends Form2BaseVisitor {
 		String op = ctx.getChild(1).getText();
 		
 		// if + operator
-		if (op == "+") {
+		if (op.equals("+")) {
 			if (verbose)
 				System.out.println("PLus expression contains +");
 			
 			return (convertToNumber(this.visit(ctx.expression(0))) + 
 					convertToNumber(this.visit(ctx.expression(1))));
 			
-		} else if (op == "-") { // if - operator
+		} else if (op.equals("-")) { // if - operator
 			if (verbose)
 				System.out.println("PLus expression contains -");
 			
@@ -294,18 +294,14 @@ public class Form2CustomVisitor extends Form2BaseVisitor {
 	///////////////// parsing / casting / converting functions
 	/**
 	 * Converts any object of an expression to a boolean 
-	 * "1" or "true" will return true, the rest will return false
+	 * "1", "1.0" or "true" will return true, the rest will return false
 	 * @param obj the object to convert
 	 * @return the converted value (boolean)
 	 */
 	private boolean convertToBool(Object obj) {
-		if (obj.getClass() == new Integer(1).getClass())
-			return (int) obj == 1;
-		
-		if (obj.getClass() == new Boolean(true).getClass())
-			return (boolean) obj;
-		
-		return (obj.toString() == "true" || obj.toString() == "1");
+		return (obj.toString().equals("true") 
+				|| obj.toString().equals("1")
+				|| obj.toString().equals("1.0"));
 	}
 	
 	/**
