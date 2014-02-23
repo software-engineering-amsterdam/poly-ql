@@ -13,11 +13,14 @@ import Form2.Form2Parser.StructuresContext;
 
 public class Form2CustomVisitor extends Form2BaseVisitor {
 	
-	
+	// set for workflow prints
+	boolean verbose = 0;
 	//////////// code for handling if/else structure
 	
 	public Object visitStructure(Form2Parser.StructureContext ctx) {
-		System.out.println("Visiting a structure");
+		
+		if (verbose)
+			System.out.println("Visiting a structure");
 		
 		// if single child, no workflow conditions apply and simply visit the only child (structures or question)
 		if (ctx.getChildCount() == 1) { 
@@ -25,22 +28,29 @@ public class Form2CustomVisitor extends Form2BaseVisitor {
 			// the question in structure
 			QuestionContext qctx = ctx.question();
 			if (qctx != null) { // if no question
-				System.out.println("Found a question in structure");
+				if (verbose) 
+					System.out.println("Found a question in structure");
 				this.visit(qctx);
 			}
 			// structure contains structures in stead of question
 			else { 
-				System.out.println("No if statements found in structure");
+				if (verbose)
+					System.out.println("No if statements found in structure");
 				this.visit(ctx.structures(0));
 			}
 		} else { 
 			// if workflow is applied, only visit questions which return a true expression
-			System.out.println("If statement found in structure");
+			if (verbose)
+				System.out.println("If statement found in structure");
 			
 			if ((boolean) this.visit(ctx.ifcondition())) {
-				System.out.println("If statement in structure is true");
+				if (verbose)
+					System.out.println("If statement in structure is true");
 				this.visit(ctx.structures(0));	
 			} else {
+				
+				if (verbose)
+					System.out.println("If statement in structure is false");
 				
 				// if the 'if statement' was not true, check for elseif en else statements
 				boolean visitElse = true; // whether to visit an optional else statement
@@ -49,17 +59,23 @@ public class Form2CustomVisitor extends Form2BaseVisitor {
 				List<ElseifconditionContext> elifctxs = ctx.elseifcondition();
 				if (elifctxs != null) {
 					for (int i = 0; i < elifctxs.size(); i++) {
-							if ((boolean) this.visit(elifctxs.get(i))) {
-								// if elseif statement is true
-								visitElse = false; // do not check else statement anymore
-								this.visit(ctx.structures(i)); // visit the structure of the elseif statement
-								break; // do not check other elseif statements anymore by breaking out of loop
+						if (verbose)
+							System.out.println("Checking elif statement");
+						if ((boolean) this.visit(elifctxs.get(i))) {
+							// if elseif statement is true
+							if (verbose)
+								System.out.println("Elif statement is true");
+							visitElse = false; // do not check else statement anymore
+							this.visit(ctx.structures(i)); // visit the structure of the elseif statement
+							break; // do not check other elseif statements anymore by breaking out of loop
 						}
 					}
 				}
 				
 				// if no 'elseif' statements were true visit else statement if available
 				if (visitElse && (ctx.elsecondition() != null)) {
+					if (verbose)
+						System.out.println("Else statement is 'true'");
 					this.visit(ctx.structures(ctx.structures().size() - 1));
 				}
 			
@@ -71,19 +87,21 @@ public class Form2CustomVisitor extends Form2BaseVisitor {
 	
 
 	public Boolean visitIfcondition(Form2Parser.IfconditionContext ctx) {
-		System.out.println("If condition visited");
+		if (verbose)
+			System.out.println("If condition visited");
 		return 1 == Integer.parseInt((String) this.visit(ctx.expression()));
 	}
 	
 	public Boolean visitElseifcondition(Form2Parser.ElseifconditionContext ctx) {
-		System.out.println("Elseif condition visited");
+		if (verbose)
+			System.out.println("Elseif condition visited");
 		return 1 == Integer.parseInt((String) this.visit(ctx.expression()));
 	}
 	
 	/////////// Code for handling visited questions
 	
 	public Object visitQuestion(Form2Parser.QuestionContext ctx) {
-		System.out.println("Question visited: \nThe question " + ctx.IDENTIFIER() + " of type " + ctx.TYPE() + " is:");
+		System.out.println("The question " + ctx.IDENTIFIER() + " of type " + ctx.TYPE() + " is:");
 		System.out.println(this.visit(ctx.label()));
 		return null;
 	}
@@ -93,7 +111,8 @@ public class Form2CustomVisitor extends Form2BaseVisitor {
 	
 	/////////// Code for handling expressions 
 	public Object visitExpression(Form2Parser.ExpressionContext ctx) {
-		System.out.println("Expression visited");
+		if (verbose)
+			System.out.println("Expression visited");
 		return ctx.getText();
 	}
 }

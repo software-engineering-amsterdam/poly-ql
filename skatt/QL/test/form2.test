@@ -6,6 +6,8 @@ if 1 {
     if 0 {
 	  vraag2 : "Hoi werk jij" : boolean;
 	  vraag1 : "Hoi werk jij" : boolean;
+	} elseif 1 {
+	  vraagelseif : "Hoi" : string;	
 	}
 	else {
 	  vraag4 : "else statement" : string;
