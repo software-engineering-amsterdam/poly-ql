@@ -13,9 +13,11 @@ using System.Reflection;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
 
-using QL.Components;
-using QL.Components.Statements;
-using QL.Components.Conditions;
+using QL.QLClasses;
+using QL.QLClasses.Statements;
+using QL.QLClasses.Expressions.Conditions;
+
+using QL.TypeChecker;
 
 namespace QL
 {
@@ -29,6 +31,8 @@ namespace QL
         private void btnParse_Click(object sender, EventArgs e)
         {
             txtOutput.Clear();
+            Identifiers.Reset();
+
             string inputString = txtInput.Text;
             MemoryStream inputStream = new MemoryStream(Encoding.UTF8.GetBytes(inputString ?? ""));
 
@@ -44,61 +48,37 @@ namespace QL
             parser.AddErrorListener(new ParserErrorListener(){OnError = WriteError});
 
             IParseTree tree = parser.questionnaire();
-            Questionnaire qst = parser.theQuestionnaire;
+            Questionnaire AST = parser.theQuestionnaire;
 
-            foreach (StatementBase statement in qst.Body)
+            if (AST == null)
             {
-                CheckStatement(statement);
+                WriteError("AST is null!!!");
+
+                txtOutput.Text += string.Format(@"{0}{0} Generated parse tree: 
+                                              {0} {1}"
+                                    , Environment.NewLine
+                                    , tree.ToStringTree(parser));
             }
-            
-            //if (parser.NumberOfSyntaxErrors > 0)
-            //    txtOutput.Text += string.Format("Parser errors found: {0}", parser.NumberOfSyntaxErrors);
+            else
+            {
+                QLTypeChecker typeChecker = new QLTypeChecker();
+                typeChecker.OnError += WriteError;
+                typeChecker.Check(AST);
 
-            //QLVisitor visitor = new QLVisitor();
-            //visitor.Visit(tree);
-
-            txtOutput.Text += string.Format(@"{0}{0} Generated parse tree: 
+                txtOutput.Text += string.Format(@"{0}{0} Generated parse tree: 
                                               {0} {1}
                                               {0} {2}
                                               {0} {3}"
-                                                , Environment.NewLine
-                                                , tree.ToStringTree(parser)
-                                                , qst.ID
-                                                , qst.Title);
-                                                /*, visitor.Visit(tree)*/
+                                    , Environment.NewLine
+                                    , tree.ToStringTree(parser)
+                                    , AST.ID
+                                    , AST.Title);
+            }
         }
             
         public void WriteError(string error)
         {
             txtOutput.Text += Environment.NewLine + error;
-        }
-
-        public void CheckStatement(StatementBase statement)
-        {
-            if (statement is ITypeChecker)
-                if (!(statement as ITypeChecker).CheckType())
-                    WriteError(string.Format("error at {0}, {1}", statement.TokenLine, statement.TokenColumn));
-            
-            IEnumerable<PropertyInfo> props = statement.GetType().GetProperties(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Public);
-            foreach(PropertyInfo pInfo in props)
-                if (pInfo.PropertyType.GetInterfaces().Contains(typeof(IExpression)))
-                    CheckExpression(pInfo.GetValue(statement) as ExpressionBase);
-            
-            if(statement is StatementIf)
-                foreach(StatementBase innerStatement in (statement as StatementIf).Body)
-                    CheckStatement(innerStatement);
-        }
-
-        public void CheckExpression(ExpressionBase expression)
-        {
-            if (expression is ITypeChecker)
-                if (!(expression as ITypeChecker).CheckType())
-                    WriteError(string.Format("error at {0}, {1}", expression.TokenLine, expression.TokenColumn));
-
-            IEnumerable<PropertyInfo> props = expression.GetType().GetProperties(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Public);
-            foreach (PropertyInfo pInfo in props)
-                if (pInfo.GetType().IsAssignableFrom(typeof(IExpression)))
-                    CheckExpression(pInfo.GetValue(expression) as ExpressionBase);
         }
     }
 }
