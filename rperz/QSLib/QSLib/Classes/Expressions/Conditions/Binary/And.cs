@@ -2,16 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using QSLib;
 namespace QSLib.Expressions.Conditions.Binary
 {
-    class And : Binary_Expression 
+    class And : Condition
     {
-        protected String _operator = "&&";
-
-        public And(IExpression a, IExpression b)
-            : base(a, b)
+        public And(IExpression a, IExpression b, int linenr)
+            : base(a, b, linenr)
         {
+            base._operator = "&&";
         }
     }
 }

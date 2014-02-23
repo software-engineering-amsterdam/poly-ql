@@ -18,5 +18,18 @@ namespace QSLib
         {
             return "form \r\n { \r\n" + this._code.ToString() + "\r\n }";
         }
+
+        public Type Type
+        {
+            get
+            {
+                return null;
+            }
+        }
+        public bool CheckType()
+        {
+            return this._code.CheckType();
+        }
+
     }
 }

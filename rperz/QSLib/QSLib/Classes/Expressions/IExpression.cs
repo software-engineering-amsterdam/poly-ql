@@ -5,8 +5,8 @@ using System.Text;
 
 namespace QSLib.Expressions
 {
-    public interface IExpression
+    public interface IExpression : IStatement
     {
-        Type CheckType();
+
     }
 }

@@ -36,6 +36,7 @@ let symbols =
         "(",    B_OPEN;
         ")",    B_CLOSE;
         ":",    COLON;
+        "=",    ASSIGN;
     ] |> Map.ofList
 }
 
@@ -48,7 +49,7 @@ let whitespace  = [' ' '\t']
 let newline     = "\n\r" | "\r\n" | '\n' | '\r'
 let symbol      = ">" | ">=" | "<" | "<=" | "==" | "!=" | "&&" | "||" | "!" // Boolean
                 | "+" | "-" | "*" | "/"                                     // Arithmetic
-                | "{" | "}" | "(" | ")" | ":"                               // Structural
+                | "{" | "}" | "(" | ")" | ":" | "="                         // Structural
 
 
 rule tokenize = parse   

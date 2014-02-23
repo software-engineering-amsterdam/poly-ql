@@ -3,40 +3,29 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace TermFrequency
+namespace Term_Frequency
 {
 	class Program
 	{
 		static void Main(string[] args)
 		{
-			StreamReader[] readers =
+			string[] inputs =
 			{
-				File.OpenText("./Input/input.txt"),
-				File.OpenText("./Input/pride-and-prejudice.txt"),
-				File.OpenText("./Input/test.txt")
+				File.OpenText("../../../Input/input.txt").ReadToEnd(),
+				File.OpenText("../../../Input/pride-and-prejudice.txt").ReadToEnd(),
+				File.OpenText("../../../Input/test.txt").ReadToEnd()
 			};
 
-			Main m = new Main();
+			TermFrequency m = new TermFrequency();
 
-			foreach (StreamReader reader in readers)
+			foreach (string input in inputs)
 			{
-				IEnumerable<KeyValuePair<string, int>> entries = m.Process(reader, 25);
+				IEnumerable<KeyValuePair<string, int>> entries = m.CountWordOccurences(input, 25);
 				foreach (string entry in entries.Select(kv => kv.Key + " => " + kv.Value))
 				{
 					Console.WriteLine(entry);
 				}
-
-				Console.WriteLine();
-				reader.BaseStream.Position = 0;
-
-				IEnumerable<KeyValuePair<string, HashSet<int>>> pages = m.ProcessPages(reader, 25);
-				foreach (string entry in pages.Select(kv => kv.Key + " => " + String.Join(", ", kv.Value)))
-				{
-					Console.WriteLine(entry);
-				}
-
-				Console.ReadKey();
-				Console.WriteLine();
+                Console.WriteLine();
 			}
 
 			Console.ReadKey();

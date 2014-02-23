@@ -6,30 +6,36 @@ using QSLib.Expressions;
 
 namespace QSLib.Expressions.Types
 {
-    public class QSString : IExpression
+    public class QSString : Primary
     {
         private String _value;
         private String _id;
+        private int _linenr;
 
-        public QSString(String id, String value)
+        public QSString(String id, String value, int linenr)
         {
             this._id = id;
             this._value = value;
+            this._linenr = linenr;
         }
 
-        public QSString(String value)
+        public QSString(String value, int linenr)
         {
             this._value = value;
+            this._linenr = linenr;
         }
 
-        public Type CheckType()
+        public override Type Type
         {
-            return "".GetType();
+            get
+            {
+                return "".GetType();
+            }
         }
 
         public override string ToString()
         {
-            return "\"" + this._value.ToString() + "\"" ;
+            return this._value.ToString();
         }
     }
 }

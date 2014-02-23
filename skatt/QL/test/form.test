@@ -1,9 +1,9 @@
 vraag1 : "Hoe werk jij" : boolean;
-if (vraag1 + 1) {
+if (1) {
   vraag2 : "Hoi werk jij" : boolean;
   vraag1 : "Hoi werk jij" : boolean;
   if true {
-    if (vraag1 + 1) {
+    if (0) {
 	  vraag2 : "Hoi werk jij" : boolean;
 	  vraag1 : "Hoi werk jij" : boolean;
 	  }

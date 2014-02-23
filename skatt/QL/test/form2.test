@@ -1,3 +1,5 @@
-if a + b > (x == x + b) {
-  vraag1 : "Hoi werk jij" : boolean;
+makkelijk : "Ik ben een makkelijke vraag" : string;
+
+if (2.0 !=  1.99) {
+  makkelijkif : "Ik ben een makkelijke if vraag" : boolean;
 }

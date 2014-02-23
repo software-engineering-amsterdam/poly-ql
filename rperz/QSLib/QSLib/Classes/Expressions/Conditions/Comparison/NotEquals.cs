@@ -5,13 +5,14 @@ using System.Text;
 
 namespace QSLib.Expressions.Conditions.Comparison
 {
-    class NotEquals : Binary_Expression 
+    class NotEquals : Condition
     {
-        protected String _operator = "!=";
+        protected new String _operator = "!=";
 
-        public NotEquals(IExpression a, IExpression b)
-            : base(a, b)
+        public NotEquals(IExpression a, IExpression b, int linenr)
+            : base(a, b, linenr)
         {
+            base._operator = "!=";
         }   
     }
 }

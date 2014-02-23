@@ -7,5 +7,7 @@ namespace QSLib
 {
     public interface IStatement
     {
+        bool CheckType();
+        Type Type { get; }
     }
 }

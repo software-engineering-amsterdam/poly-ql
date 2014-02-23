@@ -7,10 +7,10 @@ namespace QSLib.Expressions.Math
 {
     class Subtract : Binary_Expression 
     {
-        protected String _operator = "-";
-        public Subtract(IExpression a, IExpression b)
-            : base(a, b)
+        public Subtract(IExpression a, IExpression b, int linenr)
+            : base(a, b, linenr)
         {
+            base._operator = "-";
         }   
     }
 }

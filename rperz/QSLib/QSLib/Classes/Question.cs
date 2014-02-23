@@ -6,14 +6,16 @@ using QSLib.Expressions;
 using QSLib.Expressions.Types;
 namespace QSLib
 {
-    public class Question : IExpression, IStatement
+    public class Question : IStatement
     {
         private IExpression _val;
         private QSString _text;
-        public Question(QSString text, IExpression var)
+        private int _linenr;
+        public Question(QSString text, IExpression var, int linenr)
         {
             this._text = text;
             this._val = var;
+            this._linenr = linenr;
         }
 
         public override string ToString()
@@ -21,11 +23,16 @@ namespace QSLib
             return this._text.ToString()  + this._val.ToString();
         }
 
-
-        public Type CheckType()
+        public Type Type
         {
-            // not yet implemented
-            return null;
+            get
+            {
+                return null;
+            }
+        }
+        public bool CheckType()
+        {
+            return this._val.CheckType();
         }
     }
 }

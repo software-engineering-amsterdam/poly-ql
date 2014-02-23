@@ -22,9 +22,11 @@ type expression =
     | Neg           of expression
     | BooleanOp     of expression * booleanOp * expression
     | ArithmeticOp  of expression * arithmeticOp * expression
+    | TypeError     of expression * string
 
 type assignment = 
-    {   Label       : string;
+    {   ID          : string;
+        Label       : string;
         Expression  : expression }
 
 type question =

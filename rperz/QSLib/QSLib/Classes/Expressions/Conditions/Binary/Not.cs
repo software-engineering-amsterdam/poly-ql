@@ -6,22 +6,29 @@ using QSLib.Expressions.Types;
 using QSLib.Errors;
 namespace QSLib.Expressions.Conditions.Binary
 {
-    class Not : Unary_Expression
+    class Not : Condition
     {
 
-        public Not(IExpression left) : base(left)
+        public Not(IExpression left, int linenr)
+            : base(left, linenr)
         {
-
+            base._operator = "!";
         }
 
-        public Type CheckType()
+        public override bool CheckType()
         {
-            this._typeLeft = this._left.GetType();
-            if(this._typeLeft.Equals(new QSBoolean(true).GetType()))
-                return this._typeLeft;
-            else
-                throw new TypeException("Type error: ! operator can not handle type " + 
-                                        this._typeLeft.ToString());
+            bool retVal = true;
+            retVal &= this._left.CheckType();
+            retVal &= (this._left.Type.Equals(true.GetType()));
+            return retVal;
+        }
+
+        public new Type Type
+        {
+            get
+            {
+                return true.GetType();
+            }
         }
     }
 }
