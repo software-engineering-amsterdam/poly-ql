@@ -6,21 +6,21 @@ import java.util.Set;
 import nl.uva.polyql.model.Question;
 import nl.uva.polyql.model.Type;
 
-public class NumberAtom extends Expression {
+public class BooleanAtom extends Expression {
 
-    private final double mValue;
+    private final boolean mValue;
 
-    public NumberAtom(final String value) {
-        mValue = (Double) Type.NUMBER.parseInput(value);
+    public BooleanAtom(final String value) {
+        mValue = (Boolean) Type.BOOLEAN.parseInput(value);
     }
 
     @Override
     public Type getReturnType() {
-        return Type.NUMBER;
+        return Type.BOOLEAN;
     }
 
     @Override
-    public Double getValue() {
+    public Boolean getValue() {
         return mValue;
     }
 

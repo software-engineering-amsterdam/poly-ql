@@ -14,7 +14,7 @@ public class XorOperator extends BooleanOperator {
 
     @Override
     protected Boolean performOperation(boolean left, boolean right) {
-        return left | right;
+        return left ^ right;
     }
 
     @Override

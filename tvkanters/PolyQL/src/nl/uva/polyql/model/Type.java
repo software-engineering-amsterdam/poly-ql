@@ -5,7 +5,8 @@ public enum Type {
     NUMBER(0.0),
     STRING("");
 
-    public static final String BOOLEAN_TRUE = "1";
+    public static final String BOOLEAN_TRUE = "true";
+    public static final String BOOLEAN_FALSE = "false";
 
     private final Object mDefaultValue;
 
@@ -24,15 +25,24 @@ public enum Type {
     public Object parseInput(final String input) {
         switch (this) {
         case BOOLEAN:
-            return input.equals(BOOLEAN_TRUE);
+            if (input.equals(BOOLEAN_TRUE)) {
+                return true;
+            }
+            if (input.equals(BOOLEAN_FALSE)) {
+                return false;
+            }
+            return null;
+
         case NUMBER:
             try {
                 return Double.parseDouble(input);
             } catch (final NumberFormatException ex) {
                 return null;
             }
+
         case STRING:
             return input.substring(1, input.length() - 1);
+
         default:
             throw new RuntimeException("Unsupported type");
         }
