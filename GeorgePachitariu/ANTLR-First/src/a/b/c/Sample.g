@@ -12,7 +12,7 @@ options {
   package a.b.c;
 }
 
-
+//test
 // Rules
 rule: 'form' IDENT '{' form '}' ;
 form: statement*;
