@@ -9,9 +9,8 @@ public class ElseStatement extends IfStatement {
     }
 
     @Override
-    public void onQuestionUpdate(final Question question) {
-        // Inverse expression boolean here
-        // TODO: Update visibility of the statement
+    public boolean isSatisfied() {
+        return !super.isSatisfied();
     }
 
     @Override

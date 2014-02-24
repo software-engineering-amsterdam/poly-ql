@@ -24,6 +24,10 @@ public class IfStatement extends RuleContainer implements Question.OnUpdateListe
         }
     }
 
+    public boolean isSatisfied() {
+        return (Boolean) mExpression.getValue();
+    }
+
     @Override
     public void onQuestionUpdate(final Question question) {
         // TODO: Update visibility of the statement

@@ -5,10 +5,13 @@ import java.util.Set;
 
 public class Form extends RuleContainer {
 
+    private final String mLabel;
     private final Set<String> mLabels = new HashSet<>();
 
-    public Form() {
+    public Form(final String label) {
         super(null);
+
+        mLabel = label;
     }
 
     @Override
@@ -20,6 +23,11 @@ public class Form extends RuleContainer {
 
         mLabels.add(label);
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "FORM " + mLabel;
     }
 
 }

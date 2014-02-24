@@ -8,9 +8,8 @@ grammar Questionnaire;
 }
 
 
-form returns [Form f]
-	@init { $f = new Form(); } :
-	'form' ID '{' (r = formrule[$f])+ '}';
+form returns [Form f] :
+	'form' ID { $f = new Form($ID.text); } '{' (r = formrule[$f])+ '}';
 
 formrule[RuleContainer rc] : 
 	COMMENT | (field[$rc] | question[$rc] | ifstatement[$rc]) COMMENT?;
