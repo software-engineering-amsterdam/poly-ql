@@ -16,8 +16,8 @@ public class Mul extends Binary {
 	}
 
 	@Override
-	public void accept(ExprVisitor ev) {
-		ev.visit(this);
+	public <T> T accept(ExprVisitor<T> ev){
+		return ev.visit(this);
 	}
 
 	@Override

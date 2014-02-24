@@ -24,5 +24,13 @@ public class Block extends Stmt {
 	public void accept(StmtVisitor sv) {
 		sv.visit(this);
 	}
-
+	
+	public String toString(){
+		String block = "[";
+		for(Stmt s:getStatements()){
+			block += s.toString();
+		}
+		block += "]";
+		return block;
+	}
 }

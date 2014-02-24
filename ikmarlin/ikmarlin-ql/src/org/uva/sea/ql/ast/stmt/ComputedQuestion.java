@@ -25,5 +25,18 @@ public class ComputedQuestion extends Question {
 	public void accept(StmtVisitor sv) {
 		sv.visit(this);
 	}
+	
+	@Override
+	public String toString(){
+		String question = "[";
+		question += getIdent().getName();
+		question += " = ";
+		question += getType().toString();
+		question += "(";
+		question += getComputation().toString();
+		question += ")";
+		question += "]";
+		return question;
+	}
 
 }
