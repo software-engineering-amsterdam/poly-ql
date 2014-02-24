@@ -7,21 +7,20 @@ namespace Term_Frequency_If_less
 	{
 		static void Main(string[] args)
 		{
-			StreamReader[] readers =
+			string[] inputs =
 			{
-				File.OpenText("../../../Input/input.txt"),
-				File.OpenText("../../../Input/pride-and-prejudice.txt"),
-				File.OpenText("../../../Input/test.txt")
+				File.OpenText("../../../Input/input.txt").ReadToEnd(),
+				File.OpenText("../../../Input/pride-and-prejudice.txt").ReadToEnd(),
+				File.OpenText("../../../Input/test.txt").ReadToEnd()
 			};
 
 			TermFrequency m = new TermFrequency();
 
-			foreach (StreamReader reader in readers)
+            foreach (string input in inputs)
 			{
-				m.Process(reader);
+                m.ProcessInput(input);
+                Console.ReadKey();
 			}
-
-			Console.ReadKey();
 		}
 	}
 }
