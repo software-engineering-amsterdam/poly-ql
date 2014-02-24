@@ -24,7 +24,7 @@ public class StrLiteral extends Literals{
 	}
 
 	public String getVal() {
-		return val;
+		return this.val;
 	}
 
 }

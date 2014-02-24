@@ -1,6 +1,6 @@
-// Generated from QLang.g4 by ANTLR 4.1
+// Generated from QLang.g4 by ANTLR 4.2
 
-import ast.expr.Expr;
+import ast.expr.*;
 import ast.expr.binExpr.*;
 import ast.expr.unExpression.*;
 import ast.expr.literal.*;
@@ -57,6 +57,17 @@ public interface QLangListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitMulExpr(@NotNull QLangParser.MulExprContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link QLangParser#type}.
+	 * @param ctx the parse tree
+	 */
+	void enterType(@NotNull QLangParser.TypeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QLangParser#type}.
+	 * @param ctx the parse tree
+	 */
+	void exitType(@NotNull QLangParser.TypeContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link QLangParser#relExpr}.

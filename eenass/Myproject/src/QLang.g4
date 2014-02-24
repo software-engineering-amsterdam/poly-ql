@@ -2,20 +2,27 @@ grammar QLang;
 
 @parser::header
 {
-import ast.expr.Expr;
+import ast.expr.*;
 import ast.expr.binExpr.*;
 import ast.expr.unExpression.*;
 import ast.expr.literal.*;
 import ast.expr.types.*;
 }
 
+primary returns [Expr result]
+	: Bool { $result = new BoolLiteral(Boolean.parseBoolean($Bool.text));}
+	| Int {$result = new IntLiteral(Integer.parseInt($Int.text));}
+	| Ident {$result = new IdentLiteral($Ident.text);}
+	| Str {$result = new StrLiteral($Str.text);}
+	| '(' x=orExpr ')' { $result = $x.result; }
+	;
 
 unExpr returns [Expr result]
     :  '+' x=unExpr { $result = new Pos($x.result); }
     |  '-' x=unExpr { $result = new Neg($x.result); }
     |  '!' x=unExpr { $result = new Not($x.result); }
-    |  x=primary    { $result = $x.result; }
-    ;    
+//    |  x=primary    {$result = $x.result;}
+	; 
     
 mulExpr returns [Expr result]
     :   lhs=unExpr { $result=$lhs.result; } ( op=( '*' | '/' ) rhs=unExpr 
@@ -75,14 +82,11 @@ orExpr returns [Expr result]
     :   lhs=andExpr { $result = $lhs.result; } ( '||' rhs=andExpr { $result = new Or($result, $rhs.result); } )*
     ;
 
-primary returns [Expr result]
-	: Bool { $result = new BoolLiteral(Boolean.parseBoolean($Bool.text));}
-	| Int {$result = new IntLiteral(Integer.parseInt($Int.text));}
-	| Ident {$result = new IdentLiteral($Ident.text);}
-	| Str {$result = new StrLiteral($Str.text);}
-	| '(' x=orExpr ')' { $result = $x.result; }
-	;
-	
+type returns [Types result]
+    : 'boolean' {$result = new BoolType();}
+    | 'string'  {$result = new StrType();}
+    | 'integer'     {$result = new IntType();}
+    ;	
     
 // Tokens
 WS  :	(' ' | '\t' | '\n' | '\r')

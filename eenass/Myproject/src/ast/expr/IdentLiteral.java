@@ -1,10 +1,10 @@
-package ast.expr.literal;
+package ast.expr;
 
 import typecheck.Symboles;
 import ast.Visitor;
 import ast.expr.types.Types;
 
-public class IdentLiteral extends Literals{
+public class IdentLiteral extends Expr{
 	
 	private final String identName;
 
