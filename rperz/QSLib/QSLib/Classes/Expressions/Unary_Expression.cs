@@ -5,18 +5,33 @@ using System.Text;
 
 namespace QSLib.Expressions
 {
-    public class Unary_Expression : Expression
+    public class Unary_Expression : IExpression
     {
-        protected Expression _left;
+        protected IExpression _left;
         protected Type _typeLeft;
+        protected int _linenr;
 
-        public override Type GetType()
+        public Unary_Expression(IExpression left, int linenr)
         {
-            if (this._typeLeft != null)
-                return this._typeLeft;
+            this._left = left;
+            this._linenr = linenr;
+        }
 
-            this._typeLeft = this._left.GetType();
-            return this._typeLeft;
+        public Type Type
+        {
+            get
+            {
+                if (this._typeLeft != null)
+                    return this._typeLeft;
+
+                this._typeLeft = this._left.GetType();
+                return this._typeLeft;
+            }
+        }
+
+        public bool CheckType()
+        {
+            return this._left.CheckType();
         }
     }
 }

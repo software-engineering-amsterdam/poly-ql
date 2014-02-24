@@ -5,7 +5,12 @@ using System.Text;
 
 namespace QSLib.Expressions.Math
 {
-    class Add
+    class Add : Binary_Expression  
     {
+        public Add(IExpression a, IExpression b, int linenr)
+            : base(a, b, linenr)
+        {
+            base._operator = "+";
+        }
     }
 }

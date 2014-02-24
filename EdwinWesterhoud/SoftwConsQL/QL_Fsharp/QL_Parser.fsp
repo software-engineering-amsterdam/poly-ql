@@ -9,6 +9,7 @@ open Microsoft.FSharp.Collections
 %token CB_OPEN CB_CLOSE
 %token B_OPEN B_CLOSE
 %token COLON
+%token ASSIGN
 
 %token <string> IDENTIFIER
 %token <string> LABEL
@@ -21,7 +22,15 @@ open Microsoft.FSharp.Collections
 %token <float> MONEY
 
 %token QLBOOL QLSTRING QLINT QLDATE QLDECIMAL QLMONEY
-%token EQ NE LT LE GT GE AND OR NOT PLUS MINUS MULT DIV
+%token EQ NE LT LE GT GE AND OR PLUS MINUS MULT DIV NOT
+
+%left EQ NE
+%left LT LE GT GE
+%left AND OR
+%right NOT
+
+%left PLUS MINUS
+%left MULT DIV
 
 %token END
 
@@ -49,10 +58,11 @@ stmt:
     | conditional   { $1 }
 
 assignment:
-    LABEL expression { {
-                         Label      = $1;
-                         Expression = $2;
-                     } }
+    LABEL IDENTIFIER ASSIGN expression  { {
+                                            ID         = $2;
+                                            Label      = $1;
+                                            Expression = $4;
+                                        } }
 
 question:
     IDENTIFIER COLON LABEL qlType   { { 
@@ -84,6 +94,7 @@ exprType:
     | MONEY             { Money($1) }
 
 expression:
+    | B_OPEN expression B_CLOSE     { $2 }
     | IDENTIFIER                    { ID($1) }
     | exprType                      { Expr($1) }
     | NOT expression                { Neg($2) }
