@@ -34,4 +34,11 @@ public class ConditionalQuestion extends Stmt {
 		sv.visit(this);
 	}
 
-}
+	@Override
+	public String toString(){
+		String question = "[";
+		question += getCondition().toString();
+		question += getBody().toString();
+		question += "]";
+		return question;
+	}}

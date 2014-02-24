@@ -24,8 +24,8 @@ public class Ident extends Expr {
 	}
 	
 	@Override
-	public void accept(ExprVisitor ev) {
-		ev.visit(this);
+	public <T> T accept(ExprVisitor<T> ev){
+		return ev.visit(this);
 	}
 	
 	@Override

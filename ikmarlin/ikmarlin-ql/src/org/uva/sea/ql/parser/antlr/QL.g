@@ -1,5 +1,5 @@
 grammar QL;
-options {backtrack=false; memoize=true;}
+options {backtrack=false; memoize=true; language = Java;}
 
 @parser::header
 {
@@ -7,11 +7,42 @@ package org.uva.sea.ql.parser.antlr;
 import org.uva.sea.ql.ast.expr.*;
 import org.uva.sea.ql.ast.stmt.*;
 import org.uva.sea.ql.ast.form.*;
+import antlr.ANTLRException;
 }
 
 @lexer::header
 {
 package org.uva.sea.ql.parser.antlr;
+}
+
+@parser::members {
+	private ArrayList<String> errors = new ArrayList <String> ();
+	 
+	public List<String> getAllErrors() {
+	  return new ArrayList<String>(errors);
+	}
+	
+	public boolean hasErrors() {
+	  return !errors.isEmpty();
+	}
+	 
+	public void reportError(RecognitionException e) {
+		if ( state.errorRecovery ) {
+		  return;
+		}
+		state.syntaxErrors++;
+		state.errorRecovery = true;
+    String hdr = getErrorHeader(e);
+    String msg = getErrorMessage(e, tokenNames);
+		msg = null;
+		if ( e instanceof NoViableAltException ) {
+			NoViableAltException nvae = (NoViableAltException)e;
+			msg = " unexpected token: '"+e.token.getText()+"'";
+		} else {
+			msg = getErrorMessage(e, tokenNames);
+		}
+    errors.add(hdr+msg);
+	}
 }
 
 primary returns [Expr result]
@@ -101,23 +132,23 @@ type returns [Expr result]
     ;
     
 stmt returns [Stmt result]
-    : conditionalQestion { $result = $conditionalQestion.result; }
-    | computedQuestion { $result = $computedQuestion.result; }
+    : computedQuestion { $result = $computedQuestion.result; }
     | answerableQuestion { $result = $answerableQuestion.result; }
-    ;
-    
-answerableQuestion returns [Stmt result]
-    : Ident ':' Str type { $result = new AnswerableQuestion(new Ident($Ident.text), $Str.text, $type.result); }
-    ;
-
-computedQuestion returns [Stmt result]
-    : Ident ':' Str type '(' computation = orExpr ')' { $result = new ComputedQuestion(new Ident($Ident.text), $Str.text, $type.result, $computation.result); }
+    | conditionalQestion { $result = $conditionalQestion.result; }
     ;
     
 conditionalQestion returns [Stmt result]
     : 'if' '(' condition=orExpr ')' '{' block '}' { $result = new ConditionalQuestion($orExpr.result, $block.result); }
     ;
     
+computedQuestion returns [Stmt result]
+    : Ident ':' Str type '(' computation = orExpr ')' { $result = new ComputedQuestion(new Ident($Ident.text), $Str.text, $type.result, $computation.result); }
+    ;
+    
+answerableQuestion returns [Stmt result]
+    : Ident ':' Str type { $result = new AnswerableQuestion(new Ident($Ident.text), $Str.text, $type.result); }
+    ;
+
 block returns [Block result]
     @init
     {

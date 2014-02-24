@@ -2,31 +2,31 @@ package org.uva.sea.ql.checker;
 
 import org.uva.sea.ql.ast.expr.*;
 
-public interface ExprVisitor {
+public interface ExprVisitor<T> {
 	
-	public void visit(Add ex);
-	public void visit(Sub ex);
-	public void visit(Mul ex);
-	public void visit(Div ex);
+	public T visit(Add ex);
+	public T visit(Sub ex);
+	public T visit(Mul ex);
+	public T visit(Div ex);
 
-	public void visit(And ex);
-	public void visit(Or ex);
+	public T visit(And ex);
+	public T visit(Or ex);
 
-	public void visit(LEq ex);
-	public void visit(LT ex);
-	public void visit(NEq ex);
-	public void visit(Eq ex);
-	public void visit(GT ex);
-	public void visit(GEq ex);
+	public T visit(LEq ex);
+	public T visit(LT ex);
+	public T visit(NEq ex);
+	public T visit(Eq ex);
+	public T visit(GT ex);
+	public T visit(GEq ex);
 
-	public void visit(Pos ex);
-	public void visit(Neg ex);
-	public void visit(Not ex);
+	public T visit(Pos ex);
+	public T visit(Neg ex);
+	public T visit(Not ex);
 	
-	public void visit(Str ex);
-	public void visit(Bool ex);
-	public void visit(Int ex);
-	public void visit(Decimal ex);
-	public void visit(Money ex);
-	public void visit(Ident ex);
+	public T visit(Str ex);
+	public T visit(Bool ex);
+	public T visit(Int ex);
+	public T visit(Decimal ex);
+	public T visit(Money ex);
+	public T visit(Ident ex);
 }

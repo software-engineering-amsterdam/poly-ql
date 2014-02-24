@@ -2,6 +2,6 @@ package org.uva.sea.ql.checker;
 
 public interface ExprVisitable {
 	
-	public abstract void accept(ExprVisitor qlv);
+	public abstract <T> T accept(ExprVisitor<T> qlv);
 	
 }
