@@ -6,7 +6,7 @@
 
 String.prototype.sanitizeSpacing = function () {
     return this
-        .replace(/[\t\r\n\-_]/g, ' ')  // Newline / tab to single space
+        .replace(/[\t\r\n\-]/g, ' ')  // Newline/tab to single space
         .replace(/  +/g, ' ')          // Multiple 'spaces' to single 
         .trim();                       // Trim (spaces from new lines etc)
 };
@@ -14,11 +14,11 @@ String.prototype.sanitizeSpacing = function () {
 
 // Returns list of only lowercase words (thus no punctuation)
 String.prototype.toWords = function () {
-    var punctuation = /[\\\/\:\;\,\.\?\!\'\"\(\)\[\]\{\}\+\=\!\@\#\$\%\^\&\~\`]/g;
+    var punctuation = /[\\\/\:\;\,\.\?\!\'\"\(\)\[\]\{\}\+\=\!\@\#\$\%\^\&\~\`\_]|--/g;
 
     return this
         .toLowerCase()
-        .replace(/\'s|s\'/g,  '') // Remove 's (Elizabeth's == Elizabeth)
-        .replace(punctuation, '') // Remove non letter characters
-        .split(' ');              // Split to get words from line
+        //.replace(/\'s|s\'/g,  '')  // Remove 's (Elizabeth's == Elizabeth)
+        .replace(punctuation, ' ') // Remove non letter characters
+        .split(' ');               // Split to get words from line
 };
