@@ -22,7 +22,7 @@ namespace Term_Frequency_If_less
         private void ProcessWords(List<string> words)
         {
             RemoveStopWords(words, new HashSet<string>(File.OpenText("../../../Input/stop_words.txt").ReadToEnd().Split(',')));
-            CreateCounters(new Dictionary<string, Counter>(), words);
+            CreateCounters(new List<Counter>(), words, new HashSet<string>(words));
         }
 
         private void RemoveStopWords(List<string> words, HashSet<string> stopWords)
@@ -30,17 +30,11 @@ namespace Term_Frequency_If_less
             words.RemoveAll(w => stopWords.Contains(w));
         }
 
-        private void CreateCounters(Dictionary<string, Counter> counters, List<string> words)
+        private void CreateCounters(List<Counter> counters, List<string> words, HashSet<string> uniqueWords)
         {
-            words.ForEach(w => counters[w] = new Counter());
+            new List<string>(uniqueWords).ForEach(w => counters.Add(new Counter()));
 
-            StartCounterRecursion(new List<Counter>(counters.Values), words);
-        }
-
-        private void StartCounterRecursion(List<Counter> counters, List<string> words)
-        {
             counters.Add(new NullCounter());
-
             counters[0].Count(counters, words, words.GetEnumerator(), new Dictionary<string, int>());
         }
 	}
