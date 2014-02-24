@@ -10,7 +10,7 @@ namespace Term_Frequency_Callisthenics
 
         public OccurencesManager()
         {
-            _occurences = new Dictionary<Word, OccurenceCount>();
+            
         }
 
         private OccurenceCount SortKeySelector(KeyValuePair<Word, OccurenceCount> keyValuePair)
@@ -29,6 +29,8 @@ namespace Term_Frequency_Callisthenics
 
         public IEnumerable<KeyValuePair<Word, OccurenceCount>> GetWordOccurences(IEnumerable<Word> words)
         {
+            _occurences = new Dictionary<Word, OccurenceCount>();
+
             foreach (Word word in words)
             {
                 ProcessWord(word);
