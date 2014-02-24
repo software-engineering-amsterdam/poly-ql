@@ -30,11 +30,13 @@
         {
             this.textBoxSource = new System.Windows.Forms.TextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.checkBoxTypeCheck = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.buttonGenerate = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.textBoxOutput = new System.Windows.Forms.TextBox();
-            this.checkBoxTypeCheck = new System.Windows.Forms.CheckBox();
+            this.comboBoxDemos = new System.Windows.Forms.ComboBox();
+            this.labelDemo = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -65,6 +67,8 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.labelDemo);
+            this.splitContainer1.Panel1.Controls.Add(this.comboBoxDemos);
             this.splitContainer1.Panel1.Controls.Add(this.checkBoxTypeCheck);
             this.splitContainer1.Panel1.Controls.Add(this.groupBox1);
             this.splitContainer1.Panel1.Controls.Add(this.buttonGenerate);
@@ -75,6 +79,19 @@
             this.splitContainer1.Size = new System.Drawing.Size(695, 504);
             this.splitContainer1.SplitterDistance = 291;
             this.splitContainer1.TabIndex = 1;
+            // 
+            // checkBoxTypeCheck
+            // 
+            this.checkBoxTypeCheck.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.checkBoxTypeCheck.AutoSize = true;
+            this.checkBoxTypeCheck.Checked = true;
+            this.checkBoxTypeCheck.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxTypeCheck.Location = new System.Drawing.Point(96, 259);
+            this.checkBoxTypeCheck.Name = "checkBoxTypeCheck";
+            this.checkBoxTypeCheck.Size = new System.Drawing.Size(129, 17);
+            this.checkBoxTypeCheck.TabIndex = 2;
+            this.checkBoxTypeCheck.Text = "Enable Type Checker";
+            this.checkBoxTypeCheck.UseVisualStyleBackColor = true;
             // 
             // groupBox1
             // 
@@ -122,17 +139,25 @@
             this.textBoxOutput.Size = new System.Drawing.Size(689, 190);
             this.textBoxOutput.TabIndex = 0;
             // 
-            // checkBoxTypeCheck
+            // comboBoxDemos
             // 
-            this.checkBoxTypeCheck.AutoSize = true;
-            this.checkBoxTypeCheck.Checked = true;
-            this.checkBoxTypeCheck.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxTypeCheck.Location = new System.Drawing.Point(96, 259);
-            this.checkBoxTypeCheck.Name = "checkBoxTypeCheck";
-            this.checkBoxTypeCheck.Size = new System.Drawing.Size(129, 17);
-            this.checkBoxTypeCheck.TabIndex = 2;
-            this.checkBoxTypeCheck.Text = "Enable Type Checker";
-            this.checkBoxTypeCheck.UseVisualStyleBackColor = true;
+            this.comboBoxDemos.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBoxDemos.FormattingEnabled = true;
+            this.comboBoxDemos.Location = new System.Drawing.Point(535, 259);
+            this.comboBoxDemos.Name = "comboBoxDemos";
+            this.comboBoxDemos.Size = new System.Drawing.Size(144, 21);
+            this.comboBoxDemos.TabIndex = 3;
+            this.comboBoxDemos.SelectedValueChanged += new System.EventHandler(this.comboBoxDemos_SelectedValueChanged);
+            // 
+            // labelDemo
+            // 
+            this.labelDemo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelDemo.AutoSize = true;
+            this.labelDemo.Location = new System.Drawing.Point(494, 262);
+            this.labelDemo.Name = "labelDemo";
+            this.labelDemo.Size = new System.Drawing.Size(40, 13);
+            this.labelDemo.TabIndex = 4;
+            this.labelDemo.Text = "Preset:";
             // 
             // Form1
             // 
@@ -164,6 +189,8 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button buttonGenerate;
         private System.Windows.Forms.CheckBox checkBoxTypeCheck;
+        private System.Windows.Forms.ComboBox comboBoxDemos;
+        private System.Windows.Forms.Label labelDemo;
     }
 }
 

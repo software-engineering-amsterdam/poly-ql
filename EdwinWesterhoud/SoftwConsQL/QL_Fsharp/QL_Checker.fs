@@ -36,14 +36,15 @@ let rec checkExpression expression =
     | Neg(BooleanOp(_,_,_)) -> TBool, expression
     | Neg(_) -> TError, TypeError(expression, "err1")
 
-    | BooleanOp(b1, booleanOp.Eq, b2)
-    | BooleanOp(b1, booleanOp.Ne, b2) -> let t1,_ = checkExpression b1
-                                         let t2,_ = checkExpression b2
-                                         let accepted = seq [TIdentifier ; TError]
-                                         if t1.Equals(t2) || contains t1 accepted || contains t2 accepted then
-                                            TBool, expression
-                                         else
-                                            TError, TypeError(expression, "err2")
+    | BooleanOp(b1, (booleanOp.Eq as op), b2)
+    | BooleanOp(b1, (booleanOp.Ne as op), b2) -> let t1,ex1 = checkExpression b1
+                                                 let t2,ex2 = checkExpression b2
+                                                 let res = BooleanOp(ex1, op, ex2)
+                                                 let accepted = seq [TIdentifier ; TError]
+                                                 if t1.Equals(t2) || contains t1 accepted || contains t2 accepted then
+                                                    TBool, res
+                                                 else
+                                                    TError, TypeError(res, "err2")
     | BooleanOp(b1, booleanOp.And, b2)
     | BooleanOp(b1, booleanOp.Or, b2) -> let t1,_ = checkExpression b1
                                          let t2,_ = checkExpression b2
@@ -80,13 +81,13 @@ let rec checkExpression expression =
 let rec checkStmts = 
     let checkAssignment ass = let exprType, expr = checkExpression ass.Expression
                               identifiers.Add(ass.ID, exprType)
-                              Assignment(ass)
+                              Assignment({ID = ass.ID; Label = ass.Label; Expression = expr})
 
     let checkQuestion (ques:question) = identifiers.Add(ques.ID, mapQLType ques.Type)
                                         Question(ques)
 
     let checkConditional cond stmts = let exprType, expr = checkExpression cond
-                                      Conditional(cond, checkStmts stmts)
+                                      Conditional(expr, checkStmts stmts)
 
     let checkStmt stmt = 
         match stmt with
