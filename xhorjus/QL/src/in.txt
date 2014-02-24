@@ -1,0 +1,14 @@
+form Herp {
+	q1: "herp" int
+	q2: "twerp" int
+	
+	if((q1 * 2) > 100) {
+		q3: "derp" boolean
+		q4: "derpa" int
+	}
+	else {
+		q3: "schermp" boolean
+	}
+	
+	q5: "sdfsdf" int
+}

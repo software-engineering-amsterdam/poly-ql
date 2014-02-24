@@ -1,0 +1,6 @@
+assertEquals 
+  parse ("1+2", new Add(new Num(1), new Num(2)))
+
+assertEquals( parse ("1 + 1 + 1"), '+ (+ 1 1) 1')
+
+# Associativity testen

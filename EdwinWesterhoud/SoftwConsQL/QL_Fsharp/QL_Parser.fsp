@@ -1,0 +1,112 @@
+﻿%{
+open System
+open QL_Grammar
+open Microsoft.FSharp.Collections
+%}
+
+%token FORM
+%token IF
+%token CB_OPEN CB_CLOSE
+%token B_OPEN B_CLOSE
+%token COLON
+%token ASSIGN
+
+%token <string> IDENTIFIER
+%token <string> LABEL
+
+%token <bool> BOOL
+%token <string> STRING
+%token <int> INT
+%token <float> DATE
+%token <float> DECIMAL
+%token <float> MONEY
+
+%token QLBOOL QLSTRING QLINT QLDATE QLDECIMAL QLMONEY
+%token EQ NE LT LE GT GE AND OR PLUS MINUS MULT DIV NOT
+
+%left EQ NE
+%left LT LE GT GE
+%left AND OR
+%right NOT
+
+%left PLUS MINUS
+%left MULT DIV
+
+%token END
+
+%start start
+%type <QL_Grammar.questionaire> start
+
+%%
+
+start:
+    FORM IDENTIFIER CB_OPEN
+        stmtList
+    CB_CLOSE END            {
+                                {   ID          = $2;
+                                    Statements  = $4 }
+                            }
+
+stmtList:
+    |               { [] }
+    | stmt          { [$1] }
+    | stmt stmtList { $1 :: $2 }
+
+stmt:
+    | assignment    { Assignment($1) }
+    | question      { Question($1) }
+    | conditional   { $1 }
+
+assignment:
+    LABEL IDENTIFIER ASSIGN expression  { {
+                                            ID         = $2;
+                                            Label      = $1;
+                                            Expression = $4;
+                                        } }
+
+question:
+    IDENTIFIER COLON LABEL qlType   { { 
+                                        ID      = $1;
+                                        Label   = $3;
+                                        Type    = $4;
+                                    } }
+
+conditional:
+    IF B_OPEN expression B_CLOSE CB_OPEN
+        stmtList
+    CB_CLOSE                    { Conditional($3, $6) }
+
+qlType:
+    | QLBOOL    { QLBool }
+    | QLSTRING  { QLString }
+    | QLINT     { QLInt }
+    | QLDATE    { QLDate }
+    | QLDECIMAL { QLDecimal }
+    | QLMONEY   { QLMoney }
+
+exprType:
+    | STRING            { String($1) }
+    | LABEL             { String($1) }
+    | BOOL              { Bool($1) }
+    | INT               { Int($1) }
+    | DATE              { Date($1) }
+    | DECIMAL           { Decimal($1) }
+    | MONEY             { Money($1) }
+
+expression:
+    | B_OPEN expression B_CLOSE     { $2 }
+    | IDENTIFIER                    { ID($1) }
+    | exprType                      { Expr($1) }
+    | NOT expression                { Neg($2) }
+    | expression AND expression     { BooleanOp($1, And, $3) }
+    | expression OR expression      { BooleanOp($1, Or, $3) }
+    | expression LT expression      { BooleanOp($1, Lt, $3) }
+    | expression GT expression      { BooleanOp($1, Gt, $3) }
+    | expression LE expression      { BooleanOp($1, Le, $3) }
+    | expression GE expression      { BooleanOp($1, Ge, $3) }
+    | expression EQ expression      { BooleanOp($1, Eq, $3) }
+    | expression NE expression      { BooleanOp($1, Ne, $3) }
+    | expression PLUS expression    { ArithmeticOp($1, Plus, $3) }
+    | expression MINUS expression   { ArithmeticOp($1, Minus, $3) }
+    | expression MULT expression    { ArithmeticOp($1, Mult, $3) }
+    | expression DIV expression     { ArithmeticOp($1, Div, $3) }

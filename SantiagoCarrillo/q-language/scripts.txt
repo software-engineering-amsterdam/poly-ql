@@ -1,0 +1,5 @@
+#generate grammar using package name
+antlr4 Questionnaire.g4  -package edu.uva.softwarecons.grammar
+
+grun Questionnaire init -gui
+
