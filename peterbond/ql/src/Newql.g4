@@ -6,10 +6,11 @@ options {
 }
 
 // Rules
-form: 'form' formname '{' formcontent+ '}';
-formcontent: qit | ifstat;
+form: 'form' formname '{' block+ '}';
+block: qit | ifstat;
 qit: '"'question'"' identifier ASS type;
-ifstat: 'if('condition') {' formcontent '}';
+ifstat: 'if('condition') {' block '}'
+      | 'if('condition') {' block '}' 'else {' block '}';
 formname: FORMNAME;
 question: QUESTION;
 identifier: IDENTIFIER;
