@@ -19,6 +19,8 @@ namespace Term_Frequency_If_less
             foreach (string input in inputs)
 			{
                 m.ProcessInput(input);
+
+                Console.WriteLine();
                 Console.ReadKey();
 			}
 		}

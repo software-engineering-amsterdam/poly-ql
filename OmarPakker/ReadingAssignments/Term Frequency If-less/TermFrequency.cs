@@ -15,7 +15,7 @@ namespace Term_Frequency_If_less
 
 		public void ProcessInput(string input)
         {
-            ProcessWords(new List<string>(Regex.Replace(Regex.Replace(input.ToLowerInvariant(), @"[^a-z\s]", ""), @"\s+[a-z]\s+", "")
+            ProcessWords(new List<string>(Regex.Replace(Regex.Replace(input.ToLowerInvariant(), @"[^a-z\s]", " "), @"\s+[a-z]\s+", " ")
                 .Split(new[] { ' ', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)));
         }
 
