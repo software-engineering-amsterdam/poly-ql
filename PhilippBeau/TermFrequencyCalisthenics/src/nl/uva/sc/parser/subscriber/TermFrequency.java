@@ -1,5 +1,6 @@
 package nl.uva.sc.parser.subscriber;
 
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -19,7 +20,6 @@ public class TermFrequency implements BookParserSubscriber {
         if (StopWord.isStopWord(word)) {
             return;
         }
-
         Token token = mIndex.get(word);
 
         if (token == null) {
@@ -33,7 +33,16 @@ public class TermFrequency implements BookParserSubscriber {
     public List<Token> getSortedTokens() {
         List<Token> tokens = new ArrayList<>(mIndex.values());
         Collections.sort(tokens);
-
         return tokens;
+    }
+
+    public void printTop(final int topX) {
+        List<Token> sortedTokenList = getSortedTokens();
+        int sortedListSize = sortedTokenList.size();
+        PrintStream print = System.out;
+        for (int i = 1; i <= topX; ++i) {
+            Token currentToken = sortedTokenList.get(sortedListSize - i);
+            print.println(currentToken);
+        }
     }
 }
