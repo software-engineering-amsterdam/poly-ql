@@ -1,6 +1,7 @@
-// Generated from QLang.g4 by ANTLR 4.2
+// Generated from QLang.g4 by ANTLR 4.1
 
-import ast.expr.*;
+import ast.expr.Expr;
+import ast.expr.IdentLiteral;
 import ast.expr.binExpr.*;
 import ast.expr.unExpression.*;
 import ast.expr.literal.*;

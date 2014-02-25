@@ -27,4 +27,9 @@ public class IntLiteral extends Literals{
 		return this.val;
 	}
 
+	@Override
+	public String show() {
+		return Integer.toString(val);
+	}
+
 }

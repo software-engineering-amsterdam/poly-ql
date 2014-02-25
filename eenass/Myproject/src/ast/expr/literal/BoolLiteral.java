@@ -26,4 +26,9 @@ public class BoolLiteral extends Literals{
 		return new BoolType();
 	}
 
+	@Override
+	public String show() {
+		return Boolean.toString(val);
+	}
+
 }

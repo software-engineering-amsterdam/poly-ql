@@ -30,4 +30,9 @@ public class IdentLiteral extends Expr{
 		return null;
 	}
 
+	@Override
+	public String show() {
+		return identName;
+	}
+
 }

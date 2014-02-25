@@ -27,4 +27,9 @@ public class StrLiteral extends Literals{
 		return this.val;
 	}
 
+	@Override
+	public String show() {
+		return val.toString();
+	}
+
 }

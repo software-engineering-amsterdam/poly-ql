@@ -20,4 +20,9 @@ public class Not extends UnExpr{
 	public Types typeof(Symboles symboles) {
 		return new BoolType();
 	}
+
+	@Override
+	public String show() {
+		return "!";
+	}
 }
