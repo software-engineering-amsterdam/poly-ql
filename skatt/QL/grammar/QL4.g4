@@ -36,10 +36,10 @@ expression: '(' expression ')' #wrapExpr
 		  | expression '!=' expression #neqExpr
 		  
 		  // single elements expressions
-		  | BOOLEAN #boolExpr
-		  | DEC #decExpr
-		  | INT #intExpr 
-		  | IDENTIFIER #identExpr
+		  | BOOLEAN #bool
+		  | DEC #dec
+		  | INT #int 
+		  | IDENTIFIER #ident
 		  ;
 
 // lower level components
@@ -50,6 +50,8 @@ elsecondition : ELSE;
 label: STRING;
 
 ////////// lexer
+
+COMMENT : // .*? -> skip;
 
 TYPE: 'boolean' | 'string' | 'integer' | 'date' | 'decimal' | 'currency';
 

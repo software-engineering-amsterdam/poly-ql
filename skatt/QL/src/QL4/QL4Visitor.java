@@ -23,4 +23,5 @@ public class QL4Visitor extends QL4BaseVisitor {
 	public void visitStructure(QL4Parser.StructureContext ctx) {
 		
 	}
+	
 }
