@@ -30,13 +30,13 @@
         {
             this.textBoxSource = new System.Windows.Forms.TextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.labelDemo = new System.Windows.Forms.Label();
+            this.comboBoxDemos = new System.Windows.Forms.ComboBox();
             this.checkBoxTypeCheck = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.buttonGenerate = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.textBoxOutput = new System.Windows.Forms.TextBox();
-            this.comboBoxDemos = new System.Windows.Forms.ComboBox();
-            this.labelDemo = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -80,13 +80,33 @@
             this.splitContainer1.SplitterDistance = 291;
             this.splitContainer1.TabIndex = 1;
             // 
+            // labelDemo
+            // 
+            this.labelDemo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelDemo.AutoSize = true;
+            this.labelDemo.Location = new System.Drawing.Point(494, 262);
+            this.labelDemo.Name = "labelDemo";
+            this.labelDemo.Size = new System.Drawing.Size(40, 13);
+            this.labelDemo.TabIndex = 4;
+            this.labelDemo.Text = "Preset:";
+            // 
+            // comboBoxDemos
+            // 
+            this.comboBoxDemos.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBoxDemos.FormattingEnabled = true;
+            this.comboBoxDemos.Location = new System.Drawing.Point(535, 259);
+            this.comboBoxDemos.Name = "comboBoxDemos";
+            this.comboBoxDemos.Size = new System.Drawing.Size(144, 21);
+            this.comboBoxDemos.TabIndex = 3;
+            this.comboBoxDemos.SelectedValueChanged += new System.EventHandler(this.comboBoxDemos_SelectedValueChanged);
+            // 
             // checkBoxTypeCheck
             // 
             this.checkBoxTypeCheck.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.checkBoxTypeCheck.AutoSize = true;
             this.checkBoxTypeCheck.Checked = true;
             this.checkBoxTypeCheck.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxTypeCheck.Location = new System.Drawing.Point(96, 259);
+            this.checkBoxTypeCheck.Location = new System.Drawing.Point(109, 259);
             this.checkBoxTypeCheck.Name = "checkBoxTypeCheck";
             this.checkBoxTypeCheck.Size = new System.Drawing.Size(129, 17);
             this.checkBoxTypeCheck.TabIndex = 2;
@@ -111,11 +131,11 @@
             this.buttonGenerate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonGenerate.Location = new System.Drawing.Point(15, 255);
             this.buttonGenerate.Name = "buttonGenerate";
-            this.buttonGenerate.Size = new System.Drawing.Size(75, 23);
+            this.buttonGenerate.Size = new System.Drawing.Size(88, 23);
             this.buttonGenerate.TabIndex = 1;
-            this.buttonGenerate.Text = "Generate";
+            this.buttonGenerate.Text = "Generate (F5)";
             this.buttonGenerate.UseVisualStyleBackColor = true;
-            this.buttonGenerate.Click += new System.EventHandler(this.button1_Click);
+            this.buttonGenerate.Click += new System.EventHandler(this.buttonGenerate_Click);
             // 
             // groupBox2
             // 
@@ -138,26 +158,6 @@
             this.textBoxOutput.ReadOnly = true;
             this.textBoxOutput.Size = new System.Drawing.Size(689, 190);
             this.textBoxOutput.TabIndex = 0;
-            // 
-            // comboBoxDemos
-            // 
-            this.comboBoxDemos.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBoxDemos.FormattingEnabled = true;
-            this.comboBoxDemos.Location = new System.Drawing.Point(535, 259);
-            this.comboBoxDemos.Name = "comboBoxDemos";
-            this.comboBoxDemos.Size = new System.Drawing.Size(144, 21);
-            this.comboBoxDemos.TabIndex = 3;
-            this.comboBoxDemos.SelectedValueChanged += new System.EventHandler(this.comboBoxDemos_SelectedValueChanged);
-            // 
-            // labelDemo
-            // 
-            this.labelDemo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelDemo.AutoSize = true;
-            this.labelDemo.Location = new System.Drawing.Point(494, 262);
-            this.labelDemo.Name = "labelDemo";
-            this.labelDemo.Size = new System.Drawing.Size(40, 13);
-            this.labelDemo.TabIndex = 4;
-            this.labelDemo.Text = "Preset:";
             // 
             // Form1
             // 
