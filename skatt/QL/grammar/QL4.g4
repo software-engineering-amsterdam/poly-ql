@@ -17,11 +17,25 @@ question: IDENTIFIER ':' label ':' TYPE ';' #regQuestion
 
 // expressions
 expression: '(' expression ')' #wrapExpr  
-		  | expression ('*'|'/') expression #multExpr
-		  | expression ('+'|'-') expression #plusExpr
+	      
+	      // math expressions
+		  | expression '*' expression #multExpr
+		  | expression '/' expression #divExpr
+		  | expression '+' expression #plusExpr
+		  | expression '-' expression #minExpr
+		  
+		  // logical expressions
 		  | '!' expression #negExpr
-		  | expression ('&&' | '||') expression #logExpr 
-		  | expression ('==' | '>=' | '<=' | '<' | '>' | '!=' ) expression #compExpr
+		  | expression '&&' expression #andExpr
+		  | expression '||' expression #orExpr 
+		  | expression '==' expression #eqExpr
+		  | expression '>=' expression #geqExpr
+		  | expression '<=' expression #leqExpr
+		  | expression '>' expression #greExpr
+		  | expression '<' expression #lesExpr
+		  | expression '!=' expression #neqExpr
+		  
+		  // single elements expressions
 		  | BOOLEAN #boolExpr
 		  | DEC #decExpr
 		  | INT #intExpr 
