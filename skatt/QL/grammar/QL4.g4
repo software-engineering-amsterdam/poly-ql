@@ -1,17 +1,22 @@
 grammar QL4;
 
+@header {
+	package Form2;
+}
+
 /////////////// Parser
 // upper level 
 form : structures;
 structures : structure+;
 
-structure : ( 
-			question 
-			| ifcondition '{' structures '}' (elseifcondition '{' structures '}')* (elsecondition '{' structures '}')?    
-			);
+structure :  
+			question #questionStruct 
+			| ifcondition '{' structures '}' (elseifcondition '{' structures '}')* (elsecondition '{' structures '}')? #workflowStruct    
+			;
 
 
-question: IDENTIFIER ':' label ':' TYPE ';' #regQuestion 
+question: 
+			IDENTIFIER ':' label ':' TYPE ';' #regQuestion 
 		  | IDENTIFIER ':' label ':' TYPE '('expression')' ';' #compQuestion
 		  ; 
 
@@ -51,9 +56,9 @@ label: STRING;
 
 ////////// lexer
 
-COMMENT : // .*? -> skip;
+COMMENT : '//' .*? -> skip ;
 
-TYPE: 'boolean' | 'string' | 'integer' | 'date' | 'decimal' | 'currency';
+TYPE: 'boolean' | 'string' | 'integer' | 'date' | 'decimal' | 'currency' ;
 
 IF: 'if';
 ELSEIF: 'elseif';
