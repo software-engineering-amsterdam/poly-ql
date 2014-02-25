@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{920A23F4-4B01-4CD2-B89C-44A59EE000E0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Algebra.QL.Core</RootNamespace>
+    <AssemblyName>Algebra.QL.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="GOLD Engine, Version=5.0.4337.25397, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\GOLD Engine.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Expr\DoubleExpr.cs" />
+    <Compile Include="Expr\LiteralExpr.cs" />
+    <Compile Include="Expr\SingleExpr.cs" />
+    <Compile Include="Expr\TripleExpr.cs" />
+    <Compile Include="Expr\VarExpr.cs" />
+    <Compile Include="Expr\VarInitExpr.cs" />
+    <Compile Include="Factory\IQLFactory.cs" />
+    <Compile Include="Factory\QLFactoryCombination.cs" />
+    <Compile Include="Grammar\GrammarData.cs" />
+    <Compile Include="Grammar\QLParser.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Stmnt\CompStmnt.cs" />
+    <Compile Include="Stmnt\FormStmnt.cs" />
+    <Compile Include="Stmnt\GotoStmnt.cs" />
+    <Compile Include="Stmnt\IfElseStmnt.cs" />
+    <Compile Include="Stmnt\IfStmnt.cs" />
+    <Compile Include="Stmnt\QuestionStmnt.cs" />
+    <Compile Include="Type\BoolType.cs" />
+    <Compile Include="Type\IntType.cs" />
+    <Compile Include="Type\RealType.cs" />
+    <Compile Include="Type\StringType.cs" />
+    <Compile Include="Value\BoolValue.cs" />
+    <Compile Include="Value\IntValue.cs" />
+    <Compile Include="Value\RealValue.cs" />
+    <Compile Include="Value\StringValue.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Algebra.Core\Algebra.Core.csproj">
+      <Project>{66c0e1d5-1aab-4d62-8a82-bed70bd9e348}</Project>
+      <Name>Algebra.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Grammar\QL_Grammar.egt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>"$(SolutionDir)tools\GOLDbuild.exe" "$(SolutionDir)..\..\Grammar\QL_Grammar.grm" "$(ProjectDir)Grammar\QL_Grammar.egt"
+"$(SolutionDir)tools\GOLDtest.exe" "$(ProjectDir)Grammar\QL_Grammar.egt" "$(SolutionDir)..\..\Grammar\QL_Test.txt" "$(SolutionDir)..\..\Grammar\TestLog.txt"
+"$(SolutionDir)tools\GOLDprog.exe" "$(ProjectDir)Grammar\QL_Grammar.egt" "$(SolutionDir)..\..\Grammar\C-Sharp - GrammarData.pgt" "$(ProjectDir)Grammar\GrammarData.cs"</PreBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

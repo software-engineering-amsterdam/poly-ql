@@ -1,11 +1,11 @@
 ﻿using System.IO;
 using System.Reflection;
 using System.Text;
-using Grammar;
-using QL_Grammar.QLAlgebra.Value;
-using QL_Grammar.QLTypeCheck.Expr;
-using QL_Grammar.QLTypeCheck.Factory;
-using QL_Grammar.QLTypeCheck.Stmnt;
+using Algebra.QL.Core.Grammar;
+using Algebra.QL.Core.Value;
+using Algebra.QL.TypeCheck.Expr;
+using Algebra.QL.TypeCheck.Factory;
+using Algebra.QL.TypeCheck.Stmnt;
 using Xunit;
 
 namespace QL_Tests
@@ -17,8 +17,8 @@ namespace QL_Tests
 		public ParseTests()
 		{
             parser = new QLParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeCheckFactory>(new QLTypeCheckFactory());
-            Assembly a = typeof(QLTypeCheckFactory).Assembly;
-            parser.LoadGrammar(new BinaryReader(a.GetManifestResourceStream("QL_Grammar.Grammar.QL_Grammar.egt")));
+            Assembly a = parser.GetType().Assembly;
+            parser.LoadGrammar(new BinaryReader(a.GetManifestResourceStream("Algebra.QL.Core.Grammar.QL_Grammar.egt")));
 		}
 
 		[Fact]
