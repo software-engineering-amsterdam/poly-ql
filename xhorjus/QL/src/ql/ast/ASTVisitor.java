@@ -1,3 +1,6 @@
+package ql.ast;
+
+import antlr4.*;
 import org.antlr.v4.runtime.misc.NotNull;
 
 /**
@@ -17,7 +20,7 @@ public class ASTVisitor extends TestBaseVisitor<Object> {
 
 	@Override public Object visitQtype(@NotNull TestParser.QtypeContext ctx) { return visitChildren(ctx); }
 
-	@Override public Object visitParens(@NotNull TestParser.ParensContext ctx) { return visitChildren(ctx); }
+	@Override public Object visitParentheses(@NotNull TestParser.ParenthesesContext ctx) { return visitChildren(ctx); }
 
 	@Override public Object visitGt(@NotNull TestParser.GtContext ctx) { return visitChildren(ctx); }
 
