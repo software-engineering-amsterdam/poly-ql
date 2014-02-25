@@ -3,19 +3,17 @@ grammar QL4;
 /////////////// Parser
 // upper level 
 form : structures;
-structures : (structure)+;
+structures : structure+;
 
 structure : ( 
 			question 
 			| ifcondition '{' structures '}' (elseifcondition '{' structures '}')* (elsecondition '{' structures '}')?    
 			);
 
-ifcondition : IF expression;
-elseifcondition : ELSEIF expression;
-elsecondition : ELSE;
 
-question: IDENTIFIER ':' label ':' TYPE ';' 
-		  | IDENTIFIER ':' label ':' TYPE '('expression')' ';'; 
+question: IDENTIFIER ':' label ':' TYPE ';' #regQuestion 
+		  | IDENTIFIER ':' label ':' TYPE '('expression')' ';' #compQuestion
+		  ; 
 
 // expressions
 expression: '(' expression ')' #wrapExpr  
@@ -31,14 +29,20 @@ expression: '(' expression ')' #wrapExpr
 		  ;
 
 // lower level components
+ifcondition : IF expression;
+elseifcondition : ELSEIF expression;
+elsecondition : ELSE;
+
 label: STRING;
-TYPE: 'boolean' | 'string' | 'integer' | 'date' | 'decimal' | 'currency';
 
 ////////// lexer
+
+TYPE: 'boolean' | 'string' | 'integer' | 'date' | 'decimal' | 'currency';
 
 IF: 'if';
 ELSEIF: 'elseif';
 ELSE: 'else'; 
+
 BOOLEAN : 'true' | 'false';
 IDENTIFIER:   ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*;
 STRING : '"' (' '..'~')* '"';
