@@ -1,7 +1,7 @@
 grammar QL4;
 
 @header {
-	package Form2;
+	package QL4;
 }
 
 /////////////// Parser
