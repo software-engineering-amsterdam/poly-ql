@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry exported="true" kind="lib" path="lib/antlr-4.2-complete.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/home/eenass/Downloads/junit-4.11.jar"/>
-	<classpathentry kind="lib" path="lib/antlr-4.2-complete.jar"/>
-	<classpathentry kind="var" path="junit"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="var" path="junit" sourcepath="/JUNIT_HOME/junit.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
