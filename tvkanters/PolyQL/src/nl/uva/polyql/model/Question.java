@@ -3,6 +3,8 @@ package nl.uva.polyql.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import nl.uva.polyql.Log;
+
 public class Question extends Rule {
 
     private final String mId;
@@ -66,7 +68,7 @@ public class Question extends Rule {
     }
 
     public void addUpdateListener(final OnUpdateListener listener) {
-        System.out.println("LISTENER " + listener + " ADDED TO " + this);
+        Log.i("LISTENER " + listener + " ADDED TO " + this);
         mUpdateListeners.add(listener);
     }
 

@@ -2,6 +2,7 @@ package nl.uva.polyql.model.expressions.operations;
 
 import java.util.Set;
 
+import nl.uva.polyql.Log;
 import nl.uva.polyql.model.Question;
 import nl.uva.polyql.model.Type;
 import nl.uva.polyql.model.expressions.Expression;
@@ -23,7 +24,7 @@ public abstract class Operation<T> extends Expression {
             throw new UnsupportedOperandTypeException(left, operator, right);
         }
 
-        System.out.println("OPERATION " + this);
+        Log.i("OPERATION " + this);
     }
 
     public T getValue() {

@@ -22,7 +22,7 @@ public class ParserTest {
 
         assertTrue(ifStatement.isSatisfied());
     }
-    
+
     @Test
     public void testPrecedence() {
         final Form form = ParserHelper.parseResourceForm("precedence");
