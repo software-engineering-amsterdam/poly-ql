@@ -44,7 +44,9 @@
     <Compile Include="Expr\VarExpr.cs" />
     <Compile Include="Expr\VarInitExpr.cs" />
     <Compile Include="Factory\IQLFactory.cs" />
+    <Compile Include="Factory\IQLTypeFactory.cs" />
     <Compile Include="Factory\QLFactoryCombination.cs" />
+    <Compile Include="Factory\QLTypeFactory.cs" />
     <Compile Include="Grammar\GrammarData.cs" />
     <Compile Include="Grammar\QLParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

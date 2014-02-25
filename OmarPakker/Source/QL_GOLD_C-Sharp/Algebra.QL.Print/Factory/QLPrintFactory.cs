@@ -1,13 +1,11 @@
 ﻿using System;
+using Algebra.Core.Type;
+using Algebra.Core.Value;
+using Algebra.QL.Core.Value;
 using Algebra.QL.Extensions.Factory;
-using Algebra.QL.Extensions.Type;
 using Algebra.QL.Extensions.Value;
 using Algebra.QL.Print.Expr;
 using Algebra.QL.Print.Stmnt;
-using Algebra.Core.Type;
-using Algebra.Core.Value;
-using Algebra.QL.Core.Type;
-using Algebra.QL.Core.Value;
 
 namespace Algebra.QL.Print.Factory
 {
@@ -17,35 +15,6 @@ namespace Algebra.QL.Print.Factory
         {
 
         }
-
-		public IType DateType()
-		{
-			return new DateType();
-		}
-
-		//TODO: See if we can change this so you don't have to cover for types that stay the same
-        //Probably need to seperate types into its own factory to be able to do this.
-		#region Type duplication
-		public IType StringType()
-		{
-			return new StringType();
-		}
-
-		public IType IntType()
-		{
-			return new IntType();
-		}
-
-		public IType RealType()
-		{
-			return new RealType();
-		}
-
-		public IType BoolType()
-		{
-			return new BoolType();
-		}
-		#endregion
 
         public IPrintExpr Date(DateTime date)
 		{

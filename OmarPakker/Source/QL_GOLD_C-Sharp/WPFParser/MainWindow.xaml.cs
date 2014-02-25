@@ -5,7 +5,9 @@ using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
 using Algebra.Core.GrammarParser;
+using Algebra.QL.Core.Factory;
 using Algebra.QL.Core.Grammar;
+using Algebra.QL.Extensions.Factory;
 using Algebra.QL.Extensions.Grammar;
 using Algebra.QL.Print.Expr;
 using Algebra.QL.Print.Stmnt;
@@ -43,7 +45,8 @@ namespace WPFParser
 
         private AbstractParser GetTypeCheckParser()
         {
-            var parser = new QLParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeCheckFactory>(new QLTypeCheckFactory());
+            var parser = new QLParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeFactory,
+                QLTypeCheckFactory>(new QLTypeFactory(), new QLTypeCheckFactory());
 
             Assembly a = parser.GetType().Assembly;
             parser.LoadGrammar(new BinaryReader(a.GetManifestResourceStream("Algebra.QL.Core.Grammar.QL_Grammar.egt")));
@@ -54,7 +57,8 @@ namespace WPFParser
         private AbstractParser GetComboParser()
         {
             var parser = new ExtensionsParser<Tuple<ITypeCheckExpr, IPrintExpr>,
-                Tuple<ITypeCheckStmnt, IPrintStmnt>, TypeCheckPrintFactory>(new TypeCheckPrintFactory());
+                Tuple<ITypeCheckStmnt, IPrintStmnt>, QLExtensionsTypeFactory,
+                TypeCheckPrintFactory>(new QLExtensionsTypeFactory(), new TypeCheckPrintFactory());
 
             Assembly a = parser.GetType().Assembly;
             parser.LoadGrammar(new BinaryReader(a.GetManifestResourceStream("Algebra.QL.Extensions.Grammar.QL_Grammar.egt")));

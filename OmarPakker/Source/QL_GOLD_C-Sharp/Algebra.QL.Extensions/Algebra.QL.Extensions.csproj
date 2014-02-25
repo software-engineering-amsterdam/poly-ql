@@ -37,7 +37,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Factory\IQLExtensionsFactory.cs" />
+    <Compile Include="Factory\IQLExtensionsTypeFactory.cs" />
     <Compile Include="Factory\QLExtensionsFactoryCombination.cs" />
+    <Compile Include="Factory\QLExtensionsTypeFactory.cs" />
     <Compile Include="Grammar\ExtensionsParser.cs" />
     <Compile Include="Grammar\GrammarData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
