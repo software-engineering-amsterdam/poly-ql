@@ -8,13 +8,14 @@ using Grammar.Generated.v2;
 
 namespace Algebra.QL.Extensions.Grammar
 {
-    public class ExtensionsParser<E, S, F> : QLParser<E, S, F>
+    public class ExtensionsParser<E, S, TF, F> : QLParser<E, S, TF, F>
+        where TF : IQLExtensionsTypeFactory
 		where F : IQLExtensionsFactory<E, S>
     {
         protected override ReadOnlyDictionary<string, short> Rules { get { return GrammarData.Rules; } }
 
-        public ExtensionsParser(F f)
-            : base(f)
+        public ExtensionsParser(TF tf, F f)
+            : base(tf, f)
         {
 			
         }
@@ -24,7 +25,7 @@ namespace Algebra.QL.Extensions.Grammar
 			//<Type> ::= date
 			if (r.Parent.TableIndex() == Rules["Type_Date"])
 			{
-				return factory.DateType();
+				return typeFactory.DateType();
 			}
             //<MultExpr> ::= <MultExpr> '%' <NegateExpr>
             else if (r.Parent.TableIndex() == Rules["Multexpr_Percent"])

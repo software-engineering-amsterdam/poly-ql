@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Reflection;
 using System.Text;
+using Algebra.QL.Core.Factory;
 using Algebra.QL.Core.Grammar;
 using Algebra.QL.Core.Value;
 using Algebra.QL.TypeCheck.Expr;
@@ -12,11 +13,11 @@ namespace QL_Tests
 {
 	public class ParseTests
 	{
-        private QLParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeCheckFactory> parser;
+        private QLParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeFactory, QLTypeCheckFactory> parser;
 
 		public ParseTests()
 		{
-            parser = new QLParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeCheckFactory>(new QLTypeCheckFactory());
+            parser = new QLParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeFactory, QLTypeCheckFactory>(new QLTypeFactory(), new QLTypeCheckFactory());
             Assembly a = parser.GetType().Assembly;
             parser.LoadGrammar(new BinaryReader(a.GetManifestResourceStream("Algebra.QL.Core.Grammar.QL_Grammar.egt")));
 		}

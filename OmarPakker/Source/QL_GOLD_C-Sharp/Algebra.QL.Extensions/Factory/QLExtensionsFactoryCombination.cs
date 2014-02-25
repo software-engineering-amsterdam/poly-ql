@@ -1,6 +1,4 @@
 ﻿using System;
-using Algebra.QL.Extensions.Type;
-using Algebra.Core.Type;
 using Algebra.QL.Core.Factory;
 
 namespace Algebra.QL.Extensions.Factory
@@ -15,11 +13,6 @@ namespace Algebra.QL.Extensions.Factory
         {
 
         }
-
-		public IType DateType()
-		{
-			return new DateType();
-		}
 
 		public Tuple<E1, E2> Date(DateTime date)
 		{

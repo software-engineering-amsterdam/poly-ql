@@ -9,15 +9,18 @@ using Grammar.Generated.v1;
 
 namespace Algebra.QL.Core.Grammar
 {
-	public class QLParser<E, S, F> : AbstractParser
+	public class QLParser<E, S, TF, F> : AbstractParser
+        where TF : IQLTypeFactory
 		where F : IQLFactory<E, S>
 	{
 		protected override ReadOnlyDictionary<string, short> Rules { get { return GrammarData.Rules; } }
-		protected readonly F factory;
+        protected readonly TF typeFactory;
+        protected readonly F factory;
 
-		public QLParser(F f)
+		public QLParser(TF tf, F f)
 			: base(true)
 		{
+            typeFactory = tf;
             factory = f;
 		}
 
@@ -26,22 +29,22 @@ namespace Algebra.QL.Core.Grammar
 			//<Type> ::= string
 			if (r.Parent.TableIndex() == Rules["Type_String"])
 			{
-				return factory.StringType();
+                return typeFactory.StringType();
 			}
 			//<Type> ::= int
 			else if (r.Parent.TableIndex() == Rules["Type_Int"])
 			{
-				return factory.IntType();
+                return typeFactory.IntType();
 			}
 			//<Type> ::= real
 			else if (r.Parent.TableIndex() == Rules["Type_Real"])
 			{
-				return factory.RealType();
+                return typeFactory.RealType();
 			}
 			//<Type> ::= bool
 			else if (r.Parent.TableIndex() == Rules["Type_Bool"])
 			{
-				return factory.BoolType();
+                return typeFactory.BoolType();
 			}
 			//<Forms> ::= <Form> <Forms>
 			//<Statements> ::= <Statement> <Statements>
@@ -202,12 +205,12 @@ namespace Algebra.QL.Core.Grammar
 			//<NegateExpr> ::= '-' <Value>
 			else if (r.Parent.TableIndex() == Rules["Negateexpr_Minus"])
 			{
-				return factory.Negate(factory.RealType(), (E)r.get_Data(1));
+                return factory.Negate(typeFactory.RealType(), (E)r.get_Data(1));
 			}
             //<NegateExpr> ::= '!' <Value>
             else if (r.Parent.TableIndex() == Rules["Negateexpr_Exclam"])
             {
-                return factory.Negate(factory.BoolType(), (E)r.get_Data(1));
+                return factory.Negate(typeFactory.BoolType(), (E)r.get_Data(1));
             }
             //<Value> ::= Identifier
             else if (r.Parent.TableIndex() == Rules["Value_Identifier"])

@@ -3,7 +3,7 @@
 namespace Algebra.Core.Factory
 {
 	public abstract class FactoryCombination<E1, S1, E2, S2, F1, F2>
-		: IFactory<Tuple<E1, E2>, Tuple<S1, S2>>
+        : IFactory<Tuple<E1, E2>, Tuple<S1, S2>>
 		where F1 : IFactory<E1, S1>
 		where F2 : IFactory<E2, S2>
 	{

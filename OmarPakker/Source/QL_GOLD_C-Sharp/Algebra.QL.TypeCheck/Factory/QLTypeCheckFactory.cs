@@ -1,7 +1,6 @@
 ﻿using Algebra.Core.Type;
 using Algebra.Core.Value;
 using Algebra.QL.Core.Factory;
-using Algebra.QL.Core.Type;
 using Algebra.QL.Core.Value;
 using Algebra.QL.TypeCheck.Expr;
 using Algebra.QL.TypeCheck.Stmnt;
@@ -11,30 +10,9 @@ namespace Algebra.QL.TypeCheck.Factory
 	public class QLTypeCheckFactory : IQLFactory<ITypeCheckExpr, ITypeCheckStmnt>
     {
         public QLTypeCheckFactory()
-            : base()
         {
 
         }
-
-		public IType StringType()
-		{
-			return new StringType();
-		}
-
-		public IType IntType()
-		{
-			return new IntType();
-		}
-
-		public IType RealType()
-		{
-			return new RealType();
-		}
-
-		public IType BoolType()
-		{
-			return new BoolType();
-		}
 
 		public ITypeCheckExpr String(string s)
 		{

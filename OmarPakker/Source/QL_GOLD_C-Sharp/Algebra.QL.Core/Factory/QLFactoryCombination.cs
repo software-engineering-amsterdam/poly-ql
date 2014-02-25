@@ -7,7 +7,7 @@ using Algebra.QL.Core.Type;
 namespace Algebra.QL.Core.Factory
 {
 	public abstract class QLFactoryCombination<E1, S1, E2, S2, F1, F2>
-		: FactoryCombination<E1, S1, E2, S2, F1, F2>, IQLFactory<Tuple<E1, E2>, Tuple<S1, S2>>
+        : FactoryCombination<E1, S1, E2, S2, F1, F2>, IQLFactory<Tuple<E1, E2>, Tuple<S1, S2>>
 		where F1 : IQLFactory<E1, S1>
 		where F2 : IQLFactory<E2, S2>
 	{

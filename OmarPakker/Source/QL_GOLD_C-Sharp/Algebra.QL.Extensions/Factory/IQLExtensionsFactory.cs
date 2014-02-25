@@ -6,7 +6,6 @@ namespace Algebra.QL.Extensions.Factory
 {
     public interface IQLExtensionsFactory<E, S> : IQLFactory<E, S>
     {
-		IType DateType();
 		E Date(DateTime date);
 
         E Modulo(E l, E r);

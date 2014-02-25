@@ -6,11 +6,6 @@ namespace Algebra.QL.Core.Factory
 {
 	public interface IQLFactory<E, S> : IFactory<E, S>
 	{
-		IType StringType();
-		IType IntType();
-		IType RealType();
-		IType BoolType();
-
 		E String(string s);
 		E Int(int i);
 		E Real(double d);

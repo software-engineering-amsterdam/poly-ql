@@ -13,5 +13,5 @@ namespace Algebra.Core.Factory
 			Factory1 = f1;
 			Factory2 = f2;
 		}
-	}
+    }
 }

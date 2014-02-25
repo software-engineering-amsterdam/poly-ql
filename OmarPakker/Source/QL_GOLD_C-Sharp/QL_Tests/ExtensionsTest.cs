@@ -3,6 +3,7 @@ using System.Globalization;
 using System.IO;
 using System.Reflection;
 using Algebra.QL.Core.Value;
+using Algebra.QL.Extensions.Factory;
 using Algebra.QL.Extensions.Grammar;
 using Algebra.QL.Extensions.Type;
 using Algebra.QL.Extensions.TypeCheck.Expr;
@@ -16,11 +17,12 @@ namespace QL_Tests
 {
     public class ExtensionsTest
     {
-        private ExtensionsParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeCheckExtensionsFactory> parser;
+        private ExtensionsParser<ITypeCheckExpr, ITypeCheckStmnt, QLExtensionsTypeFactory, QLTypeCheckExtensionsFactory> parser;
 
         public ExtensionsTest()
         {
-            parser = new ExtensionsParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeCheckExtensionsFactory>(new QLTypeCheckExtensionsFactory());
+            parser = new ExtensionsParser<ITypeCheckExpr, ITypeCheckStmnt, QLExtensionsTypeFactory,
+                QLTypeCheckExtensionsFactory>(new QLExtensionsTypeFactory(), new QLTypeCheckExtensionsFactory());
             Assembly a = parser.GetType().Assembly;
             parser.LoadGrammar(new BinaryReader(a.GetManifestResourceStream("Algebra.QL.Extensions.Grammar.QL_Grammar.egt")));
         }
