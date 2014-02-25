@@ -37,10 +37,10 @@
             // 
             // txtOutput
             // 
-            this.txtOutput.Location = new System.Drawing.Point(12, 229);
+            this.txtOutput.Location = new System.Drawing.Point(11, 367);
             this.txtOutput.Multiline = true;
             this.txtOutput.Name = "txtOutput";
-            this.txtOutput.Size = new System.Drawing.Size(476, 119);
+            this.txtOutput.Size = new System.Drawing.Size(646, 170);
             this.txtOutput.TabIndex = 0;
             // 
             // txtInput
@@ -48,14 +48,14 @@
             this.txtInput.Location = new System.Drawing.Point(12, 29);
             this.txtInput.Multiline = true;
             this.txtInput.Name = "txtInput";
-            this.txtInput.Size = new System.Drawing.Size(476, 137);
+            this.txtInput.Size = new System.Drawing.Size(645, 275);
             this.txtInput.TabIndex = 1;
             // 
             // btnParse
             // 
-            this.btnParse.Location = new System.Drawing.Point(320, 172);
+            this.btnParse.Location = new System.Drawing.Point(429, 310);
             this.btnParse.Name = "btnParse";
-            this.btnParse.Size = new System.Drawing.Size(168, 23);
+            this.btnParse.Size = new System.Drawing.Size(228, 51);
             this.btnParse.TabIndex = 2;
             this.btnParse.Text = "Parse";
             this.btnParse.UseVisualStyleBackColor = true;
@@ -73,7 +73,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 213);
+            this.label2.Location = new System.Drawing.Point(12, 347);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(37, 13);
             this.label2.TabIndex = 4;
@@ -83,7 +83,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(502, 360);
+            this.ClientSize = new System.Drawing.Size(669, 549);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnParse);

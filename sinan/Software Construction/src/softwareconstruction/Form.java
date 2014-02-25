@@ -14,48 +14,48 @@ import java.util.List;
  */
 public class Form {
 
-    public ArrayList<Question> form = new ArrayList();
-    public Question question;
+    public ArrayList itemlist = new ArrayList();
+    private String formName;
 
-    public Form(ArrayList form, Question question) {
-        this.form = form;
-        this.question = question;
+    public Form(ArrayList form, String formName) {
+        this.itemlist = form;
+        this.formName = formName;
     }
     
     public Form() {
     }
 
-    public List addQuestion(Question question) {
-        form.add(question);
-        return form;
+    public void addQuestion(Object object) {
+        itemlist.add(object);
     }
-
+    
     /**
      * @return the form
      */
-    public List getForm() {
-        return form;
+    public List getItems() {
+        return itemlist;
     }
 
     /**
-     * @param form the form to set
+     * @param itemlist the form to set
      */
-    public void setForm(ArrayList form) {
-        this.form = form;
+    public void setForm(ArrayList itemlist) {
+        this.itemlist = itemlist;
     }
 
     /**
-     * @return the question
+     * @return the formName
      */
-    public Question getQuestion() {
-        return question;
+    public String getFormName() {
+        return formName;
     }
 
     /**
-     * @param question the question to set
+     * @param formName the formName to set
      */
-    public void setQuestion(Question question) {
-        this.question = question;
+    public void setFormName(String formName) {
+        this.formName = formName;
     }
-
+    
+    
 }

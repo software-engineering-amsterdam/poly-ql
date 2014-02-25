@@ -11,11 +11,10 @@ namespace QL.Components
     {
         public string ID { get; set; }
         public string Title { get; set; }
-        public List<Question> Questions { get; private set; }
+        public List<StatementBase> Body { get; set; }
 
         public Questionnaire()
         {
-            Questions = new List<Question>();
         }
     }
 }

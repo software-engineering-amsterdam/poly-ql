@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using QL.Components.Types;
+
 namespace QL.Components.Statements
 {
-    public class Question : Statement
+    public class Question : StatementBase
     {
         public string ID { get; set; }
         public string Label { get; set; }
-        public Type Type { get; set; }
-        public object Val { get; set; }
+        public TypeBase Type { get; set; }
     }
 }

@@ -77,6 +77,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
     <Compile Include="QL_Grammar.fs" />
+    <Compile Include="QL_Checker.fs" />
     <None Include="QL_Lexer.fsl" />
     <None Include="QL_Parser.fsp" />
     <Compile Include="QL_Parser.fs" />
@@ -108,6 +109,10 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
   </ItemGroup>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>

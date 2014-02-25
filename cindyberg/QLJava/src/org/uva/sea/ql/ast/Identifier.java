@@ -1,5 +1,8 @@
 package org.uva.sea.ql.ast;
 
+import org.uva.sea.ql.ast.type.Type;
+import org.uva.sea.ql.typechecker.TypeEnvironment;
+
 public class Identifier extends Expression {
 
 	private String name;
@@ -10,7 +13,7 @@ public class Identifier extends Expression {
 
 	}
 	
-	public String getIdentifier(){
+	public String getName(){
 		return this.name;
 	}
 	
@@ -18,9 +21,29 @@ public class Identifier extends Expression {
 		return name;};
 
 	@Override
-	public <T> void accept(ExpressionVisitor<T> visitor) {
-		visitor.visit(this);
+	public <T> T accept(ExpressionVisitor<T> visitor) {
+		return visitor.visit(this);
 		
 	}
+	
+	public Type typeOf(TypeEnvironment environment){
+		return environment.getType(this);
+	}
+	
+	@Override
+	public boolean equals(Object other) {
+	    if (other instanceof Identifier) {
+	        return name.equals(((Identifier) other).getName());
+	    }
+	    
+	    return false;
+
+	}
+	
+	@Override
+	public int hashCode(){
+		return name.hashCode();
+	}
+	
 
 }

@@ -23,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -32,6 +33,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Antlr4.Runtime.v4.5">
@@ -49,21 +51,37 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Components\Statements\Conditions\BooleanCondition.cs" />
-    <Compile Include="Components\Statements\Conditions\CompareCondition.cs" />
-    <Compile Include="Components\Statements\Conditions\Condition.cs" />
-    <Compile Include="Components\Statements\Conditions\Operators\Equals.cs" />
-    <Compile Include="Components\Statements\Conditions\Operators\SmThEq.cs" />
-    <Compile Include="Components\Statements\Conditions\Operators\GrThEq.cs" />
-    <Compile Include="Components\Statements\Conditions\Operators\SmTh.cs" />
-    <Compile Include="Components\Statements\Conditions\Operators\GrTh.cs" />
-    <Compile Include="Components\Statements\IfStatement.cs" />
-    <Compile Include="Components\Statements\Conditions\Operators\AND.cs" />
-    <Compile Include="Components\Statements\Conditions\Operators\OR.cs" />
-    <Compile Include="Components\Statements\Conditions\Operators\Operator.cs" />
-    <Compile Include="Components\Statements\Question.cs" />
-    <Compile Include="Components\Questionnaire.cs" />
-    <Compile Include="Components\Statements\Statement.cs" />
+    <Compile Include="Identifiers.cs" />
+    <Compile Include="QLClasses\Expressions\ExpressionBase.cs" />
+    <Compile Include="QLClasses\Expressions\Unary\UnaryExpression.cs" />
+    <Compile Include="QLClasses\Expressions\Conditions\BinaryExpressions\CompareExpression.cs" />
+    <Compile Include="QLClasses\Expressions\Conditions\BinaryExpression.cs" />
+    <Compile Include="QLClasses\Expressions\Conditions\BinaryExpressions\Operators\Equals.cs" />
+    <Compile Include="QLClasses\Expressions\Conditions\BinaryExpressions\Operators\SmThEq.cs" />
+    <Compile Include="QLClasses\Expressions\Conditions\BinaryExpressions\Operators\GrThEq.cs" />
+    <Compile Include="QLClasses\Expressions\Conditions\BinaryExpressions\Operators\SmTh.cs" />
+    <Compile Include="QLClasses\Expressions\Conditions\BinaryExpressions\Operators\GrTh.cs" />
+    <Compile Include="Interfaces\ITypeChecker.cs" />
+    <Compile Include="QLClasses\Expressions\Math\Add.cs" />
+    <Compile Include="QLClasses\Expressions\Math\MathExpression.cs" />
+    <Compile Include="QLClasses\Expressions\Math\Sub.cs" />
+    <Compile Include="QLClasses\Expressions\Math\Div.cs" />
+    <Compile Include="QLClasses\Expressions\Math\Mul.cs" />
+    <Compile Include="QLClasses\Expressions\Unary\Neg.cs" />
+    <Compile Include="QLClasses\Expressions\Unary\Not.cs" />
+    <Compile Include="QLClasses\Expressions\Unary\Pos.cs" />
+    <Compile Include="QLClasses\Statements\StatementIf.cs" />
+    <Compile Include="QLClasses\Expressions\Conditions\BinaryExpressions\And.cs" />
+    <Compile Include="QLClasses\Expressions\Conditions\BinaryExpressions\Or.cs" />
+    <Compile Include="QLClasses\Expressions\Conditions\BinaryExpressions\Operators\OperatorBase.cs" />
+    <Compile Include="QLClasses\Statements\Question.cs" />
+    <Compile Include="QLClasses\Questionnaire.cs" />
+    <Compile Include="QLClasses\Statements\StatementBase.cs" />
+    <Compile Include="QLClasses\Expressions\Types\QIdentifier.cs" />
+    <Compile Include="QLClasses\Expressions\Types\QBool.cs" />
+    <Compile Include="QLClasses\Expressions\Types\QInt.cs" />
+    <Compile Include="QLClasses\Expressions\Types\QString.cs" />
+    <Compile Include="QLClasses\Expressions\Types\QBaseType.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -80,9 +98,9 @@
     </Compile>
     <Compile Include="QLErrorListeners.cs" />
     <Compile Include="QLLexer.cs" />
-    <Compile Include="QLListener.cs" />
     <Compile Include="QLParser.cs" />
-    <Compile Include="QLVisitor.cs" />
+    <Compile Include="TypeChecker\QLException.cs" />
+    <Compile Include="TypeChecker\QLTypeChecker.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>

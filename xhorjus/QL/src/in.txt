@@ -1,11 +1,17 @@
 form Herp {
+	// this is a single line comment
 	q1: "herp" int
+	q2: "twerp" int
 	
-	if(someCondition) {
-		q2: "derp" boolean
+	/* multiline
+	   comment */
+	if((q1 * 2) > 100) {
+		q3: "derp" boolean
+		q4: "derpa" int
+	}
+	else {
+		q3: "schermp" boolean
 	}
 	
-	if(otherCondition) {
-		q3: "zurrr" boolean
-	}
+	q5: "sdfsdf" int
 }

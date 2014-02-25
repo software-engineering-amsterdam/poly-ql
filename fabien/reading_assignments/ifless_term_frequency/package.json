@@ -1,0 +1,20 @@
+{
+  "name": "word-frequency-ifless",
+  "description": "Count frequencies of (non stop) words in a given text without using if/else/loop statements",
+  "version": "0.0.1",
+  "maintainers": [
+    {
+      "name"  : "Fabiën Tesselaar",
+      "email" : "fabientesselaar@gmail.com",
+      "web"   : "tessmore.nl"
+    }
+  ],
+  "devDependencies" : {
+    "jslint" : "~0.2.11",
+    "mocha"  : "~1.15.0"
+  },
+  "scripts" : {
+    "start" : "node main.js",
+    "test"  : "mocha -R spec"
+  }
+}
