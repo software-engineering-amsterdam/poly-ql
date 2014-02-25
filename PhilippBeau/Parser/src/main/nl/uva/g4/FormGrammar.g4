@@ -8,10 +8,6 @@ forms returns [List<ParserForm> data]
 	:(f=form {$data.add($f.f);})+ EOF  
 	;
 
-// The start rule -> begin parsing here
-//init returns [ ParserForm f ]: 
-//(LINEEND)*? initForm=form{$f = new ParserForm($initForm.text)} (LINEEND)*?;
-
 form returns [ParserForm f]
 	: 'form' id=ID b=block {$f = new ParserForm($id.text, $b.ifs);}
 	;
@@ -21,27 +17,25 @@ block returns [List<Statement> ifs]
 	: (LINEEND)*? '{' LINEEND (parserIF=stat {$ifs.add($parserIF.parserIF);})* '}' (LINEEND)*?;
 
 stat returns [Statement parserIF]
-	: ID ':' STRING statType LINEEND {$parserIF = new SimpleStatement($ID.text);}
-    | ID ':' STRING statType '(' expr ')' LINEEND {$parserIF = new ExpressionStatement($ID.text);}
-    | 'if' '(' ex=expr ')' b=block                     {$parserIF = new IFStatement($ex.text, $b.ifs);}
-    | 'if' '(' ex=expr ')' block 'else' block        {$parserIF = new IfElseStatement($ex.text);}
+	: ID ':' STRING statType LINEEND				{$parserIF = new SimpleStatement($ID.text);}
+    | ID ':' STRING statType '(' expr ')' LINEEND 	{$parserIF = new ExpressionStatement($ID.text);}
+    | 'if' '(' ex=expr ')' b=block					{$parserIF = new IFStatement($ex.text, $b.ifs);}
+    | 'if' '(' ex=expr ')' block 'else' block		{$parserIF = new IfElseStatement($ex.text);}
     ;
 
 // The precedence is given by the order
-expr: unaryOp expr                                #Unary
-    | expr multiplicativeOp expr                  #Multiplicative
-    | expr additiveOp expr                        #Additive
-    | expr relationalOp expr                      #Relational
-    | expr equalityOp expr                        #Equality
-    | expr AND expr                               #LogicalAnd
-    | expr OR expr                                #LogicalOr
-
-    | boolLiteral                                 #Bool
-    | ID                                          #Id
-    | numLiteral                                  #Num
-    | STRING                                      #String
-
-    | '(' expr ')'                                #Parens
+expr: unaryOp expr                                
+    | expr multiplicativeOp expr                  
+    | expr additiveOp expr                        
+    | expr relationalOp expr                      
+    | expr equalityOp expr                        
+    | expr AND expr                               
+    | expr OR expr                                
+    | boolLiteral                                 
+    | ID                                          
+    | numLiteral                                  
+    | STRING                                      
+    | '(' expr ')'                                
     ;
 
 // Statement types
@@ -127,6 +121,6 @@ TEXT:    'text';
 ID: [a-zA-Z_]+ [a-zA-Z_0-9]*; 
 
 /** All skip rules */
-WS: [ \t]+ -> skip;                     // remove whitespace
-LINE_COMMENT: '//' .*? LINEEND -> skip; // remove single line comments
-COMMENT: '/*' .*? '*/' -> skip;         // remove multiline comments
+WS: [ \t]+ -> skip;                     
+LINE_COMMENT: '//' .*? LINEEND -> skip; 
+COMMENT: '/*' .*? '*/' -> skip;
