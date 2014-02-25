@@ -28,5 +28,10 @@ namespace QL_Grammar.Algebra.Value
 		{
 			return Value.GetHashCode();
 		}
+
+        public override string ToString()
+        {
+            return Value.ToString();
+        }
 	}
 }

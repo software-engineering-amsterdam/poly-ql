@@ -12,8 +12,8 @@ namespace Grammar.Parser
     {
         protected override ReadOnlyDictionary<string, short> Rules { get { return GrammarData.Rules; } }
 
-        public ExtensionsParser()
-            : base()
+        public ExtensionsParser(F f)
+            : base(f)
         {
 			
         }
@@ -23,17 +23,17 @@ namespace Grammar.Parser
 			//<Type> ::= date
 			if (r.Parent.TableIndex() == Rules["Type_Date"])
 			{
-				return Factory.DateType();
+				return factory.DateType();
 			}
             //<MultExpr> ::= <MultExpr> '%' <NegateExpr>
             else if (r.Parent.TableIndex() == Rules["Multexpr_Percent"])
             {
-                return Factory.Modulo((E)r.get_Data(0), (E)r.get_Data(2));
+                return factory.Modulo((E)r.get_Data(0), (E)r.get_Data(2));
             }
             // <PowerExpr> ::= <PowerExpr> '^' <NegateExpr>
             else if (r.Parent.TableIndex() == Rules["Powerexpr_Caret"])
             {
-                return Factory.Power((E)r.get_Data(0), (E)r.get_Data(2));
+                return factory.Power((E)r.get_Data(0), (E)r.get_Data(2));
             }
             // <PowerExpr> ::= <NegateExpr>
             else if (r.Parent.TableIndex() == Rules["Powerexpr"])
@@ -43,12 +43,12 @@ namespace Grammar.Parser
 			// <Statement> ::= loop '(' <Expression> ')' <Statement>
 			else if (r.Parent.TableIndex() == Rules["Statement_Loop_Lparen_Rparen"])
             {
-                return Factory.Loop((E)r.get_Data(2), (S)r.get_Data(4));
+                return factory.Loop((E)r.get_Data(2), (S)r.get_Data(4));
             }
 			//<Literal> ::= DateLit
 			if (r.Parent.TableIndex() == Rules["Literal_Datelit"])
 			{
-				return Factory.Date(DateTime.Parse((string)r.get_Data(0), CultureInfo.InvariantCulture));
+				return factory.Date(DateTime.Parse((string)r.get_Data(0), CultureInfo.InvariantCulture));
 			}
 
             return base.CreateObjectFor(r);

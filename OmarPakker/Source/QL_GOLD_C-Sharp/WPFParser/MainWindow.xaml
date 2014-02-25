@@ -1,0 +1,81 @@
+﻿<Window x:Class="WPFParser.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Questionaire Language" Height="768" Width="1024">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="150"/>
+        </Grid.RowDefinitions>
+        
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <Button Grid.Column="0" Content="Load File" Click="LoadBtn_Click" />
+            <Button Grid.Column="1" Content="Use Default File" Click="defaultBtn_Click"/>
+        </Grid>
+
+        <TabControl Name="tabControl" Grid.Row="1">
+            <TabItem Header="Code Printout">
+                <RichTextBox Name="printOutputBlock" IsReadOnly="True" Background="#1E1E1E" Foreground="LightGray">
+                    <RichTextBox.Resources>
+                        <Style TargetType="{x:Type Paragraph}">
+                            <Setter Property="Margin" Value="0"/>
+                        </Style>
+                    </RichTextBox.Resources>
+                </RichTextBox>
+            </TabItem>
+            
+            <TabItem Header="Write Custom Code">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="30"/>
+                    </Grid.RowDefinitions>
+                    
+                    <RichTextBox Name="customCodeBlock" Grid.Row="0" Background="#1E1E1E" Foreground="LightGray">
+                        <RichTextBox.Resources>
+                            <Style TargetType="{x:Type Paragraph}">
+                                <Setter Property="Margin" Value="0"/>
+                            </Style>
+                        </RichTextBox.Resources>
+                        
+                        <RichTextBox.Document>
+                            <FlowDocument>
+                                <Paragraph>form Form1 {</Paragraph>
+                                <Section Margin="25 0 0 0">
+                                    <Paragraph>"Power:" &lt;&lt; answer1:int = 5 ^ 2;</Paragraph>
+                                    <Paragraph>"Modulo:" &lt;&lt; 10 % 5;</Paragraph>
+                                    <Paragraph>"Modulo2:" &lt;&lt; 10 % true;</Paragraph>
+                                    <Paragraph>"Date Type:" &gt;&gt; dateVar:date;</Paragraph>
+                                    <Paragraph>"Date:" &lt;&lt; 2014-02-20T16:22:00+01:00;</Paragraph>
+                                    <Paragraph>loop (answer1)</Paragraph>
+                                    <Paragraph Margin="25 0 0 0">"In the loop:" &gt;&gt; loopAnswer:int;</Paragraph>
+                                </Section>
+                                <Paragraph>}</Paragraph>
+                            </FlowDocument>
+                        </RichTextBox.Document>
+                    </RichTextBox>
+                    
+                    <Button Grid.Row="1" Content="Run Custom Code" Click="customCodeBtn_Click"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+        <GridSplitter Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Top" 
+             ResizeBehavior="PreviousAndNext" Height="5" Background="Gray" />
+
+        <RichTextBox Name="errorOutputBlock" Grid.Row="3" IsReadOnly="True" Background="#1E1E1E">
+            <RichTextBox.Resources>
+                <Style TargetType="{x:Type Paragraph}">
+                    <Setter Property="Margin" Value="2"/>
+                </Style>
+            </RichTextBox.Resources>
+        </RichTextBox>
+    </Grid>
+</Window>
