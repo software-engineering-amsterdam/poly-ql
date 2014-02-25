@@ -6,14 +6,14 @@ using Term_Frequency_If_less.Data;
 
 namespace Term_Frequency_If_less
 {
-	public class TermFrequency
-	{
-		public TermFrequency()
-		{
+    public class TermFrequency
+    {
+        public TermFrequency()
+        {
 
-		}
+        }
 
-		public void ProcessInput(string input)
+        public void ProcessInput(string input)
         {
             ProcessWords(new List<string>(Regex.Replace(Regex.Replace(input.ToLowerInvariant(), @"[^a-z\s]", " "), @"\s+[a-z]\s+", " ")
                 .Split(new[] { ' ', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)));
@@ -64,5 +64,5 @@ namespace Term_Frequency_If_less
             printers.Add(new NullPrinter());
             printers[0].Print(printers, resultsList.GetEnumerator());
         }
-	}
+    }
 }
