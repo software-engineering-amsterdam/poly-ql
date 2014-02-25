@@ -1,11 +1,11 @@
 ﻿
 namespace Algebra.QL.Core.Expr
 {
-    public abstract class TripleExpr<E> : DoubleExpr<E>
+    public abstract class TernaryExpr<E> : BinaryExpr<E>
     {
         public E Expr3 { get; private set; }
 
-        public TripleExpr(E e1, E e2, E e3)
+        public TernaryExpr(E e1, E e2, E e3)
             : base(e1, e2)
         {
             Expr3 = e3;
@@ -13,12 +13,12 @@ namespace Algebra.QL.Core.Expr
 
 		public override bool Equals(object obj)
 		{
-			if (!base.Equals(obj) || !(obj is TripleExpr<E>))
+			if (!base.Equals(obj) || !(obj is TernaryExpr<E>))
 			{
 				return false;
 			}
 
-			return Expr3.Equals(((TripleExpr<E>)obj).Expr3);
+			return Expr3.Equals(((TernaryExpr<E>)obj).Expr3);
 		}
 
 		public override int GetHashCode()

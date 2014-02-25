@@ -5,7 +5,7 @@ using Algebra.QL.TypeCheck.Helpers;
 
 namespace Algebra.QL.TypeCheck.Expr
 {
-	public class NegateExpr : SingleExpr<ITypeCheckExpr>, ITypeCheckExpr
+	public class NegateExpr : UnaryExpr<ITypeCheckExpr>, ITypeCheckExpr
 	{
         private readonly IType NegationUpperBound;
 

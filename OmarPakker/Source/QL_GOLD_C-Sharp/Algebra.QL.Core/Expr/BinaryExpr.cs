@@ -1,11 +1,11 @@
 ﻿
 namespace Algebra.QL.Core.Expr
 {
-    public abstract class DoubleExpr<E> : SingleExpr<E>
+    public abstract class BinaryExpr<E> : UnaryExpr<E>
     {
         public E Expr2 { get; private set; }
 
-        public DoubleExpr(E e1, E e2)
+        public BinaryExpr(E e1, E e2)
             : base(e1)
         {
             Expr2 = e2;
@@ -13,12 +13,12 @@ namespace Algebra.QL.Core.Expr
 
 		public override bool Equals(object obj)
 		{
-			if (!base.Equals(obj) || !(obj is DoubleExpr<E>))
+			if (!base.Equals(obj) || !(obj is BinaryExpr<E>))
 			{
 				return false;
 			}
 
-			return Expr2.Equals(((DoubleExpr<E>)obj).Expr2);
+			return Expr2.Equals(((BinaryExpr<E>)obj).Expr2);
 		}
 
 		public override int GetHashCode()

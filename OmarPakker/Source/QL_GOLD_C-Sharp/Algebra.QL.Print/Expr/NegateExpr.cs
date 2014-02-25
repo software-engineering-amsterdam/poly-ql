@@ -4,7 +4,7 @@ using Algebra.QL.Core.Type;
 
 namespace Algebra.QL.Print.Expr
 {
-	public class NegateExpr : SingleExpr<IPrintExpr>, IPrintExpr
+	public class NegateExpr : UnaryExpr<IPrintExpr>, IPrintExpr
 	{
         private readonly IType NegationType;
 

@@ -2,7 +2,7 @@
 
 namespace Algebra.QL.Print.Expr
 {
-    public class OrExpr : DoubleExpr<IPrintExpr>, IPrintExpr
+    public class OrExpr : BinaryExpr<IPrintExpr>, IPrintExpr
 	{
 		public OrExpr(IPrintExpr l, IPrintExpr r)
             : base(l, r)
