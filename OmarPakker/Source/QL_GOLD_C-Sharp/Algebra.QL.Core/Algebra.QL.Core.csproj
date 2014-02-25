@@ -37,10 +37,10 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Expr\DoubleExpr.cs" />
+    <Compile Include="Expr\BinaryExpr.cs" />
     <Compile Include="Expr\LiteralExpr.cs" />
-    <Compile Include="Expr\SingleExpr.cs" />
-    <Compile Include="Expr\TripleExpr.cs" />
+    <Compile Include="Expr\TernaryExpr.cs" />
+    <Compile Include="Expr\UnaryExpr.cs" />
     <Compile Include="Expr\VarExpr.cs" />
     <Compile Include="Expr\VarInitExpr.cs" />
     <Compile Include="Factory\IQLFactory.cs" />
