@@ -53,13 +53,13 @@ expr_atom[RuleContainer rc] returns [Expression e] :
 	| '(' expr=expr_main[$rc]{ $e = $expr.e; } ')' ;
 
 
-modifier : ('!'|'-');
 op_or : ('||'|'|');
 op_and : '&&';
 op_eq : ('=='|'!=');
 op_num : ('<'|'>'|'>='|'<=');
 op_sum : ('+'|'-');
 op_prod : ('*'|'/');
+modifier : ('!'|'-');
 
 COMMENT : '//' ~('\n'|'\r')*;
 TYPE : ('boolean'|'number'|'string');

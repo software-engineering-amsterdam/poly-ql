@@ -22,5 +22,15 @@ public class ParserTest {
 
         assertTrue(ifStatement.isSatisfied());
     }
-
+    
+    @Test
+    public void testPrecedence() {
+        final Form form = ParserHelper.parseResourceForm("precedence");
+        assertEquals(7.0, form.getQuestion("qSumMult").getValue());
+        assertEquals(3.0, form.getQuestion("qSubDiv").getValue());
+        assertEquals(true, form.getQuestion("qAndOrAnd").getValue());
+        assertEquals(true, form.getQuestion("qSumGt").getValue());
+        assertEquals(1.0, form.getQuestion("qBracket").getValue());
+        assertEquals(1.0, form.getQuestion("qSubMod").getValue());
+    }
 }
