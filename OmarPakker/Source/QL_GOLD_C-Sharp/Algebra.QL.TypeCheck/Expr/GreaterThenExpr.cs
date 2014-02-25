@@ -6,7 +6,7 @@ using Algebra.QL.TypeCheck.Helpers;
 
 namespace Algebra.QL.TypeCheck.Expr
 {
-	public class GreaterThenExpr : DoubleExpr<ITypeCheckExpr>, ITypeCheckExpr
+	public class GreaterThenExpr : BinaryExpr<ITypeCheckExpr>, ITypeCheckExpr
 	{
 		private readonly IType ExpressionUpperBound = new RealType();
 

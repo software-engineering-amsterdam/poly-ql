@@ -6,7 +6,7 @@ using Algebra.QL.TypeCheck.Helpers;
 
 namespace Algebra.QL.TypeCheck.Expr
 {
-	public class EqualsExpr : DoubleExpr<ITypeCheckExpr>, ITypeCheckExpr
+	public class EqualsExpr : BinaryExpr<ITypeCheckExpr>, ITypeCheckExpr
 	{
 		public EqualsExpr(ITypeCheckExpr l, ITypeCheckExpr r)
             : base(l, r)

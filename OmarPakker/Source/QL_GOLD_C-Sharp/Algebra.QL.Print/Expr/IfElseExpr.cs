@@ -2,7 +2,7 @@
 
 namespace Algebra.QL.Print.Expr
 {
-    public class IfElseExpr : TripleExpr<IPrintExpr>, IPrintExpr
+    public class IfElseExpr : TernaryExpr<IPrintExpr>, IPrintExpr
     {
         public IfElseExpr(IPrintExpr a, IPrintExpr b, IPrintExpr c)
             : base(a, b, c)
