@@ -205,7 +205,7 @@ and _fslex_string pos res _fslex_state lexbuf =
           )
   | 3 -> ( 
 # 70 "D:\Mijn documenten\GitHub\poly-ql\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fsl"
-                         failwithf "Unterminated string" 
+                         failwith "Unterminated string" 
 # 209 "D:\Mijn documenten\GitHub\poly-ql\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fs"
           )
   | 4 -> ( 
