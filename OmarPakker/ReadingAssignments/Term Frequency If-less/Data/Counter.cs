@@ -4,13 +4,11 @@ namespace Term_Frequency_If_less.Data
 {
     public class Counter
     {
-        public virtual void Count(List<Counter> counters, List<string> words, List<string>.Enumerator wordStepper, Dictionary<string, int> results)
+        public virtual void Count(Stack<Counter> counters, List<string> words, Dictionary<string, int> results)
         {
-            wordStepper.MoveNext();
-            results.Add(wordStepper.Current, words.RemoveAll(w => w.Equals(wordStepper.Current)));
+            results.Add(words[words.Count - 1], words.RemoveAll(w => w.Equals(words[words.Count - 1])));
 
-            counters.RemoveAt(0);
-            counters[0].Count(counters, words, words.GetEnumerator(), results);
+            counters.Pop().Count(counters, words, results);
         }
     }
 }

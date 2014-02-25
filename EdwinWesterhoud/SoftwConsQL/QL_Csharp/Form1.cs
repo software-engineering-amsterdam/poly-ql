@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -40,12 +41,6 @@ namespace QL_Csharp
             }
         }
 
-        private void textBoxSource_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Control && e.KeyCode == Keys.A)
-                textBoxSource.SelectAll();
-        }
-
         private void comboBoxDemos_SelectedValueChanged(object sender, EventArgs e)
         {
             textBoxSource.Text = _demoPresets[comboBoxDemos.Text];
@@ -59,6 +54,17 @@ namespace QL_Csharp
                 return true;
             }
             return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        private void textBoxSource_TextChanged(object sender, EventArgs e)
+        {
+            if (checkBoxRealTime.Checked)
+                buttonGenerate_Click(this, EventArgs.Empty);
+        }
+
+        private void checkBoxRealTime_CheckedChanged(object sender, EventArgs e)
+        {
+            buttonGenerate.Enabled = !checkBoxRealTime.Checked;
         }
     }
 }

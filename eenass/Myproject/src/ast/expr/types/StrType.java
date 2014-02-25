@@ -25,4 +25,9 @@ public class StrType extends Types {
 		return true;
 	}
 
+	@Override
+	public String show() {
+		return "string";
+	}
+
 }

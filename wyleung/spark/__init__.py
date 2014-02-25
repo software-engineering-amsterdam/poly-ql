@@ -88,6 +88,7 @@ class GenericScanner:
 	def t_default(self, s):
 		r'( . | \n )+'
 		print "Specification error: unmatched input"
+		print s
 		raise SystemExit
 
 #
@@ -331,7 +332,7 @@ class GenericParser:
 			sets.append([])
 			self.makeSet(None, sets, len(tokens))
 
-		#_dump(tokens, sets, self.states)
+		_dump(tokens, sets, self.states)
 
 		finalitem = (self.finalState(tokens), 0)
 		if finalitem not in sets[-2]:

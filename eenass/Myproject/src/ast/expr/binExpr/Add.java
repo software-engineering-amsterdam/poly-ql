@@ -21,5 +21,9 @@ public class Add extends BinExpr{
 		return new IntType();
 		
 	}
+	
+	public String show(){
+		return "+";
+	}
 
 }
