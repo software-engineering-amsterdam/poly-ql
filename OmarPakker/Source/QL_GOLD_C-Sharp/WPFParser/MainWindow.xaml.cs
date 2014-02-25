@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Windows;
@@ -142,8 +143,8 @@ namespace WPFParser
             if (root is Tuple<ITypeCheckStmnt, IPrintStmnt>)
             {
                 Tuple<ITypeCheckStmnt, IPrintStmnt> tuple = (Tuple<ITypeCheckStmnt, IPrintStmnt>)root;
-                tuple.Item1.TypeCheck(data);
-                data.VerifyTopDownDependencies();
+                //TODO: Rewrote as a BF/DF traversal combination. Don't think this is really great.. Alternatively maybe use iterative deepening depth-first traversal?
+                tuple.Item1.TypeCheck(new Queue<ITypeCheckStmnt>(), data);
 
                 printOutputBlock.Document.Blocks.Add(tuple.Item2.BuildDocument());
             }

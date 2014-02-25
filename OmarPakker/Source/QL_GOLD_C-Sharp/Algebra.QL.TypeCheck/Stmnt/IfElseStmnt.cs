@@ -1,4 +1,5 @@
-﻿using Algebra.Core.Type;
+﻿using System.Collections.Generic;
+using Algebra.Core.Type;
 using Algebra.QL.Core.Stmnt;
 using Algebra.QL.Core.Type;
 using Algebra.QL.TypeCheck.Expr;
@@ -16,7 +17,7 @@ namespace Algebra.QL.TypeCheck.Stmnt
 
 		}
 
-        public void TypeCheck(TypeCheckData data)
+        public void TypeCheck(Queue<ITypeCheckStmnt> queue, TypeCheckData data)
         {
             if (!CheckExpression.TypeCheck(data).CompatibleWith(ExpressionType))
             {
@@ -24,8 +25,8 @@ namespace Algebra.QL.TypeCheck.Stmnt
                     SourcePosition);
             }
 
-            IfTrueBody.TypeCheck(data);
-            IfFalseBody.TypeCheck(data);
+            IfTrueBody.TypeCheck(queue, data);
+            IfFalseBody.TypeCheck(queue, data);
         }
     }
 }

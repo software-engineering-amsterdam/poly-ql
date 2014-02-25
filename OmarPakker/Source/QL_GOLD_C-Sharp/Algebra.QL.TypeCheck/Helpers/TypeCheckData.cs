@@ -11,27 +11,15 @@ namespace Algebra.QL.TypeCheck.Helpers
 		public event OnTypeCheckErrorEventHandler OnTypeCheckError;
 
         public HashSet<string> Forms { get; private set; }
-        public List<GotoStmnt> Gotos { get; private set; }
+        public List<string> Gotos { get; private set; }
         public Dictionary<string, VarInitExpr> Variables { get; private set; }
 
         public TypeCheckData()
         {
             Forms = new HashSet<string>();
-            Gotos = new List<GotoStmnt>();
+            Gotos = new List<string>();
             Variables = new Dictionary<string, VarInitExpr>();
         }
-
-		//TODO: Do a Breadth-First traversal instead? No need to check stuff afterwards (statements like 'goto' create this problem)
-		public void VerifyTopDownDependencies()
-		{
-			Gotos.RemoveAll((item) => Forms.Contains(item.GotoName));
-
-			foreach (GotoStmnt item in Gotos)
-			{
-				ReportError(String.Format("'goto' statement not possible. Form '{0}' does not exist!",
-					item.GotoName), item.SourcePosition);
-			}
-		}
 
         public void ReportError(string msg, Tuple<int, int> pos)
         {

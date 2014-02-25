@@ -1,4 +1,5 @@
-﻿using Algebra.QL.Core.Stmnt;
+﻿using System.Collections.Generic;
+using Algebra.QL.Core.Stmnt;
 using Algebra.QL.TypeCheck.Helpers;
 
 namespace Algebra.QL.TypeCheck.Stmnt
@@ -11,12 +12,14 @@ namespace Algebra.QL.TypeCheck.Stmnt
 
         }
 
-        public void TypeCheck(TypeCheckData data)
+        public void TypeCheck(Queue<ITypeCheckStmnt> queue, TypeCheckData data)
         {
             data.Forms.Add(Name);
+            if (queue.Count > 0) queue.Dequeue().TypeCheck(queue, data);
+
             data.Variables.Clear();
 
-            Body.TypeCheck(data);
+            Body.TypeCheck(queue, data);
         }
     }
 }
