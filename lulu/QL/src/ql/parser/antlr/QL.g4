@@ -21,30 +21,31 @@ form returns[Form result]
 { $result = new Form(new Ident($Ident.text), $f.result); }
 ;
 
-
+//(WS | WS COMMENT WS) 
 
 formItems returns [List<FormItems> result]
 @init { List<FormItems> formItems = new ArrayList(); }
-: '{' (WS | WS COMMENT WS) 
+: '{' NEWLINE
 	(q=question {formItems.add($q.result);}
 //	| s=stat {formItems.add($s.result);}
-	)* '}'
-	 (WS | WS COMMENT WS)
+	)* 
+	'}' NEWLINE
+	
 { $result = formItems; } 
 ;
 		
 
 question returns [Question result]
-: Ident ':' s=str t=type (WS | WS COMMENT WS)
-{ $result = new Question(new Ident($Ident.text), $s.text, $t.result); }
+: Ident ':' Str t=type NEWLINE
+{ $result = new Question(new Ident($Ident.text), $Str.text, $t.result); }
 //| Ident ':' s=str t=type '(' x=orExpr ')' (WS | WS COMMENT WS)
 //{ $result = new Question(new Ident($Ident.text), $s.text, $t.result, $x.result); }
 ;
 
 type returns [Type result]
-: 'Boolean' { $result = new Bool();}
-| 'Int' { $result = new Int();}	
-| 'String' { $result = new Str();}
+: 'boolean' { $result = new Bool();}
+| 'int' { $result = new Int();}	
+| 'string' { $result = new Str();}
 ;
 
 //stat returns [Statement result]
@@ -125,17 +126,19 @@ type returns [Type result]
 //    :   lhs=andExpr { $result = $lhs.result; } ( '||' rhs=andExpr { $result = new Or($result, rhs); } )*
 //    ;
     
-str //returns [String result] 
-: '"' .*? '"'// {setText(getText().substring(1,getText().length() - 1)); }
-;
+//str returns [String result] 
+//: '"' .*? '"' {setText(getText().substring(1,getText().length() - 1)); }
+//;
 
+Str: '"' .*? '"' ;
+NEWLINE : '\r'? '\n' ;
 WS  :	(' ' | '\t' | '\n' | '\r') -> channel(HIDDEN)
     ;
 
-COMMENT : ('/*' .*? '*/' | '//' .*?) -> channel(HIDDEN)
+COMMENT : ('/*' .* '*/' | '//' .*?) -> channel(HIDDEN)
     ;
 
-Ident:   ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*;
+Ident: [a-zA-Z0-9]+;
 
 Int: ('0'..'9')+;
 Bool: 'true' | 'false';

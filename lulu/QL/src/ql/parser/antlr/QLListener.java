@@ -16,17 +16,6 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface QLListener extends ParseTreeListener {
 	/**
-	 * Enter a parse tree produced by {@link QLParser#str}.
-	 * @param ctx the parse tree
-	 */
-	void enterStr(@NotNull QLParser.StrContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link QLParser#str}.
-	 * @param ctx the parse tree
-	 */
-	void exitStr(@NotNull QLParser.StrContext ctx);
-
-	/**
 	 * Enter a parse tree produced by {@link QLParser#form}.
 	 * @param ctx the parse tree
 	 */

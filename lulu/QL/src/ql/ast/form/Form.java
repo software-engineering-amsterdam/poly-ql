@@ -14,4 +14,7 @@ public class Form {
 		this.formItems = formItems;
 	}
 	
+	public List<FormItems> getFormItems() {
+		return formItems;
+	}
 }
