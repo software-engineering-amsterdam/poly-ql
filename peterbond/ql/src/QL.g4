@@ -11,8 +11,8 @@ question: QUESTION;
 block: qit 
      | ifcon; 
      
-qit: identifier ASS '"'question'"'type              #QitStat
-   | identifier ASS '"'question'"'type '(' expr ')' #QitExprStat
+qit: identifier ': "'question'"'type              #QitStat
+   | identifier ': "'question'"'type '(' expr ')' #QitExprStat
    ;
    
 type: 'boolean' 
@@ -24,22 +24,22 @@ ifcon : 'if(' expr ') {' qit+ '}' 'else' '{' qit+ '}' #IfStat
       | 'if(' expr ') {' qit+ '}'                     #IfElseStat
       ;
 
-expr: '!' expr       # Neg
-    | '(' expr ')'   # Parentheses
-	| expr '*' expr  # Mul
-    | expr '/' expr  # Div
-    | expr '+' expr  # Add
-    | expr '-' expr  # Sub
-    | expr '%' expr  # Mod
-    | expr '>' expr  # Gt
-    | expr '<' expr  # Lt
-    | expr '>=' expr # GtEq
-    | expr '<=' expr # LtEq
-    | expr '==' expr # Eq
-    | expr '!=' expr # Neq
-    | expr '&&' expr # And
-    | expr '||' expr # Or            
-    | identifier     # QuestionID
+expr: '!' expr       # NegOp
+    | '(' expr ')'   # ParOp
+    | expr '*' expr  # MulOp
+    | expr '/' expr  # DivOp
+    | expr '+' expr  # AddOp
+    | expr '-' expr  # SubOp
+    | expr '%' expr  # ModOp
+    | expr '>' expr  # GtOp
+    | expr '<' expr  # LtOp
+    | expr '>=' expr # GtEqOp
+    | expr '<=' expr # LtEqOp
+    | expr '==' expr # EqOp
+    | expr '!=' expr # NeqOp
+    | expr '&&' expr # AndOp
+    | expr '||' expr # OrOp         
+    | identifier     # QID
     | INT            # Int;
 
 // QL Tokens
@@ -48,8 +48,5 @@ IDENTIFIER: [a-z][a-zA-Z0-9]*;
 QUESTION: [A-Z][a-zA-Z0-9\\?: ]*;
 
 // Misc
-ASS: ':';
-LP: '(';
-RP: ')'; 
 INT: [0-9]+;
 WS: [ \t\r\n]+ -> skip ;
