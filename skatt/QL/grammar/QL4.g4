@@ -4,12 +4,10 @@ grammar QL4;
 // upper level 
 form : structures;
 structures : (structure)+;
+
 structure : ( 
 			question 
-			| ifcondition '{' structures '}' (elseifcondition '{' structures '}')+ elsecondition '{' structures '}'    
-			| ifcondition '{' structures '}' (elseifcondition '{' structures '}')+
-			| ifcondition '{' structures '}' elsecondition '{' structures '}'   
-			| ifcondition '{' structures '}'
+			| ifcondition '{' structures '}' (elseifcondition '{' structures '}')* (elsecondition '{' structures '}')?    
 			);
 
 ifcondition : IF expression;

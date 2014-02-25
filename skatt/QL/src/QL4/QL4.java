@@ -40,7 +40,7 @@ public class QL4 {
 		// visit the tree with our own QL4 visitor
 		QL4visitor visitor = new QL4visitor();
 		visitor.visit(tree);
-		
+		 
 	}
 	
 	/**
