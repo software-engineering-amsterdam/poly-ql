@@ -47,6 +47,13 @@ public class TermFrequency implements BookParserSubscriber {
         return tokens;
     }
 
+    public void printTop(final int topX) {
+        List<Token> sortedTokenList = getSortedTokens();
+        for (int i = 1; i <= topX; ++i) {
+            System.out.println(sortedTokenList.get(sortedTokenList.size() - i));
+        }
+    }
+
     @Override
     public void newLine() {}
 

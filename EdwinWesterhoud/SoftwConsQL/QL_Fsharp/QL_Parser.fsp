@@ -17,11 +17,9 @@ open Microsoft.FSharp.Collections
 %token <bool> BOOL
 %token <string> STRING
 %token <int> INT
-%token <float> DATE
 %token <float> DECIMAL
-%token <float> MONEY
 
-%token QLBOOL QLSTRING QLINT QLDATE QLDECIMAL QLMONEY
+%token QLBOOL QLSTRING QLINT QLDECIMAL
 %token EQ NE LT LE GT GE AND OR PLUS MINUS MULT DIV NOT
 
 %left EQ NE
@@ -80,18 +78,14 @@ qlType:
     | QLBOOL    { QLBool }
     | QLSTRING  { QLString }
     | QLINT     { QLInt }
-    | QLDATE    { QLDate }
     | QLDECIMAL { QLDecimal }
-    | QLMONEY   { QLMoney }
 
 exprType:
     | STRING            { String($1) }
     | LABEL             { String($1) }
     | BOOL              { Bool($1) }
     | INT               { Int($1) }
-    | DATE              { Date($1) }
     | DECIMAL           { Decimal($1) }
-    | MONEY             { Money($1) }
 
 expression:
     | B_OPEN expression B_CLOSE     { $2 }

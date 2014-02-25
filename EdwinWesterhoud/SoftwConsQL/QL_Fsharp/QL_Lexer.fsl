@@ -12,8 +12,6 @@ let keywords =
         "string", QLSTRING;
         "integer", QLINT;
         "decimal", QLDECIMAL;
-        "date", QLDATE;
-        "money", QLMONEY;
     ] |> Map.ofList
 
 let symbols =

@@ -14,5 +14,5 @@ public class AnswerableQuestion extends Question {
 	public void accept(StmtVisitor sv) {
 		sv.visit(this);
 	}
-
+	
 }
