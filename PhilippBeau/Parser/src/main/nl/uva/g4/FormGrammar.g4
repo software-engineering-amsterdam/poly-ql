@@ -16,15 +16,15 @@ form returns [ParserForm f]
 	: 'form' id=ID b=block {$f = new ParserForm($id.text, $b.ifs);}
 	;
 
-block returns [List<ParserIf> ifs]
-@init {$ifs = new ArrayList<ParserIf>();}
+block returns [List<Statement> ifs]
+@init {$ifs = new ArrayList<Statement>();}
 	: (LINEEND)*? '{' LINEEND (parserIF=stat {$ifs.add($parserIF.parserIF);})* '}' (LINEEND)*?;
 
-stat returns [ParserIf parserIF]
-	: ID ':' STRING statType LINEEND {$parserIF = new ParserIf($ID.text);}
-    | ID ':' STRING statType '(' expr ')' LINEEND {$parserIF = new ParserIf($ID.text);}
-    | 'if' '(' ex=expr ')' block                     {$parserIF = new ParserIf($ex.text);}
-    | 'if' '(' ex=expr ')' block 'else' block        {$parserIF = new ParserIf($ex.text);}
+stat returns [Statement parserIF]
+	: ID ':' STRING statType LINEEND {$parserIF = new SimpleStatement($ID.text);}
+    | ID ':' STRING statType '(' expr ')' LINEEND {$parserIF = new ExpressionStatement($ID.text);}
+    | 'if' '(' ex=expr ')' b=block                     {$parserIF = new IFStatement($ex.text, $b.ifs);}
+    | 'if' '(' ex=expr ')' block 'else' block        {$parserIF = new IfElseStatement($ex.text);}
     ;
 
 // The precedence is given by the order
