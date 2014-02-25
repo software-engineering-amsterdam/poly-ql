@@ -17,5 +17,10 @@ namespace QL_Grammar.QLAlgebra.Value
 		{
 
 		}
+
+        public override string ToString()
+        {
+            return "\"" + base.ToString() + "\"";
+        }
 	}
 }

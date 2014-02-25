@@ -54,18 +54,25 @@
       <HintPath>..\lib\GOLD Engine.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="QLAlgebraExtensions\Factory\QLExtensionsFactoryCombination.cs" />
     <Compile Include="QLAlgebraExtensions\Type\DateType.cs" />
     <Compile Include="QLAlgebraExtensions\Value\DateValue.cs" />
-    <Compile Include="QLEval\Expr\ModuloExpr.cs" />
-    <Compile Include="QLEval\Expr\PowerExpr.cs" />
-    <Compile Include="QLEval\Expr\VarExpr.cs" />
-    <Compile Include="QLEval\Factory\QLEvalFactory.cs" />
-    <Compile Include="QLEval\IEval.cs" />
-    <Compile Include="QLEval\Stmnt\LoopStmnt.cs" />
+    <Compile Include="QLPrint\Expr\IPrintExpr.cs" />
+    <Compile Include="QLPrint\Expr\ModuloExpr.cs" />
+    <Compile Include="QLPrint\Expr\PowerExpr.cs" />
+    <Compile Include="QLPrint\Expr\VarExpr.cs" />
+    <Compile Include="QLPrint\Factory\QLEvalFactory.cs" />
+    <Compile Include="QLPrint\IPrint.cs" />
+    <Compile Include="QLPrint\Stmnt\IPrintStmnt.cs" />
+    <Compile Include="QLPrint\Stmnt\LoopStmnt.cs" />
+    <Compile Include="QLPrint\StyleSettings.cs" />
     <Compile Include="QLTypeCheckExtensions\Stmnt\LoopStmnt.cs" />
     <Compile Include="Grammar\GrammarData.cs" />
     <Compile Include="QLTypeCheckExtensions\Expr\PowerExpr.cs" />
@@ -74,31 +81,29 @@
     <Compile Include="QLTypeCheckExtensions\Factory\QLTypeCheckExtensionsFactory.cs" />
     <Compile Include="Grammar\ExtensionsParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QLEval\Stmnt\QuestionStmnt.cs" />
-    <Compile Include="QLEval\Stmnt\IfStmnt.cs" />
-    <Compile Include="QLEval\Stmnt\IfElseStmnt.cs" />
-    <Compile Include="QLEval\Stmnt\IEvalStmnt.cs" />
-    <Compile Include="QLEval\Stmnt\GotoStmnt.cs" />
-    <Compile Include="QLEval\Stmnt\FormStmnt.cs" />
-    <Compile Include="QLEval\Stmnt\CompStmnt.cs" />
-    <Compile Include="QLEval\Expr\VarInitExpr.cs" />
-    <Compile Include="QLEval\Expr\SubtractExpr.cs" />
-    <Compile Include="QLEval\Expr\OrExpr.cs" />
-    <Compile Include="QLEval\Expr\NotEqualExpr.cs" />
-    <Compile Include="QLEval\Expr\NegateExpr.cs" />
-    <Compile Include="QLEval\Expr\MultiplyExpr.cs" />
-    <Compile Include="QLEval\Expr\LiteralExpr.cs" />
-    <Compile Include="QLEval\Expr\LessThenExpr.cs" />
-    <Compile Include="QLEval\Expr\LessOrEqualToExpr.cs" />
-    <Compile Include="QLEval\Expr\IfElseExpr.cs" />
-    <Compile Include="QLEval\Expr\IEvalExpr.cs" />
-    <Compile Include="QLEval\Expr\GreaterThenExpr.cs" />
-    <Compile Include="QLEval\Expr\GreaterOrEqualToExpr.cs" />
-    <Compile Include="QLEval\Expr\EqualsExpr.cs" />
-    <Compile Include="QLEval\Expr\DivideExpr.cs" />
-    <Compile Include="QLEval\Expr\AndExpr.cs" />
-    <Compile Include="QLEval\Expr\AddExpr.cs" />
-    <Compile Include="Merged\TypeCheckEvalFactory.cs" />
+    <Compile Include="QLPrint\Stmnt\QuestionStmnt.cs" />
+    <Compile Include="QLPrint\Stmnt\IfStmnt.cs" />
+    <Compile Include="QLPrint\Stmnt\IfElseStmnt.cs" />
+    <Compile Include="QLPrint\Stmnt\GotoStmnt.cs" />
+    <Compile Include="QLPrint\Stmnt\FormStmnt.cs" />
+    <Compile Include="QLPrint\Stmnt\CompStmnt.cs" />
+    <Compile Include="QLPrint\Expr\VarInitExpr.cs" />
+    <Compile Include="QLPrint\Expr\SubtractExpr.cs" />
+    <Compile Include="QLPrint\Expr\OrExpr.cs" />
+    <Compile Include="QLPrint\Expr\NotEqualExpr.cs" />
+    <Compile Include="QLPrint\Expr\NegateExpr.cs" />
+    <Compile Include="QLPrint\Expr\MultiplyExpr.cs" />
+    <Compile Include="QLPrint\Expr\LiteralExpr.cs" />
+    <Compile Include="QLPrint\Expr\LessThenExpr.cs" />
+    <Compile Include="QLPrint\Expr\LessOrEqualToExpr.cs" />
+    <Compile Include="QLPrint\Expr\IfElseExpr.cs" />
+    <Compile Include="QLPrint\Expr\GreaterThenExpr.cs" />
+    <Compile Include="QLPrint\Expr\GreaterOrEqualToExpr.cs" />
+    <Compile Include="QLPrint\Expr\EqualsExpr.cs" />
+    <Compile Include="QLPrint\Expr\DivideExpr.cs" />
+    <Compile Include="QLPrint\Expr\AndExpr.cs" />
+    <Compile Include="QLPrint\Expr\AddExpr.cs" />
+    <Compile Include="Merged\TypeCheckPrintFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Grammar\QL_Grammar.egt" />

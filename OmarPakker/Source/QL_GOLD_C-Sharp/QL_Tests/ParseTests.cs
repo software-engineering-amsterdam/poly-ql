@@ -16,9 +16,8 @@ namespace QL_Tests
 
 		public ParseTests()
 		{
-            parser = new QLParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeCheckFactory>();
-            parser.Factory = new QLTypeCheckFactory();
-            Assembly a = parser.Factory.GetType().Assembly;
+            parser = new QLParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeCheckFactory>(new QLTypeCheckFactory());
+            Assembly a = typeof(QLTypeCheckFactory).Assembly;
             parser.LoadGrammar(new BinaryReader(a.GetManifestResourceStream("QL_Grammar.Grammar.QL_Grammar.egt")));
 		}
 

@@ -20,9 +20,8 @@ namespace QL_Tests
 
         public ExtensionsTest()
         {
-            parser = new ExtensionsParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeCheckExtensionsFactory>();
-            parser.Factory = new QLTypeCheckExtensionsFactory();
-            Assembly a = parser.Factory.GetType().Assembly;
+            parser = new ExtensionsParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeCheckExtensionsFactory>(new QLTypeCheckExtensionsFactory());
+            Assembly a = typeof(QLTypeCheckExtensionsFactory).Assembly;
             parser.LoadGrammar(new BinaryReader(a.GetManifestResourceStream("QL_ExtensionTest.Grammar.QL_Grammar.egt")));
         }
 
