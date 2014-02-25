@@ -52,12 +52,12 @@ public class Main {
         // print LISP-style tree
         // System.out.println(tree.toStringTree(parser));
 
-        int n = 1;
-        for (Object o : tokens.getTokens()) {
-            CommonToken token = (CommonToken) o;
-            System.out.println("token(" + n + ") = " + token.getText().replace("\n", "\\n"));
-            n++;
-        }
+        // int n = 1;
+        // for (Object o : tokens.getTokens()) {
+        // CommonToken token = (CommonToken) o;
+        // System.out.println("token(" + n + ") = " + token.getText().replace("\n", "\\n"));
+        // n++;
+        // }
 
     }
 

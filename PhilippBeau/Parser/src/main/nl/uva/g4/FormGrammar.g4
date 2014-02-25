@@ -2,26 +2,29 @@
 grammar FormGrammar; 
 
 @header{import main.nl.uva.parser.elements.*;}
-import SimpleType;
 
 forms returns [List<ParserForm> data] 
 @init {$data = new ArrayList<ParserForm>();}
 	:(f=form {$data.add($f.f);})+ EOF  
-  ;
+	;
 
 // The start rule -> begin parsing here
 //init returns [ ParserForm f ]: 
 //(LINEEND)*? initForm=form{$f = new ParserForm($initForm.text)} (LINEEND)*?;
 
-form returns [ParserForm f]: 
-'form' ID block {$f = new ParserForm($ID.text);};
+form returns [ParserForm f]
+	: 'form' id=ID b=block {$f = new ParserForm($id.text, $b.ifs);}
+	;
 
-block: (LINEEND)*? '{' LINEEND stat* '}' (LINEEND)*?;
+block returns [List<ParserIf> ifs]
+@init {$ifs = new ArrayList<ParserIf>();}
+	: (LINEEND)*? '{' LINEEND (parserIF=stat {$ifs.add($parserIF.parserIF);})* '}' (LINEEND)*?;
 
-stat: ID ':' STRING statType LINEEND              #Assign
-    | ID ':' STRING statType '(' expr ')' LINEEND #ComputAssign
-    | 'if' '(' expr ')' block                     #IfStat
-    | 'if' '(' expr ')' block 'else' block        #IfElseStat
+stat returns [ParserIf parserIF]
+	: ID ':' STRING statType LINEEND {$parserIF = new ParserIf($ID.text);}
+    | ID ':' STRING statType '(' expr ')' LINEEND {$parserIF = new ParserIf($ID.text);}
+    | 'if' '(' ex=expr ')' block                     {$parserIF = new ParserIf($ex.text);}
+    | 'if' '(' ex=expr ')' block 'else' block        {$parserIF = new ParserIf($ex.text);}
     ;
 
 // The precedence is given by the order
@@ -42,9 +45,9 @@ expr: unaryOp expr                                #Unary
     ;
 
 // Statement types
-statType: BOOLEAN #BOOLEANType // becomes JCheckBox
-        | MONEY   #MONEYType   // becomes JTextField
-        | TEXT    #TEXTType    // becomes JTextField
+statType: BOOLEAN 
+        | MONEY   
+        | TEXT    
         ;
 
 // Unary Operators
@@ -85,3 +88,45 @@ boolLiteral: TRUE
 numLiteral: INTEGER
           | DOUBLE
           ;
+          
+/** Primitives */
+
+INTEGER: [0-9]+;
+DOUBLE :  INTEGER '.' INTEGER;
+STRING: '"' ('\\"' | '\\\\'|.)*? '"';
+LINEEND: '\r'? '\n'; //
+
+/** Boolean */
+BOOLEAN: 'boolean';
+TRUE: 'true';
+FALSE: 'false';
+
+/** Boolean utils*/
+AND: '&&';
+OR: '||';
+NOT: '!';
+LOWER_THAN: '<';
+GRATER_THAN: '>';
+LOWER_EQUAL_THAN: '<=';
+GRATER_EQUAL_THAN: '>=';
+EQUAL: '==';
+NOT_EQUAL: '!=';
+
+/** Mathematical */
+MUL: '*';
+DIV: '/';
+MOD: '%';
+ADD: '+';
+SUB: '-';
+
+/** Custom data types */
+MONEY:   'money';
+TEXT:    'text';
+
+/** ID datatype  */
+ID: [a-zA-Z_]+ [a-zA-Z_0-9]*; 
+
+/** All skip rules */
+WS: [ \t]+ -> skip;                     // remove whitespace
+LINE_COMMENT: '//' .*? LINEEND -> skip; // remove single line comments
+COMMENT: '/*' .*? '*/' -> skip;         // remove multiline comments
