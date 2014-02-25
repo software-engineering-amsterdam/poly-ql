@@ -1,4 +1,4 @@
-package ql.ast.expr.ExprType;
+package ql.ast.expr.exprType;
 
 public class StrExpr extends Expr{
 	private final String str;

@@ -1,4 +1,4 @@
-package ql.ast.expr.ExprType;
+package ql.ast.expr.exprType;
 
 public class BoolExpr extends Expr{
 	public final boolean bool;

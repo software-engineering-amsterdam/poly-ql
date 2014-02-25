@@ -1,4 +1,4 @@
-package ql.ast.expr.ExprType;
+package ql.ast.expr.exprType;
 
 public class Ident extends Expr{
 	public final String id;

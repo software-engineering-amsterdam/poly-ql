@@ -1,6 +1,6 @@
-package ql.ast.expr.ExprType;
+package ql.ast.expr.exprType;
 
-public class IntExpr {
+public class IntExpr extends Expr{
 	private final int num;
 	
 	public IntExpr(int num){

@@ -1,4 +1,4 @@
-package ql.ast.form.QuestionType;
+package ql.ast.form.questionType;
 
 public class Str extends Type {
 
