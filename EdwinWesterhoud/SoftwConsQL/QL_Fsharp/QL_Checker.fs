@@ -7,15 +7,13 @@ open QL_Grammar
 
 let contains x = Seq.exists ((=) x)
 
-type expressionType = TBool | TString | TInt | TDate | TDecimal | TMoney | TError | TForm
+type expressionType = TBool | TString | TInt | TDecimal | TError | TForm
 
 let mapQLType qlType = match qlType with
                        | QLBool -> TBool
                        | QLString -> TString
                        | QLInt -> TInt
-                       | QLDate -> TDate
                        | QLDecimal -> TDecimal
-                       | QLMoney -> TMoney
 
 let identifiers = new Dictionary<string, expressionType>()
 
@@ -24,9 +22,7 @@ let getPrimitiveType exprType =
     | Bool(_) -> TBool, exprType
     | String(_) -> TString, exprType
     | Int(_) -> TInt, exprType
-    | Date(_) -> TDate, exprType
     | Decimal(_) -> TDecimal, exprType
-    | Money(_) -> TMoney, exprType
 
 let rec checkExpression expression =
     match expression with
@@ -63,16 +59,16 @@ let rec checkExpression expression =
     | BooleanOp(expr1, (booleanOp.Ge as op), expr2) ->  let type1,res1 = checkExpression expr1
                                                         let type2,res2 = checkExpression expr2
                                                         let res = BooleanOp(res1, op, res2)
-                                                        let valid = seq [TInt ; TDate ; TDecimal ; TMoney ]
+                                                        let valid = seq [TInt ; TDecimal ]
                                                         match type1 with
-                                                           | TInt | TDate | TDecimal | TMoney when type1.Equals(type2) || type2.Equals(TError) -> TBool, res
+                                                           | TInt | TDecimal when type1.Equals(type2) || type2.Equals(TError) -> TBool, res
                                                            | TError when contains type2 valid || type2.Equals(TError) -> TBool, res
                                                            | _ -> TError, TypeError(res, sprintf "Type error: cannot apply %+A on %+A and %+A" op type1 type2)
 
     | ArithmeticOp(a1, op, a2) ->   let type1,res1 = checkExpression a1
                                     let type2,res2 = checkExpression a2
                                     let res = ArithmeticOp(res1, op, res2)
-                                    let accepted = seq [TInt ; TDate ; TDecimal ; TMoney ; TError]
+                                    let accepted = seq [TInt ; TDecimal ; TError]
                                     if type1.Equals(type2) && contains type1 accepted then
                                       type1, res
                                     else if contains type1 accepted && contains type2 accepted then
