@@ -24,7 +24,7 @@ stat returns [Statement parserIF]
     ;
 
 // The precedence is given by the order
-expr: unaryOp expr                                
+expr: unaryOp expr              
     | expr multiplicativeOp expr                  
     | expr additiveOp expr                        
     | expr relationalOp expr                      
@@ -95,7 +95,7 @@ BOOLEAN: 'boolean';
 TRUE: 'true';
 FALSE: 'false';
 
-/** Boolean utils*/
+/** Boolean operators*/
 AND: '&&';
 OR: '||';
 NOT: '!';
