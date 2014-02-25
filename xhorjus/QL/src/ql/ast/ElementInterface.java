@@ -1,3 +1,5 @@
+package ql.ast;
+
 /**
  * Interface for element
  */

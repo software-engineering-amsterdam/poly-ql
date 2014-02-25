@@ -1,3 +1,6 @@
+package ql.ast.statement;
+import ql.ast.*;
+
 /**
  * Interface for statements
  */

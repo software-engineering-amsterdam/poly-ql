@@ -1,9 +1,13 @@
+package ql;
+
+import ql.ast.*;
 import java.io.FileInputStream;
 import java.io.IOException;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
+import antlr4.*;
 
 /**
  * Test class to instantiate Test expression and do stuff.
@@ -28,6 +32,9 @@ public class Test {
 	    
 	    // Print tree. Tada.
 	    System.out.println(tree.toStringTree(parser));
-
+	    
+	    // Create visitor
+	    QLVisitor eval = new QLVisitor();
+	    eval.visit(tree);
 	}
 }
