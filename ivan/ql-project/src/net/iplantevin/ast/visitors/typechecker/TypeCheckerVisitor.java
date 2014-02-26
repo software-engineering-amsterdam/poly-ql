@@ -22,11 +22,13 @@ public class TypeCheckerVisitor implements IQLASTVisitor {
     private ExceptionCollection exceptionCollection;
     private TypeEnvironment typeEnvironment;
     private LabelCollection labelCollection;
+    private ExpressionValidator expressionValidator;
 
     public TypeCheckerVisitor() {
         exceptionCollection = new ExceptionCollection();
         typeEnvironment = new TypeEnvironment(exceptionCollection);
         labelCollection = new LabelCollection(exceptionCollection);
+        expressionValidator = new ExpressionValidator(exceptionCollection, typeEnvironment, this);
     }
 
     public ExceptionCollection getExceptionCollection() {
@@ -56,27 +58,27 @@ public class TypeCheckerVisitor implements IQLASTVisitor {
 
     @Override
     public void visit(Block block) {
-        for(Statement statement : block.getStatements()) {
+        for (Statement statement : block.getStatements()) {
             statement.accept(this);
         }
     }
 
     @Override
     public void visit(Computation computation) {
+        expressionValidator.checkComputation(computation);
         typeEnvironment.addIdentifier(computation.getName(), computation.getType());
         labelCollection.addQuestionable(computation);
-        // TODO: handle expression.
     }
 
     @Override
     public void visit(If ifStat) {
-        // TODO: handle expression.
+        expressionValidator.checkCondition(ifStat.getCondition());
         ifStat.getBody().accept(this);
     }
 
     @Override
     public void visit(IfElse ifElse) {
-        // TODO: handle expression.
+        expressionValidator.checkCondition(ifElse.getCondition());
         ifElse.getBody().accept(this);
         ifElse.getElseBody().accept(this);
     }
@@ -94,77 +96,96 @@ public class TypeCheckerVisitor implements IQLASTVisitor {
 
     @Override
     public void visit(Add add) {
+        expressionValidator.checkNumeric(add);
     }
 
     @Override
     public void visit(And and) {
+        expressionValidator.checkLogical(and);
     }
 
     @Override
     public void visit(Div div) {
+        expressionValidator.checkNumeric(div);
     }
 
     @Override
     public void visit(EQ eq) {
+        expressionValidator.checkEquality(eq);
     }
 
     @Override
     public void visit(GEQ geq) {
+        expressionValidator.checkComparison(geq);
     }
 
     @Override
     public void visit(GT gt) {
+        expressionValidator.checkComparison(gt);
     }
 
     @Override
     public void visit(LEQ leq) {
+        expressionValidator.checkComparison(leq);
     }
 
     @Override
     public void visit(LT lt) {
+        expressionValidator.checkComparison(lt);
     }
 
     @Override
     public void visit(Mul mul) {
+        expressionValidator.checkNumeric(mul);
     }
 
     @Override
     public void visit(Neg neg) {
+        expressionValidator.checkUnary(neg);
     }
 
     @Override
     public void visit(NEQ neq) {
+        expressionValidator.checkEquality(neq);
     }
 
     @Override
     public void visit(Not not) {
+        expressionValidator.checkUnary(not);
     }
 
     @Override
     public void visit(Or or) {
+        expressionValidator.checkLogical(or);
     }
 
     @Override
     public void visit(Pos pos) {
+        expressionValidator.checkUnary(pos);
     }
 
     @Override
     public void visit(Sub sub) {
+        expressionValidator.checkNumeric(sub);
     }
 
     @Override
     public void visit(Bool bool) {
+        // Do nothing.
     }
 
     @Override
     public void visit(ID id) {
+        // Do nothing.
     }
 
     @Override
     public void visit(Int integer) {
+        // Do nothing.
     }
 
     @Override
     public void visit(Str str) {
+        // Do nothing.
     }
 }

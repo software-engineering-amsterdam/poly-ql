@@ -5,7 +5,8 @@ form Box1HouseOwning {
  
  // This should lead to two exceptions, one type and one duplicate label.
  hasSoldHouse: "Did you sell a house in 2010?" integer
- 
+
+ // |bla| is undefined
  if (bla) test: "test textual input" string
 
  // This should also result in two exceptions.
@@ -36,8 +37,11 @@ form Box1HouseOwning {
 
  // Invalid parentheses expression, |valueResidue| invalid type.
  invalidBoolExpr: "Multiple boolean errors"
-   boolean(hasSoldhouse || !hasSoldhouse && (sellingPrice - privateDebt) || valueResidue)
+   boolean(hasSoldHouse || !hasSoldHouse && (sellingPrice - privateDebt) || valueResidue)
 
  // An argument (|rubbish|) was undefined.
  undefinedExpr: "Argument undefined" integer(sellingPrice + rubbish)
+
+ // Expression in computation is of wrong type and arguments too.
+ wrongCompType: "Wrong computation type" integer(sellingPrice || privateDebt)
 }

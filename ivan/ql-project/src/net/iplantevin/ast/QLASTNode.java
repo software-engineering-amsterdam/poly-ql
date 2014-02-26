@@ -29,4 +29,7 @@ public abstract class QLASTNode {
     }
 
     public abstract void accept(IQLASTVisitor visitor);
+
+    @Override
+    public abstract String toString();
 }

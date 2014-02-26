@@ -18,8 +18,8 @@ public class IntegerType extends Type {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return obj instanceof IntegerType;
+    public boolean equals(Object object) {
+        return object instanceof IntegerType;
     }
 
     @Override

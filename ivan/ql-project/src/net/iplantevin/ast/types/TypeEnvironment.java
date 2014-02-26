@@ -15,8 +15,8 @@ import java.util.HashMap;
  * Type environment. Has a map of ID->IDTuple and convenience methods.
  */
 public class TypeEnvironment {
-    private HashMap<String, IDTuple> idTypeEnv;
-    private ExceptionCollection exceptionCollection;
+    private final HashMap<String, IDTuple> idTypeEnv;
+    private final ExceptionCollection exceptionCollection;
 
     public TypeEnvironment(ExceptionCollection exceptionCollection) {
         idTypeEnv = new HashMap<String, IDTuple>();
@@ -28,6 +28,9 @@ public class TypeEnvironment {
     }
 
     private IDTuple getIdentifier(ID identifier) {
+        if (!isDeclared(identifier)) {
+            return new IDTuple(null, new UndefinedType());
+        }
         return idTypeEnv.get(identifier.getName());
     }
 
@@ -53,21 +56,21 @@ public class TypeEnvironment {
             idTypeEnv.put(identifier.getName(), new IDTuple(identifier, type));
         }
     }
+}
 
-    /**
-     * Tuple-like helper class.
-     */
-    private class IDTuple {
-        public final ID id;
-        public final Type type;
+/**
+ * Tuple-like helper class.
+ */
+class IDTuple {
+    public final ID id;
+    public final Type type;
 
-        public IDTuple(ID id, Type type) {
-            this.id = id;
-            this.type = type;
-        }
+    public IDTuple(ID id, Type type) {
+        this.id = id;
+        this.type = type;
+    }
 
-        public LineInfo getDeclaredLineInfo() {
-            return id.getLineInfo();
-        }
+    public LineInfo getDeclaredLineInfo() {
+        return id.getLineInfo();
     }
 }

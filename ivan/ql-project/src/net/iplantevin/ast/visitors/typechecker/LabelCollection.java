@@ -12,8 +12,8 @@ import java.util.HashMap;
  * @author Ivan
  */
 public class LabelCollection {
-    private HashMap<String, Questionable> labels;
-    private ExceptionCollection exceptionCollection;
+    private final HashMap<String, Questionable> labels;
+    private final ExceptionCollection exceptionCollection;
 
     public LabelCollection(ExceptionCollection exceptionCollection) {
         labels = new HashMap<String, Questionable>();

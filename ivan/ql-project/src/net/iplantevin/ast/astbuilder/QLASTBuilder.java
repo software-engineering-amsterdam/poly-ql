@@ -42,7 +42,7 @@ public class QLASTBuilder {
         System.out.println(formCollection);
 
         // Type Checking:
-        for(Form form : formCollection.getForms()) {
+        for (Form form : formCollection.getForms()) {
             TypeCheckerVisitor typeChecker = new TypeCheckerVisitor();
             typeChecker.visit(form);
             typeChecker.getExceptionCollection().printAllExceptions();

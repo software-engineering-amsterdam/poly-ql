@@ -31,4 +31,10 @@ public abstract class Type {
      * @return true or false.
      */
     public abstract boolean isCompatibleToType(Type type);
+
+    @Override
+    public abstract String toString();
+
+    @Override
+    public abstract boolean equals(Object object);
 }

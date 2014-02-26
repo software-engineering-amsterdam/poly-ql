@@ -18,8 +18,8 @@ public class StringType extends Type {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return obj instanceof StringType;
+    public boolean equals(Object object) {
+        return object instanceof StringType;
     }
 
     @Override
