@@ -1,10 +1,11 @@
 package expr.relationalExpr;
 
-import expr.Expr;
+import expr.BinaryExpr;
+import expr.Expression;
 
-public class GT extends Expr {
+public class GT extends BinaryExpr {
 
-	public GT(Expr first, Expr second) {
+	public GT(Expression first, Expression second) {
 		super(first,second);
 	}
 

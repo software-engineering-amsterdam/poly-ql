@@ -1,10 +1,12 @@
 package expr.arithmeticExpr;
 
-import expr.Expr;
 
-public class Div extends Expr {
+import expr.BinaryExpr;
+import expr.Expression;
 
-	public Div(Expr first, Expr second) {
+public class Div extends BinaryExpr {
+
+	public Div(Expression first, Expression second) {
 		super(first,second);
 	}
 

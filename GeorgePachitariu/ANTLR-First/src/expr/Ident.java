@@ -1,6 +1,6 @@
 package expr;
 
-public class Ident extends Expr {
+public class Ident extends Expression {
 	private String identifier;
 
 	public Ident(String identifier) {

@@ -1,10 +1,11 @@
 package expr.arithmeticExpr;
 
-import expr.Expr;
+import expr.BinaryExpr;
+import expr.Expression;
 
-public class Sub extends Expr {
+public class Sub extends BinaryExpr {
 
-	public Sub(Expr first, Expr second) {
+	public Sub(Expression first, Expression second) {
 		super(first,second);
 	}
 
