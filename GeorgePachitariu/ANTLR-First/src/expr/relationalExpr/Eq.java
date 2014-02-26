@@ -1,10 +1,11 @@
 package expr.relationalExpr;
 
-import expr.Expr;
+import expr.BinaryExpr;
+import expr.Expression;
 
-public class Eq extends Expr {
+public class Eq extends BinaryExpr {
 
-	public Eq(Expr first, Expr second) {
+	public Eq(Expression first, Expression second) {
 		super(first,second);
 	}
 
