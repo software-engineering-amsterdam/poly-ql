@@ -27,5 +27,6 @@ public class Main {
         ParseTreeWalker walker = new ParseTreeWalker();
         Evaluator evaluator = new Evaluator();
         walker.walk(evaluator, tree);
+         System.out.println("ss");
     }
 }
