@@ -2,8 +2,8 @@
 	<!-- global properties -->
     <property name="srcPath" location="src/org/uva/sea/ql/parser/antlr" />
     <property name="genPath" location="gen" />
-	<property name="grammar" value="Form2" />
-	<property name="interpreter" value="Form2" />
+	<property name="grammar" value="QL4" />
+	<property name="interpreter" value="QL4" />
  
 	<!-- library classpaths -->
     <path id="classpath">
