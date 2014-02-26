@@ -4,6 +4,7 @@ import javax.swing.JFileChooser;
 
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
+import QL4.*;
 
 /**
  * This class will request a file and attempt to visit it using QL4 
@@ -38,7 +39,7 @@ public class QL4 {
 		ParseTree tree = parser.form(); 
 		
 		// visit the tree with our own QL4 visitor
-		QL4visitor visitor = new QL4visitor();
+		QL4Visitor visitor = new QL4Visitor();
 		visitor.visit(tree);
 		 
 	}
@@ -51,7 +52,7 @@ public class QL4 {
 		// initiate JFileChooser and set settings
 		JFileChooser chooser = new JFileChooser();
 		chooser.setCurrentDirectory(new java.io.File("."));
-		chooser.setDialogTitle("Please choose the master file");
+		chooser.setDialogTitle("Please choose the file to parse");
 		chooser.setAcceptAllFileFilterUsed(false);
 
 		// request file 

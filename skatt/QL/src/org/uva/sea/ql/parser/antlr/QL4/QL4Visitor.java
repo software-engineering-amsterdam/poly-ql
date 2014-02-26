@@ -1,5 +1,8 @@
 package org.uva.sea.ql.parser.antlr.QL4;
 
+import QL4.QL4BaseVisitor;
+import QL4.QL4Parser;
+
 /**
  * A visitor for the QL4 grammar. Visits a tree parsed by the Antlr4
  * generated QL4parser on the QL4 grammar. Extends the QL4BaseVisitor
@@ -8,10 +11,13 @@ package org.uva.sea.ql.parser.antlr.QL4;
  * @author Sammie Katt
  *
  */
-public class QL4Visitor extends QL4BaseVisitor {
+public class QL4Visitor extends QL4BaseVisitor<Value> {
 
 	// Handles the information printed
 	boolean verbose = true;
+	
+	// contains all identifiers and their values
+	Map<String, Value> variables = new HashMap<String, Value>();
 	
 	/**
 	 * Specifies behavior when visiting a structure. Depending on the 
