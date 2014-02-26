@@ -2,14 +2,24 @@ package main.nl.uva.parser.elements;
 
 public class SimpleStatement extends Statement {
 
-    private final String _name;
+    private final String _function;
 
-    public SimpleStatement(final String name) {
-        _name = name;
+    private final String _type;
+
+    public SimpleStatement(final String id, final Statement parent, final String type,
+            final String function) {
+        super(id, parent);
+        _function = function;
+        _type = type;
     }
 
     @Override
     public String toString() {
-        return "SimpleStatement " + _name;
+        return "SimpleStatement " + " " + _function + " " + _type;
+    }
+
+    @Override
+    protected boolean validateImpl() {
+        return true;
     }
 }

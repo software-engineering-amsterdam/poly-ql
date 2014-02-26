@@ -9,18 +9,18 @@ forms returns [List<ParserForm> data]
 	;
 
 form returns [ParserForm f]
-	: 'form' id=ID b=block {$f = new ParserForm($id.text, $b.ifs);}
+	: 'form' id=ID {$f = new ParserForm($id.text, null);} block[$f] //{$f.addBlock($b.ifs)} 
 	;
 
-block returns [List<Statement> ifs]
-@init {$ifs = new ArrayList<Statement>();}
-	: (LINEEND)*? '{' LINEEND (parserIF=stat {$ifs.add($parserIF.parserIF);})* '}' (LINEEND)*?;
+block[Statement parentStatement] //returns [List<Statement> ifs]
+//@init {$ifs = new ArrayList<Statement>();}
+	: (LINEEND)*? '{' LINEEND (child=statement[$parentStatement] {$parentStatement.addChild($child.current);})* '}' (LINEEND)*?;
 
-stat returns [Statement parserIF]
-	: ID ':' STRING statType LINEEND				{$parserIF = new SimpleStatement($ID.text);}
-    | ID ':' STRING statType '(' expr ')' LINEEND 	{$parserIF = new ExpressionStatement($ID.text);}
-    | 'if' '(' ex=expr ')' b=block					{$parserIF = new IFStatement($ex.text, $b.ifs);}
-    | 'if' '(' ex=expr ')' block 'else' block		{$parserIF = new IfElseStatement($ex.text);}
+statement[Statement parentStatement] returns [Statement current]
+	: ID ':' STRING sType=statType LINEEND					{$current = new SimpleStatement($ID.text, $parentStatement, $sType.text, $STRING.text);}
+    | ID ':' STRING sType=statType '(' expr ')' LINEEND 	{$current = new ExpressionStatement($ID.text, $parentStatement);}
+    | 'if' '(' ex=expr ')' {$current = new IFStatement($ex.text, $parentStatement);} block[$current]							
+    | 'if' '(' ex=expr ')' {$current = new IfElseStatement($ex.text, $parentStatement);} block[$current] 'else' block[$current]				
     ;
 
 // The precedence is given by the order

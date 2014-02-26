@@ -2,15 +2,18 @@ package main.nl.uva.parser.elements;
 
 public class ExpressionStatement extends Statement {
 
-    private final String _name;
-
-    public ExpressionStatement(final String name) {
-        _name = name;
+    public ExpressionStatement(final String id, final Statement parent) {
+        super(id, parent);
     }
 
     @Override
     public String toString() {
-        return "ExpressionStatement " + _name;
+        return "ExpressionStatement " + _id;
+    }
+
+    @Override
+    protected boolean validateImpl() {
+        return true;
     }
 
 }

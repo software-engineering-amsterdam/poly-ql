@@ -1,26 +1,24 @@
 package main.nl.uva.parser.elements;
 
-import java.util.List;
-
 public class IFStatement extends Statement {
 
-    private final String _name;
+    public IFStatement(final String id, final Statement parent) {
+        super(id, parent);
+    }
 
-    private final List<Statement> _block;
+    @Override
+    protected boolean validateImpl() {
+        boolean valid = _parent.validates(this);
 
-    public IFStatement(final String name, final List<Statement> ifs) {
-        _name = name;
-        _block = ifs;
+        if (!valid) {
+            System.err.println(this + "Is very very wrong");
+        }
+
+        return valid;
     }
 
     @Override
     public String toString() {
-        String erg = "IFStatement " + _name + "\n";
-
-        for (Statement s : _block) {
-            erg += s + "\n";
-        }
-
-        return erg;
+        return "IFStatement " + _id + "\n";
     }
 }

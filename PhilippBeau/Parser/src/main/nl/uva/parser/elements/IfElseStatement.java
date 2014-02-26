@@ -2,14 +2,24 @@ package main.nl.uva.parser.elements;
 
 public class IfElseStatement extends Statement {
 
-    private final String _name;
-
-    public IfElseStatement(final String name) {
-        _name = name;
+    public IfElseStatement(final String id, final Statement parent) {
+        super(id, parent);
     }
 
     @Override
     public String toString() {
-        return "IfElseStatement " + _name;
+        return "IfElseStatement ";
+    }
+
+    @Override
+    protected boolean validateImpl() {
+
+        boolean valid = _parent.validates(this);
+
+        if (!valid) {
+            System.err.println(this + "Is very very wrong");
+        }
+
+        return valid;
     }
 }

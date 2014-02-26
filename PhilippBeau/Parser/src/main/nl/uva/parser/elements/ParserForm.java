@@ -1,26 +1,24 @@
 package main.nl.uva.parser.elements;
 
-import java.util.List;
+public class ParserForm extends Statement {
 
-public class ParserForm {
-
-    private final String _name;
-
-    private final List<Statement> _blocks;
-
-    public ParserForm(final String name, final List<Statement> ifs) {
-        _name = name;
-        _blocks = ifs;
+    public ParserForm(final String id, final Statement parent) {
+        super(id, parent);
     }
 
     @Override
     public String toString() {
-        String erg = _name + "\n";
+        String erg = "";
 
-        for (Statement s : _blocks) {
-            erg += s + "\n";
+        for (Statement child : _childrens) {
+            erg += child + "\n";
         }
 
         return erg;
+    }
+
+    @Override
+    protected boolean validateImpl() {
+        return true;
     }
 }

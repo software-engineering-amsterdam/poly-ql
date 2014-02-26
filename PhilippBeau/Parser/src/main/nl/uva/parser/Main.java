@@ -36,7 +36,9 @@ public class Main {
         List<ParserForm> pf = parser.forms().data;
 
         for (ParserForm f : pf) {
-            System.out.println(f);
+            if (f.validate()) {
+                System.out.println("All OK");
+            }
         }
     }
 }
