@@ -1,0 +1,8 @@
+form Types {
+    qString: "Label here" string
+    qNum: "Label here" number
+    
+    qPlusString: "Label here as well" (qString + qString)
+    qPlus: "Label here as well" (qString + qNum)
+    qMin: "Label here as well" (qString - qNum)
+}

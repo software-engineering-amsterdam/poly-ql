@@ -18,12 +18,8 @@ type token =
   | QLBOOL
   | QLSTRING
   | QLINT
-  | QLDATE
   | QLDECIMAL
-  | QLMONEY
-  | MONEY of (float)
   | DECIMAL of (float)
-  | DATE of (float)
   | INT of (int)
   | STRING of (string)
   | BOOL of (bool)
@@ -55,12 +51,8 @@ type tokenId =
     | TOKEN_QLBOOL
     | TOKEN_QLSTRING
     | TOKEN_QLINT
-    | TOKEN_QLDATE
     | TOKEN_QLDECIMAL
-    | TOKEN_QLMONEY
-    | TOKEN_MONEY
     | TOKEN_DECIMAL
-    | TOKEN_DATE
     | TOKEN_INT
     | TOKEN_STRING
     | TOKEN_BOOL
@@ -85,7 +77,7 @@ type nonTerminalId =
     | NONTERM_question
     | NONTERM_conditional
     | NONTERM_qlType
-    | NONTERM_exprType
+    | NONTERM_literal
     | NONTERM_expression
 /// This function maps integers indexes to symbolic token ids
 val tagOfToken: token -> int

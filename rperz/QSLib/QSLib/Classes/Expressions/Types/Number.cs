@@ -5,7 +5,7 @@ using System.Text;
 
 namespace QSLib.Expressions.Types
 {
-    class QSNumber : Primary
+    public class QSNumber : Primary
     {
         private int _value;
         private String _id;
@@ -35,6 +35,14 @@ namespace QSLib.Expressions.Types
         public override string ToString()
         {
             return this._value.ToString();
+        }
+
+        public override bool Equals(object obj)
+        { 
+            var temp = obj as QSNumber;
+            if (!temp._value.Equals(temp._value))
+                return false;
+            return base.Equals(obj);  
         }
     }
 }

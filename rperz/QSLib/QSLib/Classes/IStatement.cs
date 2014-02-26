@@ -9,5 +9,6 @@ namespace QSLib
     {
         bool CheckType();
         Type Type { get; }
+        bool Equals(object obj);
     }
 }

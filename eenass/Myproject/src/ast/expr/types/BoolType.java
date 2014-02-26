@@ -30,4 +30,9 @@ public class BoolType extends Types {
 		return true;
 	}
 
+	@Override
+	public String show() {
+		return "boolean";
+	}
+
 }

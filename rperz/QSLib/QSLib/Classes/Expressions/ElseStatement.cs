@@ -36,8 +36,7 @@ namespace QSLib.Expressions
                 return "else " + this._if.ToString();
             if (this._code != null)
                 return "else \r\n {" + this._code.ToString() + "\r\n}";
-            else 
-                throw new Exception("Syntax error on line ");
+            else return "else {}";
         }
 
         public Type Type
@@ -52,8 +51,29 @@ namespace QSLib.Expressions
         {
             if (this._if != null)
                 return this._code.CheckType() && this._if.CheckType();
-            else
+            else if(this._code != null)
                 return this._code.CheckType();
+            else
+                TypeChecker.ReportEmptyBlockWarning("else", this._linenr);
+            return true;
+        }
+
+        public override bool Equals(object obj)
+        {
+            bool retVal = true;
+            var comp = obj as ElseStatement;
+            if (comp == null)
+                return false;
+            if (this._if != null && comp._if != null)
+                retVal &= this._if.Equals(comp._if);
+            else if (this._if != null || comp._if != null)
+                retVal = false;
+            if (this._code != null && comp._code != null)
+                retVal &= this._code.Equals(comp._code);
+            else if (this._code != null || comp._code != null)
+                retVal = false;
+
+            return retVal;
         }
     }
 }

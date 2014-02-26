@@ -2,23 +2,21 @@
 open System
 
 // Question types
-type qlType = QLBool | QLString | QLInt | QLDate | QLDecimal | QLMoney
+type qlType = QLBool | QLString | QLInt | QLDecimal
 
-// Expression types
-type exprType =
+// Literals
+type literal =
     | Bool      of bool
     | String    of string
     | Int       of int
-    | Date      of float
     | Decimal   of float
-    | Money     of float
 
-// EXPRESSION
+// Expression
 type booleanOp = And | Or | Lt | Gt | Le | Ge | Eq | Ne
 type arithmeticOp = Plus | Minus | Mult | Div
 type expression =
     | ID            of string
-    | Expr          of exprType
+    | Literal       of literal
     | Neg           of expression
     | BooleanOp     of expression * booleanOp * expression
     | ArithmeticOp  of expression * arithmeticOp * expression

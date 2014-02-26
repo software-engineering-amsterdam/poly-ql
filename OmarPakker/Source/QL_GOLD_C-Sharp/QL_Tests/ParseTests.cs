@@ -1,25 +1,25 @@
 ﻿using System.IO;
 using System.Reflection;
 using System.Text;
-using Grammar;
-using QL_Grammar.QLAlgebra.Value;
-using QL_Grammar.QLTypeCheck.Expr;
-using QL_Grammar.QLTypeCheck.Factory;
-using QL_Grammar.QLTypeCheck.Stmnt;
+using Algebra.QL.Core.Factory;
+using Algebra.QL.Core.Grammar;
+using Algebra.QL.Core.Value;
+using Algebra.QL.TypeCheck.Expr;
+using Algebra.QL.TypeCheck.Factory;
+using Algebra.QL.TypeCheck.Stmnt;
 using Xunit;
 
 namespace QL_Tests
 {
 	public class ParseTests
 	{
-        private QLParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeCheckFactory> parser;
+        private QLParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeFactory, QLTypeCheckFactory> parser;
 
 		public ParseTests()
 		{
-            parser = new QLParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeCheckFactory>();
-            parser.Factory = new QLTypeCheckFactory();
-            Assembly a = parser.Factory.GetType().Assembly;
-            parser.LoadGrammar(new BinaryReader(a.GetManifestResourceStream("QL_Grammar.Grammar.QL_Grammar.egt")));
+            parser = new QLParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeFactory, QLTypeCheckFactory>(new QLTypeFactory(), new QLTypeCheckFactory());
+            Assembly a = parser.GetType().Assembly;
+            parser.LoadGrammar(new BinaryReader(a.GetManifestResourceStream("Algebra.QL.Core.Grammar.QL_Grammar.egt")));
 		}
 
 		[Fact]

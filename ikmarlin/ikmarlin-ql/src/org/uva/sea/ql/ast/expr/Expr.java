@@ -7,6 +7,10 @@ import org.uva.sea.ql.checker.ExprVisitor;;
 public abstract class Expr implements ExprVisitable {
 	
 	public abstract Type hasType();
-	public abstract void accept(ExprVisitor qlv);
+	
+	@Override
+	public abstract <T> T accept(ExprVisitor<T> ev);
+	
+	@Override
 	public abstract String toString();
 }

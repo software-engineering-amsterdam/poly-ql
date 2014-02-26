@@ -21,4 +21,9 @@ public class Sub extends BinExpr{
 	public Types typeof(Symboles symb) {
 		return new IntType();
 	}
+
+	@Override
+	public String show() {
+		return "-";
+	}
 }

@@ -9,6 +9,17 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface QuestionnaireListener extends ParseTreeListener {
 	/**
+	 * Enter a parse tree produced by {@link QuestionnaireParser#simpleQuestion}.
+	 * @param ctx the parse tree
+	 */
+	void enterSimpleQuestion(@NotNull QuestionnaireParser.SimpleQuestionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QuestionnaireParser#simpleQuestion}.
+	 * @param ctx the parse tree
+	 */
+	void exitSimpleQuestion(@NotNull QuestionnaireParser.SimpleQuestionContext ctx);
+
+	/**
 	 * Enter a parse tree produced by {@link QuestionnaireParser#ifElse}.
 	 * @param ctx the parse tree
 	 */
@@ -18,6 +29,17 @@ public interface QuestionnaireListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitIfElse(@NotNull QuestionnaireParser.IfElseContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link QuestionnaireParser#computedQuestion}.
+	 * @param ctx the parse tree
+	 */
+	void enterComputedQuestion(@NotNull QuestionnaireParser.ComputedQuestionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QuestionnaireParser#computedQuestion}.
+	 * @param ctx the parse tree
+	 */
+	void exitComputedQuestion(@NotNull QuestionnaireParser.ComputedQuestionContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link QuestionnaireParser#integer}.
@@ -42,15 +64,15 @@ public interface QuestionnaireListener extends ParseTreeListener {
 	void exitOr(@NotNull QuestionnaireParser.OrContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link QuestionnaireParser#int}.
+	 * Enter a parse tree produced by {@link QuestionnaireParser#typeExp}.
 	 * @param ctx the parse tree
 	 */
-	void enterInt(@NotNull QuestionnaireParser.IntContext ctx);
+	void enterTypeExp(@NotNull QuestionnaireParser.TypeExpContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link QuestionnaireParser#int}.
+	 * Exit a parse tree produced by {@link QuestionnaireParser#typeExp}.
 	 * @param ctx the parse tree
 	 */
-	void exitInt(@NotNull QuestionnaireParser.IntContext ctx);
+	void exitTypeExp(@NotNull QuestionnaireParser.TypeExpContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link QuestionnaireParser#compare}.
@@ -64,26 +86,15 @@ public interface QuestionnaireListener extends ParseTreeListener {
 	void exitCompare(@NotNull QuestionnaireParser.CompareContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link QuestionnaireParser#AddSub}.
+	 * Enter a parse tree produced by {@link QuestionnaireParser#mulDiv}.
 	 * @param ctx the parse tree
 	 */
-	void enterAddSub(@NotNull QuestionnaireParser.AddSubContext ctx);
+	void enterMulDiv(@NotNull QuestionnaireParser.MulDivContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link QuestionnaireParser#AddSub}.
+	 * Exit a parse tree produced by {@link QuestionnaireParser#mulDiv}.
 	 * @param ctx the parse tree
 	 */
-	void exitAddSub(@NotNull QuestionnaireParser.AddSubContext ctx);
-
-	/**
-	 * Enter a parse tree produced by {@link QuestionnaireParser#parens}.
-	 * @param ctx the parse tree
-	 */
-	void enterParens(@NotNull QuestionnaireParser.ParensContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link QuestionnaireParser#parens}.
-	 * @param ctx the parse tree
-	 */
-	void exitParens(@NotNull QuestionnaireParser.ParensContext ctx);
+	void exitMulDiv(@NotNull QuestionnaireParser.MulDivContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link QuestionnaireParser#date}.
@@ -108,17 +119,6 @@ public interface QuestionnaireListener extends ParseTreeListener {
 	void exitDecimal(@NotNull QuestionnaireParser.DecimalContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link QuestionnaireParser#quest}.
-	 * @param ctx the parse tree
-	 */
-	void enterQuest(@NotNull QuestionnaireParser.QuestContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link QuestionnaireParser#quest}.
-	 * @param ctx the parse tree
-	 */
-	void exitQuest(@NotNull QuestionnaireParser.QuestContext ctx);
-
-	/**
 	 * Enter a parse tree produced by {@link QuestionnaireParser#and}.
 	 * @param ctx the parse tree
 	 */
@@ -128,28 +128,6 @@ public interface QuestionnaireListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitAnd(@NotNull QuestionnaireParser.AndContext ctx);
-
-	/**
-	 * Enter a parse tree produced by {@link QuestionnaireParser#MulDiv}.
-	 * @param ctx the parse tree
-	 */
-	void enterMulDiv(@NotNull QuestionnaireParser.MulDivContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link QuestionnaireParser#MulDiv}.
-	 * @param ctx the parse tree
-	 */
-	void exitMulDiv(@NotNull QuestionnaireParser.MulDivContext ctx);
-
-	/**
-	 * Enter a parse tree produced by {@link QuestionnaireParser#currency}.
-	 * @param ctx the parse tree
-	 */
-	void enterCurrency(@NotNull QuestionnaireParser.CurrencyContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link QuestionnaireParser#currency}.
-	 * @param ctx the parse tree
-	 */
-	void exitCurrency(@NotNull QuestionnaireParser.CurrencyContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link QuestionnaireParser#id}.
@@ -207,6 +185,17 @@ public interface QuestionnaireListener extends ParseTreeListener {
 	void exitString(@NotNull QuestionnaireParser.StringContext ctx);
 
 	/**
+	 * Enter a parse tree produced by {@link QuestionnaireParser#addSub}.
+	 * @param ctx the parse tree
+	 */
+	void enterAddSub(@NotNull QuestionnaireParser.AddSubContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QuestionnaireParser#addSub}.
+	 * @param ctx the parse tree
+	 */
+	void exitAddSub(@NotNull QuestionnaireParser.AddSubContext ctx);
+
+	/**
 	 * Enter a parse tree produced by {@link QuestionnaireParser#money}.
 	 * @param ctx the parse tree
 	 */
@@ -218,13 +207,24 @@ public interface QuestionnaireListener extends ParseTreeListener {
 	void exitMoney(@NotNull QuestionnaireParser.MoneyContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link QuestionnaireParser#bool}.
+	 * Enter a parse tree produced by {@link QuestionnaireParser#boolean}.
 	 * @param ctx the parse tree
 	 */
-	void enterBool(@NotNull QuestionnaireParser.BoolContext ctx);
+	void enterBoolean(@NotNull QuestionnaireParser.BooleanContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link QuestionnaireParser#bool}.
+	 * Exit a parse tree produced by {@link QuestionnaireParser#boolean}.
 	 * @param ctx the parse tree
 	 */
-	void exitBool(@NotNull QuestionnaireParser.BoolContext ctx);
+	void exitBoolean(@NotNull QuestionnaireParser.BooleanContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link QuestionnaireParser#parenthesis}.
+	 * @param ctx the parse tree
+	 */
+	void enterParenthesis(@NotNull QuestionnaireParser.ParenthesisContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QuestionnaireParser#parenthesis}.
+	 * @param ctx the parse tree
+	 */
+	void exitParenthesis(@NotNull QuestionnaireParser.ParenthesisContext ctx);
 }

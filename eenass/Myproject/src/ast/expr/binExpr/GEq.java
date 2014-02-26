@@ -22,4 +22,9 @@ public class GEq extends BinExpr{
 		return new BoolType();
 	}
 
+	@Override
+	public String show() {
+		return ">=";
+	}
+
 }

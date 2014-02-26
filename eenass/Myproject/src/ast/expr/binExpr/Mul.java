@@ -22,4 +22,9 @@ public class Mul extends BinExpr{
 		return new IntType();		
 	}
 
+	@Override
+	public String show() {
+		return "*";
+	}
+
 }

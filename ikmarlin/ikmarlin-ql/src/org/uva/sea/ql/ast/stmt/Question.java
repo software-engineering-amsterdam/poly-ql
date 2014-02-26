@@ -1,15 +1,15 @@
 package org.uva.sea.ql.ast.stmt;
 
-import org.uva.sea.ql.ast.expr.Expr;
 import org.uva.sea.ql.ast.expr.Ident;
+import org.uva.sea.ql.ast.type.Type;
 
 public abstract class Question extends Stmt {
 	
 	private Ident ident;
 	private String label;
-	private Expr type;
+	private Type type;
 	
-	public Question(Ident ident, String label, Expr type){
+	public Question(Ident ident, String label, Type type){
 		this.setIdent(ident);
 		this.label = label;
 		this.type = type;
@@ -31,12 +31,21 @@ public abstract class Question extends Stmt {
 		this.label = label;
 	}
 
-	public Expr getType() {
+	public Type getType() {
 		return type;
 	}
 
-	public void setType(Expr type) {
+	public void setType(Type type) {
 		this.type = type;
 	}
 	
+	@Override
+	public String toString(){
+		String question = "[";
+		question += getIdent().getName();
+		question += " = ";
+		question += getType().toString();
+		question += "]";
+		return question;
+	}
 }

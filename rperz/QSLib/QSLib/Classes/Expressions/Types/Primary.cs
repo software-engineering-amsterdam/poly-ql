@@ -16,5 +16,16 @@ namespace QSLib.Expressions.Types
         {
             get;
         }
+
+        public override bool Equals(object obj)
+        {
+            var temp = obj as Primary;
+            if (temp == null)
+                return false;
+            if (!this.Type.Equals(temp.Type))
+                return false;
+   
+            return true;
+        }
     }
 }

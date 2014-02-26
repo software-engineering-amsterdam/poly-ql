@@ -8,11 +8,7 @@ namespace QSLib
     public class MyListener : QSBaseListener
     {
         private QSParser parser;
-        public delegate void Print(String text);
-        public Print OnPrint { get; set; }
-        public Form root;
-        public List<String> variables = new List<String>();
-
+        private Form root;
 
         public MyListener(QSParser parser)
         {
@@ -22,6 +18,14 @@ namespace QSLib
         public override void ExitForm(QSParser.FormContext context)
         {
             root = context.f;
+        }
+
+        public Form Root
+        {
+            get
+            {
+                return root;
+            }
         }
     }
 }
