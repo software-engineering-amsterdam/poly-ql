@@ -32,8 +32,6 @@ namespace QSLib.Expressions.Conditions
             this._linenr = linenr;
         }
 
-
-
         public override string ToString()
         {
             if (this._right != null)
@@ -45,13 +43,24 @@ namespace QSLib.Expressions.Conditions
         public virtual bool CheckType()
         {
             bool retVal = true;
-            if(this._left != null)
+            if (this._left != null)
                 retVal &= this._left.CheckType();
             if (this._right != null)
                 retVal &= this._right.CheckType();
 
-            if (this._left != null && this._right != null)
-                retVal &= (this._left.Type.Equals(this._right.Type));
+            if (this._right != null && this._left != null && !(this._left.Type.Equals(this._right.Type)))
+            {
+                // operands not of same type
+                retVal = false;
+                TypeChecker.ReportTypeMismatch(this._left.Type, this._right.Type, this._operator, this._linenr);
+            }
+            else if (!retVal && this._right != null && this._right.Type != true.GetType())
+            {
+                // type of unary condition is not boolean
+                retVal = false;
+                TypeChecker.ReportTypeMismatch(this._left.Type, this._operator, this._linenr);
+            }
+
             return retVal;
         }
 
@@ -63,30 +72,49 @@ namespace QSLib.Expressions.Conditions
                     return this._type;
                 if (this._right != null)
                 {
-                    this._typeRight = this._right.GetType();
-                    this._typeLeft = this._left.GetType();
+                    // this is a binary condition
+                    this._typeRight = this._right.Type;
+                    this._typeLeft = this._left.Type;
 
-                    // if the types do not match, we have a type error
-                    if (this._typeLeft.Equals(this._typeRight))
-                        return this._typeLeft;
-                    else
-                        throw new TypeException("Type error: " + this._typeLeft.ToString() +
-                                                " is incompatible with " + this._typeRight.ToString());
+                    // if the types do not match, the type error is handled by CheckType
+                    return this._typeLeft;
                 }
                 else
                 {
+                    // this is a unary condition
                     if (this._typeLeft != null)
                     {
                         this._type = this._typeLeft;
                         return this._typeLeft;
                     }
 
-
-                    this._typeLeft = this._left.GetType();
+                    this._typeLeft = this._left.Type;
                     this._type = this._typeLeft;
                     return this._typeLeft;
                 }
             }
+        }
+
+        public override bool Equals(object obj)
+        {
+            bool retVal = true;
+            var comp = obj as Condition;
+            if (comp == null)
+                return false;
+
+            // check if both have a left operand set and check if these are equal (else if only one has one it is false)
+            if (this._left != null && comp._left != null)
+                retVal &= this._left.Equals(comp._left);
+            else if (this._left != null || comp._left != null)
+                retVal = false;
+
+            // check if both have a right operand set and check if these are equal (else if only one has one it is false)
+            if (this._right != null && comp._right != null)
+                retVal &= this._right.Equals(comp._right);
+            else if (this._right != null || comp._right != null)
+                retVal = false;
+            
+            return retVal;
         }
 
     }

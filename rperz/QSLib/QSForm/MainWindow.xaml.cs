@@ -39,8 +39,10 @@ namespace QSForm
             MyListener listener = new MyListener(parser);
             ParseTreeWalker walker = new ParseTreeWalker();
             walker.Walk(listener, tree);
-
-            tbOutput.Text = listener.root.ToString();
+            if (!TypeChecker.CheckTypes(listener.Root))
+                tbOutput.Text = TypeChecker.GetCheckerOutput();
+            else
+                tbOutput.Text = "Typecheck completed without errors";
         }
 
     }

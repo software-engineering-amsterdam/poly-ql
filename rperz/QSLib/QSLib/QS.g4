@@ -27,7 +27,7 @@
 
 form returns [Form f]
 	:
-	  FORM a=code_block EOF { $f = new Form($a.c); }
+	  b=FORM a=code_block EOF { $f = new Form($a.c, $b.line); }
 	;
 
 code_block returns [CodeBlock c]
@@ -54,6 +54,7 @@ statement returns [IStatement s]
 question_statement returns [Question q]
 	:
 	  a=STRING_LITERAL b=type_declaration { $q = new Question(new QSString($a.text,$a.line), $b.e, $a.line); }
+	| a=STRING_LITERAL c=assignment { $q = new Question(new QSString($a.text,$a.line), $c.e, $a.line); }
 	;
 
 type_declaration returns [Identifier e]
@@ -90,36 +91,36 @@ expression returns [IExpression e]
 
 math_expression returns [IExpression e]
 	: 
-	  l=simple_math o=MULTIPLY r=simple_math { $e = new Multiply($l.e, $r.e, $o.line); } // multiply and divide have higher precedence
-	| l=simple_math o=DIVIDE r=simple_math { $e = new Divide($l.e, $r.e, $o.line); } 
-	| l=simple_math o=PLUS r=simple_math { $e = new Add($l.e, $r.e, $o.line); }
+	  l=simple_math o=PLUS r=simple_math { $e = new Add($l.e, $r.e, $o.line); }
 	| l=simple_math o=MINUS r=simple_math { $e = new Subtract($l.e, $r.e, $o.line); } // than plus and minus 
+	| l=simple_math o=MULTIPLY r=simple_math { $e = new Multiply($l.e, $r.e, $o.line); } // multiply and divide have higher precedence
+	| l=simple_math o=DIVIDE r=simple_math { $e = new Divide($l.e, $r.e, $o.line); } 
 	| a=boolean_expression  { $e = ($a.e as IExpression); }
 	;
 
 simple_math returns [IExpression e]
 	: 
-	  l=primary o=MULTIPLY r=simple_math { $e = new Multiply($l.e, $r.e, $o.line); } // multiply and divide have higher precedence
-	| l=primary o=DIVIDE r=simple_math { $e = new Divide($l.e, $r.e, $o.line); } 
-	| l=primary o=PLUS r=simple_math { $e = new Add($l.e, $r.e, $o.line); }
+      l=primary o=PLUS r=simple_math { $e = new Add($l.e, $r.e, $o.line); }
 	| l=primary o=MINUS r=simple_math { $e = new Subtract($l.e, $r.e, $o.line); } // than plus and minus 
+	| l=primary o=MULTIPLY r=simple_math { $e = new Multiply($l.e, $r.e, $o.line); } // multiply and divide have higher precedence
+	| l=primary o=DIVIDE r=simple_math { $e = new Divide($l.e, $r.e, $o.line); } 
 	| a=primary { $e = ($a.e as IExpression); }
 	;
 
 
 boolean_expression returns [IExpression e]
 	: 
-	  o=NOT a=simple_bool					 { $e = new Not($a.e, $o.line); } // not has highest precedence but
+	  c=simple_bool o=OR b=simple_bool   { $e = new Or($c.e, $b.e, $o.line); } // than or
 	| c=simple_bool o=AND b=simple_bool  { $e = new And($c.e, $b.e, $o.line); } // and has higher precedence
-	| c=simple_bool o=OR b=simple_bool   { $e = new Or($c.e, $b.e, $o.line); } // than or
+	| o=NOT a=simple_bool					 { $e = new Not($a.e, $o.line); } // not has highest precedence but
 	| d=comparative_expression { $e = ($d.e as IExpression); } 
 	;
 
 simple_bool returns [IExpression e]
 	: 
-	  o=NOT a=primary					 { $e = new Not($a.e, $o.line); } // not has highest precedence but
+	  c=primary o=OR b=simple_bool   { $e = new Or($c.e, $b.e, $o.line); } // than or
 	| c=primary o=AND b=simple_bool  { $e = new And($c.e, $b.e, $o.line); } // and has higher precedence
-	| c=primary o=OR b=simple_bool   { $e = new Or($c.e, $b.e, $o.line); } // than or
+	| o=NOT a=primary					 { $e = new Not($a.e, $o.line); } // not has highest precedence but
 	| a=primary { $e = ($a.e as IExpression); }
 	;
 
@@ -241,10 +242,7 @@ INTERPUNCT :
 	| '.'
 	| '?'
 	| '!'
-	;
-
-COMMENT :
-	  '\\\\'
+	| '\''
 	;
 
 PLUS :
@@ -284,26 +282,34 @@ SQ :
 	;
 
 L_HOOK :
-	'('
+	  '('
 	;
 
 R_HOOK :
-	')'
+	  ')'
 	;
 
 L_BRACKET :
-	'{'
+	  '{'
 	;
 
 R_BRACKET :
-	'}'
+	  '}'
 	;
+
+COMMENT
+    :   '//' ~('\r' | '\n')* NEWLINE? -> skip
+    ;
 
 STRING_LITERAL :
 	    SQ ((WORD+ INTERPUNCT?)|[ \t\r\n])+ SQ
 	  ;
 
-		
-WS	: 
-	[ \t\r\n]+ ->skip ;
+NEWLINE
+    :  '\r'? '\n'
+    ;
+
+WS
+    :   (' ' | '\r' | '\n' | '\t' | '\f')+ -> skip
+    ;
 
