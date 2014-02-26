@@ -18,4 +18,12 @@ public abstract class BinExpr extends Expr {
 	public Expr get_rhs(){
 		return rhs;
 	}
+	
+	public String show_lhs(){
+		return lhs.show();
+	}
+	
+	public String show_rhs(){
+		return rhs.show();
+	}
 }
