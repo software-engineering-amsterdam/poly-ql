@@ -33,7 +33,7 @@ public class Main {
 		FormChecker.check(form, new HashMap<Ident, Type>(), errors);
 		String printErrors = errors.size() + " error(s) gevonden\n";
 		for (String error : errors) {
-			printErrors += "-   " + error + "\n";
+			printErrors += "-\t" + error + "\n";
 		}
 		
 		JFrame frame = new JFrame(form.getName().toString());
@@ -46,7 +46,9 @@ public class Main {
 		panel.setLayout(box);
 		
 		JTextArea formtextarea = new JTextArea(formString);
+		formtextarea.setTabSize(2);
 		JTextArea errorstextarea = new JTextArea(printErrors);
+		errorstextarea.setTabSize(2);
 		if (errors.size() > 0) {
 			errorstextarea.setForeground(Color.RED);
 		}
