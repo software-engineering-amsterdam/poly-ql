@@ -84,7 +84,7 @@ type ConditionalTests() =
                         }
                     }"
         let tree = { ID = "formName"; Statements = [
-                                        Conditional(Expr(Bool(true)), [
+                                        Conditional(Literal(Bool(true)), [
                                                         Question({
                                                                     ID = "boolQ"; 
                                                                     Label = "Can you see this?";
@@ -107,7 +107,7 @@ type ConditionalTests() =
                                                     ID = "boolQ1"; 
                                                     Label = "How much do you earn?";
                                                     Type = QLInt });
-                                        Conditional(BooleanOp(ID("boolQ1"), Gt, Expr(Int(5))), [
+                                        Conditional(BooleanOp(ID("boolQ1"), Gt, Literal(Int(5))), [
                                                         Question({
                                                                     ID = "boolQ2"; 
                                                                     Label = "Is it enough?";
@@ -136,7 +136,7 @@ type AssignmentTests() =
                                         Assignment({
                                                     ID = "intTax";
                                                     Label = "Tax amount";
-                                                    Expression = ArithmeticOp(ArithmeticOp(ID("intQ1"), arithmeticOp.Div, Expr(Int(100))), arithmeticOp.Mult, Expr(Int(52)))
+                                                    Expression = ArithmeticOp(ArithmeticOp(ID("intQ1"), arithmeticOp.Div, Literal(Int(100))), arithmeticOp.Mult, Literal(Int(52)))
                                                 });
                                     ]; }
         let result = parse_str text true
@@ -155,7 +155,7 @@ type Associativity() =
                                         Assignment({
                                                     ID = "intX";
                                                     Label = "Testing assignment"
-                                                    Expression = ArithmeticOp(ArithmeticOp(Expr(Int(1)), arithmeticOp.Plus, Expr(Int(2))), arithmeticOp.Plus, Expr(Int(3)))
+                                                    Expression = ArithmeticOp(ArithmeticOp(Literal(Int(1)), arithmeticOp.Plus, Literal(Int(2))), arithmeticOp.Plus, Literal(Int(3)))
                                                 })
                                             ]}
         let result = parse_str text true
@@ -167,7 +167,7 @@ type Associativity() =
                                         Assignment({
                                                     ID = "intX";
                                                     Label = "Testing assignment"
-                                                    Expression = ArithmeticOp(ArithmeticOp(Expr(Int(1)), arithmeticOp.Minus, Expr(Int(2))), arithmeticOp.Minus, Expr(Int(3)))
+                                                    Expression = ArithmeticOp(ArithmeticOp(Literal(Int(1)), arithmeticOp.Minus, Literal(Int(2))), arithmeticOp.Minus, Literal(Int(3)))
                                                 })
                                             ]}
         let result = parse_str text true
@@ -179,7 +179,7 @@ type Associativity() =
                                         Assignment({
                                                     ID = "intX";
                                                     Label = "Testing assignment"
-                                                    Expression = ArithmeticOp(ArithmeticOp(Expr(Int(1)), arithmeticOp.Mult, Expr(Int(2))), arithmeticOp.Mult, Expr(Int(3)))
+                                                    Expression = ArithmeticOp(ArithmeticOp(Literal(Int(1)), arithmeticOp.Mult, Literal(Int(2))), arithmeticOp.Mult, Literal(Int(3)))
                                                 })
                                             ]}
         let result = parse_str text true
@@ -191,7 +191,7 @@ type Associativity() =
                                         Assignment({
                                                     ID = "intX";
                                                     Label = "Testing assignment"
-                                                    Expression = ArithmeticOp(ArithmeticOp(Expr(Int(1)), arithmeticOp.Div, Expr(Int(2))), arithmeticOp.Div, Expr(Int(3)))
+                                                    Expression = ArithmeticOp(ArithmeticOp(Literal(Int(1)), arithmeticOp.Div, Literal(Int(2))), arithmeticOp.Div, Literal(Int(3)))
                                                 })
                                             ]}
         let result = parse_str text true
@@ -207,7 +207,7 @@ type Precedence() =
                                         Assignment({
                                                     ID = "intX";
                                                     Label = "Testing assignment"
-                                                    Expression = ArithmeticOp(Expr(Int(1)), arithmeticOp.Plus, ArithmeticOp(Expr(Int(2)), arithmeticOp.Mult, Expr(Int(3))))
+                                                    Expression = ArithmeticOp(Literal(Int(1)), arithmeticOp.Plus, ArithmeticOp(Literal(Int(2)), arithmeticOp.Mult, Literal(Int(3))))
                                                 })
                                             ]}
         let result = parse_str text true
@@ -219,7 +219,7 @@ type Precedence() =
                                         Assignment({
                                                     ID = "intX";
                                                     Label = "Testing assignment"
-                                                    Expression = ArithmeticOp(Expr(Int(1)), arithmeticOp.Minus, ArithmeticOp(Expr(Int(2)), arithmeticOp.Div, Expr(Int(3))))
+                                                    Expression = ArithmeticOp(Literal(Int(1)), arithmeticOp.Minus, ArithmeticOp(Literal(Int(2)), arithmeticOp.Div, Literal(Int(3))))
                                                 })
                                             ]}
         let result = parse_str text true
