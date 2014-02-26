@@ -1,0 +1,59 @@
+﻿{   
+module QlLexer
+// header: any valid F# can appear here.   
+open System
+open QlParser
+open Microsoft.FSharp.Text.Lexing
+ 
+
+let keywords =   
+    [   
+        "form", FORM;  
+        "boolean", BOOLEAN;
+        "integer", INTEGER;
+        "money", MONEY;
+    ] |> Map.ofList   
+ 
+let ops =   
+    [   
+        ":", ASS;
+        "{", BRACKET_OPEN;
+        "}", BRACKET_CLOSE;
+        "(", PARENS_OPEN;
+        ")", PARENS_CLOSE;
+
+    ] |> Map.ofList   
+}  
+
+
+
+
+let char        = ['a'-'z' 'A'-'Z']   
+let digit       = ['0'-'9']   
+let int         = '-'?digit+   
+let float       = '-'?digit+ '.' digit+   
+let identifier  = char(char|digit|['-' '_' '.'])*   
+let symbol      = ['{' '}' ':'] 
+let whitespace  = [' ' '\t']   
+let newline     = "\n\r" | '\n' | '\r'  
+ 
+rule tokenize = parse   
+| whitespace    { tokenize lexbuf }   
+| newline       { lexbuf.EndPos <- lexbuf.EndPos.NextLine; tokenize lexbuf; }   
+| int           { INT(Int32.Parse(LexBuffer<_>.LexemeString lexbuf)) }   
+| float         { FLOAT(Double.Parse(LexBuffer<_>.LexemeString lexbuf)) }   
+| identifier    { match keywords.TryFind(LexBuffer<_>.LexemeString lexbuf) with   
+                  | Some(token) -> token   
+                  | None -> ID(LexBuffer<_>.LexemeString lexbuf) }      
+| symbol        { match ops.TryFind(LexBuffer<_>.LexemeString lexbuf) with   
+                  | Some(token) -> token   
+                  | None -> ID(LexBuffer<_>.LexemeString lexbuf) }  
+| "\""          { STRING (string lexbuf.StartPos "" lexbuf) }
+| eof           { EOF }
+
+and string pos s = parse
+| "\\\""        { string pos (s + "\\\"") lexbuf }
+| "\""          { s }
+| "\n"          { lexbuf.EndPos <- lexbuf.EndPos.NextLine;string pos (s + "\n") lexbuf }
+| eof           { failwithf "end of file in string started at or near %A" pos }
+| _             { string pos (s + (LexBuffer<_>.LexemeString lexbuf)) lexbuf }

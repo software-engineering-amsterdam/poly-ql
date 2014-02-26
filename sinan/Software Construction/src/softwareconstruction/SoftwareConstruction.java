@@ -19,6 +19,20 @@ import org.antlr.v4.runtime.tree.ParseTree;
  */
 public class SoftwareConstruction {
 
+    public static void printCondition(ConditionalQuestion q, int depth){
+        for(Object o : q.getConditionalQuestions()){
+                if(o instanceof Question){
+//                    System.out.println(depth);
+                    System.out.println(o.toString());
+                }
+                if(o instanceof ConditionalQuestion){
+                    System.out.println("IF:");
+                    printCondition((ConditionalQuestion) o, depth +1);
+                }
+            }
+    }
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -29,8 +43,22 @@ public class SoftwareConstruction {
             SinansGrammerLexer lexer = new SinansGrammerLexer(input);
             CommonTokenStream tokens = new CommonTokenStream(lexer);
             SinansGrammerParser parser = new SinansGrammerParser(tokens);
-            ParseTree tree = parser.form();
-            System.out.println(tree.toStringTree(parser));
+//            ParseTree tree = parser.form();
+            Form form = parser.form().fo;
+//            System.out.println(form.getFormName());
+//            System.out.println(form.getItems());
+            for(Object o : form.getItems()){
+                if(o instanceof Question){
+                    System.out.println(o.toString());
+                }
+                if(o instanceof ConditionalQuestion){
+                    System.out.println("IF:");
+                    printCondition((ConditionalQuestion) o, 1);
+                }
+            }
+//            Form form = parser.form().fo;
+//            System.out.println(form.getQuestion());
+//            System.out.println(tree.toStringTree(parser));
         } catch (RecognitionException ex) {
             Logger.getLogger(SoftwareConstruction.class.getName()).log(Level.SEVERE, null, ex);
         } catch (FileNotFoundException ex) {

@@ -8,11 +8,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Reflection;
 
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
 
-using QL.Components;
+using QL.QLClasses;
+using QL.QLClasses.Statements;
+using QL.QLClasses.Expressions.Conditions;
+
+using QL.TypeChecker;
 
 namespace QL
 {
@@ -26,6 +31,8 @@ namespace QL
         private void btnParse_Click(object sender, EventArgs e)
         {
             txtOutput.Clear();
+            Identifiers.Reset();
+
             string inputString = txtInput.Text;
             MemoryStream inputStream = new MemoryStream(Encoding.UTF8.GetBytes(inputString ?? ""));
 
@@ -41,28 +48,37 @@ namespace QL
             parser.AddErrorListener(new ParserErrorListener(){OnError = WriteError});
 
             IParseTree tree = parser.questionnaire();
-            Questionnaire q = parser.theQuestionnaire;
-            //if (parser.NumberOfSyntaxErrors > 0)
-            //    txtOutput.Text += string.Format("Parser errors found: {0}", parser.NumberOfSyntaxErrors);
+            Questionnaire AST = parser.theQuestionnaire;
 
-            //QLVisitor visitor = new QLVisitor();
-            //visitor.Visit(tree);
+            if (AST == null)
+            {
+                WriteError("AST is null!!!");
 
-            txtOutput.Text += string.Format(@"{0}{0} Generated parse tree: 
+                txtOutput.Text += string.Format(@"{0}{0} Generated parse tree: 
+                                              {0} {1}"
+                                    , Environment.NewLine
+                                    , tree.ToStringTree(parser));
+            }
+            else
+            {
+                QLTypeChecker typeChecker = new QLTypeChecker();
+                typeChecker.OnError += WriteError;
+                typeChecker.Check(AST);
+
+                txtOutput.Text += string.Format(@"{0}{0} Generated parse tree: 
                                               {0} {1}
                                               {0} {2}
                                               {0} {3}"
-                                                , Environment.NewLine
-                                                , tree.ToStringTree(parser)
-                                                , q.ID
-                                                , q.Title);
-                                                /*, visitor.Visit(tree)*/
+                                    , Environment.NewLine
+                                    , tree.ToStringTree(parser)
+                                    , AST.ID
+                                    , AST.Title);
+            }
         }
             
         public void WriteError(string error)
         {
             txtOutput.Text += Environment.NewLine + error;
         }
-
     }
 }

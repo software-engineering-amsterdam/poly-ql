@@ -5,7 +5,14 @@ using System.Text;
 
 namespace QSLib.Expressions.Conditions.Binary
 {
-    class Or : Binary_Expression 
+    class Or : Condition
     {
+        public Or(IExpression a, IExpression b, int linenr)
+            : base(a, b, linenr)
+        {
+            base._operator = "||";
+        }
+
+
     }
 }

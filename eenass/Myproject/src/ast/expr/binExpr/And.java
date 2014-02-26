@@ -22,4 +22,10 @@ public class And extends BinExpr{
 		return new BoolType();
 	}
 
+	@Override
+	public String show() {
+		return "&&";
+	}
+	
+
 }

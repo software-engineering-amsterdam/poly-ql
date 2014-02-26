@@ -1,5 +1,6 @@
 package org.uva.sea.ql.ast.expr;
 
+
 public abstract class Binary extends Expr {
 	private Expr lhs;
 	private Expr rhs;
@@ -16,4 +17,7 @@ public abstract class Binary extends Expr {
 	public Expr getRhs(){
 		return this.rhs;
 	}
+	
+	public  abstract String toString();
+	
 }

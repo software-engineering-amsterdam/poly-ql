@@ -1,23 +1,40 @@
 package org.uva.sea.ql.ast.form;
 
-import java.util.ArrayList;
-
 import org.uva.sea.ql.ast.expr.Ident;
-import org.uva.sea.ql.ast.stat.Question;
-import org.uva.sea.ql.ast.stat.Statement;
+import org.uva.sea.ql.ast.stmt.Block;
+import org.uva.sea.ql.checker.FormVisitable;
+import org.uva.sea.ql.checker.FormVisitor;
 
-public class Form {
+public class Form implements FormVisitable {
 	private Ident ident;
-	private ArrayList<Statement> statements;
+	private Block stmts;
 	
-	public Form(Statement stmt){
-		this.statements = new ArrayList<Statement>();
-		this.statements.add(stmt);
+	public Form(Ident ident, Block stmts){
+		this.setIdent(ident);
+		this.stmts = stmts;
 	}
 	
-	public void addStatement(Statement stmt){
-		this.statements.add(stmt);
+	public Ident getIdent() {
+		return ident;
+	}
+
+	public void setIdent(Ident ident) {
+		this.ident = ident;
+	}
+
+	public Block getBlock(){
+		return this.stmts;
 	}
 	
+	public String toString(){
+		String form = getIdent().getName();
+		form += getBlock().toString();
+		return form;
+	}
+
+	@Override
+	public void accept(FormVisitor fv) {
+		fv.visit(this);
+	}
 	
 }

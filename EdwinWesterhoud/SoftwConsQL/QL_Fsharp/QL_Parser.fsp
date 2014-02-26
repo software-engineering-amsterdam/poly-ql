@@ -9,6 +9,7 @@ open Microsoft.FSharp.Collections
 %token CB_OPEN CB_CLOSE
 %token B_OPEN B_CLOSE
 %token COLON
+%token ASSIGN
 
 %token <string> IDENTIFIER
 %token <string> LABEL
@@ -16,12 +17,18 @@ open Microsoft.FSharp.Collections
 %token <bool> BOOL
 %token <string> STRING
 %token <int> INT
-%token <float> DATE
 %token <float> DECIMAL
-%token <float> MONEY
 
-%token QLBOOL QLSTRING QLINT QLDATE QLDECIMAL QLMONEY
-%token EQ NE LT LE GT GE AND OR NOT PLUS MINUS MULT DIV
+%token QLBOOL QLSTRING QLINT QLDECIMAL
+%token EQ NE LT LE GT GE AND OR PLUS MINUS MULT DIV NOT
+
+%left EQ NE
+%left LT LE GT GE
+%left AND OR
+%right NOT
+
+%left PLUS MINUS
+%left MULT DIV
 
 %token END
 
@@ -31,12 +38,13 @@ open Microsoft.FSharp.Collections
 %%
 
 start:
-    FORM IDENTIFIER CB_OPEN
+    | FORM IDENTIFIER CB_OPEN
         stmtList
-    CB_CLOSE END            {
-                                {   ID          = $2;
-                                    Statements  = $4 }
-                            }
+      CB_CLOSE END              {
+                                    {   ID          = $2;
+                                        Statements  = $4 }
+                                }
+    | { failwith "Empty file" }
 
 stmtList:
     |               { [] }
@@ -49,13 +57,11 @@ stmt:
     | conditional   { $1 }
 
 assignment:
-    IDENTIFIER COLON LABEL exprType
-    B_OPEN expression B_CLOSE   { {
-                                    ID          = $1;
-                                    Label       = $3;
-                                    Type        = $4;
-                                    Expression  = $6;
-                                } }
+    LABEL IDENTIFIER ASSIGN expression  { {
+                                            ID         = $2;
+                                            Label      = $1;
+                                            Expression = $4;
+                                        } }
 
 question:
     IDENTIFIER COLON LABEL qlType   { { 
@@ -73,23 +79,19 @@ qlType:
     | QLBOOL    { QLBool }
     | QLSTRING  { QLString }
     | QLINT     { QLInt }
-    | QLDATE    { QLDate }
     | QLDECIMAL { QLDecimal }
-    | QLMONEY   { QLMoney }
 
-exprType:
+literal:
     | STRING            { String($1) }
+    | LABEL             { String($1) }
     | BOOL              { Bool($1) }
     | INT               { Int($1) }
-    | DATE              { Date($1) }
     | DECIMAL           { Decimal($1) }
-    | MONEY             { Money($1) }
-
-
 
 expression:
+    | B_OPEN expression B_CLOSE     { $2 }
     | IDENTIFIER                    { ID($1) }
-    | exprType                      { Expr($1) }
+    | literal                       { Literal($1) }
     | NOT expression                { Neg($2) }
     | expression AND expression     { BooleanOp($1, And, $3) }
     | expression OR expression      { BooleanOp($1, Or, $3) }

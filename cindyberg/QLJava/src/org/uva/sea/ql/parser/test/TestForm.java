@@ -13,8 +13,17 @@ public class TestForm extends TestParser {
 		 
 		assertEquals(parser.parser("form fName { "
 				+ "hasName : \"label\" money }").getClass(),Form.class);
+		//assertEquals(parser.parser("form fName { "
+		//		+ "hasName : \"label\" boolean (true && false)}").getClass(),Form.class);
+		assertEquals(parser.parser("form fName { "
+				+ "hasName : \"label\" money "
+				+ "if(BLA){hasName : \"label\" money} }").getClass(),Form.class);
 		assertEquals(parser.parser("form fName { hasName : \"label\" money ( a + b )\n"
 				+ "hasName2 : \"lalala\" boolean }").getClass(),Form.class);
+		assertEquals(parser.parser("form F { NieuwVar : \"lala\" boolean "
+		      + "if (NieuwVar) "
+		      + "{ Hasiets : \"mones\" integer } }").getClass(),Form.class);
+		
 		assertEquals(parser.parser("form fName { hasName : \"label\" money\n"
 				+ "if (hasName) {"
 				+ "hasVar : \"label2\" boolean } }").getClass(), Form.class);

@@ -25,4 +25,9 @@ public class IntType extends Types{
 		return true;
 	}
 
+	@Override
+	public String show() {
+		return "int";
+	}
+
 }

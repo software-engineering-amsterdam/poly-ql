@@ -19,36 +19,36 @@ namespace QL
         public override void EnterQuestionnaire(QLParser.QuestionnaireContext context)
         {
             base.EnterQuestionnaire(context);
-            string id = context.ID().GetText();
+            //string id = context.ID().GetText();
 
             //if(_identifiers.Contains(id))
               //      
                 
-            Questionnaire = new Questionnaire { ID = id, Title = context.STRING().GetText() };
+            //Questionnaire = new Questionnaire { ID = id, Title = context.STRING().GetText() };
         }
 
         public override void EnterQuestion_stmt(QLParser.Question_stmtContext context)
         {
             base.EnterQuestion_stmt(context);
 
-            string type = context.t.GetText();
-            Type t = typeof(string);
+            //string type = context.t.GetText();
+            //Type t = typeof(string);
 
-            switch (type)
-            {
-                case "int":
-                    t = typeof(int);
-                    break;
-                case "bool":
-                    t = typeof(bool);
-                    break;
-                case "string":
-                    t = typeof(string);
-                    break;
-            }
+            //switch (type)
+            //{
+            //    case "int":
+            //        t = typeof(int);
+            //        break;
+            //    case "bool":
+            //        t = typeof(bool);
+            //        break;
+            //    case "string":
+            //        t = typeof(string);
+            //        break;
+            //}
         
             //Questionnaire.Questions.Add(context.qst);
-            Questionnaire.Questions.Add(new Question { ID = context.ID().GetText(), Label = context.STRING().GetText(), Type = t });
+            //Questionnaire.Questions.Add(new Question { ID = context.ID().GetText(), Label = context.STRING().GetText(), Type = t });
         }
     }
 }

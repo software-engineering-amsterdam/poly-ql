@@ -10,7 +10,7 @@ public abstract class UnExpr extends Expr{
 	}
 
 	public Expr getOperand() {
-		return operand;
+		return this.operand;
 	}
 
 }

@@ -11,7 +11,8 @@ public class Word {
     @Override
     public boolean equals(final Object o) {
         if (o instanceof Word) {
-            return mWord.equals(((Word) o).mWord);
+            String wordString = ((Word) o).mWord;
+            return mWord.equals(wordString);
         }
 
         return this.equals(o);

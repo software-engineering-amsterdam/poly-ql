@@ -1,0 +1,36 @@
+form Hello {
+  if (foo) {
+    Are you leaving?
+    boolean hello
+    required "false"
+    
+    Are you staying?
+    boolean foobar
+  }
+
+  Are you alive?
+  boolean foo
+
+  Are you having a nice day?
+  boolean bar
+  
+  if (foo) {
+    Are you leaving?
+    boolean hello
+    
+    Are you staying?
+    boolean foobar
+  }
+  else if (bar) {
+  
+  }
+  else {
+    Are you Moving?
+    boolean foospoon
+  }
+  
+  if (foo) {
+    Are you leaving?
+    boolean hello
+  }
+}

@@ -1,6 +1,7 @@
 // Generated from /Users/Sinan/Documents/NetBeansProjects/Software Construction/sinan/Software Construction/src/softwareconstruction/SinansGrammer.g by ANTLR 4.2
 
     package softwareconstruction;
+    import java.util.ArrayList;
 
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -26,6 +27,32 @@ public class SinansGrammerBaseListener implements SinansGrammerListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitForm(@NotNull SinansGrammerParser.FormContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterItem(@NotNull SinansGrammerParser.ItemContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitItem(@NotNull SinansGrammerParser.ItemContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterConditional(@NotNull SinansGrammerParser.ConditionalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitConditional(@NotNull SinansGrammerParser.ConditionalContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

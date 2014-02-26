@@ -5,28 +5,81 @@ using System.Text;
 using QSLib.Errors;
 namespace QSLib.Expressions
 {
-    public class Binary_Expression : Expression
+    public abstract class Binary_Expression : IExpression
     {
-        protected  Expression _left;
-        protected  Expression _right;
+        protected  IExpression _left;
+        protected  IExpression _right;
         protected  Type _type;
         protected  Type _typeLeft;
-        protected  Type _typeRight;
+        protected Type _typeRight;
+        protected String _operator = "Empty";
+        protected int _linenr;
 
-        public  override Type GetType()
+        public Binary_Expression(int linenr)
         {
-            if (this._type != null)
-                return this._type;
+            this._linenr = linenr;
+        }
 
-            this._typeRight = this._right.GetType();
-            this._typeLeft = this._left.GetType();
+        public Binary_Expression(IExpression a, IExpression b, int linenr)
+        {
+            this._left = a;
+            this._right = b;
+            this._linenr = linenr;
+        }
 
-            // if the types do not match, we have a type error
-            if (this._typeLeft.Equals(this._typeRight))
+        public Type Type
+        {
+            get
+            {
+                if (this._type != null)
+                    return this._type;
+
+                this._typeRight = this._right.Type;
+                this._typeLeft = this._left.Type;
+
+                // if the types do not match, it will be caught by the CheckType function
                 return this._typeLeft;
-            else
-                throw new TypeException("Type error: " + this._typeLeft.ToString() + 
-                                        " is incompatible with " + this._typeRight.ToString());
+            }
+        }
+
+        public bool CheckType()
+        {
+            bool retVal = true;
+            if(this._left != null)
+                retVal &= this._left.CheckType();
+            if(this._right != null)
+                retVal &= this._right.CheckType();
+
+            if (this._right != null && this._left != null && !(this._left.Type.Equals(this._right.Type)))
+            {
+                retVal = false;
+                TypeChecker.ReportTypeMismatch(this._left.Type, this._right.Type, this._operator, this._linenr);
+            }
+
+            return retVal;
+        }
+
+        public override bool Equals(object obj)
+        {
+            bool retVal = true;
+            var comp = obj as Binary_Expression;
+            if (comp == null)
+                return false;
+            if (this._left != null && comp._left != null)
+                retVal &= this._left.Equals(comp._left);
+            else if (this._left != null || comp._left != null)
+                retVal = false;
+            if (this._right != null && comp._right != null)
+                retVal &= this._right.Equals(comp._right);
+            else if (this._right != null || comp._right != null)
+                retVal = false;
+
+            return retVal;
+        }
+
+        public override string ToString()
+        {
+            return this._left.ToString() + this._operator + this._right.ToString();
         }
     }
 }

@@ -24,6 +24,7 @@ __version__ = 'SPARK-0.7 (pre-alpha-7)'
 import re
 import sys
 import string
+import pprint
 
 def _namelist(instance):
 	namelist, namedict, classlist = [], {}, [instance.__class__]
@@ -88,6 +89,7 @@ class GenericScanner:
 	def t_default(self, s):
 		r'( . | \n )+'
 		print "Specification error: unmatched input"
+		# print s
 		raise SystemExit
 
 #
@@ -97,6 +99,9 @@ class _State:
 	def __init__(self, stateno, items):
 		self.T, self.complete, self.items = [], [], items
 		self.stateno = stateno
+	def __repr__(self):
+		return u"<State {} {} {}>".format( self.T, self.complete, self.stateno )
+
 
 class GenericParser:
 	#
@@ -181,7 +186,6 @@ class GenericParser:
 	def addRule(self, doc, func, _preprocess=1):
 		fn = func
 		rules = string.split(doc)
-
 		index = []
 		for i in range(len(rules)):
 			if rules[i] == '::=':
@@ -213,6 +217,7 @@ class GenericParser:
 
 	def augment(self, start):
 		rule = '%s ::= %s %s' % (self._START, self._BOF, start)
+		# print rule
 		self.addRule(rule, lambda args: args[1], 0)
 
 	def computeNull(self):
@@ -310,7 +315,6 @@ class GenericParser:
 	def parse(self, tokens):
 		sets = [ [(1,0), (2,0)] ]
 		self.links = {}
-		
 		if self.ruleschanged:
 			self.computeNull()
 			self.newrules = {}
@@ -320,20 +324,24 @@ class GenericParser:
 			self.edges, self.cores = {}, {}
 			self.states = { 0: self.makeState0() }
 			self.makeState(0, self._BOF)
+		# print self.states
+		# print sets
+		# print len(tokens)
 
 		for i in xrange(len(tokens)):
 			sets.append([])
-
 			if sets[i] == []:
 				break				
+			# print "current token:",tokens[i]
 			self.makeSet(tokens[i], sets, i)
 		else:
 			sets.append([])
 			self.makeSet(None, sets, len(tokens))
 
-		#_dump(tokens, sets, self.states)
+		pprint.pprint( sets )
 
 		finalitem = (self.finalState(tokens), 0)
+		# print "finalitem:",finalitem
 		if finalitem not in sets[-2]:
 			if len(tokens) > 0:
 				self.error(tokens[i-1])
@@ -462,8 +470,12 @@ class GenericParser:
 	def gotoST(self, state, st):
 		rv = []
 		for t in self.states[state].T:
+			# print state, st, t
+			# print type(st), type(t)
 			if st == t:
+				# print "{} is {}".format(st,t)
 				rv.append(self.goto(state, t))
+		# print rv
 		return rv
 
 	def add(self, set, item, i=None, predecessor=None, causal=None):
@@ -479,18 +491,22 @@ class GenericParser:
 
 	def makeSet(self, token, sets, i):
 		cur, next = sets[i], sets[i+1]
-
+		# print 'currentset:', cur
+		# print 'nextset:',next
 		ttype = token is not None and self.typestring(token) or None
+		# print ttype
 		if ttype is not None:
 			fn, arg = self.gotoT, ttype
 		else:
 			fn, arg = self.gotoST, token
-
+		# print fn, arg
 		for item in cur:
 			ptr = (item, i)
 			state, parent = item
 			add = fn(state, arg)
+			# print state, parent
 			for k in add:
+				# print k
 				if k is not None:
 					self.add(next, (k, parent), i+1, ptr)
 					nk = self.goto(k, None)

@@ -6,11 +6,11 @@ package WordSeparation;
 }
  
 // PARSER
-program : (part)+;
+program : (part)+ end;
  
-part: WORD | WORD ':';
+part: WORD ':';
+end: WORD;
 
 // LEXER
-
 WORD     : ('a'..'z'|'A'..'Z')+;
 WS: [ \t\n\r]+ -> skip ;

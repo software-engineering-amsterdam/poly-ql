@@ -3,7 +3,7 @@ package org.uva.sea.ql.ast.literal;
 import org.uva.sea.ql.ast.ExpressionVisitor;
 import org.uva.sea.ql.ast.type.BoolType;
 import org.uva.sea.ql.ast.type.Type;
-import org.uva.sea.ql.typechecker.Environment;
+import org.uva.sea.ql.typechecker.TypeEnvironment;
 
 
 public class BoolLiteral extends Literal<Boolean> {
@@ -16,14 +16,13 @@ public class BoolLiteral extends Literal<Boolean> {
 
 
 	@Override
-	public <T> void accept(ExpressionVisitor<T> visitor) {
-		visitor.visit(this);
+	public <T> T accept(ExpressionVisitor<T> visitor) {
+		return visitor.visit(this);
 		
 	}
 
 
-	@Override
-	public Type typeOf() {
+	public Type typeOf(TypeEnvironment environment) {
 		return new BoolType();
 	}
 	

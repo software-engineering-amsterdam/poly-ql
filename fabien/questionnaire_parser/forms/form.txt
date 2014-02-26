@@ -1,0 +1,25 @@
+form Hello {
+  what is this?
+  boolean fu
+
+  what is this again?
+  string hello1
+  * "What"
+  * "Is"
+  * "This"
+
+  what is fu again?
+  money valu
+  error "Your money value seems to be below zero"
+  success "Congrats rich person"
+
+  if (hello) {
+    if (fu) {
+      mr dobo is not ok?
+      error "This is"
+    }
+  }
+
+  WHERE does this come from?
+  string yes
+}
