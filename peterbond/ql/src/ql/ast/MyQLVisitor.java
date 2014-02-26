@@ -2,8 +2,19 @@ package ql.ast;
 
 import org.antlr.v4.runtime.misc.NotNull;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ql.ast.misc.ParOp;
 import ql.ast.operators.*;
+import ql.ast.statements.IfStat;
+import ql.ast.statements.QitStat;
+import ql.ast.statements.SInterface;
+import ql.ast.statements.types.STInterface;
+import ql.ast.types.TBoolean;
+import ql.ast.types.TInterface;
+import ql.ast.types.TMoney;
+import ql.ast.types.TText;
 import ql.ast.expressions.*;
 import antlr4.QLBaseVisitor;
 import antlr4.QLParser;
@@ -22,7 +33,7 @@ import antlr4.QLParser.NeqOpContext;
  * 
  * @author Peter
  */
-public class MyQLVisitor extends QLBaseVisitor {
+public class MyQLVisitor extends QLBaseVisitor<Object> {
 	
 	@Override 
 	public LtEqOp visitLtEqOp(@NotNull QLParser.LtEqOpContext ctx) {
@@ -64,9 +75,16 @@ public class MyQLVisitor extends QLBaseVisitor {
 	}
 
 	@Override
-	public T visitType(@NotNull QLParser.TypeContext ctx) {
-		return visitChildren(ctx);
-		
+	public TInterface visitType(@NotNull QLParser.TypeContext ctx) {
+		TInterface typeContext = (TInterface) ctx.getParent();
+		if(typeContext.toStr() == "boolean")
+			return new TBoolean();
+		else if(typeContext.toStr() == "money")
+			return new TMoney();
+		else if(typeContext.toStr() == "text")
+			return new TText();
+		else
+			return new TBoolean(); // This shouldn't happen...
 	}
 
 	@Override 
@@ -105,8 +123,11 @@ public class MyQLVisitor extends QLBaseVisitor {
 
 
 	@Override 
-	public T visitIfStat(@NotNull QLParser.IfStatContext ctx) {
-		return visitChildren(ctx);
+	public IfStat visitIfStat(@NotNull QLParser.IfStatContext ctx) {
+		return new IfStat( (ExprInterface) ctx.expr().accept(this),
+	                        visitQit(ctx.qit()),
+	                        new ArrayList<SInterface>()
+	                     );
 	}
 
 
@@ -127,9 +148,10 @@ public class MyQLVisitor extends QLBaseVisitor {
 	}
 
 	@Override
-	public T visitAndOp(@NotNull QLParser.AndOpContext ctx) {
-		return visitChildren(ctx);
-		
+	public AndOp visitAndOp(@NotNull QLParser.AndOpContext ctx) {
+		return new AndOp( (ExprInterface) ctx.expr(0).accept(this), 
+				          (ExprInterface) ctx.expr(1).accept(this)
+				        );
 	}
 
 	@Override
@@ -148,9 +170,11 @@ public class MyQLVisitor extends QLBaseVisitor {
 	}
 
 	@Override 
-	public T visitQitStat(@NotNull QLParser.QitStatContext ctx) { 
-		return visitChildren(ctx); 
-		
+	public QitStat visitQitStat(@NotNull QLParser.QitStatContext ctx) { 
+		return new QitStat( ctx.IDENTIFIER().getText(),
+	                        ctx.QUESTION().getText().substring(1, ctx.QUESTION().getText().length() -1),
+	                       (STInterface) ctx.type().accept(this)
+	                      );
 	}
 
 
@@ -179,9 +203,10 @@ public class MyQLVisitor extends QLBaseVisitor {
 	}
 
 	@Override
-	public T visitOrOp(@NotNull QLParser.OrOpContext ctx) { 
-		return visitChildren(ctx);
-		
+	public OrOp visitOrOp(@NotNull QLParser.OrOpContext ctx) { 
+		return new OrOp( (ExprInterface) ctx.expr(0).accept(this), 
+				         (ExprInterface) ctx.expr(1).accept(this)
+				       );
 	}
 
 
