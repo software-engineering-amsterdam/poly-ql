@@ -1,5 +1,7 @@
 package expr;
 
+import typeChecker.ASTVisitor;
+
 
 public class Ident extends Expression {
 	private String identifier;
@@ -15,5 +17,10 @@ public class Ident extends Expression {
 			return false;
 		Ident ident=(Ident) obj;
 		return this.identifier.equals(ident.identifier);
+	}
+	
+	@Override
+	public void accept(ASTVisitor visitor) {
+		visitor.visit(this);
 	}
 }
