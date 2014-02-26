@@ -19,7 +19,7 @@ import java.io.InputStream;
 public class QLASTBuilder {
     public static void main(String[] args) throws IOException {
         String inputFile = "/Users/Ivan/Documents/Master SE/Software " +
-                "Construction/poly-ql/ivan/ql-project/src/questionnaires/";
+                "Construction/poly-ql/ivan/ql-project/src/net.iplantevin.ql.questionnaires/";
 //        inputFile += "form1.txt";
 //        inputFile += "form2.txt";
         inputFile += "typeForm1.txt";
