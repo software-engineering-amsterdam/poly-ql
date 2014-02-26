@@ -51,7 +51,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Identifiers.cs" />
+    <Compile Include="QLClasses\Expressions\Identifier\QIdentifier.cs" />
+    <Compile Include="QLClasses\Expressions\Literals\BoolLiteral.cs" />
+    <Compile Include="QLClasses\Expressions\Literals\StringLiteral.cs" />
+    <Compile Include="QLClasses\Expressions\Literals\IntLiteral.cs" />
+    <Compile Include="TypeChecker\Identifiers.cs" />
     <Compile Include="QLClasses\Expressions\ExpressionBase.cs" />
     <Compile Include="QLClasses\Expressions\Unary\UnaryExpression.cs" />
     <Compile Include="QLClasses\Expressions\Conditions\BinaryExpressions\CompareExpression.cs" />
@@ -77,11 +81,10 @@
     <Compile Include="QLClasses\Statements\Question.cs" />
     <Compile Include="QLClasses\Questionnaire.cs" />
     <Compile Include="QLClasses\Statements\StatementBase.cs" />
-    <Compile Include="QLClasses\Expressions\Types\QIdentifier.cs" />
-    <Compile Include="QLClasses\Expressions\Types\QBool.cs" />
-    <Compile Include="QLClasses\Expressions\Types\QInt.cs" />
-    <Compile Include="QLClasses\Expressions\Types\QString.cs" />
-    <Compile Include="QLClasses\Expressions\Types\QBaseType.cs" />
+    <Compile Include="QLClasses\Types\QBool.cs" />
+    <Compile Include="QLClasses\Types\QInt.cs" />
+    <Compile Include="QLClasses\Types\QString.cs" />
+    <Compile Include="QLClasses\Types\QBaseType.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -101,6 +104,7 @@
     <Compile Include="QLParser.cs" />
     <Compile Include="TypeChecker\QLException.cs" />
     <Compile Include="TypeChecker\QLTypeChecker.cs" />
+    <Compile Include="QLClasses\QLTokenInfo.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>

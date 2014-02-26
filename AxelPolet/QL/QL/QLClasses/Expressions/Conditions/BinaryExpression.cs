@@ -1,4 +1,4 @@
-﻿using System;
+﻿using QL.QLClasses.Types;
 using QL.TypeChecker;
 
 namespace QL.QLClasses.Expressions.Conditions
@@ -13,9 +13,9 @@ namespace QL.QLClasses.Expressions.Conditions
             return LeftValue.CheckType(ref error) && RightValue.CheckType(ref error);
         }
 
-        public override Type GetType()
+        public override QBaseType GetResultType()
         {
-            return typeof (bool);
+            return new QBool();
         }
     }
 }

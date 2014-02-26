@@ -1,4 +1,5 @@
 ﻿using System;
+using QL.QLClasses.Expressions.Literals;
 using QL.TypeChecker;
 using QL.QLClasses.Expressions.Conditions.BinaryExpressions.Operators;
 
@@ -8,33 +9,27 @@ namespace QL.QLClasses.Expressions.Conditions.BinaryExpressions
     {
         public OperatorBase CompareOperator { get; set; }
 
-        public override object Result()
+        public override ExpressionBase GetResult()
         {
-            return Convert.ToBoolean(CompareOperator.Compare(LeftValue, RightValue));
+            return new BoolLiteral(Convert.ToBoolean(CompareOperator.Compare(LeftValue, RightValue)));
         }
 
         public override bool CheckType(ref QLException error)
         {
             base.CheckType(ref error);
 
-            if (LeftValue.GetType() != RightValue.GetType())
+            if (!LeftValue.GetResultType().IsCompatibleWith(RightValue.GetResultType()))
             {
-                error.Message = string.Format("Cannot compare values of different types! Left: '{0}', Right: '{1}'", LeftValue.GetType(), RightValue.GetType());
-
-                error.TokenLine = LeftValue.TokenLine;
-                error.TokenColumn = LeftValue.TokenColumn;
-                error.TokenText = LeftValue.TokenText;
+                error.Message = string.Format("Cannot compare values of different types! Left: '{0}', Right: '{1}'", LeftValue.GetResultType(), RightValue.GetResultType());
+                error.TokenInfo = LeftValue.TokenInfo;
 
                 return false;
             }
 
-            if (LeftValue.GetType() == typeof(string) && RightValue.GetType() == typeof(string) && !(CompareOperator is Equals))
+            if (LeftValue.GetResultType().IsCompatibleWithQString(null) && RightValue.GetResultType().IsCompatibleWithQString(null) && !(CompareOperator is Equals))
             {
                 error.Message = string.Format("String values can only be compared on equality! CompareOperator: '{0}'", CompareOperator);
-
-                error.TokenLine = CompareOperator.TokenLine;
-                error.TokenColumn = CompareOperator.TokenColumn;
-                error.TokenText = CompareOperator.TokenText;
+                error.TokenInfo = CompareOperator.TokenInfo;
 
                 return false;
             }
