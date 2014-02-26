@@ -19,13 +19,14 @@ namespace Algebra.QL.TypeCheck.Stmnt
 
         public void TypeCheck(Queue<ITypeCheckStmnt> queue, TypeCheckData data)
         {
+			queue.Enqueue(IfTrueBody);
+			if (queue.Count > 0) queue.Dequeue().TypeCheck(queue, data);
+
             if (!CheckExpression.TypeCheck(data).CompatibleWith(ExpressionType))
             {
                 data.ReportError("Unable to evaluate 'if'. Expression must be of type bool!",
                     SourcePosition);
             }
-
-            IfTrueBody.TypeCheck(queue, data);
         }
     }
 }

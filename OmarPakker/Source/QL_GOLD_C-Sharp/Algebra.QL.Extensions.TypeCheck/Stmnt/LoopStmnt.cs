@@ -23,13 +23,14 @@ namespace Algebra.QL.Extensions.TypeCheck.Stmnt
 
         public void TypeCheck(Queue<ITypeCheckStmnt> queue, TypeCheckData data)
         {
+			queue.Enqueue(Body);
+			if (queue.Count > 0) queue.Dequeue().TypeCheck(queue, data);
+
 			if (!Expression.TypeCheck(data).CompatibleWith(ExpressionType))
             {
                 data.ReportError("Unable to evaluate 'loop'. Expression must be a integral type!",
                     SourcePosition);
             }
-
-            Body.TypeCheck(queue, data);
         }
     }
 }

@@ -15,11 +15,11 @@ namespace Algebra.QL.TypeCheck.Stmnt
         public void TypeCheck(Queue<ITypeCheckStmnt> queue, TypeCheckData data)
         {
             data.Forms.Add(Name);
-            if (queue.Count > 0) queue.Dequeue().TypeCheck(queue, data);
+
+			queue.Enqueue(Body);
+			if (queue.Count > 0) queue.Dequeue().TypeCheck(queue, data);
 
             data.Variables.Clear();
-
-            Body.TypeCheck(queue, data);
         }
     }
 }

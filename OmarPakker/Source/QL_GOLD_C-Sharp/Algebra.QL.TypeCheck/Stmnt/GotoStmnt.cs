@@ -14,6 +14,8 @@ namespace Algebra.QL.TypeCheck.Stmnt
 
         public void TypeCheck(Queue<ITypeCheckStmnt> queue, TypeCheckData data)
         {
+			if (queue.Count > 0) queue.Dequeue().TypeCheck(queue, data);
+
             if (data.Gotos.Contains(GotoName))
             {
                 data.ReportWarning(String.Format("You already defined a goto for Form {0}. Are you sure you want to go to the same form?",

@@ -16,6 +16,8 @@ namespace Algebra.QL.TypeCheck.Stmnt
 
         public void TypeCheck(Queue<ITypeCheckStmnt> queue, TypeCheckData data)
         {
+			if (queue.Count > 0) queue.Dequeue().TypeCheck(queue, data);
+
             Expression.TypeCheck(data);
 
             if (String.IsNullOrWhiteSpace(QuestionText))
