@@ -6,8 +6,10 @@ form Box1HouseOwning {
  // This should lead to two exceptions, one type and one duplicate label.
  hasSoldHouse: "Did you sell a house in 2010?" integer
 
- // |bla| is undefined
- if (bla) test: "test textual input" string
+ // |bla| is defined further down.
+ if (bla) test: "test textual input:" string
+
+ bla: "Declaration of bla:" boolean
 
  // This should also result in two exceptions.
  hasSoldHouse: "test textual input" string
@@ -44,4 +46,10 @@ form Box1HouseOwning {
 
  // Expression in computation is of wrong type and arguments too.
  wrongCompType: "Wrong computation type" integer(sellingPrice || privateDebt)
+
+ // Equality of different types.
+ wrongEquality: "Incorrect equality computation" boolean(hasSoldHouse == sellingPrice)
+
+ cycleA: "First value" integer(5 * cycleB)
+ cycleB: "Second value" integer(10 * cycleA)
 }

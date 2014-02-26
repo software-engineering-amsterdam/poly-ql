@@ -8,6 +8,7 @@ import java.util.HashMap;
  *
  * @author Ivan
  */
+// TODO: rename exception > error.
 public class ExceptionCollection {
     private HashMap<Class<QLException>, ArrayList<QLException>> exceptionCollection;
 

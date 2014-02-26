@@ -15,6 +15,7 @@ import java.util.HashMap;
  * Type environment. Has a map of ID->IDTuple and convenience methods.
  */
 public class TypeEnvironment {
+    // TODO: change map from ID to Type.
     private final HashMap<String, IDTuple> idTypeEnv;
     private final ExceptionCollection exceptionCollection;
 

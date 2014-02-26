@@ -13,6 +13,7 @@ import net.iplantevin.exceptions.QLUndefinedException;
 /**
  * @author Ivan
  */
+// TODO: integrate with TypeCheckerVisitor
 public class ExpressionValidator {
     private final ExceptionCollection exceptionCollection;
     private final TypeEnvironment typeEnvironment;
@@ -69,19 +70,19 @@ public class ExpressionValidator {
     public void checkLogical(Binary expression) {
         checkExpectedType(expression.getLeftExpr(), new BooleanType());
         checkExpectedType(expression.getRightExpr(), new BooleanType());
-        visitBinary(expression);
+        checkBinary(expression);
     }
 
     public void checkEquality(Binary expression) {
         checkExpectedType(expression.getLeftExpr(),
                 expression.getRightExpr().getType(typeEnvironment));
-        visitBinary(expression);
+        checkBinary(expression);
     }
 
     public void checkNumeric(Binary expression) {
         checkExpectedType(expression.getLeftExpr(), new IntegerType());
         checkExpectedType(expression.getRightExpr(), new IntegerType());
-        visitBinary(expression);
+        checkBinary(expression);
     }
 
     public void checkUnary(Unary expression) {
@@ -89,7 +90,7 @@ public class ExpressionValidator {
         expression.getExpression().accept(visitor);
     }
 
-    private void visitBinary(Binary expression) {
+    private void checkBinary(Binary expression) {
         expression.getLeftExpr().accept(visitor);
         expression.getRightExpr().accept(visitor);
     }

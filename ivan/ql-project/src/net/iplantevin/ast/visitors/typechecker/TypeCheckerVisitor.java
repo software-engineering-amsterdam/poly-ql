@@ -19,6 +19,7 @@ import net.iplantevin.exceptions.ExceptionCollection;
  * @author Ivan
  */
 public class TypeCheckerVisitor implements IQLASTVisitor {
+    // TODO: static shorthand constructor.
     private ExceptionCollection exceptionCollection;
     private TypeEnvironment typeEnvironment;
     private LabelCollection labelCollection;
