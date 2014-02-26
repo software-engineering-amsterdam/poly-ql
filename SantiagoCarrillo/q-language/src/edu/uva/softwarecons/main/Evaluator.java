@@ -32,7 +32,7 @@ public class Evaluator extends QuestionnaireBaseListener{
 
     Type currentType;
 
-    boolean isSimpleQuestion = false;
+    boolean isSimpleQuestion = true;
 
     boolean isBinaryExpression;
 
