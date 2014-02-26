@@ -1,7 +1,8 @@
 package nl.uva.polyql.model.expressions.operators.bool;
 
-import nl.uva.polyql.model.Type;
 import nl.uva.polyql.model.expressions.operators.SameOperandOperator;
+import nl.uva.polyql.model.expressions.operators.UnsupportedOperandTypeException;
+import nl.uva.polyql.model.types.Type;
 import nl.uva.polyql.model.values.BooleanValue;
 import nl.uva.polyql.model.values.NumberValue;
 import nl.uva.polyql.model.values.StringValue;
@@ -14,11 +15,17 @@ public abstract class BooleanOperator extends SameOperandOperator<BooleanValue> 
         return leftValue.performOperationOnLeft(this, rightValue);
     }
 
-    public abstract BooleanValue performOperation(final BooleanValue left, final BooleanValue right);
+    public BooleanValue performOperation(final BooleanValue left, final BooleanValue right) {
+        throw new UnsupportedOperandTypeException(Type.BOOLEAN, getSyntax());
+    }
 
-    public abstract BooleanValue performOperation(final NumberValue left, final NumberValue right);
+    public BooleanValue performOperation(final NumberValue left, final NumberValue right) {
+        throw new UnsupportedOperandTypeException(Type.NUMBER, getSyntax());
+    }
 
-    public abstract BooleanValue performOperation(final StringValue left, final StringValue right);
+    public BooleanValue performOperation(final StringValue left, final StringValue right) {
+        throw new UnsupportedOperandTypeException(Type.STRING, getSyntax());
+    }
 
     @Override
     public boolean isValid(final Type type) {

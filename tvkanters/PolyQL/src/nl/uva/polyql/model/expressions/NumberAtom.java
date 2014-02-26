@@ -4,7 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import nl.uva.polyql.model.Question;
-import nl.uva.polyql.model.Type;
+import nl.uva.polyql.model.types.Type;
+import nl.uva.polyql.model.types.NumberType;
 import nl.uva.polyql.model.values.NumberValue;
 
 public class NumberAtom extends Expression {
@@ -12,7 +13,7 @@ public class NumberAtom extends Expression {
     private final NumberValue mValue;
 
     public NumberAtom(final String value) {
-        mValue = (NumberValue) Type.NUMBER.parseInput(value);
+        mValue = new NumberType().parseInput(value);
     }
 
     @Override

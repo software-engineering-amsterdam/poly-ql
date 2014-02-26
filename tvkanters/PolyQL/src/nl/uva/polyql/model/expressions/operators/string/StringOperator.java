@@ -1,8 +1,8 @@
 package nl.uva.polyql.model.expressions.operators.string;
 
-import nl.uva.polyql.model.Type;
 import nl.uva.polyql.model.expressions.Expression;
 import nl.uva.polyql.model.expressions.operators.Operator;
+import nl.uva.polyql.model.types.Type;
 import nl.uva.polyql.model.values.NumberValue;
 import nl.uva.polyql.model.values.StringValue;
 
@@ -21,24 +21,7 @@ public abstract class StringOperator extends Operator<StringValue> {
 
     @Override
     public boolean isValid(final Type leftType, final Type rightType) {
-        boolean valid = true;
-
-        switch (leftType) {
-        case STRING:
-        case NUMBER:
-            break;
-        default:
-            valid = false;
-        }
-
-        switch (rightType) {
-        case STRING:
-        case NUMBER:
-            break;
-        default:
-            valid = false;
-        }
-
-        return valid;
+        return leftType == Type.STRING && rightType == Type.STRING || leftType == Type.NUMBER
+                && rightType == Type.STRING || leftType == Type.STRING && rightType == Type.NUMBER;
     }
 }

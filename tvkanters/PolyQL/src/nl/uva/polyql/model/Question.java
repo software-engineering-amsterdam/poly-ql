@@ -4,7 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import nl.uva.polyql.Log;
-import nl.uva.polyql.model.values.StringValue;
+import nl.uva.polyql.model.types.Type;
+import nl.uva.polyql.model.types.StringType;
 import nl.uva.polyql.model.values.Value;
 
 public class Question extends Rule {
@@ -29,10 +30,10 @@ public class Question extends Rule {
         }
 
         mId = id;
-        mLabel = ((StringValue) Type.STRING.parseInput(label)).getValue();
+        mLabel = StringType.parseInputToString(label);
         mType = type;
 
-        setValue(mType.getDefaultValue());
+        setValue(mType.getType().getDefaultValue());
     }
 
     public String getId() {
@@ -56,7 +57,7 @@ public class Question extends Rule {
     }
 
     public void setValueFromInput(final String input) {
-        final Value<?> value = mType.parseInput(input);
+        final Value<?> value = mType.getType().parseInput(input);
         mValueValid = value != null;
         setValue(value);
     }

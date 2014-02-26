@@ -6,13 +6,9 @@ import nl.uva.polyql.model.expressions.operators.string.StringOperator;
 
 public abstract class Value<T> {
 
-    private T mValue;
+    private final T mValue;
 
     public Value(final T value) {
-        setValue(value);
-    }
-
-    public void setValue(final T value) {
         mValue = value;
     }
 

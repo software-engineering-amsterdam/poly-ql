@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import nl.uva.polyql.model.Question;
-import nl.uva.polyql.model.Type;
+import nl.uva.polyql.model.types.Type;
 import nl.uva.polyql.model.values.BooleanValue;
 import nl.uva.polyql.model.values.NumberValue;
 import nl.uva.polyql.model.values.Value;

@@ -1,9 +1,9 @@
 package nl.uva.polyql.model.expressions.operators;
 
-import nl.uva.polyql.model.Type;
 import nl.uva.polyql.model.expressions.Expression;
 import nl.uva.polyql.model.expressions.operations.OperationHelper;
 import nl.uva.polyql.model.expressions.operators.Operator;
+import nl.uva.polyql.model.types.Type;
 import nl.uva.polyql.model.values.Value;
 
 public abstract class SameOperandOperator<T extends Value<?>> extends Operator<T> {

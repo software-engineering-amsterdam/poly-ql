@@ -1,9 +1,9 @@
 package nl.uva.polyql.model.expressions.operations;
 
-import nl.uva.polyql.model.Type;
 import nl.uva.polyql.model.expressions.Expression;
 import nl.uva.polyql.model.expressions.operators.Operator;
 import nl.uva.polyql.model.expressions.operators.OperatorHelper;
+import nl.uva.polyql.model.types.Type;
 import nl.uva.polyql.model.values.StringValue;
 
 public class StringOperation extends Operation<StringValue> {

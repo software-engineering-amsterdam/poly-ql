@@ -9,8 +9,8 @@ import nl.uva.polyql.ParserHelper;
 import nl.uva.polyql.model.Form;
 import nl.uva.polyql.model.IfStatement;
 import nl.uva.polyql.model.Question;
-import nl.uva.polyql.model.Type;
 import nl.uva.polyql.model.expressions.operators.UnsupportedOperandTypeException;
+import nl.uva.polyql.model.types.Type;
 
 import org.junit.Before;
 import org.junit.Test;

@@ -4,7 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import nl.uva.polyql.model.Question;
-import nl.uva.polyql.model.Type;
+import nl.uva.polyql.model.types.Type;
+import nl.uva.polyql.model.types.StringType;
 import nl.uva.polyql.model.values.StringValue;
 
 public class StringAtom extends Expression {
@@ -12,8 +13,7 @@ public class StringAtom extends Expression {
     private final StringValue mValue;
 
     public StringAtom(final String value) {
-        // Strip out the quotes
-        mValue = (StringValue) Type.STRING.parseInput(value);
+        mValue = new StringType().parseInput(value);
     }
 
     @Override

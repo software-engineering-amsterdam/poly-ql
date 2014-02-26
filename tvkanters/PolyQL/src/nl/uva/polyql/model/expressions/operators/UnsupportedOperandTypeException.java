@@ -1,7 +1,7 @@
 package nl.uva.polyql.model.expressions.operators;
 
-import nl.uva.polyql.model.Type;
 import nl.uva.polyql.model.expressions.Expression;
+import nl.uva.polyql.model.types.Type;
 
 public class UnsupportedOperandTypeException extends UnsupportedOperationException {
 

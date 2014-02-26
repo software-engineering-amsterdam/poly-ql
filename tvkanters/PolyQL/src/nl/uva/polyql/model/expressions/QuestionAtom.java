@@ -5,7 +5,7 @@ import java.util.Set;
 
 import nl.uva.polyql.model.Question;
 import nl.uva.polyql.model.RuleContainer;
-import nl.uva.polyql.model.Type;
+import nl.uva.polyql.model.types.Type;
 import nl.uva.polyql.model.values.Value;
 
 public class QuestionAtom extends Expression {

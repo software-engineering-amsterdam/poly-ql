@@ -1,8 +1,8 @@
 package nl.uva.polyql.model.expressions.operators;
 
-import nl.uva.polyql.model.Type;
 import nl.uva.polyql.model.expressions.Expression;
 import nl.uva.polyql.model.expressions.operations.Operation;
+import nl.uva.polyql.model.types.Type;
 import nl.uva.polyql.model.values.Value;
 
 public abstract class Operator<T extends Value<?>> {

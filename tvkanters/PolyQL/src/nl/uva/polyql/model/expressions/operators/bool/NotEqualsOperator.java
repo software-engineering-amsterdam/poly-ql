@@ -1,6 +1,6 @@
 package nl.uva.polyql.model.expressions.operators.bool;
 
-import nl.uva.polyql.model.Type;
+import nl.uva.polyql.model.types.Type;
 import nl.uva.polyql.model.values.BooleanValue;
 import nl.uva.polyql.model.values.NumberValue;
 import nl.uva.polyql.model.values.StringValue;
