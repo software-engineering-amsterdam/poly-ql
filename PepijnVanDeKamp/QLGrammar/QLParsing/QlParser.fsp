@@ -1,0 +1,51 @@
+﻿%{   
+open System
+open QL.Grammar
+open Microsoft.FSharp.Collections   
+%}   
+ 
+%token <string> ID   
+%token <int> INT   
+%token <float> FLOAT  
+%token <string> STRING
+ 
+ 
+%token FORM
+%token BOOLEAN
+%token INTEGER
+%token MONEY
+%token ASS
+%token BRACKET_OPEN
+%token BRACKET_CLOSE
+%token PARENS_OPEN
+%token PARENS_CLOSE
+%token EOF
+
+ 
+
+ 
+// start   
+%start start   
+%type <QL.Grammar.Form> start   
+ 
+%%   
+ 
+start:  FORM ID BRACKET_OPEN Question_List BRACKET_CLOSE
+        EOF                 {
+                                {  Name = $2; 
+                                   QuestionList = $4; }
+                            }             
+Question_List:
+	|						{ [] }
+	| Question				{ [$1] }
+	| Question Question_List	{ $1 :: $2 }
+
+Question: ID ASS STRING QuestionType { {QuestionId = $1; QuestionString = $3; QuestionType = $4; } } 
+
+QuestionType:
+	|	BOOLEAN				{ QL_Boolean }
+	|   INTEGER				{ QL_Integer }
+	|   MONEY				{ QL_Money }
+
+
+%%

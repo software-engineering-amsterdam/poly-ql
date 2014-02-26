@@ -7,25 +7,25 @@ import java.util.List;
 import org.uva.sea.ql.ast.expr.Add;
 import org.uva.sea.ql.ast.expr.And;
 import org.uva.sea.ql.ast.expr.Binary;
-import org.uva.sea.ql.ast.expr.Bool;
-import org.uva.sea.ql.ast.expr.Decimal;
+import org.uva.sea.ql.ast.expr.BoolLiteral;
+import org.uva.sea.ql.ast.expr.DecimalLiteral;
 import org.uva.sea.ql.ast.expr.Div;
 import org.uva.sea.ql.ast.expr.Eq;
 import org.uva.sea.ql.ast.expr.Expr;
 import org.uva.sea.ql.ast.expr.GEq;
 import org.uva.sea.ql.ast.expr.GT;
 import org.uva.sea.ql.ast.expr.Ident;
-import org.uva.sea.ql.ast.expr.Int;
+import org.uva.sea.ql.ast.expr.IntLiteral;
 import org.uva.sea.ql.ast.expr.LEq;
 import org.uva.sea.ql.ast.expr.LT;
-import org.uva.sea.ql.ast.expr.Money;
+import org.uva.sea.ql.ast.expr.MoneyLiteral;
 import org.uva.sea.ql.ast.expr.Mul;
 import org.uva.sea.ql.ast.expr.NEq;
 import org.uva.sea.ql.ast.expr.Neg;
 import org.uva.sea.ql.ast.expr.Not;
 import org.uva.sea.ql.ast.expr.Or;
 import org.uva.sea.ql.ast.expr.Pos;
-import org.uva.sea.ql.ast.expr.Str;
+import org.uva.sea.ql.ast.expr.StrLiteral;
 import org.uva.sea.ql.ast.expr.Sub;
 import org.uva.sea.ql.ast.expr.Unary;
 import org.uva.sea.ql.ast.type.Error;
@@ -145,27 +145,27 @@ public class ExprChecker implements ExprVisitor<Type> {
 	}
 
 	@Override
-	public Type visit(Str ex) {
+	public Type visit(StrLiteral ex) {
 		return ex.hasType();
 	}
 
 	@Override
-	public Type visit(Bool ex) {
+	public Type visit(BoolLiteral ex) {
 		return ex.hasType();
 	}
 
 	@Override
-	public Type visit(Int ex) {
+	public Type visit(IntLiteral ex) {
 		return ex.hasType();
 	}
 
 	@Override
-	public Type visit(Decimal ex) {
+	public Type visit(DecimalLiteral ex) {
 		return ex.hasType();
 	}
 
 	@Override
-	public Type visit(Money ex) {
+	public Type visit(MoneyLiteral ex) {
 		return ex.hasType();
 	}
 

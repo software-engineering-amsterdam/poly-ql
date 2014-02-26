@@ -15,6 +15,7 @@ public class QL {
 	
 	public static void main(String[] args){
 		String src = getSrc();
+		System.out.println(src);
 		Compiler compiler = new Compiler();
 		Form form = compiler.compile(src);
 		if(compiler.hasErrors()){
@@ -22,6 +23,7 @@ public class QL {
 				System.err.println(e);
 			}
 		}else{
+			System.out.println("no errors");
 			//Check Semantic
 			List<Error> errors = new ArrayList<Error>();
 			HashMap<String, Type> symbolTable = getSymbolTable(form);
