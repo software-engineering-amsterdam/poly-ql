@@ -69,7 +69,7 @@ public class MyQLVisitor extends QLBaseVisitor<Object> {
 	}
 
 	@Override
-	public T visitBlock(@NotNull QLParser.BlockContext ctx) {
+	public Block visitBlock(@NotNull QLParser.BlockContext ctx) {
 		return visitChildren(ctx); 
 		
 	}
@@ -125,7 +125,7 @@ public class MyQLVisitor extends QLBaseVisitor<Object> {
 	@Override 
 	public IfStat visitIfStat(@NotNull QLParser.IfStatContext ctx) {
 		return new IfStat( (ExprInterface) ctx.expr().accept(this),
-	                        visitQit(ctx.qit()),
+	                        visitBlock(ctx.block()),
 	                        new ArrayList<SInterface>()
 	                     );
 	}
@@ -171,8 +171,8 @@ public class MyQLVisitor extends QLBaseVisitor<Object> {
 
 	@Override 
 	public QitStat visitQitStat(@NotNull QLParser.QitStatContext ctx) { 
-		return new QitStat( ctx.IDENTIFIER().getText(),
-	                        ctx.QUESTION().getText().substring(1, ctx.QUESTION().getText().length() -1),
+		return new QitStat( ctx.identifier().getText(),
+	                        ctx.question().getText().substring(1, ctx.question().getText().length() -1),
 	                       (STInterface) ctx.type().accept(this)
 	                      );
 	}
