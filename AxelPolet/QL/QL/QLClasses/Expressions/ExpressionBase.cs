@@ -1,6 +1,4 @@
-﻿using System;
-using Antlr4.Runtime;
-using QL.Interfaces;
+﻿using Antlr4.Runtime;
 using QL.QLClasses.Types;
 using QL.TypeChecker;
 
@@ -20,7 +18,7 @@ namespace QL.QLClasses.Expressions
 
         #region TypeChecker Implementation
 
-        public abstract bool CheckType(ref QLException error);
+        public abstract bool CheckType(ref QLTypeError error);
 
         #endregion
     }

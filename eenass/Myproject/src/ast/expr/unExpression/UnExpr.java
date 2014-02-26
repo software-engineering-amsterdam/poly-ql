@@ -12,5 +12,8 @@ public abstract class UnExpr extends Expr{
 	public Expr getOperand() {
 		return this.operand;
 	}
-
+	
+	public String show_operand(){
+		return operand.show();
+	}
 }

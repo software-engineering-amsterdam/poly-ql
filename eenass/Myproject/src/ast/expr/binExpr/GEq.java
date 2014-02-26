@@ -24,7 +24,7 @@ public class GEq extends BinExpr{
 
 	@Override
 	public String show() {
-		return ">=";
+		return "(" + show_lhs() + " >= " + show_rhs() + ")";
 	}
 
 }

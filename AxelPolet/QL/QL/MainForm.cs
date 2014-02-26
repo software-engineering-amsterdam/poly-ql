@@ -1,21 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
+
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
-using System.Reflection;
 
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
 
 using QL.QLClasses;
-using QL.QLClasses.Statements;
-using QL.QLClasses.Expressions.Conditions;
 
 using QL.TypeChecker;
 
@@ -31,7 +23,7 @@ namespace QL
         private void btnParse_Click(object sender, EventArgs e)
         {
             txtOutput.Clear();
-            Identifiers.Reset();
+            QLIdentifiers.Reset();
             QLTypeChecker.ClearAdditionalErrors();
 
             string inputString = txtInput.Text;

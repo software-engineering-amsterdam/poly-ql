@@ -12,17 +12,17 @@ import ast.expr.types.*;
 
 
 unExpr returns [Expr result]
-    :  y=primary    {$result = $y.result;}
-    |  '+' x=unExpr { $result = new Pos($x.result); }
+    :  '+' x=unExpr { $result = new Pos($x.result); }
     |  '-' x=unExpr { $result = new Neg($x.result); }
     |  '!' x=unExpr { $result = new Not($x.result); }
+    | y=primary    {$result = $y.result;}
 	; 
 primary returns [Expr result]
-	: '(' x=orExpr ')' { $result = $x.result; }
-	| Bool { $result = new BoolLiteral(Boolean.parseBoolean($Bool.text));}
+	: Bool { $result = new BoolLiteral(Boolean.parseBoolean($Bool.text));}
 	| Int {$result = new IntLiteral(Integer.parseInt($Int.text));}
 	| Ident {$result = new IdentLiteral($Ident.text);}
 	| Str {$result = new StrLiteral($Str.text);}
+	| '(' x=orExpr ')' { $result = $x.result; }
 	;
     
 mulExpr returns [Expr result]
@@ -90,13 +90,12 @@ type returns [Types result]
     ;	
     
 // Tokens
-WS  :	(' ' | '\t' | '\n' | '\r')
-    ;
+WS: [ \t\r\n]+ -> skip ;
 
 COMMENT 
      : '/*' (.)*? '*/' | '//' (.)*? | '//' (NewLine)*?
     ;
-NewLine: '\n' | '\r\n';
+NewLine: '\r'?'\n'| '\n' ;
 
 Ident:   ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*;
 

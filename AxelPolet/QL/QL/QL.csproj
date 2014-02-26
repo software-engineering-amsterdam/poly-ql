@@ -41,43 +41,38 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="QLClasses\Expressions\Binary\Conditional\And.cs" />
+    <Compile Include="QLClasses\Expressions\Binary\Compare\CompareExpression.cs" />
+    <Compile Include="QLClasses\Expressions\Binary\Compare\Operators\Equals.cs" />
+    <Compile Include="QLClasses\Expressions\Binary\Compare\Operators\GrTh.cs" />
+    <Compile Include="QLClasses\Expressions\Binary\Compare\Operators\GrThEq.cs" />
+    <Compile Include="QLClasses\Expressions\Binary\Compare\Operators\OperatorBase.cs" />
+    <Compile Include="QLClasses\Expressions\Binary\Compare\Operators\SmTh.cs" />
+    <Compile Include="QLClasses\Expressions\Binary\Compare\Operators\SmThEq.cs" />
+    <Compile Include="QLClasses\Expressions\Binary\Conditional\Or.cs" />
+    <Compile Include="QLClasses\Expressions\Binary\Math\Add.cs" />
+    <Compile Include="QLClasses\Expressions\Binary\Math\Div.cs" />
+    <Compile Include="QLClasses\Expressions\Binary\Math\MathExpression.cs" />
+    <Compile Include="QLClasses\Expressions\Binary\Math\Mul.cs" />
+    <Compile Include="QLClasses\Expressions\Binary\Math\Sub.cs" />
     <Compile Include="QLClasses\Expressions\Identifier\QIdentifier.cs" />
     <Compile Include="QLClasses\Expressions\Literals\BoolLiteral.cs" />
     <Compile Include="QLClasses\Expressions\Literals\StringLiteral.cs" />
     <Compile Include="QLClasses\Expressions\Literals\IntLiteral.cs" />
-    <Compile Include="TypeChecker\Identifiers.cs" />
+    <Compile Include="QLController.cs" />
+    <Compile Include="TypeChecker\QLIdentifiers.cs" />
     <Compile Include="QLClasses\Expressions\ExpressionBase.cs" />
     <Compile Include="QLClasses\Expressions\Unary\UnaryExpression.cs" />
-    <Compile Include="QLClasses\Expressions\Conditions\BinaryExpressions\CompareExpression.cs" />
-    <Compile Include="QLClasses\Expressions\Conditions\BinaryExpression.cs" />
-    <Compile Include="QLClasses\Expressions\Conditions\BinaryExpressions\Operators\Equals.cs" />
-    <Compile Include="QLClasses\Expressions\Conditions\BinaryExpressions\Operators\SmThEq.cs" />
-    <Compile Include="QLClasses\Expressions\Conditions\BinaryExpressions\Operators\GrThEq.cs" />
-    <Compile Include="QLClasses\Expressions\Conditions\BinaryExpressions\Operators\SmTh.cs" />
-    <Compile Include="QLClasses\Expressions\Conditions\BinaryExpressions\Operators\GrTh.cs" />
-    <Compile Include="Interfaces\ITypeChecker.cs" />
-    <Compile Include="QLClasses\Expressions\Math\Add.cs" />
-    <Compile Include="QLClasses\Expressions\Math\MathExpression.cs" />
-    <Compile Include="QLClasses\Expressions\Math\Sub.cs" />
-    <Compile Include="QLClasses\Expressions\Math\Div.cs" />
-    <Compile Include="QLClasses\Expressions\Math\Mul.cs" />
+    <Compile Include="QLClasses\Expressions\Binary\BinaryExpression.cs" />
+    <Compile Include="TypeChecker\ITypeChecker.cs" />
     <Compile Include="QLClasses\Expressions\Unary\Neg.cs" />
     <Compile Include="QLClasses\Expressions\Unary\Not.cs" />
     <Compile Include="QLClasses\Expressions\Unary\Pos.cs" />
     <Compile Include="QLClasses\Statements\StatementIf.cs" />
-    <Compile Include="QLClasses\Expressions\Conditions\BinaryExpressions\And.cs" />
-    <Compile Include="QLClasses\Expressions\Conditions\BinaryExpressions\Or.cs" />
-    <Compile Include="QLClasses\Expressions\Conditions\BinaryExpressions\Operators\OperatorBase.cs" />
     <Compile Include="QLClasses\Statements\Question.cs" />
     <Compile Include="QLClasses\Questionnaire.cs" />
     <Compile Include="QLClasses\Statements\StatementBase.cs" />
@@ -102,7 +97,7 @@
     <Compile Include="QLErrorListeners.cs" />
     <Compile Include="QLLexer.cs" />
     <Compile Include="QLParser.cs" />
-    <Compile Include="TypeChecker\QLException.cs" />
+    <Compile Include="TypeChecker\QLTypeError.cs" />
     <Compile Include="TypeChecker\QLTypeChecker.cs" />
     <Compile Include="QLClasses\QLTokenInfo.cs" />
     <EmbeddedResource Include="MainForm.resx">
@@ -136,6 +131,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
