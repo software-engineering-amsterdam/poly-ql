@@ -17,7 +17,7 @@ let mapQLType qlType = match qlType with
 
 let identifiers = new Dictionary<string, expressionType>()
 
-let getPrimitiveType exprType = 
+let literalType exprType = 
     match exprType with
     | Bool(_) -> TBool, exprType
     | String(_) -> TString, exprType
@@ -29,7 +29,7 @@ let rec checkExpression expression =
     | ID(name) when identifiers.ContainsKey(name)   -> identifiers.[name], expression
     | ID(name)                                      -> TError, TypeError(expression, "Unknown identifier: " + name)
 
-    | Expr(expr) -> (fst <| getPrimitiveType expr), expression
+    | Literal(expr) -> (fst <| literalType expr), expression
 
     | Neg(expr)  -> let type1,res1 = checkExpression expr
                     if type1.Equals(TBool) || type1.Equals(TError) then

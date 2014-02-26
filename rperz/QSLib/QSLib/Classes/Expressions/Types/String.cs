@@ -37,5 +37,13 @@ namespace QSLib.Expressions.Types
         {
             return this._value.ToString();
         }
+
+        public override bool Equals(object obj)
+        {
+            var temp = obj as QSString;
+            if (!temp._value.Equals(temp._value))
+                return false;
+            return base.Equals(obj);
+        }
     }
 }

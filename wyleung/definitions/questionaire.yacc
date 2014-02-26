@@ -1,13 +1,14 @@
 form ::= form_name bracket_open form_body bracket_close
+form ::= term
 form_body ::= question
 form_body ::= questions
 
 form_name ::= factor
 
 bracket_open ::= factor
-bracket_close ::= factor
+bracket_close ::= term
 
-fields ::= field field
+fields ::= field fields
 fields ::= field
 field ::= fieldlabel question checkbox
 field ::= fieldlabel question radio

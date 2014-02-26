@@ -17,7 +17,7 @@ public class CyclicStmtChecker implements StmtVisitor {
 	private List<Dependancy> cyclic;
 	private List<String> conditions;
 	private CyclicExprChecker cec;
-	private ArrayList<Error> errors;
+	private List<Error> errors;
 	private boolean conditional = false;
 	
 	public CyclicStmtChecker() {
@@ -41,7 +41,7 @@ public class CyclicStmtChecker implements StmtVisitor {
 		return !errors.isEmpty();
 	}
 	
-	public ArrayList<Error> getErrors() {
+	public List<Error> getErrors() {
 		return errors;
 	}
 

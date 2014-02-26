@@ -5,6 +5,9 @@ import ql.ast.expression.ExpressionInterface;
 import ql.ast.type.TypeBool;
 import ql.ast.type.TypeInterface;
 
+/** 
+ * Equal to operator
+ */
 public class OperatorEq extends BinaryOperator {
 	public OperatorEq(ExpressionInterface left, ExpressionInterface right) {
 		super(left, right);

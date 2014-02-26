@@ -2,10 +2,10 @@ package org.uva.sea.ql.ast.form;
 
 import org.uva.sea.ql.ast.expr.Ident;
 import org.uva.sea.ql.ast.stmt.Block;
-import org.uva.sea.ql.ast.stmt.Stmt;
-import org.uva.sea.ql.checker.StmtVisitor;
+import org.uva.sea.ql.checker.FormVisitable;
+import org.uva.sea.ql.checker.FormVisitor;
 
-public class Form extends Stmt {
+public class Form implements FormVisitable {
 	private Ident ident;
 	private Block stmts;
 	
@@ -33,8 +33,8 @@ public class Form extends Stmt {
 	}
 
 	@Override
-	public void accept(StmtVisitor sv) {
-		sv.visit(this);
+	public void accept(FormVisitor fv) {
+		fv.visit(this);
 	}
 	
 }

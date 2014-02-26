@@ -77,7 +77,7 @@ type nonTerminalId =
     | NONTERM_question
     | NONTERM_conditional
     | NONTERM_qlType
-    | NONTERM_exprType
+    | NONTERM_literal
     | NONTERM_expression
 /// This function maps integers indexes to symbolic token ids
 val tagOfToken: token -> int

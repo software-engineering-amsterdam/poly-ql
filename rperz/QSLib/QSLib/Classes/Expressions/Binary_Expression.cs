@@ -34,15 +34,11 @@ namespace QSLib.Expressions
                 if (this._type != null)
                     return this._type;
 
-                this._typeRight = this._right.GetType();
-                this._typeLeft = this._left.GetType();
+                this._typeRight = this._right.Type;
+                this._typeLeft = this._left.Type;
 
-                // if the types do not match, we have a type error
-                if (this._typeLeft.Equals(this._typeRight))
-                    return this._typeLeft;
-                else
-                    throw new TypeException("Type error: " + this._typeLeft.ToString() +
-                                            " is incompatible with " + this._typeRight.ToString());
+                // if the types do not match, it will be caught by the CheckType function
+                return this._typeLeft;
             }
         }
 
@@ -53,8 +49,31 @@ namespace QSLib.Expressions
                 retVal &= this._left.CheckType();
             if(this._right != null)
                 retVal &= this._right.CheckType();
-            if (this._right != null && this._left != null)
-                retVal &= (this._left.Type.Equals(this._right.Type));
+
+            if (this._right != null && this._left != null && !(this._left.Type.Equals(this._right.Type)))
+            {
+                retVal = false;
+                TypeChecker.ReportTypeMismatch(this._left.Type, this._right.Type, this._operator, this._linenr);
+            }
+
+            return retVal;
+        }
+
+        public override bool Equals(object obj)
+        {
+            bool retVal = true;
+            var comp = obj as Binary_Expression;
+            if (comp == null)
+                return false;
+            if (this._left != null && comp._left != null)
+                retVal &= this._left.Equals(comp._left);
+            else if (this._left != null || comp._left != null)
+                retVal = false;
+            if (this._right != null && comp._right != null)
+                retVal &= this._right.Equals(comp._right);
+            else if (this._right != null || comp._right != null)
+                retVal = false;
+
             return retVal;
         }
 

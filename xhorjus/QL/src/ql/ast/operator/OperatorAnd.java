@@ -5,6 +5,9 @@ import ql.ast.expression.ExpressionInterface;
 import ql.ast.type.TypeBool;
 import ql.ast.type.TypeInterface;
 
+/** 
+ * Logical AND operator
+ */
 public class OperatorAnd extends BinaryOperator {
 	public OperatorAnd(ExpressionInterface left, ExpressionInterface right) {
 		super(left, right);

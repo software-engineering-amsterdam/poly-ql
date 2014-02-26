@@ -34,5 +34,19 @@ namespace QSLib
         {
             return this._val.CheckType();
         }
+
+        public override bool Equals(object obj)
+        {
+            bool retVal = true;
+            var comp = obj as Question;
+            if (comp == null)
+                return false;
+            retVal &= this._text.Equals(comp._text);
+            if (this._val != null && comp._val != null)
+                retVal &= this._val.Equals(comp._val);
+            else if (this._val != null || comp._val != null)
+                retVal = false;
+            return retVal;
+        }
     }
 }

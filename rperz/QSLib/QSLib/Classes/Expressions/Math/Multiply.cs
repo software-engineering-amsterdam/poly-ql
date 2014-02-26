@@ -5,7 +5,7 @@ using System.Text;
 
 namespace QSLib.Expressions.Math
 {
-    class Multiply : Binary_Expression 
+    public class Multiply : Binary_Expression 
     {
         public Multiply(IExpression a, IExpression b, int linenr)
             : base(a, b, linenr)

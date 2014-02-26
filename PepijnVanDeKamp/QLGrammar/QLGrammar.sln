@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "QLParsing", "..\QLGrammar\QLParsing\QLParsing.fsproj", "{7138C2BD-D137-48C7-B14E-183EF6DA02CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QLUserInterface", "..\QLGrammar\QLUserInterface\QLUserInterface.csproj", "{7B4A8EBC-10FD-4D0C-883C-006126D89124}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParseTests", "..\QLGrammar\ParseTests\ParseTests.csproj", "{9877B094-3809-4E68-9560-709FF913D179}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7138C2BD-D137-48C7-B14E-183EF6DA02CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7138C2BD-D137-48C7-B14E-183EF6DA02CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7138C2BD-D137-48C7-B14E-183EF6DA02CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7138C2BD-D137-48C7-B14E-183EF6DA02CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B4A8EBC-10FD-4D0C-883C-006126D89124}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B4A8EBC-10FD-4D0C-883C-006126D89124}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B4A8EBC-10FD-4D0C-883C-006126D89124}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B4A8EBC-10FD-4D0C-883C-006126D89124}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9877B094-3809-4E68-9560-709FF913D179}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9877B094-3809-4E68-9560-709FF913D179}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9877B094-3809-4E68-9560-709FF913D179}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9877B094-3809-4E68-9560-709FF913D179}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
