@@ -17,6 +17,7 @@ import edu.uva.softwarecons.model.question.IfElseQuestion;
 import edu.uva.softwarecons.model.question.IfQuestion;
 import edu.uva.softwarecons.model.question.Question;
 import edu.uva.softwarecons.model.type.*;
+import edu.uva.softwarecons.visitor.IFormElement;
 import org.antlr.v4.runtime.misc.NotNull;
 
 /**
@@ -27,7 +28,7 @@ import org.antlr.v4.runtime.misc.NotNull;
 public class QuestionnaireEvalVisitor extends QuestionnaireBaseVisitor<Object>{
 
     @Override
-    public Form visitQuestionnaire(@NotNull QuestionnaireParser.QuestionnaireContext ctx) {
+    public IFormElement visitQuestionnaire(@NotNull QuestionnaireParser.QuestionnaireContext ctx) {
         Form form = new Form(ctx.ID().getText());
         for(QuestionnaireParser.QuestionContext question: ctx.question()){
             form.addQuestion((Question) question.accept(this));

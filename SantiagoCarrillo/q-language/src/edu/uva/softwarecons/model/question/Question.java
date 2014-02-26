@@ -2,6 +2,8 @@ package edu.uva.softwarecons.model.question;
 
 import edu.uva.softwarecons.grammar.QuestionnaireParser;
 import edu.uva.softwarecons.model.type.Type;
+import edu.uva.softwarecons.visitor.IFormElement;
+import edu.uva.softwarecons.visitor.IFormElementVisitor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +13,7 @@ import java.util.List;
  * User: sancarbar
  * Date: 2/19/14
  */
-public class Question {
+public class Question implements IFormElement {
 
     private String id;
 
@@ -35,5 +37,22 @@ public class Question {
 
     public void setType(Type type) {
         this.type = type;
+    }
+
+    @Override
+    public void accept(IFormElementVisitor visitor) {
+        visitor.visit(this);
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public Type getType() {
+        return type;
     }
 }

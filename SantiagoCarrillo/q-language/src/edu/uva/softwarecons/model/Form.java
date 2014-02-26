@@ -1,6 +1,8 @@
 package edu.uva.softwarecons.model;
 
 import edu.uva.softwarecons.model.question.Question;
+import edu.uva.softwarecons.visitor.IFormElement;
+import edu.uva.softwarecons.visitor.IFormElementVisitor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +12,7 @@ import java.util.List;
  * User: sancarbar
  * Date: 2/25/14
  */
-public class Form {
+public class Form implements IFormElement {
 
     String id;
 
@@ -25,4 +27,16 @@ public class Form {
             questions.add(question);
     }
 
+    @Override
+    public void accept(IFormElementVisitor visitor) {
+        visitor.visit(this);
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public List<Question> getQuestions() {
+        return questions;
+    }
 }

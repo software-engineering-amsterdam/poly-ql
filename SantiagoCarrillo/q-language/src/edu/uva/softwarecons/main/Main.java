@@ -4,6 +4,8 @@ import edu.uva.softwarecons.grammar.QuestionnaireEvalVisitor;
 import edu.uva.softwarecons.grammar.QuestionnaireLexer;
 import edu.uva.softwarecons.grammar.QuestionnaireParser;
 import edu.uva.softwarecons.model.Form;
+import edu.uva.softwarecons.visitor.FormVisitor;
+import edu.uva.softwarecons.visitor.IFormElement;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
@@ -25,7 +27,7 @@ public class Main {
         QuestionnaireParser parser = new QuestionnaireParser(tokens);
         ParseTree tree = parser.questionnaire(); // parse
         QuestionnaireEvalVisitor questionnaireEvalVisitor = new QuestionnaireEvalVisitor();
-        Form form  = (Form) questionnaireEvalVisitor.visit(tree);
-        System.out.println("ss");
+        IFormElement form  = (Form) questionnaireEvalVisitor.visit(tree);
+        form.accept(new FormVisitor());
     }
 }
