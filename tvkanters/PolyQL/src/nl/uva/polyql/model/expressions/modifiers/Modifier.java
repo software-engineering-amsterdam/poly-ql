@@ -29,4 +29,9 @@ public abstract class Modifier<T extends Value<?>> implements SyntaxKey {
     public abstract NumberValue apply(final NumberValue value);
 
     public abstract StringValue apply(final StringValue value);
+
+    @Override
+    public String toString() {
+        return getSyntax();
+    }
 }

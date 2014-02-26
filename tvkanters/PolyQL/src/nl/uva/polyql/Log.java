@@ -5,9 +5,17 @@ public class Log {
     private static boolean sInfoEnabled = true;
     private static boolean sErrorEnabled = true;
 
-    public static void disable() {
-        sInfoEnabled = false;
-        sErrorEnabled = false;
+    public static void setLogging(final boolean logging) {
+        sInfoEnabled = logging;
+        sErrorEnabled = logging;
+    }
+
+    public static void setInfoLogging(final boolean logging) {
+        sInfoEnabled = logging;
+    }
+
+    public static void setErrorLogging(final boolean logging) {
+        sErrorEnabled = logging;
     }
 
     public static void i(final String msg) {

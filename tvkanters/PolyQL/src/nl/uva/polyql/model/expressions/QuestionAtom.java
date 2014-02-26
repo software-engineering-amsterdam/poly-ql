@@ -5,8 +5,8 @@ import java.util.Set;
 
 import nl.uva.polyql.model.Question;
 import nl.uva.polyql.model.RuleContainer;
-import nl.uva.polyql.model.expressions.modifiers.ModifierHelper;
 import nl.uva.polyql.model.expressions.modifiers.Modifier;
+import nl.uva.polyql.model.expressions.modifiers.ModifierHelper;
 import nl.uva.polyql.model.types.Type;
 import nl.uva.polyql.model.values.Value;
 

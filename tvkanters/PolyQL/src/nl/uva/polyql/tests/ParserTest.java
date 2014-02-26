@@ -19,7 +19,7 @@ public class ParserTest {
 
     @Before
     public void beforeTests() {
-        Log.disable();
+        Log.setLogging(false);
     }
 
     @Test
