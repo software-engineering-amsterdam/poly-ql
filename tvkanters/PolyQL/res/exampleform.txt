@@ -2,7 +2,7 @@ form exampleForm {
     truth: "Is it true?" boolean
     truthwhy: "Why is(n't) it true?" ("bob")
     truthwhy2: "Why is(n't) it true?" (true)
-    truthwhydouble: "Because: " (truthwhy == " " + truthwhy + 123)
+    truthwhydouble: "Because: " (truthwhy == " " + truthwhy2 + 123)
     
     // Comments here
     if (!truthwhy2 | false || (2 + 6 * 3 * 9 - 4 - (4 + 5)) > 2) {

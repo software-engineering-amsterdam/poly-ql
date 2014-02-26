@@ -6,10 +6,11 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import nl.uva.polyql.Log;
 import nl.uva.polyql.ParserHelper;
+import nl.uva.polyql.exceptions.DuplicateQuestionIdException;
+import nl.uva.polyql.exceptions.UnsupportedOperandTypeException;
 import nl.uva.polyql.model.Form;
 import nl.uva.polyql.model.IfStatement;
 import nl.uva.polyql.model.Question;
-import nl.uva.polyql.model.expressions.operators.UnsupportedOperandTypeException;
 import nl.uva.polyql.model.types.Type;
 
 import org.junit.Before;
@@ -60,7 +61,7 @@ public class ParserTest {
 
         try {
             ParserHelper.parseResourceForm("ex_bool_plus_num");
-            fail("No exception throw");
+            fail("No exception thrown");
         } catch (final UnsupportedOperandTypeException ex) {
             assertEquals(Type.BOOLEAN, ex.getLeft());
             assertEquals(Type.NUMBER, ex.getRight());
@@ -69,7 +70,7 @@ public class ParserTest {
 
         try {
             ParserHelper.parseResourceForm("ex_string_min_num");
-            fail("No exception throw");
+            fail("No exception thrown");
         } catch (final UnsupportedOperandTypeException ex) {
             assertEquals(Type.STRING, ex.getLeft());
             assertEquals(Type.NUMBER, ex.getRight());
@@ -77,15 +78,13 @@ public class ParserTest {
         }
     }
 
-    // @Test
-    // public void testDuplicateId() {
-    // try {
-    // ParserHelper.parseResourceForm("duplicateid");
-    // fail("No exception throw");
-    // } catch (final UnsupportedOperandTypeException ex) {
-    // assertEquals(Type.STRING, ex.getLeft());
-    // assertEquals(Type.NUMBER, ex.getRight());
-    // assertEquals("-", ex.getOperatorSyntax());
-    // }
-    // }
+    @Test
+    public void testDuplicateId() {
+        try {
+            ParserHelper.parseResourceForm("duplicateid");
+            fail("No exception throw for duplicate IDs");
+        } catch (final DuplicateQuestionIdException ex) {
+            // Test passed
+        }
+    }
 }

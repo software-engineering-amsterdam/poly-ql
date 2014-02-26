@@ -4,8 +4,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import nl.uva.polyql.Log;
-import nl.uva.polyql.model.types.Type;
+import nl.uva.polyql.exceptions.DuplicateQuestionIdException;
 import nl.uva.polyql.model.types.StringType;
+import nl.uva.polyql.model.types.Type;
 import nl.uva.polyql.model.values.Value;
 
 public class Question extends Rule {
@@ -26,7 +27,7 @@ public class Question extends Rule {
         super(parent);
 
         if (parent.getQuestion(id) != null) {
-            throw new RuntimeException("Duplicate rule ID");
+            throw new DuplicateQuestionIdException(id);
         }
 
         mId = id;

@@ -1,7 +1,7 @@
 package nl.uva.polyql.model.expressions.operators.bool;
 
+import nl.uva.polyql.exceptions.UnsupportedOperandTypeException;
 import nl.uva.polyql.model.expressions.operators.SameOperandOperator;
-import nl.uva.polyql.model.expressions.operators.UnsupportedOperandTypeException;
 import nl.uva.polyql.model.types.Type;
 import nl.uva.polyql.model.values.BooleanValue;
 import nl.uva.polyql.model.values.NumberValue;

@@ -4,6 +4,7 @@ import nl.uva.polyql.model.expressions.modifiers.Modifier;
 import nl.uva.polyql.model.expressions.operators.bool.BooleanOperator;
 import nl.uva.polyql.model.expressions.operators.number.NumberOperator;
 import nl.uva.polyql.model.expressions.operators.string.StringOperator;
+import nl.uva.polyql.model.types.Type;
 
 public abstract class Value<T> {
 
@@ -16,6 +17,8 @@ public abstract class Value<T> {
     public T getValue() {
         return mValue;
     }
+
+    public abstract Type getType();
 
     public abstract BooleanValue performOperationOnLeft(final BooleanOperator operator, final Value<?> rightValue);
 

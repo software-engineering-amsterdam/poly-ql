@@ -1,9 +1,11 @@
-package nl.uva.polyql.model.expressions.operators;
+package nl.uva.polyql.exceptions;
 
 import nl.uva.polyql.model.expressions.Expression;
+import nl.uva.polyql.model.expressions.operators.Operator;
 import nl.uva.polyql.model.types.Type;
+import nl.uva.polyql.model.values.Value;
 
-public class UnsupportedOperandTypeException extends UnsupportedOperationException {
+public class UnsupportedOperandTypeException extends ParsingException {
 
     private static final long serialVersionUID = 8634412238170543338L;
 
@@ -24,6 +26,11 @@ public class UnsupportedOperandTypeException extends UnsupportedOperationExcepti
 
     public UnsupportedOperandTypeException(final Type typeLeftRight, final String operatorSyntax) {
         this(typeLeftRight, operatorSyntax, typeLeftRight);
+    }
+
+    public UnsupportedOperandTypeException(final Value<?> leftValue, final Operator<?> operator,
+            final Value<?> rightValue) {
+        this(leftValue.getType(), operator.getSyntax(), rightValue.getType());
     }
 
     public Type getLeft() {

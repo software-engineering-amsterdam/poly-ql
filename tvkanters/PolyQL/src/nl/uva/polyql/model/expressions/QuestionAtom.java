@@ -3,6 +3,8 @@ package nl.uva.polyql.model.expressions;
 import java.util.HashSet;
 import java.util.Set;
 
+import nl.uva.polyql.exceptions.InvalidModifierException;
+import nl.uva.polyql.exceptions.InvalidQuestionIdException;
 import nl.uva.polyql.model.Question;
 import nl.uva.polyql.model.RuleContainer;
 import nl.uva.polyql.model.expressions.modifiers.Modifier;
@@ -18,12 +20,12 @@ public class QuestionAtom extends Expression {
     public QuestionAtom(final RuleContainer parentRuleContainer, final String id, final String modifier) {
         mQuestion = parentRuleContainer.getQuestion(id);
         if (mQuestion == null) {
-            throw new RuntimeException("Unknown question ID " + id);
+            throw new InvalidQuestionIdException(id);
         }
 
         mModifier = ModifierHelper.getBySyntax(modifier);
         if (!mModifier.isValid(mQuestion.getType())) {
-            throw new RuntimeException("Unsupported modifier " + mModifier + " for type " + mQuestion.getType());
+            throw new InvalidModifierException(mModifier, mQuestion.getType());
         }
     }
 
