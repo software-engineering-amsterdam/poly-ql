@@ -2,28 +2,53 @@ package ql.ast;
 
 import org.antlr.v4.runtime.misc.NotNull;
 
-import antlr4.*;
+import ql.ast.misc.ParOp;
+import ql.ast.operators.*;
+import ql.ast.expressions.*;
+import antlr4.QLBaseVisitor;
+import antlr4.QLParser;
+import antlr4.QLParser.AddOpContext;
+import antlr4.QLParser.DivOpContext;
+import antlr4.QLParser.EqOpContext;
+import antlr4.QLParser.GtEqOpContext;
+import antlr4.QLParser.LtEqOpContext;
+import antlr4.QLParser.LtOpContext;
+import antlr4.QLParser.ModOpContext;
+import antlr4.QLParser.NegOpContext;
+import antlr4.QLParser.NeqOpContext;
+
 
 /**
- * QLVisitor class 
  * 
- * Visit the ParseTree for the input and return an AST.
+ * @author Peter
  */
-public class MyQLVisitor<T> extends QLBaseVisitor<T> {
+public class MyQLVisitor extends QLBaseVisitor {
+	
 	@Override 
-	public T visitLtEqOp(@NotNull QLParser.LtEqOpContext ctx) {
-		return visitChildren(ctx); 
+	public LtEqOp visitLtEqOp(@NotNull QLParser.LtEqOpContext ctx) {
+		LtEqOpContext parent = (LtEqOpContext) ctx.getParent();
+		
+        return new LtEqOp( (ExprInterface) parent.expr(0).accept(this),
+                           (ExprInterface) parent.expr(1).accept(this)
+                         );
 	}
 
 	@Override 
-	public T visitGtEqOp(@NotNull QLParser.GtEqOpContext ctx) { 
-		return visitChildren(ctx); 
+	public GtEqOp visitGtEqOp(@NotNull QLParser.GtEqOpContext ctx) { 
+		GtEqOpContext parent = (GtEqOpContext) ctx.getParent();
+		
+		return new GtEqOp( (ExprInterface) parent.expr(0).accept(this),
+				           (ExprInterface) parent.expr(1).accept(this)
+				         );
 	}
 
 	@Override
-	public T visitLtOp(@NotNull QLParser.LtOpContext ctx) { 
-		return visitChildren(ctx); 
+	public LtOp visitLtOp(@NotNull QLParser.LtOpContext ctx) { 
+		LtOpContext parent = (LtOpContext) ctx.getParent();
 		
+		return new LtOp( (ExprInterface) parent.expr(0).accept(this),
+		                 (ExprInterface) parent.expr(1).accept(this)
+		               );
 	}
 
 	@Override
@@ -45,9 +70,12 @@ public class MyQLVisitor<T> extends QLBaseVisitor<T> {
 	}
 
 	@Override 
-	public T visitAddOp(@NotNull QLParser.AddOpContext ctx) {
-		return visitChildren(ctx);
+	public AddOp visitAddOp(@NotNull QLParser.AddOpContext ctx) {
+		AddOpContext parent = (AddOpContext) ctx.getParent();
 		
+		return new AddOp( (ExprInterface) parent.expr(0).accept(this),
+				          (ExprInterface) parent.expr(1).accept(this)
+				        );
 	}
 
 	@Override
@@ -58,13 +86,21 @@ public class MyQLVisitor<T> extends QLBaseVisitor<T> {
 
 
 	@Override 
-	public T visitModOp(@NotNull QLParser.ModOpContext ctx) {
-		return visitChildren(ctx); 
+	public ModOp visitModOp(@NotNull QLParser.ModOpContext ctx) {
+		ModOpContext parent = (ModOpContext) ctx.getParent();
+		
+		return new ModOp( (ExprInterface) parent.expr(0).accept(this),
+				          (ExprInterface) parent.expr(1).accept(this)
+				        ); 
 	}
 
 	@Override
-	public T visitEqOp(@NotNull QLParser.EqOpContext ctx) {
-		return visitChildren(ctx);
+	public EqOp visitEqOp(@NotNull QLParser.EqOpContext ctx) {
+		EqOpContext parent = (EqOpContext) ctx.getParent();
+		
+		return new EqOp( (ExprInterface) parent.expr(0).accept(this),
+				         (ExprInterface) parent.expr(1).accept(this)
+				       ); 
 	}
 
 
@@ -80,9 +116,8 @@ public class MyQLVisitor<T> extends QLBaseVisitor<T> {
 	}
 
 	@Override 
-	public T visitInt(@NotNull QLParser.IntContext ctx) { 
-		return visitChildren(ctx);
-		
+	public Integer visitInt(@NotNull QLParser.IntContext ctx) { 
+		return Integer.parseInt(ctx.getText());
 	}
 
 	@Override
@@ -98,9 +133,12 @@ public class MyQLVisitor<T> extends QLBaseVisitor<T> {
 	}
 
 	@Override
-	public T visitNeqOp(@NotNull QLParser.NeqOpContext ctx) {
-		return visitChildren(ctx); 
+	public NeqOp visitNeqOp(@NotNull QLParser.NeqOpContext ctx) {
+		NeqOpContext parent = (NeqOpContext) ctx.getParent();
 		
+		return new NeqOp( (ExprInterface) parent.expr(0).accept(this),
+				          (ExprInterface) parent.expr(1).accept(this)
+				        ); 
 	}
 
 	@Override
@@ -136,9 +174,8 @@ public class MyQLVisitor<T> extends QLBaseVisitor<T> {
 	}
 
 	@Override 
-	public T visitParOp(@NotNull QLParser.ParOpContext ctx) { 
-		return visitChildren(ctx);
-		
+	public ParOp visitParOp(@NotNull QLParser.ParOpContext ctx) { 
+		return new ParOp( (ExprInterface) ctx.expr().accept(this));
 	}
 
 	@Override
@@ -156,9 +193,12 @@ public class MyQLVisitor<T> extends QLBaseVisitor<T> {
 
 
 	@Override
-	public T visitDivOp(@NotNull QLParser.DivOpContext ctx) { 
-		return visitChildren(ctx);
+	public DivOp visitDivOp(@NotNull QLParser.DivOpContext ctx) { 
+		DivOpContext parent = (DivOpContext) ctx.getParent();
 		
+		return new DivOp( (ExprInterface) parent.expr(0).accept(this),
+				          (ExprInterface) parent.expr(1).accept(this)
+				        ); 
 	}
 
 

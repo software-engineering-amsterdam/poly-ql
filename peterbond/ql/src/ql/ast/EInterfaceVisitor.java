@@ -18,6 +18,7 @@ public interface EInterfaceVisitor {
 	public void visit(ModOp modOp);
 	public void visit(MulOp mulOp);
 	public void visit(NegOp negOp);
+	public void visit(NeqOp neqOp);
 	public void visit(OrOp orOp);
 	public void visit(SubOp subOp);
 	public void visit(IfElseStat ifElseStat);
