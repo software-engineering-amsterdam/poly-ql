@@ -89,4 +89,12 @@ public class ExprTest {
 		assertEquals(Bool.class, parser.parseExpr("// kdjksjdf \n true // comment \n").getClass());
 		assertEquals(Bool.class, parser.parseExpr("/* kdjksjdf */ false /* comment */").getClass());
 	}
+	
+	@Test
+	public void testOperatorPrecedence() throws ParseError {
+		assertEquals(Eq.class, parser.parseExpr("1*2+1*3 == 6*2-1+0").getClass());
+		assertEquals(Add.class, parser.parseExpr("1*2 + 1*2").getClass());
+		assertEquals(Add.class, parser.parseExpr("1 + 2*1 + 2").getClass()); // = 1 + ((2*1) + 2)
+		assertEquals(Add.class, parser.parseExpr("1*2 + 2 + 4").getClass()); // = ((1*2) + 2) + 4
+	}
 }

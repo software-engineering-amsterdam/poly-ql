@@ -18,7 +18,6 @@ public class FormTest {
 	@Test
 	public void testForms() throws ParseError, IOException {
 		final String form = FileUtils.readFileToString(new File("HouseOwning.ql"));
-//		System.out.println(form);
 		assertEquals(Form.class, parser.parseForm(form).getClass());
 	}
 }
