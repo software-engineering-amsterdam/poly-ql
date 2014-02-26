@@ -1,4 +1,4 @@
-package main.nl.uva.parser.elements;
+package main.nl.uva.parser.elements.statements;
 
 public class IFStatement extends Statement {
 

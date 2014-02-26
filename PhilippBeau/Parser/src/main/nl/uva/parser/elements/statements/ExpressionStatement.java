@@ -1,4 +1,4 @@
-package main.nl.uva.parser.elements;
+package main.nl.uva.parser.elements.statements;
 
 public class ExpressionStatement extends Statement {
 
@@ -15,5 +15,4 @@ public class ExpressionStatement extends Statement {
     protected boolean validateImpl() {
         return true;
     }
-
 }

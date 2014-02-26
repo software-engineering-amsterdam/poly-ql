@@ -1,4 +1,4 @@
-package main.nl.uva.parser.elements;
+package main.nl.uva.parser.elements.statements;
 
 import java.util.ArrayList;
 import java.util.List;

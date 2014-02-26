@@ -1,7 +1,11 @@
 // CSV.g  
 grammar FormGrammar; 
 
-@header{import main.nl.uva.parser.elements.*;}
+@header{
+	import main.nl.uva.parser.elements.expressions.*;
+	import main.nl.uva.parser.elements.operations.*;
+	import main.nl.uva.parser.elements.statements.*;
+}
 
 forms returns [List<ParserForm> data] 
 @init {$data = new ArrayList<ParserForm>();}
@@ -9,82 +13,94 @@ forms returns [List<ParserForm> data]
 	;
 
 form returns [ParserForm f]
-	: 'form' id=ID {$f = new ParserForm($id.text, null);} block[$f] //{$f.addBlock($b.ifs)} 
+	: 'form' id=ID {$f = new ParserForm($id.text, null);} block[$f] 
 	;
 
-block[Statement parentStatement] //returns [List<Statement> ifs]
-//@init {$ifs = new ArrayList<Statement>();}
-	: (LINEEND)*? '{' LINEEND (child=statement[$parentStatement] {$parentStatement.addChild($child.current);})* '}' (LINEEND)*?;
+block[Statement parentStatement]
+	: (LINEEND)*? '{' LINEEND (child=statement[$parentStatement] 
+		{
+			$parentStatement.addChild($child.current);
+		}
+	)* '}' (LINEEND)*?;
 
 statement[Statement parentStatement] returns [Statement current]
-	: ID ':' STRING sType=statType LINEEND					{$current = new SimpleStatement($ID.text, $parentStatement, $sType.text, $STRING.text);}
-    | ID ':' STRING sType=statType '(' expr ')' LINEEND 	{$current = new ExpressionStatement($ID.text, $parentStatement);}
-    | 'if' '(' ex=expr ')' {$current = new IFStatement($ex.text, $parentStatement);} block[$current]							
-    | 'if' '(' ex=expr ')' {$current = new IfElseStatement($ex.text, $parentStatement);} block[$current] 'else' block[$current]				
+	: ID ':' STRING sType=simpleType LINEEND					
+	{
+		$current = new SimpleStatement($ID.text, $parentStatement, $sType.text, $STRING.text);
+	}
+	
+    | ID ':' STRING sType=simpleType '(' ex=expression ')' LINEEND 	
+    {
+    	$current = new ExpressionStatement($ID.text, $parentStatement);
+    }
+    
+    | 'if' '(' ex=expression ')' 
+    {
+    	$current = new IFStatement($ex.text, $parentStatement);
+    } block[$current]							
+    
+    | 'if' '(' ex=expression ')' 
+    {
+    	$current = new IfElseStatement($ex.text, $parentStatement);
+    } block[$current] 'else' block[$current]
     ;
 
-// The precedence is given by the order
-expr: unaryOp expr              
-    | expr multiplicativeOp expr                  
-    | expr additiveOp expr                        
-    | expr relationalOp expr                      
-    | expr equalityOp expr                        
-    | expr AND expr                               
-    | expr OR expr                                
-    | boolLiteral                                 
-    | ID                                          
-    | numLiteral                                  
-    | STRING                                      
-    | '(' expr ')'                                
+expression returns [Expression currEx]
+	: op=prefix e=expression {$currEx = new UnaryExpression($op.op, $e.currEx);}
+	| ((lEx=expression da=arithmeticOp) rEx=expression) {$currEx = new BinaryExpression($da.op, null, null);} 
+//    | expression da1=comparisonOp expression {$currEx = new BinaryExpression($da1.op, null, null);}
+//    | expression da2=booleanOp expression {$currEx = new BinaryExpression($da2.op, null, null);}
+    | boolLiteral 
+    | ID
+    | numLiteral
+    | STRING
+    | '(' expression ')'
     ;
 
-// Statement types
-statType: BOOLEAN 
-        | MONEY   
-        | TEXT    
-        ;
+simpleType
+	: BOOLEAN
+    | MONEY
+    | TEXT
+    ;
 
-// Unary Operators
-unaryOp: ADD 
-       | SUB 
-       | NOT 
-       ;
+prefix returns [Operation op]
+	: ADD {$op = new Add();}
+	| SUB {$op = new Sub();}
+	;
 
-// Multiplicative Operators
-multiplicativeOp: MUL 
-                | DIV 
-                | MOD 
-                ;
+booleanOp returns [Operation op]
+	: AND {$op = new And();}
+	| OR {$op = new Or();}
+	;
 
-// Additive Operators
-additiveOp: ADD
-          | SUB
-          ;
+arithmeticOp returns [Operation op]
+	: MUL {$op = new Mul();}
+	| ADD {$op = new Add();}
+    | SUB {$op = new Sub();}
+	| DIV {$op = new Div();}
+    | MOD {$op = new Mod();}
+    ;
 
-// Relational Operators
-relationalOp: LOWER_THAN
-            | GRATER_THAN
-            | LOWER_EQUAL_THAN
-            | GRATER_EQUAL_THAN
-            ;
+comparisonOp returns [Operation op]
+	: LOWER_THAN {$op = new LowerThan();}
+    | GRATER_THAN {$op = new GraterThan();}
+    | LOWER_EQUAL_THAN {$op = new LowerEqualThan();}
+    | GRATER_EQUAL_THAN {$op = new GraterEqualThan();}
+    | EQUAL {$op = new Equal();}
+    | NOT_EQUAL {$op = new NotEqual();}
+    ;
 
-// Equality Operators
-equalityOp: EQUAL
-          | NOT_EQUAL
-          ;
+boolLiteral
+	: TRUE  
+    | FALSE 
+    ;
 
-// Boolean Values
-boolLiteral: TRUE  
-           | FALSE 
-           ;
-
-// Number Types
-numLiteral: INTEGER
-          | DOUBLE
-          ;
+numLiteral
+	: INTEGER
+    | DOUBLE
+    ;
           
 /** Primitives */
-
 INTEGER: [0-9]+;
 DOUBLE :  INTEGER '.' INTEGER;
 STRING: '"' ('\\"' | '\\\\'|.)*? '"';

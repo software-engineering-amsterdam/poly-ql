@@ -6,7 +6,7 @@ import java.util.List;
 
 import main.nl.uva.g4.FormGrammarLexer;
 import main.nl.uva.g4.FormGrammarParser;
-import main.nl.uva.parser.elements.ParserForm;
+import main.nl.uva.parser.elements.statements.ParserForm;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
