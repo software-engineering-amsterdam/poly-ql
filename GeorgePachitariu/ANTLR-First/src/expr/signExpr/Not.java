@@ -1,11 +1,11 @@
 package expr.signExpr;
 
-import expr.Expr;
+import expr.Expression;
 import expr.UnaryExpr;
 
 public class Not extends UnaryExpr {
 
-	public Not(Expr expr) {
+	public Not(Expression expr) {
 		super(expr);
 	}
 

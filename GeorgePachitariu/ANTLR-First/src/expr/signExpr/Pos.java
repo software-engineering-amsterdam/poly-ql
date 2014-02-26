@@ -1,11 +1,11 @@
 package expr.signExpr;
 
-import expr.Expr;
+import expr.Expression;
 import expr.UnaryExpr;
 
 public class Pos extends UnaryExpr {
 
-	public Pos(Expr expr) {
+	public Pos(Expression expr) {
 		super(expr);
 	}
 }

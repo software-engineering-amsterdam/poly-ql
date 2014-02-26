@@ -38,9 +38,10 @@ form returns [Form result]
   { 
     $result=new Form (new Ident($IDENT.text), list); 
   };
+  
 statement returns [Statement result]
   : x=question {$result=$x.result;}
-  | x=if_block {$result=$x.result;}
+  | y=if_block {$result=$y.result;}
   ;
 
 question returns [Question result]
@@ -53,7 +54,7 @@ question returns [Question result]
      $questiontype.result, $expression.result); 
     }
   )? 
-  ';';  
+  ;  
 
 if_block returns [IfBlock result]
   : 'if' (x=expression) '{' 
@@ -75,9 +76,9 @@ if_block returns [IfBlock result]
       List<Statement> list2 = new LinkedList<Statement>();  
     }
     (
-      y=statement
+      y2=statement
       {
-        list2.add($y.result);
+        list2.add($y2.result);
       }
     )* 
     { 
@@ -99,10 +100,10 @@ primary returns [Expression result]
   ;
     
 unExpr returns [Expression result]
-    :  '+' x=primary { $result = new Pos($x.result); }  
-    |  '-' x=primary { $result = new Neg($x.result); }  
-    |  '!' x=primary { $result = new Not($x.result); } 
-    |  x=primary    { $result = $x.result; }
+    :  '+' x1=primary { $result = new Pos($x1.result); }  
+    |  '-' x2=primary { $result = new Neg($x2.result); }  
+    |  '!' x3=primary { $result = new Not($x3.result); } 
+    |  x4=primary    { $result = $x4.result; }
     ;    
     
 mulExpr returns [Expression result]
