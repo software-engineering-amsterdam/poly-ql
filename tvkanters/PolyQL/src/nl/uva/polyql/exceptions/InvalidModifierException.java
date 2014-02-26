@@ -5,7 +5,7 @@ import nl.uva.polyql.model.types.Type;
 
 public class InvalidModifierException extends ParsingException {
 
-    private static final long serialVersionUID = 8634412238170543338L;
+    private static final long serialVersionUID = -7593607078507836377L;
 
     private final Modifier<?> mModifier;
     private final Type mType;

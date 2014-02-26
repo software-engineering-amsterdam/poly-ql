@@ -59,8 +59,8 @@ public class QLangParser extends Parser {
 	}
 	public static class UnExprContext extends ParserRuleContext {
 		public Expr result;
-		public PrimaryContext y;
 		public UnExprContext x;
+		public PrimaryContext y;
 		public PrimaryContext primary() {
 			return getRuleContext(PrimaryContext.class,0);
 		}
@@ -87,39 +87,39 @@ public class QLangParser extends Parser {
 		try {
 			setState(31);
 			switch (_input.LA(1)) {
+			case 2:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(16); match(2);
+				setState(17); ((UnExprContext)_localctx).x = unExpr();
+				 ((UnExprContext)_localctx).result =  new Pos(((UnExprContext)_localctx).x.result); 
+				}
+				break;
+			case 4:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(20); match(4);
+				setState(21); ((UnExprContext)_localctx).x = unExpr();
+				 ((UnExprContext)_localctx).result =  new Neg(((UnExprContext)_localctx).x.result); 
+				}
+				break;
+			case 18:
+				enterOuterAlt(_localctx, 3);
+				{
+				setState(24); match(18);
+				setState(25); ((UnExprContext)_localctx).x = unExpr();
+				 ((UnExprContext)_localctx).result =  new Not(((UnExprContext)_localctx).x.result); 
+				}
+				break;
 			case 5:
 			case Ident:
 			case Int:
 			case Str:
 			case Bool:
-				enterOuterAlt(_localctx, 1);
-				{
-				setState(16); ((UnExprContext)_localctx).y = primary();
-				((UnExprContext)_localctx).result =  ((UnExprContext)_localctx).y.result;
-				}
-				break;
-			case 2:
-				enterOuterAlt(_localctx, 2);
-				{
-				setState(19); match(2);
-				setState(20); ((UnExprContext)_localctx).x = unExpr();
-				 ((UnExprContext)_localctx).result =  new Pos(((UnExprContext)_localctx).x.result); 
-				}
-				break;
-			case 4:
-				enterOuterAlt(_localctx, 3);
-				{
-				setState(23); match(4);
-				setState(24); ((UnExprContext)_localctx).x = unExpr();
-				 ((UnExprContext)_localctx).result =  new Neg(((UnExprContext)_localctx).x.result); 
-				}
-				break;
-			case 18:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(27); match(18);
-				setState(28); ((UnExprContext)_localctx).x = unExpr();
-				 ((UnExprContext)_localctx).result =  new Not(((UnExprContext)_localctx).x.result); 
+				setState(28); ((UnExprContext)_localctx).y = primary();
+				((UnExprContext)_localctx).result =  ((UnExprContext)_localctx).y.result;
 				}
 				break;
 			default:
@@ -139,11 +139,11 @@ public class QLangParser extends Parser {
 
 	public static class PrimaryContext extends ParserRuleContext {
 		public Expr result;
-		public OrExprContext x;
 		public Token Bool;
 		public Token Int;
 		public Token Ident;
 		public Token Str;
+		public OrExprContext x;
 		public TerminalNode Ident() { return getToken(QLangParser.Ident, 0); }
 		public TerminalNode Bool() { return getToken(QLangParser.Bool, 0); }
 		public OrExprContext orExpr() {
@@ -171,41 +171,41 @@ public class QLangParser extends Parser {
 		try {
 			setState(46);
 			switch (_input.LA(1)) {
-			case 5:
+			case Bool:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(33); match(5);
-				setState(34); ((PrimaryContext)_localctx).x = orExpr();
-				setState(35); match(1);
-				 ((PrimaryContext)_localctx).result =  ((PrimaryContext)_localctx).x.result; 
-				}
-				break;
-			case Bool:
-				enterOuterAlt(_localctx, 2);
-				{
-				setState(38); ((PrimaryContext)_localctx).Bool = match(Bool);
+				setState(33); ((PrimaryContext)_localctx).Bool = match(Bool);
 				 ((PrimaryContext)_localctx).result =  new BoolLiteral(Boolean.parseBoolean((((PrimaryContext)_localctx).Bool!=null?((PrimaryContext)_localctx).Bool.getText():null)));
 				}
 				break;
 			case Int:
-				enterOuterAlt(_localctx, 3);
+				enterOuterAlt(_localctx, 2);
 				{
-				setState(40); ((PrimaryContext)_localctx).Int = match(Int);
+				setState(35); ((PrimaryContext)_localctx).Int = match(Int);
 				((PrimaryContext)_localctx).result =  new IntLiteral(Integer.parseInt((((PrimaryContext)_localctx).Int!=null?((PrimaryContext)_localctx).Int.getText():null)));
 				}
 				break;
 			case Ident:
-				enterOuterAlt(_localctx, 4);
+				enterOuterAlt(_localctx, 3);
 				{
-				setState(42); ((PrimaryContext)_localctx).Ident = match(Ident);
+				setState(37); ((PrimaryContext)_localctx).Ident = match(Ident);
 				((PrimaryContext)_localctx).result =  new IdentLiteral((((PrimaryContext)_localctx).Ident!=null?((PrimaryContext)_localctx).Ident.getText():null));
 				}
 				break;
 			case Str:
+				enterOuterAlt(_localctx, 4);
+				{
+				setState(39); ((PrimaryContext)_localctx).Str = match(Str);
+				((PrimaryContext)_localctx).result =  new StrLiteral((((PrimaryContext)_localctx).Str!=null?((PrimaryContext)_localctx).Str.getText():null));
+				}
+				break;
+			case 5:
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(44); ((PrimaryContext)_localctx).Str = match(Str);
-				((PrimaryContext)_localctx).result =  new StrLiteral((((PrimaryContext)_localctx).Str!=null?((PrimaryContext)_localctx).Str.getText():null));
+				setState(41); match(5);
+				setState(42); ((PrimaryContext)_localctx).x = orExpr();
+				setState(43); match(1);
+				 ((PrimaryContext)_localctx).result =  ((PrimaryContext)_localctx).x.result; 
 				}
 				break;
 			default:
@@ -651,13 +651,13 @@ public class QLangParser extends Parser {
 		"\13\b\3\t\3\t\3\t\3\t\3\t\3\t\5\tp\n\t\3\t\2\n\2\4\6\b\n\f\16\20\2\5\4"+
 		"\2\5\5\21\21\4\2\4\4\6\6\6\2\b\n\r\r\20\20\22\22w\2!\3\2\2\2\4\60\3\2"+
 		"\2\2\6\62\3\2\2\2\b=\3\2\2\2\nH\3\2\2\2\fS\3\2\2\2\16^\3\2\2\2\20o\3\2"+
-		"\2\2\22\23\5\4\3\2\23\24\b\2\1\2\24\"\3\2\2\2\25\26\7\4\2\2\26\27\5\2"+
-		"\2\2\27\30\b\2\1\2\30\"\3\2\2\2\31\32\7\6\2\2\32\33\5\2\2\2\33\34\b\2"+
-		"\1\2\34\"\3\2\2\2\35\36\7\24\2\2\36\37\5\2\2\2\37 \b\2\1\2 \"\3\2\2\2"+
-		"!\22\3\2\2\2!\25\3\2\2\2!\31\3\2\2\2!\35\3\2\2\2\"\3\3\2\2\2#$\7\7\2\2"+
-		"$%\5\16\b\2%&\7\3\2\2&\'\b\3\1\2\'\61\3\2\2\2()\7\33\2\2)\61\b\3\1\2*"+
-		"+\7\31\2\2+\61\b\3\1\2,-\7\30\2\2-\61\b\3\1\2./\7\32\2\2/\61\b\3\1\2\60"+
-		"#\3\2\2\2\60(\3\2\2\2\60*\3\2\2\2\60,\3\2\2\2\60.\3\2\2\2\61\5\3\2\2\2"+
+		"\2\2\22\23\7\4\2\2\23\24\5\2\2\2\24\25\b\2\1\2\25\"\3\2\2\2\26\27\7\6"+
+		"\2\2\27\30\5\2\2\2\30\31\b\2\1\2\31\"\3\2\2\2\32\33\7\24\2\2\33\34\5\2"+
+		"\2\2\34\35\b\2\1\2\35\"\3\2\2\2\36\37\5\4\3\2\37 \b\2\1\2 \"\3\2\2\2!"+
+		"\22\3\2\2\2!\26\3\2\2\2!\32\3\2\2\2!\36\3\2\2\2\"\3\3\2\2\2#$\7\33\2\2"+
+		"$\61\b\3\1\2%&\7\31\2\2&\61\b\3\1\2\'(\7\30\2\2(\61\b\3\1\2)*\7\32\2\2"+
+		"*\61\b\3\1\2+,\7\7\2\2,-\5\16\b\2-.\7\3\2\2./\b\3\1\2/\61\3\2\2\2\60#"+
+		"\3\2\2\2\60%\3\2\2\2\60\'\3\2\2\2\60)\3\2\2\2\60+\3\2\2\2\61\5\3\2\2\2"+
 		"\62\63\5\2\2\2\63:\b\4\1\2\64\65\t\2\2\2\65\66\5\2\2\2\66\67\b\4\1\2\67"+
 		"9\3\2\2\28\64\3\2\2\29<\3\2\2\2:8\3\2\2\2:;\3\2\2\2;\7\3\2\2\2<:\3\2\2"+
 		"\2=>\5\6\4\2>E\b\5\1\2?@\t\3\2\2@A\5\6\4\2AB\b\5\1\2BD\3\2\2\2C?\3\2\2"+

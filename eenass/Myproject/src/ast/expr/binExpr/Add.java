@@ -23,7 +23,7 @@ public class Add extends BinExpr{
 	}
 	
 	public String show(){
-		return "+";
+		return "(" + show_lhs() + " + " + show_rhs() + ")";
 	}
 
 }

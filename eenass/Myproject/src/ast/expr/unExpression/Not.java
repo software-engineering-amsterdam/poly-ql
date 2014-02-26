@@ -23,6 +23,6 @@ public class Not extends UnExpr{
 
 	@Override
 	public String show() {
-		return "!";
+		return "! " + show_operand();
 	}
 }

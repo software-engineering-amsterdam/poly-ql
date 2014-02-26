@@ -6,6 +6,13 @@ import nl.uva.polyql.model.expressions.operators.number.NumberOperator;
 import nl.uva.polyql.model.expressions.operators.string.StringOperator;
 import nl.uva.polyql.model.types.Type;
 
+/**
+ * A value representation heavily utilising the visitor pattern to perform operations on different
+ * types and to apply modifiers.
+ * 
+ * @param <T>
+ *            The type of the literal value
+ */
 public abstract class Value<T> {
 
     private final T mValue;

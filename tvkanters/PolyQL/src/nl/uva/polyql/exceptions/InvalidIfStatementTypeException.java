@@ -4,7 +4,7 @@ import nl.uva.polyql.model.types.Type;
 
 public class InvalidIfStatementTypeException extends ParsingException {
 
-    private static final long serialVersionUID = 8634412238170543338L;
+    private static final long serialVersionUID = -7553479915956670117L;
 
     private final Type mType;
 

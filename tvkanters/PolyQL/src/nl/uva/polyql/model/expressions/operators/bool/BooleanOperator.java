@@ -15,14 +15,47 @@ public abstract class BooleanOperator extends SameOperandOperator<BooleanValue> 
         return leftValue.performOperationOnLeft(this, rightValue);
     }
 
+    /**
+     * Performs the operation on boolean arguments. Invalid by default but can be overridden to
+     * supply an functionality for this operand type.
+     * 
+     * @param left
+     *            The left hand value
+     * @param right
+     *            The right hand value
+     * 
+     * @return The value resulting of applying the operation on the arguments
+     */
     public BooleanValue performOperation(final BooleanValue left, final BooleanValue right) {
         throw new UnsupportedOperandTypeException(Type.BOOLEAN, getSyntax());
     }
 
+    /**
+     * Performs the operation on number arguments. Invalid by default but can be overridden to
+     * supply an functionality for this operand type.
+     * 
+     * @param left
+     *            The left hand value
+     * @param right
+     *            The right hand value
+     * 
+     * @return The value resulting of applying the operation on the arguments
+     */
     public BooleanValue performOperation(final NumberValue left, final NumberValue right) {
         throw new UnsupportedOperandTypeException(Type.NUMBER, getSyntax());
     }
 
+    /**
+     * Performs the operation on string arguments. Invalid by default but can be overridden to
+     * supply an functionality for this operand type.
+     * 
+     * @param left
+     *            The left hand value
+     * @param right
+     *            The right hand value
+     * 
+     * @return The value resulting of applying the operation on the arguments
+     */
     public BooleanValue performOperation(final StringValue left, final StringValue right) {
         throw new UnsupportedOperandTypeException(Type.STRING, getSyntax());
     }
@@ -39,5 +72,14 @@ public abstract class BooleanOperator extends SameOperandOperator<BooleanValue> 
         }
     }
 
+    /**
+     * Should be implemented to that it returns true for and only for the operand types that have
+     * functionality implemented.
+     * 
+     * @param type
+     *            The operand type to check for
+     * 
+     * @return True iff the operator is valid for the given type
+     */
     public abstract boolean isValidForImplementedType(final Type type);
 }

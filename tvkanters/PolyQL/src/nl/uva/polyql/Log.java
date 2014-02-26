@@ -18,12 +18,24 @@ public class Log {
         sErrorEnabled = logging;
     }
 
+    /**
+     * Logs messages on an info (regular) level. Will not print with logging disabled.
+     * 
+     * @param msg
+     *            The message to print
+     */
     public static void i(final String msg) {
         if (sInfoEnabled) {
             System.out.println(msg);
         }
     }
 
+    /**
+     * Logs messages on an error level. Will not print with logging disabled.
+     * 
+     * @param msg
+     *            The message to print
+     */
     public static void e(final String msg) {
         if (sErrorEnabled) {
             System.err.println(msg);

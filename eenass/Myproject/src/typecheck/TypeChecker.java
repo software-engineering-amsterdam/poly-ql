@@ -13,7 +13,7 @@ public class TypeChecker implements Visitor<Boolean>{
 	
 	private final Symboles symb_map;
 
-	private TypeChecker(Symboles symb_map) {
+	public TypeChecker(Symboles symb_map) {
 		this.symb_map = symb_map;
 	}
 	
@@ -22,11 +22,11 @@ public class TypeChecker implements Visitor<Boolean>{
 		return node.accept(visitor);		
 	}
 	
-	private boolean isValidExpr(Expr exp){
+	public boolean isValidExpr(Expr exp){
 		return exp.accept(this);		
 	}
 	
-	private boolean isValidInt(Expr exp){
+	public boolean isValidInt(Expr exp){
 		if (isValidExpr(exp)){
 			Types type = exp.typeof(symb_map);
 			if((type != null) && (type.isCompatableToInt())){
@@ -36,14 +36,14 @@ public class TypeChecker implements Visitor<Boolean>{
 		return false;
 	}
 	
-	private boolean isValidInt(Expr lhs, Expr rhs){
+	public boolean isValidInt(Expr lhs, Expr rhs){
 		boolean isValid_lhs = isValidInt(lhs);
 		boolean isValid_rhs = isValidInt(rhs);
 		
 		return (isValid_lhs && isValid_rhs);
 	}
 	
-	private boolean isValidBool(Expr exp){
+	public boolean isValidBool(Expr exp){
 		if (isValidExpr(exp)){
 			Types type = exp.typeof(symb_map);
 			if((type != null) && (type.isCompatableToBool())){
@@ -53,7 +53,7 @@ public class TypeChecker implements Visitor<Boolean>{
 		return false;
 	}
 	
-	private boolean isValidBool(Expr lhs, Expr rhs){
+	public boolean isValidBool(Expr lhs, Expr rhs){
 		boolean isValid_lhs = isValidBool(lhs);
 		boolean isValid_rhs = isValidBool(rhs);
 		
@@ -61,7 +61,7 @@ public class TypeChecker implements Visitor<Boolean>{
 	}	
 
 	
-	private boolean Equel_types(Expr lhs, Expr rhs){
+	public boolean Equel_types(Expr lhs, Expr rhs){
 		boolean isValid_lhs = isValidExpr(lhs);
 		boolean isValid_rhs = isValidExpr(rhs);
 		

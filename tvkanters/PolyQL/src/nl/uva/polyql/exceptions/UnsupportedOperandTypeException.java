@@ -7,7 +7,7 @@ import nl.uva.polyql.model.values.Value;
 
 public class UnsupportedOperandTypeException extends ParsingException {
 
-    private static final long serialVersionUID = 8634412238170543338L;
+    private static final long serialVersionUID = -4223641491733689837L;
 
     private final Type mLeft;
     private final Type mRight;
@@ -33,14 +33,29 @@ public class UnsupportedOperandTypeException extends ParsingException {
         this(leftValue.getType(), operator.getSyntax(), rightValue.getType());
     }
 
+    /**
+     * Retrieves the type of the left argument of the operation
+     * 
+     * @return The left type
+     */
     public Type getLeft() {
         return mLeft;
     }
 
+    /**
+     * Retrieves the type of the right argument of the operation
+     * 
+     * @return The right type
+     */
     public Type getRight() {
         return mRight;
     }
 
+    /**
+     * The syntax of the operator for the operation. E.g., +
+     * 
+     * @return The operator's syntax
+     */
     public String getOperatorSyntax() {
         return mOperatorSyntax;
     }
