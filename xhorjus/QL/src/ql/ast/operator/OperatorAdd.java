@@ -5,6 +5,9 @@ import ql.ast.expression.ExpressionInterface;
 import ql.ast.type.TypeInterface;
 import ql.ast.type.TypeMoney;
 
+/** 
+ * Add operator
+ */
 public class OperatorAdd extends BinaryOperator {
 	public OperatorAdd(ExpressionInterface left, ExpressionInterface right) {
 		super(left, right);

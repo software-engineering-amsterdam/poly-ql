@@ -8,7 +8,7 @@ import ql.ast.statement.StatementString;
  * Type interface
  */
 public interface TypeInterface {
-	public String toString();
+	public String toStr();
 	
 	public Boolean compatibleWith(StatementBoolean type);
 	public Boolean compatibleWith(StatementMoney type);

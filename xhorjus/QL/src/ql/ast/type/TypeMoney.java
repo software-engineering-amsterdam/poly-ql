@@ -4,27 +4,29 @@ import ql.ast.statement.StatementBoolean;
 import ql.ast.statement.StatementMoney;
 import ql.ast.statement.StatementString;
 
+/** 
+ * "money" token class
+ */
 public class TypeMoney implements TypeInterface {
 	public TypeMoney() { }
 
 	@Override
 	public Boolean compatibleWith(StatementBoolean type) {
-		// TODO Auto-generated method stub
-		return null;
+		return false;
 	}
 
 	@Override
 	public Boolean compatibleWith(StatementMoney type) {
-		// TODO Auto-generated method stub
-		return null;
+		return true;
 	}
 
 	@Override
 	public Boolean compatibleWith(StatementString type) {
-		// TODO Auto-generated method stub
-		return null;
+		return false;
 	}
-	
-	//@Override 
-	//public Boolean compatibleWith()
+
+	@Override
+	public String toStr() {
+		return "money";
+	}
 }

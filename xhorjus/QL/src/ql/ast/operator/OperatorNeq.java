@@ -5,6 +5,9 @@ import ql.ast.expression.ExpressionInterface;
 import ql.ast.type.TypeBool;
 import ql.ast.type.TypeInterface;
 
+/** 
+ * Not equal to operator
+ */
 public class OperatorNeq extends BinaryOperator {
 	public OperatorNeq(ExpressionInterface left, ExpressionInterface right) {
 		super(left, right);

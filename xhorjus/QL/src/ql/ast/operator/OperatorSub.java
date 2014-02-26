@@ -5,6 +5,9 @@ import ql.ast.expression.ExpressionInterface;
 import ql.ast.type.TypeInterface;
 import ql.ast.type.TypeMoney;
 
+/**
+ * Subtraction operator.
+ */
 public class OperatorSub extends BinaryOperator {
 	public OperatorSub(ExpressionInterface left, ExpressionInterface right) {
 		super(left, right);

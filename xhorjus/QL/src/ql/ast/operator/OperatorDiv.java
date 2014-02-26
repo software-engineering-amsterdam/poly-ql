@@ -5,6 +5,9 @@ import ql.ast.expression.ExpressionInterface;
 import ql.ast.type.TypeInterface;
 import ql.ast.type.TypeMoney;
 
+/** 
+ * Division operator
+ */
 public class OperatorDiv extends BinaryOperator {
 	public OperatorDiv(ExpressionInterface left, ExpressionInterface right) {
 		super(left, right);

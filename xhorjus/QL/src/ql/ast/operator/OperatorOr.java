@@ -5,6 +5,9 @@ import ql.ast.expression.ExpressionInterface;
 import ql.ast.type.TypeBool;
 import ql.ast.type.TypeInterface;
 
+/**
+ * Logical OR operator
+ */
 public class OperatorOr extends BinaryOperator {
 	public OperatorOr(ExpressionInterface left, ExpressionInterface right) {
 		super(left, right);

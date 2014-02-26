@@ -5,6 +5,9 @@ import ql.ast.expression.ExpressionInterface;
 import ql.ast.type.TypeBool;
 import ql.ast.type.TypeInterface;
 
+/** 
+ * Greater than or equal operator
+ */
 public class OperatorGtEq extends BinaryOperator {
 	public OperatorGtEq(ExpressionInterface left, ExpressionInterface right) {
 		super(left, right);
