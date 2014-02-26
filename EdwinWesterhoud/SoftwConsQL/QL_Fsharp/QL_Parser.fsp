@@ -81,7 +81,7 @@ qlType:
     | QLINT     { QLInt }
     | QLDECIMAL { QLDecimal }
 
-exprType:
+literal:
     | STRING            { String($1) }
     | LABEL             { String($1) }
     | BOOL              { Bool($1) }
@@ -91,7 +91,7 @@ exprType:
 expression:
     | B_OPEN expression B_CLOSE     { $2 }
     | IDENTIFIER                    { ID($1) }
-    | exprType                      { Expr($1) }
+    | literal                       { Literal($1) }
     | NOT expression                { Neg($2) }
     | expression AND expression     { BooleanOp($1, And, $3) }
     | expression OR expression      { BooleanOp($1, Or, $3) }

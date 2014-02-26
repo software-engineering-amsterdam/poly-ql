@@ -1,0 +1,13 @@
+form Hello {
+  Are you alive?
+  boolean foo
+  
+  if (foo) {
+    Nice to hear, how is your day?
+    string day
+  }
+  else {
+    Oh dear, what is wrong?
+    string wrong
+  }
+}

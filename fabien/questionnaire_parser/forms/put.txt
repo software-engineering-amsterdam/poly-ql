@@ -1,0 +1,7 @@
+form Hello {
+  what is this?
+  boolean fu
+  
+  put "Your day is now" (3 * fu)
+  put "Your day is now" (4 * fu)
+}

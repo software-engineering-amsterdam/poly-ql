@@ -6,7 +6,7 @@ using QSLib.Expressions.Conditions;
 
 namespace QSLib.Expressions.Types
 {
-    class QSBoolean : Primary 
+    public class QSBoolean : Primary 
     {
         private bool _value;
         private string _id;
@@ -37,7 +37,17 @@ namespace QSLib.Expressions.Types
         {
             return this._value.ToString();
         }
+
+        public override bool Equals(object obj)
+        {
+            var temp = obj as QSBoolean;
+            if (!temp._value.Equals(temp._value))
+                return false;
+            return base.Equals(obj);
+        }
+
     }
+
 
     
 }

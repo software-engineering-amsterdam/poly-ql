@@ -20,4 +20,9 @@ public class Pos extends UnExpr{
 	public Types typeof(Symboles symb) {
 		return new IntType();
 	}
+
+	@Override
+	public String show() {
+		return "+";
+	}
 }

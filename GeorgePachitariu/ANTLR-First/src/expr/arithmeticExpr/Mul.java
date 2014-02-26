@@ -1,10 +1,13 @@
 package expr.arithmeticExpr;
 
-import expr.Expr;
 
-public class Mul extends Expr {
 
-	public Mul(Expr first, Expr second) {
+import expr.BinaryExpr;
+import expr.Expression;
+
+public class Mul extends BinaryExpr {
+
+	public Mul(Expression first, Expression second) {
 		super(first,second);
 	}
 }

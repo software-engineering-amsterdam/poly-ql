@@ -1,7 +1,11 @@
 package edu.uva.softwarecons.main;
 
+import edu.uva.softwarecons.grammar.QuestionnaireEvalVisitor;
 import edu.uva.softwarecons.grammar.QuestionnaireLexer;
 import edu.uva.softwarecons.grammar.QuestionnaireParser;
+import edu.uva.softwarecons.model.Form;
+import edu.uva.softwarecons.visitor.FormVisitor;
+import edu.uva.softwarecons.visitor.IFormElement;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
@@ -22,10 +26,8 @@ public class Main {
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         QuestionnaireParser parser = new QuestionnaireParser(tokens);
         ParseTree tree = parser.questionnaire(); // parse
-        System.out.println(tree.toStringTree(parser));// print LISP-style tree
-
-        ParseTreeWalker walker = new ParseTreeWalker();
-        Evaluator evaluator = new Evaluator();
-        walker.walk(evaluator, tree);
+        QuestionnaireEvalVisitor questionnaireEvalVisitor = new QuestionnaireEvalVisitor();
+        IFormElement form  = (Form) questionnaireEvalVisitor.visit(tree);
+        form.accept(new FormVisitor());
     }
 }

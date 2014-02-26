@@ -5,6 +5,9 @@ import ql.ast.expression.ExpressionInterface;
 import ql.ast.type.TypeBool;
 import ql.ast.type.TypeInterface;
 
+/**
+ * Negation (NOT) operator
+ */
 public class OperatorNeg extends UnaryOperator {
 	public OperatorNeg(ExpressionInterface expression) {
 		super(expression);

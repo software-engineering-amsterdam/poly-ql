@@ -7,6 +7,5 @@ namespace QSLib.Expressions
 {
     public interface IExpression : IStatement
     {
-
     }
 }

@@ -2,7 +2,7 @@ package ql.ast.form;
 
 import java.util.List;
 
-import ql.ast.expr.ExprType.Ident;
+import ql.ast.expr.exprType.Ident;
 
 public class Form {
 	

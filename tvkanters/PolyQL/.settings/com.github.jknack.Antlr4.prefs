@@ -1,0 +1,8 @@
+antlr4.listener=true
+antlr4.visitor=false
+autobuilding=true
+eclipse.preferences.version=1
+is_project_specific=true
+outlet.DEFAULT_OUTPUT.createDirectory=true
+outlet.DEFAULT_OUTPUT.derived=true
+outlet.DEFAULT_OUTPUT.directory=./src/nl/uva/polyql/antlr4

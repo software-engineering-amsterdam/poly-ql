@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\CodeBlock.cs" />
+    <Compile Include="Classes\Comment.cs" />
     <Compile Include="Classes\Errors\TypeError.cs" />
     <Compile Include="Classes\Expressions\Conditions\Binary\And.cs" />
     <Compile Include="Classes\Expressions\Binary_Expression.cs" />
@@ -53,8 +54,8 @@
     <Compile Include="Classes\Expressions\ElseStatement.cs" />
     <Compile Include="Classes\Expressions\IfStatement.cs" />
     <Compile Include="Classes\Expressions\Types\Identifier.cs" />
+    <Compile Include="Classes\Expressions\Types\NullObject.cs" />
     <Compile Include="Classes\Expressions\Types\Primary.cs" />
-    <Compile Include="Classes\Expressions\Unary_Expression.cs" />
     <Compile Include="Classes\Expressions\IExpression.cs" />
     <Compile Include="Classes\Expressions\Types\Bool.cs" />
     <Compile Include="Classes\Expressions\Conditions\Comparison\Equals.cs" />

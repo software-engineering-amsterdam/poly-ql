@@ -1,4 +1,4 @@
-// $ANTLR 3.4 C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g 2014-02-23 16:20:24
+// $ANTLR 3.4 C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g 2014-02-26 13:33:45
 
 package org.uva.sea.ql.parser.antlr;
 
@@ -36,6 +36,7 @@ public class QLLexer extends Lexer {
     public static final int T__34=34;
     public static final int T__35=35;
     public static final int T__36=36;
+    public static final int T__37=37;
     public static final int Bool=4;
     public static final int Decimal=5;
     public static final int Ident=6;
@@ -436,10 +437,10 @@ public class QLLexer extends Lexer {
         try {
             int _type = T__29;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:28:7: ( 'form' )
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:28:9: 'form'
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:28:7: ( 'else' )
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:28:9: 'else'
             {
-            match("form"); 
+            match("else"); 
 
 
 
@@ -459,10 +460,10 @@ public class QLLexer extends Lexer {
         try {
             int _type = T__30;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:29:7: ( 'if' )
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:29:9: 'if'
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:29:7: ( 'form' )
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:29:9: 'form'
             {
-            match("if"); 
+            match("form"); 
 
 
 
@@ -482,10 +483,10 @@ public class QLLexer extends Lexer {
         try {
             int _type = T__31;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:30:7: ( 'integer' )
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:30:9: 'integer'
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:30:7: ( 'if' )
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:30:9: 'if'
             {
-            match("integer"); 
+            match("if"); 
 
 
 
@@ -505,10 +506,10 @@ public class QLLexer extends Lexer {
         try {
             int _type = T__32;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:31:7: ( 'money' )
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:31:9: 'money'
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:31:7: ( 'integer' )
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:31:9: 'integer'
             {
-            match("money"); 
+            match("integer"); 
 
 
 
@@ -528,10 +529,10 @@ public class QLLexer extends Lexer {
         try {
             int _type = T__33;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:32:7: ( 'string' )
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:32:9: 'string'
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:32:7: ( 'money' )
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:32:9: 'money'
             {
-            match("string"); 
+            match("money"); 
 
 
 
@@ -551,10 +552,12 @@ public class QLLexer extends Lexer {
         try {
             int _type = T__34;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:33:7: ( '{' )
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:33:9: '{'
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:33:7: ( 'string' )
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:33:9: 'string'
             {
-            match('{'); 
+            match("string"); 
+
+
 
             }
 
@@ -572,12 +575,10 @@ public class QLLexer extends Lexer {
         try {
             int _type = T__35;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:34:7: ( '||' )
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:34:9: '||'
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:34:7: ( '{' )
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:34:9: '{'
             {
-            match("||"); 
-
-
+            match('{'); 
 
             }
 
@@ -595,10 +596,12 @@ public class QLLexer extends Lexer {
         try {
             int _type = T__36;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:35:7: ( '}' )
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:35:9: '}'
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:35:7: ( '||' )
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:35:9: '||'
             {
-            match('}'); 
+            match("||"); 
+
+
 
             }
 
@@ -611,13 +614,34 @@ public class QLLexer extends Lexer {
     }
     // $ANTLR end "T__36"
 
+    // $ANTLR start "T__37"
+    public final void mT__37() throws RecognitionException {
+        try {
+            int _type = T__37;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:36:7: ( '}' )
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:36:9: '}'
+            {
+            match('}'); 
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        	// do for sure before leaving
+        }
+    }
+    // $ANTLR end "T__37"
+
     // $ANTLR start "WS"
     public final void mWS() throws RecognitionException {
         try {
             int _type = WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:165:5: ( ( ' ' | '\\t' | '\\n' | '\\r' ) )
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:165:7: ( ' ' | '\\t' | '\\n' | '\\r' )
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:171:5: ( ( ' ' | '\\t' | '\\n' | '\\r' ) )
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:171:7: ( ' ' | '\\t' | '\\n' | '\\r' )
             {
             if ( (input.LA(1) >= '\t' && input.LA(1) <= '\n')||input.LA(1)=='\r'||input.LA(1)==' ' ) {
                 input.consume();
@@ -647,14 +671,14 @@ public class QLLexer extends Lexer {
         try {
             int _type = SLComment;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:169:5: ( '//' ( . )* ( '\\r' )* '\\n' )
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:169:7: '//' ( . )* ( '\\r' )* '\\n'
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:175:5: ( '//' ( . )* ( '\\r' )* '\\n' )
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:175:7: '//' ( . )* ( '\\r' )* '\\n'
             {
             match("//"); 
 
 
 
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:169:11: ( . )*
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:175:11: ( . )*
             loop1:
             do {
                 int alt1=2;
@@ -673,7 +697,7 @@ public class QLLexer extends Lexer {
 
                 switch (alt1) {
             	case 1 :
-            	    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:169:12: .
+            	    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:175:12: .
             	    {
             	    matchAny(); 
 
@@ -686,7 +710,7 @@ public class QLLexer extends Lexer {
             } while (true);
 
 
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:169:15: ( '\\r' )*
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:175:15: ( '\\r' )*
             loop2:
             do {
                 int alt2=2;
@@ -699,7 +723,7 @@ public class QLLexer extends Lexer {
 
                 switch (alt2) {
             	case 1 :
-            	    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:169:16: '\\r'
+            	    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:175:16: '\\r'
             	    {
             	    match('\r'); 
 
@@ -732,14 +756,14 @@ public class QLLexer extends Lexer {
         try {
             int _type = MLCOMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:173:5: ( '/*' ( . )* '*/' )
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:173:7: '/*' ( . )* '*/'
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:179:5: ( '/*' ( . )* '*/' )
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:179:7: '/*' ( . )* '*/'
             {
             match("/*"); 
 
 
 
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:173:12: ( . )*
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:179:12: ( . )*
             loop3:
             do {
                 int alt3=2;
@@ -764,7 +788,7 @@ public class QLLexer extends Lexer {
 
                 switch (alt3) {
             	case 1 :
-            	    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:173:12: .
+            	    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:179:12: .
             	    {
             	    matchAny(); 
 
@@ -799,7 +823,7 @@ public class QLLexer extends Lexer {
         try {
             int _type = Bool;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:177:5: ( 'true' | 'false' )
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:183:5: ( 'true' | 'false' )
             int alt4=2;
             int LA4_0 = input.LA(1);
 
@@ -818,7 +842,7 @@ public class QLLexer extends Lexer {
             }
             switch (alt4) {
                 case 1 :
-                    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:177:7: 'true'
+                    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:183:7: 'true'
                     {
                     match("true"); 
 
@@ -827,7 +851,7 @@ public class QLLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:178:7: 'false'
+                    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:184:7: 'false'
                     {
                     match("false"); 
 
@@ -851,8 +875,8 @@ public class QLLexer extends Lexer {
         try {
             int _type = Ident;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:182:5: ( ( 'a' .. 'z' | 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )* )
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:182:9: ( 'a' .. 'z' | 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:188:5: ( ( 'a' .. 'z' | 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )* )
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:188:9: ( 'a' .. 'z' | 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
             {
             if ( (input.LA(1) >= 'A' && input.LA(1) <= 'Z')||(input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
                 input.consume();
@@ -864,7 +888,7 @@ public class QLLexer extends Lexer {
             }
 
 
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:182:28: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:188:28: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
             loop5:
             do {
                 int alt5=2;
@@ -914,12 +938,12 @@ public class QLLexer extends Lexer {
         try {
             int _type = Str;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:186:5: ( '\"' ( . )* '\"' )
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:186:7: '\"' ( . )* '\"'
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:192:5: ( '\"' ( . )* '\"' )
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:192:7: '\"' ( . )* '\"'
             {
             match('\"'); 
 
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:186:11: ( . )*
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:192:11: ( . )*
             loop6:
             do {
                 int alt6=2;
@@ -935,7 +959,7 @@ public class QLLexer extends Lexer {
 
                 switch (alt6) {
             	case 1 :
-            	    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:186:11: .
+            	    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:192:11: .
             	    {
             	    matchAny(); 
 
@@ -966,10 +990,10 @@ public class QLLexer extends Lexer {
         try {
             int _type = Int;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:190:5: ( ( '0' .. '9' )+ )
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:190:7: ( '0' .. '9' )+
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:196:5: ( ( '0' .. '9' )+ )
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:196:7: ( '0' .. '9' )+
             {
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:190:7: ( '0' .. '9' )+
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:196:7: ( '0' .. '9' )+
             int cnt7=0;
             loop7:
             do {
@@ -1024,8 +1048,8 @@ public class QLLexer extends Lexer {
         try {
             int _type = Decimal;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:194:5: ( Int ',' Int )
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:194:7: Int ',' Int
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:200:5: ( Int ',' Int )
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:200:7: Int ',' Int
             {
             mInt(); 
 
@@ -1047,8 +1071,8 @@ public class QLLexer extends Lexer {
     // $ANTLR end "Decimal"
 
     public void mTokens() throws RecognitionException {
-        // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:1:8: ( T__12 | T__13 | T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | WS | SLComment | MLCOMMENT | Bool | Ident | Str | Int | Decimal )
-        int alt8=33;
+        // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:1:8: ( T__12 | T__13 | T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | WS | SLComment | MLCOMMENT | Bool | Ident | Str | Int | Decimal )
+        int alt8=34;
         alt8 = dfa8.predict(input);
         switch (alt8) {
             case 1 :
@@ -1252,63 +1276,71 @@ public class QLLexer extends Lexer {
                 }
                 break;
             case 26 :
-                // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:1:160: WS
+                // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:1:160: T__37
+                {
+                mT__37(); 
+
+
+                }
+                break;
+            case 27 :
+                // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:1:166: WS
                 {
                 mWS(); 
 
 
                 }
                 break;
-            case 27 :
-                // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:1:163: SLComment
+            case 28 :
+                // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:1:169: SLComment
                 {
                 mSLComment(); 
 
 
                 }
                 break;
-            case 28 :
-                // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:1:173: MLCOMMENT
+            case 29 :
+                // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:1:179: MLCOMMENT
                 {
                 mMLCOMMENT(); 
 
 
                 }
                 break;
-            case 29 :
-                // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:1:183: Bool
+            case 30 :
+                // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:1:189: Bool
                 {
                 mBool(); 
 
 
                 }
                 break;
-            case 30 :
-                // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:1:188: Ident
+            case 31 :
+                // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:1:194: Ident
                 {
                 mIdent(); 
 
 
                 }
                 break;
-            case 31 :
-                // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:1:194: Str
+            case 32 :
+                // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:1:200: Str
                 {
                 mStr(); 
 
 
                 }
                 break;
-            case 32 :
-                // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:1:198: Int
+            case 33 :
+                // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:1:204: Int
                 {
                 mInt(); 
 
 
                 }
                 break;
-            case 33 :
-                // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:1:202: Decimal
+            case 34 :
+                // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:1:208: Decimal
                 {
                 mDecimal(); 
 
@@ -1323,118 +1355,123 @@ public class QLLexer extends Lexer {
 
     protected DFA8 dfa8 = new DFA8(this);
     static final String DFA8_eotS =
-        "\1\uffff\1\34\6\uffff\1\37\1\uffff\1\41\1\uffff\1\43\6\30\4\uffff"+
-        "\1\30\2\uffff\1\55\11\uffff\4\30\1\63\4\30\2\uffff\4\30\1\uffff"+
-        "\6\30\1\102\4\30\1\107\2\30\1\uffff\1\107\1\30\1\113\1\30\1\uffff"+
-        "\3\30\1\uffff\1\120\1\121\1\122\1\123\4\uffff";
+        "\1\uffff\1\35\6\uffff\1\40\1\uffff\1\42\1\uffff\1\44\7\31\4\uffff"+
+        "\1\31\2\uffff\1\57\11\uffff\5\31\1\66\4\31\2\uffff\5\31\1\uffff"+
+        "\6\31\1\106\1\107\4\31\1\114\2\31\2\uffff\1\114\1\31\1\120\1\31"+
+        "\1\uffff\3\31\1\uffff\1\125\1\126\1\127\1\130\4\uffff";
     static final String DFA8_eofS =
-        "\124\uffff";
+        "\131\uffff";
     static final String DFA8_minS =
         "\1\11\1\75\6\uffff\1\52\1\uffff\1\75\1\uffff\1\75\1\157\1\145\1"+
-        "\141\1\146\1\157\1\164\4\uffff\1\162\2\uffff\1\54\11\uffff\1\157"+
-        "\1\143\1\162\1\154\1\60\1\164\1\156\1\162\1\165\2\uffff\1\154\1"+
-        "\151\1\155\1\163\1\uffff\2\145\1\151\2\145\1\155\1\60\1\145\1\147"+
-        "\1\171\1\156\1\60\2\141\1\uffff\1\60\1\145\1\60\1\147\1\uffff\1"+
-        "\156\1\154\1\162\1\uffff\4\60\4\uffff";
+        "\154\1\141\1\146\1\157\1\164\4\uffff\1\162\2\uffff\1\54\11\uffff"+
+        "\1\157\1\143\1\163\1\162\1\154\1\60\1\164\1\156\1\162\1\165\2\uffff"+
+        "\1\154\1\151\1\145\1\155\1\163\1\uffff\2\145\1\151\2\145\1\155\2"+
+        "\60\1\145\1\147\1\171\1\156\1\60\2\141\2\uffff\1\60\1\145\1\60\1"+
+        "\147\1\uffff\1\156\1\154\1\162\1\uffff\4\60\4\uffff";
     static final String DFA8_maxS =
         "\1\175\1\75\6\uffff\1\57\1\uffff\1\75\1\uffff\1\75\1\157\1\145\1"+
-        "\157\1\156\1\157\1\164\4\uffff\1\162\2\uffff\1\71\11\uffff\1\157"+
-        "\1\143\1\162\1\154\1\172\1\164\1\156\1\162\1\165\2\uffff\1\154\1"+
-        "\151\1\155\1\163\1\uffff\2\145\1\151\2\145\1\155\1\172\1\145\1\147"+
-        "\1\171\1\156\1\172\2\141\1\uffff\1\172\1\145\1\172\1\147\1\uffff"+
-        "\1\156\1\154\1\162\1\uffff\4\172\4\uffff";
+        "\154\1\157\1\156\1\157\1\164\4\uffff\1\162\2\uffff\1\71\11\uffff"+
+        "\1\157\1\143\1\163\1\162\1\154\1\172\1\164\1\156\1\162\1\165\2\uffff"+
+        "\1\154\1\151\1\145\1\155\1\163\1\uffff\2\145\1\151\2\145\1\155\2"+
+        "\172\1\145\1\147\1\171\1\156\1\172\2\141\2\uffff\1\172\1\145\1\172"+
+        "\1\147\1\uffff\1\156\1\154\1\162\1\uffff\4\172\4\uffff";
     static final String DFA8_acceptS =
-        "\2\uffff\1\3\1\4\1\5\1\6\1\7\1\10\1\uffff\1\12\1\uffff\1\15\7\uffff"+
-        "\1\27\1\30\1\31\1\32\1\uffff\1\36\1\37\1\uffff\1\2\1\1\1\33\1\34"+
-        "\1\11\1\14\1\13\1\17\1\16\11\uffff\1\40\1\41\4\uffff\1\23\16\uffff"+
-        "\1\22\4\uffff\1\35\3\uffff\1\25\4\uffff\1\26\1\20\1\21\1\24";
+        "\2\uffff\1\3\1\4\1\5\1\6\1\7\1\10\1\uffff\1\12\1\uffff\1\15\10\uffff"+
+        "\1\30\1\31\1\32\1\33\1\uffff\1\37\1\40\1\uffff\1\2\1\1\1\34\1\35"+
+        "\1\11\1\14\1\13\1\17\1\16\12\uffff\1\41\1\42\5\uffff\1\24\17\uffff"+
+        "\1\22\1\23\4\uffff\1\36\3\uffff\1\26\4\uffff\1\27\1\20\1\21\1\25";
     static final String DFA8_specialS =
-        "\124\uffff}>";
+        "\131\uffff}>";
     static final String[] DFA8_transitionS = {
-            "\2\26\2\uffff\1\26\22\uffff\1\26\1\1\1\31\3\uffff\1\2\1\uffff"+
-            "\1\3\1\4\1\5\1\6\1\uffff\1\7\1\uffff\1\10\12\32\1\11\1\uffff"+
-            "\1\12\1\13\1\14\2\uffff\32\30\6\uffff\1\30\1\15\1\30\1\16\1"+
-            "\30\1\17\2\30\1\20\3\30\1\21\5\30\1\22\1\27\6\30\1\23\1\24\1"+
-            "\25",
-            "\1\33",
+            "\2\27\2\uffff\1\27\22\uffff\1\27\1\1\1\32\3\uffff\1\2\1\uffff"+
+            "\1\3\1\4\1\5\1\6\1\uffff\1\7\1\uffff\1\10\12\33\1\11\1\uffff"+
+            "\1\12\1\13\1\14\2\uffff\32\31\6\uffff\1\31\1\15\1\31\1\16\1"+
+            "\17\1\20\2\31\1\21\3\31\1\22\5\31\1\23\1\30\6\31\1\24\1\25\1"+
+            "\26",
+            "\1\34",
             "",
             "",
             "",
             "",
             "",
             "",
-            "\1\36\4\uffff\1\35",
+            "\1\37\4\uffff\1\36",
             "",
-            "\1\40",
+            "\1\41",
             "",
-            "\1\42",
-            "\1\44",
+            "\1\43",
             "\1\45",
-            "\1\47\15\uffff\1\46",
-            "\1\50\7\uffff\1\51",
-            "\1\52",
-            "\1\53",
-            "",
-            "",
-            "",
-            "",
+            "\1\46",
+            "\1\47",
+            "\1\51\15\uffff\1\50",
+            "\1\52\7\uffff\1\53",
             "\1\54",
-            "",
-            "",
-            "\1\56\3\uffff\12\32",
-            "",
+            "\1\55",
             "",
             "",
             "",
             "",
+            "\1\56",
+            "",
+            "",
+            "\1\60\3\uffff\12\33",
             "",
             "",
             "",
             "",
-            "\1\57",
-            "\1\60",
+            "",
+            "",
+            "",
+            "",
+            "",
             "\1\61",
             "\1\62",
-            "\12\30\7\uffff\32\30\4\uffff\1\30\1\uffff\32\30",
+            "\1\63",
             "\1\64",
             "\1\65",
-            "\1\66",
+            "\12\31\7\uffff\32\31\4\uffff\1\31\1\uffff\32\31",
             "\1\67",
-            "",
-            "",
             "\1\70",
             "\1\71",
             "\1\72",
-            "\1\73",
             "",
+            "",
+            "\1\73",
             "\1\74",
             "\1\75",
             "\1\76",
             "\1\77",
+            "",
             "\1\100",
             "\1\101",
-            "\12\30\7\uffff\32\30\4\uffff\1\30\1\uffff\32\30",
+            "\1\102",
             "\1\103",
             "\1\104",
             "\1\105",
-            "\1\106",
-            "\12\30\7\uffff\32\30\4\uffff\1\30\1\uffff\32\30",
+            "\12\31\7\uffff\32\31\4\uffff\1\31\1\uffff\32\31",
+            "\12\31\7\uffff\32\31\4\uffff\1\31\1\uffff\32\31",
             "\1\110",
             "\1\111",
-            "",
-            "\12\30\7\uffff\32\30\4\uffff\1\30\1\uffff\32\30",
             "\1\112",
-            "\12\30\7\uffff\32\30\4\uffff\1\30\1\uffff\32\30",
-            "\1\114",
-            "",
+            "\1\113",
+            "\12\31\7\uffff\32\31\4\uffff\1\31\1\uffff\32\31",
             "\1\115",
             "\1\116",
-            "\1\117",
             "",
-            "\12\30\7\uffff\32\30\4\uffff\1\30\1\uffff\32\30",
-            "\12\30\7\uffff\32\30\4\uffff\1\30\1\uffff\32\30",
-            "\12\30\7\uffff\32\30\4\uffff\1\30\1\uffff\32\30",
-            "\12\30\7\uffff\32\30\4\uffff\1\30\1\uffff\32\30",
+            "",
+            "\12\31\7\uffff\32\31\4\uffff\1\31\1\uffff\32\31",
+            "\1\117",
+            "\12\31\7\uffff\32\31\4\uffff\1\31\1\uffff\32\31",
+            "\1\121",
+            "",
+            "\1\122",
+            "\1\123",
+            "\1\124",
+            "",
+            "\12\31\7\uffff\32\31\4\uffff\1\31\1\uffff\32\31",
+            "\12\31\7\uffff\32\31\4\uffff\1\31\1\uffff\32\31",
+            "\12\31\7\uffff\32\31\4\uffff\1\31\1\uffff\32\31",
+            "\12\31\7\uffff\32\31\4\uffff\1\31\1\uffff\32\31",
             "",
             "",
             "",
@@ -1471,7 +1508,7 @@ public class QLLexer extends Lexer {
             this.transition = DFA8_transition;
         }
         public String getDescription() {
-            return "1:1: Tokens : ( T__12 | T__13 | T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | WS | SLComment | MLCOMMENT | Bool | Ident | Str | Int | Decimal );";
+            return "1:1: Tokens : ( T__12 | T__13 | T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | WS | SLComment | MLCOMMENT | Bool | Ident | Str | Int | Decimal );";
         }
     }
  

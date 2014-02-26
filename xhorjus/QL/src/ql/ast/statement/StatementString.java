@@ -3,6 +3,9 @@ package ql.ast.statement;
 import ql.ast.type.TypeInterface;
 import ql.ast.type.TypeString;
 
+/** 
+ * A string statement
+ */
 public class StatementString implements StatementTypeInterface {
 	public StatementString() { }
 

@@ -12,8 +12,8 @@ public class BoolLiteral extends Literals{
 		this.val = val;
 	}
 
-	public boolean isVal() {
-		return val;
+	public boolean getVal() {
+		return this.val;
 	}
 
 	@Override
@@ -24,6 +24,11 @@ public class BoolLiteral extends Literals{
 	@Override
 	public Types typeof(Symboles symb) {
 		return new BoolType();
+	}
+
+	@Override
+	public String show() {
+		return Boolean.toString(val);
 	}
 
 }

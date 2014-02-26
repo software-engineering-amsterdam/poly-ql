@@ -1,13 +1,16 @@
 package ql;
 
-import ql.ast.*;
 import java.io.FileInputStream;
 import java.io.IOException;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
-import antlr4.*;
+
+import ql.ast.ASTVisitor;
+import ql.ast.Questionnares;
+import antlr4.TestLexer;
+import antlr4.TestParser;
 
 /**
  * Test class to instantiate Test expression and do stuff.
@@ -31,10 +34,10 @@ public class Test {
 	    ParseTree tree = parser.questionnare();
 	    
 	    // Print tree. Tada.
-	    System.out.println(tree.toStringTree(parser));
+	    System.out.println("PARSE TREE:\n" + tree.toStringTree(parser));
 	    
-	    // Create visitor
-	    QLVisitor eval = new QLVisitor();
-	    eval.visit(tree);
+	    // Create parsetree visitor, generate AST
+	    ASTVisitor eval  = new ASTVisitor();
+	    Questionnares qs = (Questionnares)eval.visit(tree);
 	}
 }

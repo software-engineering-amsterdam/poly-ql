@@ -4,16 +4,19 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
-using Grammar;
-using Grammar.Parser;
+using Algebra.Core.GrammarParser;
+using Algebra.QL.Core.Factory;
+using Algebra.QL.Core.Grammar;
+using Algebra.QL.Extensions.Factory;
+using Algebra.QL.Extensions.Grammar;
+using Algebra.QL.Print.Expr;
+using Algebra.QL.Print.Stmnt;
+using Algebra.QL.TypeCheck.Expr;
+using Algebra.QL.TypeCheck.Factory;
+using Algebra.QL.TypeCheck.Helpers;
+using Algebra.QL.TypeCheck.Stmnt;
 using Microsoft.Win32;
-using QL_ExtensionTest.Merged;
-using QL_ExtensionTest.QLPrint.Expr;
-using QL_ExtensionTest.QLPrint.Stmnt;
-using QL_Grammar.QLTypeCheck.Expr;
-using QL_Grammar.QLTypeCheck.Factory;
-using QL_Grammar.QLTypeCheck.Helpers;
-using QL_Grammar.QLTypeCheck.Stmnt;
+using WPFParser.MergedFactory;
 
 namespace WPFParser
 {
@@ -42,10 +45,11 @@ namespace WPFParser
 
         private AbstractParser GetTypeCheckParser()
         {
-            var parser = new QLParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeCheckFactory>(new QLTypeCheckFactory());
+            var parser = new QLParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeFactory,
+                QLTypeCheckFactory>(new QLTypeFactory(), new QLTypeCheckFactory());
 
-            Assembly a = typeof(QLTypeCheckFactory).Assembly;
-            parser.LoadGrammar(new BinaryReader(a.GetManifestResourceStream("QL_Grammar.Grammar.QL_Grammar.egt")));
+            Assembly a = parser.GetType().Assembly;
+            parser.LoadGrammar(new BinaryReader(a.GetManifestResourceStream("Algebra.QL.Core.Grammar.QL_Grammar.egt")));
 
             return parser;
         }
@@ -53,10 +57,11 @@ namespace WPFParser
         private AbstractParser GetComboParser()
         {
             var parser = new ExtensionsParser<Tuple<ITypeCheckExpr, IPrintExpr>,
-                Tuple<ITypeCheckStmnt, IPrintStmnt>, TypeCheckPrintFactory>(new TypeCheckPrintFactory());
+                Tuple<ITypeCheckStmnt, IPrintStmnt>, QLExtensionsTypeFactory,
+                TypeCheckPrintFactory>(new QLExtensionsTypeFactory(), new TypeCheckPrintFactory());
 
-            Assembly a = typeof(TypeCheckPrintFactory).Assembly;
-            parser.LoadGrammar(new BinaryReader(a.GetManifestResourceStream("QL_ExtensionTest.Grammar.QL_Grammar.egt")));
+            Assembly a = parser.GetType().Assembly;
+            parser.LoadGrammar(new BinaryReader(a.GetManifestResourceStream("Algebra.QL.Extensions.Grammar.QL_Grammar.egt")));
 
             return parser;
         }

@@ -5,5 +5,5 @@ import ql.ast.*;
  * Interface for statements
  */
 public interface StatementInterface extends ElementInterface {
-	public StatementTypeInterface getStatementType();
+	public StatementTypeInterface getType();
 }

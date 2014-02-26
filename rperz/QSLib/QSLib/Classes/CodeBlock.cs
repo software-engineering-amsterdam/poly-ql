@@ -47,5 +47,23 @@ namespace QSLib
             }
             return retVal;
         }
+
+        public override bool Equals(object obj)
+        {
+            bool retVal = true;
+            var temp = obj as CodeBlock;
+            if (temp == null)
+                return false;
+            if (this._statements != null && temp._statements != null)
+            {
+                if (this._statements.Count != temp._statements.Count)
+                    return false;
+                for (int i = 0; i < this._statements.Count; i++)
+                {
+                    retVal &= this._statements[i].Equals(temp._statements[i]);
+                }
+            }
+            return retVal;
+        }
     }
 }

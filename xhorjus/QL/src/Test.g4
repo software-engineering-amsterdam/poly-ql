@@ -7,18 +7,28 @@ grammar Test;
 	package antlr4;
 }
 
-questionnare    : 'form' title '{' block+ '}';
+//questionnare : expr;
+questionnare    : form*;
+form            : 'form' ID block;
+block           : '{' statement* '}'; 
 
-title           : TITLE;
-block           : ifblock | question; 
+statement       : 'if' LP expr RP block                # StatementIf
+				| 'if' '(' expr ')' block 'else' block # StatementIfElse
+				| QUESTIONTITLE ':' STRING qtype       # StatementAssignment 
+				;
+				
+qtype           : 'boolean' # StatementBoolean
+                | 'money'   # StatementMoney
+                | 'string'  # StatementString
+                ;
 
-question		: qid ASSIGNMENT '"' qcontent '"' qtype;
-qid             : QUESTIONTITLE;
-qcontent        : .+?;
-qtype           : 'boolean' | 'money' | 'string';
-
-ifblock         : 'if' LP expr RP '{' question+ '}' 'else' '{' question+ '}'
-                | 'if' LP expr RP '{' question+ '}';
+intLit          : INT     # Integer
+                | DECIMAL # Decimal
+                ;
+                
+boolLit         : 'true'  # LiteralTrue
+                | 'false' # LiteralFalse
+                ;
 
 expr            : '!' expr       # Neg
                 | '(' expr ')'   # Parentheses
@@ -35,16 +45,21 @@ expr            : '!' expr       # Neg
                 | expr '!=' expr # Neq
                 | expr '&&' expr # And
                 | expr '||' expr # Or            
-                | question       # QuestionID
-                | INT            # Int;
+                | intLit         # LiteralInt
+                | boolLit        # LiteralBool
+                | QUESTIONTITLE  # Id
+                ;
 
 INT             : [0-9]+;
-TITLE           : [A-Z][a-zA-Z0-9]*;
-QUESTIONTITLE   : [a-z][a-zA-Z0-9]*;
+DECIMAL         : INT '.' INT;
+STRING          : '"' (SLASHES|.)*? '"';
+ID              : [A-Z][a-zA-Z0-9_]*;
+QUESTIONTITLE   : [a-z][a-zA-Z0-9_]*;
 ASSIGNMENT      : ':';
 LP              : '(';
 RP              : ')'; 
-WS              : [ \t\r\n]+ -> skip ;
+SLASHES         : '\\"' | '\\\\';
+WS              : [ \t\r\n]+ -> skip;
 
 /* From http://stackoverflow.com/questions/14778570/antlr-4-channel-hidden-and-options */
 COMMENT

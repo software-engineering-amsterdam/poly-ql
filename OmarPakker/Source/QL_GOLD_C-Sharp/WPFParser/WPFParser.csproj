@@ -35,12 +35,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
@@ -67,6 +61,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MergedFactory\TypeCheckPrintFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -94,13 +89,29 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\QL_ExtensionTest\QL_ExtensionTest.csproj">
-      <Project>{5cf4b5c1-853c-487f-9572-7f9a32447adf}</Project>
-      <Name>QL_ExtensionTest</Name>
+    <ProjectReference Include="..\Algebra.Core\Algebra.Core.csproj">
+      <Project>{66c0e1d5-1aab-4d62-8a82-bed70bd9e348}</Project>
+      <Name>Algebra.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\QL_Grammar\QL_Grammar.csproj">
-      <Project>{adef29ed-b350-451a-a0c7-5e7ae04609a5}</Project>
-      <Name>QL_Grammar</Name>
+    <ProjectReference Include="..\Algebra.QL.Core\Algebra.QL.Core.csproj">
+      <Project>{920a23f4-4b01-4cd2-b89c-44a59ee000e0}</Project>
+      <Name>Algebra.QL.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Algebra.QL.Extensions.TypeCheck\Algebra.QL.Extensions.TypeCheck.csproj">
+      <Project>{961e46c7-f25c-4811-98ef-65ba97d9fb97}</Project>
+      <Name>Algebra.QL.Extensions.TypeCheck</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Algebra.QL.Extensions\Algebra.QL.Extensions.csproj">
+      <Project>{c3cb2fb3-25c0-4fdb-b99c-7eb72927d0d1}</Project>
+      <Name>Algebra.QL.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Algebra.QL.Print\Algebra.QL.Print.csproj">
+      <Project>{39772314-1749-44c2-b22a-7fc5113892b0}</Project>
+      <Name>Algebra.QL.Print</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Algebra.QL.TypeCheck\Algebra.QL.TypeCheck.csproj">
+      <Project>{90503068-d7ac-4b1c-ac08-799155c503df}</Project>
+      <Name>Algebra.QL.TypeCheck</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

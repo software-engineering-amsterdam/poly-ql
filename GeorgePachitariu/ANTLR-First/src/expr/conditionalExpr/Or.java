@@ -1,10 +1,11 @@
 package expr.conditionalExpr;
 
-import expr.Expr;
+import expr.BinaryExpr;
+import expr.Expression;
 
-public class Or extends Expr {
+public class Or extends BinaryExpr {
 
-	public Or(Expr first, Expr second) {
+	public Or(Expression first, Expression second) {
 		super(first,second);
 	}
 
