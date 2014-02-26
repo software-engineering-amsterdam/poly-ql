@@ -1,8 +1,8 @@
-package net.iplantevin.ast.expressions;
+package net.iplantevin.ql.ast.expressions;
 
-import net.iplantevin.ast.types.Type;
-import net.iplantevin.ast.types.TypeEnvironment;
-import net.iplantevin.ast.visitors.IQLASTVisitor;
+import net.iplantevin.ql.ast.types.Type;
+import net.iplantevin.ql.ast.types.TypeEnvironment;
+import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 /**

@@ -1,17 +1,17 @@
-package net.iplantevin.ast.visitors.typechecker;
+package net.iplantevin.ql.ast.visitors.typechecker;
 
-import net.iplantevin.ast.expressions.Par;
-import net.iplantevin.ast.expressions.literals.Bool;
-import net.iplantevin.ast.expressions.literals.ID;
-import net.iplantevin.ast.expressions.literals.Int;
-import net.iplantevin.ast.expressions.literals.Str;
-import net.iplantevin.ast.expressions.operators.*;
-import net.iplantevin.ast.form.Form;
-import net.iplantevin.ast.form.FormCollection;
-import net.iplantevin.ast.statements.*;
-import net.iplantevin.ast.types.TypeEnvironment;
-import net.iplantevin.ast.visitors.IQLASTVisitor;
-import net.iplantevin.exceptions.ExceptionCollection;
+import net.iplantevin.ql.ast.expressions.Par;
+import net.iplantevin.ql.ast.expressions.literals.Bool;
+import net.iplantevin.ql.ast.expressions.literals.ID;
+import net.iplantevin.ql.ast.expressions.literals.Int;
+import net.iplantevin.ql.ast.expressions.literals.Str;
+import net.iplantevin.ql.ast.expressions.operators.*;
+import net.iplantevin.ql.ast.form.Form;
+import net.iplantevin.ql.ast.form.FormCollection;
+import net.iplantevin.ql.ast.statements.*;
+import net.iplantevin.ql.ast.types.TypeEnvironment;
+import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
+import net.iplantevin.ql.exceptions.ExceptionCollection;
 
 /**
  * Visits AST

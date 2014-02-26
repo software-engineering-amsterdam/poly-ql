@@ -1,6 +1,6 @@
-package net.iplantevin.ast.statements;
+package net.iplantevin.ql.ast.statements;
 
-import net.iplantevin.ast.expressions.Expression;
+import net.iplantevin.ql.ast.expressions.Expression;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 /**

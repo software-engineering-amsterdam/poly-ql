@@ -1,14 +1,14 @@
-package net.iplantevin.ast.visitors.typechecker;
+package net.iplantevin.ql.ast.visitors.typechecker;
 
-import net.iplantevin.ast.expressions.Expression;
-import net.iplantevin.ast.expressions.operators.Binary;
-import net.iplantevin.ast.expressions.operators.Unary;
-import net.iplantevin.ast.statements.Computation;
-import net.iplantevin.ast.types.*;
-import net.iplantevin.ast.visitors.IQLASTVisitor;
-import net.iplantevin.exceptions.ExceptionCollection;
-import net.iplantevin.exceptions.QLTypeException;
-import net.iplantevin.exceptions.QLUndefinedException;
+import net.iplantevin.ql.ast.expressions.Expression;
+import net.iplantevin.ql.ast.expressions.operators.Binary;
+import net.iplantevin.ql.ast.expressions.operators.Unary;
+import net.iplantevin.ql.ast.statements.Computation;
+import net.iplantevin.ql.ast.types.*;
+import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
+import net.iplantevin.ql.exceptions.ExceptionCollection;
+import net.iplantevin.ql.exceptions.QLTypeException;
+import net.iplantevin.ql.exceptions.QLUndefinedException;
 
 /**
  * @author Ivan

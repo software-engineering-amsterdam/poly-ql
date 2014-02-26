@@ -1,9 +1,9 @@
-package net.iplantevin.ast.expressions;
+package net.iplantevin.ql.ast.expressions;
 
-import net.iplantevin.ast.LineInfo;
-import net.iplantevin.ast.QLASTNode;
-import net.iplantevin.ast.types.Type;
-import net.iplantevin.ast.types.TypeEnvironment;
+import net.iplantevin.ql.ast.LineInfo;
+import net.iplantevin.ql.ast.QLASTNode;
+import net.iplantevin.ql.ast.types.Type;
+import net.iplantevin.ql.ast.types.TypeEnvironment;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 /**

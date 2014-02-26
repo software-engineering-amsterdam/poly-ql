@@ -1,7 +1,7 @@
-package net.iplantevin.exceptions;
+package net.iplantevin.ql.exceptions;
 
-import net.iplantevin.ast.QLASTNode;
-import net.iplantevin.ast.types.Type;
+import net.iplantevin.ql.ast.QLASTNode;
+import net.iplantevin.ql.ast.types.Type;
 
 /**
  * Created with IntelliJ IDEA.

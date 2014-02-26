@@ -1,6 +1,6 @@
-package net.iplantevin.ast;
+package net.iplantevin.ql.ast;
 
-import net.iplantevin.ast.visitors.IQLASTVisitor;
+import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 /**

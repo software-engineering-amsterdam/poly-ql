@@ -1,7 +1,7 @@
-package net.iplantevin.ast.statements;
+package net.iplantevin.ql.ast.statements;
 
-import net.iplantevin.ast.expressions.Expression;
-import net.iplantevin.ast.visitors.IQLASTVisitor;
+import net.iplantevin.ql.ast.expressions.Expression;
+import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 /**

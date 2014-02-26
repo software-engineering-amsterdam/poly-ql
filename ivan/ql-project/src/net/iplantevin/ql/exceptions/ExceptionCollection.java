@@ -1,4 +1,4 @@
-package net.iplantevin.exceptions;
+package net.iplantevin.ql.exceptions;
 
 import java.util.ArrayList;
 import java.util.HashMap;

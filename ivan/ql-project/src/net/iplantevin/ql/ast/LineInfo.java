@@ -1,4 +1,4 @@
-package net.iplantevin.ast;
+package net.iplantevin.ql.ast;
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.TerminalNode;

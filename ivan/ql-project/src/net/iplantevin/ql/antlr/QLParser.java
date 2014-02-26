@@ -1,5 +1,5 @@
 // Generated from QL.g4 by ANTLR 4.2
-package net.iplantevin.antlr;
+package net.iplantevin.ql.antlr;
 
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.atn.ATN;

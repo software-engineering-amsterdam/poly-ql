@@ -1,4 +1,4 @@
-package net.iplantevin.ast.types;
+package net.iplantevin.ql.ast.types;
 
 /**
  * Created with IntelliJ IDEA.

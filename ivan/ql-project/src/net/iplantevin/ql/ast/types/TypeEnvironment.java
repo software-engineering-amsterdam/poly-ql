@@ -1,9 +1,9 @@
-package net.iplantevin.ast.types;
+package net.iplantevin.ql.ast.types;
 
-import net.iplantevin.ast.LineInfo;
-import net.iplantevin.ast.expressions.literals.ID;
-import net.iplantevin.exceptions.ExceptionCollection;
-import net.iplantevin.exceptions.QLTypeException;
+import net.iplantevin.ql.ast.LineInfo;
+import net.iplantevin.ql.ast.expressions.literals.ID;
+import net.iplantevin.ql.exceptions.ExceptionCollection;
+import net.iplantevin.ql.exceptions.QLTypeException;
 
 import java.util.HashMap;
 

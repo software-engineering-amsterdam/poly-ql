@@ -1,11 +1,11 @@
-package net.iplantevin.ast.expressions.operators;
+package net.iplantevin.ql.ast.expressions.operators;
 
-import net.iplantevin.ast.LineInfo;
-import net.iplantevin.ast.expressions.Expression;
-import net.iplantevin.ast.types.BooleanType;
-import net.iplantevin.ast.types.Type;
-import net.iplantevin.ast.types.TypeEnvironment;
-import net.iplantevin.ast.visitors.IQLASTVisitor;
+import net.iplantevin.ql.ast.LineInfo;
+import net.iplantevin.ql.ast.expressions.Expression;
+import net.iplantevin.ql.ast.types.BooleanType;
+import net.iplantevin.ql.ast.types.Type;
+import net.iplantevin.ql.ast.types.TypeEnvironment;
+import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
 
 /**
  * Created with IntelliJ IDEA.

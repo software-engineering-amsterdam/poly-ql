@@ -1,4 +1,4 @@
-package net.iplantevin.tests;
+package net.iplantevin.ql.tests;
 /**
  * Created with IntelliJ IDEA.
  * User: Ivan
@@ -6,8 +6,8 @@ package net.iplantevin.tests;
  * Tests for antlr4 grammar
  */
 
-import net.iplantevin.antlr.QLLexer;
-import net.iplantevin.antlr.QLParser;
+import net.iplantevin.ql.antlr.QLLexer;
+import net.iplantevin.ql.antlr.QLParser;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.junit.Assert;

@@ -1,6 +1,6 @@
-package net.iplantevin.exceptions;
+package net.iplantevin.ql.exceptions;
 
-import net.iplantevin.ast.statements.Questionable;
+import net.iplantevin.ql.ast.statements.Questionable;
 
 /**
  * @author Ivan

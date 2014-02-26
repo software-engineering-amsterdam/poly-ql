@@ -1,7 +1,7 @@
-package net.iplantevin.ast.expressions.operators;
+package net.iplantevin.ql.ast.expressions.operators;
 
-import net.iplantevin.ast.LineInfo;
-import net.iplantevin.ast.expressions.Expression;
+import net.iplantevin.ql.ast.LineInfo;
+import net.iplantevin.ql.ast.expressions.Expression;
 
 /**
  * Created with IntelliJ IDEA.

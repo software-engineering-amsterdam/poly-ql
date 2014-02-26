@@ -1,8 +1,8 @@
-package net.iplantevin.ast.visitors.typechecker;
+package net.iplantevin.ql.ast.visitors.typechecker;
 
-import net.iplantevin.ast.statements.Questionable;
-import net.iplantevin.exceptions.ExceptionCollection;
-import net.iplantevin.exceptions.QLDuplicateLabelException;
+import net.iplantevin.ql.ast.statements.Questionable;
+import net.iplantevin.ql.exceptions.ExceptionCollection;
+import net.iplantevin.ql.exceptions.QLDuplicateLabelException;
 
 import java.util.HashMap;
 

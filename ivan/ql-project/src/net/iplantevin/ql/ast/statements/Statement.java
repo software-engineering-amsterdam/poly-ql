@@ -1,6 +1,6 @@
-package net.iplantevin.ast.statements;
+package net.iplantevin.ql.ast.statements;
 
-import net.iplantevin.ast.QLASTNode;
+import net.iplantevin.ql.ast.QLASTNode;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 /**

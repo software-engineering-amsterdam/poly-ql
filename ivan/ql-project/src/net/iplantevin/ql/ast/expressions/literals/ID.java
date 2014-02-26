@@ -1,10 +1,10 @@
-package net.iplantevin.ast.expressions.literals;
+package net.iplantevin.ql.ast.expressions.literals;
 
-import net.iplantevin.ast.LineInfo;
-import net.iplantevin.ast.expressions.Expression;
-import net.iplantevin.ast.types.Type;
-import net.iplantevin.ast.types.TypeEnvironment;
-import net.iplantevin.ast.visitors.IQLASTVisitor;
+import net.iplantevin.ql.ast.LineInfo;
+import net.iplantevin.ql.ast.expressions.Expression;
+import net.iplantevin.ql.ast.types.Type;
+import net.iplantevin.ql.ast.types.TypeEnvironment;
+import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 /**

@@ -1,6 +1,6 @@
-package net.iplantevin.exceptions;
+package net.iplantevin.ql.exceptions;
 
-import net.iplantevin.ast.QLASTNode;
+import net.iplantevin.ql.ast.QLASTNode;
 
 /**
  * @author Ivan
