@@ -1,0 +1,5 @@
+form Modifier {
+    num: "Give a number" number
+	num2: "Negative" (-num)
+	num3: "Inverse" (!num)
+}

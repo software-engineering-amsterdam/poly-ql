@@ -1,14 +1,23 @@
 package nl.uva.polyql.model.values;
 
+import nl.uva.polyql.exceptions.UnsupportedOperandTypeException;
 import nl.uva.polyql.model.expressions.modifiers.Modifier;
 import nl.uva.polyql.model.expressions.operators.bool.BooleanOperator;
 import nl.uva.polyql.model.expressions.operators.number.NumberOperator;
 import nl.uva.polyql.model.expressions.operators.string.StringOperator;
+import nl.uva.polyql.model.types.Type;
 
 public class StringValue extends Value<String> {
 
+    private static final Type TYPE = Type.STRING;
+
     public StringValue(final String value) {
         super(value);
+    }
+
+    @Override
+    public Type getType() {
+        return TYPE;
     }
 
     @Override
@@ -18,8 +27,7 @@ public class StringValue extends Value<String> {
 
     @Override
     public NumberValue performOperationOnLeft(final NumberOperator operator, final Value<?> rightValue) {
-        // TODO Auto-generated method stub
-        return null;
+        throw new UnsupportedOperandTypeException(this, operator, rightValue);
     }
 
     @Override
@@ -29,14 +37,12 @@ public class StringValue extends Value<String> {
 
     @Override
     public BooleanValue performOperationOnRight(final BooleanValue leftValue, final BooleanOperator operator) {
-        // TODO: Throw exception
-        return null;
+        throw new UnsupportedOperandTypeException(leftValue, operator, this);
     }
 
     @Override
     public BooleanValue performOperationOnRight(final NumberValue leftValue, final BooleanOperator operator) {
-        // TODO: Throw exception
-        return null;
+        throw new UnsupportedOperandTypeException(leftValue, operator, this);
     }
 
     @Override
@@ -46,8 +52,7 @@ public class StringValue extends Value<String> {
 
     @Override
     public NumberValue performOperationOnRight(final NumberValue leftValue, final NumberOperator operator) {
-        // TODO: Throw exception
-        return null;
+        throw new UnsupportedOperandTypeException(leftValue, operator, this);
     }
 
     @Override

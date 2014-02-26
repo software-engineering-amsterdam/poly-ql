@@ -1,14 +1,23 @@
 package nl.uva.polyql.model.values;
 
+import nl.uva.polyql.exceptions.UnsupportedOperandTypeException;
 import nl.uva.polyql.model.expressions.modifiers.Modifier;
 import nl.uva.polyql.model.expressions.operators.bool.BooleanOperator;
 import nl.uva.polyql.model.expressions.operators.number.NumberOperator;
 import nl.uva.polyql.model.expressions.operators.string.StringOperator;
+import nl.uva.polyql.model.types.Type;
 
 public class NumberValue extends Value<Double> {
 
+    private static final Type TYPE = Type.NUMBER;
+
     public NumberValue(final Double value) {
         super(value);
+    }
+
+    @Override
+    public Type getType() {
+        return TYPE;
     }
 
     @Override
@@ -23,14 +32,12 @@ public class NumberValue extends Value<Double> {
 
     @Override
     public StringValue performOperationOnLeft(final StringOperator operator, final Value<?> rightValue) {
-        // TODO: Throw exception
-        return null;
+        throw new UnsupportedOperandTypeException(this, operator, rightValue);
     }
 
     @Override
     public BooleanValue performOperationOnRight(final BooleanValue leftValue, final BooleanOperator operator) {
-        // TODO: Throw exception
-        return null;
+        throw new UnsupportedOperandTypeException(leftValue, operator, this);
     }
 
     @Override
@@ -40,8 +47,7 @@ public class NumberValue extends Value<Double> {
 
     @Override
     public BooleanValue performOperationOnRight(final StringValue leftValue, final BooleanOperator operator) {
-        // TODO: Throw exception
-        return null;
+        throw new UnsupportedOperandTypeException(leftValue, operator, this);
     }
 
     @Override
@@ -56,8 +62,7 @@ public class NumberValue extends Value<Double> {
 
     @Override
     public StringValue performOperationOnRight(final NumberValue leftValue, final StringOperator operator) {
-        // TODO: Throw exception
-        return null;
+        throw new UnsupportedOperandTypeException(leftValue, operator, this);
     }
 
     @Override

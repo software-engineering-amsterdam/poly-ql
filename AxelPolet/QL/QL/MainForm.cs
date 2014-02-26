@@ -32,6 +32,7 @@ namespace QL
         {
             txtOutput.Clear();
             Identifiers.Reset();
+            QLTypeChecker.ClearAdditionalErrors();
 
             string inputString = txtInput.Text;
             MemoryStream inputStream = new MemoryStream(Encoding.UTF8.GetBytes(inputString ?? ""));
@@ -66,13 +67,9 @@ namespace QL
                 typeChecker.Check(AST);
 
                 txtOutput.Text += string.Format(@"{0}{0} Generated parse tree: 
-                                              {0} {1}
-                                              {0} {2}
-                                              {0} {3}"
+                                              {0} {1}"
                                     , Environment.NewLine
-                                    , tree.ToStringTree(parser)
-                                    , AST.ID
-                                    , AST.Title);
+                                    , tree.ToStringTree(parser));
             }
         }
             

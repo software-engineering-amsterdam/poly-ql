@@ -1,5 +1,6 @@
 ﻿using System;
 using QL.QLClasses.Expressions.Unary;
+using QL.QLClasses.Types;
 using QL.TypeChecker;
 
 namespace QL.QLClasses.Expressions.Math
@@ -11,22 +12,10 @@ namespace QL.QLClasses.Expressions.Math
 
         public override bool CheckType(ref QLException error)
         {
-            if (LeftValue.GetType() != RightValue.GetType())
+            if (!(LeftValue.GetResultType().IsCompatibleWithQInt(null) || !RightValue.GetResultType().IsCompatibleWithQInt(null)))
             {
-                error.Message = string.Format("(MathExpression) Type mismatch! LeftValue: '{0}', RightValue '{1}'", LeftValue.GetType(), RightValue.GetType());
-                error.TokenLine = TokenLine;
-                error.TokenColumn = TokenColumn;
-                error.TokenText = TokenText;
-
-                return false;
-            }
-
-            if (LeftValue.GetType() != typeof(int) && RightValue.GetType() != typeof(int))
-            {
-                error.Message = string.Format("(MathExpression) Expect 2 integers! LeftValue: '{0}', RightValue '{1}'", LeftValue.GetType(), RightValue.GetType());
-                error.TokenLine = TokenLine;
-                error.TokenColumn = TokenColumn;
-                error.TokenText = TokenText;
+                error.Message = string.Format("(MathExpression) Expect 2 integers! LeftValue: '{0}', RightValue '{1}'", LeftValue.GetResultType(), RightValue.GetResultType());
+                error.TokenInfo = LeftValue.TokenInfo;
 
                 return false;
             }
@@ -34,9 +23,9 @@ namespace QL.QLClasses.Expressions.Math
             return true;
         }
 
-        public override Type GetType()
+        public override QBaseType GetResultType()
         {
-            return LeftValue.GetType();
+            return LeftValue.GetResultType();
         }
     }
 }

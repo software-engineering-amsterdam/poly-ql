@@ -6,15 +6,17 @@ namespace QL.QLClasses.Statements
 {
     public abstract class StatementBase : ITypeChecker
     {
-        public int TokenLine { get; set; }
-        public int TokenColumn { get; set; }
-        public string TokenText { get; set; }
+        public QLTokenInfo TokenInfo { get; set; }
 
         public IToken Token 
         {
-            set { TokenLine = value.Line; TokenColumn = value.Column; TokenText = value.Text; }
+            set { TokenInfo = new QLTokenInfo(value);}
         }
 
+        #region TypeChecker Implementation
+
         public abstract bool CheckType(ref QLException error);
+
+        #endregion
     }
 }

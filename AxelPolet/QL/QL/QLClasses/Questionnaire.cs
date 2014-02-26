@@ -5,7 +5,6 @@ namespace QL.QLClasses
 {
     public class Questionnaire
     {
-        public string ID { get; set; }
         public string Title { get; set; }
         public List<StatementBase> Body { get; set; }
     }
