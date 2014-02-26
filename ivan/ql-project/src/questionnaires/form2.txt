@@ -1,0 +1,29 @@
+form Box1HouseOwning {
+ hasSoldHouse: "Did you sell a house in 2010?" boolean
+ hasBoughtHouse: "Did you by a house in 2010?" boolean
+ hasMaintLoan: "Did you enter a loan for maintenance/reconstruction?" boolean
+ 
+ if (hasBoughtHouse) lol: "Do you like your new house?" boolean
+ 
+ if (hasSoldHouse) {
+   sellingPrice: "Price the house was sold for:" integer
+   privateDebt: "Private debts for the sold house:" integer
+   valueResidue: "Value residue:" integer(sellingPrice - privateDebt)
+
+   if (sellingPrice > 150000 && privateDebt == 0 || valueResidue > 100000)
+     message: "Congratulations!" string("Hurray!")
+ }
+ else {
+   message: "You didn't sell a house?" string("Looser!")
+ }
+}
+
+form secondForm {
+  man: "Are you a man?" boolean
+  age: "How old are you?" integer
+  
+  if (man && (age < 12)) // It's a boy
+    present: "Your birthday present will be:" integer(10 * age)
+  else
+    present: "Your birthday present will be:" integer(0)
+}

@@ -6,16 +6,18 @@ package net.iplantevin.tests;
  * Tests for antlr4 grammar
  */
 
+import net.iplantevin.antlr.QLLexer;
+import net.iplantevin.antlr.QLParser;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
 import org.junit.Assert;
 import org.junit.Test;
 
-import org.antlr.v4.runtime.*;
-
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-
-import net.iplantevin.antlr.*;
 
 
 public class GrammarTest {
@@ -40,7 +42,7 @@ public class GrammarTest {
 
     private String getMessage(String fileName) {
         return "The parse tree for input file '" + fileName + ext +
-               "' does not match the expected tree:";
+                "' does not match the expected tree:";
     }
 
     @Test
@@ -51,7 +53,7 @@ public class GrammarTest {
         // Holds all files to test for expression rule.
         String[] files = new String[]{"expr1", "expr2", "expr3", "expr4", "expr5"};
 
-        for(String file : files) {
+        for (String file : files) {
             parser = getParser(file);
             expected = getExpectedTree(file);
             actual = parser.expr().toStringTree(parser);
@@ -67,7 +69,7 @@ public class GrammarTest {
         // Holds all files to test for form rule.
         String[] files = new String[]{"form1"};
 
-        for(String file : files) {
+        for (String file : files) {
             parser = getParser(file);
             expected = getExpectedTree(file);
             actual = parser.form().toStringTree(parser);
