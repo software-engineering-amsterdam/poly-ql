@@ -1,0 +1,6 @@
+form DuplicateId {
+    num: "Give a number" number
+    if (num > 5) {
+    	num: "Number is more than 5" (num)
+    }
+}

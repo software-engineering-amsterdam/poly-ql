@@ -1,0 +1,5 @@
+form Warnings {
+    q1: "Label here" boolean
+    q2: "Label here as well" boolean
+    q3: "Label here" boolean
+}
