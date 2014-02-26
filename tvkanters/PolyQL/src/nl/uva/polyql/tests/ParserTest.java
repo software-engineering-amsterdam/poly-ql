@@ -7,10 +7,14 @@ import static org.junit.Assert.fail;
 import nl.uva.polyql.Log;
 import nl.uva.polyql.ParserHelper;
 import nl.uva.polyql.exceptions.DuplicateQuestionIdException;
+import nl.uva.polyql.exceptions.InvalidIfStatementTypeException;
+import nl.uva.polyql.exceptions.InvalidModifierException;
+import nl.uva.polyql.exceptions.InvalidQuestionIdException;
 import nl.uva.polyql.exceptions.UnsupportedOperandTypeException;
 import nl.uva.polyql.model.Form;
 import nl.uva.polyql.model.IfStatement;
 import nl.uva.polyql.model.Question;
+import nl.uva.polyql.model.expressions.modifiers.ModifierHelper;
 import nl.uva.polyql.model.types.Type;
 
 import org.junit.Before;
@@ -34,6 +38,16 @@ public class ParserTest {
         question.setValueFromInput("10");
 
         assertTrue(ifStatement.isSatisfied());
+    }
+
+    @Test
+    public void testIfStatementType() {
+        try {
+            ParserHelper.parseResourceForm("ex_ifstatement");
+            fail("No exception throw for non-boolean if-statement expression");
+        } catch (final InvalidIfStatementTypeException ex) {
+            // Test passed
+        }
     }
 
     @Test
@@ -81,10 +95,30 @@ public class ParserTest {
     @Test
     public void testDuplicateId() {
         try {
-            ParserHelper.parseResourceForm("duplicateid");
+            ParserHelper.parseResourceForm("ex_duplicateid");
             fail("No exception throw for duplicate IDs");
         } catch (final DuplicateQuestionIdException ex) {
             // Test passed
+        }
+    }
+
+    @Test
+    public void testInvalidId() {
+        try {
+            ParserHelper.parseResourceForm("ex_invalidid");
+            fail("No exception throw for invalid IDs");
+        } catch (final InvalidQuestionIdException ex) {
+            // Test passed
+        }
+    }
+
+    @Test
+    public void testModifier() {
+        try {
+            ParserHelper.parseResourceForm("ex_modifier");
+            fail("No exception throw for invalid IDs");
+        } catch (final InvalidModifierException ex) {
+            assertEquals(ModifierHelper.getBySyntax("!"), ex.getModifier());
         }
     }
 }
