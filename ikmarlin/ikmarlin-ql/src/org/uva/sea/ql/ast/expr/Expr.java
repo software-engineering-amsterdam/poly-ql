@@ -9,7 +9,7 @@ public abstract class Expr implements ExprVisitable {
 	public abstract Type hasType();
 	
 	@Override
-	public abstract <T> T accept(ExprVisitor<T> qlv);
+	public abstract <T> T accept(ExprVisitor<T> ev);
 	
 	@Override
 	public abstract String toString();

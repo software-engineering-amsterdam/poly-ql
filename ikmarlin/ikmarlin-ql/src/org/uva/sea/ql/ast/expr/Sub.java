@@ -1,7 +1,7 @@
 package org.uva.sea.ql.ast.expr;
 
-import org.uva.sea.ql.ast.type.Type;
 import org.uva.sea.ql.ast.type.Number;
+import org.uva.sea.ql.ast.type.Type;
 import org.uva.sea.ql.checker.ExprVisitor;
 
 public class Sub extends Binary {

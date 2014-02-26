@@ -18,7 +18,7 @@ public class StmtChecker implements StmtVisitor {
 	
 	private HashMap<String, Type> symbolTable;
 	private ExprChecker ec;
-	private ArrayList<Error> errors;
+	private List<Error> errors;
 	
 	public StmtChecker(HashMap<String, Type> symbolTable) {
 		this.setSymbolTable(symbolTable);
@@ -46,11 +46,11 @@ public class StmtChecker implements StmtVisitor {
 		return !errors.isEmpty();
 	}
 	
-	public ArrayList<Error> getErrors() {
+	public List<Error> getErrors() {
 		return errors;
 	}
 
-	public void setErrors(ArrayList<Error> errors) {
+	public void setErrors(List<Error> errors) {
 		this.errors = errors;
 	}
 	
@@ -74,7 +74,7 @@ public class StmtChecker implements StmtVisitor {
 	@Override
 	public void visit(ComputedQuestion stmt) {
 		Type computationType = ec.infer(stmt.getComputation());
-		Type questionType = stmt.getType().hasType();
+		Type questionType = stmt.getType();
 		addExprErrors(ec.getErrors());
 		if(!computationType.isCompatibleWith(questionType)){
 			String error = "the expression << "+stmt.getComputation()+" >> is not compatible with the type "+questionType+".";

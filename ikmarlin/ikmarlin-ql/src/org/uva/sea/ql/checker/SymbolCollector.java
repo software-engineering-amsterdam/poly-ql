@@ -52,7 +52,7 @@ public class SymbolCollector implements StmtVisitor {
 	}
 	
 	private void addSymbol(Question q){
-		this.symbolTable.put(q.getIdent().getName(), q.getType().hasType());
+		this.symbolTable.put(q.getIdent().getName(), q.getType());
 	}
 
 }
