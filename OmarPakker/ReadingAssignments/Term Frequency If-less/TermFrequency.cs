@@ -6,14 +6,14 @@ using Term_Frequency_If_less.Data;
 
 namespace Term_Frequency_If_less
 {
-	public class TermFrequency
-	{
-		public TermFrequency()
-		{
+    public class TermFrequency
+    {
+        public TermFrequency()
+        {
 
-		}
+        }
 
-		public void ProcessInput(string input)
+        public void ProcessInput(string input)
         {
             ProcessWords(new List<string>(Regex.Replace(Regex.Replace(input.ToLowerInvariant(), @"[^a-z\s]", " "), @"\s+[a-z]\s+", " ")
                 .Split(new[] { ' ', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)));
@@ -32,37 +32,38 @@ namespace Term_Frequency_If_less
 
         private void SetupResultsDictionary(Dictionary<string, int> results, List<string> words)
         {
-            CreateAndRunCounters(new List<Counter>(), words, new HashSet<string>(words), results);
+            CreateAndRunCounters(new Stack<Counter>(), words, new HashSet<string>(words), results);
             CreateAndRunPrinters(new List<KeyValuePair<string, int>>(results));
         }
 
-        private void CreateAndRunCounters(List<Counter> counters, List<string> words, HashSet<string> uniqueWords, Dictionary<string, int> results)
+        private void CreateAndRunCounters(Stack<Counter> counters, List<string> words, HashSet<string> uniqueWords, Dictionary<string, int> results)
         {
-            new List<string>(uniqueWords).ForEach(w => counters.Add(new Counter()));
+            counters.Push(new NullCounter());
+            new List<string>(uniqueWords).ForEach(w => counters.Push(new Counter()));
 
-            counters.Add(new NullCounter());
-            counters[0].Count(counters, words, words.GetEnumerator(), results);
+            counters.Pop().Count(counters, words, results);
         }
 
         private void CreateAndRunPrinters(List<KeyValuePair<string, int>> resultsList)
         {
             resultsList.Sort((kv1, kv2) => kv2.Value - kv1.Value);
 
-            CapOutput(new List<Printer>(), new Printer[Math.Min(resultsList.Count, 25)], resultsList);
+            CapOutput(new List<Printer>(), new Printer[Math.Min(resultsList.Count + 1, 26)], resultsList);
         }
 
         private void CapOutput(List<Printer> printers, Printer[] limitedOutput, List<KeyValuePair<string, int>> resultsList)
         {
-            resultsList.ForEach(w => printers.Add(new Printer()));
-            printers.CopyTo(0, limitedOutput, 0, Math.Min(printers.Count, 25));
-
-            RunPrinters(new List<Printer>(limitedOutput), resultsList);
-        }
-
-        private void RunPrinters(List<Printer> printers, List<KeyValuePair<string, int>> resultsList)
-        {
             printers.Add(new NullPrinter());
-            printers[0].Print(printers, resultsList.GetEnumerator());
+            resultsList.ForEach(w => printers.Add(new Printer()));
+
+            printers.CopyTo(0, limitedOutput, 0, Math.Min(printers.Count, 26));
+
+            RunPrinters(new Stack<Printer>(limitedOutput), resultsList);
         }
-	}
+
+        private void RunPrinters(Stack<Printer> printers, List<KeyValuePair<string, int>> resultsList)
+        {
+            printers.Pop().Print(printers, resultsList.GetEnumerator());
+        }
+    }
 }

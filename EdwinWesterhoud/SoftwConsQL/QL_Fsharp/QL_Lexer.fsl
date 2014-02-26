@@ -67,7 +67,7 @@ and string pos res = parse
 | "\\\""		{ string pos (res + "\\\"") lexbuf }
 | "\""			{ res }
 | newline       { lexbuf.EndPos <- lexbuf.EndPos.NextLine; string pos (res + "\n") lexbuf; }
-| eof			{ failwithf "Unterminated string" }
+| eof			{ failwith "Unterminated string" }
 | _				{ string pos (res + (LexBuffer<_>.LexemeString lexbuf)) lexbuf }
 
 

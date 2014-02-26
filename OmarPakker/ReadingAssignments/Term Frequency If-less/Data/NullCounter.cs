@@ -4,7 +4,7 @@ namespace Term_Frequency_If_less.Data
 {
     public class NullCounter : Counter
     {
-        public override void Count(List<Counter> counters, List<string> words, List<string>.Enumerator wordStepper, Dictionary<string, int> results)
+        public override void Count(Stack<Counter> counters, List<string> words, Dictionary<string, int> results)
         {
 
         }

@@ -21,4 +21,9 @@ public class Or extends BinExpr{
 	public Types typeof(Symboles symb) {
 		return new BoolType();
 	}
+
+	@Override
+	public String show() {
+		return "||";
+	}
 }
