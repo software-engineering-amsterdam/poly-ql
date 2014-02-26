@@ -4,7 +4,7 @@
     {
         public override bool Compare(ExpressionBase leftValue, ExpressionBase rightValue)
         {
-            return leftValue.Result() == rightValue.Result();
+            return leftValue.GetResult() == rightValue.GetResult();
         }
 
         public override string ToString()
