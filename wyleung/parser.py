@@ -40,9 +40,9 @@ def parse(tokens,grammar=None):
 	if grammar:
 		AutoExprParser.p_expr.__func__.__doc__ = grammar
 	
-	parser = AutoExprParser(AST)
+	parser = AutoExprParser(AST, start='form')
 #		parser.p_expr.__func__.__doc__ = grammar
 #	parser.collectRules()
-	pprint.pprint( parser.rules )
+#	pprint.pprint( parser.rules )
 	return parser.parse(tokens)
 
