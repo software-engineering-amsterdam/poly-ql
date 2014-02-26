@@ -67,5 +67,8 @@ public class OperatorHelper {
         return sStringSyntaxMap.contains(operator);
     }
 
+    /**
+     * This class is static-only.
+     */
     private OperatorHelper() {}
 }

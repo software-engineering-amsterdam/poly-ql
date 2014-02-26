@@ -81,8 +81,16 @@ public class Question extends Rule {
         return mId + " = " + mValue;
     }
 
+    /**
+     * The interface for that must be implemented to receive callbacks when the question's value is
+     * update, e.g., when the user types in the question's field.
+     */
     public interface OnUpdateListener {
 
+        /**
+         * Called when the question's value is update, e.g., when the user types in the question's
+         * field.
+         */
         public void onQuestionUpdate(final Question question);
     }
 }

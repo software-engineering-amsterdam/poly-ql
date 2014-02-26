@@ -1,9 +1,8 @@
 package nl.uva.polyql.exceptions;
 
-
 public class InvalidQuestionIdException extends ParsingException {
 
-    private static final long serialVersionUID = 8634412238170543338L;
+    private static final long serialVersionUID = -8331323445960900687L;
 
     private final String mId;
 

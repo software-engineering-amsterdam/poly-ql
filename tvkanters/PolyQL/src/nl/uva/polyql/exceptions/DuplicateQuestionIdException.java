@@ -2,7 +2,7 @@ package nl.uva.polyql.exceptions;
 
 public class DuplicateQuestionIdException extends ParsingException {
 
-    private static final long serialVersionUID = 8634412238170543338L;
+    private static final long serialVersionUID = -10149099570217767L;
 
     private final String mId;
 
