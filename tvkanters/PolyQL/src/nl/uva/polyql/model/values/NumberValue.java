@@ -1,5 +1,6 @@
 package nl.uva.polyql.model.values;
 
+import nl.uva.polyql.model.expressions.modifiers.Modifier;
 import nl.uva.polyql.model.expressions.operators.bool.BooleanOperator;
 import nl.uva.polyql.model.expressions.operators.number.NumberOperator;
 import nl.uva.polyql.model.expressions.operators.string.StringOperator;
@@ -57,6 +58,11 @@ public class NumberValue extends Value<Double> {
     public StringValue performOperationOnRight(final NumberValue leftValue, final StringOperator operator) {
         // TODO: Throw exception
         return null;
+    }
+
+    @Override
+    public NumberValue applyModifier(final Modifier<?> modifier) {
+        return modifier.apply(this);
     }
 
 }

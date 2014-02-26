@@ -1,5 +1,6 @@
 package nl.uva.polyql.model.values;
 
+import nl.uva.polyql.model.expressions.modifiers.Modifier;
 import nl.uva.polyql.model.expressions.operators.bool.BooleanOperator;
 import nl.uva.polyql.model.expressions.operators.number.NumberOperator;
 import nl.uva.polyql.model.expressions.operators.string.StringOperator;
@@ -33,6 +34,8 @@ public abstract class Value<T> {
     public abstract StringValue performOperationOnRight(final StringValue leftValue, final StringOperator operator);
 
     public abstract StringValue performOperationOnRight(final NumberValue leftValue, final StringOperator operator);
+
+    public abstract Value<T> applyModifier(final Modifier<?> modifier);
 
     @Override
     public boolean equals(final Object obj) {

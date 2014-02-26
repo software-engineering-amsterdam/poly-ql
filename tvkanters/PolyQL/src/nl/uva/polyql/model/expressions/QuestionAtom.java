@@ -5,13 +5,15 @@ import java.util.Set;
 
 import nl.uva.polyql.model.Question;
 import nl.uva.polyql.model.RuleContainer;
+import nl.uva.polyql.model.expressions.modifiers.ModifierHelper;
+import nl.uva.polyql.model.expressions.modifiers.Modifier;
 import nl.uva.polyql.model.types.Type;
 import nl.uva.polyql.model.values.Value;
 
 public class QuestionAtom extends Expression {
 
     private final Question mQuestion;
-    private final Modifier mModifier;
+    private final Modifier<?> mModifier;
 
     public QuestionAtom(final RuleContainer parentRuleContainer, final String id, final String modifier) {
         mQuestion = parentRuleContainer.getQuestion(id);
@@ -19,7 +21,7 @@ public class QuestionAtom extends Expression {
             throw new RuntimeException("Unknown question ID " + id);
         }
 
-        mModifier = Modifier.getBySyntax(modifier);
+        mModifier = ModifierHelper.getBySyntax(modifier);
         if (!mModifier.isValid(mQuestion.getType())) {
             throw new RuntimeException("Unsupported modifier " + mModifier + " for type " + mQuestion.getType());
         }
@@ -32,7 +34,7 @@ public class QuestionAtom extends Expression {
 
     @Override
     public Value<?> getValue() {
-        return mModifier.apply(mQuestion);
+        return mQuestion.getValue().applyModifier(mModifier);
     }
 
     @Override

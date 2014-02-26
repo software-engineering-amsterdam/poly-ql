@@ -1,5 +1,6 @@
 package nl.uva.polyql.model.values;
 
+import nl.uva.polyql.model.expressions.modifiers.Modifier;
 import nl.uva.polyql.model.expressions.operators.bool.BooleanOperator;
 import nl.uva.polyql.model.expressions.operators.number.NumberOperator;
 import nl.uva.polyql.model.expressions.operators.string.StringOperator;
@@ -57,6 +58,11 @@ public class StringValue extends Value<String> {
     @Override
     public StringValue performOperationOnRight(final StringValue leftValue, final StringOperator operator) {
         return operator.performOperation(leftValue, this);
+    }
+
+    @Override
+    public StringValue applyModifier(final Modifier<?> modifier) {
+        return modifier.apply(this);
     }
 
 }

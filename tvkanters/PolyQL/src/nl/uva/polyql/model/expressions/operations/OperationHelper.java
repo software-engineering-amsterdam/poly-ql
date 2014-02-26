@@ -33,4 +33,6 @@ public class OperationHelper {
 
         return leftType;
     }
+
+    private OperationHelper() {}
 }
