@@ -29,9 +29,9 @@ namespace QL.QLClasses.Expressions.Identifier
         {
             if (!Referenced)
             {
-                if (Identifiers.IsDefined(Identifier))
+                if (QLIdentifiers.IsDefined(Identifier))
                 {
-                    QLException error = new QLException();
+                    QLTypeError error = new QLTypeError();
 
                     error.Message = string.Format("Identifier '{0}' already defined!", Identifier);
                     error.TokenInfo = TokenInfo;
@@ -40,7 +40,7 @@ namespace QL.QLClasses.Expressions.Identifier
                 }
                 else
                 {
-                    Identifiers.AddIdentifier(Identifier, this);
+                    QLIdentifiers.AddIdentifier(Identifier, this);
                 }
             }
         }
@@ -52,10 +52,10 @@ namespace QL.QLClasses.Expressions.Identifier
 
             if (Referenced)
             {
-                if (!Identifiers.IsDefined(Identifier))
+                if (!QLIdentifiers.IsDefined(Identifier))
                     return null;
 
-                QIdentifier refId = Identifiers.GetIdentifier(Identifier);
+                QIdentifier refId = QLIdentifiers.GetIdentifier(Identifier);
                 return InnerType = refId.GetResultType();
             }
 
@@ -69,10 +69,10 @@ namespace QL.QLClasses.Expressions.Identifier
 
             if (Referenced)
             {
-                if (!Identifiers.IsDefined(Identifier))
+                if (!QLIdentifiers.IsDefined(Identifier))
                     return null;
 
-                QIdentifier refId = Identifiers.GetIdentifier(Identifier);
+                QIdentifier refId = QLIdentifiers.GetIdentifier(Identifier);
                 return InnerValue = refId.GetResult();
             }
 
@@ -81,9 +81,9 @@ namespace QL.QLClasses.Expressions.Identifier
 
         #region TypeChecker Implementation
 
-        public override bool CheckType(ref QLException error)
+        public override bool CheckType(ref QLTypeError error)
         {
-            if (Referenced && !Identifiers.IsDefined(Identifier))
+            if (Referenced && !QLIdentifiers.IsDefined(Identifier))
             {
                 error.Message = string.Format("Referenced identifier '{0}' is not defined!", Identifier);
                 error.TokenInfo = TokenInfo;

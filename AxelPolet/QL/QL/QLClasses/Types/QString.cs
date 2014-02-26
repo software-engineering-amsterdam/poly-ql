@@ -10,10 +10,12 @@ namespace QL.QLClasses.Types
             return this;
         }
 
-        public override bool CheckType(ref QLException error)
+        public override bool CheckType(ref QLTypeError error)
         {
             return true;
         }
+
+        #region Double Dispatch Implementation
 
         public override bool IsCompatibleWith(QBaseType type)
         {
@@ -24,5 +26,7 @@ namespace QL.QLClasses.Types
         {
             return true;
         }
+
+        #endregion
     }
 }
