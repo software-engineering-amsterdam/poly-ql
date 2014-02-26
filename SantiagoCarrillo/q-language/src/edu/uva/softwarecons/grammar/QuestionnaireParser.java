@@ -71,6 +71,11 @@ public class QuestionnaireParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).exitQuestionnaire(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitQuestionnaire(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final QuestionnaireContext questionnaire() throws RecognitionException {
@@ -136,8 +141,13 @@ public class QuestionnaireParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).exitSimpleQuestion(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitSimpleQuestion(this);
+			else return visitor.visitChildren(this);
+		}
 	}
-	public static class ExpQuestionContext extends QuestionContext {
+	public static class ComputedQuestionContext extends QuestionContext {
 		public ExprContext expr() {
 			return getRuleContext(ExprContext.class,0);
 		}
@@ -146,14 +156,19 @@ public class QuestionnaireParser extends Parser {
 			return getRuleContext(TypeContext.class,0);
 		}
 		public TerminalNode STRING() { return getToken(QuestionnaireParser.STRING, 0); }
-		public ExpQuestionContext(QuestionContext ctx) { copyFrom(ctx); }
+		public ComputedQuestionContext(QuestionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).enterExpQuestion(this);
+			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).enterComputedQuestion(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).exitExpQuestion(this);
+			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).exitComputedQuestion(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitComputedQuestion(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class IfContext extends QuestionContext {
@@ -178,6 +193,11 @@ public class QuestionnaireParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).exitIf(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitIf(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final QuestionContext question() throws RecognitionException {
@@ -199,7 +219,7 @@ public class QuestionnaireParser extends Parser {
 				break;
 
 			case 2:
-				_localctx = new ExpQuestionContext(_localctx);
+				_localctx = new ComputedQuestionContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(24); match(ID);
@@ -285,6 +305,11 @@ public class QuestionnaireParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).exitIfElse(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitIfElse(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final ElsestatContext elsestat() throws RecognitionException {
@@ -346,6 +371,11 @@ public class QuestionnaireParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).exitInteger(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitInteger(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	public static class StringContext extends TypeContext {
 		public TerminalNode STRING_TYPE() { return getToken(QuestionnaireParser.STRING_TYPE, 0); }
@@ -357,6 +387,11 @@ public class QuestionnaireParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).exitString(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitString(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class MoneyContext extends TypeContext {
@@ -370,17 +405,27 @@ public class QuestionnaireParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).exitMoney(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitMoney(this);
+			else return visitor.visitChildren(this);
+		}
 	}
-	public static class BoolContext extends TypeContext {
+	public static class BooleanContext extends TypeContext {
 		public TerminalNode BOOL_TYPE() { return getToken(QuestionnaireParser.BOOL_TYPE, 0); }
-		public BoolContext(TypeContext ctx) { copyFrom(ctx); }
+		public BooleanContext(TypeContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).enterBool(this);
+			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).enterBoolean(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).exitBool(this);
+			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).exitBoolean(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitBoolean(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class DateContext extends TypeContext {
@@ -394,6 +439,11 @@ public class QuestionnaireParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).exitDate(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitDate(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	public static class DecimalContext extends TypeContext {
 		public TerminalNode DECIMAL_TYPE() { return getToken(QuestionnaireParser.DECIMAL_TYPE, 0); }
@@ -406,6 +456,11 @@ public class QuestionnaireParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).exitDecimal(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitDecimal(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final TypeContext type() throws RecognitionException {
@@ -415,7 +470,7 @@ public class QuestionnaireParser extends Parser {
 			setState(61);
 			switch (_input.LA(1)) {
 			case BOOL_TYPE:
-				_localctx = new BoolContext(_localctx);
+				_localctx = new BooleanContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(55); match(BOOL_TYPE);
@@ -496,17 +551,46 @@ public class QuestionnaireParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).exitNot(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitNot(this);
+			else return visitor.visitChildren(this);
+		}
 	}
-	public static class IntContext extends ExprContext {
-		public TerminalNode INT() { return getToken(QuestionnaireParser.INT, 0); }
-		public IntContext(ExprContext ctx) { copyFrom(ctx); }
+	public static class IdContext extends ExprContext {
+		public TerminalNode ID() { return getToken(QuestionnaireParser.ID, 0); }
+		public IdContext(ExprContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).enterInt(this);
+			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).enterId(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).exitInt(this);
+			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).exitId(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitId(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class TypeExpContext extends ExprContext {
+		public TypeContext type() {
+			return getRuleContext(TypeContext.class,0);
+		}
+		public TypeExpContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).enterTypeExp(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).exitTypeExp(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitTypeExp(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class OrContext extends ExprContext {
@@ -526,6 +610,11 @@ public class QuestionnaireParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).exitOr(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitOr(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	public static class MulDivContext extends ExprContext {
 		public TerminalNode MUL() { return getToken(QuestionnaireParser.MUL, 0); }
@@ -544,6 +633,11 @@ public class QuestionnaireParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).exitMulDiv(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitMulDiv(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class CompareContext extends ExprContext {
@@ -568,6 +662,11 @@ public class QuestionnaireParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).exitCompare(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitCompare(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	public static class AddSubContext extends ExprContext {
 		public List<ExprContext> expr() {
@@ -587,6 +686,11 @@ public class QuestionnaireParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).exitAddSub(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitAddSub(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	public static class ParenthesisContext extends ExprContext {
 		public ExprContext expr() {
@@ -601,17 +705,10 @@ public class QuestionnaireParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).exitParenthesis(this);
 		}
-	}
-	public static class VariableContext extends ExprContext {
-		public TerminalNode ID() { return getToken(QuestionnaireParser.ID, 0); }
-		public VariableContext(ExprContext ctx) { copyFrom(ctx); }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).enterVariable(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).exitVariable(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitParenthesis(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class AndContext extends ExprContext {
@@ -630,6 +727,11 @@ public class QuestionnaireParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).exitAnd(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitAnd(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -663,18 +765,23 @@ public class QuestionnaireParser extends Parser {
 				break;
 			case ID:
 				{
-				_localctx = new VariableContext(_localctx);
+				_localctx = new IdContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
 				setState(66); match(ID);
 				}
 				break;
-			case INT:
+			case BOOL_TYPE:
+			case STRING_TYPE:
+			case INT_TYPE:
+			case DATE_TYPE:
+			case DECIMAL_TYPE:
+			case MONEY_TYPE:
 				{
-				_localctx = new IntContext(_localctx);
+				_localctx = new TypeExpContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(67); match(INT);
+				setState(67); type();
 				}
 				break;
 			case 5:
@@ -835,7 +942,7 @@ public class QuestionnaireParser extends Parser {
 		"\63\62\3\2\2\2\64\65\3\2\2\2\65\63\3\2\2\2\65\66\3\2\2\2\66\67\3\2\2\2"+
 		"\678\7\b\2\28\7\3\2\2\29@\7\t\2\2:@\7\n\2\2;@\7\13\2\2<@\7\f\2\2=@\7\r"+
 		"\2\2>@\7\16\2\2?9\3\2\2\2?:\3\2\2\2?;\3\2\2\2?<\3\2\2\2?=\3\2\2\2?>\3"+
-		"\2\2\2@\t\3\2\2\2AB\b\6\1\2BC\7\23\2\2CK\5\n\6\bDK\7\36\2\2EK\7\37\2\2"+
+		"\2\2\2@\t\3\2\2\2AB\b\6\1\2BC\7\23\2\2CK\5\n\6\bDK\7\36\2\2EK\5\b\5\2"+
 		"FG\7\7\2\2GH\5\n\6\2HI\7\5\2\2IK\3\2\2\2JA\3\2\2\2JD\3\2\2\2JE\3\2\2\2"+
 		"JF\3\2\2\2K]\3\2\2\2LM\f\13\2\2MN\t\2\2\2N\\\5\n\6\fOP\f\n\2\2PQ\t\3\2"+
 		"\2Q\\\5\n\6\13RS\f\t\2\2ST\t\4\2\2T\\\5\n\6\nUV\f\7\2\2VW\7\24\2\2W\\"+

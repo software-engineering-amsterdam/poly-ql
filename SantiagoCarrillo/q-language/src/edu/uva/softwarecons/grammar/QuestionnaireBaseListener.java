@@ -30,19 +30,6 @@ public class QuestionnaireBaseListener implements QuestionnaireListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExpQuestion(@NotNull QuestionnaireParser.ExpQuestionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitExpQuestion(@NotNull QuestionnaireParser.ExpQuestionContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterIfElse(@NotNull QuestionnaireParser.IfElseContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -50,6 +37,19 @@ public class QuestionnaireBaseListener implements QuestionnaireListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitIfElse(@NotNull QuestionnaireParser.IfElseContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterComputedQuestion(@NotNull QuestionnaireParser.ComputedQuestionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitComputedQuestion(@NotNull QuestionnaireParser.ComputedQuestionContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
@@ -82,13 +82,13 @@ public class QuestionnaireBaseListener implements QuestionnaireListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterInt(@NotNull QuestionnaireParser.IntContext ctx) { }
+	@Override public void enterTypeExp(@NotNull QuestionnaireParser.TypeExpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitInt(@NotNull QuestionnaireParser.IntContext ctx) { }
+	@Override public void exitTypeExp(@NotNull QuestionnaireParser.TypeExpContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
@@ -154,6 +154,19 @@ public class QuestionnaireBaseListener implements QuestionnaireListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitAnd(@NotNull QuestionnaireParser.AndContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterId(@NotNull QuestionnaireParser.IdContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitId(@NotNull QuestionnaireParser.IdContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
@@ -238,6 +251,19 @@ public class QuestionnaireBaseListener implements QuestionnaireListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterBoolean(@NotNull QuestionnaireParser.BooleanContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBoolean(@NotNull QuestionnaireParser.BooleanContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterParenthesis(@NotNull QuestionnaireParser.ParenthesisContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -245,32 +271,6 @@ public class QuestionnaireBaseListener implements QuestionnaireListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitParenthesis(@NotNull QuestionnaireParser.ParenthesisContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterBool(@NotNull QuestionnaireParser.BoolContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitBool(@NotNull QuestionnaireParser.BoolContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterVariable(@NotNull QuestionnaireParser.VariableContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitVariable(@NotNull QuestionnaireParser.VariableContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

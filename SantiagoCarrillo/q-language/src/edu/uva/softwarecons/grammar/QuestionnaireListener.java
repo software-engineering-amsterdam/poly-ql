@@ -20,17 +20,6 @@ public interface QuestionnaireListener extends ParseTreeListener {
 	void exitSimpleQuestion(@NotNull QuestionnaireParser.SimpleQuestionContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link QuestionnaireParser#expQuestion}.
-	 * @param ctx the parse tree
-	 */
-	void enterExpQuestion(@NotNull QuestionnaireParser.ExpQuestionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link QuestionnaireParser#expQuestion}.
-	 * @param ctx the parse tree
-	 */
-	void exitExpQuestion(@NotNull QuestionnaireParser.ExpQuestionContext ctx);
-
-	/**
 	 * Enter a parse tree produced by {@link QuestionnaireParser#ifElse}.
 	 * @param ctx the parse tree
 	 */
@@ -40,6 +29,17 @@ public interface QuestionnaireListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitIfElse(@NotNull QuestionnaireParser.IfElseContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link QuestionnaireParser#computedQuestion}.
+	 * @param ctx the parse tree
+	 */
+	void enterComputedQuestion(@NotNull QuestionnaireParser.ComputedQuestionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QuestionnaireParser#computedQuestion}.
+	 * @param ctx the parse tree
+	 */
+	void exitComputedQuestion(@NotNull QuestionnaireParser.ComputedQuestionContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link QuestionnaireParser#integer}.
@@ -64,15 +64,15 @@ public interface QuestionnaireListener extends ParseTreeListener {
 	void exitOr(@NotNull QuestionnaireParser.OrContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link QuestionnaireParser#int}.
+	 * Enter a parse tree produced by {@link QuestionnaireParser#typeExp}.
 	 * @param ctx the parse tree
 	 */
-	void enterInt(@NotNull QuestionnaireParser.IntContext ctx);
+	void enterTypeExp(@NotNull QuestionnaireParser.TypeExpContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link QuestionnaireParser#int}.
+	 * Exit a parse tree produced by {@link QuestionnaireParser#typeExp}.
 	 * @param ctx the parse tree
 	 */
-	void exitInt(@NotNull QuestionnaireParser.IntContext ctx);
+	void exitTypeExp(@NotNull QuestionnaireParser.TypeExpContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link QuestionnaireParser#compare}.
@@ -128,6 +128,17 @@ public interface QuestionnaireListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitAnd(@NotNull QuestionnaireParser.AndContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link QuestionnaireParser#id}.
+	 * @param ctx the parse tree
+	 */
+	void enterId(@NotNull QuestionnaireParser.IdContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QuestionnaireParser#id}.
+	 * @param ctx the parse tree
+	 */
+	void exitId(@NotNull QuestionnaireParser.IdContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link QuestionnaireParser#not}.
@@ -196,6 +207,17 @@ public interface QuestionnaireListener extends ParseTreeListener {
 	void exitMoney(@NotNull QuestionnaireParser.MoneyContext ctx);
 
 	/**
+	 * Enter a parse tree produced by {@link QuestionnaireParser#boolean}.
+	 * @param ctx the parse tree
+	 */
+	void enterBoolean(@NotNull QuestionnaireParser.BooleanContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QuestionnaireParser#boolean}.
+	 * @param ctx the parse tree
+	 */
+	void exitBoolean(@NotNull QuestionnaireParser.BooleanContext ctx);
+
+	/**
 	 * Enter a parse tree produced by {@link QuestionnaireParser#parenthesis}.
 	 * @param ctx the parse tree
 	 */
@@ -205,26 +227,4 @@ public interface QuestionnaireListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitParenthesis(@NotNull QuestionnaireParser.ParenthesisContext ctx);
-
-	/**
-	 * Enter a parse tree produced by {@link QuestionnaireParser#bool}.
-	 * @param ctx the parse tree
-	 */
-	void enterBool(@NotNull QuestionnaireParser.BoolContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link QuestionnaireParser#bool}.
-	 * @param ctx the parse tree
-	 */
-	void exitBool(@NotNull QuestionnaireParser.BoolContext ctx);
-
-	/**
-	 * Enter a parse tree produced by {@link QuestionnaireParser#variable}.
-	 * @param ctx the parse tree
-	 */
-	void enterVariable(@NotNull QuestionnaireParser.VariableContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link QuestionnaireParser#variable}.
-	 * @param ctx the parse tree
-	 */
-	void exitVariable(@NotNull QuestionnaireParser.VariableContext ctx);
 }

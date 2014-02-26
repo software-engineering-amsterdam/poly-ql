@@ -10,8 +10,10 @@ import edu.uva.softwarecons.model.type.Type;
  */
 public class UnaryExpression implements Expression {
 
-    private Type type;
+    private Expression expression;
 
-    private Operator operator;
 
+    public UnaryExpression(Expression expression) {
+        this.expression = expression;
+    }
 }

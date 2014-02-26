@@ -2,17 +2,17 @@ package edu.uva.softwarecons.main;
 
 import edu.uva.softwarecons.grammar.QuestionnaireBaseListener;
 import edu.uva.softwarecons.grammar.QuestionnaireParser;
-import edu.uva.softwarecons.model.ConditionalQuestion;
+import edu.uva.softwarecons.model.question.ComputedQuestion;
 import edu.uva.softwarecons.model.Form;
-import edu.uva.softwarecons.model.Question;
+import edu.uva.softwarecons.model.question.IfQuestion;
+import edu.uva.softwarecons.model.question.Question;
 import edu.uva.softwarecons.model.expression.Expression;
-import edu.uva.softwarecons.model.expression.VariableExpression;
+import edu.uva.softwarecons.model.expression.IdExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.AddExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.DivExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.MulExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.SubExpression;
 import edu.uva.softwarecons.model.expression.bool.AndExpression;
-import edu.uva.softwarecons.model.expression.bool.NotExpression;
 import edu.uva.softwarecons.model.expression.bool.OrExpression;
 import edu.uva.softwarecons.model.expression.comparison.*;
 import edu.uva.softwarecons.model.type.*;
@@ -23,16 +23,18 @@ import org.antlr.v4.runtime.misc.NotNull;
  * User: sancarbar
  * Date: 2/19/14
  */
-public class Evaluator extends QuestionnaireBaseListener{
+public class QuestionnaireEvaluator extends QuestionnaireBaseListener{
 
 
     Form form;
 
-    Question currentQuestion;
-
     Type currentType;
 
-    boolean isSimpleQuestion = true;
+    IfQuestion currentIfQuestion;
+
+    boolean isIfQuestion = false;
+
+    boolean isIfQuestionExpressionSet = false;
 
     boolean isBinaryExpression;
 
@@ -49,41 +51,56 @@ public class Evaluator extends QuestionnaireBaseListener{
         form = new Form(ctx.ID().getText());
     }
 
+    private void checkForIfQuestionExpression() {
+        if(isIfQuestion && !isIfQuestionExpressionSet){
+            currentIfQuestion.setExpression(currentExpression);
+            isIfQuestionExpressionSet = true;
+        }
+    }
+
     @Override
     public void enterIf(@NotNull QuestionnaireParser.IfContext ctx) {
         super.enterIf(ctx);
-        isSimpleQuestion = false;
+        isIfQuestion = true;
+        currentIfQuestion = new IfQuestion();
     }
 
     @Override
     public void exitIf(@NotNull QuestionnaireParser.IfContext ctx) {
         super.exitIf(ctx);
-        isSimpleQuestion = true;
+        form.addQuestion(currentIfQuestion);
+        isIfQuestion = false;
     }
 
-    @Override
-    public void enterSimpleQuestion(@NotNull QuestionnaireParser.SimpleQuestionContext ctx) {
-        super.enterSimpleQuestion(ctx);
-        currentQuestion = isSimpleQuestion ? new Question(ctx.ID().getText(), ctx.STRING().getText()):
-                new ConditionalQuestion(ctx.ID().getText(), ctx.STRING().getText());
-    }
+
+    //Simple Question
 
     @Override
     public void exitSimpleQuestion(@NotNull QuestionnaireParser.SimpleQuestionContext ctx) {
         super.exitSimpleQuestion(ctx);
-        currentQuestion.setType(currentType);
-        if(currentQuestion instanceof ConditionalQuestion){
-            ((ConditionalQuestion)currentQuestion).setExpression(currentExpression);
-            form.addConditionalQuestion((ConditionalQuestion) currentQuestion);
+        if(isIfQuestion){
+            currentIfQuestion.addQuestion(new Question(ctx.ID().getText(), ctx.STRING().getText(), currentType));
         }else
-            form.addQuestion(currentQuestion);
+            form.addQuestion(new Question(ctx.ID().getText(), ctx.STRING().getText(), currentType));
     }
+
+    //Computed Question
+
+    @Override
+    public void exitComputedQuestion(@NotNull QuestionnaireParser.ComputedQuestionContext ctx) {
+        super.exitComputedQuestion(ctx);
+        if(isIfQuestion)
+            currentIfQuestion.addQuestion(new ComputedQuestion(ctx.ID().getText(), ctx.STRING().getText(), currentType, currentExpression));
+        else
+            form.addQuestion(new ComputedQuestion(ctx.ID().getText(), ctx.STRING().getText(), currentType, currentExpression));
+    }
+
 
     //Data Types
 
     @Override
-    public void exitBool(@NotNull QuestionnaireParser.BoolContext ctx) {
-        super.exitBool(ctx);
+    public void exitBoolean(@NotNull QuestionnaireParser.BooleanContext ctx) {
+        super.exitBoolean(ctx);
         currentType = new BooleanType();
     }
 
@@ -138,6 +155,8 @@ public class Evaluator extends QuestionnaireBaseListener{
         currentExpression = (null != ctx.MUL()) ?
                 new MulExpression(currentLeftExpression, currentRightExpression):
                 new DivExpression(currentLeftExpression, currentRightExpression);
+        checkForIfQuestionExpression();
+
     }
 
     @Override
@@ -154,6 +173,7 @@ public class Evaluator extends QuestionnaireBaseListener{
                 new SubExpression(currentLeftExpression, currentRightExpression):
                 new AddExpression(currentLeftExpression, currentRightExpression);
         isBinaryExpression = false;
+        checkForIfQuestionExpression();
     }
 
     @Override
@@ -167,6 +187,8 @@ public class Evaluator extends QuestionnaireBaseListener{
         super.exitAnd(ctx);
         currentExpression = new AndExpression(currentLeftExpression, currentRightExpression);
         isBinaryExpression = false;
+        checkForIfQuestionExpression();
+
     }
 
     @Override
@@ -180,6 +202,8 @@ public class Evaluator extends QuestionnaireBaseListener{
         super.exitOr(ctx);
         currentExpression = new OrExpression(currentLeftExpression, currentRightExpression);
         isBinaryExpression = false;
+        checkForIfQuestionExpression();
+
     }
 
     @Override
@@ -204,22 +228,28 @@ public class Evaluator extends QuestionnaireBaseListener{
             currentExpression = new LessExpression(currentLeftExpression, currentRightExpression);
         else if(null != ctx.NEq())
             currentExpression = new NotEqualExpression(currentLeftExpression, currentRightExpression);
+        checkForIfQuestionExpression();
     }
+
+
 
     @Override
     public void exitNot(@NotNull QuestionnaireParser.NotContext ctx) {
         super.exitNot(ctx);
-        currentExpression = new NotExpression();
+//        currentExpression = new NotExpression();
+        checkForIfQuestionExpression();
     }
 
     @Override
-    public void exitVariable(@NotNull QuestionnaireParser.VariableContext ctx) {
-        super.exitVariable(ctx);
+    public void exitId(@NotNull QuestionnaireParser.IdContext ctx) {
+        super.exitId(ctx);
         if(isBinaryExpression){
             if(null == currentLeftExpression)
-                currentLeftExpression = new VariableExpression(ctx.ID().getText());
+                currentLeftExpression = new IdExpression(ctx.ID().getText());
             else
-                currentRightExpression = new VariableExpression(ctx.ID().getText());
-        }
+                currentRightExpression = new IdExpression(ctx.ID().getText());
+        }else
+            currentExpression = new IdExpression(ctx.ID().getText());
+        checkForIfQuestionExpression();
     }
 }

@@ -1,4 +1,4 @@
-package edu.uva.softwarecons.model;
+package edu.uva.softwarecons.model.question;
 
 import edu.uva.softwarecons.model.expression.Expression;
 import edu.uva.softwarecons.model.type.Type;
@@ -12,8 +12,9 @@ public class ComputedQuestion extends Question {
 
     Expression expression;
 
-    public ComputedQuestion(String id, String label) {
-        super(id, label);
+    public ComputedQuestion(String id, String text, Type type, Expression expression) {
+        super(id, text, type);
+        this.expression = expression;
     }
 
     public void setExpression(Expression expression) {

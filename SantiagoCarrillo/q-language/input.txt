@@ -6,5 +6,10 @@ form Box1HouseOwning {
         sellingPrice: "Price the house was sold for:" money
         privateDebt: "Private debts for the sold house:" money
         valueResidue: "Value residue:" money(sellingPrice * privateDebt)
+        if (hasSoldHouse) {
+            bitches: "Vamos !!" money(sellingPrice * privateDebt)
+        }else{
+            bitches: "Vamos !!" money(sellingPrice * privateDebt)
+        }
        }
  }
