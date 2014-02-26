@@ -5,6 +5,9 @@ import java.util.Map;
 
 import nl.uva.polyql.model.Question;
 import nl.uva.polyql.model.Type;
+import nl.uva.polyql.model.values.BooleanValue;
+import nl.uva.polyql.model.values.NumberValue;
+import nl.uva.polyql.model.values.Value;
 
 public enum Modifier {
     NONE(""),
@@ -32,9 +35,9 @@ public enum Modifier {
         mSyntax = syntax;
     }
 
-    public Object apply(final Question question) {
+    public Value<?> apply(final Question question) {
         final Type type = question.getType();
-        final Object value = question.getValue();
+        final Value<?> value = question.getValue();
 
         switch (this) {
         case NONE:
@@ -42,13 +45,13 @@ public enum Modifier {
 
         case INVERSE:
             if (type == Type.BOOLEAN) {
-                return !(Boolean) value;
+                return new BooleanValue(!((BooleanValue) value).getValue());
             }
             break;
 
         case NEGATIVE:
             if (type == Type.NUMBER) {
-                return -(Double) value;
+                return new NumberValue(-((NumberValue) value).getValue());
             }
             break;
 

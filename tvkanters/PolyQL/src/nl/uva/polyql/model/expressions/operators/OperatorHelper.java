@@ -2,12 +2,15 @@ package nl.uva.polyql.model.expressions.operators;
 
 import nl.uva.polyql.model.expressions.operators.bool.*;
 import nl.uva.polyql.model.expressions.operators.number.*;
+import nl.uva.polyql.model.values.BooleanValue;
+import nl.uva.polyql.model.values.NumberValue;
+import nl.uva.polyql.model.values.StringValue;
 
 public class OperatorHelper {
 
-    private final static OperatorMap<Boolean> sBooleanSyntaxMap = new OperatorMap<>();
-    private final static OperatorMap<Double> sNumberSyntaxMap = new OperatorMap<>();
-    private final static OperatorMap<String> sStringSyntaxMap = new OperatorMap<>();
+    private final static OperatorMap<BooleanValue> sBooleanSyntaxMap = new OperatorMap<>();
+    private final static OperatorMap<NumberValue> sNumberSyntaxMap = new OperatorMap<>();
+    private final static OperatorMap<StringValue> sStringSyntaxMap = new OperatorMap<>();
 
     static {
         sBooleanSyntaxMap.put(new EqualsOperator());
@@ -28,15 +31,15 @@ public class OperatorHelper {
         sStringSyntaxMap.put(new nl.uva.polyql.model.expressions.operators.string.AddOperator());
     }
 
-    public static Operator<Boolean> getBooleanOperator(final String operator) {
+    public static Operator<BooleanValue> getBooleanOperator(final String operator) {
         return sBooleanSyntaxMap.get(operator);
     }
 
-    public static Operator<Double> getNumberOperator(final String operator) {
+    public static Operator<NumberValue> getNumberOperator(final String operator) {
         return sNumberSyntaxMap.get(operator);
     }
 
-    public static Operator<String> getStringOperator(final String operator) {
+    public static Operator<StringValue> getStringOperator(final String operator) {
         return sStringSyntaxMap.get(operator);
     }
 

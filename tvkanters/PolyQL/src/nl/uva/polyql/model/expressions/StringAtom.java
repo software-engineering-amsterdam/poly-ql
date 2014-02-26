@@ -5,14 +5,15 @@ import java.util.Set;
 
 import nl.uva.polyql.model.Question;
 import nl.uva.polyql.model.Type;
+import nl.uva.polyql.model.values.StringValue;
 
 public class StringAtom extends Expression {
 
-    private final String mValue;
+    private final StringValue mValue;
 
     public StringAtom(final String value) {
         // Strip out the quotes
-        mValue = (String) Type.STRING.parseInput(value);
+        mValue = (StringValue) Type.STRING.parseInput(value);
     }
 
     @Override
@@ -21,7 +22,7 @@ public class StringAtom extends Expression {
     }
 
     @Override
-    public String getValue() {
+    public StringValue getValue() {
         return mValue;
     }
 

@@ -1,6 +1,7 @@
 package nl.uva.polyql.model;
 
 import nl.uva.polyql.model.expressions.Expression;
+import nl.uva.polyql.model.values.BooleanValue;
 
 public class IfStatement extends RuleContainer implements Question.OnUpdateListener {
 
@@ -25,7 +26,7 @@ public class IfStatement extends RuleContainer implements Question.OnUpdateListe
     }
 
     public boolean isSatisfied() {
-        return (Boolean) mExpression.getValue();
+        return ((BooleanValue) mExpression.getValue()).getValue();
     }
 
     @Override

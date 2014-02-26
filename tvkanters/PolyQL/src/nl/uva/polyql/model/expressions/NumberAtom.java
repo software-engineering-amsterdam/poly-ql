@@ -5,13 +5,14 @@ import java.util.Set;
 
 import nl.uva.polyql.model.Question;
 import nl.uva.polyql.model.Type;
+import nl.uva.polyql.model.values.NumberValue;
 
 public class NumberAtom extends Expression {
 
-    private final double mValue;
+    private final NumberValue mValue;
 
     public NumberAtom(final String value) {
-        mValue = (Double) Type.NUMBER.parseInput(value);
+        mValue = (NumberValue) Type.NUMBER.parseInput(value);
     }
 
     @Override
@@ -20,7 +21,7 @@ public class NumberAtom extends Expression {
     }
 
     @Override
-    public Double getValue() {
+    public NumberValue getValue() {
         return mValue;
     }
 

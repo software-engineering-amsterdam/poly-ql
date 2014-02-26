@@ -3,40 +3,21 @@ package nl.uva.polyql.model.expressions.operators.string;
 import nl.uva.polyql.model.Type;
 import nl.uva.polyql.model.expressions.Expression;
 import nl.uva.polyql.model.expressions.operators.Operator;
-import nl.uva.polyql.model.expressions.operators.UnsupportedOperandTypeException;
+import nl.uva.polyql.model.values.NumberValue;
+import nl.uva.polyql.model.values.StringValue;
 
-public abstract class StringOperator extends Operator<String> {
+public abstract class StringOperator extends Operator<StringValue> {
 
     @Override
-    protected String performOperation(final Expression left, final Expression right) {
-        final Type leftType = left.getReturnType();
-        final Type rightType = right.getReturnType();
-
-        final String leftValue;
-        final String rightValue;
-
-        switch (leftType) {
-        case STRING:
-        case NUMBER:
-            leftValue = left.getValue().toString();
-            break;
-        default:
-            throw new UnsupportedOperandTypeException(leftType, getSyntax(), rightType);
-        }
-
-        switch (rightType) {
-        case STRING:
-        case NUMBER:
-            rightValue = right.getValue().toString();
-            break;
-        default:
-            throw new UnsupportedOperandTypeException(leftType, getSyntax(), rightType);
-        }
-
-        return performOperation(leftValue, rightValue);
+    protected StringValue performOperation(final Expression left, final Expression right) {
+        return left.getValue().performOperationOnLeft(this, right.getValue());
     }
 
-    protected abstract String performOperation(final String left, final String right);
+    public abstract StringValue performOperation(final StringValue left, final StringValue right);
+
+    public abstract StringValue performOperation(final StringValue left, final NumberValue right);
+
+    public abstract StringValue performOperation(final NumberValue left, final StringValue right);
 
     @Override
     public boolean isValid(final Type leftType, final Type rightType) {

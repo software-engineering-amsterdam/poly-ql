@@ -4,8 +4,9 @@ import nl.uva.polyql.model.Type;
 import nl.uva.polyql.model.expressions.Expression;
 import nl.uva.polyql.model.expressions.operators.Operator;
 import nl.uva.polyql.model.expressions.operators.OperatorHelper;
+import nl.uva.polyql.model.values.BooleanValue;
 
-public class BooleanOperation extends Operation<Boolean> {
+public class BooleanOperation extends Operation<BooleanValue> {
 
     public BooleanOperation(final Expression left, final String operator, final Expression right) {
         super(left, operator, right);
@@ -17,7 +18,7 @@ public class BooleanOperation extends Operation<Boolean> {
     }
 
     @Override
-    protected Operator<Boolean> getOperator(final String operator) {
+    protected Operator<BooleanValue> getOperator(final String operator) {
         return OperatorHelper.getBooleanOperator(operator);
     }
 

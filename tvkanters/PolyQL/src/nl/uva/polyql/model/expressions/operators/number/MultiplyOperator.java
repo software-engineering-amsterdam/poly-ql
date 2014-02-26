@@ -1,5 +1,7 @@
 package nl.uva.polyql.model.expressions.operators.number;
 
+import nl.uva.polyql.model.values.NumberValue;
+
 public class MultiplyOperator extends NumberOperator {
 
     public static final String SYNTAX = "*";
@@ -10,8 +12,8 @@ public class MultiplyOperator extends NumberOperator {
     }
 
     @Override
-    protected Double performOperation(double left, double right) {
-        return left * right;
+    public NumberValue performOperation(final NumberValue left, final NumberValue right) {
+        return new NumberValue(left.getValue() * right.getValue());
     }
 
 }

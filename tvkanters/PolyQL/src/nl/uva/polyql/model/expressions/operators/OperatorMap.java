@@ -3,7 +3,9 @@ package nl.uva.polyql.model.expressions.operators;
 import java.util.HashMap;
 import java.util.Map;
 
-public class OperatorMap<T> {
+import nl.uva.polyql.model.values.Value;
+
+public class OperatorMap<T extends Value<?>> {
 
     private final Map<String, Operator<T>> sSyntaxMap = new HashMap<>();
 

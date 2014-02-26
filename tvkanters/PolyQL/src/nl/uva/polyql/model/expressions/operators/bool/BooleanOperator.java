@@ -2,32 +2,23 @@ package nl.uva.polyql.model.expressions.operators.bool;
 
 import nl.uva.polyql.model.Type;
 import nl.uva.polyql.model.expressions.operators.SameOperandOperator;
-import nl.uva.polyql.model.expressions.operators.UnsupportedOperandTypeException;
+import nl.uva.polyql.model.values.BooleanValue;
+import nl.uva.polyql.model.values.NumberValue;
+import nl.uva.polyql.model.values.StringValue;
+import nl.uva.polyql.model.values.Value;
 
-public abstract class BooleanOperator extends SameOperandOperator<Boolean> {
+public abstract class BooleanOperator extends SameOperandOperator<BooleanValue> {
 
     @Override
-    protected Boolean performOperation(final Type operandType, final Object leftValue, final Object rightValue) {
-        switch (operandType) {
-        case BOOLEAN:
-            return performOperation((boolean) leftValue, (boolean) rightValue);
-
-        case NUMBER:
-            return performOperation((double) leftValue, (double) rightValue);
-
-        case STRING:
-            return performOperation((String) leftValue, (String) rightValue);
-
-        default:
-            throw new UnsupportedOperandTypeException(operandType, getSyntax());
-        }
+    public BooleanValue performOperation(final Type operandType, final Value<?> leftValue, final Value<?> rightValue) {
+        return leftValue.performOperationOnLeft(this, rightValue);
     }
 
-    protected abstract Boolean performOperation(final boolean left, final boolean right);
+    public abstract BooleanValue performOperation(final BooleanValue left, final BooleanValue right);
 
-    protected abstract Boolean performOperation(final double left, final double right);
+    public abstract BooleanValue performOperation(final NumberValue left, final NumberValue right);
 
-    protected abstract Boolean performOperation(final String left, final String right);
+    public abstract BooleanValue performOperation(final StringValue left, final StringValue right);
 
     @Override
     public boolean isValid(final Type type) {

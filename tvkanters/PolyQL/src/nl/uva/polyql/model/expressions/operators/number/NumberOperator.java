@@ -2,22 +2,17 @@ package nl.uva.polyql.model.expressions.operators.number;
 
 import nl.uva.polyql.model.Type;
 import nl.uva.polyql.model.expressions.operators.SameOperandOperator;
-import nl.uva.polyql.model.expressions.operators.UnsupportedOperandTypeException;
+import nl.uva.polyql.model.values.NumberValue;
+import nl.uva.polyql.model.values.Value;
 
-public abstract class NumberOperator extends SameOperandOperator<Double> {
+public abstract class NumberOperator extends SameOperandOperator<NumberValue> {
 
     @Override
-    protected Double performOperation(final Type operandType, final Object leftValue, final Object rightValue) {
-        switch (operandType) {
-        case NUMBER:
-            return performOperation((double) leftValue, (double) rightValue);
-
-        default:
-            throw new UnsupportedOperandTypeException(operandType, getSyntax());
-        }
+    public NumberValue performOperation(final Type operandType, final Value<?> leftValue, final Value<?> rightValue) {
+        return leftValue.performOperationOnLeft(this, rightValue);
     }
 
-    protected abstract Double performOperation(final double left, final double right);
+    public abstract NumberValue performOperation(final NumberValue left, final NumberValue right);
 
     @Override
     public boolean isValid(final Type type) {

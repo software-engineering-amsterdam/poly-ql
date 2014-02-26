@@ -2,6 +2,9 @@ package nl.uva.polyql.model.expressions.operators.bool;
 
 import nl.uva.polyql.model.Type;
 import nl.uva.polyql.model.expressions.operators.UnsupportedOperandTypeException;
+import nl.uva.polyql.model.values.BooleanValue;
+import nl.uva.polyql.model.values.NumberValue;
+import nl.uva.polyql.model.values.StringValue;
 
 public class AndOperator extends BooleanOperator {
 
@@ -13,17 +16,17 @@ public class AndOperator extends BooleanOperator {
     }
 
     @Override
-    protected Boolean performOperation(boolean left, boolean right) {
-        return left && right;
+    public BooleanValue performOperation(final BooleanValue left, final BooleanValue right) {
+        return new BooleanValue(left.getValue() && right.getValue());
     }
 
     @Override
-    protected Boolean performOperation(double left, double right) {
+    public BooleanValue performOperation(final NumberValue left, final NumberValue right) {
         throw new UnsupportedOperandTypeException(Type.NUMBER, SYNTAX);
     }
 
     @Override
-    protected Boolean performOperation(String left, String right) {
+    public BooleanValue performOperation(final StringValue left, final StringValue right) {
         throw new UnsupportedOperandTypeException(Type.STRING, SYNTAX);
     }
 

@@ -8,8 +8,9 @@ import nl.uva.polyql.model.Type;
 import nl.uva.polyql.model.expressions.Expression;
 import nl.uva.polyql.model.expressions.operators.Operator;
 import nl.uva.polyql.model.expressions.operators.UnsupportedOperandTypeException;
+import nl.uva.polyql.model.values.Value;
 
-public abstract class Operation<T> extends Expression {
+public abstract class Operation<T extends Value<?>> extends Expression {
 
     private final Expression mLeft;
     private final Operator<T> mOperator;

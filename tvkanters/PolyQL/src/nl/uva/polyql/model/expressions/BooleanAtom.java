@@ -5,13 +5,14 @@ import java.util.Set;
 
 import nl.uva.polyql.model.Question;
 import nl.uva.polyql.model.Type;
+import nl.uva.polyql.model.values.BooleanValue;
 
 public class BooleanAtom extends Expression {
 
-    private final boolean mValue;
+    private final BooleanValue mValue;
 
     public BooleanAtom(final String value) {
-        mValue = (Boolean) Type.BOOLEAN.parseInput(value);
+        mValue = (BooleanValue) Type.BOOLEAN.parseInput(value);
     }
 
     @Override
@@ -20,7 +21,7 @@ public class BooleanAtom extends Expression {
     }
 
     @Override
-    public Boolean getValue() {
+    public BooleanValue getValue() {
         return mValue;
     }
 

@@ -4,13 +4,15 @@ import java.util.HashSet;
 import java.util.Set;
 
 import nl.uva.polyql.Log;
+import nl.uva.polyql.model.values.StringValue;
+import nl.uva.polyql.model.values.Value;
 
 public class Question extends Rule {
 
     private final String mId;
     private final String mLabel;
     private final Type mType;
-    private Object mValue;
+    private Value<?> mValue;
     private boolean mValueValid = true;
 
     private final Set<OnUpdateListener> mUpdateListeners = new HashSet<>();
@@ -27,7 +29,7 @@ public class Question extends Rule {
         }
 
         mId = id;
-        mLabel = (String) Type.STRING.parseInput(label);
+        mLabel = ((StringValue) Type.STRING.parseInput(label)).getValue();
         mType = type;
 
         setValue(mType.getDefaultValue());
@@ -45,7 +47,7 @@ public class Question extends Rule {
         return mType;
     }
 
-    public void setValue(final Object value) {
+    public void setValue(final Value<?> value) {
         mValue = value;
 
         for (final OnUpdateListener valueListener : mUpdateListeners) {
@@ -54,12 +56,12 @@ public class Question extends Rule {
     }
 
     public void setValueFromInput(final String input) {
-        final Object value = mType.parseInput(input);
+        final Value<?> value = mType.parseInput(input);
         mValueValid = value != null;
         setValue(value);
     }
 
-    public Object getValue() {
+    public Value<?> getValue() {
         return mValue;
     }
 
