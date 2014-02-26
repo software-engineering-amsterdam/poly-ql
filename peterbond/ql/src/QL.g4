@@ -11,6 +11,8 @@ question: QUESTION;
 block: qit 
      | ifcon; 
      
+qitwrapper: qit;     
+     
 qit: identifier ': "'question'"'type              #QitStat
    | identifier ': "'question'"'type '(' expr ')' #QitExprStat
    ;
@@ -20,8 +22,8 @@ type: 'boolean'
     | 'text'
     ;
 
-ifcon : 'if(' expr ') {' qit+ '}' 'else' '{' qit+ '}' #IfStat
-      | 'if(' expr ') {' qit+ '}'                     #IfElseStat
+ifcon : 'if(' expr ') {' block+ '}' 'else' '{' block+ '}' #IfElseStat
+      | 'if(' expr ') {' block+ '}'                     #IfStat
       ;
 
 expr: '!' expr       # NegOp

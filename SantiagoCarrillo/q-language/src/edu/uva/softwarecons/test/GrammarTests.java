@@ -1,4 +1,4 @@
-package edu.uva.softwarecons.junit;
+package edu.uva.softwarecons.test;
 
 import edu.uva.softwarecons.main.ParserUtil;
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -45,6 +45,24 @@ public class GrammarTests {
                 "(questionnaire form Box1HouseOwning { (question if ( (expr (expr a) == (expr b)) ) { (question hasSoldHouse : \"Did you sell a house in 2010?\" (type boolean)) }) })");
     }
 
+
+    @Test
+    public void booleansAndFormTest(){
+        InputStream inputStream = new ByteArrayInputStream("form Box1HouseOwning {if(a==b && a<b){hasSoldHouse: \"t\" date}}".getBytes());
+        ParseTree tree = parserUtil.buildParseTree(inputStream);
+        assertEquals(tree.toStringTree(parserUtil.getParser()),
+                "(questionnaire form Box1HouseOwning { (question if ( (expr (expr (expr a) == (expr b)) && (expr (expr a) < (expr b))) ) { (question hasSoldHouse : \"t\" (type date)) }) })");
+    }
+
+
+    @Test
+    public void booleansAndOrFormTest(){
+        InputStream inputStream = new ByteArrayInputStream("form Box1HouseOwning {if(a==b && a<b){hasSoldHouse: \"t\" date}}".getBytes());
+        ParseTree tree = parserUtil.buildParseTree(inputStream);
+        assertEquals(tree.toStringTree(parserUtil.getParser()),
+                "(questionnaire form Box1HouseOwning { (question if ( (expr (expr (expr a) == (expr b)) && (expr (expr a) < (expr b))) ) { (question hasSoldHouse : \"t\" (type date)) }) })");
+    }
+
     @Test
     public void conditionalIfElseFormTest(){
         InputStream inputStream = new ByteArrayInputStream("form Box1HouseOwning {if(a==b){hasSoldHouse: \"text\" boolean} else { hasSoldHouse: \"text\" money }}".getBytes());
@@ -66,7 +84,6 @@ public class GrammarTests {
     public void expressionOperationTest(){
         InputStream inputStream = new ByteArrayInputStream("form Box1HouseOwning {hasSoldHouse: \"text\" money(1+5*5)}".getBytes());
         ParseTree tree = parserUtil.buildParseTree(inputStream);
-//        System.out.println(tree.toStringTree(parserUtil.getParser()));
         assertEquals(tree.toStringTree(parserUtil.getParser()),
                 "(questionnaire form Box1HouseOwning { (question hasSoldHouse : \"text\" (type money) (expr ( (expr (expr 1) + (expr (expr 5) * (expr 5))) ))) })");
     }
