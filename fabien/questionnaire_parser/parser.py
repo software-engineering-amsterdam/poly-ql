@@ -10,7 +10,7 @@ if __name__ == '__main__':
 
     try:
         xml = form.parseFile( options.filename ).asXML()
-        #print xml
+        print xml
         
     except IOError:
         #print "File %s not found\n" % options.filename

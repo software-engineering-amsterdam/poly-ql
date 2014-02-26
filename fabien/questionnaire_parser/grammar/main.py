@@ -9,7 +9,6 @@ word       = Word(alphanums + "`~_-+=!@#$%^&*[]:;.,'/") # all but {} () " and ?
 variable   = Word(alphanums)
 keyword    = oneOf("required example success error value validation")
 
-
 # Multiple words
 sentence   = OneOrMore(word).setParseAction(toSentence)
 string     = Suppress('"') + sentence + Suppress('"')   #quotedString
@@ -33,6 +32,7 @@ ask           = sentence('ask') + Suppress("?")
 question_type = Optional(type + variable('id'))
 question      = Group(ask + question_type + settings + options)('question')
 
+
 # Condition block
 condition = Forward()
 
@@ -44,13 +44,21 @@ left_term  = Optional(variable | condition)
 right_term = Optional(condition | variable('term'))
 term       = Optional(_not) + (left_term | right_term)
 
-# Final expression
+# Condition allows recursive/nested (terms) 
 condition << Group(Suppress("(") + Group(term)('left') + Optional(operator + Group(term)('right')) + Suppress(")"))
 
 
+
+# Put (i.e computed fields/answers)
+# Match: put "Label text" (value * 3)
+# Skips spacing, so also allows (value*3)
+put = Group(Suppress("put") + Optional(string)('answer') + condition('computation'))('put')
+
+
+# Expression
 expression = Forward()
 
-block           = Suppress("{") + ZeroOrMore(question | expression) + Suppress("}")
+block           = Suppress("{") + ZeroOrMore(question | put | expression) + Suppress("}")
 condition_block = Group(condition + block)
 
 _if   = Suppress("if")      + condition_block('if')

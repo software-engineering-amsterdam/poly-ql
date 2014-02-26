@@ -19,6 +19,10 @@ Running the parser:
 
 `python parser.py -f forms/if-else.txt`
 
+Running tests
+
+`python test.py`
+
 
 # Notes / TODO
 

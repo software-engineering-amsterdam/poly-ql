@@ -48,29 +48,37 @@ class ParserTestCase(unittest.TestCase):
         self.assertNoMatch(string, '\'hello\'')
         self.assertNoMatch(string, '"hello')
         self.assertNoMatch(string, 'hello')
-    
-    def test_expression(self):
-        self.assertMatch(expr, "()")
-        self.assertMatch(expr, "(hello)")
+
+    # TODO : Test associativity
+    def test_put(self):
+        self.assertMatch(put, "put \"Your answer was\" () ")
+        self.assertMatch(put, "put \"Your answer was\" (foo * 3)")
+        self.assertMatch(put, "put \"Your answer was\" (foo * (3 + bar))")
+        self.assertMatch(put, "put (foo * 3)")
    
-        self.assertNoMatch(expr, "(hello)(world)")
+        
+    def test_expression(self):
+        self.assertMatch(condition, "()")
+        self.assertMatch(condition, "(hello)")
+   
+        self.assertNoMatch(condition, "(hello)(world)")
    
     def test_negation(self):
-        self.assertMatch(expr, "(!hello)")
+        self.assertMatch(condition, "(!hello)")
         
     def test_nested_expression(self):
-        self.assertMatch(expr, "(())")
-        self.assertMatch(expr, "( (hello) )")
-        self.assertMatch(expr, "( hello and world )")
-        self.assertMatch(expr, "( hello and !world )")
-        self.assertMatch(expr, "( hello and not world )")
-        self.assertMatch(expr, "( hello and (hello or world) )")
-        self.assertMatch(expr, "( !(hello or world) and hello )")
+        self.assertMatch(condition, "(())")
+        self.assertMatch(condition, "( (hello) )")
+        self.assertMatch(condition, "( hello and world )")
+        self.assertMatch(condition, "( hello and !world )")
+        self.assertMatch(condition, "( hello and not world )")
+        self.assertMatch(condition, "( hello and (hello or world) )")
+        self.assertMatch(condition, "( !(hello or world) and hello )")
    
-        self.assertNoMatch(expr, "( (hello or world) hello )")
+        self.assertNoMatch(condition, "( (hello or world) hello )")
 
     def test_operators_in_expression(self):
-        self.assertMatch(expr, "( hello > world )")
+        self.assertMatch(condition, "( hello > world )")
 
     def test_if(self):
         self.assertMatch(_if, 'if (hello) { }')
@@ -79,7 +87,7 @@ class ParserTestCase(unittest.TestCase):
         self.assertNoMatch(_if, 'else if (hello)')
         
     def test_else_if(self):
-        self.assertMatch(_else_if, 'else if (hello) { }')
+        self.assertMatch(_elif, 'else if (hello) { }')
         
     def test_else(self):
         self.assertMatch(_else, 'else { }')
@@ -88,9 +96,9 @@ class ParserTestCase(unittest.TestCase):
         self.assertNoMatch(_else, 'else if (hello) { }')
     
     def test_condition(self):
-        self.assertMatch(condition, 'if (hello) { }')
-        self.assertMatch(condition, 'if (hello) { }\n else if (foo) { } ')
-        self.assertMatch(condition, 'if (hello) { }\n else if (foo) { }\n else {} ')
+        self.assertMatch(expression, 'if (hello) { }')
+        self.assertMatch(expression, 'if (hello) { }\n else if (foo) { } ')
+        self.assertMatch(expression, 'if (hello) { }\n else if (foo) { }\n else {} ')
         
     def test_question(self):
         self.assertMatch(question, 'How old are you?')
