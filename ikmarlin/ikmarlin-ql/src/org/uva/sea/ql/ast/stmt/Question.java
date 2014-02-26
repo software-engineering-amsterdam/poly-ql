@@ -39,4 +39,13 @@ public abstract class Question extends Stmt {
 		this.type = type;
 	}
 	
+	@Override
+	public String toString(){
+		String question = "[";
+		question += getIdent().getName();
+		question += " = ";
+		question += getType().toString();
+		question += "]";
+		return question;
+	}
 }

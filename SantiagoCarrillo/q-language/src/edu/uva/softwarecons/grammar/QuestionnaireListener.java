@@ -9,6 +9,28 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface QuestionnaireListener extends ParseTreeListener {
 	/**
+	 * Enter a parse tree produced by {@link QuestionnaireParser#simpleQuestion}.
+	 * @param ctx the parse tree
+	 */
+	void enterSimpleQuestion(@NotNull QuestionnaireParser.SimpleQuestionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QuestionnaireParser#simpleQuestion}.
+	 * @param ctx the parse tree
+	 */
+	void exitSimpleQuestion(@NotNull QuestionnaireParser.SimpleQuestionContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link QuestionnaireParser#expQuestion}.
+	 * @param ctx the parse tree
+	 */
+	void enterExpQuestion(@NotNull QuestionnaireParser.ExpQuestionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QuestionnaireParser#expQuestion}.
+	 * @param ctx the parse tree
+	 */
+	void exitExpQuestion(@NotNull QuestionnaireParser.ExpQuestionContext ctx);
+
+	/**
 	 * Enter a parse tree produced by {@link QuestionnaireParser#ifElse}.
 	 * @param ctx the parse tree
 	 */
@@ -64,26 +86,15 @@ public interface QuestionnaireListener extends ParseTreeListener {
 	void exitCompare(@NotNull QuestionnaireParser.CompareContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link QuestionnaireParser#AddSub}.
+	 * Enter a parse tree produced by {@link QuestionnaireParser#mulDiv}.
 	 * @param ctx the parse tree
 	 */
-	void enterAddSub(@NotNull QuestionnaireParser.AddSubContext ctx);
+	void enterMulDiv(@NotNull QuestionnaireParser.MulDivContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link QuestionnaireParser#AddSub}.
+	 * Exit a parse tree produced by {@link QuestionnaireParser#mulDiv}.
 	 * @param ctx the parse tree
 	 */
-	void exitAddSub(@NotNull QuestionnaireParser.AddSubContext ctx);
-
-	/**
-	 * Enter a parse tree produced by {@link QuestionnaireParser#parens}.
-	 * @param ctx the parse tree
-	 */
-	void enterParens(@NotNull QuestionnaireParser.ParensContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link QuestionnaireParser#parens}.
-	 * @param ctx the parse tree
-	 */
-	void exitParens(@NotNull QuestionnaireParser.ParensContext ctx);
+	void exitMulDiv(@NotNull QuestionnaireParser.MulDivContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link QuestionnaireParser#date}.
@@ -108,17 +119,6 @@ public interface QuestionnaireListener extends ParseTreeListener {
 	void exitDecimal(@NotNull QuestionnaireParser.DecimalContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link QuestionnaireParser#quest}.
-	 * @param ctx the parse tree
-	 */
-	void enterQuest(@NotNull QuestionnaireParser.QuestContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link QuestionnaireParser#quest}.
-	 * @param ctx the parse tree
-	 */
-	void exitQuest(@NotNull QuestionnaireParser.QuestContext ctx);
-
-	/**
 	 * Enter a parse tree produced by {@link QuestionnaireParser#and}.
 	 * @param ctx the parse tree
 	 */
@@ -128,39 +128,6 @@ public interface QuestionnaireListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitAnd(@NotNull QuestionnaireParser.AndContext ctx);
-
-	/**
-	 * Enter a parse tree produced by {@link QuestionnaireParser#MulDiv}.
-	 * @param ctx the parse tree
-	 */
-	void enterMulDiv(@NotNull QuestionnaireParser.MulDivContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link QuestionnaireParser#MulDiv}.
-	 * @param ctx the parse tree
-	 */
-	void exitMulDiv(@NotNull QuestionnaireParser.MulDivContext ctx);
-
-	/**
-	 * Enter a parse tree produced by {@link QuestionnaireParser#currency}.
-	 * @param ctx the parse tree
-	 */
-	void enterCurrency(@NotNull QuestionnaireParser.CurrencyContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link QuestionnaireParser#currency}.
-	 * @param ctx the parse tree
-	 */
-	void exitCurrency(@NotNull QuestionnaireParser.CurrencyContext ctx);
-
-	/**
-	 * Enter a parse tree produced by {@link QuestionnaireParser#id}.
-	 * @param ctx the parse tree
-	 */
-	void enterId(@NotNull QuestionnaireParser.IdContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link QuestionnaireParser#id}.
-	 * @param ctx the parse tree
-	 */
-	void exitId(@NotNull QuestionnaireParser.IdContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link QuestionnaireParser#not}.
@@ -207,6 +174,17 @@ public interface QuestionnaireListener extends ParseTreeListener {
 	void exitString(@NotNull QuestionnaireParser.StringContext ctx);
 
 	/**
+	 * Enter a parse tree produced by {@link QuestionnaireParser#addSub}.
+	 * @param ctx the parse tree
+	 */
+	void enterAddSub(@NotNull QuestionnaireParser.AddSubContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QuestionnaireParser#addSub}.
+	 * @param ctx the parse tree
+	 */
+	void exitAddSub(@NotNull QuestionnaireParser.AddSubContext ctx);
+
+	/**
 	 * Enter a parse tree produced by {@link QuestionnaireParser#money}.
 	 * @param ctx the parse tree
 	 */
@@ -218,6 +196,17 @@ public interface QuestionnaireListener extends ParseTreeListener {
 	void exitMoney(@NotNull QuestionnaireParser.MoneyContext ctx);
 
 	/**
+	 * Enter a parse tree produced by {@link QuestionnaireParser#parenthesis}.
+	 * @param ctx the parse tree
+	 */
+	void enterParenthesis(@NotNull QuestionnaireParser.ParenthesisContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QuestionnaireParser#parenthesis}.
+	 * @param ctx the parse tree
+	 */
+	void exitParenthesis(@NotNull QuestionnaireParser.ParenthesisContext ctx);
+
+	/**
 	 * Enter a parse tree produced by {@link QuestionnaireParser#bool}.
 	 * @param ctx the parse tree
 	 */
@@ -227,4 +216,15 @@ public interface QuestionnaireListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitBool(@NotNull QuestionnaireParser.BoolContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link QuestionnaireParser#variable}.
+	 * @param ctx the parse tree
+	 */
+	void enterVariable(@NotNull QuestionnaireParser.VariableContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QuestionnaireParser#variable}.
+	 * @param ctx the parse tree
+	 */
+	void exitVariable(@NotNull QuestionnaireParser.VariableContext ctx);
 }

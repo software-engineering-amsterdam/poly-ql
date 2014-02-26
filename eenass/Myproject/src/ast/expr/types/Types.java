@@ -7,6 +7,7 @@ public abstract class Types implements ASTNode{
 	private boolean unknown = true;
 	
 	public abstract boolean isCompatableTo(Types type); 	
+	public abstract String show();
 
 	public boolean isCompatableToBool(){
 		return false;

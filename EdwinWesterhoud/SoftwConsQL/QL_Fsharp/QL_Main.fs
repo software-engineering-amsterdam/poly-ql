@@ -16,16 +16,10 @@ let parse_str str checkTypes = let lexbuf = Lexing.LexBuffer<_>.FromString str
                                        let message = err.Message
                                        let s_pos = lexbuf.StartPos
                                        let e_pos = lexbuf.EndPos
-                                       let startPos = Position(s_pos.Line, s_pos.Column)
-                                       let endPos = Position(e_pos.Line, e_pos.Column)
+                                       let startPos = Position(s_pos.Line+1, s_pos.Column+1)
+                                       let endPos = Position(e_pos.Line+1, e_pos.Column+1)
                                        //let lastToken = new System.String(lexbuf.Lexeme)
                                        raise << ParseErrorException <| ParseErrorExceptionMessage(message, startPos, endPos)
-
-// Test type checker
-//let t = ArithmeticOp(Expr(Bool(true)), arithmeticOp.Div, BooleanOp())
-//let check = getTypeExpr t
-//printfn "%A" check
-
 
 // Used for direct input in console
 let x = Console.ReadLine()

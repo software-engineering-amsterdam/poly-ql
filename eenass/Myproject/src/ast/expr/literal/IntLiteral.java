@@ -24,7 +24,12 @@ public class IntLiteral extends Literals{
 	}
 
 	public int getVal() {
-		return val;
+		return this.val;
+	}
+
+	@Override
+	public String show() {
+		return Integer.toString(val);
 	}
 
 }

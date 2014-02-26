@@ -2,28 +2,29 @@
 using System.Globalization;
 using System.IO;
 using System.Reflection;
-using Grammar.Parser;
-using QL_ExtensionTest.QLAlgebraExtensions.Type;
-using QL_ExtensionTest.QLAlgebraExtensions.Value;
-using QL_ExtensionTest.QLTypeCheckExtensions.Expr;
-using QL_ExtensionTest.QLTypeCheckExtensions.Factory;
-using QL_Grammar.QLAlgebra.Value;
-using QL_Grammar.QLTypeCheck.Expr;
-using QL_Grammar.QLTypeCheck.Stmnt;
+using Algebra.QL.Core.Value;
+using Algebra.QL.Extensions.Factory;
+using Algebra.QL.Extensions.Grammar;
+using Algebra.QL.Extensions.Type;
+using Algebra.QL.Extensions.TypeCheck.Expr;
+using Algebra.QL.Extensions.TypeCheck.Factory;
+using Algebra.QL.Extensions.Value;
+using Algebra.QL.TypeCheck.Expr;
+using Algebra.QL.TypeCheck.Stmnt;
 using Xunit;
 
 namespace QL_Tests
 {
     public class ExtensionsTest
     {
-        private ExtensionsParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeCheckExtensionsFactory> parser;
+        private ExtensionsParser<ITypeCheckExpr, ITypeCheckStmnt, QLExtensionsTypeFactory, QLTypeCheckExtensionsFactory> parser;
 
         public ExtensionsTest()
         {
-            parser = new ExtensionsParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeCheckExtensionsFactory>();
-            parser.Factory = new QLTypeCheckExtensionsFactory();
-            Assembly a = parser.Factory.GetType().Assembly;
-            parser.LoadGrammar(new BinaryReader(a.GetManifestResourceStream("QL_ExtensionTest.Grammar.QL_Grammar.egt")));
+            parser = new ExtensionsParser<ITypeCheckExpr, ITypeCheckStmnt, QLExtensionsTypeFactory,
+                QLTypeCheckExtensionsFactory>(new QLExtensionsTypeFactory(), new QLTypeCheckExtensionsFactory());
+            Assembly a = parser.GetType().Assembly;
+            parser.LoadGrammar(new BinaryReader(a.GetManifestResourceStream("Algebra.QL.Extensions.Grammar.QL_Grammar.egt")));
         }
 
         [Fact]

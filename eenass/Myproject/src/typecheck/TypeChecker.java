@@ -3,6 +3,7 @@ package typecheck;
 import ast.ASTNode;
 import ast.Visitor;
 import ast.expr.Expr;
+import ast.expr.IdentLiteral;
 import ast.expr.binExpr.*;
 import ast.expr.literal.*;
 import ast.expr.types.*;

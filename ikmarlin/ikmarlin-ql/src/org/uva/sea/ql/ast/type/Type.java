@@ -1,19 +1,30 @@
 package org.uva.sea.ql.ast.type;
 
 public abstract class Type {
-	public boolean isCompatibleWith(Bool t) {
+	
+	public abstract boolean isCompatibleWith(Type t);
+
+	public boolean isCompatibleWithBool(){
 		return false;
 	}
 	
-	public boolean isCompatibleWith(Str t) {
+	public boolean isCompatibleWithStr() {
 		return false;
 	}
 	
-	public boolean isCompatibleWith(Number t) {
+	public boolean isCompatibleWithNumber() {
 		return false;
 	}
 	
-	public boolean isCompatibleWith(Undefined t) {
+	public boolean isCompatibleWithUndefined(){
+		return true;
+	}
+	
+	public boolean isCompatibleWithError(){
 		return false;
 	}
+	
+	@Override
+	public abstract String toString();
+
 }

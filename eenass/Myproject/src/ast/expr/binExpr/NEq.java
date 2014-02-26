@@ -22,4 +22,9 @@ public class NEq extends BinExpr{
 		return new BoolType();
 	}
 
+	@Override
+	public String show() {
+		return "!=";
+	}
+
 }
