@@ -31,4 +31,11 @@ public interface IValue {
 	 * @return the value of the object
 	 */
 	Object asValue();
+	
+	/**
+	 * Force values to be printable with custom toString
+	 * @return a string defining the object (the value)
+	 */
+	String toString();
+	
 }
