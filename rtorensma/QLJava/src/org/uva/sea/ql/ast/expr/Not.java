@@ -10,7 +10,6 @@ public class Not extends UnaryExpr {
 
 	public Not(Expr expr) {
 		super(expr);
-		this.symbol = "!";
 	}
 	
 	@Override
@@ -21,5 +20,10 @@ public class Not extends UnaryExpr {
 	@Override
 	public Type typeOf(Map<Ident, Type> typeEnv) {
 		return new org.uva.sea.ql.ast.types.Bool();
+	}
+	
+	@Override
+	public String getSymbol() {
+		return "!";
 	}
 }

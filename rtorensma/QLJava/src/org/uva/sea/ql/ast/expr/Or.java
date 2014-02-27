@@ -10,7 +10,6 @@ public class Or extends BinaryExpr {
 
 	public Or(Expr lhs, Expr rhs) {
 		super(lhs, rhs);
-		this.symbol = "||";
 	}
 	
 	@Override
@@ -21,5 +20,10 @@ public class Or extends BinaryExpr {
 	@Override
 	public Type typeOf(Map<Ident, Type> typeEnv) {
 		return new org.uva.sea.ql.ast.types.Bool();
+	}
+	
+	@Override
+	public String getSymbol() {
+		return "||";
 	}
 }

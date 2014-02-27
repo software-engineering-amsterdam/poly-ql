@@ -2,7 +2,6 @@ package org.uva.sea.ql.ast.expr;
 
 public abstract class BinaryExpr extends Expr {
 	private final Expr lhs, rhs;
-	protected String symbol;
 	
 	public BinaryExpr(Expr lhs, Expr rhs) {
 		this.lhs = lhs;
@@ -17,12 +16,10 @@ public abstract class BinaryExpr extends Expr {
 		return rhs;
 	}
 
-	public String getSymbol() {
-		return symbol;
-	}
+	public abstract String getSymbol();
 	
 	@Override
 	public String toString() {
-		return String.format("%s %s %s", lhs, this.symbol, rhs);
+		return String.format("%s %s %s", lhs, getSymbol(), rhs);
 	}
 }

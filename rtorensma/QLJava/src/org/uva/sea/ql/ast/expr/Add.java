@@ -10,7 +10,6 @@ public class Add extends BinaryExpr {
 
 	public Add(Expr lhs, Expr rhs) {
 		super(lhs, rhs);
-		this.symbol = "+";
 	}
 	
 	@Override
@@ -21,5 +20,10 @@ public class Add extends BinaryExpr {
 	@Override
 	public Type typeOf(Map<Ident, Type> typeEnv) {
 		return new org.uva.sea.ql.ast.types.Int();
+	}
+
+	@Override
+	public String getSymbol() {
+		return "+";
 	}
 }

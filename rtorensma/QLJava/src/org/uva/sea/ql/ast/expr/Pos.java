@@ -10,7 +10,6 @@ public class Pos extends UnaryExpr {
 
 	public Pos(Expr expr) {
 		super(expr);
-		this.symbol = "+";
 	}
 	
 	@Override
@@ -21,5 +20,10 @@ public class Pos extends UnaryExpr {
 	@Override
 	public Type typeOf(Map<Ident, Type> typeEnv) {
 		return new org.uva.sea.ql.ast.types.Int();
+	}
+	
+	@Override
+	public String getSymbol() {
+		return "+";
 	}
 }

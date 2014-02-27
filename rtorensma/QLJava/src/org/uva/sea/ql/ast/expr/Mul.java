@@ -9,7 +9,6 @@ import org.uva.sea.ql.checker.ExprVisitor;
 public class Mul extends BinaryExpr {
 	public Mul(Expr lhs, Expr rhs) {
 		super(lhs, rhs);
-		this.symbol = "*";
 	}
 	
 	@Override
@@ -20,5 +19,9 @@ public class Mul extends BinaryExpr {
 	@Override
 	public Type typeOf(Map<Ident, Type> typeEnv) {
 		return new org.uva.sea.ql.ast.types.Int();
+	}
+	@Override
+	public String getSymbol() {
+		return "*";
 	}
 }
