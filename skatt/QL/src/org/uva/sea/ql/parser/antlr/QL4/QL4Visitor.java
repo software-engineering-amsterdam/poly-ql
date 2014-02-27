@@ -173,6 +173,21 @@ public class QL4Visitor extends QL4BaseVisitor<Value> {
    * @param ctx is the context of the and expression
    * @return is the evaluation of the and expression in the form of a QLboolean
    */
+  public Value visitEqExpr(QL4Parser.EqExprContext ctx) {
+    if (verbose)
+      System.out.println("Visiting equality expr");
+    
+    boolean evaluation = this.visit(ctx.expression(0)).asBoolean() 
+        == this.visit(ctx.expression(1)).asBoolean();
+    
+    return new QLboolean(evaluation);
+  }
+  
+  /**
+   * Returns the evaluation of an and expression in the form of a QLboolean
+   * @param ctx is the context of the and expression
+   * @return is the evaluation of the and expression in the form of a QLboolean
+   */
   public Value visitAndExpr(QL4Parser.AndExprContext ctx) {
     if (verbose)
       System.out.println("Visiting and expr");
@@ -188,12 +203,14 @@ public class QL4Visitor extends QL4BaseVisitor<Value> {
    * @param ctx is the context of the or expression
    * @return is the evaluation of the or expression in the form of a QLboolean
    */
-  public Value visitOrExpr(QL4Parser.AndExprContext ctx) {
+  public Value visitOrExpr(QL4Parser.OrExprContext ctx) {
     if (verbose)
-      System.out.println("Visiting and expr");
+      System.out.println("Visiting or expr");
     
-    boolean evaluation = this.visit(ctx.expression(0)).asBoolean() 
-        || this.visit(ctx.expression(1)).asBoolean();
+    boolean evaluation = (this.visit(ctx.expression(0)).asBoolean() 
+        || this.visit(ctx.expression(1)).asBoolean());
+
+    System.out.println(evaluation);
     
     return new QLboolean(evaluation);
   }

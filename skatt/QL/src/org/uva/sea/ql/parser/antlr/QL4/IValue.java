@@ -25,4 +25,10 @@ public interface IValue {
 	 * @return a boolean
 	 */
 	Double asDouble();
+	
+	/**
+	 * Returns the actual value
+	 * @return the value of the object
+	 */
+	Object asValue();
 }

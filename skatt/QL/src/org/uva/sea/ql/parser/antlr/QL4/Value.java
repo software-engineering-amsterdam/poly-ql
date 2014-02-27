@@ -1,6 +1,12 @@
 package org.uva.sea.ql.parser.antlr.QL4;
 
-public class Value implements IValue {
+/**
+ * Abstract class for value, implements the regular functions
+ * of IValue.
+ * @author Sammie
+ *
+ */
+public abstract class Value implements IValue {
 
 	@Override
 	public Boolean asBoolean() {
@@ -16,5 +22,11 @@ public class Value implements IValue {
 	public Double asDouble() {
 		return null;
 	}
+
+	@Override
+	public Object asValue() {
+		return null;
+	}
+	
 
 }

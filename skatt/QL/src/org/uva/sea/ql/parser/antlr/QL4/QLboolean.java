@@ -42,6 +42,14 @@ public class QLboolean extends Value {
 	}
 	
 	/**
+	 * Implements the asValue() function. Returns its value
+	 * @return the value of QLboolean
+	 */
+	public Boolean asValue() {
+		return this.value;
+	}
+	
+	/**
 	 * return either true of false, depending on value
 	 * @return value as string
 	 */
