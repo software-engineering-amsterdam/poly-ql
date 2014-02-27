@@ -77,15 +77,15 @@ namespace QL_Tests
             parser.OnCompletion += (root) =>
             {
                 FormStmnt tree = new FormStmnt("Form1",
-                    new CompStmnt(
+                    new FormsStmnt(
                         new LabelStmnt("\"Question 1:\"",
                             new IntLiteral(5)
                         ),
-                        new CompStmnt(
+                        new StatementsStmnt(
                             new LabelStmnt("\"Question 1:\"",
                                 new IntLiteral(5)
                             ),
-                            new CompStmnt(
+                            new StatementsStmnt(
                                 new LabelStmnt("\"Question 1:\"",
                                     new IntLiteral(5)
                                 ),
@@ -116,7 +116,7 @@ namespace QL_Tests
         //    parser.OnCompletion += (root) =>
         //    {
         //        FormStmnt tree = new FormStmnt("Form1",
-        //            new CompStmnt(
+        //            new StatementsStmnt(
         //                new LabelStmnt("\"Question 1:\"",
         //                    new IntLiteral(5)
         //                ),

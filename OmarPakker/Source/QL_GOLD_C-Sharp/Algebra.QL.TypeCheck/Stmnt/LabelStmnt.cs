@@ -20,11 +20,9 @@ namespace Algebra.QL.TypeCheck.Stmnt
 
             if (String.IsNullOrWhiteSpace(Text))
             {
-                data.ReportWarning("Label has no text. Are you sure you only want it to show the value?",
+                data.ReportWarning("Label has no text. Are you sure you only want it to show data?",
                     SourcePosition);
             }
-
-            if (queue.Count > 0) queue.Dequeue().TypeCheck(queue, data);
         }
     }
 }

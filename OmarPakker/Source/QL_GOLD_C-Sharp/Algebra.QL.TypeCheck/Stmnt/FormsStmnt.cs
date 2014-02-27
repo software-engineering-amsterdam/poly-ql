@@ -4,9 +4,9 @@ using Algebra.QL.TypeCheck.Helpers;
 
 namespace Algebra.QL.TypeCheck.Stmnt
 {
-	public class CompStmnt : CompStmnt<ITypeCheckStmnt>, ITypeCheckStmnt
+	public class FormsStmnt : CompStmnt<ITypeCheckStmnt>, ITypeCheckStmnt
     {
-		public CompStmnt(ITypeCheckStmnt a, ITypeCheckStmnt b)
+		public FormsStmnt(ITypeCheckStmnt a, ITypeCheckStmnt b)
             : base(a, b)
         {
 
@@ -16,6 +16,7 @@ namespace Algebra.QL.TypeCheck.Stmnt
         {
             queue.Enqueue(Statement1);
             queue.Enqueue(Statement2);
+
             if (queue.Count > 0) queue.Dequeue().TypeCheck(queue, data);
         }
     }

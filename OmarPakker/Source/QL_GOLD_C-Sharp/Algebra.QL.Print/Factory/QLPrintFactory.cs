@@ -154,6 +154,16 @@ namespace Algebra.QL.Print.Factory
             return new IfElseExpr(toEval, ifTrue, ifFalse);
         }
 
+        public IPrintStmnt Forms(IPrintStmnt l, IPrintStmnt r)
+        {
+            return new CompStmnt(l, r);
+        }
+
+        public IPrintStmnt Statements(IPrintStmnt l, IPrintStmnt r)
+        {
+            return new CompStmnt(l, r);
+        }
+
         public IPrintStmnt Form(string var, IPrintStmnt s)
         {
             return new FormStmnt(var, s);
@@ -162,11 +172,6 @@ namespace Algebra.QL.Print.Factory
         public IPrintStmnt Goto(string var)
         {
             return new GotoStmnt(var);
-        }
-
-        public IPrintStmnt Comp(IPrintStmnt l, IPrintStmnt r)
-        {
-            return new CompStmnt(l, r);
         }
 
         public IPrintStmnt Question(string s, IPrintExpr e)

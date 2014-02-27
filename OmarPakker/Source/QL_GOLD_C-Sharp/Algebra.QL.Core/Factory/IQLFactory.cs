@@ -41,10 +41,11 @@ namespace Algebra.QL.Core.Factory
 
 		E IfElse(E toEval, E ifTrue, E ifFalse);
 
+        S Forms(S l, S r);
+        S Statements(S l, S r);
+
 		S Form(string var, S s);
 		S Goto(string var);
-
-		S Comp(S l, S r);
 		S Question(string s, E e);
         S Label(string s, E e);
 		S If(E toEval, S ifTrue);

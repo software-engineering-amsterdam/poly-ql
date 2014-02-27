@@ -152,6 +152,16 @@ namespace Algebra.QL.Core.Factory
 				Factory2.IfElse(toEval.Item2, ifTrue.Item2, ifFalse.Item2));
 		}
 
+        public CombinedStmnt<S1, S2> Forms(CombinedStmnt<S1, S2> l, CombinedStmnt<S1, S2> r)
+        {
+            return new CombinedStmnt<S1, S2>(Factory1.Forms(l.Item1, r.Item1), Factory2.Forms(l.Item2, r.Item2));
+        }
+
+        public CombinedStmnt<S1, S2> Statements(CombinedStmnt<S1, S2> l, CombinedStmnt<S1, S2> r)
+        {
+            return new CombinedStmnt<S1, S2>(Factory1.Statements(l.Item1, r.Item1), Factory2.Statements(l.Item2, r.Item2));
+        }
+
 		public CombinedStmnt<S1, S2> Form(string var, CombinedStmnt<S1, S2> s)
 		{
 			return new CombinedStmnt<S1, S2>(Factory1.Form(var, s.Item1), Factory2.Form(var, s.Item2));
@@ -160,11 +170,6 @@ namespace Algebra.QL.Core.Factory
 		public CombinedStmnt<S1, S2> Goto(string var)
 		{
 			return new CombinedStmnt<S1, S2>(Factory1.Goto(var), Factory2.Goto(var));
-		}
-
-		public CombinedStmnt<S1, S2> Comp(CombinedStmnt<S1, S2> l, CombinedStmnt<S1, S2> r)
-		{
-			return new CombinedStmnt<S1, S2>(Factory1.Comp(l.Item1 ,r.Item1), Factory2.Comp(l.Item2, r.Item2));
 		}
 
 		public CombinedStmnt<S1, S2> Question(string s, CombinedExpr<E1, E2> e)

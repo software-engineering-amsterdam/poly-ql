@@ -65,14 +65,6 @@ namespace WPFParser
             Assembly a = parser.GetType().Assembly;
             parser.LoadGrammar(new BinaryReader(a.GetManifestResourceStream("Algebra.QL.Extensions.Grammar.QL_Grammar.egt")));
 
-            parser.OnReduction += OnReduction;
-            parser.OnCompletion += OnCompletion;
-            parser.OnGroupError += OnGroupError;
-            parser.OnInternalError += OnInternalError;
-            parser.OnNotLoadedError += OnNotLoadedError;
-            parser.OnLexicalError += OnLexicalError;
-            parser.OnSyntaxError += OnSyntaxError;
-
             return parser;
         }
 

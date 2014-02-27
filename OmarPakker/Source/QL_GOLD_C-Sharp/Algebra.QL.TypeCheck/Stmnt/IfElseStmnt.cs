@@ -24,9 +24,8 @@ namespace Algebra.QL.TypeCheck.Stmnt
                     SourcePosition);
             }
 
-            queue.Enqueue(IfTrueBody);
-			queue.Enqueue(IfFalseBody);
-			if (queue.Count > 0) queue.Dequeue().TypeCheck(queue, data);
+            IfTrueBody.TypeCheck(queue, data);
+			IfFalseBody.TypeCheck(queue, data);
         }
     }
 }

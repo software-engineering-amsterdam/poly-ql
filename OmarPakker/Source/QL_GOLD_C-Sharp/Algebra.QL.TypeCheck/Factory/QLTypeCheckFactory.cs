@@ -143,6 +143,16 @@ namespace Algebra.QL.TypeCheck.Factory
             return new IfElseExpr(toEval, ifTrue, ifFalse);
         }
 
+        public ITypeCheckStmnt Forms(ITypeCheckStmnt l, ITypeCheckStmnt r)
+        {
+            return new FormsStmnt(l, r);
+        }
+
+        public ITypeCheckStmnt Statements(ITypeCheckStmnt l, ITypeCheckStmnt r)
+        {
+            return new StatementsStmnt(l, r);
+        }
+
         public ITypeCheckStmnt Form(string var, ITypeCheckStmnt s)
         {
             return new FormStmnt(var, s);
@@ -151,11 +161,6 @@ namespace Algebra.QL.TypeCheck.Factory
         public ITypeCheckStmnt Goto(string var)
         {
             return new GotoStmnt(var);
-        }
-
-        public ITypeCheckStmnt Comp(ITypeCheckStmnt l, ITypeCheckStmnt r)
-        {
-            return new CompStmnt(l, r);
         }
 
         public ITypeCheckStmnt Question(string s, ITypeCheckExpr e)

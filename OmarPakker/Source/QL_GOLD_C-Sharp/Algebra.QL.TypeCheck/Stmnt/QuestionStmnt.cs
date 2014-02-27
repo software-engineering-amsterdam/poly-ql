@@ -23,8 +23,6 @@ namespace Algebra.QL.TypeCheck.Stmnt
                 data.ReportWarning("Empty question detected. Are you sure you want to leave this question blank?",
                     SourcePosition);
             }
-
-            if (queue.Count > 0) queue.Dequeue().TypeCheck(queue, data);
         }
     }
 }

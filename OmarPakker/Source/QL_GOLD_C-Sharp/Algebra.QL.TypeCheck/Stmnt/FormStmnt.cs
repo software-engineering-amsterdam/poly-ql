@@ -16,8 +16,9 @@ namespace Algebra.QL.TypeCheck.Stmnt
         {
             data.Forms.Add(Name);
 
-			queue.Enqueue(Body);
 			if (queue.Count > 0) queue.Dequeue().TypeCheck(queue, data);
+            
+            Body.TypeCheck(queue, data);
 
             data.Variables.Clear();
         }

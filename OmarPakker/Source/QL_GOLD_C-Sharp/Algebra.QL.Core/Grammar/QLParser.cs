@@ -49,12 +49,15 @@ namespace Algebra.QL.Core.Grammar
                 return factory.BoolType();
 			}
 			//<Forms> ::= <Form> <Forms>
-			//<Statements> ::= <Statement> <Statements>
-			else if (tableIndex == Rules["Forms"]
-				|| tableIndex == Rules["Statements"])
+			else if (tableIndex == Rules["Forms"])
 			{
-				return factory.Comp((S)r.get_Data(0), (S)r.get_Data(1));
+				return factory.Forms((S)r.get_Data(0), (S)r.get_Data(1));
 			}
+            //<Statements> ::= <Statement> <Statements>
+            else if (tableIndex == Rules["Statements"])
+            {
+                return factory.Statements((S)r.get_Data(0), (S)r.get_Data(1));
+            }
 			//<Forms> ::= <Form>
 			//<Statements> ::= <Statement>
 			//<Statement> ::= <Block>
