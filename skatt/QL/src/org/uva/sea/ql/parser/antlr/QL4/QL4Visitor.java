@@ -169,10 +169,11 @@ public class QL4Visitor extends QL4BaseVisitor<Value> {
   }
   
   /**
-   * Returns the evaluation of an and expression in the form of a QLboolean
+   * Returns the evaluation of an equality expression in the 
+   * form of a QLboolean
    * TODO: check type
-   * @param ctx is the context of the and expression
-   * @return is the evaluation of the and expression in the form of a QLboolean
+   * @param ctx is the context of the equality expression
+   * @return is the evaluation of the equality expression in the form of a QLboolean
    */
   public Value visitEqExpr(QL4Parser.EqExprContext ctx) {
     if (verbose)
@@ -185,17 +186,78 @@ public class QL4Visitor extends QL4BaseVisitor<Value> {
   }
   
   /**
-   * Returns the evaluation of an and expression in the form of a QLboolean
+   * Returns the evaluation of an nequality expression in the 
+   * form of a QLboolean
    * TODO: check type
-   * @param ctx is the context of the and expression
-   * @return is the evaluation of the and expression in the form of a QLboolean
+   * @param ctx is the context of the nequality expression
+   * @return is the evaluation of the nequality expression in the form of a QLboolean
    */
   public Value visitNeqExpr(QL4Parser.NeqExprContext ctx) {
     if (verbose)
-      System.out.println("Visiting equality expr");
+      System.out.println("Visiting nequality expr");
     
     boolean evaluation = !(this.visit(ctx.expression(0)).asValue() 
         == this.visit(ctx.expression(1)).asValue());
+    
+    return new QLboolean(evaluation);
+  }
+  
+  /**
+   * Returns the evaluation of a greater or equal expression in the form of a QLboolean
+   * @param ctx is the context of the greater or equal expression
+   * @return is the evaluation of the greater or equal expression in the form of a QLboolean
+   */
+  public Value visitGeqExpr(QL4Parser.GeqExprContext ctx) {
+    if (verbose)
+      System.out.println("Visiting greater or equal to expr");
+    
+    boolean evaluation = (this.visit(ctx.expression(0)).asDouble() 
+        >= this.visit(ctx.expression(1)).asDouble());
+    
+    return new QLboolean(evaluation);
+  }
+  
+  /**
+   * Returns the evaluation of a less or equal expression in the form of a QLboolean
+   * @param ctx is the context of the less or equal expression
+   * @return is the evaluation of the less or equal expression in the form of a QLboolean
+   */
+  public Value visitLeqExpr(QL4Parser.LeqExprContext ctx) {
+    if (verbose)
+      System.out.println("Visiting less or equal to expr");
+    
+    boolean evaluation = (this.visit(ctx.expression(0)).asDouble() 
+        <= this.visit(ctx.expression(1)).asDouble());
+    
+    return new QLboolean(evaluation);
+  }
+  
+  /**
+   * Returns the evaluation of a greater than expression in the form of a QLboolean
+   * @param ctx is the context of the greater than expression
+   * @return is the evaluation of the greater than expression in the form of a QLboolean
+   */
+  public Value visitGreExpr(QL4Parser.GreExprContext ctx) {
+    if (verbose)
+      System.out.println("Visiting greater than expr");
+    
+    boolean evaluation = (this.visit(ctx.expression(0)).asDouble() 
+        > this.visit(ctx.expression(1)).asDouble());
+    
+    return new QLboolean(evaluation);
+  }
+  
+  /**
+   * Returns the evaluation of a less expression in the form of a QLboolean
+   * @param ctx is the context of the less expression
+   * @return is the evaluation of the less expression in the form of a QLboolean
+   */
+  public Value visitLesExpr(QL4Parser.LesExprContext ctx) {
+    if (verbose)
+      System.out.println("Visiting less than expr");
+    
+    boolean evaluation = (this.visit(ctx.expression(0)).asDouble() 
+        < this.visit(ctx.expression(1)).asDouble());
     
     return new QLboolean(evaluation);
   }
