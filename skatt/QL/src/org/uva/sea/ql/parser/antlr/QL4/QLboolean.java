@@ -12,6 +12,11 @@ public class QLboolean extends Value {
 	 */
 	boolean value;
 	
+	@Override
+	public Boolean equals(Value value) {
+		return Boolean.compare(this.value, value.asBoolean()) > 0;
+	}
+
 	/**
 	 * Constructor for when initiated with a string. The 
 	 * input will be translated to a boolean: true or 1 means true, 
@@ -55,5 +60,18 @@ public class QLboolean extends Value {
 	 */
 	public String toString() {
 		return (value) ? "true" : "false";
+	}
+
+
+	@Override
+	public Integer asInteger() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Double asDouble() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

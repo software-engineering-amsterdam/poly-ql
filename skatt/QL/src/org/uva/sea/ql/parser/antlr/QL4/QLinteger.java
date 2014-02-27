@@ -14,6 +14,15 @@ public class QLinteger extends Value {
 	int value;
 	
 	/**
+	 * Compares the value with this.value
+	 * @param value is the value to compare this with
+	 * @return is a boolean, evaluating whether value input equals this
+	 */
+	public Boolean equals(Value value) {
+		return Integer.compare(this.value, value.asInteger()) > 0;
+	}
+	
+	/**
 	 * Constructor for when initiated with a string. The 
 	 * input will be translated to an int: 
 	 * 

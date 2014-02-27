@@ -188,8 +188,8 @@ public class QL4Visitor extends QL4BaseVisitor<Value> {
     if (verbose)
       System.out.println("Visiting equality expr");
     
-    boolean evaluation = (this.visit(ctx.expression(0)).asValue() 
-        == this.visit(ctx.expression(1)).asValue());
+    boolean evaluation = this.visit(ctx.expression(0)).equals(
+    		this.visit(ctx.expression(1)));
     
     return new QLboolean(evaluation);
   }
@@ -205,8 +205,8 @@ public class QL4Visitor extends QL4BaseVisitor<Value> {
     if (verbose)
       System.out.println("Visiting nequality expr");
     
-    boolean evaluation = !(this.visit(ctx.expression(0)).asValue() 
-        == this.visit(ctx.expression(1)).asValue());
+    boolean evaluation = !this.visit(ctx.expression(0)).equals(
+    		this.visit(ctx.expression(1)));
     
     return new QLboolean(evaluation);
   }
@@ -313,6 +313,18 @@ public class QL4Visitor extends QL4BaseVisitor<Value> {
       System.out.println("Visiting boolean");
     
     return new QLboolean(ctx.getText());
+  }
+  
+  /**
+   * Creates a QLdouble and returns this
+   * @param ctx is the context of the dec visited
+   * @return a QLdouble with the value of the input
+   */
+  public Value visitDec(QL4Parser.DecContext ctx) {
+    if (verbose) 
+      System.out.println("Visiting dec");
+    
+    return new QLdouble(ctx.getText());
   }
   
   /**

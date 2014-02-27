@@ -9,6 +9,12 @@ package org.uva.sea.ql.parser.antlr.QL4;
 public interface IValue {
 	
 	/**
+	 * Returns whether value equals the object itself
+	 * @return evaluation of equality 
+	 */
+	Boolean equals(Value value);
+	
+	/**
 	 * Defines how the value should be printed as boolean
 	 * @return a boolean
 	 */

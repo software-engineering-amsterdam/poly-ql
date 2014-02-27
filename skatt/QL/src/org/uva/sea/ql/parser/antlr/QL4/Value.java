@@ -14,16 +14,6 @@ public abstract class Value implements IValue {
 	}
 
 	@Override
-	public Integer asInteger() {
-		return null;
-	}
-
-	@Override
-	public Double asDouble() {
-		return null;
-	}
-
-	@Override
 	public Object asValue() {
 		return null;
 	}
