@@ -182,7 +182,7 @@ public class QL4Visitor extends QL4BaseVisitor<Value> {
   /**
    * Returns the division of the context when visiting
    * the div expression.
-   * @param ctx is the context of the multiplication
+   * @param ctx is the context of the addition
    * @return a QLdouble, whose value is the evaluation of the expression
    */
   public Value visitDivExpr(QL4Parser.DivExprContext ctx) {
@@ -190,6 +190,38 @@ public class QL4Visitor extends QL4BaseVisitor<Value> {
 		  System.out.println("Visiting div exp");
 	  
 	  double evaluation =  this.visit(ctx.expression(0)).asDouble() / 
+			  this.visit(ctx.expression(1)).asDouble();
+	  
+	  return new QLdouble(evaluation);
+  }
+  
+  /**
+   * Returns the addition of the context when visiting
+   * the plus expression.
+   * @param ctx is the context of the addition
+   * @return a QLdouble, whose value is the evaluation of the expression
+   */
+  public Value visitPlusExpr(QL4Parser.PlusExprContext ctx) {
+	  if (verbose) 
+		  System.out.println("Visiting plus exp");
+	  
+	  double evaluation =  this.visit(ctx.expression(0)).asDouble() +
+			  this.visit(ctx.expression(1)).asDouble();
+	  
+	  return new QLdouble(evaluation);
+  }
+  
+  /**
+   * Returns the subtraction of the context when visiting
+   * the plus expression.
+   * @param ctx is the context of the subtraction  	
+   * @return a QLdouble, whose value is the evaluation of the expression
+   */
+  public Value visitMinExpr(QL4Parser.MinExprContext ctx) {
+	  if (verbose) 
+		  System.out.println("Visiting min exp");
+	  
+	  double evaluation =  this.visit(ctx.expression(0)).asDouble() -
 			  this.visit(ctx.expression(1)).asDouble();
 	  
 	  return new QLdouble(evaluation);
@@ -336,6 +368,20 @@ public class QL4Visitor extends QL4BaseVisitor<Value> {
     return new QLboolean(evaluation);
   }
 
+  /**
+   * Returns the negation of the expression in the context 
+   * in the form of a QLboolean
+   * @param ctx is the context of the neg (!) expression
+   * @return a QLboolean whose value is the evaluation of the expression
+   */
+  public Value visitNegExpr(QL4Parser.NegExprContext ctx) {
+	  if (verbose)
+		  System.out.println("Visiting ! expr");
+	  
+	  boolean evaluation = !this.visit(ctx.expression()).asBoolean();
+	  
+	  return new QLboolean(evaluation);
+  }
   /**
    * Creates a QLboolean and returns this
    * @param ctx is the context of the boolean visited
