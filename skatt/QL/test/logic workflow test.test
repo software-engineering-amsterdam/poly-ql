@@ -1,4 +1,4 @@
-if ((true && (true != false) && true) || false) {
+if (!!(true && (true != false) && true) || false) {
   makkelijkif : "Ik ben een makkelijke if vraag" : boolean ;
   
   if ((false && true) != false) {
