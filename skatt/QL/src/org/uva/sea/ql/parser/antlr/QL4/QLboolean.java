@@ -8,7 +8,7 @@ package org.uva.sea.ql.parser.antlr.QL4;
  */
 public class QLboolean extends Value {
 	/**
-	 * The value of the object QLboolean
+	 * The value of the object QLboolean is a boolean
 	 */
 	boolean value;
 	
