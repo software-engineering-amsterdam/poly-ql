@@ -1,22 +1,22 @@
-if (true) {
+if (true && true && true) {
   makkelijkif : "Ik ben een makkelijke if vraag" : boolean ;
   
-  if (false) {
-  	fouteifif : "Ik ben een foute if if vraag" : boolean;
+  if (false && true) {
+    fouteifif : "Ik ben een foute if if vraag" : boolean;
   } elseif (true) {
-  	makkelijkifif : "Ik ben een goede if elif vraag" : boolean;
-  	
-  	if (true) {
-  		makkelijkifif : "Ik ben een goede if if vraag" : boolean;
-  		if (false) {
-  			fouteifif : "Ik ben een foute if if if vraag" : boolean;	
-  		} elseif (false) {
-  			fouteifif : "Ik ben een foute if if elseif vraag" : boolean;
-  		} elseif (false) {
-  			fouteifif : "Ik ben een foute if if elseif vraag" : boolean;
-  		} else {
-  			goedeifif : "Ik ben een goede if if else vraag" : boolean;
-  		}
-	}
+    makkelijkifif : "Ik ben een goede if elif vraag" : boolean;
+    
+    if (true) {
+      makkelijkifif : "Ik ben een goede if if vraag" : boolean;
+      if (false && false) {
+        fouteifif : "Ik ben een foute if if if vraag" : boolean;  
+      } elseif (false) {
+        fouteifif : "Ik ben een foute if if elseif vraag" : boolean;
+      } elseif (false) {
+        fouteifif : "Ik ben een foute if if elseif vraag" : boolean;
+      } else {
+        goedeifif : "Ik ben een goede if if else vraag" : boolean;
+      }
+  }
   }
 }

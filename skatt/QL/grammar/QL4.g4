@@ -1,7 +1,7 @@
 grammar QL4;
 
 @header {
-	package QL4;
+  package QL4;
 }
 
 /////////////// Parser
@@ -10,43 +10,43 @@ form : structures;
 structures : structure+;
 
 structure :  
-			question #questionStruct 
-			| ifcondition '{' structures '}' (elseifcondition '{' structures '}')* (elsecondition '{' structures '}')? #workflowStruct    
-			;
+      question #questionStruct 
+      | ifcondition '{' structures '}' (elseifcondition '{' structures '}')* (elsecondition '{' structures '}')? #workflowStruct    
+      ;
 
 
 question: 
-			IDENTIFIER ':' LABEL ':' TYPE ';' #regQuestion 
-		  | IDENTIFIER ':' LABEL ':' TYPE '(' expression ')' ';' #compQuestion
-		  ; 
+      IDENTIFIER ':' LABEL ':' TYPE ';' #regQuestion 
+      | IDENTIFIER ':' LABEL ':' TYPE '(' expression ')' ';' #compQuestion
+      ; 
 
 // expressions
 expression: 
-		  '(' expression ')' #wrapExpr  
-	      
-	      // math expressions
-		  | expression '*' expression #multExpr
-		  | expression '/' expression #divExpr
-		  | expression '+' expression #plusExpr
-		  | expression '-' expression #minExpr
-		  
-		  // logical expressions
-		  | '!' expression #negExpr
-		  | expression '&&' expression #andExpr
-		  | expression '||' expression #orExpr 
-		  | expression '==' expression #eqExpr
-		  | expression '>=' expression #geqExpr
-		  | expression '<=' expression #leqExpr
-		  | expression '>' expression #greExpr
-		  | expression '<' expression #lesExpr
-		  | expression '!=' expression #neqExpr
-		  
-		  // single elements expressions
-		  | BOOLEAN #bool
-		  | DEC #dec
-		  | INT #int 
-		  | IDENTIFIER #ident
-		  ;
+      '(' expression ')' #wrapExpr  
+        
+        // math expressions
+      | expression '*' expression #multExpr
+      | expression '/' expression #divExpr
+      | expression '+' expression #plusExpr
+      | expression '-' expression #minExpr
+      
+      // logical expressions
+      | '!' expression #negExpr
+      | expression '&&' expression #andExpr
+      | expression '||' expression #orExpr 
+      | expression '==' expression #eqExpr
+      | expression '>=' expression #geqExpr
+      | expression '<=' expression #leqExpr
+      | expression '>' expression #greExpr
+      | expression '<' expression #lesExpr
+      | expression '!=' expression #neqExpr
+      
+      // single elements expressions
+      | BOOLEAN #bool
+      | DEC #dec
+      | INT #int 
+      | IDENTIFIER #ident
+      ;
 
 // lower level components
 ifcondition : IF expression;
