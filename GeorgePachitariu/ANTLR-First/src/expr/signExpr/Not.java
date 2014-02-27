@@ -1,11 +1,18 @@
 package expr.signExpr;
 
-import expr.Expr;
+import typeChecker.ASTVisitor;
+import expr.Expression;
+import expr.UnaryExpr;
 
-public class Not extends Expr {
+public class Not extends UnaryExpr {
 
-	public Not(Expr expr) {
+	public Not(Expression expr) {
 		super(expr);
 	}
 
+	@Override
+	public void accept(ASTVisitor visitor) {
+		visitor.visit(this); 
+		this.first.accept(visitor);
+	}
 }

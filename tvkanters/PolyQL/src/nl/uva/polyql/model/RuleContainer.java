@@ -47,10 +47,24 @@ public abstract class RuleContainer extends Rule {
         return child;
     }
 
+    /**
+     * Retrieves the list of rules within this container. Does not include the parent's rules.
+     * 
+     * @return This container's rules
+     */
     public List<Rule> getRules() {
         return mRules;
     }
 
+    /**
+     * Finds a question based on the ID through a recursive upward search. Doesn't find questions
+     * defined in scopes that sibling this container's hierarchy.
+     * 
+     * @param id
+     *            The question ID to find
+     * 
+     * @return The question matching the given ID or null if it wasn't found
+     */
     public Question getQuestion(final String id) {
         if (mQuestions.containsKey(id)) {
             return mQuestions.get(id);

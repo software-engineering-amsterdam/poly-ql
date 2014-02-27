@@ -1,5 +1,6 @@
 package nl.uva.polyql.model;
 
+import nl.uva.polyql.exceptions.InvalidIfStatementTypeException;
 import nl.uva.polyql.model.expressions.Expression;
 import nl.uva.polyql.model.types.Type;
 import nl.uva.polyql.model.values.BooleanValue;
@@ -11,12 +12,8 @@ public class IfStatement extends RuleContainer implements Question.OnUpdateListe
     protected IfStatement(final RuleContainer parent, final Expression expression) {
         super(parent);
 
-        if (parent == null) {
-            throw new RuntimeException("If-statements must have a parent");
-        }
-
         if (expression.getReturnType() != Type.BOOLEAN) {
-            throw new RuntimeException("Invalid if-statement expression type: " + expression.getReturnType());
+            throw new InvalidIfStatementTypeException(expression.getReturnType());
         }
 
         mExpression = expression;

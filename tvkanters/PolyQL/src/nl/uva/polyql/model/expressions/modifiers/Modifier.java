@@ -20,6 +20,14 @@ public abstract class Modifier<T extends Value<?>> implements SyntaxKey {
         return mSyntax;
     }
 
+    /**
+     * Checks if the modifier can be applied to values of the specified type.
+     * 
+     * @param type
+     *            The type to check for
+     * 
+     * @return True iff the modifier is applicable
+     */
     public abstract boolean isValid(final Type type);
 
     public abstract T apply(final T value);

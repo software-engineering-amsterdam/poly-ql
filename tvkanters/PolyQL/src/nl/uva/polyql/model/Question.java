@@ -4,8 +4,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import nl.uva.polyql.Log;
-import nl.uva.polyql.model.types.Type;
+import nl.uva.polyql.exceptions.DuplicateQuestionIdException;
 import nl.uva.polyql.model.types.StringType;
+import nl.uva.polyql.model.types.Type;
 import nl.uva.polyql.model.values.Value;
 
 public class Question extends Rule {
@@ -26,7 +27,7 @@ public class Question extends Rule {
         super(parent);
 
         if (parent.getQuestion(id) != null) {
-            throw new RuntimeException("Duplicate rule ID");
+            throw new DuplicateQuestionIdException(id);
         }
 
         mId = id;
@@ -80,8 +81,16 @@ public class Question extends Rule {
         return mId + " = " + mValue;
     }
 
+    /**
+     * The interface for that must be implemented to receive callbacks when the question's value is
+     * update, e.g., when the user types in the question's field.
+     */
     public interface OnUpdateListener {
 
+        /**
+         * Called when the question's value is update, e.g., when the user types in the question's
+         * field.
+         */
         public void onQuestionUpdate(final Question question);
     }
 }

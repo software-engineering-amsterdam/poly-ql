@@ -1,11 +1,19 @@
 package expr.relationalExpr;
 
-import expr.Expr;
+import typeChecker.ASTVisitor;
+import expr.BinaryExpr;
+import expr.Expression;
 
-public class LT extends Expr {
+public class LT extends BinaryExpr {
 
-	public LT(Expr first, Expr second) {
+	public LT(Expression first, Expression second) {
 		super(first,second);
 	}
 
+	@Override
+	public void accept(ASTVisitor visitor) {
+		visitor.visit(this); 
+		this.first.accept(visitor);
+		this.second.accept(visitor);
+	}
 }

@@ -6,6 +6,12 @@ import nl.uva.polyql.model.types.Type;
 import nl.uva.polyql.model.values.Value;
 import nl.uva.polyql.utils.SyntaxKey;
 
+/**
+ * An operator that can be performed on expressions.
+ * 
+ * @param <T>
+ *            The return type of the operator.
+ */
 public abstract class Operator<T extends Value<?>> implements SyntaxKey {
 
     public T performOperation(final Operation<T> operation) {

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using QL.QLClasses.Expressions;
+using QL.QLClasses.Types;
 using QL.TypeChecker;
 
 namespace QL.QLClasses.Statements
@@ -15,7 +16,7 @@ namespace QL.QLClasses.Statements
             Body = new List<StatementBase>();
         }
 
-        public override bool CheckType(ref QLException error)
+        public override bool CheckType(ref QLTypeError error)
         {
             //when else statement, condition is null
             if (Condition != null)
@@ -23,14 +24,11 @@ namespace QL.QLClasses.Statements
                 if (!Condition.CheckType(ref error))
                     return false;
 
-                if (Condition.GetType() != typeof(bool))
+                if (!(Condition.GetResultType() is QBool))
                 {
-                    error.Message = string.Format("Condition is not a boolean. Got QType '{0}', with valuetype '{1}'", Condition, Condition.GetType());
-
-                    error.TokenLine = Condition.TokenLine;
-                    error.TokenColumn = Condition.TokenColumn;
-                    error.TokenText = Condition.TokenText;
-
+                    error.Message = string.Format("Condition is not a boolean. Got QType '{0}', with valuetype '{1}'", Condition, Condition.GetResultType());
+                    error.TokenInfo = Condition.TokenInfo;
+                    
                     return false;
                 }
             }

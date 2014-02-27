@@ -16,6 +16,7 @@ public class StringType extends ValueType<StringValue> {
     }
 
     public static String parseInputToString(final String input) {
+        // Remove the quotes from around the string
         return input.substring(1, input.length() - 1);
     }
 }
