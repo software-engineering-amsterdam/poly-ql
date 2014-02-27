@@ -8,8 +8,8 @@ import net.iplantevin.ql.ast.types.TypeEnvironment;
 import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
 
 /**
- * @author  Ivan
- * Addition.
+ * @author Ivan
+ *         Addition.
  */
 public class Add extends Binary {
     public Add(Expression left, Expression right, LineInfo lineInfo) {

@@ -6,6 +6,7 @@ import net.iplantevin.ql.ast.QLASTNode;
 /**
  * Abstract class for errors. Named ASTError because it must contain a node
  * from the AST (which will me used for messages).
+ *
  * @author Ivan
  */
 public abstract class ASTError {

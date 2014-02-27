@@ -8,8 +8,8 @@ import net.iplantevin.ql.ast.types.TypeEnvironment;
 import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
 
 /**
- * @author  Ivan
- * Greater or equal.
+ * @author Ivan
+ *         Greater or equal.
  */
 public class GEQ extends Binary {
     public GEQ(Expression left, Expression right, LineInfo lineInfo) {

@@ -8,8 +8,8 @@ import net.iplantevin.ql.ast.types.TypeEnvironment;
 import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
 
 /**
- * @author  Ivan
- * Division.
+ * @author Ivan
+ *         Division.
  */
 public class Div extends Binary {
     public Div(Expression left, Expression right, LineInfo lineInfo) {

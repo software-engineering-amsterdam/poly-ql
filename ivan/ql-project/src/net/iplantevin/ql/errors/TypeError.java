@@ -4,8 +4,8 @@ import net.iplantevin.ql.ast.QLASTNode;
 import net.iplantevin.ql.ast.types.Type;
 
 /**
- * @author  Ivan
- * Exception class to use for type checking errors.
+ * @author Ivan
+ *         Exception class to use for type checking errors.
  */
 public class TypeError extends ASTError {
     private final Type expectedType;

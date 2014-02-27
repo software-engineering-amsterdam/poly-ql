@@ -4,8 +4,8 @@ import net.iplantevin.ql.ast.LineInfo;
 import net.iplantevin.ql.ast.expressions.Expression;
 
 /**
- * @author  Ivan
- * Parent class of all binary expressions. Has two expressions (left and right).
+ * @author Ivan
+ *         Parent class of all binary expressions. Has two expressions (left and right).
  */
 public abstract class Binary extends Expression {
     private final Expression leftExpr;

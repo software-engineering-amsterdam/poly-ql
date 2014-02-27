@@ -8,8 +8,8 @@ import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 /**
- * @author  Ivan
- * Identifier.
+ * @author Ivan
+ *         Identifier.
  */
 public class ID extends Expression {
     private final String name;

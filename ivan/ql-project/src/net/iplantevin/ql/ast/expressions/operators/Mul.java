@@ -8,8 +8,8 @@ import net.iplantevin.ql.ast.types.TypeEnvironment;
 import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
 
 /**
- * @author  Ivan
- * Multiplication.
+ * @author Ivan
+ *         Multiplication.
  */
 public class Mul extends Binary {
     public Mul(Expression left, Expression right, LineInfo lineInfo) {

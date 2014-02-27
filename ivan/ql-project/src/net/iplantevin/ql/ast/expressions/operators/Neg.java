@@ -8,8 +8,8 @@ import net.iplantevin.ql.ast.types.TypeEnvironment;
 import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
 
 /**
- * @author  Ivan
- * Unary -. Type is Integer.
+ * @author Ivan
+ *         Unary -. Type is Integer.
  */
 public class Neg extends Unary {
     public Neg(Expression expression, LineInfo lineInfo) {

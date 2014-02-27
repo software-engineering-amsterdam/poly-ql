@@ -8,8 +8,8 @@ import net.iplantevin.ql.ast.types.TypeEnvironment;
 import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
 
 /**
- * @author  Ivan
- * Less than.
+ * @author Ivan
+ *         Less than.
  */
 public class LT extends Binary {
     public LT(Expression left, Expression right, LineInfo lineInfo) {

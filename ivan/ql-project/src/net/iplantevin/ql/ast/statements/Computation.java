@@ -8,8 +8,8 @@ import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 /**
- * @author  Ivan
- * Computed question. In addition to name, label and type, also has an Expression.
+ * @author Ivan
+ *         Computed question. In addition to name, label and type, also has an Expression.
  */
 public class Computation extends Questionable {
     private final Expression expression;

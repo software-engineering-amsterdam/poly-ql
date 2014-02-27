@@ -5,8 +5,8 @@ import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 /**
- * @author  Ivan
- * If statement.
+ * @author Ivan
+ *         If statement.
  */
 public class If extends Conditional {
     public If(Expression condition, Statement body, ParserRuleContext ctx) {

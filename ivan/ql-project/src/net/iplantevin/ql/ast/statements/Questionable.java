@@ -6,8 +6,8 @@ import net.iplantevin.ql.ast.types.Type;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 /**
- * @author  Ivan
- * Questionable. Parent class for questions and computed questions.
+ * @author Ivan
+ *         Questionable. Parent class for questions and computed questions.
  */
 public abstract class Questionable extends Statement {
     private final ID name;

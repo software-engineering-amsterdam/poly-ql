@@ -6,8 +6,8 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import java.util.ArrayList;
 
 /**
- * @author  Ivan
- * Block: a list of statements.
+ * @author Ivan
+ *         Block: a list of statements.
  */
 public class Block extends Statement {
     private final ArrayList<Statement> statements;

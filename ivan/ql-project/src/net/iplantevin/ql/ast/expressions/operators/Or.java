@@ -8,8 +8,8 @@ import net.iplantevin.ql.ast.types.TypeEnvironment;
 import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
 
 /**
- * @author  Ivan
- * Logical OR (||).
+ * @author Ivan
+ *         Logical OR (||).
  */
 public class Or extends Binary {
     public Or(Expression left, Expression right, LineInfo lineInfo) {

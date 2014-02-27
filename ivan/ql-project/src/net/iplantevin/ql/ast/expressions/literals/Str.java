@@ -9,8 +9,8 @@ import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 /**
- * @author  Ivan
- * String.
+ * @author Ivan
+ *         String.
  */
 public class Str extends Expression {
     private final String text;

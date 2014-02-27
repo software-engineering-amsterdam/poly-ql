@@ -4,9 +4,9 @@ import net.iplantevin.ql.ast.LineInfo;
 import net.iplantevin.ql.ast.expressions.Expression;
 
 /**
- * @author  Ivan
- * Parent class of all unary expressions. Unary expressions have a single
- * expression.
+ * @author Ivan
+ *         Parent class of all unary expressions. Unary expressions have a single
+ *         expression.
  */
 public abstract class Unary extends Expression {
     private final Expression expression;

@@ -8,8 +8,8 @@ import net.iplantevin.ql.ast.types.TypeEnvironment;
 import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
 
 /**
- * @author  Ivan
- * Equality.
+ * @author Ivan
+ *         Equality.
  */
 public class EQ extends Binary {
     public EQ(Expression left, Expression right, LineInfo lineInfo) {

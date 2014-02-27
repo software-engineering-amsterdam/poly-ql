@@ -8,8 +8,8 @@ import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 /**
- * @author  Ivan
- * Boolean.
+ * @author Ivan
+ *         Boolean.
  */
 public class Bool extends Expression {
     private final Boolean value;

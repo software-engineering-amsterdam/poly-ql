@@ -8,8 +8,8 @@ import net.iplantevin.ql.ast.types.TypeEnvironment;
 import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
 
 /**
- * @author  Ivan
- * Subtraction.
+ * @author Ivan
+ *         Subtraction.
  */
 public class Sub extends Binary {
     public Sub(Expression left, Expression right, LineInfo lineInfo) {

@@ -8,8 +8,8 @@ import net.iplantevin.ql.ast.types.TypeEnvironment;
 import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
 
 /**
- * @author  Ivan
- * Not equal.
+ * @author Ivan
+ *         Not equal.
  */
 public class NEQ extends Binary {
     public NEQ(Expression left, Expression right, LineInfo lineInfo) {
