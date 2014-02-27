@@ -4,10 +4,7 @@ import net.iplantevin.ql.ast.QLASTNode;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 /**
- * Created with IntelliJ IDEA.
- *
- * @user: Ivan
- * @date: 19-02-14
+ * @author  Ivan
  * Main statement abstract class. Extended by all kinds of statements.
  */
 public abstract class Statement extends QLASTNode {

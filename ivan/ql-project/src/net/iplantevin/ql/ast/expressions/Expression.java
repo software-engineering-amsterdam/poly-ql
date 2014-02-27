@@ -7,10 +7,7 @@ import net.iplantevin.ql.ast.types.TypeEnvironment;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 /**
- * Created with IntelliJ IDEA.
- *
- * @user: Ivan
- * @date: 19-02-14
+ * @author  Ivan
  * Abstract Expression class that implements the QLASTNode interface. All kinds
  * of expressions must extend this class or a subclass of it.
  */

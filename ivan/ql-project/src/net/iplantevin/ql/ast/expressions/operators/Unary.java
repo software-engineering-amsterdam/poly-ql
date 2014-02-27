@@ -4,10 +4,7 @@ import net.iplantevin.ql.ast.LineInfo;
 import net.iplantevin.ql.ast.expressions.Expression;
 
 /**
- * Created with IntelliJ IDEA.
- *
- * @user: Ivan
- * @date: 19-02-14
+ * @author  Ivan
  * Parent class of all unary expressions. Unary expressions have a single
  * expression.
  */

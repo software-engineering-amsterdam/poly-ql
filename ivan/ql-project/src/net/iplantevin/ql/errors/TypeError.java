@@ -4,10 +4,7 @@ import net.iplantevin.ql.ast.QLASTNode;
 import net.iplantevin.ql.ast.types.Type;
 
 /**
- * Created with IntelliJ IDEA.
- *
- * @user: Ivan
- * @date: 20-02-14
+ * @author  Ivan
  * Exception class to use for type checking errors.
  */
 public class TypeError extends ASTError {

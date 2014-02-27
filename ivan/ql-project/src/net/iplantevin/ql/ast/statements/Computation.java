@@ -8,10 +8,7 @@ import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 /**
- * Created with IntelliJ IDEA.
- *
- * @user: Ivan
- * @date: 19-02-14
+ * @author  Ivan
  * Computed question. In addition to name, label and type, also has an Expression.
  */
 public class Computation extends Questionable {

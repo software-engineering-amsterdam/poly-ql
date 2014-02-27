@@ -8,10 +8,7 @@ import net.iplantevin.ql.errors.TypeError;
 import java.util.HashMap;
 
 /**
- * Created with IntelliJ IDEA.
- *
- * @user: Ivan
- * @date: 20-02-14
+ * @author  Ivan
  * Type environment. Has a map of ID->IDTuple and convenience methods.
  */
 public class TypeEnvironment {

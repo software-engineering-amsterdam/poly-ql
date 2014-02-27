@@ -6,10 +6,7 @@ import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 /**
- * Created with IntelliJ IDEA.
- *
- * @user: Ivan
- * @date: 19-02-14
+ * @author  Ivan
  * Parentheses (forced precedence).
  */
 public class Par extends Expression {
