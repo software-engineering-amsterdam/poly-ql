@@ -122,12 +122,16 @@ public class QL4Visitor extends QL4BaseVisitor<Value> {
     if (verbose) 
       System.out.println("Checking question struct");
     
+    // extract information from context
+    String ident = ctx.IDENTIFIER().getText();
     String label = ctx.LABEL().getText();
     String type = ctx.TYPE().getText();
     
-    // TODO: check if value in memory
+    // lookup the value from our map
+    Value value = variables.get(ident);
     
-    questions.add(new Question(label, type));
+    // add question to the list
+    questions.add(new Question(label, type, value));
     
     return null;
   }
@@ -144,11 +148,16 @@ public class QL4Visitor extends QL4BaseVisitor<Value> {
     if (verbose) 
       System.out.println("Checking computed question");
     
+    // extract information from context
     String label = ctx.LABEL().getText();
     String type = ctx.TYPE().getText();
-    Value value = this.visit(ctx.expression()); // TODO
     
+    // compute value
+    Value value = this.visit(ctx.expression()); 
+    
+    // add question to list
     questions.add(new Question(label, type, value));
+    
     return null;
   }
   

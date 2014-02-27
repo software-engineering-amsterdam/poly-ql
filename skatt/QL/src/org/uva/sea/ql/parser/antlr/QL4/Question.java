@@ -39,7 +39,7 @@ public class Question {
 		if (value != null)
 			return "Label: " + label + " of type: "  + type + " with computed answer " + value;
 		else 
-			return "Label: " + label + " of type: "  + type ;
+			return "Label: " + label + " of type: "  + type + " with value "  + value;
 	}
 }
 
