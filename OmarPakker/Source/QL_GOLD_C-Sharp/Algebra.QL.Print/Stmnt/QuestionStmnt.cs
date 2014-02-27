@@ -4,10 +4,10 @@ using Algebra.QL.Core.Stmnt;
 
 namespace Algebra.QL.Print.Stmnt
 {
-    public class QuestionStmnt : QuestionStmnt<IPrintExpr>, IPrintStmnt
+    public class QuestionStmnt : TextExprStmnt<IPrintExpr>, IPrintStmnt
     {
-        public QuestionStmnt(string text, bool editable, IPrintExpr e)
-            : base(text, editable, e)
+        public QuestionStmnt(string text, IPrintExpr e)
+            : base(text, e)
         {
 
         }
@@ -15,9 +15,9 @@ namespace Algebra.QL.Print.Stmnt
         public Block BuildDocument()
         {
             Paragraph p = new Paragraph();
-            p.Inlines.Add(new Run(QuestionText) { Foreground = StyleSettings.QuestionStringColor });
-            p.Inlines.Add(Editable ? " >> " : " << ");
-            p.Inlines.Add(Expression.BuildDocument());
+            p.Inlines.Add(new Run(Text) { Foreground = StyleSettings.QuestionStringColor });
+            p.Inlines.Add(" >> ");
+            p.Inlines.AddRange(Expression.BuildDocument());
             p.Inlines.Add(";");
             return p;
         }

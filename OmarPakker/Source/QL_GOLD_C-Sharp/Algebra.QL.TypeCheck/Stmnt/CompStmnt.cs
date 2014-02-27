@@ -6,20 +6,16 @@ namespace Algebra.QL.TypeCheck.Stmnt
 {
 	public class CompStmnt : CompStmnt<ITypeCheckStmnt>, ITypeCheckStmnt
     {
-		public CompStmnt(params ITypeCheckStmnt[] stmnts)
-            : base(stmnts)
+		public CompStmnt(ITypeCheckStmnt a, ITypeCheckStmnt b)
+            : base(a, b)
         {
 
         }
 
         public void TypeCheck(Queue<ITypeCheckStmnt> queue, TypeCheckData data)
         {
-            foreach (ITypeCheckStmnt item in Statements)
-            {
-                //item.TypeCheck(queue, data);
-                queue.Enqueue(item);
-            }
-
+            queue.Enqueue(Statement1);
+            queue.Enqueue(Statement2);
             if (queue.Count > 0) queue.Dequeue().TypeCheck(queue, data);
         }
     }

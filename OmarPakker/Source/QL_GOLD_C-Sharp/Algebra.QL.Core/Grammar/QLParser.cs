@@ -2,54 +2,56 @@
 using System.Collections.ObjectModel;
 using System.Globalization;
 using Algebra.Core.GrammarParser;
-using Algebra.Core.Type;
+using Algebra.Core.Tree;
 using Algebra.QL.Core.Factory;
 using GOLD;
 using Grammar.Generated.v1;
 
 namespace Algebra.QL.Core.Grammar
 {
-	public class QLParser<E, S, TF, F> : AbstractParser
-        where TF : IQLTypeFactory
-		where F : IQLFactory<E, S>
+	public class QLParser<E, S, T, F> : AbstractParser
+        where E : IExprNode
+        where S : IStmntNode
+        where T : ITypeNode
+		where F : IQLFactory<E, S, T>
 	{
 		protected override ReadOnlyDictionary<string, short> Rules { get { return GrammarData.Rules; } }
-        protected readonly TF typeFactory;
         protected readonly F factory;
 
-		public QLParser(TF tf, F f)
+		public QLParser(F f)
 			: base(true)
 		{
-            typeFactory = tf;
             factory = f;
 		}
 
 		protected override object CreateObjectFor(Reduction r)
 		{
+            short tableIndex = r.Parent.TableIndex();
+
 			//<Type> ::= string
-			if (r.Parent.TableIndex() == Rules["Type_String"])
+			if (tableIndex == Rules["Type_String"])
 			{
-                return typeFactory.StringType();
+                return factory.StringType();
 			}
 			//<Type> ::= int
-			else if (r.Parent.TableIndex() == Rules["Type_Int"])
+			else if (tableIndex == Rules["Type_Int"])
 			{
-                return typeFactory.IntType();
+                return factory.IntType();
 			}
 			//<Type> ::= real
-			else if (r.Parent.TableIndex() == Rules["Type_Real"])
+			else if (tableIndex == Rules["Type_Real"])
 			{
-                return typeFactory.RealType();
+                return factory.RealType();
 			}
 			//<Type> ::= bool
-			else if (r.Parent.TableIndex() == Rules["Type_Bool"])
+			else if (tableIndex == Rules["Type_Bool"])
 			{
-                return typeFactory.BoolType();
+                return factory.BoolType();
 			}
 			//<Forms> ::= <Form> <Forms>
 			//<Statements> ::= <Statement> <Statements>
-			else if (r.Parent.TableIndex() == Rules["Forms"]
-				|| r.Parent.TableIndex() == Rules["Statements"])
+			else if (tableIndex == Rules["Forms"]
+				|| tableIndex == Rules["Statements"])
 			{
 				return factory.Comp((S)r.get_Data(0), (S)r.get_Data(1));
 			}
@@ -66,38 +68,38 @@ namespace Algebra.QL.Core.Grammar
 			//<MultExpr> ::= <NegateExpr>
 			//<NegateExpr> ::= <Value>
 			//<Value> ::= <Literal>
-			else if (r.Parent.TableIndex() == Rules["Forms2"]
-				|| r.Parent.TableIndex() == Rules["Statements2"]
-				|| r.Parent.TableIndex() == Rules["Statement"]
-				|| r.Parent.TableIndex() == Rules["Statement2"]
-				|| r.Parent.TableIndex() == Rules["Expression"]
-				|| r.Parent.TableIndex() == Rules["Orexpr"]
-				|| r.Parent.TableIndex() == Rules["Andexpr"]
-				|| r.Parent.TableIndex() == Rules["Eqexpr"]
-				|| r.Parent.TableIndex() == Rules["Compexpr"]
-				|| r.Parent.TableIndex() == Rules["Addexpr"]
-				|| r.Parent.TableIndex() == Rules["Multexpr"]
-				|| r.Parent.TableIndex() == Rules["Negateexpr"]
-				|| r.Parent.TableIndex() == Rules["Value"])
+			else if (tableIndex == Rules["Forms2"]
+				|| tableIndex == Rules["Statements2"]
+				|| tableIndex == Rules["Statement"]
+				|| tableIndex == Rules["Statement2"]
+				|| tableIndex == Rules["Expression"]
+				|| tableIndex == Rules["Orexpr"]
+				|| tableIndex == Rules["Andexpr"]
+				|| tableIndex == Rules["Eqexpr"]
+				|| tableIndex == Rules["Compexpr"]
+				|| tableIndex == Rules["Addexpr"]
+				|| tableIndex == Rules["Multexpr"]
+				|| tableIndex == Rules["Negateexpr"]
+				|| tableIndex == Rules["Value"])
 			{
 				return r.get_Data(0);
 			}
 			//<Form> ::= form Identifier <Block>
-			else if (r.Parent.TableIndex() == Rules["Form_Form_Identifier"])
+			else if (tableIndex == Rules["Form_Form_Identifier"])
 			{
 				return factory.Form((string)r.get_Data(1), (S)r.get_Data(2));
 			}
 			//<Block> ::= '{' <Statements> '}'
 			//<OptElse> ::= else <Statement>
 			//<Value> ::= '(' <Expression> ')'
-			else if (r.Parent.TableIndex() == Rules["Block_Lbrace_Rbrace"]
-				|| r.Parent.TableIndex() == Rules["Optelse_Else"]
-				|| r.Parent.TableIndex() == Rules["Value_Lparen_Rparen"])
+			else if (tableIndex == Rules["Block_Lbrace_Rbrace"]
+				|| tableIndex == Rules["Optelse_Else"]
+				|| tableIndex == Rules["Value_Lparen_Rparen"])
 			{
 				return r.get_Data(1);
 			}
 			//<Statement> ::= if '(' <Expression> ')' <Statement> <OptElse>
-			else if (r.Parent.TableIndex() == Rules["Statement_If_Lparen_Rparen"])
+			else if (tableIndex == Rules["Statement_If_Lparen_Rparen"])
 			{
 				if (r.get_Data(5) != null)
 				{
@@ -106,139 +108,139 @@ namespace Algebra.QL.Core.Grammar
 				return factory.If((E)r.get_Data(2), (S)r.get_Data(4));
 			}
 			//<Statement> ::= goto Identifier ';'
-			else if (r.Parent.TableIndex() == Rules["Statement_Goto_Identifier_Semi"])
+			else if (tableIndex == Rules["Statement_Goto_Identifier_Semi"])
 			{
 				return factory.Goto((string)r.get_Data(1));
 			}
 			//<OptElse> ::= 
-			else if (r.Parent.TableIndex() == Rules["Optelse"])
+			else if (tableIndex == Rules["Optelse"])
 			{
 				return null;
 			}
 			//<VarDecl> ::= Identifier ':' <Type>
-			else if (r.Parent.TableIndex() == Rules["Vardecl_Identifier_Colon"])
+			else if (tableIndex == Rules["Vardecl_Identifier_Colon"])
 			{
-				return factory.VarDecl((string)r.get_Data(0), (IType)r.get_Data(2));
+				return factory.VarDecl((string)r.get_Data(0), (T)r.get_Data(2));
 			}
 			//<VarAssign> ::= Identifier ':' <Type> '=' <Expression>
-			else if (r.Parent.TableIndex() == Rules["Varassign_Identifier_Colon_Eq"])
+			else if (tableIndex == Rules["Varassign_Identifier_Colon_Eq"])
 			{
-				return factory.VarAssign((string)r.get_Data(0), (IType)r.get_Data(2), (E)r.get_Data(4));
+				return factory.VarAssign((string)r.get_Data(0), (T)r.get_Data(2), (E)r.get_Data(4));
 			}
 			//<Question> ::= StringLit '>>' <VarDecl> ';'
-			else if (r.Parent.TableIndex() == Rules["Question_Stringlit_Gtgt_Semi"])
+			else if (tableIndex == Rules["Question_Stringlit_Gtgt_Semi"])
 			{
-				return factory.Question((string)r.get_Data(0), true, (E)r.get_Data(2));
+				return factory.Question((string)r.get_Data(0), (E)r.get_Data(2));
 			}
 			//<Question> ::= StringLit '<<' <VarAssign> ';'
 			//<Question> ::= StringLit '<<' <Expression> ';'
-			else if (r.Parent.TableIndex() == Rules["Question_Stringlit_Ltlt_Semi"]
-				|| r.Parent.TableIndex() == Rules["Question_Stringlit_Ltlt_Semi2"])
+			else if (tableIndex == Rules["Question_Stringlit_Ltlt_Semi"]
+				|| tableIndex == Rules["Question_Stringlit_Ltlt_Semi2"])
 			{
-				return factory.Question((string)r.get_Data(0), false, (E)r.get_Data(2));
+				return factory.Label((string)r.get_Data(0), (E)r.get_Data(2));
 			}
 			//<Expression> ::= <OrExpr> '?' <OrExpr> ':' <Expression>
-			else if (r.Parent.TableIndex() == Rules["Expression_Question_Colon"])
+			else if (tableIndex == Rules["Expression_Question_Colon"])
 			{
 				return factory.IfElse((E)r.get_Data(0), (E)r.get_Data(2), (E)r.get_Data(4));
 			}
 			//<OrExpr> ::= <OrExpr> '||' <AndExpr>
-			else if (r.Parent.TableIndex() == Rules["Orexpr_Pipepipe"])
+			else if (tableIndex == Rules["Orexpr_Pipepipe"])
 			{
 				return factory.Or((E)r.get_Data(0), (E)r.get_Data(2));
 			}
 			//<AndExpr> ::= <AndExpr> '&&' <EqExpr>
-			else if (r.Parent.TableIndex() == Rules["Andexpr_Ampamp"])
+			else if (tableIndex == Rules["Andexpr_Ampamp"])
 			{
 				return factory.And((E)r.get_Data(0), (E)r.get_Data(2));
 			}
 			//<EqExpr> ::= <EqExpr> '==' <CompExpr>
-			else if (r.Parent.TableIndex() == Rules["Eqexpr_Eqeq"])
+			else if (tableIndex == Rules["Eqexpr_Eqeq"])
 			{
 				return factory.Eq((E)r.get_Data(0), (E)r.get_Data(2));
 			}
 			//<EqExpr> ::= <EqExpr> '!=' <CompExpr>
-			else if (r.Parent.TableIndex() == Rules["Eqexpr_Exclameq"])
+			else if (tableIndex == Rules["Eqexpr_Exclameq"])
 			{
 				return factory.NotEq((E)r.get_Data(0), (E)r.get_Data(2));
 			}
 			//<CompExpr> ::= <CompExpr> '<' <AddExpr>
-			else if (r.Parent.TableIndex() == Rules["Compexpr_Lt"])
+			else if (tableIndex == Rules["Compexpr_Lt"])
 			{
 				return factory.LessThen((E)r.get_Data(0), (E)r.get_Data(2));
 			}
 			//<CompExpr> ::= <CompExpr> '>' <AddExpr>
-			else if (r.Parent.TableIndex() == Rules["Compexpr_Gt"])
+			else if (tableIndex == Rules["Compexpr_Gt"])
 			{
 				return factory.GreaterThen((E)r.get_Data(0), (E)r.get_Data(2));
 			}
 			//<CompExpr> ::= <CompExpr> '<=' <AddExpr>
-			else if (r.Parent.TableIndex() == Rules["Compexpr_Lteq"])
+			else if (tableIndex == Rules["Compexpr_Lteq"])
 			{
 				return factory.LessOrEqualTo((E)r.get_Data(0), (E)r.get_Data(2));
 			}
 			//<CompExpr> ::= <CompExpr> '>=' <AddExpr>
-			else if (r.Parent.TableIndex() == Rules["Compexpr_Gteq"])
+			else if (tableIndex == Rules["Compexpr_Gteq"])
 			{
 				return factory.GreaterOrEqualTo((E)r.get_Data(0), (E)r.get_Data(2));
 			}
 			//<AddExpr> ::= <AddExpr> '+' <MultExpr>
-			else if (r.Parent.TableIndex() == Rules["Addexpr_Plus"])
+			else if (tableIndex == Rules["Addexpr_Plus"])
 			{
 				return factory.Add((E)r.get_Data(0), (E)r.get_Data(2));
 			}
 			//<AddExpr> ::= <AddExpr> '-' <MultExpr>
-			else if (r.Parent.TableIndex() == Rules["Addexpr_Minus"])
+			else if (tableIndex == Rules["Addexpr_Minus"])
 			{
 				return factory.Subtract((E)r.get_Data(0), (E)r.get_Data(2));
 			}
 			//<MultExpr> ::= <MultExpr> '*' <NegateExpr>
-			else if (r.Parent.TableIndex() == Rules["Multexpr_Times"])
+			else if (tableIndex == Rules["Multexpr_Times"])
 			{
 				return factory.Multiply((E)r.get_Data(0), (E)r.get_Data(2));
 			}
 			//<MultExpr> ::= <MultExpr> '/' <NegateExpr>
-			else if (r.Parent.TableIndex() == Rules["Multexpr_Div"])
+			else if (tableIndex == Rules["Multexpr_Div"])
 			{
 				return factory.Divide((E)r.get_Data(0), (E)r.get_Data(2));
 			}
 			//<NegateExpr> ::= '-' <Value>
-			else if (r.Parent.TableIndex() == Rules["Negateexpr_Minus"])
+			else if (tableIndex == Rules["Negateexpr_Minus"])
 			{
-                return factory.Negate(typeFactory.RealType(), (E)r.get_Data(1));
+                return factory.NegateNumeric((E)r.get_Data(1));
 			}
             //<NegateExpr> ::= '!' <Value>
-            else if (r.Parent.TableIndex() == Rules["Negateexpr_Exclam"])
+            else if (tableIndex == Rules["Negateexpr_Exclam"])
             {
-                return factory.Negate(typeFactory.BoolType(), (E)r.get_Data(1));
+                return factory.NegateBool((E)r.get_Data(1));
             }
             //<Value> ::= Identifier
-            else if (r.Parent.TableIndex() == Rules["Value_Identifier"])
+            else if (tableIndex == Rules["Value_Identifier"])
             {
                 return factory.Variable((string)r.get_Data(0));
             }
             //<Literal> ::= StringLit
-            else if (r.Parent.TableIndex() == Rules["Literal_Stringlit"])
+            else if (tableIndex == Rules["Literal_Stringlit"])
             {
                 return factory.String((string)r.get_Data(0));
             }
             //<Literal> ::= IntLit
-            else if (r.Parent.TableIndex() == Rules["Literal_Intlit"])
+            else if (tableIndex == Rules["Literal_Intlit"])
             {
                 return factory.Int(Int32.Parse((string)r.get_Data(0)));
             }
             //<Literal> ::= RealLit
-            else if (r.Parent.TableIndex() == Rules["Literal_Reallit"])
+            else if (tableIndex == Rules["Literal_Reallit"])
             {
                 return factory.Real(Double.Parse((string)r.get_Data(0), CultureInfo.InvariantCulture));
             }
             //<Literal> ::= BoolLit
-            else if (r.Parent.TableIndex() == Rules["Literal_Boollit"])
+            else if (tableIndex == Rules["Literal_Boollit"])
             {
                 return factory.Bool(Boolean.Parse((string)r.get_Data(0)));
             }
 
-			return null;
+            throw new InvalidOperationException("Parser object construction is missing value checks!");
 		}
 	}
 }

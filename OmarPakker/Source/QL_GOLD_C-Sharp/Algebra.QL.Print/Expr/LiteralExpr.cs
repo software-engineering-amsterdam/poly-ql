@@ -1,18 +1,21 @@
-﻿using Algebra.Core.Value;
+﻿using System.Collections.Generic;
+using System.Windows.Documents;
+using Algebra.QL.Core.Expr;
+using Algebra.QL.Print.Type;
 
 namespace Algebra.QL.Print.Expr
 {
-    public class LiteralExpr : Algebra.QL.Core.Expr.LiteralExpr, IPrintExpr
+    public abstract class LiteralExpr<V> : LiteralExpr<IPrintType, V>, IPrintExpr
     {
-        public LiteralExpr(IValue value)
+        protected LiteralExpr(V value)
             : base(value)
         {
 
         }
 
-        public string BuildDocument()
+        public virtual IEnumerable<Inline> BuildDocument()
         {
-            return Value.ToString();
+            return new[] { new Run(Value.ToString()) };
         }
     }
 }

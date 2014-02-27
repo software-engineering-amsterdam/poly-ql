@@ -1,10 +1,11 @@
-﻿using Algebra.Core.Type;
+﻿using Algebra.Core.Tree;
 using Algebra.QL.TypeCheck.Helpers;
+using Algebra.QL.TypeCheck.Type;
 
 namespace Algebra.QL.TypeCheck.Expr
 {
-	public interface ITypeCheckExpr : ITypeCheck
+    public interface ITypeCheckExpr : ITypeCheck, IExprNode
 	{
-		IType TypeCheck(TypeCheckData data);
+        ITypeCheckType TypeCheck(TypeCheckData data);
 	}
 }

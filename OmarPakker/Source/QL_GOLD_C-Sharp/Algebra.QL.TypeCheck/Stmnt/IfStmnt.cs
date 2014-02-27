@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
-using Algebra.Core.Type;
 using Algebra.QL.Core.Stmnt;
-using Algebra.QL.Core.Type;
 using Algebra.QL.TypeCheck.Expr;
 using Algebra.QL.TypeCheck.Helpers;
+using Algebra.QL.TypeCheck.Type;
 
 namespace Algebra.QL.TypeCheck.Stmnt
 {
 	public class IfStmnt : IfStmnt<ITypeCheckExpr, ITypeCheckStmnt>, ITypeCheckStmnt
     {
-		private readonly IType ExpressionType = new BoolType();
+		private readonly ITypeCheckType ExpressionType = new BoolType();
 
 		public IfStmnt(ITypeCheckExpr check, ITypeCheckStmnt ifTrue)
             : base(check, ifTrue)
@@ -19,14 +18,14 @@ namespace Algebra.QL.TypeCheck.Stmnt
 
         public void TypeCheck(Queue<ITypeCheckStmnt> queue, TypeCheckData data)
         {
-			queue.Enqueue(IfTrueBody);
-			if (queue.Count > 0) queue.Dequeue().TypeCheck(queue, data);
-
             if (!CheckExpression.TypeCheck(data).CompatibleWith(ExpressionType))
             {
                 data.ReportError("Unable to evaluate 'if'. Expression must be of type bool!",
                     SourcePosition);
             }
+
+            queue.Enqueue(IfTrueBody);
+			if (queue.Count > 0) queue.Dequeue().TypeCheck(queue, data);
         }
     }
 }

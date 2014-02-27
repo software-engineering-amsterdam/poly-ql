@@ -1,20 +1,20 @@
-﻿using Algebra.Core.Type;
-using Algebra.Core.Value;
+﻿using Algebra.QL.Core.Expr;
 using Algebra.QL.TypeCheck.Helpers;
+using Algebra.QL.TypeCheck.Type;
 
 namespace Algebra.QL.TypeCheck.Expr
 {
-	public class LiteralExpr : Algebra.QL.Core.Expr.LiteralExpr, ITypeCheckExpr
+	public abstract class LiteralExpr<V> : LiteralExpr<ITypeCheckType, V>, ITypeCheckExpr
 	{
-		public LiteralExpr(IValue value)
+		protected LiteralExpr(V value)
 			: base(value)
 		{
 
 		}
 
-        public IType TypeCheck(TypeCheckData data)
+        public ITypeCheckType TypeCheck(TypeCheckData data)
         {
-            return Value.Type;
+            return Type;
         }
     }
 }

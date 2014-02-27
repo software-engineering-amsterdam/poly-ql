@@ -1,26 +1,31 @@
 ﻿using System;
-using Algebra.Core.Type;
 using Algebra.QL.Extensions.Factory;
-using Algebra.QL.Extensions.Type;
 using Algebra.QL.Extensions.TypeCheck.Expr;
+using Algebra.QL.Extensions.TypeCheck.Expr.Literals;
 using Algebra.QL.Extensions.TypeCheck.Stmnt;
-using Algebra.QL.Extensions.Value;
+using Algebra.QL.Extensions.TypeCheck.Type;
 using Algebra.QL.TypeCheck.Expr;
 using Algebra.QL.TypeCheck.Factory;
 using Algebra.QL.TypeCheck.Stmnt;
+using Algebra.QL.TypeCheck.Type;
 
 namespace Algebra.QL.Extensions.TypeCheck.Factory
 {
-	public class QLTypeCheckExtensionsFactory : QLTypeCheckFactory, IQLExtensionsFactory<ITypeCheckExpr, ITypeCheckStmnt>
+    public class QLTypeCheckExtensionsFactory : QLTypeCheckFactory, IQLExtensionsFactory<ITypeCheckExpr, ITypeCheckStmnt, ITypeCheckType>
     {
-		public IType DateType()
-		{
-			return new DateType();
-		}
+        public QLTypeCheckExtensionsFactory()
+        {
+
+        }
+
+        public ITypeCheckType DateType()
+        {
+            return new DateType();
+        }
 
 		public ITypeCheckExpr Date(DateTime date)
 		{
-			return Literal(new DateValue(date));
+            return new DateLiteral(date);
 		}
 
         public ITypeCheckExpr Modulo(ITypeCheckExpr l, ITypeCheckExpr r)

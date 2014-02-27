@@ -1,10 +1,11 @@
 ﻿using System;
+using Algebra.Core.Tree;
 
 namespace Algebra.QL.Core.Stmnt
 {
-    public abstract class GotoStmnt
+    public abstract class GotoStmnt : IStmntNode
     {
-		public Tuple<int, int> SourcePosition { get; set; }
+        public Tuple<int, int> SourcePosition { get; set; }
         public string GotoName { get; private set; }
 
 		public GotoStmnt(string gotoName)

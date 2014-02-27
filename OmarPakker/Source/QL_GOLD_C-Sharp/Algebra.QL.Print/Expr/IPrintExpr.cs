@@ -1,9 +1,11 @@
-﻿using System.Windows.Documents;
+﻿using System.Collections.Generic;
+using System.Windows.Documents;
+using Algebra.Core.Tree;
 
 namespace Algebra.QL.Print.Expr
 {
-    public interface IPrintExpr : IPrint
+    public interface IPrintExpr : IPrint, IExprNode
     {
-        string BuildDocument();
+        IEnumerable<Inline> BuildDocument();
     }
 }

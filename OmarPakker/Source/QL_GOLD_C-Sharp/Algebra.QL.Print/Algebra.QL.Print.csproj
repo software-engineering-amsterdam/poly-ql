@@ -48,9 +48,15 @@
     <Compile Include="Expr\LessOrEqualToExpr.cs" />
     <Compile Include="Expr\LessThenExpr.cs" />
     <Compile Include="Expr\LiteralExpr.cs" />
+    <Compile Include="Expr\Literals\BoolLiteral.cs" />
+    <Compile Include="Expr\Literals\DateLiteral.cs" />
+    <Compile Include="Expr\Literals\IntLiteral.cs" />
+    <Compile Include="Expr\Literals\RealLiteral.cs" />
+    <Compile Include="Expr\Literals\StringLiteral.cs" />
     <Compile Include="Expr\ModuloExpr.cs" />
     <Compile Include="Expr\MultiplyExpr.cs" />
-    <Compile Include="Expr\NegateExpr.cs" />
+    <Compile Include="Expr\NegateBoolExpr.cs" />
+    <Compile Include="Expr\NegateNumericExpr.cs" />
     <Compile Include="Expr\NotEqualExpr.cs" />
     <Compile Include="Expr\OrExpr.cs" />
     <Compile Include="Expr\PowerExpr.cs" />
@@ -66,9 +72,17 @@
     <Compile Include="Stmnt\IfElseStmnt.cs" />
     <Compile Include="Stmnt\IfStmnt.cs" />
     <Compile Include="Stmnt\IPrintStmnt.cs" />
+    <Compile Include="Stmnt\LabelStmnt.cs" />
     <Compile Include="Stmnt\LoopStmnt.cs" />
     <Compile Include="Stmnt\QuestionStmnt.cs" />
     <Compile Include="StyleSettings.cs" />
+    <Compile Include="Type\BaseType.cs" />
+    <Compile Include="Type\BoolType.cs" />
+    <Compile Include="Type\DateType.cs" />
+    <Compile Include="Type\IntType.cs" />
+    <Compile Include="Type\IPrintType.cs" />
+    <Compile Include="Type\RealType.cs" />
+    <Compile Include="Type\StringType.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Algebra.Core\Algebra.Core.csproj">

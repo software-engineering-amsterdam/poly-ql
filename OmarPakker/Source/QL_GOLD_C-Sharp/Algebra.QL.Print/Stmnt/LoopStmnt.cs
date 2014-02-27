@@ -21,7 +21,7 @@ namespace Algebra.QL.Print.Stmnt
             Paragraph p = new Paragraph();
             p.Inlines.Add(new Run("loop") { Foreground = StyleSettings.KeyWordColor });
             p.Inlines.Add(" (");
-            p.Inlines.Add(Expression.BuildDocument());
+            p.Inlines.AddRange(Expression.BuildDocument());
             p.Inlines.Add(")");
 
             Block bodyBlock = Body.BuildDocument();

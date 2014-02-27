@@ -5,8 +5,8 @@ namespace Algebra.QL.Print.Stmnt
 {
     public class CompStmnt : CompStmnt<IPrintStmnt>, IPrintStmnt
     {
-        public CompStmnt(params IPrintStmnt[] stmnts)
-            : base(stmnts)
+        public CompStmnt(IPrintStmnt a, IPrintStmnt b)
+            : base(a, b)
         {
 
         }
@@ -14,12 +14,8 @@ namespace Algebra.QL.Print.Stmnt
         public Block BuildDocument()
         {
             Section s = new Section();
-
-            foreach (IPrintStmnt stmnt in Statements)
-            {
-                s.Blocks.Add(stmnt.BuildDocument());
-            }
-
+            s.Blocks.Add(Statement1.BuildDocument());
+            s.Blocks.Add(Statement2.BuildDocument());
             return s;
         }
     }

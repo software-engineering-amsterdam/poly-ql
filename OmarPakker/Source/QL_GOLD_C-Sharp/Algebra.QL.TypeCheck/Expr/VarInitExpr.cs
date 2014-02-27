@@ -1,19 +1,19 @@
 ﻿using System;
-using Algebra.Core.Type;
-using Algebra.QL.Core.Expr;
+using Algebra.Core.Expr;
 using Algebra.QL.TypeCheck.Helpers;
+using Algebra.QL.TypeCheck.Type;
 
 namespace Algebra.QL.TypeCheck.Expr
 {
-	public class VarInitExpr : VarInitExpr<ITypeCheckExpr>, ITypeCheckExpr
+	public class VarInitExpr : VarInitExpr<ITypeCheckExpr, ITypeCheckType>, ITypeCheckExpr
     {
-		public VarInitExpr(string name, IType type, ITypeCheckExpr value)
+		public VarInitExpr(string name, ITypeCheckType type, ITypeCheckExpr value)
             : base(name, type, value)
 		{
 
 		}
 
-        public IType TypeCheck(TypeCheckData data)
+        public ITypeCheckType TypeCheck(TypeCheckData data)
         {
             if (data.Variables.ContainsKey(Name))
 			{
@@ -33,7 +33,7 @@ namespace Algebra.QL.TypeCheck.Expr
 				data.Variables.Add(Name, this);
 			}
 
-			IType a = Value.TypeCheck(data);
+			ITypeCheckType a = Value.TypeCheck(data);
 			if (!Type.CompatibleWith(a))
 			{
                 data.ReportError(String.Format("Can't assign value of {0} to variable of type {1}.",

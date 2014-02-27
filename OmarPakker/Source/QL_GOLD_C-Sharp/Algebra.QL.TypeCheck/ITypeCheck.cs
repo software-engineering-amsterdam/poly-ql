@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Algebra.Core.Tree;
 
 namespace Algebra.QL.TypeCheck
 {
-	public interface ITypeCheck
+	public interface ITypeCheck : INode
 	{
-		Tuple<int, int> SourcePosition { get; set; }
+
 	}
 }

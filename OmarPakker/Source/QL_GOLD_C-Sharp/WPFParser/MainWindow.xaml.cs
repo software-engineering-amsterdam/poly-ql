@@ -5,17 +5,19 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
+using Algebra.Core.Factory;
 using Algebra.Core.GrammarParser;
-using Algebra.QL.Core.Factory;
+using Algebra.Core.Tree;
 using Algebra.QL.Core.Grammar;
-using Algebra.QL.Extensions.Factory;
 using Algebra.QL.Extensions.Grammar;
 using Algebra.QL.Print.Expr;
 using Algebra.QL.Print.Stmnt;
+using Algebra.QL.Print.Type;
 using Algebra.QL.TypeCheck.Expr;
 using Algebra.QL.TypeCheck.Factory;
 using Algebra.QL.TypeCheck.Helpers;
 using Algebra.QL.TypeCheck.Stmnt;
+using Algebra.QL.TypeCheck.Type;
 using Microsoft.Win32;
 using WPFParser.MergedFactory;
 
@@ -46,8 +48,7 @@ namespace WPFParser
 
         private AbstractParser GetTypeCheckParser()
         {
-            var parser = new QLParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeFactory,
-                QLTypeCheckFactory>(new QLTypeFactory(), new QLTypeCheckFactory());
+            var parser = new QLParser<ITypeCheckExpr, ITypeCheckStmnt, ITypeCheckType, QLTypeCheckFactory>(new QLTypeCheckFactory());
 
             Assembly a = parser.GetType().Assembly;
             parser.LoadGrammar(new BinaryReader(a.GetManifestResourceStream("Algebra.QL.Core.Grammar.QL_Grammar.egt")));
@@ -57,12 +58,20 @@ namespace WPFParser
 
         private AbstractParser GetComboParser()
         {
-            var parser = new ExtensionsParser<Tuple<ITypeCheckExpr, IPrintExpr>,
-                Tuple<ITypeCheckStmnt, IPrintStmnt>, QLExtensionsTypeFactory,
-                TypeCheckPrintFactory>(new QLExtensionsTypeFactory(), new TypeCheckPrintFactory());
+            var parser = new ExtensionsParser<CombinedExpr<ITypeCheckExpr, IPrintExpr>,
+                CombinedStmnt<ITypeCheckStmnt, IPrintStmnt>, CombinedType<ITypeCheckType, IPrintType>,
+                TypeCheckPrintFactory>(new TypeCheckPrintFactory());
 
             Assembly a = parser.GetType().Assembly;
             parser.LoadGrammar(new BinaryReader(a.GetManifestResourceStream("Algebra.QL.Extensions.Grammar.QL_Grammar.egt")));
+
+            parser.OnReduction += OnReduction;
+            parser.OnCompletion += OnCompletion;
+            parser.OnGroupError += OnGroupError;
+            parser.OnInternalError += OnInternalError;
+            parser.OnNotLoadedError += OnNotLoadedError;
+            parser.OnLexicalError += OnLexicalError;
+            parser.OnSyntaxError += OnSyntaxError;
 
             return parser;
         }
@@ -125,28 +134,31 @@ namespace WPFParser
 
         private void OnReduction(int line, int column, object newObj)
         {
-            if (newObj is Tuple<ITypeCheckExpr, IPrintExpr>)
+            if(newObj is INode)
             {
-                ((Tuple<ITypeCheckExpr, IPrintExpr>)newObj).Item1.SourcePosition = new Tuple<int, int>(line, column);
-            }
-            else if (newObj is Tuple<ITypeCheckStmnt, IPrintStmnt>)
-            {
-                ((Tuple<ITypeCheckStmnt, IPrintStmnt>)newObj).Item1.SourcePosition = new Tuple<int, int>(line, column);
+                ((INode)newObj).SourcePosition = new Tuple<int, int>(line, column);
             }
         }
 
         private void OnCompletion(object root)
         {
-            TypeCheckData data = new TypeCheckData();
-            data.OnTypeCheckError += PrintError;
+            //TODO: WIP rewrite typecheck as a BF/DF traversal combination. Alternatively maybe use iterative deepening depth-first traversal?
 
-            if (root is Tuple<ITypeCheckStmnt, IPrintStmnt>)
+            if (root is ITypeCheckStmnt)
             {
-                Tuple<ITypeCheckStmnt, IPrintStmnt> tuple = (Tuple<ITypeCheckStmnt, IPrintStmnt>)root;
-                //TODO: Rewrote as a BF/DF traversal combination. Don't think this is really great.. Alternatively maybe use iterative deepening depth-first traversal?
-                tuple.Item1.TypeCheck(new Queue<ITypeCheckStmnt>(), data);
+                TypeCheckData data = new TypeCheckData();
+                data.OnTypeCheckError += PrintError;
+                ((ITypeCheckStmnt)root).TypeCheck(new Queue<ITypeCheckStmnt>(), data);
+            }
+            else if (root is CombinedStmnt<ITypeCheckStmnt, IPrintStmnt>)
+            {
+                CombinedStmnt<ITypeCheckStmnt, IPrintStmnt> combItem = (CombinedStmnt<ITypeCheckStmnt, IPrintStmnt>)root;
 
-                printOutputBlock.Document.Blocks.Add(tuple.Item2.BuildDocument());
+                TypeCheckData data = new TypeCheckData();
+                data.OnTypeCheckError += PrintError;
+                combItem.Item1.TypeCheck(new Queue<ITypeCheckStmnt>(), data);
+
+                printOutputBlock.Document = new FlowDocument(combItem.Item2.BuildDocument());
             }
         }
 

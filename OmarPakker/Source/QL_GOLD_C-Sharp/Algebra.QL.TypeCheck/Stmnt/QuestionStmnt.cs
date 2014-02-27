@@ -6,25 +6,25 @@ using Algebra.QL.TypeCheck.Helpers;
 
 namespace Algebra.QL.TypeCheck.Stmnt
 {
-    public class QuestionStmnt : QuestionStmnt<ITypeCheckExpr>, ITypeCheckStmnt
+    public class QuestionStmnt : TextExprStmnt<ITypeCheckExpr>, ITypeCheckStmnt
     {
-        public QuestionStmnt(string text, bool editable, ITypeCheckExpr e)
-            : base(text, editable, e)
+        public QuestionStmnt(string text, ITypeCheckExpr e)
+            : base(text, e)
         {
 
         }
 
         public void TypeCheck(Queue<ITypeCheckStmnt> queue, TypeCheckData data)
         {
-			if (queue.Count > 0) queue.Dequeue().TypeCheck(queue, data);
-
             Expression.TypeCheck(data);
 
-            if (String.IsNullOrWhiteSpace(QuestionText))
+            if (String.IsNullOrWhiteSpace(Text))
             {
                 data.ReportWarning("Empty question detected. Are you sure you want to leave this question blank?",
                     SourcePosition);
             }
+
+            if (queue.Count > 0) queue.Dequeue().TypeCheck(queue, data);
         }
     }
 }

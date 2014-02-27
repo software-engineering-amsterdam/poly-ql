@@ -36,19 +36,26 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Expr\BinaryExpr.cs" />
+    <Compile Include="Expr\TernaryExpr.cs" />
+    <Compile Include="Expr\UnaryExpr.cs" />
+    <Compile Include="Expr\VarExpr.cs" />
+    <Compile Include="Expr\VarInitExpr.cs" />
+    <Compile Include="Factory\CombinedExpr.cs" />
+    <Compile Include="Factory\CombinedItems.cs" />
+    <Compile Include="Factory\CombinedStmnt.cs" />
+    <Compile Include="Factory\CombinedType.cs" />
     <Compile Include="Factory\FactoryCombination.cs" />
     <Compile Include="Factory\FactoryUnion.cs" />
     <Compile Include="Factory\IFactory.cs" />
-    <Compile Include="Factory\ITypeFactory.cs" />
     <Compile Include="GrammarParser\AbstractParser.cs" />
+    <Compile Include="Tree\IExprNode.cs" />
+    <Compile Include="Tree\INode.cs" />
+    <Compile Include="Tree\IStmntNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Type\BaseType.cs" />
-    <Compile Include="Type\IType.cs" />
-    <Compile Include="Type\UnknownType.cs" />
-    <Compile Include="Value\BaseValue.cs" />
-    <Compile Include="Value\IValue.cs" />
-    <Compile Include="Value\UnknownValue.cs" />
+    <Compile Include="Tree\ITypeNode.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

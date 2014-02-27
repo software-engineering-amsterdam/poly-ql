@@ -1,4 +1,6 @@
-﻿using Algebra.QL.Core.Expr;
+﻿using System.Collections.Generic;
+using System.Windows.Documents;
+using Algebra.Core.Expr;
 
 namespace Algebra.QL.Print.Expr
 {
@@ -10,9 +12,13 @@ namespace Algebra.QL.Print.Expr
 
 		}
 
-        public string BuildDocument()
+        public IEnumerable<Inline> BuildDocument()
         {
-            return Expr1.BuildDocument() + " != " + Expr2.BuildDocument();
+            List<Inline> inlines = new List<Inline>();
+            inlines.AddRange(Expr1.BuildDocument());
+            inlines.Add(new Run(" != "));
+            inlines.AddRange(Expr2.BuildDocument());
+            return inlines;
         }
 	}
 }

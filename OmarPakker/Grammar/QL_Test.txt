@@ -11,18 +11,18 @@ form Form1
 
     "Final real:" << result:real = answer2 + answer4;
     "No var assignment:" << answer1 || answer3;
-	"Unknown var usage:" << bladiebla;
-	"Var re-definition:" >> answer3:string;
-	"Var re-use:" >> answer4:real;
-	"Incompatible types:" << answer1 * answer2;
-	"Inline if:" << answer3 ? answer1 : answer2;
-	"Incompatible literals:" << 500 + true;
+	"Unknown var usage:" << bladiebla;						//ERROR
+	"Var re-definition:" >> answer3:string;					//ERROR
+	"Var re-use:" >> answer4:real;							//WARNING
+	"Incompatible types:" << answer1 * answer2;				//ERROR
+	"Inline if:" << answer3 ? answer1 : answer2;			//ERROR
+	"Incompatible literals:" << 500 + true;					//ERROR
 
     "Int:" << intValue:int = 500 + 600;
     "Real:" << realValue:real = .5;
     "Boolean:" << boolValue:bool = true;
 	"Boolean2:" << false;
-	"Real into Int:" << myInt:int = realValue;
+	"Real into Int:" << myInt:int = realValue;				//WARNING
     
     //Line comment
     /*
@@ -36,5 +36,5 @@ form Form2
 {
 	"Bool:" >> answer1:bool;
 
-	goto Form3;
+	goto Form3;												//ERROR
 }

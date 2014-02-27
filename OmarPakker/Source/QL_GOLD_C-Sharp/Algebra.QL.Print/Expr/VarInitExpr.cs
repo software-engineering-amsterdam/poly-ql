@@ -1,19 +1,28 @@
-﻿using Algebra.Core.Type;
-using Algebra.QL.Core.Expr;
+﻿using System.Collections.Generic;
+using System.Windows.Documents;
+using Algebra.Core.Expr;
+using Algebra.QL.Print.Type;
 
 namespace Algebra.QL.Print.Expr
 {
-    public class VarInitExpr : VarInitExpr<IPrintExpr>, IPrintExpr
+    public class VarInitExpr : VarInitExpr<IPrintExpr, IPrintType>, IPrintExpr
     {
-        public VarInitExpr(string name, IType type, IPrintExpr value)
+        public VarInitExpr(string name, IPrintType type, IPrintExpr value)
             : base(name, type, value)
 		{
 
 		}
 
-        public string BuildDocument()
+        public IEnumerable<Inline> BuildDocument()
         {
-            return Name + ":" + Type + " = " + Value.BuildDocument();
+            List<Inline> inlines = new List<Inline>
+            {
+                new Run(Name + ":"),
+                Type.BuildDocument(),
+                new Run(" = ")
+            };
+            inlines.AddRange(Value.BuildDocument());
+            return inlines;
         }
     }
 }

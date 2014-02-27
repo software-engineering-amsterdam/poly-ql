@@ -1,15 +1,14 @@
 ﻿using System;
-using Algebra.Core.Type;
-using Algebra.QL.Core.Expr;
-using Algebra.QL.Core.Type;
+using Algebra.Core.Expr;
 using Algebra.QL.TypeCheck.Expr;
 using Algebra.QL.TypeCheck.Helpers;
+using Algebra.QL.TypeCheck.Type;
 
 namespace Algebra.QL.Extensions.TypeCheck.Expr
 {
     public class PowerExpr : BinaryExpr<ITypeCheckExpr>, ITypeCheckExpr
     {
-		private readonly IType ExpressionUpperBound = new RealType();
+        private readonly ITypeCheckType ExpressionUpperBound = new RealType();
 
         public PowerExpr(ITypeCheckExpr l, ITypeCheckExpr r)
             : base(l, r)
@@ -17,10 +16,10 @@ namespace Algebra.QL.Extensions.TypeCheck.Expr
 
         }
 
-        public IType TypeCheck(TypeCheckData data)
+        public ITypeCheckType TypeCheck(TypeCheckData data)
         {
-            IType a = Expr1.TypeCheck(data);
-            IType b = Expr2.TypeCheck(data);
+            ITypeCheckType a = Expr1.TypeCheck(data);
+            ITypeCheckType b = Expr2.TypeCheck(data);
 
             if (!a.CompatibleWith(ExpressionUpperBound) || !a.CompatibleWith(b))
             {

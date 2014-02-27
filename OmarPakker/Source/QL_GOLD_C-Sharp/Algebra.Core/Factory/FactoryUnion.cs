@@ -1,9 +1,13 @@
-﻿
+﻿using Algebra.Core.Tree;
+
 namespace Algebra.Core.Factory
 {
-	public abstract class FactoryUnion<E, S, F1, F2> : IFactory<E, S>
-		where F1 : IFactory<E, S>
-		where F2 : IFactory<E, S>
+	public abstract class FactoryUnion<E, S, T, F1, F2> : IFactory<E, S, T>
+        where E : IExprNode
+        where S : IStmntNode
+        where T : ITypeNode
+		where F1 : IFactory<E, S, T>
+		where F2 : IFactory<E, S, T>
 	{
 		protected F1 Factory1 { get; private set; }
 		protected F2 Factory2 { get; private set; }

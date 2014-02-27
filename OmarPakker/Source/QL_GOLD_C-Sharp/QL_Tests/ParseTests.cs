@@ -1,23 +1,24 @@
 ﻿using System.IO;
 using System.Reflection;
 using System.Text;
-using Algebra.QL.Core.Factory;
 using Algebra.QL.Core.Grammar;
-using Algebra.QL.Core.Value;
 using Algebra.QL.TypeCheck.Expr;
+using Algebra.QL.TypeCheck.Expr.Literals;
 using Algebra.QL.TypeCheck.Factory;
 using Algebra.QL.TypeCheck.Stmnt;
+using Algebra.QL.TypeCheck.Type;
 using Xunit;
 
 namespace QL_Tests
 {
 	public class ParseTests
 	{
-        private QLParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeFactory, QLTypeCheckFactory> parser;
+        private QLParser<ITypeCheckExpr, ITypeCheckStmnt, ITypeCheckType, QLTypeCheckFactory> parser;
 
 		public ParseTests()
 		{
-            parser = new QLParser<ITypeCheckExpr, ITypeCheckStmnt, QLTypeFactory, QLTypeCheckFactory>(new QLTypeFactory(), new QLTypeCheckFactory());
+            parser = new QLParser<ITypeCheckExpr, ITypeCheckStmnt, ITypeCheckType, QLTypeCheckFactory>(new QLTypeCheckFactory());
+
             Assembly a = parser.GetType().Assembly;
             parser.LoadGrammar(new BinaryReader(a.GetManifestResourceStream("Algebra.QL.Core.Grammar.QL_Grammar.egt")));
 		}
@@ -28,12 +29,13 @@ namespace QL_Tests
 			parser.OnCompletion += (root) =>
 			{
 				FormStmnt tree = new FormStmnt("Form1",
-					new QuestionStmnt("\"Question 1:\"", false,
+                    new LabelStmnt("\"Question 1:\"",
 						new AddExpr(
 							new AddExpr(
-								new LiteralExpr(new IntValue(5)),
-								new LiteralExpr(new IntValue(2))),
-							new LiteralExpr(new IntValue(4))
+								new IntLiteral(5),
+								new IntLiteral(2)
+                            ),
+							new IntLiteral(4)
 						)
 					)
 				);
@@ -51,12 +53,12 @@ namespace QL_Tests
 			parser.OnCompletion += (root) =>
 			{
 				FormStmnt tree = new FormStmnt("Form1",
-					new QuestionStmnt("\"Question 1:\"", false,
+					new LabelStmnt("\"Question 1:\"",
 						new AddExpr(
-							new LiteralExpr(new IntValue(5)),
+							new IntLiteral(5),
 							new MultiplyExpr(
-								new LiteralExpr(new IntValue(2)),
-								new LiteralExpr(new IntValue(4))
+								new IntLiteral(2),
+								new IntLiteral(4)
 							)
 						)
 					)
@@ -69,40 +71,79 @@ namespace QL_Tests
 			Assert.True(parseOk);
 		}
 
-		[Fact]
-		public void CompStmntFlattened()
-		{
-			parser.OnCompletion += (root) =>
-			{
-				FormStmnt tree = new FormStmnt("Form1",
-					new CompStmnt(
-						new QuestionStmnt("\"Question 1:\"", false,
-							new LiteralExpr(new IntValue(5))
-						),
-						new QuestionStmnt("\"Question 1:\"", false,
-							new LiteralExpr(new IntValue(5))
-						),
-						new QuestionStmnt("\"Question 1:\"", false,
-							new LiteralExpr(new IntValue(5))
-						),
-						new QuestionStmnt("\"Question 1:\"", false,
-							new LiteralExpr(new IntValue(5))
-						)
-					)
-				);
-				Assert.NotNull(root);
-				Assert.Equal(root, tree);
-			};
+        [Fact]
+        public void CompStmntNestingRightHand()
+        {
+            parser.OnCompletion += (root) =>
+            {
+                FormStmnt tree = new FormStmnt("Form1",
+                    new CompStmnt(
+                        new LabelStmnt("\"Question 1:\"",
+                            new IntLiteral(5)
+                        ),
+                        new CompStmnt(
+                            new LabelStmnt("\"Question 1:\"",
+                                new IntLiteral(5)
+                            ),
+                            new CompStmnt(
+                                new LabelStmnt("\"Question 1:\"",
+                                    new IntLiteral(5)
+                                ),
+                                new LabelStmnt("\"Question 1:\"",
+                                    new IntLiteral(5)
+                                )
+                            )
+                        )
+                    )
+                );
+                Assert.NotNull(root);
+                Assert.Equal(root, tree);
+            };
 
-			bool parseOk = parser.Parse(new StringBuilder().AppendLine("form Form1 {")
+            bool parseOk = parser.Parse(new StringBuilder().AppendLine("form Form1 {")
                 .AppendLine("\"Question 1:\" << 5;")
                 .AppendLine("\"Question 1:\" << 5;")
                 .AppendLine("\"Question 1:\" << 5;")
                 .AppendLine("\"Question 1:\" << 5;")
                 .AppendLine("}").ToString());
 
-			Assert.True(parseOk);
-		}
+            Assert.True(parseOk);
+        }
+
+        //[Fact]
+        //public void CompStmntFlattened()
+        //{
+        //    parser.OnCompletion += (root) =>
+        //    {
+        //        FormStmnt tree = new FormStmnt("Form1",
+        //            new CompStmnt(
+        //                new LabelStmnt("\"Question 1:\"",
+        //                    new IntLiteral(5)
+        //                ),
+        //                new LabelStmnt("\"Question 1:\"",
+        //                    new IntLiteral(5)
+        //                ),
+        //                new LabelStmnt("\"Question 1:\"",
+        //                    new IntLiteral(5)
+        //                ),
+        //                new LabelStmnt("\"Question 1:\"",
+        //                    new IntLiteral(5)
+        //                )
+        //            )
+        //        );
+        //        Assert.NotNull(root);
+        //        Assert.Equal(root, tree);
+        //    };
+
+        //    bool parseOk = parser.Parse(new StringBuilder().AppendLine("form Form1 {")
+        //        .AppendLine("\"Question 1:\" << 5;")
+        //        .AppendLine("\"Question 1:\" << 5;")
+        //        .AppendLine("\"Question 1:\" << 5;")
+        //        .AppendLine("\"Question 1:\" << 5;")
+        //        .AppendLine("}").ToString());
+
+        //    Assert.True(parseOk);
+        //}
 
         [Fact]
         public void AssociatesElseCorrectly()
@@ -111,14 +152,14 @@ namespace QL_Tests
             {
                 FormStmnt tree = new FormStmnt("Form1",
                     new IfStmnt(
-                        new LiteralExpr(new BoolValue(true)),
+                        new BoolLiteral(true),
                         new IfElseStmnt(
-                            new LiteralExpr(new BoolValue(false)),
-                            new QuestionStmnt("\"Question 1:\"", false,
-                                new LiteralExpr(new IntValue(7))
+                            new BoolLiteral(false),
+                            new LabelStmnt("\"Question 1:\"",
+                                new IntLiteral(7)
                             ),
-                            new QuestionStmnt("\"Question 2:\"", false,
-                                new LiteralExpr(new IntValue(13))
+                            new LabelStmnt("\"Question 2:\"",
+                                new IntLiteral(13)
                             )
                         )
                     )

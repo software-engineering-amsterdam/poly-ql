@@ -75,7 +75,8 @@ namespace Algebra.Core.GrammarParser
 
                         if (OnReduction != null)
                         {
-                            OnReduction(parser.CurrentPosition().Line, parser.CurrentPosition().Column, newObj);
+                            Position pos = parser.CurrentPosition();
+                            OnReduction(pos.Line, pos.Column, newObj);
                         }
                         break;
 

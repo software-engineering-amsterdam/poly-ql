@@ -1,36 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using Algebra.Core.Type;
-using Algebra.QL.Core.Type;
+﻿using System.Collections.Generic;
+using Algebra.QL.Extensions.Stmnt;
 using Algebra.QL.TypeCheck.Expr;
 using Algebra.QL.TypeCheck.Helpers;
 using Algebra.QL.TypeCheck.Stmnt;
+using Algebra.QL.TypeCheck.Type;
 
 namespace Algebra.QL.Extensions.TypeCheck.Stmnt
 {
-	public class LoopStmnt : ITypeCheckStmnt
+	public class LoopStmnt : LoopStmnt<ITypeCheckExpr, ITypeCheckStmnt>, ITypeCheckStmnt
 	{
-		private readonly IType ExpressionType = new IntType();
-		public Tuple<int, int> SourcePosition { get; set; }
-		public ITypeCheckExpr Expression { get; private set; }
-		public ITypeCheckStmnt Body { get; private set; }
+		private readonly ITypeCheckType ExpressionType = new IntType();
 
 		public LoopStmnt(ITypeCheckExpr expr, ITypeCheckStmnt body)
+            : base(expr, body)
 		{
-			Expression = expr;
-			Body = body;
+
 		}
 
         public void TypeCheck(Queue<ITypeCheckStmnt> queue, TypeCheckData data)
         {
-			queue.Enqueue(Body);
-			if (queue.Count > 0) queue.Dequeue().TypeCheck(queue, data);
-
 			if (!Expression.TypeCheck(data).CompatibleWith(ExpressionType))
             {
                 data.ReportError("Unable to evaluate 'loop'. Expression must be a integral type!",
                     SourcePosition);
             }
+
+            queue.Enqueue(Body);
+            if (queue.Count > 0) queue.Dequeue().TypeCheck(queue, data);
         }
     }
 }

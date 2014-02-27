@@ -1,16 +1,22 @@
 ﻿using Algebra.Core.Factory;
-using Algebra.Core.Type;
-using Algebra.Core.Value;
+using Algebra.Core.Tree;
 
 namespace Algebra.QL.Core.Factory
 {
-	public interface IQLFactory<E, S> : IFactory<E, S>
+	public interface IQLFactory<E, S, T> : IFactory<E, S, T>
+        where E : IExprNode
+        where S : IStmntNode
+        where T : ITypeNode
 	{
+        T StringType();
+        T IntType();
+        T RealType();
+        T BoolType();
+
 		E String(string s);
 		E Int(int i);
 		E Real(double d);
 		E Bool(bool b);
-		E Literal(IValue value);
 		E Variable(string var);
 
 		E Or(E l, E r);
@@ -27,10 +33,11 @@ namespace Algebra.QL.Core.Factory
 		E Multiply(E l, E r);
 		E Divide(E l, E r);
 
-		E Negate(IType t, E e);
+        E NegateBool(E e);
+		E NegateNumeric(E e);
 
-		E VarDecl(string var, IType t);
-		E VarAssign(string var, IType t, E e);
+		E VarDecl(string var, T t);
+		E VarAssign(string var, T t, E e);
 
 		E IfElse(E toEval, E ifTrue, E ifFalse);
 
@@ -38,7 +45,8 @@ namespace Algebra.QL.Core.Factory
 		S Goto(string var);
 
 		S Comp(S l, S r);
-		S Question(string s, bool b, E e);
+		S Question(string s, E e);
+        S Label(string s, E e);
 		S If(E toEval, S ifTrue);
 		S IfElse(E toEval, S ifTrue, S ifFalse);
 	}

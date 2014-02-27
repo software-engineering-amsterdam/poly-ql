@@ -37,16 +37,9 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Expr\BinaryExpr.cs" />
     <Compile Include="Expr\LiteralExpr.cs" />
-    <Compile Include="Expr\TernaryExpr.cs" />
-    <Compile Include="Expr\UnaryExpr.cs" />
-    <Compile Include="Expr\VarExpr.cs" />
-    <Compile Include="Expr\VarInitExpr.cs" />
     <Compile Include="Factory\IQLFactory.cs" />
-    <Compile Include="Factory\IQLTypeFactory.cs" />
     <Compile Include="Factory\QLFactoryCombination.cs" />
-    <Compile Include="Factory\QLTypeFactory.cs" />
     <Compile Include="Grammar\GrammarData.cs" />
     <Compile Include="Grammar\QLParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -55,15 +48,7 @@
     <Compile Include="Stmnt\GotoStmnt.cs" />
     <Compile Include="Stmnt\IfElseStmnt.cs" />
     <Compile Include="Stmnt\IfStmnt.cs" />
-    <Compile Include="Stmnt\QuestionStmnt.cs" />
-    <Compile Include="Type\BoolType.cs" />
-    <Compile Include="Type\IntType.cs" />
-    <Compile Include="Type\RealType.cs" />
-    <Compile Include="Type\StringType.cs" />
-    <Compile Include="Value\BoolValue.cs" />
-    <Compile Include="Value\IntValue.cs" />
-    <Compile Include="Value\RealValue.cs" />
-    <Compile Include="Value\StringValue.cs" />
+    <Compile Include="Stmnt\TextExprStmnt.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Algebra.Core\Algebra.Core.csproj">

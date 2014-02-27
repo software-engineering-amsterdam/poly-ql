@@ -1,43 +1,57 @@
-﻿using Algebra.Core.Type;
-using Algebra.Core.Value;
-using Algebra.QL.Core.Factory;
-using Algebra.QL.Core.Value;
+﻿using Algebra.QL.Core.Factory;
 using Algebra.QL.TypeCheck.Expr;
+using Algebra.QL.TypeCheck.Expr.Literals;
 using Algebra.QL.TypeCheck.Stmnt;
+using Algebra.QL.TypeCheck.Type;
 
 namespace Algebra.QL.TypeCheck.Factory
 {
-	public class QLTypeCheckFactory : IQLFactory<ITypeCheckExpr, ITypeCheckStmnt>
+	public class QLTypeCheckFactory : IQLFactory<ITypeCheckExpr, ITypeCheckStmnt, ITypeCheckType>
     {
         public QLTypeCheckFactory()
         {
 
         }
 
+        public ITypeCheckType StringType()
+        {
+            return new StringType();
+        }
+
+        public ITypeCheckType IntType()
+        {
+            return new IntType();
+        }
+
+        public ITypeCheckType RealType()
+        {
+            return new RealType();
+        }
+
+        public ITypeCheckType BoolType()
+        {
+            return new BoolType();
+        }
+
 		public ITypeCheckExpr String(string s)
 		{
-			return Literal(new StringValue(s));
+            return new StringLiteral(s);
 		}
 
 		public ITypeCheckExpr Int(int i)
 		{
-			return Literal(new IntValue(i));
+            return new IntLiteral(i);
 		}
 
 		public ITypeCheckExpr Real(double d)
 		{
-			return Literal(new RealValue(d));
+            return new RealLiteral(d);
 		}
 
 		public ITypeCheckExpr Bool(bool b)
 		{
-			return Literal(new BoolValue(b));
+            return new BoolLiteral(b);
 		}
-
-        public ITypeCheckExpr Literal(IValue value)
-        {
-            return new LiteralExpr(value);
-        }
 
 		public ITypeCheckExpr Variable(string var)
 		{
@@ -104,17 +118,22 @@ namespace Algebra.QL.TypeCheck.Factory
 			return new DivideExpr(l, r);
 		}
 
-        public ITypeCheckExpr Negate(IType t, ITypeCheckExpr e)
+        public ITypeCheckExpr NegateBool(ITypeCheckExpr e)
+        {
+            return new NegateBoolExpr(e);
+        }
+
+        public ITypeCheckExpr NegateNumeric(ITypeCheckExpr e)
 		{
-			return new NegateExpr(t, e);
+			return new NegateNumericExpr(e);
 		}
 
-		public ITypeCheckExpr VarDecl(string var, IType t)
+		public ITypeCheckExpr VarDecl(string var, ITypeCheckType t)
 		{
-			return VarAssign(var, t, Literal(t.DefaultValue));
+			return VarAssign(var, t, t.DefaultValue);
 		}
 
-        public ITypeCheckExpr VarAssign(string var, IType t, ITypeCheckExpr e)
+        public ITypeCheckExpr VarAssign(string var, ITypeCheckType t, ITypeCheckExpr e)
         {
             return new VarInitExpr(var, t, e);
         }
@@ -139,9 +158,14 @@ namespace Algebra.QL.TypeCheck.Factory
             return new CompStmnt(l, r);
         }
 
-        public ITypeCheckStmnt Question(string s, bool b, ITypeCheckExpr e)
+        public ITypeCheckStmnt Question(string s, ITypeCheckExpr e)
         {
-            return new QuestionStmnt(s, b, e);
+            return new QuestionStmnt(s, e);
+        }
+
+        public ITypeCheckStmnt Label(string s, ITypeCheckExpr e)
+        {
+            return new LabelStmnt(s, e);
         }
 
         public ITypeCheckStmnt If(ITypeCheckExpr toEval, ITypeCheckStmnt ifTrue)

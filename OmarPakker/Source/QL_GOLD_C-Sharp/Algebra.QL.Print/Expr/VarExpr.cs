@@ -1,7 +1,9 @@
-﻿
+﻿using System.Collections.Generic;
+using System.Windows.Documents;
+
 namespace Algebra.QL.Print.Expr
 {
-	public class VarExpr : Algebra.QL.Core.Expr.VarExpr, IPrintExpr
+	public class VarExpr : Algebra.Core.Expr.VarExpr, IPrintExpr
 	{
 		public VarExpr(string name)
 			: base(name)
@@ -9,9 +11,9 @@ namespace Algebra.QL.Print.Expr
 
 		}
 
-        public string BuildDocument()
+        public IEnumerable<Inline> BuildDocument()
         {
-            return Name;
+            return new[] { new Run(Name) };
         }
     }
 }

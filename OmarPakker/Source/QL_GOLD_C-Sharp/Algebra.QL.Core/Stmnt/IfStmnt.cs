@@ -1,10 +1,11 @@
 ﻿using System;
+using Algebra.Core.Tree;
 
 namespace Algebra.QL.Core.Stmnt
 {
-    public abstract class IfStmnt<E, S>
+    public abstract class IfStmnt<E, S> : IStmntNode
     {
-		public Tuple<int, int> SourcePosition { get; set; }
+        public Tuple<int, int> SourcePosition { get; set; }
         public E CheckExpression { get; private set; }
         public S IfTrueBody { get; private set; }
 

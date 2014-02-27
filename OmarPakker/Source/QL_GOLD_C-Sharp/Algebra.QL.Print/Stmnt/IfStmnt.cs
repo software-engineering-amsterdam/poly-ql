@@ -17,7 +17,7 @@ namespace Algebra.QL.Print.Stmnt
             Paragraph p = new Paragraph();
             p.Inlines.Add(new Run("if") { Foreground = StyleSettings.KeyWordColor });
             p.Inlines.Add(" (");
-            p.Inlines.Add(CheckExpression.BuildDocument());
+            p.Inlines.AddRange(CheckExpression.BuildDocument());
             p.Inlines.Add(")");
 
             Block ifTrueBlock = IfTrueBody.BuildDocument();

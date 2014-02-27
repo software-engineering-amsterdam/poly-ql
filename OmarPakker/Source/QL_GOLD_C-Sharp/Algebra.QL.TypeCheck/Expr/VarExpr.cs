@@ -1,10 +1,10 @@
 ﻿using System;
-using Algebra.Core.Type;
 using Algebra.QL.TypeCheck.Helpers;
+using Algebra.QL.TypeCheck.Type;
 
 namespace Algebra.QL.TypeCheck.Expr
 {
-	public class VarExpr : Algebra.QL.Core.Expr.VarExpr, ITypeCheckExpr
+	public class VarExpr : Algebra.Core.Expr.VarExpr, ITypeCheckExpr
 	{
 		public VarExpr(string name)
 			: base(name)
@@ -12,7 +12,7 @@ namespace Algebra.QL.TypeCheck.Expr
 
 		}
 
-        public IType TypeCheck(TypeCheckData data)
+        public ITypeCheckType TypeCheck(TypeCheckData data)
         {
             if (!data.Variables.ContainsKey(Name))
             {

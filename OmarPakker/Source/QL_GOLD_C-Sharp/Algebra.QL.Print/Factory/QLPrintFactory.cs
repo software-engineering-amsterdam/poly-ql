@@ -1,49 +1,67 @@
 ﻿using System;
-using Algebra.Core.Type;
-using Algebra.Core.Value;
-using Algebra.QL.Core.Value;
 using Algebra.QL.Extensions.Factory;
-using Algebra.QL.Extensions.Value;
 using Algebra.QL.Print.Expr;
+using Algebra.QL.Print.Expr.Literals;
 using Algebra.QL.Print.Stmnt;
+using Algebra.QL.Print.Type;
 
 namespace Algebra.QL.Print.Factory
 {
-    public class QLPrintFactory : IQLExtensionsFactory<IPrintExpr, IPrintStmnt>
+    public class QLPrintFactory : IQLExtensionsFactory<IPrintExpr, IPrintStmnt, IPrintType>
     {
         public QLPrintFactory()
         {
 
         }
 
+        public IPrintType DateType()
+        {
+            return new DateType();
+        }
+
+        public IPrintType StringType()
+        {
+            return new StringType();
+        }
+
+        public IPrintType IntType()
+        {
+            return new IntType();
+        }
+
+        public IPrintType RealType()
+        {
+            return new RealType();
+        }
+
+        public IPrintType BoolType()
+        {
+            return new BoolType();
+        }
+
         public IPrintExpr Date(DateTime date)
 		{
-			return Literal(new DateValue(date));
+			return new DateLiteral(date);
 		}
 
         public IPrintExpr String(string s)
         {
-            return Literal(new StringValue(s));
+            return new StringLiteral(s);
         }
 
         public IPrintExpr Int(int i)
         {
-            return Literal(new IntValue(i));
+            return new IntLiteral(i);
         }
 
         public IPrintExpr Real(double d)
         {
-            return Literal(new RealValue(d));
+            return new RealLiteral(d);
         }
 
         public IPrintExpr Bool(bool b)
         {
-            return Literal(new BoolValue(b));
-        }
-
-        public IPrintExpr Literal(IValue value)
-        {
-            return new LiteralExpr(value);
+            return new BoolLiteral(b);
         }
 
         public IPrintExpr Variable(string var)
@@ -111,17 +129,22 @@ namespace Algebra.QL.Print.Factory
             return new DivideExpr(l, r);
         }
 
-        public IPrintExpr Negate(IType t, IPrintExpr e)
+        public IPrintExpr NegateBool(IPrintExpr e)
         {
-            return new NegateExpr(t, e);
+            return new NegateBoolExpr(e);
         }
 
-        public IPrintExpr VarDecl(string var, IType t)
+        public IPrintExpr NegateNumeric(IPrintExpr e)
         {
-            return VarAssign(var, t, Literal(t.DefaultValue));
+            return new NegateNumericExpr(e);
         }
 
-        public IPrintExpr VarAssign(string var, IType t, IPrintExpr e)
+        public IPrintExpr VarDecl(string var, IPrintType t)
+        {
+            return VarAssign(var, t, t.DefaultValue);
+        }
+
+        public IPrintExpr VarAssign(string var, IPrintType t, IPrintExpr e)
         {
             return new VarInitExpr(var, t, e);
         }
@@ -146,9 +169,14 @@ namespace Algebra.QL.Print.Factory
             return new CompStmnt(l, r);
         }
 
-        public IPrintStmnt Question(string s, bool b, IPrintExpr e)
+        public IPrintStmnt Question(string s, IPrintExpr e)
         {
-            return new QuestionStmnt(s, b, e);
+            return new QuestionStmnt(s, e);
+        }
+
+        public IPrintStmnt Label(string s, IPrintExpr e)
+        {
+            return new LabelStmnt(s, e);
         }
 
         public IPrintStmnt If(IPrintExpr toEval, IPrintStmnt ifTrue)

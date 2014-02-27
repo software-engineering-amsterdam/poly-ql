@@ -1,32 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using Algebra.Core.Tree;
 
 namespace Algebra.QL.Core.Stmnt
 {
-    public abstract class CompStmnt<S>
+    public abstract class CompStmnt<S> : IStmntNode
     {
-		public Tuple<int, int> SourcePosition { get; set; }
-        public ReadOnlyCollection<S> Statements { get; private set; }
+        public Tuple<int, int> SourcePosition { get; set; }
+        public S Statement1 { get; private set; }
+        public S Statement2 { get; private set; }
 
-        public CompStmnt(params S[] stmnts)
+        public CompStmnt(S a, S b)
         {
-			//TODO: Don't flatten gotos? Doing so requires 'is CompStmnt<S>'...
-            List<S> statements = new List<S>();
-
-			foreach (S stmnt in stmnts)
-            {
-                if (stmnt is CompStmnt<S>)
-                {
-                    statements.AddRange((stmnt as CompStmnt<S>).Statements);
-                }
-                else
-                {
-                    statements.Add((S)stmnt);
-                }
-            }
-
-            Statements = statements.AsReadOnly();
+            Statement1 = a;
+            Statement2 = b;
         }
 
 		public override bool Equals(object obj)
@@ -37,31 +23,12 @@ namespace Algebra.QL.Core.Stmnt
 			}
 
 			CompStmnt<S> other = (CompStmnt<S>)obj;
-
-			if (Statements.Count != other.Statements.Count)
-			{
-				return false;
-			}
-
-			foreach (S stmnt in other.Statements)
-			{
-				if (!Statements.Contains(stmnt))
-				{
-					return false;
-				}
-			}
-
-			return true;
+            return Statement1.Equals(other.Statement1) && Statement2.Equals(other.Statement2);
 		}
 
 		public override int GetHashCode()
 		{
-			int hash = Statements.Count;
-			foreach (S stmnt in Statements)
-			{
-				hash += stmnt.GetHashCode();
-			}
-			return hash;
+            return Statement1.GetHashCode() + Statement2.GetHashCode();
 		}
     }
 }

@@ -1,10 +1,11 @@
 ﻿using System;
+using Algebra.Core.Tree;
 
 namespace Algebra.QL.Core.Stmnt
 {
-    public abstract class FormStmnt<S>
+    public abstract class FormStmnt<S> : IStmntNode
     {
-		public Tuple<int, int> SourcePosition { get; set; }
+        public Tuple<int, int> SourcePosition { get; set; }
         public string Name { get; private set; }
         public S Body { get; private set; }
 

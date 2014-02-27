@@ -33,11 +33,13 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Expr\Literals\DateLiteral.cs" />
     <Compile Include="Expr\ModuloExpr.cs" />
     <Compile Include="Expr\PowerExpr.cs" />
     <Compile Include="Factory\QLTypeCheckExtensionsFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Stmnt\LoopStmnt.cs" />
+    <Compile Include="Type\DateType.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Algebra.Core\Algebra.Core.csproj">
