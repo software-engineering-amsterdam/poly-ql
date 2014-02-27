@@ -9,7 +9,7 @@ if (1 == 2) {
 }
 
 if (1 == true) {
-    intbool : "Ik ben goede int bool comp vraag" : boolean; 
+    intbool : "Ik ben foute int bool comp vraag" : boolean; 
 }
 
 if (0 == true) {
@@ -18,3 +18,32 @@ if (0 == true) {
     intboolright: "Ik ben goede else vraag" : boolean;
 }
 
+if (0 < 10) {
+    intboolwrong : "Ik ben goed int < int vraag" : boolean;
+}
+
+if (0 > 10) {
+    intboolwrong : "Ik ben foute int > int vraag" : boolean;
+} elseif (10 > 5) {
+    intboolwrong : "Ik ben goed int > int vraag" : boolean;
+}
+
+if (0 >= 10) {
+    intboolwrong : "Ik ben foute int >= int vraag" : boolean;
+}
+
+if (10 >= 10) {
+    intboolwrong : "Ik ben goede int > int vraag" : boolean;
+}
+
+if (10 <= 10) {
+    intboolwrong : "Ik ben goede int > int vraag" : boolean;
+}
+
+if (10 >= 9) {
+    intboolwrong : "Ik ben goede int > int vraag" : boolean(true);
+}
+
+if (10 >= 11) {
+    intboolwrong : "Ik ben foute int > int vraag" : boolean(true);
+}
