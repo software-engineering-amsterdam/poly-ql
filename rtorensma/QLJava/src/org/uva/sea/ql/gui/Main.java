@@ -31,9 +31,9 @@ public class Main {
 		Form form = parser.parseForm(formString);
 		List<String> errors = new ArrayList<String>();
 		FormChecker.check(form, new HashMap<Ident, Type>(), errors);
-		String printErrors = errors.size() + " error(s) gevonden\n";
+		String printErrors = errors.size() + " error(s) gevonden";
 		for (String error : errors) {
-			printErrors += "-\t" + error + "\n";
+			printErrors += "\n-\t" + error + "";
 		}
 		
 		JFrame frame = new JFrame(form.getName().toString());
