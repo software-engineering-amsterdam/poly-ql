@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using Algebra.QL.Core.Stmnt;
 using Algebra.QL.TypeCheck.Expr;
 using Algebra.QL.TypeCheck.Helpers;
@@ -8,7 +8,8 @@ namespace Algebra.QL.TypeCheck.Stmnt
 {
 	public class IfElseStmnt : IfElseStmnt<ITypeCheckExpr, ITypeCheckStmnt>, ITypeCheckStmnt
 	{
-		private readonly ITypeCheckType ExpressionType = new BoolType();
+		private static readonly ITypeCheckType ExpressionType = new BoolType();
+        public Tuple<int, int> SourcePosition { get; set; }
 
 		public IfElseStmnt(ITypeCheckExpr check, ITypeCheckStmnt ifTrue, ITypeCheckStmnt ifFalse)
             : base(check, ifTrue, ifFalse)
@@ -16,16 +17,16 @@ namespace Algebra.QL.TypeCheck.Stmnt
 
 		}
 
-        public void TypeCheck(Queue<ITypeCheckStmnt> queue, TypeCheckData data)
+        public void TypeCheck(TypeEnvironment env, ErrorReporter errRep)
         {
-            if (!CheckExpression.TypeCheck(data).CompatibleWith(ExpressionType))
+            if (!CheckExpression.TypeCheck(env, errRep).CompatibleWith(ExpressionType))
             {
-                data.ReportError("Unable to evaluate 'if/else'. Expression must be of type bool!",
+                errRep.ReportError("Unable to evaluate 'if/else'. Expression must be of type bool!",
                     SourcePosition);
             }
 
-            IfTrueBody.TypeCheck(queue, data);
-			IfFalseBody.TypeCheck(queue, data);
+            IfTrueBody.TypeCheck(env, errRep);
+			IfFalseBody.TypeCheck(env, errRep);
         }
     }
 }

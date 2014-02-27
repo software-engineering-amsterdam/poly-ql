@@ -1,18 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
-using Algebra.Core.Factory;
 using Algebra.Core.GrammarParser;
-using Algebra.Core.Tree;
 using Algebra.QL.Core.Grammar;
 using Algebra.QL.Extensions.Grammar;
 using Algebra.QL.Print.Expr;
 using Algebra.QL.Print.Stmnt;
 using Algebra.QL.Print.Type;
+using Algebra.QL.TypeCheck;
 using Algebra.QL.TypeCheck.Expr;
 using Algebra.QL.TypeCheck.Factory;
 using Algebra.QL.TypeCheck.Helpers;
@@ -28,7 +26,7 @@ namespace WPFParser
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly AbstractParser Parser;
+        private readonly Parser Parser;
 
         public MainWindow()
         {
@@ -46,7 +44,7 @@ namespace WPFParser
             Parser.OnSyntaxError += OnSyntaxError;
         }
 
-        private AbstractParser GetTypeCheckParser()
+        private Parser GetTypeCheckParser()
         {
             var parser = new QLParser<ITypeCheckExpr, ITypeCheckStmnt, ITypeCheckType, QLTypeCheckFactory>(new QLTypeCheckFactory());
 
@@ -56,10 +54,10 @@ namespace WPFParser
             return parser;
         }
 
-        private AbstractParser GetComboParser()
+        private Parser GetComboParser()
         {
-            var parser = new ExtensionsParser<CombinedExpr<ITypeCheckExpr, IPrintExpr>,
-                CombinedStmnt<ITypeCheckStmnt, IPrintStmnt>, CombinedType<ITypeCheckType, IPrintType>,
+            var parser = new ExtensionsParser<Tuple<ITypeCheckExpr, IPrintExpr>,
+                Tuple<ITypeCheckStmnt, IPrintStmnt>, Tuple<ITypeCheckType, IPrintType>,
                 TypeCheckPrintFactory>(new TypeCheckPrintFactory());
 
             Assembly a = parser.GetType().Assembly;
@@ -74,7 +72,7 @@ namespace WPFParser
             {
                 DefaultExt = "txt",
                 InitialDirectory = System.IO.Path.GetFullPath(@"..\..\..\..\..\Grammar\"),
-                Multiselect = false
+                                   Multiselect = false
             };
 
             dialog.FileOk += (s, dialogE) =>
@@ -126,29 +124,27 @@ namespace WPFParser
 
         private void OnReduction(int line, int column, object newObj)
         {
-            if(newObj is INode)
+            if (newObj is ITypeCheck)
             {
-                ((INode)newObj).SourcePosition = new Tuple<int, int>(line, column);
+                ((ITypeCheck)newObj).SourcePosition = new Tuple<int, int>(line, column);
             }
         }
 
         private void OnCompletion(object root)
         {
-            //TODO: WIP rewrite typecheck as a BF/DF traversal combination. Alternatively maybe use iterative deepening depth-first traversal?
+            ErrorReporter errRep = new ErrorReporter();
+            errRep.OnTypeCheckError += PrintError;
+
+            TypeEnvironment env = new TypeEnvironment();
 
             if (root is ITypeCheckStmnt)
             {
-                TypeCheckData data = new TypeCheckData();
-                data.OnTypeCheckError += PrintError;
-                ((ITypeCheckStmnt)root).TypeCheck(new Queue<ITypeCheckStmnt>(), data);
+                ((ITypeCheckStmnt)root).TypeCheck(env, errRep);
             }
-            else if (root is CombinedStmnt<ITypeCheckStmnt, IPrintStmnt>)
+            else if (root is Tuple<ITypeCheckStmnt, IPrintStmnt>)
             {
-                CombinedStmnt<ITypeCheckStmnt, IPrintStmnt> combItem = (CombinedStmnt<ITypeCheckStmnt, IPrintStmnt>)root;
-
-                TypeCheckData data = new TypeCheckData();
-                data.OnTypeCheckError += PrintError;
-                combItem.Item1.TypeCheck(new Queue<ITypeCheckStmnt>(), data);
+                Tuple<ITypeCheckStmnt, IPrintStmnt> combItem = (Tuple<ITypeCheckStmnt, IPrintStmnt>)root;
+                combItem.Item1.TypeCheck(env, errRep);
 
                 printOutputBlock.Document = new FlowDocument(combItem.Item2.BuildDocument());
             }

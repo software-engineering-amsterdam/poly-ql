@@ -1,36 +1,27 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using GOLD;
 
 namespace Algebra.Core.GrammarParser
 {
-    public abstract class AbstractParser
+    public abstract class Parser : IParser
     {
-        //Delegates
-        public delegate void OnReductionEventHandler(int line, int column, object newObj);
-        public delegate void OnCompletionEventHandler(object root);
-        public delegate void OnGroupErrorEventHandler();
-        public delegate void OnInternalErrorEventHandler();
-        public delegate void OnNotLoadedErrorEventHandler();
-        public delegate void OnLexicalErrorEventHandler(int line, int column, object token);
-        public delegate void OnSyntaxErrorEventHandler(int line, int column, object token, string expected);
+        public event Action<int, int, object> OnReduction;
+        public event Action<object> OnCompletion;
+        public event Action OnGroupError;
+        public event Action OnInternalError;
+        public event Action OnNotLoadedError;
+        public event Action<int, int, object> OnLexicalError;
+        public event Action<int, int, object, string> OnSyntaxError;
 
-        //Events
-        public event OnReductionEventHandler OnReduction;
-        public event OnCompletionEventHandler OnCompletion;
-        public event OnGroupErrorEventHandler OnGroupError;
-        public event OnInternalErrorEventHandler OnInternalError;
-        public event OnNotLoadedErrorEventHandler OnNotLoadedError;
-        public event OnLexicalErrorEventHandler OnLexicalError;
-        public event OnSyntaxErrorEventHandler OnSyntaxError;
-
-        private Parser parser;
+        private GOLD.Parser parser;
 
         protected abstract ReadOnlyDictionary<string, short> Rules { get; }
 
-        public AbstractParser(bool trimReductions)
+        public Parser(bool trimReductions)
         {
-            parser = new Parser();
+            parser = new GOLD.Parser();
             parser.TrimReductions = trimReductions;
         }
 

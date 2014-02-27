@@ -64,7 +64,6 @@
     <Compile Include="Expr\VarExpr.cs" />
     <Compile Include="Expr\VarInitExpr.cs" />
     <Compile Include="Factory\QLPrintFactory.cs" />
-    <Compile Include="IPrint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Stmnt\CompStmnt.cs" />
     <Compile Include="Stmnt\FormStmnt.cs" />

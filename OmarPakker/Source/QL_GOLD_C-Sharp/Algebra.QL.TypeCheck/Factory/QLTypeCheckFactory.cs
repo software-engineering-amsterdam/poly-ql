@@ -145,12 +145,12 @@ namespace Algebra.QL.TypeCheck.Factory
 
         public ITypeCheckStmnt Forms(ITypeCheckStmnt l, ITypeCheckStmnt r)
         {
-            return new FormsStmnt(l, r);
+            return new CompStmnt(l, r);
         }
 
         public ITypeCheckStmnt Statements(ITypeCheckStmnt l, ITypeCheckStmnt r)
         {
-            return new StatementsStmnt(l, r);
+            return new CompStmnt(l, r);
         }
 
         public ITypeCheckStmnt Form(string var, ITypeCheckStmnt s)

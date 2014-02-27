@@ -7,7 +7,8 @@ namespace Algebra.QL.TypeCheck.Expr
 {
 	public class AndExpr : BinaryExpr<ITypeCheckExpr>, ITypeCheckExpr
 	{
-		private readonly ITypeCheckType ExpressionUpperBound = new BoolType();
+		private static readonly ITypeCheckType ExpressionUpperBound = new BoolType();
+        public Tuple<int, int> SourcePosition { get; set; }
 
 		public AndExpr(ITypeCheckExpr l, ITypeCheckExpr r)
             : base(l, r)
@@ -15,14 +16,14 @@ namespace Algebra.QL.TypeCheck.Expr
 
         }
 
-        public ITypeCheckType TypeCheck(TypeCheckData data)
+        public ITypeCheckType TypeCheck(TypeEnvironment env, ErrorReporter errRep)
         {
-            ITypeCheckType a = Expr1.TypeCheck(data);
-            ITypeCheckType b = Expr2.TypeCheck(data);
+            ITypeCheckType a = Expr1.TypeCheck(env, errRep);
+            ITypeCheckType b = Expr2.TypeCheck(env, errRep);
 
             if (!a.CompatibleWith(ExpressionUpperBound) || !a.CompatibleWith(b))
             {
-                data.ReportError(String.Format("'&&' not possible. Incompatible types: '{0}', '{1}'. Only the bool type is supported.",
+                errRep.ReportError(String.Format("'&&' not possible. Incompatible types: '{0}', '{1}'. Only the bool type is supported.",
                     a, b), SourcePosition);
 
 				return ExpressionUpperBound;

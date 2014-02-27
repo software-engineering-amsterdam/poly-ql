@@ -2,17 +2,12 @@
 using System.Collections.ObjectModel;
 using System.Globalization;
 using Algebra.Core.GrammarParser;
-using Algebra.Core.Tree;
 using Algebra.QL.Core.Factory;
-using GOLD;
 using Grammar.Generated.v1;
 
 namespace Algebra.QL.Core.Grammar
 {
-	public class QLParser<E, S, T, F> : AbstractParser
-        where E : IExprNode
-        where S : IStmntNode
-        where T : ITypeNode
+	public class QLParser<E, S, T, F> : Parser
 		where F : IQLFactory<E, S, T>
 	{
 		protected override ReadOnlyDictionary<string, short> Rules { get { return GrammarData.Rules; } }
@@ -24,7 +19,7 @@ namespace Algebra.QL.Core.Grammar
             factory = f;
 		}
 
-		protected override object CreateObjectFor(Reduction r)
+		protected override object CreateObjectFor(GOLD.Reduction r)
 		{
             short tableIndex = r.Parent.TableIndex();
 

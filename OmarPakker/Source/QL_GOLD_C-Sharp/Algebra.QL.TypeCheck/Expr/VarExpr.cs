@@ -6,23 +6,25 @@ namespace Algebra.QL.TypeCheck.Expr
 {
 	public class VarExpr : Algebra.Core.Expr.VarExpr, ITypeCheckExpr
 	{
+        public Tuple<int, int> SourcePosition { get; set; }
+
 		public VarExpr(string name)
 			: base(name)
 		{
 
 		}
 
-        public ITypeCheckType TypeCheck(TypeCheckData data)
+        public ITypeCheckType TypeCheck(TypeEnvironment env, ErrorReporter errRep)
         {
-            if (!data.Variables.ContainsKey(Name))
+            if (!env.IsVarDeclared(Name))
             {
-                data.ReportError(String.Format("Undefined variable '{0}' used. Make sure the variable is defined.",
+                errRep.ReportError(String.Format("Undefined variable '{0}' used. Make sure the variable is defined.",
                     Name), SourcePosition);
 
                 return new UnknownType();
             }
 
-            return data.Variables[Name].Type;
+            return env.GetVariable(Name).Type;
         }
     }
 }

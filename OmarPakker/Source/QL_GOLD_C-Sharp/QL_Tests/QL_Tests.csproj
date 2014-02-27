@@ -49,9 +49,27 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="ExtensionsTest.cs" />
-    <Compile Include="ParseTests.cs" />
+    <Compile Include="Expr\BinaryExpr.cs" />
+    <Compile Include="Expr\TernaryExpr.cs" />
+    <Compile Include="Expr\ITestExpr.cs" />
+    <Compile Include="Expr\LiteralExpr.cs" />
+    <Compile Include="Expr\UnaryExpr.cs" />
+    <Compile Include="Expr\VarExpr.cs" />
+    <Compile Include="Expr\VarInitExpr.cs" />
+    <Compile Include="Factory\TestFactory.cs" />
+    <Compile Include="Stmnt\CompStmnt.cs" />
+    <Compile Include="Stmnt\FormStmnt.cs" />
+    <Compile Include="Stmnt\GotoStmnt.cs" />
+    <Compile Include="Stmnt\IfElseStmnt.cs" />
+    <Compile Include="Stmnt\IfStmnt.cs" />
+    <Compile Include="Stmnt\ITestStmnt.cs" />
+    <Compile Include="Stmnt\LoopStmnt.cs" />
+    <Compile Include="Stmnt\TextExprStmnt.cs" />
+    <Compile Include="Tests\ExtensionsTest.cs" />
+    <Compile Include="Tests\ParseTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Type\BaseType.cs" />
+    <Compile Include="Type\ITestType.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

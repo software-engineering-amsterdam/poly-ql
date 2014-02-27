@@ -2,22 +2,21 @@
 using System.Reflection;
 using System.Text;
 using Algebra.QL.Core.Grammar;
-using Algebra.QL.TypeCheck.Expr;
-using Algebra.QL.TypeCheck.Expr.Literals;
-using Algebra.QL.TypeCheck.Factory;
-using Algebra.QL.TypeCheck.Stmnt;
-using Algebra.QL.TypeCheck.Type;
+using QL_Tests.Expr;
+using QL_Tests.Factory;
+using QL_Tests.Stmnt;
+using QL_Tests.Type;
 using Xunit;
 
-namespace QL_Tests
+namespace QL_Tests.Tests
 {
 	public class ParseTests
 	{
-        private QLParser<ITypeCheckExpr, ITypeCheckStmnt, ITypeCheckType, QLTypeCheckFactory> parser;
+        private QLParser<ITestExpr, ITestStmnt, ITestType, TestFactory> parser;
 
 		public ParseTests()
 		{
-            parser = new QLParser<ITypeCheckExpr, ITypeCheckStmnt, ITypeCheckType, QLTypeCheckFactory>(new QLTypeCheckFactory());
+            parser = new QLParser<ITestExpr, ITestStmnt, ITestType, TestFactory>(new TestFactory());
 
             Assembly a = parser.GetType().Assembly;
             parser.LoadGrammar(new BinaryReader(a.GetManifestResourceStream("Algebra.QL.Core.Grammar.QL_Grammar.egt")));
@@ -29,13 +28,13 @@ namespace QL_Tests
 			parser.OnCompletion += (root) =>
 			{
 				FormStmnt tree = new FormStmnt("Form1",
-                    new LabelStmnt("\"Question 1:\"",
-						new AddExpr(
-							new AddExpr(
-								new IntLiteral(5),
-								new IntLiteral(2)
+                    new TextExprStmnt("\"Question 1:\"",
+						new BinaryExpr(
+							new BinaryExpr(
+								new LiteralExpr<int>(5),
+								new LiteralExpr<int>(2)
                             ),
-							new IntLiteral(4)
+							new LiteralExpr<int>(4)
 						)
 					)
 				);
@@ -53,12 +52,15 @@ namespace QL_Tests
 			parser.OnCompletion += (root) =>
 			{
 				FormStmnt tree = new FormStmnt("Form1",
-					new LabelStmnt("\"Question 1:\"",
-						new AddExpr(
-							new IntLiteral(5),
-							new MultiplyExpr(
-								new IntLiteral(2),
-								new IntLiteral(4)
+					new TextExprStmnt("\"Question 1:\"",
+						new BinaryExpr(
+                            new BinaryExpr(
+                                new LiteralExpr<int>(2),
+							    new LiteralExpr<int>(5)
+                            ),
+							new BinaryExpr(
+								new LiteralExpr<int>(2),
+								new LiteralExpr<int>(4)
 							)
 						)
 					)
@@ -67,7 +69,7 @@ namespace QL_Tests
 				Assert.Equal(root, tree);
 			};
 
-			bool parseOk = parser.Parse("form Form1 { \"Question 1:\" << 5 + 2 * 4; }");
+			bool parseOk = parser.Parse("form Form1 { \"Question 1:\" << 2 * 5 + 2 * 4; }");
 			Assert.True(parseOk);
 		}
 
@@ -77,20 +79,20 @@ namespace QL_Tests
             parser.OnCompletion += (root) =>
             {
                 FormStmnt tree = new FormStmnt("Form1",
-                    new FormsStmnt(
-                        new LabelStmnt("\"Question 1:\"",
-                            new IntLiteral(5)
+                    new CompStmnt(
+                        new TextExprStmnt("\"Question 1:\"",
+                            new LiteralExpr<int>(5)
                         ),
-                        new StatementsStmnt(
-                            new LabelStmnt("\"Question 1:\"",
-                                new IntLiteral(5)
+                        new CompStmnt(
+                            new TextExprStmnt("\"Question 1:\"",
+                                new LiteralExpr<int>(5)
                             ),
-                            new StatementsStmnt(
-                                new LabelStmnt("\"Question 1:\"",
-                                    new IntLiteral(5)
+                            new CompStmnt(
+                                new TextExprStmnt("\"Question 1:\"",
+                                    new LiteralExpr<int>(5)
                                 ),
-                                new LabelStmnt("\"Question 1:\"",
-                                    new IntLiteral(5)
+                                new TextExprStmnt("\"Question 1:\"",
+                                    new LiteralExpr<int>(5)
                                 )
                             )
                         )
@@ -116,18 +118,18 @@ namespace QL_Tests
         //    parser.OnCompletion += (root) =>
         //    {
         //        FormStmnt tree = new FormStmnt("Form1",
-        //            new StatementsStmnt(
-        //                new LabelStmnt("\"Question 1:\"",
-        //                    new IntLiteral(5)
+        //            new CompStmnt(
+        //                new TextExprStmnt("\"Question 1:\"",
+        //                    new LiteralExpr<int>(5)
         //                ),
-        //                new LabelStmnt("\"Question 1:\"",
-        //                    new IntLiteral(5)
+        //                new TextExprStmnt("\"Question 1:\"",
+        //                    new LiteralExpr<int>(5)
         //                ),
-        //                new LabelStmnt("\"Question 1:\"",
-        //                    new IntLiteral(5)
+        //                new TextExprStmnt("\"Question 1:\"",
+        //                    new LiteralExpr<int>(5)
         //                ),
-        //                new LabelStmnt("\"Question 1:\"",
-        //                    new IntLiteral(5)
+        //                new TextExprStmnt("\"Question 1:\"",
+        //                    new LiteralExpr<int>(5)
         //                )
         //            )
         //        );
@@ -152,14 +154,14 @@ namespace QL_Tests
             {
                 FormStmnt tree = new FormStmnt("Form1",
                     new IfStmnt(
-                        new BoolLiteral(true),
+                        new LiteralExpr<bool>(true),
                         new IfElseStmnt(
-                            new BoolLiteral(false),
-                            new LabelStmnt("\"Question 1:\"",
-                                new IntLiteral(7)
+                            new LiteralExpr<bool>(false),
+                            new TextExprStmnt("\"Question 1:\"",
+                                new LiteralExpr<int>(7)
                             ),
-                            new LabelStmnt("\"Question 2:\"",
-                                new IntLiteral(13)
+                            new TextExprStmnt("\"Question 2:\"",
+                                new LiteralExpr<int>(13)
                             )
                         )
                     )

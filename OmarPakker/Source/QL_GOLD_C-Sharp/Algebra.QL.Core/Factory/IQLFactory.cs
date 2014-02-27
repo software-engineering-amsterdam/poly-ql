@@ -1,12 +1,8 @@
 ﻿using Algebra.Core.Factory;
-using Algebra.Core.Tree;
 
 namespace Algebra.QL.Core.Factory
 {
 	public interface IQLFactory<E, S, T> : IFactory<E, S, T>
-        where E : IExprNode
-        where S : IStmntNode
-        where T : ITypeNode
 	{
         T StringType();
         T IntType();

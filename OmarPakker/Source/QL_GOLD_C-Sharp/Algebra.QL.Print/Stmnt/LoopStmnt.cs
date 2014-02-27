@@ -1,12 +1,10 @@
-﻿using System;
-using System.Windows.Documents;
+﻿using System.Windows.Documents;
 using Algebra.QL.Print.Expr;
 
 namespace Algebra.QL.Print.Stmnt
 {
 	public class LoopStmnt : IPrintStmnt
 	{
-		public Tuple<int, int> SourcePosition { get; set; }
 		public IPrintExpr Expression { get; private set; }
         public IPrintStmnt Body { get; private set; }
 

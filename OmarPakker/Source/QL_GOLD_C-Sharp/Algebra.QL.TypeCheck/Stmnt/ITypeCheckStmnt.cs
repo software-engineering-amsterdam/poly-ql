@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
-using Algebra.Core.Tree;
-using Algebra.QL.TypeCheck.Helpers;
+﻿using Algebra.QL.TypeCheck.Helpers;
 
 namespace Algebra.QL.TypeCheck.Stmnt
 {
-	public interface ITypeCheckStmnt : ITypeCheck, IStmntNode
+	public interface ITypeCheckStmnt : ITypeCheck
 	{
-		void TypeCheck(Queue<ITypeCheckStmnt> queue, TypeCheckData data);
+		void TypeCheck(TypeEnvironment env, ErrorReporter errRep);
 	}
 }

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using Algebra.QL.Core.Stmnt;
 using Algebra.QL.TypeCheck.Helpers;
 
@@ -6,21 +6,22 @@ namespace Algebra.QL.TypeCheck.Stmnt
 {
 	public class FormStmnt : FormStmnt<ITypeCheckStmnt>, ITypeCheckStmnt
     {
+        public Tuple<int, int> SourcePosition { get; set; }
+
 		public FormStmnt(string name, ITypeCheckStmnt body)
             : base(name, body)
         {
 
         }
 
-        public void TypeCheck(Queue<ITypeCheckStmnt> queue, TypeCheckData data)
+        public void TypeCheck(TypeEnvironment env, ErrorReporter errRep)
         {
-            data.Forms.Add(Name);
+            env.DeclareForm(Name);
 
-			if (queue.Count > 0) queue.Dequeue().TypeCheck(queue, data);
-            
-            Body.TypeCheck(queue, data);
+            Body.TypeCheck(env, errRep);
 
-            data.Variables.Clear();
+            env.ResetGotos();
+            env.ResetVariables();
         }
     }
 }

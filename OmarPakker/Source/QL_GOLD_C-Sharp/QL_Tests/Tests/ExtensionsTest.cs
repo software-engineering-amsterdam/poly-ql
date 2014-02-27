@@ -3,25 +3,21 @@ using System.Globalization;
 using System.IO;
 using System.Reflection;
 using Algebra.QL.Extensions.Grammar;
-using Algebra.QL.Extensions.TypeCheck.Expr;
-using Algebra.QL.Extensions.TypeCheck.Expr.Literals;
-using Algebra.QL.Extensions.TypeCheck.Factory;
-using Algebra.QL.Extensions.TypeCheck.Type;
-using Algebra.QL.TypeCheck.Expr;
-using Algebra.QL.TypeCheck.Expr.Literals;
-using Algebra.QL.TypeCheck.Stmnt;
-using Algebra.QL.TypeCheck.Type;
+using QL_Tests.Expr;
+using QL_Tests.Factory;
+using QL_Tests.Stmnt;
+using QL_Tests.Type;
 using Xunit;
 
-namespace QL_Tests
+namespace QL_Tests.Tests
 {
     public class ExtensionsTest
     {
-        private ExtensionsParser<ITypeCheckExpr, ITypeCheckStmnt, ITypeCheckType, QLTypeCheckExtensionsFactory> parser;
+        private ExtensionsParser<ITestExpr, ITestStmnt, ITestType, TestFactory> parser;
 
         public ExtensionsTest()
         {
-            parser = new ExtensionsParser<ITypeCheckExpr, ITypeCheckStmnt, ITypeCheckType, QLTypeCheckExtensionsFactory>(new QLTypeCheckExtensionsFactory());
+            parser = new ExtensionsParser<ITestExpr, ITestStmnt, ITestType, TestFactory>(new TestFactory());
             Assembly a = parser.GetType().Assembly;
             parser.LoadGrammar(new BinaryReader(a.GetManifestResourceStream("Algebra.QL.Extensions.Grammar.QL_Grammar.egt")));
         }
@@ -32,10 +28,10 @@ namespace QL_Tests
             parser.OnCompletion += (root) =>
             {
                 FormStmnt tree = new FormStmnt("Form1",
-                    new LabelStmnt("\"Question 1:\"",
-                        new ModuloExpr(
-                            new IntLiteral(5),
-                            new IntLiteral(2)
+                    new TextExprStmnt("\"Question 1:\"",
+                        new BinaryExpr(
+                            new LiteralExpr<int>(5),
+                            new LiteralExpr<int>(2)
                         )
                     )
                 );
@@ -53,10 +49,10 @@ namespace QL_Tests
             parser.OnCompletion += (root) =>
             {
                 FormStmnt tree = new FormStmnt("Form1",
-                    new LabelStmnt("\"Question 1:\"",
-                        new PowerExpr(
-                            new IntLiteral(5),
-                            new IntLiteral(2)
+                    new TextExprStmnt("\"Question 1:\"",
+                        new BinaryExpr(
+                            new LiteralExpr<int>(5),
+                            new LiteralExpr<int>(2)
                         )
                     )
                 );
@@ -74,10 +70,10 @@ namespace QL_Tests
             parser.OnCompletion += (root) =>
             {
                 FormStmnt tree = new FormStmnt("Form1",
-                    new QuestionStmnt("\"Question 1:\"",
+                    new TextExprStmnt("\"Question 1:\"",
                         new VarInitExpr("myDate",
-                            new DateType(),
-                            new DateLiteral(DateTime.MinValue)
+                            new BaseType<DateTime>(),
+                            new LiteralExpr<object>(0)
                         )
                     )
                 );
@@ -95,8 +91,8 @@ namespace QL_Tests
             parser.OnCompletion += (root) =>
             {
                 FormStmnt tree = new FormStmnt("Form1",
-                    new LabelStmnt("\"Question 1:\"",
-                        new DateLiteral(DateTime.Parse("2014-02-20T22:00:00Z", CultureInfo.InvariantCulture))
+                    new TextExprStmnt("\"Question 1:\"",
+                        new LiteralExpr<DateTime>(DateTime.Parse("2014-02-20T22:00:00Z", CultureInfo.InvariantCulture))
                     )
                 );
                 Assert.NotNull(root);

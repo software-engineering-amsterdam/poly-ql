@@ -1,9 +1,8 @@
-﻿using Algebra.Core.Tree;
-using Algebra.QL.TypeCheck.Expr;
+﻿using Algebra.QL.TypeCheck.Expr;
 
 namespace Algebra.QL.TypeCheck.Type
 {
-    public interface ITypeCheckType : ITypeCheck, ITypeNode
+    public interface ITypeCheckType : ITypeCheck
     {
         ITypeCheckType SuperType { get; }
         ITypeCheckExpr DefaultValue { get; }

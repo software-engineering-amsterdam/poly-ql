@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
-using Algebra.Core.Tree;
 using Algebra.QL.Core.Grammar;
 using Algebra.QL.Extensions.Factory;
 using GOLD;
@@ -10,9 +9,6 @@ using Grammar.Generated.v2;
 namespace Algebra.QL.Extensions.Grammar
 {
     public class ExtensionsParser<E, S, T, F> : QLParser<E, S, T, F>
-        where E : IExprNode
-        where S : IStmntNode
-        where T : ITypeNode
 		where F : IQLExtensionsFactory<E, S, T>
     {
         protected override ReadOnlyDictionary<string, short> Rules { get { return GrammarData.Rules; } }

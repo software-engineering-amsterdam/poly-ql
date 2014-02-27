@@ -1,6 +1,7 @@
 ﻿using System;
 using Algebra.QL.Extensions.TypeCheck.Type;
 using Algebra.QL.TypeCheck.Expr;
+using Algebra.QL.TypeCheck.Expr.Literals;
 using Algebra.QL.TypeCheck.Type;
 
 namespace Algebra.QL.Extensions.TypeCheck.Expr.Literals

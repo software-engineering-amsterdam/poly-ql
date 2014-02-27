@@ -7,20 +7,22 @@ namespace Algebra.QL.TypeCheck.Expr
 {
 	public class EqualsExpr : BinaryExpr<ITypeCheckExpr>, ITypeCheckExpr
 	{
+        public Tuple<int, int> SourcePosition { get; set; }
+
 		public EqualsExpr(ITypeCheckExpr l, ITypeCheckExpr r)
             : base(l, r)
 		{
 
 		}
 
-        public ITypeCheckType TypeCheck(TypeCheckData data)
+        public ITypeCheckType TypeCheck(TypeEnvironment env, ErrorReporter errRep)
         {
-            ITypeCheckType a = Expr1.TypeCheck(data);
-            ITypeCheckType b = Expr2.TypeCheck(data);
+            ITypeCheckType a = Expr1.TypeCheck(env, errRep);
+            ITypeCheckType b = Expr2.TypeCheck(env, errRep);
 
             if (!a.CompatibleWith(b))
             {
-                data.ReportError(String.Format("Comparison using '==' not possible. Incompatible types: '{0}', '{1}'.",
+                errRep.ReportError(String.Format("Comparison using '==' not possible. Incompatible types: '{0}', '{1}'.",
                     a, b), SourcePosition);
             }
 
