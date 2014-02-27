@@ -170,6 +170,7 @@ public class QL4Visitor extends QL4BaseVisitor<Value> {
   
   /**
    * Returns the evaluation of an and expression in the form of a QLboolean
+   * TODO: check type
    * @param ctx is the context of the and expression
    * @return is the evaluation of the and expression in the form of a QLboolean
    */
@@ -177,8 +178,24 @@ public class QL4Visitor extends QL4BaseVisitor<Value> {
     if (verbose)
       System.out.println("Visiting equality expr");
     
-    boolean evaluation = this.visit(ctx.expression(0)).asValue() 
-        == this.visit(ctx.expression(1)).asValue();
+    boolean evaluation = (this.visit(ctx.expression(0)).asValue() 
+        == this.visit(ctx.expression(1)).asValue());
+    
+    return new QLboolean(evaluation);
+  }
+  
+  /**
+   * Returns the evaluation of an and expression in the form of a QLboolean
+   * TODO: check type
+   * @param ctx is the context of the and expression
+   * @return is the evaluation of the and expression in the form of a QLboolean
+   */
+  public Value visitNeqExpr(QL4Parser.NeqExprContext ctx) {
+    if (verbose)
+      System.out.println("Visiting equality expr");
+    
+    boolean evaluation = !(this.visit(ctx.expression(0)).asValue() 
+        == this.visit(ctx.expression(1)).asValue());
     
     return new QLboolean(evaluation);
   }
@@ -192,8 +209,8 @@ public class QL4Visitor extends QL4BaseVisitor<Value> {
     if (verbose)
       System.out.println("Visiting and expr");
     
-    boolean evaluation = this.visit(ctx.expression(0)).asBoolean() 
-        && this.visit(ctx.expression(1)).asBoolean();
+    boolean evaluation = (this.visit(ctx.expression(0)).asBoolean() 
+        && this.visit(ctx.expression(1)).asBoolean());
     
     return new QLboolean(evaluation);
   }
@@ -225,6 +242,18 @@ public class QL4Visitor extends QL4BaseVisitor<Value> {
       System.out.println("Visiting boolean");
     
     return new QLboolean(ctx.getText());
+  }
+  
+  /**
+   * Creates a QLint and returns this
+   * @param ctx is the context of the int visited
+   * @return a QLint with the value of the input
+   */
+  public Value visitInt(QL4Parser.IntContext ctx) {
+    if (verbose) 
+      System.out.println("Visiting int");
+    
+    return new QLinteger(ctx.getText());
   }
   
   /////////////////////////// public helper functions

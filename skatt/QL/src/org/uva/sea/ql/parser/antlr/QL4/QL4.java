@@ -46,6 +46,7 @@ public class QL4 {
     
     // extract questions and print them
     List<Question> qList = visitor.getQuestions();
+    System.out.println(qList.size());
     System.out.println(qList);
   }
   
