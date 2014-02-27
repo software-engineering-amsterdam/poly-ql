@@ -6,34 +6,34 @@ import net.iplantevin.ql.errors.ErrorCollection;
 import net.iplantevin.ql.errors.TypeError;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
- * @author  Ivan
- * Type environment. Has a map of ID->IDTuple and convenience methods.
+ * @author Ivan
+ *         Type environment. Has a map of name->IDInfo and convenience methods.
  */
 public class TypeEnvironment {
-    // TODO: change map from ID to Type.
-    private final HashMap<String, IDTuple> idTypeEnv;
-    private final ErrorCollection errorCollection;
+    private final Map<String, IDInfo> idTypeStore;
+    private final ErrorCollection errors;
 
-    public TypeEnvironment(ErrorCollection errorCollection) {
-        idTypeEnv = new HashMap<String, IDTuple>();
-        this.errorCollection = errorCollection;
+    public TypeEnvironment(ErrorCollection errors) {
+        idTypeStore = new HashMap<String, IDInfo>();
+        this.errors = errors;
     }
 
     public boolean isDeclared(ID identifier) {
-        return idTypeEnv.containsKey(identifier.getName());
+        return idTypeStore.containsKey(identifier.getName());
     }
 
-    private IDTuple getIdentifier(ID identifier) {
+    private IDInfo getIdentifier(ID identifier) {
         if (!isDeclared(identifier)) {
-            return new IDTuple(null, new UndefinedType());
+            return new IDInfo(null, new UndefinedType());
         }
-        return idTypeEnv.get(identifier.getName());
+        return idTypeStore.get(identifier.getName());
     }
 
     public Type getDeclaredType(ID identifier) {
-        return getIdentifier(identifier).type;
+        return getIdentifier(identifier).getDeclaredType();
     }
 
     public void addIdentifier(ID identifier, Type type) {
@@ -48,10 +48,11 @@ public class TypeEnvironment {
                         getDeclaredType(identifier),
                         type
                 );
-                errorCollection.addException(typeException);
+                errors.addException(typeException);
             }
         } else {
-            idTypeEnv.put(identifier.getName(), new IDTuple(identifier, type));
+            idTypeStore.put(identifier.getName(),
+                    new IDInfo(identifier.getLineInfo(), type));
         }
     }
 }
@@ -59,16 +60,20 @@ public class TypeEnvironment {
 /**
  * Tuple-like helper class.
  */
-class IDTuple {
-    public final ID id;
-    public final Type type;
+class IDInfo {
+    private final LineInfo declaredLineInfo;
+    private final Type declaredType;
 
-    public IDTuple(ID id, Type type) {
-        this.id = id;
-        this.type = type;
+    public IDInfo(LineInfo lineInfo, Type type) {
+        declaredLineInfo = lineInfo;
+        declaredType = type;
     }
 
     public LineInfo getDeclaredLineInfo() {
-        return id.getLineInfo();
+        return declaredLineInfo;
+    }
+
+    public Type getDeclaredType() {
+        return declaredType;
     }
 }
