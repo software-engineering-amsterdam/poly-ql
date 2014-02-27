@@ -1,7 +1,7 @@
-if ((true && true && true) || false) {
+if ((true && (true != false) && true) || false) {
   makkelijkif : "Ik ben een makkelijke if vraag" : boolean ;
   
-  if ((false && true) == true) {
+  if ((false && true) != false) {
     fouteifif : "Ik ben een foute if if vraag" : boolean;
   } elseif (true) {
     makkelijkifif : "Ik ben een goede if elif vraag" : boolean;

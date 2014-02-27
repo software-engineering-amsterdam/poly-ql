@@ -6,7 +6,7 @@ package org.uva.sea.ql.parser.antlr.QL4;
  * @author Sammie Katt
  *
  */
-public class QLinteger extends Value {
+public class QLinteger extends Value implements IValue {
 
 	/**
 	 * The value of the object QLintger is an int
@@ -45,5 +45,17 @@ public class QLinteger extends Value {
 	 */
 	public String toString() {
 		return String.valueOf(value);
+	}
+
+	@Override
+	public Integer asInteger() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Double asDouble() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
