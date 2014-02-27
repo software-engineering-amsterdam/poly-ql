@@ -2,6 +2,7 @@ package edu.uva.softwarecons.model.question;
 
 import edu.uva.softwarecons.model.expression.Expression;
 import edu.uva.softwarecons.model.type.Type;
+import edu.uva.softwarecons.visitor.IFormElementVisitor;
 
 /**
  * Falconlabs
@@ -19,5 +20,10 @@ public class ComputedQuestion extends Question {
 
     public void setExpression(Expression expression) {
         this.expression = expression;
+    }
+
+    @Override
+    public void accept(IFormElementVisitor visitor) {
+        visitor.visitComputedQuestion(this);
     }
 }

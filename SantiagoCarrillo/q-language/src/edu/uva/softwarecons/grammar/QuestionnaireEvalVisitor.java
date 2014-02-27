@@ -79,7 +79,7 @@ public class QuestionnaireEvalVisitor extends QuestionnaireBaseVisitor<IFormElem
     @Override
     public IfQuestion visitIf(@NotNull QuestionnaireParser.IfContext ctx) {
         IfQuestion question = null == ctx.elsestat() ? new IfQuestion() : (IfElseQuestion) ctx.elsestat().accept(this);
-        question.setExpression((Expression) ctx.expr().accept(this));
+        question.expression = (Expression) ctx.expr().accept(this);
         for(QuestionnaireParser.QuestionContext q : ctx.question()){
             question.addQuestion((Question) q.accept(this));
         }

@@ -1,6 +1,7 @@
 package edu.uva.softwarecons.model.question;
 
 import edu.uva.softwarecons.model.expression.Expression;
+import edu.uva.softwarecons.visitor.IFormElementVisitor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,9 +13,9 @@ import java.util.List;
  */
 public class IfQuestion extends Question {
 
-    Expression expression;
+    public Expression expression;
 
-    List<Question> questions = new ArrayList<Question>();
+    public List<Question> questions = new ArrayList<Question>();
 
     public IfQuestion() {
     }
@@ -23,7 +24,8 @@ public class IfQuestion extends Question {
         questions.add(question);
     }
 
-    public void setExpression(Expression expression) {
-        this.expression = expression;
+    @Override
+    public void accept(IFormElementVisitor visitor) {
+        visitor.visitIfQuestion(this);
     }
 }

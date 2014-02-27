@@ -10,7 +10,7 @@ import edu.uva.softwarecons.visitor.IFormElementVisitor;
  */
 public class IdExpression implements Expression {
 
-    String id;
+    public  String id;
 
     public IdExpression(String id) {
         this.id = id;

@@ -1,5 +1,7 @@
 package edu.uva.softwarecons.model.question;
 
+import edu.uva.softwarecons.visitor.IFormElementVisitor;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,13 +12,18 @@ import java.util.List;
  */
 public class IfElseQuestion extends IfQuestion {
 
-    List<Question> elseQuestions = new ArrayList<Question>();
+    public List<Question> elseQuestions = new ArrayList<Question>();
 
     public IfElseQuestion() {
     }
 
     public void addElseQuestion(Question question){
         elseQuestions.add(question);
+    }
+
+    @Override
+    public void accept(IFormElementVisitor visitor) {
+        visitor.visitIfElseQuestion(this);
     }
 
 }

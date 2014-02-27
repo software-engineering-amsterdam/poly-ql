@@ -11,6 +11,9 @@ import edu.uva.softwarecons.model.expression.bool.NotExpression;
 import edu.uva.softwarecons.model.expression.bool.OrExpression;
 import edu.uva.softwarecons.model.expression.comparison.*;
 import edu.uva.softwarecons.model.operation.Operation;
+import edu.uva.softwarecons.model.question.ComputedQuestion;
+import edu.uva.softwarecons.model.question.IfElseQuestion;
+import edu.uva.softwarecons.model.question.IfQuestion;
 import edu.uva.softwarecons.model.question.Question;
 import edu.uva.softwarecons.model.type.*;
 
@@ -28,12 +31,22 @@ public class FormBaseVisitor implements IFormElementVisitor{
     }
 
     @Override
-    public void visitQuestion(Question question) {
+    public void visitComputedQuestion(ComputedQuestion question) {
 
     }
 
     @Override
-    public void visitExpression(Expression expression) {
+    public void visitIfElseQuestion(IfElseQuestion question) {
+
+    }
+
+    @Override
+    public void visitIfQuestion(IfQuestion question) {
+
+    }
+
+    @Override
+    public void visitQuestion(Question question) {
 
     }
 

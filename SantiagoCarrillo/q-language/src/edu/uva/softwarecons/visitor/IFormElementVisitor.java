@@ -11,6 +11,9 @@ import edu.uva.softwarecons.model.expression.bool.NotExpression;
 import edu.uva.softwarecons.model.expression.bool.OrExpression;
 import edu.uva.softwarecons.model.expression.comparison.*;
 import edu.uva.softwarecons.model.operation.Operation;
+import edu.uva.softwarecons.model.question.ComputedQuestion;
+import edu.uva.softwarecons.model.question.IfElseQuestion;
+import edu.uva.softwarecons.model.question.IfQuestion;
 import edu.uva.softwarecons.model.question.Question;
 import edu.uva.softwarecons.model.type.*;
 
@@ -23,9 +26,13 @@ public interface IFormElementVisitor {
 
     void visitForm(Form form);
 
-    void visitQuestion(Question question);
+    void visitComputedQuestion(ComputedQuestion question);
 
-    void visitExpression(Expression expression);
+    void visitIfElseQuestion(IfElseQuestion question);
+
+    void visitIfQuestion(IfQuestion question);
+
+    void visitQuestion(Question question);
 
     void visitAddExpression(AddExpression expression);
 

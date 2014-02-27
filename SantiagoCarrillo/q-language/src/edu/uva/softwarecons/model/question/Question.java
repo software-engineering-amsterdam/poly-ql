@@ -15,11 +15,11 @@ import java.util.List;
  */
 public class Question implements IFormElement {
 
-    private String id;
+    public String id;
 
-    private String text;
+    public String text;
 
-    private Type type;
+    public Type type;
 
     public Question() {
     }
@@ -30,29 +30,10 @@ public class Question implements IFormElement {
         this.type = type;
     }
 
-    public Question(String id, String text) {
-        this.id = id;
-        this.text = text;
-    }
-
-    public void setType(Type type) {
-        this.type = type;
-    }
-
     @Override
     public void accept(IFormElementVisitor visitor) {
         visitor.visitQuestion(this);
     }
 
-    public String getId() {
-        return id;
-    }
 
-    public String getText() {
-        return text;
-    }
-
-    public Type getType() {
-        return type;
-    }
 }
