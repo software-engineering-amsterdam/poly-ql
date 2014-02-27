@@ -163,6 +163,12 @@ public class QL4Visitor extends QL4BaseVisitor<Value> {
   
   ///////////////////////// methametical expressions handling
   
+  /**
+   * Returns the multipliation of the context when visiting
+   * the mult expression.
+   * @param ctx is the context of the multiplication
+   * @return a QLdouble, whose value is the evaluation of the expression
+   */
   public Value visitMultExpr(QL4Parser.MultExprContext ctx) {
 	  if (verbose) 
 		  System.out.println("Visiting mult exp");
