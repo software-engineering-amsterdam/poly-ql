@@ -41,14 +41,6 @@ public class QLinteger extends Value {
 	}
 	
 	/**
-	 * Implements the asValue() function. Returns its value
-	 * @return the value of QLinteger
-	 */
-	public Integer asValue() {
-		return this.value;
-	}
-	
-	/**
 	 * return the value as a string by String.parse
 	 * @return value as string
 	 */

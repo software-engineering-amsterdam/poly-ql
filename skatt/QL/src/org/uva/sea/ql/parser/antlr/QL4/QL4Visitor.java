@@ -161,11 +161,22 @@ public class QL4Visitor extends QL4BaseVisitor<Value> {
     return null;
   }
   
+  ///////////////////////// methametical expressions handling
   
-  ///////////////////////// Expressions handling
+  public Value visitMultExpr(QL4Parser.MultExprContext ctx) {
+	  if (verbose) 
+		  System.out.println("Visiting mult exp");
+	  
+	  double evaluation =  this.visit(ctx.expression(0)).asDouble() * 
+			  this.visit(ctx.expression(1)).asDouble();
+	  
+	  return new QLdouble(evaluation);
+  }
+  
+  ///////////////////////// logic expressions handling
   
   /**
-   * Returns the value of the exppresion within the wrapper expression
+   * Returns the value of the expression within the wrapper expression
    * (expression) -> valueof(expression)
    * @param is the expression context, in our case ( expression )
    * @return the value of the expression in the brackets

@@ -33,12 +33,6 @@ public interface IValue {
 	Double asDouble();
 	
 	/**
-	 * Returns the actual value
-	 * @return the value of the object
-	 */
-	Object asValue();
-	
-	/**
 	 * Force values to be printable with custom toString
 	 * @return a string defining the object (the value)
 	 */

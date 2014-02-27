@@ -13,10 +13,4 @@ public abstract class Value implements IValue {
 		return null;
 	}
 
-	@Override
-	public Object asValue() {
-		return null;
-	}
-	
-
 }
