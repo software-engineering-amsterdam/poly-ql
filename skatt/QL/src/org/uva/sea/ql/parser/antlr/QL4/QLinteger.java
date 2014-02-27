@@ -19,7 +19,7 @@ public class QLinteger extends Value {
 	 * @return is a boolean, evaluating whether value input equals this
 	 */
 	public Boolean equals(Value value) {
-		return Integer.compare(this.value, value.asInteger()) > 0;
+		return Integer.compare(this.value, value.asInteger()) == 0;
 	}
 	
 	/**

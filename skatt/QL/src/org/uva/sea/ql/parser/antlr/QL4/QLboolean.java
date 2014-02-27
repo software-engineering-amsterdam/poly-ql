@@ -14,7 +14,7 @@ public class QLboolean extends Value {
 	
 	@Override
 	public Boolean equals(Value value) {
-		return Boolean.compare(this.value, value.asBoolean()) > 0;
+		return Boolean.compare(this.value, value.asBoolean()) == 0;
 	}
 
 	/**
