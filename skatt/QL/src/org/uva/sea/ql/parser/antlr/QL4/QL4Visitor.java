@@ -24,7 +24,7 @@ public class QL4Visitor extends QL4BaseVisitor<Value> {
   /*
    *  contains all identifiers and their values
    *  Is updated whenever a question is filled in
-   *  TODO
+   *  
    */
   Map<String, Value> variables = new HashMap<String, Value>();
   
