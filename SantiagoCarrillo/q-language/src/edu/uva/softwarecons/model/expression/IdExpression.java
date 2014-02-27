@@ -8,7 +8,7 @@ import edu.uva.softwarecons.visitor.IFormElementVisitor;
  * User: sancarbar
  * Date: 2/26/14
  */
-public class IdExpression implements Expression, IFormElement {
+public class IdExpression implements Expression {
 
     String id;
 
@@ -18,6 +18,6 @@ public class IdExpression implements Expression, IFormElement {
 
     @Override
     public void accept(IFormElementVisitor visitor) {
-        visitor.visit(this);
+        visitor.visitIdExpression(this);
     }
 }

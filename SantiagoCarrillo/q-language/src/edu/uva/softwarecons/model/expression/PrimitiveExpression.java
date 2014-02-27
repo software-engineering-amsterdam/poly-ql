@@ -9,12 +9,12 @@ import edu.uva.softwarecons.visitor.IFormElementVisitor;
  * User: sancarbar
  * Date: 2/26/14
  */
-public class PrimitiveExpression implements Expression, IFormElement {
+public class PrimitiveExpression implements Expression {
 
     Type type;
 
     @Override
     public void accept(IFormElementVisitor visitor) {
-        visitor.visit(this);
+        visitor.visitPrimitiveExpression(this);
     }
 }

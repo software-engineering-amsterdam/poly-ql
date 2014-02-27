@@ -1,10 +1,18 @@
 package edu.uva.softwarecons.visitor;
 
 import edu.uva.softwarecons.model.Form;
-import edu.uva.softwarecons.model.expression.Expression;
+import edu.uva.softwarecons.model.expression.*;
+import edu.uva.softwarecons.model.expression.arithmetic.AddExpression;
+import edu.uva.softwarecons.model.expression.arithmetic.DivExpression;
+import edu.uva.softwarecons.model.expression.arithmetic.MulExpression;
+import edu.uva.softwarecons.model.expression.arithmetic.SubExpression;
+import edu.uva.softwarecons.model.expression.bool.AndExpression;
+import edu.uva.softwarecons.model.expression.bool.NotExpression;
+import edu.uva.softwarecons.model.expression.bool.OrExpression;
+import edu.uva.softwarecons.model.expression.comparison.*;
 import edu.uva.softwarecons.model.operation.Operation;
 import edu.uva.softwarecons.model.question.Question;
-import edu.uva.softwarecons.model.type.Type;
+import edu.uva.softwarecons.model.type.*;
 
 /**
  * Falconlabs
@@ -13,13 +21,63 @@ import edu.uva.softwarecons.model.type.Type;
  */
 public interface IFormElementVisitor {
 
-    void visit(Form form);
+    void visitForm(Form form);
 
-    void visit(Question question);
+    void visitQuestion(Question question);
 
-    void visit(Expression expression);
+    void visitExpression(Expression expression);
 
-    void visit(Operation operation);
+    void visitAddExpression(AddExpression expression);
 
-    void visit(Type type);
+    void visitDivExpression(DivExpression expression);
+
+    void visitMulExpression(MulExpression expression);
+
+    void visitSubExpression(SubExpression expression);
+
+    void visitAndExpression(AndExpression expression);
+
+    void visitNotExpression(NotExpression expression);
+
+    void visitOrExpression(OrExpression expression);
+
+    void visitEqualExpression(EqualExpression expression);
+
+    void visitGreaterEqualExpression(GreaterEqualExpression expression);
+
+    void visitGreaterExpression(GreaterExpression expression);
+
+    void visitLessEqualExpression(LessEqualExpression expression);
+
+    void visitLessExpression(LessExpression expression);
+
+    void visitNotEqualExpression(NotEqualExpression expression);
+
+    void visitBinaryExpression(BinaryExpression expression);
+
+    void visitIdExpression(IdExpression expression);
+
+    void visitParenthesisExpression(ParenthesisExpression expression);
+
+    void visitPrimitiveExpression(PrimitiveExpression expression);
+
+    void visitUnaryExpression(UnaryExpression expression);
+
+    void visitOperation(Operation operation);
+
+    void visitType(Type type);
+
+    void visitBooleanType(BooleanType type);
+
+    void visitDateType(DateType type);
+
+    void visitDecimalType(DecimalType type);
+
+    void visitIntegerType(IntegerType type);
+
+    void visitMoneyType(MoneyType type);
+
+    void visitStringType(StringType type);
+
+
 }

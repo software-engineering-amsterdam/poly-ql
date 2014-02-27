@@ -1,5 +1,7 @@
 package edu.uva.softwarecons.model.type;
 
+import edu.uva.softwarecons.visitor.IFormElementVisitor;
+
 import java.math.BigDecimal;
 
 /**
@@ -14,5 +16,10 @@ public class MoneyType extends Type{
     @Override
     public BigDecimal getValue() {
         return value;
+    }
+
+    @Override
+    public void accept(IFormElementVisitor visitor) {
+        visitor.visitMoneyType(this);
     }
 }

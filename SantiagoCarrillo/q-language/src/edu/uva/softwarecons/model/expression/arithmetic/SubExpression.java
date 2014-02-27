@@ -25,6 +25,6 @@ public class SubExpression extends BinaryExpression {
 
     @Override
     public void accept(IFormElementVisitor visitor) {
-        visitor.visit(this);
+        visitor.visitSubExpression(this);
     }
 }

@@ -19,6 +19,6 @@ public class NotExpression extends UnaryExpression {
 
     @Override
     public void accept(IFormElementVisitor visitor) {
-        visitor.visit(this);
+        visitor.visitNotExpression(this);
     }
 }

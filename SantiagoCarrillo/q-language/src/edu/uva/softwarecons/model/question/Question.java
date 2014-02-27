@@ -41,7 +41,7 @@ public class Question implements IFormElement {
 
     @Override
     public void accept(IFormElementVisitor visitor) {
-        visitor.visit(this);
+        visitor.visitQuestion(this);
     }
 
     public String getId() {

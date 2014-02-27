@@ -25,6 +25,6 @@ public class GreaterExpression extends BinaryExpression{
 
     @Override
     public void accept(IFormElementVisitor visitor) {
-        visitor.visit(this);
+        visitor.visitGreaterExpression(this);
     }
 }

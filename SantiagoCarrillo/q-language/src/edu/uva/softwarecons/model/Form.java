@@ -29,7 +29,7 @@ public class Form implements IFormElement {
 
     @Override
     public void accept(IFormElementVisitor visitor) {
-        visitor.visit(this);
+        visitor.visitForm(this);
     }
 
     public String getId() {

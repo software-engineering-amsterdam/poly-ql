@@ -1,5 +1,7 @@
 package edu.uva.softwarecons.model.type;
 
+import edu.uva.softwarecons.visitor.IFormElementVisitor;
+
 /**
  * Falconlabs
  * User: sancarbar
@@ -12,5 +14,10 @@ public class IntegerType extends Type{
     @Override
     public Integer getValue() {
         return value;
+    }
+
+    @Override
+    public void accept(IFormElementVisitor visitor) {
+        visitor.visitIntegerType(this);
     }
 }

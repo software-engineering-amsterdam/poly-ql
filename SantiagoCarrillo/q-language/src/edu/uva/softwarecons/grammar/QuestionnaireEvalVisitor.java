@@ -25,7 +25,7 @@ import org.antlr.v4.runtime.misc.NotNull;
  * User: sancarbar
  * Date: 2/26/14
  */
-public class QuestionnaireEvalVisitor extends QuestionnaireBaseVisitor<Object>{
+public class QuestionnaireEvalVisitor extends QuestionnaireBaseVisitor<IFormElement>{
 
     @Override
     public IFormElement visitQuestionnaire(@NotNull QuestionnaireParser.QuestionnaireContext ctx) {

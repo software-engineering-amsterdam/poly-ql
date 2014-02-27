@@ -25,6 +25,6 @@ public class EqualExpression extends BinaryExpression{
 
     @Override
     public void accept(IFormElementVisitor visitor) {
-        visitor.visit(this);
+        visitor.visitEqualExpression(this);
     }
 }

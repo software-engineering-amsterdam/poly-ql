@@ -9,7 +9,7 @@ import edu.uva.softwarecons.visitor.IFormElement;
  * User: sancarbar
  * Date: 2/20/14
  */
-public abstract class BinaryExpression implements Expression, IFormElement {
+public abstract class BinaryExpression implements Expression {
 
     protected Expression leftOperand;
 
