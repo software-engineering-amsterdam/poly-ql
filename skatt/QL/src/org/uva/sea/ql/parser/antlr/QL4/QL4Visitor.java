@@ -164,7 +164,7 @@ public class QL4Visitor extends QL4BaseVisitor<Value> {
   ///////////////////////// methametical expressions handling
   
   /**
-   * Returns the multipliation of the context when visiting
+   * Returns the multiplication of the context when visiting
    * the mult expression.
    * @param ctx is the context of the multiplication
    * @return a QLdouble, whose value is the evaluation of the expression
@@ -174,6 +174,22 @@ public class QL4Visitor extends QL4BaseVisitor<Value> {
 		  System.out.println("Visiting mult exp");
 	  
 	  double evaluation =  this.visit(ctx.expression(0)).asDouble() * 
+			  this.visit(ctx.expression(1)).asDouble();
+	  
+	  return new QLdouble(evaluation);
+  }
+  
+  /**
+   * Returns the division of the context when visiting
+   * the div expression.
+   * @param ctx is the context of the multiplication
+   * @return a QLdouble, whose value is the evaluation of the expression
+   */
+  public Value visitDivExpr(QL4Parser.DivExprContext ctx) {
+	  if (verbose) 
+		  System.out.println("Visiting div exp");
+	  
+	  double evaluation =  this.visit(ctx.expression(0)).asDouble() / 
 			  this.visit(ctx.expression(1)).asDouble();
 	  
 	  return new QLdouble(evaluation);
