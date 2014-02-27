@@ -1,6 +1,7 @@
 package ql.ast.expr.operation;
 
 import ql.ast.expr.exprType.Expr;
+import ql.ast.value.Value;
 
 public class Operation extends Expr{
 	private Expr left = null;
@@ -26,6 +27,12 @@ public class Operation extends Expr{
 
 	public Expr getExpr() {
 		return expr;
+	}
+
+	@Override
+	public Value eval() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 		
 }
