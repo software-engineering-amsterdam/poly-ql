@@ -177,8 +177,8 @@ public class QL4Visitor extends QL4BaseVisitor<Value> {
     if (verbose)
       System.out.println("Visiting equality expr");
     
-    boolean evaluation = this.visit(ctx.expression(0)).asBoolean() 
-        == this.visit(ctx.expression(1)).asBoolean();
+    boolean evaluation = this.visit(ctx.expression(0)).asValue() 
+        == this.visit(ctx.expression(1)).asValue();
     
     return new QLboolean(evaluation);
   }
