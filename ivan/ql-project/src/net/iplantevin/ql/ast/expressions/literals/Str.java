@@ -9,11 +9,8 @@ import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 /**
- * Created with IntelliJ IDEA.
- *
- * @user: Ivan
- * @date: 19-02-14
- * String.
+ * @author Ivan
+ *         String.
  */
 public class Str extends Expression {
     private final String text;

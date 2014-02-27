@@ -8,11 +8,8 @@ import net.iplantevin.ql.ast.types.TypeEnvironment;
 import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
 
 /**
- * Created with IntelliJ IDEA.
- *
- * @user: Ivan
- * @date: 19-02-14
- * Greater or equal.
+ * @author Ivan
+ *         Greater or equal.
  */
 public class GEQ extends Binary {
     public GEQ(Expression left, Expression right, LineInfo lineInfo) {

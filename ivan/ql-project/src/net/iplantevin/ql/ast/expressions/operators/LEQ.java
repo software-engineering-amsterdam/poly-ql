@@ -8,11 +8,8 @@ import net.iplantevin.ql.ast.types.TypeEnvironment;
 import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
 
 /**
- * Created with IntelliJ IDEA.
- *
- * @user: Ivan
- * @date: 19-02-14
- * Less or equal.
+ * @author Ivan
+ *         Less or equal.
  */
 public class LEQ extends Binary {
     public LEQ(Expression left, Expression right, LineInfo lineInfo) {

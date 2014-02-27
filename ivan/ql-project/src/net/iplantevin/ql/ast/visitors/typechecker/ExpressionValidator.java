@@ -6,22 +6,22 @@ import net.iplantevin.ql.ast.expressions.operators.Unary;
 import net.iplantevin.ql.ast.statements.Computation;
 import net.iplantevin.ql.ast.types.*;
 import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
-import net.iplantevin.ql.exceptions.ExceptionCollection;
-import net.iplantevin.ql.exceptions.QLTypeException;
-import net.iplantevin.ql.exceptions.QLUndefinedException;
+import net.iplantevin.ql.errors.ErrorCollection;
+import net.iplantevin.ql.errors.TypeError;
+import net.iplantevin.ql.errors.UndefinedError;
 
 /**
  * @author Ivan
  */
 // TODO: integrate with TypeCheckerVisitor
 public class ExpressionValidator {
-    private final ExceptionCollection exceptionCollection;
+    private final ErrorCollection errorCollection;
     private final TypeEnvironment typeEnvironment;
     private final IQLASTVisitor visitor;
     private final UndefinedType UNDEFINED = new UndefinedType();
 
-    public ExpressionValidator(ExceptionCollection exceptionCollection, TypeEnvironment typeEnvironment, IQLASTVisitor visitor) {
-        this.exceptionCollection = exceptionCollection;
+    public ExpressionValidator(ErrorCollection errorCollection, TypeEnvironment typeEnvironment, IQLASTVisitor visitor) {
+        this.errorCollection = errorCollection;
         this.typeEnvironment = typeEnvironment;
         this.visitor = visitor;
     }
@@ -30,24 +30,24 @@ public class ExpressionValidator {
         Type actualType = expression.getType(typeEnvironment);
         if (actualType.equals(UNDEFINED)) {
             String message = "the expression below is undefined!";
-            QLUndefinedException undefinedException = new QLUndefinedException(
+            UndefinedError undefinedException = new UndefinedError(
                     message,
                     expression
             );
-            exceptionCollection.addException(undefinedException);
+            errorCollection.addException(undefinedException);
         }
-        // NOTE: undefined values result in both QLUndefinedException AND
-        // QLTypeException!
+        // NOTE: undefined values result in both UndefinedError AND
+        // TypeError!
         if (!actualType.isCompatibleToType(expectedType)) {
             String message = "the type of the expression below is not compatible " +
                     "with the expected type!";
-            QLTypeException typeException = new QLTypeException(
+            TypeError typeException = new TypeError(
                     message,
                     expression,
                     expectedType,
                     expression.getType(typeEnvironment)
             );
-            exceptionCollection.addException(typeException);
+            errorCollection.addException(typeException);
         }
     }
 

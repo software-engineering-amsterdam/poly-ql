@@ -4,12 +4,9 @@ import net.iplantevin.ql.ast.expressions.Expression;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 /**
- * Created with IntelliJ IDEA.
- *
- * @user: Ivan
- * @date: 19-02-14
- * Conditional statement, parent for If and IfElse statements. Has condition
- * and body.
+ * @author Ivan
+ *         Conditional statement, parent for If and IfElse statements. Has condition
+ *         and body.
  */
 public abstract class Conditional extends Statement {
     private final Expression condition;

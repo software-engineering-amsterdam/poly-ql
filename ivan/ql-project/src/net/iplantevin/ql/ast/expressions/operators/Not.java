@@ -8,11 +8,8 @@ import net.iplantevin.ql.ast.types.TypeEnvironment;
 import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
 
 /**
- * Created with IntelliJ IDEA.
- *
- * @user: Ivan
- * @date: 19-02-14
- * Negation. Type is Integer.
+ * @author Ivan
+ *         Negation. Type is Integer.
  */
 public class Not extends Unary {
     public Not(Expression expression, LineInfo lineInfo) {

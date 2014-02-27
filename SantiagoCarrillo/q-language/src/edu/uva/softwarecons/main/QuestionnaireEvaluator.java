@@ -53,7 +53,7 @@ public class QuestionnaireEvaluator extends QuestionnaireBaseListener{
 
     private void checkForIfQuestionExpression() {
         if(isIfQuestion && !isIfQuestionExpressionSet){
-            currentIfQuestion.setExpression(currentExpression);
+            currentIfQuestion.expression = currentExpression;
             isIfQuestionExpressionSet = true;
         }
     }

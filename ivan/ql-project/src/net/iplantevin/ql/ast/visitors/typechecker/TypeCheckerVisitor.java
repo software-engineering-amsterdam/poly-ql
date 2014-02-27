@@ -1,5 +1,6 @@
 package net.iplantevin.ql.ast.visitors.typechecker;
 
+import net.iplantevin.ql.ast.QLASTNode;
 import net.iplantevin.ql.ast.expressions.Par;
 import net.iplantevin.ql.ast.expressions.literals.Bool;
 import net.iplantevin.ql.ast.expressions.literals.ID;
@@ -11,7 +12,7 @@ import net.iplantevin.ql.ast.form.FormCollection;
 import net.iplantevin.ql.ast.statements.*;
 import net.iplantevin.ql.ast.types.TypeEnvironment;
 import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
-import net.iplantevin.ql.exceptions.ExceptionCollection;
+import net.iplantevin.ql.errors.ErrorCollection;
 
 /**
  * Visits AST
@@ -20,20 +21,26 @@ import net.iplantevin.ql.exceptions.ExceptionCollection;
  */
 public class TypeCheckerVisitor implements IQLASTVisitor {
     // TODO: static shorthand constructor.
-    private ExceptionCollection exceptionCollection;
+    private ErrorCollection errorCollection;
     private TypeEnvironment typeEnvironment;
     private LabelCollection labelCollection;
     private ExpressionValidator expressionValidator;
 
-    public TypeCheckerVisitor() {
-        exceptionCollection = new ExceptionCollection();
-        typeEnvironment = new TypeEnvironment(exceptionCollection);
-        labelCollection = new LabelCollection(exceptionCollection);
-        expressionValidator = new ExpressionValidator(exceptionCollection, typeEnvironment, this);
+    private TypeCheckerVisitor() {
+        errorCollection = new ErrorCollection();
+        typeEnvironment = new TypeEnvironment(errorCollection);
+        labelCollection = new LabelCollection(errorCollection);
+        expressionValidator = new ExpressionValidator(errorCollection, typeEnvironment, this);
     }
 
-    public ExceptionCollection getExceptionCollection() {
-        return exceptionCollection;
+    public static TypeCheckerVisitor checkNode(QLASTNode node) {
+        TypeCheckerVisitor typeChecker = new TypeCheckerVisitor();
+        node.accept(typeChecker);
+        return typeChecker;
+    }
+
+    public ErrorCollection getErrorCollection() {
+        return errorCollection;
     }
 
     public TypeEnvironment getTypeEnvironment() {
@@ -48,8 +55,9 @@ public class TypeCheckerVisitor implements IQLASTVisitor {
     public void visit(FormCollection formCollection) {
         // Nothing special (yet).
         // NOTE: should only call visit on individual forms!! (Since checking
-        //   is on a per-form basis.
+        //   is on a per-form basis.) Otherwise, just returns.
         // TODO: proper notice if this method is called.
+        return;
     }
 
     @Override

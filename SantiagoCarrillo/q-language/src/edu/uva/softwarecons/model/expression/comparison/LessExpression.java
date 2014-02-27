@@ -25,6 +25,6 @@ public class LessExpression extends BinaryExpression{
 
     @Override
     public void accept(IFormElementVisitor visitor) {
-        visitor.visit(this);
+        visitor.visitLessExpression(this);
     }
 }

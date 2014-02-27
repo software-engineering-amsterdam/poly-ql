@@ -1,6 +1,4 @@
-﻿using System;
-using Antlr4.Runtime;
-using QL.Interfaces;
+﻿using Antlr4.Runtime;
 using QL.TypeChecker;
 
 namespace QL.QLClasses.Types
@@ -14,9 +12,11 @@ namespace QL.QLClasses.Types
 
         #region TypeChecker Implementation
 
-        public abstract bool CheckType(ref QLException error);
+        public abstract bool CheckType(ref QLTypeError error);
 
         #endregion
+
+        #region Double Dispatch Implementation
 
         public virtual bool IsCompatibleWith(QBaseType type)
         {
@@ -37,5 +37,7 @@ namespace QL.QLClasses.Types
         {
             return false;
         }
+
+        #endregion
     }
 }

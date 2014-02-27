@@ -23,7 +23,7 @@ namespace QL.QLClasses.Expressions.Literals
             return null;
         }
 
-        public override bool CheckType(ref QLException error)
+        public override bool CheckType(ref QLTypeError error)
         {
             return true;
         }

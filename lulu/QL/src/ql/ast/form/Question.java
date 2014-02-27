@@ -2,22 +2,22 @@ package ql.ast.form;
 
 import ql.ast.expr.exprType.Expr;
 import ql.ast.expr.exprType.Ident;
-import ql.ast.form.questionType.Type;
+import ql.ast.form.questionType.TypeQue;
 
 public class Question extends FormItems{
 	private final Ident id;
 	private final String question;
-	private final Type type;
+	private final TypeQue type;
 	private final Expr expr;
 	
-	public Question(Ident id, String question, Type type, Expr expr){
+	public Question(Ident id, String question, TypeQue type, Expr expr){
 		this.id = id;
 		this.question = question;
 		this.type = type;
 		this.expr = expr;
 	}
 	
-	public Question(Ident id, String question, Type type){
+	public Question(Ident id, String question, TypeQue type){
 		this.id = id;
 		this.question = question;
 		this.type = type;
@@ -32,7 +32,7 @@ public class Question extends FormItems{
 		return question;
 	}
 
-	public Type getType() {
+	public TypeQue getType() {
 		return type;
 	}
 

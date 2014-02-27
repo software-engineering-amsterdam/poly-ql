@@ -1,5 +1,7 @@
 package edu.uva.softwarecons.model.type;
 
+import edu.uva.softwarecons.visitor.IFormElementVisitor;
+
 import java.util.Date;
 
 /**
@@ -17,4 +19,8 @@ public class DateType extends Type {
         return date;
     }
 
+    @Override
+    public void accept(IFormElementVisitor visitor) {
+        visitor.visitDateType(this);
+    }
 }

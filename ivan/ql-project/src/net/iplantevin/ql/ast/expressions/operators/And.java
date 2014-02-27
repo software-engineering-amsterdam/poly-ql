@@ -8,11 +8,8 @@ import net.iplantevin.ql.ast.types.TypeEnvironment;
 import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
 
 /**
- * Created with IntelliJ IDEA.
- *
- * @user: Ivan
- * @date: 19-02-14
- * Logical AND (&&).
+ * @author Ivan
+ *         Logical AND (&&).
  */
 public class And extends Binary {
     public And(Expression left, Expression right, LineInfo lineInfo) {

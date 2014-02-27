@@ -16,7 +16,7 @@ namespace QL.QLClasses.Statements
             Body = new List<StatementBase>();
         }
 
-        public override bool CheckType(ref QLException error)
+        public override bool CheckType(ref QLTypeError error)
         {
             //when else statement, condition is null
             if (Condition != null)

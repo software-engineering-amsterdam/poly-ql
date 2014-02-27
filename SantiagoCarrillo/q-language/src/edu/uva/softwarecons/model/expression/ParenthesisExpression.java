@@ -8,7 +8,7 @@ import edu.uva.softwarecons.visitor.IFormElementVisitor;
  * User: sancarbar
  * Date: 2/26/14
  */
-public class ParenthesisExpression implements Expression, IFormElement {
+public class ParenthesisExpression implements Expression {
 
     Expression expression;
 
@@ -18,6 +18,6 @@ public class ParenthesisExpression implements Expression, IFormElement {
 
     @Override
     public void accept(IFormElementVisitor visitor) {
-
+         visitor.visitParenthesisExpression(this);
     }
 }

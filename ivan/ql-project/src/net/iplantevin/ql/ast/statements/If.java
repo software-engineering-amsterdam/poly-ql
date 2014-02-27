@@ -5,11 +5,8 @@ import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 /**
- * Created with IntelliJ IDEA.
- *
- * @user: Ivan
- * @date: 19-02-14
- * If statement.
+ * @author Ivan
+ *         If statement.
  */
 public class If extends Conditional {
     public If(Expression condition, Statement body, ParserRuleContext ctx) {

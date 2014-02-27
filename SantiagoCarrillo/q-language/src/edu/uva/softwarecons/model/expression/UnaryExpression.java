@@ -10,7 +10,7 @@ import edu.uva.softwarecons.visitor.IFormElementVisitor;
  * User: sancarbar
  * Date: 2/20/14
  */
-public abstract class UnaryExpression implements Expression, IFormElement {
+public abstract class UnaryExpression implements Expression {
 
     private Expression expression;
 

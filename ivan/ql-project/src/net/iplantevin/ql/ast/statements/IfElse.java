@@ -5,11 +5,8 @@ import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 /**
- * Created with IntelliJ IDEA.
- *
- * @user: Ivan
- * @date: 19-02-14
- * IfElse statement. Adds a body for the else to the Conditional body.
+ * @author Ivan
+ *         IfElse statement. Adds a body for the else to the Conditional body.
  */
 public class IfElse extends Conditional {
     private final Statement elseBody;

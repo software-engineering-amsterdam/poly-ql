@@ -28,7 +28,7 @@ namespace QL.QLClasses.Statements
             Name.DeclareSelf();
         }
 
-        public override bool CheckType(ref QLException error)
+        public override bool CheckType(ref QLTypeError error)
         {
             if (!Name.CheckType(ref error))
                 return false;

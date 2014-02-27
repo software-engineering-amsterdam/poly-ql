@@ -6,11 +6,8 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import java.util.ArrayList;
 
 /**
- * Created with IntelliJ IDEA.
- *
- * @user: Ivan
- * @date: 19-02-14
- * Block: a list of statements.
+ * @author Ivan
+ *         Block: a list of statements.
  */
 public class Block extends Statement {
     private final ArrayList<Statement> statements;

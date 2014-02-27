@@ -28,6 +28,6 @@ public class DivExpression extends BinaryExpression {
 
     @Override
     public void accept(IFormElementVisitor visitor) {
-        visitor.visit(this);
+        visitor.visitDivExpression(this);
     }
 }

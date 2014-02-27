@@ -26,6 +26,6 @@ public class OrExpression extends BinaryExpression{
 
     @Override
     public void accept(IFormElementVisitor visitor) {
-        visitor.visit(this);
+        visitor.visitOrExpression(this);
     }
 }

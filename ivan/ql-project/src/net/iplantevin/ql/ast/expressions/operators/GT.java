@@ -8,11 +8,8 @@ import net.iplantevin.ql.ast.types.TypeEnvironment;
 import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
 
 /**
- * Created with IntelliJ IDEA.
- *
- * @user: Ivan
- * @date: 19-02-14
- * Greater than.
+ * @author Ivan
+ *         Greater than.
  */
 public class GT extends Binary {
     public GT(Expression left, Expression right, LineInfo lineInfo) {
