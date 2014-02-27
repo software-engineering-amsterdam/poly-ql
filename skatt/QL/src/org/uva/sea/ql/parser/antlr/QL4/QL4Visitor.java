@@ -318,7 +318,7 @@ public class QL4Visitor extends QL4BaseVisitor<Value> {
     return new QLinteger(ctx.getText());
   }
   
-  /////////////////////////// public helper functions
+  /////////////////////////// public get/set functions
   
   /**
    * Getter for the questions accumulated when visiting

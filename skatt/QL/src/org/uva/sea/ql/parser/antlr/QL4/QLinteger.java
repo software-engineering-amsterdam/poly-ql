@@ -48,14 +48,17 @@ public class QLinteger extends Value {
 	}
 
 	/**
-	 * 
+	 * returns the value 
+	 * @return value
 	 */
-	@Override
 	public Integer asInteger() {
 		return this.value;
 	}
 
-	@Override
+	/**
+	 * returns the value as a double 
+	 * @return value parsed to double
+	 */
 	public Double asDouble() {
 		return Double.valueOf(this.value);
 	}
