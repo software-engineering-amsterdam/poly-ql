@@ -1,5 +1,6 @@
 package net.iplantevin.ql.ast.visitors.typechecker;
 
+import net.iplantevin.ql.ast.QLASTNode;
 import net.iplantevin.ql.ast.expressions.Par;
 import net.iplantevin.ql.ast.expressions.literals.Bool;
 import net.iplantevin.ql.ast.expressions.literals.ID;
@@ -25,11 +26,17 @@ public class TypeCheckerVisitor implements IQLASTVisitor {
     private LabelCollection labelCollection;
     private ExpressionValidator expressionValidator;
 
-    public TypeCheckerVisitor() {
+    private TypeCheckerVisitor() {
         errorCollection = new ErrorCollection();
         typeEnvironment = new TypeEnvironment(errorCollection);
         labelCollection = new LabelCollection(errorCollection);
         expressionValidator = new ExpressionValidator(errorCollection, typeEnvironment, this);
+    }
+
+    public static TypeCheckerVisitor checkNode(QLASTNode node) {
+        TypeCheckerVisitor typeChecker = new TypeCheckerVisitor();
+        node.accept(typeChecker);
+        return typeChecker;
     }
 
     public ErrorCollection getErrorCollection() {
@@ -48,8 +55,9 @@ public class TypeCheckerVisitor implements IQLASTVisitor {
     public void visit(FormCollection formCollection) {
         // Nothing special (yet).
         // NOTE: should only call visit on individual forms!! (Since checking
-        //   is on a per-form basis.
+        //   is on a per-form basis.) Otherwise, just returns.
         // TODO: proper notice if this method is called.
+        return;
     }
 
     @Override
