@@ -1,12 +1,12 @@
-package net.iplantevin.ql.exceptions;
+package net.iplantevin.ql.errors;
 
 import net.iplantevin.ql.ast.QLASTNode;
 
 /**
  * @author Ivan
  */
-public class QLUndefinedException extends QLASTException {
-    public QLUndefinedException(String message, QLASTNode node) {
+public class UndefinedError extends ASTError {
+    public UndefinedError(String message, QLASTNode node) {
         super(message, node);
     }
 

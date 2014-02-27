@@ -1,15 +1,15 @@
-package net.iplantevin.ql.exceptions;
+package net.iplantevin.ql.errors;
 
 import net.iplantevin.ql.ast.statements.Questionable;
 
 /**
  * @author Ivan
  */
-public class QLDuplicateLabelException extends QLASTException {
+public class DuplicateLabelError extends ASTError {
     private final Questionable originalQuestionable;
     private final Questionable newQuestionable;
 
-    public QLDuplicateLabelException(String message, Questionable newQuestionable, Questionable originalQuestionable) {
+    public DuplicateLabelError(String message, Questionable newQuestionable, Questionable originalQuestionable) {
         super(message, null);
         this.originalQuestionable = originalQuestionable;
         this.newQuestionable = newQuestionable;

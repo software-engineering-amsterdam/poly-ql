@@ -11,7 +11,7 @@ import net.iplantevin.ql.ast.form.FormCollection;
 import net.iplantevin.ql.ast.statements.*;
 import net.iplantevin.ql.ast.types.TypeEnvironment;
 import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
-import net.iplantevin.ql.exceptions.ExceptionCollection;
+import net.iplantevin.ql.errors.ErrorCollection;
 
 /**
  * Visits AST
@@ -20,20 +20,20 @@ import net.iplantevin.ql.exceptions.ExceptionCollection;
  */
 public class TypeCheckerVisitor implements IQLASTVisitor {
     // TODO: static shorthand constructor.
-    private ExceptionCollection exceptionCollection;
+    private ErrorCollection errorCollection;
     private TypeEnvironment typeEnvironment;
     private LabelCollection labelCollection;
     private ExpressionValidator expressionValidator;
 
     public TypeCheckerVisitor() {
-        exceptionCollection = new ExceptionCollection();
-        typeEnvironment = new TypeEnvironment(exceptionCollection);
-        labelCollection = new LabelCollection(exceptionCollection);
-        expressionValidator = new ExpressionValidator(exceptionCollection, typeEnvironment, this);
+        errorCollection = new ErrorCollection();
+        typeEnvironment = new TypeEnvironment(errorCollection);
+        labelCollection = new LabelCollection(errorCollection);
+        expressionValidator = new ExpressionValidator(errorCollection, typeEnvironment, this);
     }
 
-    public ExceptionCollection getExceptionCollection() {
-        return exceptionCollection;
+    public ErrorCollection getErrorCollection() {
+        return errorCollection;
     }
 
     public TypeEnvironment getTypeEnvironment() {

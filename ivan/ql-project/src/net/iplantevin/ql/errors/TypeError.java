@@ -1,4 +1,4 @@
-package net.iplantevin.ql.exceptions;
+package net.iplantevin.ql.errors;
 
 import net.iplantevin.ql.ast.QLASTNode;
 import net.iplantevin.ql.ast.types.Type;
@@ -10,11 +10,11 @@ import net.iplantevin.ql.ast.types.Type;
  * @date: 20-02-14
  * Exception class to use for type checking errors.
  */
-public class QLTypeException extends QLASTException {
+public class TypeError extends ASTError {
     private final Type expectedType;
     private final Type actualType;
 
-    public QLTypeException(String message, QLASTNode node, Type expected, Type actual) {
+    public TypeError(String message, QLASTNode node, Type expected, Type actual) {
         super(message, node);
         expectedType = expected;
         actualType = actual;

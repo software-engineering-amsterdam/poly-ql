@@ -2,8 +2,8 @@ package net.iplantevin.ql.ast.types;
 
 import net.iplantevin.ql.ast.LineInfo;
 import net.iplantevin.ql.ast.expressions.literals.ID;
-import net.iplantevin.ql.exceptions.ExceptionCollection;
-import net.iplantevin.ql.exceptions.QLTypeException;
+import net.iplantevin.ql.errors.ErrorCollection;
+import net.iplantevin.ql.errors.TypeError;
 
 import java.util.HashMap;
 
@@ -17,11 +17,11 @@ import java.util.HashMap;
 public class TypeEnvironment {
     // TODO: change map from ID to Type.
     private final HashMap<String, IDTuple> idTypeEnv;
-    private final ExceptionCollection exceptionCollection;
+    private final ErrorCollection errorCollection;
 
-    public TypeEnvironment(ExceptionCollection exceptionCollection) {
+    public TypeEnvironment(ErrorCollection errorCollection) {
         idTypeEnv = new HashMap<String, IDTuple>();
-        this.exceptionCollection = exceptionCollection;
+        this.errorCollection = errorCollection;
     }
 
     public boolean isDeclared(ID identifier) {
@@ -45,13 +45,13 @@ public class TypeEnvironment {
                 String message = "type mismatch on already declared identifier '" +
                         identifier.getName() + "' (declared at " +
                         getIdentifier(identifier).getDeclaredLineInfo() + ") !";
-                QLTypeException typeException = new QLTypeException(
+                TypeError typeException = new TypeError(
                         message,
                         identifier,
                         getDeclaredType(identifier),
                         type
                 );
-                exceptionCollection.addException(typeException);
+                errorCollection.addException(typeException);
             }
         } else {
             idTypeEnv.put(identifier.getName(), new IDTuple(identifier, type));

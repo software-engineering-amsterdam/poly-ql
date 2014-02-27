@@ -1,4 +1,4 @@
-package net.iplantevin.ql.exceptions;
+package net.iplantevin.ql.errors;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,19 +9,19 @@ import java.util.HashMap;
  * @author Ivan
  */
 // TODO: rename exception > error.
-public class ExceptionCollection {
-    private HashMap<Class<QLException>, ArrayList<QLException>> exceptionCollection;
+public class ErrorCollection {
+    private HashMap<Class<ASTError>, ArrayList<ASTError>> exceptionCollection;
 
-    public ExceptionCollection() {
-        exceptionCollection = new HashMap<Class<QLException>, ArrayList<QLException>>();
+    public ErrorCollection() {
+        exceptionCollection = new HashMap<Class<ASTError>, ArrayList<ASTError>>();
     }
 
-    public void addException(QLException exception) {
+    public void addException(ASTError exception) {
         Class exceptionClass = exception.getClass();
         if (exceptionCollection.containsKey(exceptionClass)) {
             exceptionCollection.get(exceptionClass).add(exception);
         } else {
-            ArrayList<QLException> exceptionsList = new ArrayList<QLException>();
+            ArrayList<ASTError> exceptionsList = new ArrayList<ASTError>();
             exceptionsList.add(exception);
             exceptionCollection.put(exceptionClass, exceptionsList);
         }
@@ -35,12 +35,12 @@ public class ExceptionCollection {
 
     private void printExceptionClass(Class exceptionClass) {
         if (!exceptionCollection.containsKey(exceptionClass)) {
-            System.out.println("Notice: no exceptions of this type.");
+            System.out.println("Notice: no errors of this type.");
             return;
         }
         System.out.println("###############################\n" +
                 "EXCEPTIONS OF TYPE " + exceptionClass + ":\n");
-        for (QLException exception : exceptionCollection.get(exceptionClass)) {
+        for (ASTError exception : exceptionCollection.get(exceptionClass)) {
             System.out.println(exception + "\n");
         }
     }

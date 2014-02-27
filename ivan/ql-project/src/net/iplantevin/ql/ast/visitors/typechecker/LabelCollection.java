@@ -1,8 +1,8 @@
 package net.iplantevin.ql.ast.visitors.typechecker;
 
 import net.iplantevin.ql.ast.statements.Questionable;
-import net.iplantevin.ql.exceptions.ExceptionCollection;
-import net.iplantevin.ql.exceptions.QLDuplicateLabelException;
+import net.iplantevin.ql.errors.DuplicateLabelError;
+import net.iplantevin.ql.errors.ErrorCollection;
 
 import java.util.HashMap;
 
@@ -13,11 +13,11 @@ import java.util.HashMap;
  */
 public class LabelCollection {
     private final HashMap<String, Questionable> labels;
-    private final ExceptionCollection exceptionCollection;
+    private final ErrorCollection errorCollection;
 
-    public LabelCollection(ExceptionCollection exceptionCollection) {
+    public LabelCollection(ErrorCollection errorCollection) {
         labels = new HashMap<String, Questionable>();
-        this.exceptionCollection = exceptionCollection;
+        this.errorCollection = errorCollection;
     }
 
     public void addQuestionable(Questionable questionable) {
@@ -25,12 +25,12 @@ public class LabelCollection {
         if (originalQuestion != null) {
             // Label in given question is duplicate from earlier question.
             String message = "this label was already used!";
-            QLDuplicateLabelException labelException = new QLDuplicateLabelException(
+            DuplicateLabelError labelException = new DuplicateLabelError(
                     message,
                     questionable,
                     originalQuestion
             );
-            exceptionCollection.addException(labelException);
+            errorCollection.addException(labelException);
         } else {
             labels.put(questionable.getLabel().getText(), questionable);
         }
