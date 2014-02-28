@@ -16,4 +16,14 @@ public class LT extends BinaryExpr {
 		this.first.accept(visitor);
 		this.second.accept(visitor);
 	}
+	
+	@Override
+	public boolean isBoolean() {
+		return true;
+	}
+	
+	@Override
+	public String toString() {
+		return this.first.toString() + "<" + this.second.toString(); 
+	}
 }

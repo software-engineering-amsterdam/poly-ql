@@ -2,7 +2,7 @@ package org.uva.sea.ql.ast.expr;
 
 import org.uva.sea.ql.ast.type.Bool;
 import org.uva.sea.ql.ast.type.Type;
-import org.uva.sea.ql.checker.ExprVisitor;
+import org.uva.sea.ql.checker.visitor.IExprVisitor;
 
 public class BoolLiteral extends Literal<Boolean> {
 	
@@ -16,7 +16,7 @@ public class BoolLiteral extends Literal<Boolean> {
 	}
 
 	@Override
-	public <T> T accept(ExprVisitor<T> ev) {
+	public <T> T accept(IExprVisitor<T> ev) {
 		return ev.visit(this);
 	}
 

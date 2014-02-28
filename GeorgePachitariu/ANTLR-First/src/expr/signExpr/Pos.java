@@ -15,4 +15,14 @@ public class Pos extends UnaryExpr {
 		visitor.visit(this); 
 		this.first.accept(visitor);
 	}
+	
+	@Override
+	public boolean isBoolean() {
+		return false;
+	}
+	
+	@Override
+	public String toString() {
+		return "+" + this.first.toString(); 
+	}
 }
