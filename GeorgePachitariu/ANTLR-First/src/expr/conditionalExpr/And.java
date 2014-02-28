@@ -1,8 +1,11 @@
 package expr.conditionalExpr;
 
 import typeChecker.ASTVisitor;
+import types.BoolType;
+import types.Type;
 import expr.BinaryExpr;
 import expr.Expression;
+import expr.literals.Bool;
 
 public class And extends BinaryExpr {
 
@@ -25,5 +28,33 @@ public class And extends BinaryExpr {
 	@Override
 	public String toString() {
 		return this.first.toString() + "&&" + this.second.toString(); 
+	}
+	
+	@Override
+	public boolean isNumeric() {
+		return false;
+	}
+
+	@Override
+	public boolean isComparable() {
+		return false;
+	}
+
+	@Override
+	public boolean isTheSameType(Expression exp) {
+		return exp.isBoolean();
+	}
+	
+	@Override
+	public boolean hasValidOperatorsType() {
+		if(this.first.isTheSameType(this.second) &&
+			this.first.isBoolean() ) 	
+			return true;
+		return false;
+	}
+	
+	@Override
+	public Type getType() {
+		return new BoolType();
 	}
 }

@@ -1,6 +1,8 @@
 package expr.relationalExpr;
 
 import typeChecker.ASTVisitor;
+import types.BoolType;
+import types.Type;
 import expr.BinaryExpr;
 import expr.Expression;
 
@@ -25,5 +27,33 @@ public class Eq extends BinaryExpr {
 	@Override
 	public String toString() {
 		return this.first.toString() + "==" + this.second.toString(); 
+	}
+	
+	@Override
+	public boolean isNumeric() {
+		return false;
+	}
+
+	@Override
+	public boolean isComparable() {
+		return false;
+	}
+
+	@Override
+	public boolean isTheSameType(Expression exp) {
+		return exp.isBoolean();
+	}
+	
+	@Override
+	public boolean hasValidOperatorsType() {
+		if(getType().equals(obj))
+		if(this.first.isTheSameType(this.second)) 	
+			return true;
+		return false;
+	}
+	
+	@Override
+	public Type getType() {
+		return new BoolType();
 	}
 }

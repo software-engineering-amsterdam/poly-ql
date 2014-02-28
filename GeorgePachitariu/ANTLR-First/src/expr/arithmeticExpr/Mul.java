@@ -3,6 +3,7 @@ package expr.arithmeticExpr;
 
 
 import typeChecker.ASTVisitor;
+import types.Type;
 import expr.BinaryExpr;
 import expr.Expression;
 
@@ -27,5 +28,34 @@ public class Mul extends BinaryExpr {
 	@Override
 	public String toString() {
 		return this.first.toString() + "*" + this.second.toString(); 
+	}
+	
+	@Override
+	public boolean isNumeric() {
+		return true;
+	}
+
+	@Override
+	public boolean isComparable() {
+		return true;
+	}
+
+	@Override
+	public boolean isTheSameType(Expression exp) {
+		// result of the mul is the type of one of its operands
+		return this.first.isTheSameType(exp);
+	}
+	
+	@Override
+	public boolean hasValidOperatorsType() {
+		if(this.first.isTheSameType(this.second) &&
+			this.first.isNumeric() ) 	
+			return true;
+		return false;
+	}
+	
+	@Override
+	public Type getType() {
+		return this.first.getType();
 	}
 }
