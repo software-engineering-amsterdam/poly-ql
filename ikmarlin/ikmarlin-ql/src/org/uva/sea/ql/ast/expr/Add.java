@@ -1,8 +1,8 @@
 package org.uva.sea.ql.ast.expr;
 
-import org.uva.sea.ql.ast.type.Type;
 import org.uva.sea.ql.ast.type.Number;
-import org.uva.sea.ql.checker.ExprVisitor;
+import org.uva.sea.ql.ast.type.Type;
+import org.uva.sea.ql.checker.visitor.IExprVisitor;
 
 public class Add extends Binary {
 	
@@ -11,15 +11,15 @@ public class Add extends Binary {
 	}
 
 	@Override
+	public <T> T accept(IExprVisitor<T> ev) {
+		return ev.visit(this);
+	}
+
+	@Override
 	public Type hasType() {
 		return new Number();
 	}
 
-	@Override
-	public <T> T accept(ExprVisitor<T> ev){
-		return ev.visit(this);
-	}
-	
 	@Override
 	public String toString(){
 		return this.getLhs().toString()+" + "+this.getRhs().toString();

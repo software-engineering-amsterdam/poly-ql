@@ -1,8 +1,8 @@
 package org.uva.sea.ql.ast.expr;
 
-import org.uva.sea.ql.ast.type.Type;
 import org.uva.sea.ql.ast.type.Number;
-import org.uva.sea.ql.checker.ExprVisitor;
+import org.uva.sea.ql.ast.type.Type;
+import org.uva.sea.ql.checker.visitor.IExprVisitor;
 
 public class Neg extends Unary {
 
@@ -11,17 +11,17 @@ public class Neg extends Unary {
 	}
 
 	@Override
+	public <T> T accept(IExprVisitor<T> ev) {
+		return ev.visit(this);
+	}
+
+	@Override
 	public Type hasType() {
 		return new Number();
 	}
 
-	@Override
-	public <T> T accept(ExprVisitor<T> ev){
-		return ev.visit(this);
-	}
-
-	public String toString() {
-		return "-" + this.getArg().toString();
+	public String toString(){
+		return "-"+this.getArg().toString();
 	}
 
 }
