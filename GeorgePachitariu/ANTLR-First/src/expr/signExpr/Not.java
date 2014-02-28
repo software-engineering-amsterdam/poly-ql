@@ -15,4 +15,14 @@ public class Not extends UnaryExpr {
 		visitor.visit(this); 
 		this.first.accept(visitor);
 	}
+	
+	@Override
+	public boolean isBoolean() {
+		return true;
+	}
+	
+	@Override
+	public String toString() {
+		return "!" + this.first.toString(); 
+	}
 }

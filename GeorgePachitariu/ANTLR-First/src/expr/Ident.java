@@ -23,4 +23,13 @@ public class Ident extends Expression {
 	public void accept(ASTVisitor visitor) {
 		visitor.visit(this);
 	}
+
+	@Override
+	public boolean isBoolean() {
+		return false;
+	}
+	
+	public String toString() {
+		return this.identifier;
+	}
 }

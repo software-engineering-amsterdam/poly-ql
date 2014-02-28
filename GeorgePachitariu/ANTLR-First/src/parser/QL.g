@@ -68,7 +68,7 @@ if_block returns [IfBlock result]
     }
   )* '}'
   { 
-    $result = new IfBlock(new BooleanExpr($x.result), list);
+    $result = new IfBlock($x.result, list);
   }
   (
     ELSE '{'
@@ -82,7 +82,7 @@ if_block returns [IfBlock result]
       }
     )* 
     { 
-      $result = new IfBlock(new BooleanExpr($x.result), list, list2);
+      $result = new IfBlock($x.result, list, list2);
     }
     '}'
   )?
