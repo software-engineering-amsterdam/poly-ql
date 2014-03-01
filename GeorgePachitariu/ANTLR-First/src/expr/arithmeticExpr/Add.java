@@ -1,9 +1,9 @@
 package expr.arithmeticExpr;
 
 import typeChecker.ASTVisitor;
+import types.Type;
 import expr.BinaryExpr;
 import expr.Expression;
-import expr.syntacticExpr.Statement;
 
 public class Add extends BinaryExpr {	
 	
@@ -19,12 +19,20 @@ public class Add extends BinaryExpr {
 	}
 	
 	@Override
-	public boolean isBoolean() {
-		return false;
-	}
-	
-	@Override
 	public String toString() {
 		return this.first.toString() + "+" + this.second.toString(); 
+	}
+
+	@Override
+	public Type getType() {
+		return this.first.getType();
+	}
+
+	@Override
+	public boolean areOperandsTypeValid() {
+		Type t1=this.first.getType();
+		Type t2=this.second.getType();
+		return (t1.isCompatibleWith(t2) &&
+				      t1.isArithmetic());
 	}
 }
