@@ -40,31 +40,7 @@ public class Ident extends Expression {
 	}
 
 	@Override
-	public boolean isTheSameType(Expression exp) {
-		// TODO Auto-generated method stub
-				return false;
-	}
-
-	@Override
-	public boolean hasValidOperatorsType() {
+	public boolean areOperandsTypeValid() {
 		return true;
-	}
-
-	@Override
-	public boolean isBoolean() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isNumeric() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isComparable() {
-		// TODO Auto-generated method stub
-		return false;
 	}
 }

@@ -2,12 +2,7 @@ package expr;
 
 import typeChecker.ASTVisitor;
 
-public abstract class Expr {
-
-	@Override
-	public boolean equals(Object obj) {
-			return false;
-	}
+public interface Expr {
 	
 	public abstract void accept(ASTVisitor visitor);
 }

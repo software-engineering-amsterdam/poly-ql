@@ -18,11 +18,6 @@ public class Div extends BinaryExpr {
 		this.first.accept(visitor);
 		this.second.accept(visitor);
 	}
-
-	@Override
-	public boolean isBoolean() {
-		return false;
-	}
 	
 	@Override
 	public String toString() {
@@ -30,31 +25,15 @@ public class Div extends BinaryExpr {
 	}
 	
 	@Override
-	public boolean isNumeric() {
-		return true;
-	}
-
-	@Override
-	public boolean isComparable() {
-		return true;
-	}
-
-	@Override
-	public boolean isTheSameType(Expression exp) {
-		// result of the div is the type of one of its operands
-		return this.first.isTheSameType(exp);
+	public Type getType() {
+		return this.first.getType();
 	}
 	
 	@Override
-	public boolean hasValidOperatorsType() {
-		if(this.first.isTheSameType(this.second) &&
-			this.first.isNumeric() ) 	
-			return true;
-		return false;
-	}
-
-	@Override
-	public Type getType() {
-		return this.first.getType();
+	public boolean areOperandsTypeValid() {
+		Type t1=this.first.getType();
+		Type t2=this.second.getType();
+		return (t1.isCompatibleWith(t2) &&
+				      t1.isArithmetic());
 	}
 }
