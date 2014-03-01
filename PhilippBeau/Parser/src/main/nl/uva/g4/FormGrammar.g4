@@ -36,26 +36,40 @@ statement[Statement parentStatement] returns [Statement current]
     
     | 'if' '(' ex=expression ')' 
     {
-    	$current = new IFStatement($ex.text, $parentStatement);
+    	$current = new IFStatement($ex.currEx, $parentStatement);
     } block[$current]							
     
     | 'if' '(' ex=expression ')' 
     {
-    	$current = new IfElseStatement($ex.text, $parentStatement);
+    	$current = new IfElseStatement($ex.currEx, $parentStatement);
     } block[$current] 'else' block[$current]
     ;
 
 expression returns [Expression currEx]
-	: op=prefix e=expression {$currEx = new UnaryExpression($op.op, $e.currEx);}
-	| ((lEx=expression da=arithmeticOp) rEx=expression) {$currEx = new BinaryExpression($da.op, null, null);} 
-//    | expression da1=comparisonOp expression {$currEx = new BinaryExpression($da1.op, null, null);}
-//    | expression da2=booleanOp expression {$currEx = new BinaryExpression($da2.op, null, null);}
-    | boolLiteral 
-    | ID
-    | numLiteral
-    | STRING
-    | '(' expression ')'
-    ;
+  :  add=addExp {$currEx = new UnaryExpression(null, $add.text);}
+  ;
+
+addExp
+  :  multExp (('+' | '-') multExp)*
+  ;
+
+multExp
+  :  atom (('*' | '/') atom)*
+  ;
+
+atom
+  :  ID
+  |  '(' addExp ')'
+  ;
+
+//ID    : 'a'..'z' | 'A'..'Z';
+
+
+mathExpression returns [Expression currEx]
+	: n1=numLiteral aop=arithmeticOp n2=numLiteral  {$currEx = new BinaryExpression($aop.op, $n1.text, $n2.text);}
+	| n1=numLiteral cop=comparisonOp n2=numLiteral  {$currEx = new BinaryExpression($cop.op, $n1.text, $n2.text);}
+	| n1=numLiteral cop=comparisonOp mEx=mathExpression  {$currEx = new BinaryExpression($cop.op, $n1.text, $mEx.text);}
+	;
 
 simpleType
 	: BOOLEAN
