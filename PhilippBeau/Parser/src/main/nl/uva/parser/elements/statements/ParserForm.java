@@ -8,13 +8,7 @@ public class ParserForm extends Statement {
 
     @Override
     public String toString() {
-        String erg = "";
-
-        for (Statement child : _childrens) {
-            erg += child + "\n";
-        }
-
-        return erg;
+        return _id;
     }
 
     @Override

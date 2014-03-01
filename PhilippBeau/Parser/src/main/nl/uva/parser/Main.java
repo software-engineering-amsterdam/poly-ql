@@ -7,6 +7,7 @@ import java.util.List;
 import main.nl.uva.g4.FormGrammarLexer;
 import main.nl.uva.g4.FormGrammarParser;
 import main.nl.uva.parser.elements.statements.ParserForm;
+import main.nl.uva.parser.elements.statements.Statement;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -36,9 +37,18 @@ public class Main {
         List<ParserForm> pf = parser.forms().data;
 
         for (ParserForm f : pf) {
-            if (f.validate()) {
-                System.out.println("All OK");
-            }
+            printRec(f);
+
+            // if (f.validate()) {
+            // System.out.println("All OK");
+            // }
+        }
+    }
+
+    public static void printRec(final Statement s) {
+        System.out.println(s + " " + s.getChildren().size());
+        for (Statement sChild : s.getChildren()) {
+            printRec(sChild);
         }
     }
 }

@@ -4,8 +4,11 @@ import main.nl.uva.parser.elements.expressions.Expression;
 
 public class IFStatement extends Statement {
 
+    private final Expression _expression;
+
     public IFStatement(final Expression expression, final Statement parent) {
         super("", parent);
+        _expression = expression;
     }
 
     @Override
@@ -21,6 +24,6 @@ public class IFStatement extends Statement {
 
     @Override
     public String toString() {
-        return "IFStatement " + _id + "\n";
+        return "IFStatement " + _id + _expression;
     }
 }

@@ -5,6 +5,8 @@ grammar FormGrammar;
 	import main.nl.uva.parser.elements.expressions.*;
 	import main.nl.uva.parser.elements.operations.*;
 	import main.nl.uva.parser.elements.statements.*;
+	import main.nl.uva.parser.elements.expressions.*;
+	import main.nl.uva.parser.elements.type.*;
 }
 
 forms returns [List<ParserForm> data] 
@@ -26,7 +28,7 @@ block[Statement parentStatement]
 statement[Statement parentStatement] returns [Statement current]
 	: ID ':' STRING sType=simpleType LINEEND					
 	{
-		$current = new SimpleStatement($ID.text, $parentStatement, $sType.text, $STRING.text);
+		$current = new SimpleStatement($ID.text, $parentStatement, $sType.type, $STRING.text);
 	}
 	
     | ID ':' STRING sType=simpleType '(' ex=expression ')' LINEEND 	
@@ -46,35 +48,28 @@ statement[Statement parentStatement] returns [Statement current]
     ;
 
 expression returns [Expression currEx]
-  :  add=addExp {$currEx = new UnaryExpression(null, $add.text);}
+  : add=addExp {$currEx = new UnaryExpression(null, $add.text);}
   ;
 
-addExp
-  :  multExp (('+' | '-') multExp)*
+addExp 
+  : multExp (('+' | '-') multExp)*
   ;
 
 multExp
-  :  atom (('*' | '/') atom)*
+  : atom (('*' | '/') atom)*
   ;
 
 atom
-  :  ID
-  |  '(' addExp ')'
+  : ID
+  |	numLiteral
+  | boolLiteral
+  | '(' addExp ')'
   ;
 
-//ID    : 'a'..'z' | 'A'..'Z';
-
-
-mathExpression returns [Expression currEx]
-	: n1=numLiteral aop=arithmeticOp n2=numLiteral  {$currEx = new BinaryExpression($aop.op, $n1.text, $n2.text);}
-	| n1=numLiteral cop=comparisonOp n2=numLiteral  {$currEx = new BinaryExpression($cop.op, $n1.text, $n2.text);}
-	| n1=numLiteral cop=comparisonOp mEx=mathExpression  {$currEx = new BinaryExpression($cop.op, $n1.text, $mEx.text);}
-	;
-
-simpleType
-	: BOOLEAN
-    | MONEY
-    | TEXT
+simpleType returns [Type type]
+	: BOOLEAN {$type = new Bool();}
+    | MONEY {$type = new Money();}
+    | TEXT {$type = new Text();}
     ;
 
 prefix returns [Operation op]

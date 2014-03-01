@@ -9,4 +9,9 @@ public class UnaryExpression extends Expression {
     public UnaryExpression(final Operation operation, final String expression) {
         _expression = expression;
     }
+
+    @Override
+    public String toString() {
+        return _expression;
+    }
 }

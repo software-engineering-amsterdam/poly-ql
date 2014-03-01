@@ -57,4 +57,7 @@ public abstract class Statement {
         return valid;
     }
 
+    public List<Statement> getChildren() {
+        return _childrens;
+    }
 }
