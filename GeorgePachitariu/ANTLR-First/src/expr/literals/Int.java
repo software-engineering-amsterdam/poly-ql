@@ -1,32 +1,26 @@
-package expr;
+package expr.literals;
 
+import expr.Expression;
 import typeChecker.ASTVisitor;
+import types.BoolType;
+import types.IntType;
 import types.Type;
 
 
-public class Ident extends Expression {
-	private String identifier;
-	private Type type;
+public class Int extends Expression {
+	private int value;
 
-	public Ident(String identifier) {
+	public Int(int value) {
 		super();
-		this.identifier=identifier;
-	}
-
-	public void setType(Type type) {
-		this.type = type;
-	}
-	
-	public Type getType() {
-		return this.type;
+		this.value=value;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (!(obj instanceof Ident))
+		if (!(obj instanceof Int))
 			return false;
-		Ident ident=(Ident) obj;
-		return this.identifier.equals(ident.identifier);
+		Int expr=(Int) obj;
+		return expr.value == this.value;
 	}
 	
 	@Override
@@ -36,18 +30,24 @@ public class Ident extends Expression {
 	
 	@Override
 	public String toString() {
-		return this.identifier;
+		return "int";
 	}
-
+	
+	@Override
+	public Type getType() {
+		return new IntType();
+	}
+	
 	@Override
 	public boolean areOperandsTypeValid() {
 		return true;
 	}
-
+	
 	@Override
 	public boolean containsTreeNode(Expression e) {
 		if(e.equals(this))
 			return true;
 		return false;
 	}
+
 }

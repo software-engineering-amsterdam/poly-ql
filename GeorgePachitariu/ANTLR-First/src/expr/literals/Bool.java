@@ -1,32 +1,25 @@
-package expr;
+package expr.literals;
 
+import expr.Expression;
 import typeChecker.ASTVisitor;
+import types.BoolType;
 import types.Type;
 
 
-public class Ident extends Expression {
-	private String identifier;
-	private Type type;
+public class Bool extends Expression {
+	private boolean value;
 
-	public Ident(String identifier) {
+	public Bool(boolean value) {
 		super();
-		this.identifier=identifier;
-	}
-
-	public void setType(Type type) {
-		this.type = type;
-	}
-	
-	public Type getType() {
-		return this.type;
+		this.value=value;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (!(obj instanceof Ident))
+		if (!(obj instanceof Bool))
 			return false;
-		Ident ident=(Ident) obj;
-		return this.identifier.equals(ident.identifier);
+		Bool expr=(Bool) obj;
+		return expr.value == this.value;
 	}
 	
 	@Override
@@ -36,14 +29,19 @@ public class Ident extends Expression {
 	
 	@Override
 	public String toString() {
-		return this.identifier;
+		return "boolean";
 	}
-
+	
+	@Override
+	public Type getType() {
+		return new BoolType();
+	}
+	
 	@Override
 	public boolean areOperandsTypeValid() {
 		return true;
 	}
-
+	
 	@Override
 	public boolean containsTreeNode(Expression e) {
 		if(e.equals(this))
