@@ -55,6 +55,7 @@ public class QL4Visitor extends QL4BaseVisitor<Value> {
     
     // visit the rest of the form
     this.visitStructures(ctx.structures());
+    ctx.structures().accept(this);
     return null;
   }
   
@@ -149,6 +150,7 @@ public class QL4Visitor extends QL4BaseVisitor<Value> {
       System.out.println("Checking computed question");
     
     // extract information from context
+    String ident = ctx.IDENTIFIER().getText();
     String label = ctx.LABEL().getText();
     String type = ctx.TYPE().getText();
     
@@ -157,6 +159,9 @@ public class QL4Visitor extends QL4BaseVisitor<Value> {
     
     // add question to list
     questions.add(new Question(label, type, value));
+    
+    // add value to variables
+    variables.put(ident, value);
     
     return null;
   }
@@ -209,6 +214,14 @@ public class QL4Visitor extends QL4BaseVisitor<Value> {
 			  this.visit(ctx.expression(1)).asDouble();
 	  
 	  return new QLdouble(evaluation);
+	  
+	  ctx.children.accept(this);
+	  
+	  
+	  
+	  IExpr lh1 = ctx.lhs.accept(this);
+	  IExpr rhs = ctx.rhs.accept(this);
+	  return new Plus(lhs, rhs)
   }
   
   /**
@@ -418,6 +431,14 @@ public class QL4Visitor extends QL4BaseVisitor<Value> {
     return new QLinteger(ctx.getText());
   }
   
+
+  public Value visitIdent(QL4Parser.IdentContext ctx) {
+	  if (verbose)
+		  System.out.println("Visiting int");
+	  
+	  return variables.get(ctx.getText());
+		  
+  }
   /////////////////////////// public get/set functions
   
   /**
@@ -431,4 +452,15 @@ public class QL4Visitor extends QL4BaseVisitor<Value> {
     return questions;
   }
   
+  /**
+   * Adds a questions answer to the map of variables
+   * @param ident is the identifier of the question
+   * @param value is the value of the answer
+   */
+  public void addAnswer(String ident, Value value) {
+	  if (verbose)
+		  System.out.println("Adding question" + ident + " with value " + value);
+	  
+	  variables.put(ident, value);
+  }
 }
