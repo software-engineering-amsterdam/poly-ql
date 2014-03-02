@@ -5,6 +5,8 @@ package org.uva.sea.ql.parser.antlr.QL4.AST;
  * Contains a id, type, label and value 
  * 
  * TODO: May possibly be extended into several type of questions 
+ * TODO: missing value, while this is important. Think of classes hierarchy with
+ * comp question (who extends what?)
  * @author Sammie Katt
  *
  */

@@ -93,7 +93,7 @@ public class QL4Visitor extends QL4BaseVisitor<QLTree> {
    */
   public QLTree visitRegQuestion(QL4Parser.RegQuestionContext ctx) {
 	  if (verbose) 
-		  System.out.println("Visiting Question");
+		  System.out.println("Visiting RegQuestion");
 	  
 	  QLTree id = ctx.IDENTIFIER().accept(this);
 	  QLTree label = ctx.LABEL().accept(this);
@@ -102,5 +102,21 @@ public class QL4Visitor extends QL4BaseVisitor<QLTree> {
 	  return new QL4RegQuestion(id, label, type); 
   }
   
-  
+  /**
+   * Returns a compQuestion object, containing its content:
+   * Type, label, id and value
+   * @param ctx
+   * @return
+   */
+  public QLTree visitCompQuestion(QL4Parser.CompQuestionContext ctx) {
+	  if (verbose) 
+		  System.out.println("Visiting CompQuestion");
+	  
+	  QLTree id = ctx.IDENTIFIER().accept(this);
+	  QLTree label = ctx.LABEL().accept(this);
+	  QLTree type = ctx.TYPE().accept(this);
+	  QLTree value = ctx.expression().accept(this);
+	  
+	  return new QL4CompQuestion(id, label, type, value); 
+  }
 }
