@@ -5,11 +5,12 @@ import net.iplantevin.ql.ast.expressions.Expression;
 import net.iplantevin.ql.ast.types.IntegerType;
 import net.iplantevin.ql.ast.types.Type;
 import net.iplantevin.ql.ast.types.TypeEnvironment;
-import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
+import net.iplantevin.ql.ast.visitors.IASTVisitor;
 
 /**
+ * Multiplication.
+ *
  * @author Ivan
- *         Multiplication.
  */
 public class Mul extends Binary {
     public Mul(Expression left, Expression right, LineInfo lineInfo) {
@@ -17,17 +18,17 @@ public class Mul extends Binary {
     }
 
     @Override
-    public Type getType(TypeEnvironment idTypeMap) {
+    public Type getType(TypeEnvironment idTypeStore) {
         return new IntegerType();
     }
 
     @Override
     public String toString() {
-        return getLeftExpr() + " * " + getRightExpr();
+        return getLeftHS() + " * " + getRightHS();
     }
 
     @Override
-    public void accept(IQLASTVisitor visitor) {
+    public void accept(IASTVisitor visitor) {
         visitor.visit(this);
     }
 }

@@ -2,12 +2,13 @@ package net.iplantevin.ql.ast.expressions;
 
 import net.iplantevin.ql.ast.types.Type;
 import net.iplantevin.ql.ast.types.TypeEnvironment;
-import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
+import net.iplantevin.ql.ast.visitors.IASTVisitor;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 /**
+ * Parentheses (forced precedence).
+ *
  * @author Ivan
- *         Parentheses (forced precedence).
  */
 public class Par extends Expression {
     private final Expression expression;
@@ -22,8 +23,8 @@ public class Par extends Expression {
     }
 
     @Override
-    public Type getType(TypeEnvironment idTypeMap) {
-        return this.expression.getType(idTypeMap);
+    public Type getType(TypeEnvironment idTypeStore) {
+        return this.expression.getType(idTypeStore);
     }
 
     @Override
@@ -32,7 +33,7 @@ public class Par extends Expression {
     }
 
     @Override
-    public void accept(IQLASTVisitor visitor) {
+    public void accept(IASTVisitor visitor) {
         visitor.visit(this);
     }
 }

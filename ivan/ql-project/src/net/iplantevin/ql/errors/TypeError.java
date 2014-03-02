@@ -1,6 +1,6 @@
 package net.iplantevin.ql.errors;
 
-import net.iplantevin.ql.ast.QLASTNode;
+import net.iplantevin.ql.ast.ASTNode;
 import net.iplantevin.ql.ast.types.Type;
 
 /**
@@ -11,7 +11,7 @@ public class TypeError extends ASTError {
     private final Type expectedType;
     private final Type actualType;
 
-    public TypeError(String message, QLASTNode node, Type expected, Type actual) {
+    public TypeError(String message, ASTNode node, Type expected, Type actual) {
         super(message, node);
         expectedType = expected;
         actualType = actual;
@@ -19,7 +19,7 @@ public class TypeError extends ASTError {
 
     @Override
     public String toString() {
-        return "Type exception: " + super.toString() +
-                "Expected '" + expectedType + "' but got '" + actualType + "'.";
+        return "TYPE ERROR: " + super.toString() +
+                "Expected '" + expectedType + "' but got '" + actualType + "'\n";
     }
 }

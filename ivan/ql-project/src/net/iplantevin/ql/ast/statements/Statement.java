@@ -1,13 +1,14 @@
 package net.iplantevin.ql.ast.statements;
 
-import net.iplantevin.ql.ast.QLASTNode;
+import net.iplantevin.ql.ast.ASTNode;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 /**
+ * Main statement abstract class. Extended by all kinds of statements.
+ *
  * @author Ivan
- *         Main statement abstract class. Extended by all kinds of statements.
  */
-public abstract class Statement extends QLASTNode {
+public abstract class Statement extends ASTNode {
     public Statement(ParserRuleContext ctx) {
         super(ctx);
     }

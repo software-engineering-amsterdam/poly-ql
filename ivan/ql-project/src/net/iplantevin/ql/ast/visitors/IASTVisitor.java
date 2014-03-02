@@ -11,11 +11,12 @@ import net.iplantevin.ql.ast.form.FormCollection;
 import net.iplantevin.ql.ast.statements.*;
 
 /**
+ * General interface for visiting the AST. Abstract classes can of course not
+ * be visited.
+ *
  * @author Ivan
- *         General interface for visiting the AST. Abstract classes can of course not
- *         be visited.
  */
-public interface IQLASTVisitor {
+public interface IASTVisitor {
     public void visit(FormCollection formCollection);
 
     public void visit(Form form);

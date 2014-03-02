@@ -4,12 +4,13 @@ import net.iplantevin.ql.ast.LineInfo;
 import net.iplantevin.ql.ast.expressions.Expression;
 import net.iplantevin.ql.ast.types.Type;
 import net.iplantevin.ql.ast.types.TypeEnvironment;
-import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
+import net.iplantevin.ql.ast.visitors.IASTVisitor;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 /**
+ * Identifier.
+ *
  * @author Ivan
- *         Identifier.
  */
 public class ID extends Expression {
     private final String name;
@@ -25,8 +26,8 @@ public class ID extends Expression {
     }
 
     @Override
-    public Type getType(TypeEnvironment idTypeEnv) {
-        return idTypeEnv.getDeclaredType(this);
+    public Type getType(TypeEnvironment idTypeStore) {
+        return idTypeStore.getDeclaredType(this);
     }
 
     public String getName() {
@@ -39,7 +40,7 @@ public class ID extends Expression {
     }
 
     @Override
-    public void accept(IQLASTVisitor visitor) {
+    public void accept(IASTVisitor visitor) {
         visitor.visit(this);
     }
 }

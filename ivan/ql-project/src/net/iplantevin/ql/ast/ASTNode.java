@@ -1,22 +1,21 @@
 package net.iplantevin.ql.ast;
 
-import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
+import net.iplantevin.ql.ast.visitors.IASTVisitor;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Ivan
- * Date: 19-02-14
  * Interface that should be implemented by all nodes from the AST.
+ *
+ * @author Ivan
  */
-public abstract class QLASTNode {
+public abstract class ASTNode {
     private final LineInfo lineInfo;
 
-    public QLASTNode(ParserRuleContext ctx) {
+    public ASTNode(ParserRuleContext ctx) {
         this.lineInfo = new LineInfo(ctx);
     }
 
-    public QLASTNode(LineInfo lineInfo) {
+    public ASTNode(LineInfo lineInfo) {
         this.lineInfo = lineInfo;
     }
 
@@ -28,7 +27,7 @@ public abstract class QLASTNode {
         return lineInfo.toString();
     }
 
-    public abstract void accept(IQLASTVisitor visitor);
+    public abstract void accept(IASTVisitor visitor);
 
     @Override
     public abstract String toString();

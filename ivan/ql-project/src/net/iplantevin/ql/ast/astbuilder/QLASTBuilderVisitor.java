@@ -22,8 +22,9 @@ import org.antlr.v4.runtime.misc.NotNull;
 import java.util.ArrayList;
 
 /**
+ * Visitor that creates an custom AST from the antlr tree.
+ *
  * @author Ivan
- *         Visitor that creates an custom AST from the antlr tree.
  */
 public class QLASTBuilderVisitor<Object> extends QLBaseVisitor {
     /**

@@ -1,12 +1,13 @@
 package net.iplantevin.ql.ast.statements;
 
 import net.iplantevin.ql.ast.expressions.Expression;
-import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
+import net.iplantevin.ql.ast.visitors.IASTVisitor;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 /**
+ * If statement.
+ *
  * @author Ivan
- *         If statement.
  */
 public class If extends Conditional {
     public If(Expression condition, Statement body, ParserRuleContext ctx) {
@@ -19,7 +20,7 @@ public class If extends Conditional {
     }
 
     @Override
-    public void accept(IQLASTVisitor visitor) {
+    public void accept(IASTVisitor visitor) {
         visitor.visit(this);
     }
 }

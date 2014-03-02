@@ -1,26 +1,26 @@
 package net.iplantevin.ql.ast.form;
 
-import net.iplantevin.ql.ast.QLASTNode;
-import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
+import net.iplantevin.ql.ast.ASTNode;
+import net.iplantevin.ql.ast.visitors.IASTVisitor;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Ivan
- * Date: 19-02-14
  * Root of a Questionnaire Language AST (QLAST). Contains a list of Form objects.
+ *
+ * @author Ivan
  */
-public class FormCollection extends QLASTNode {
-    private ArrayList<Form> forms;
+public class FormCollection extends ASTNode {
+    private List<Form> forms;
 
     /**
      * Create new FormCollection with given list of Form objects.
      *
      * @param forms list of Form objects.
      */
-    public FormCollection(ArrayList<Form> forms, ParserRuleContext ctx) {
+    public FormCollection(List<Form> forms, ParserRuleContext ctx) {
         // TODO: error handling.
         super(ctx);
         this.forms = forms;
@@ -42,7 +42,7 @@ public class FormCollection extends QLASTNode {
      *
      * @return list of Form objects.
      */
-    public ArrayList<Form> getForms() {
+    public List<Form> getForms() {
         return forms;
     }
 
@@ -67,7 +67,7 @@ public class FormCollection extends QLASTNode {
     }
 
     @Override
-    public void accept(IQLASTVisitor visitor) {
+    public void accept(IASTVisitor visitor) {
         visitor.visit(this);
     }
 }
