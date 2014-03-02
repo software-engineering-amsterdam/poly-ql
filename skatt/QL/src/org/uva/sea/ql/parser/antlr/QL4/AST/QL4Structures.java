@@ -5,21 +5,22 @@ import java.util.List;
 
 /**
  * Abstract syntax tree of the structures construct in the QL4 grammar
+ * Contains an array list of structures
  * @author Sammie Katt
  *
  */
-public class QL4Structures extends IQLTree {
+public class QL4Structures extends QLTree {
 	
 	/**
 	 * A list of all the structures in 'structure'
 	 */
-	List<IQLTree> structures = new ArrayList<IQLTree>();
+	List<QLTree> structures = new ArrayList<QLTree>();
 	
 	/**
 	 * Adds a structure to structures
 	 * @param structure is the structure to be added in the list of structures
 	 */
-	public void addStructure(IQLTree structure) {
+	public void addStructure(QLTree structure) {
 		structures.add(structure);
 	}
 	
@@ -30,7 +31,7 @@ public class QL4Structures extends IQLTree {
 		String str = "Structure containing: \n";
 		
 		// for each structure in structures add its description to the string
-		for (IQLTree struct : structures) {
+		for (QLTree struct : structures) {
 			str += struct.toString() + "\n";
 		}
 		

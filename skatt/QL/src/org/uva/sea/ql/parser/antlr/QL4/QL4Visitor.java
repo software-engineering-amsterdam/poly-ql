@@ -13,7 +13,7 @@ import QL4.QL4Parser;
  * @author Sammie Katt
  *
  */
-public class QL4Visitor extends QL4BaseVisitor<IQLTree> {
+public class QL4Visitor extends QL4BaseVisitor<QLTree> {
 
   // Handles the information printed
   boolean verbose = true;
@@ -26,14 +26,11 @@ public class QL4Visitor extends QL4BaseVisitor<IQLTree> {
    * @param ctx is the context of the structures
    * @return the generated tree by visiting its childs
    */
-  public IQLTree visitForm(QL4Parser.FormContext ctx) {
+  public QLTree visitForm(QL4Parser.FormContext ctx) {
 	  if (verbose) 
 	      System.out.println("Visiting Form");
 	
-	  QL4Form form = new QL4Form();
-	
-	  form.setStructures(ctx.structures().accept(this));    
-	  return form;
+	  return new QL4Form(ctx.structures().accept(this));
   }
   
   /**
@@ -42,7 +39,7 @@ public class QL4Visitor extends QL4BaseVisitor<IQLTree> {
    * @param ctx is the structures context from which structure(s) are extracted
    * @return the structures object
    */
-  public IQLTree visitStructures(QL4Parser.StructuresContext ctx) {
+  public QLTree visitStructures(QL4Parser.StructuresContext ctx) {
 	  if (verbose)
 		  System.out.println("Visiting structures");
 		  
@@ -56,16 +53,28 @@ public class QL4Visitor extends QL4BaseVisitor<IQLTree> {
   }
 
   /**
+   * Returns a conditional object 
+   * @param ctx the conditional context
+   * @return a conditional object 
+   */
+  public QLTree visitConditional(QL4Parser.ConditionalContext ctx) {
+	 if (verbose)  
+		 System.out.println("Visiting conditional");
+	 
+	 return new QL4Conditional();
+  }
+  
+  /**
    * Returns a question object, containing its content:
    * Type, label, id and value
    * @param ctx
    * @return
    */
-  public IQLTree visitRegQuestion(QL4Parser.RegQuestionContext ctx) {
+  public QLTree visitRegQuestion(QL4Parser.RegQuestionContext ctx) {
 	  if (verbose) 
 		  System.out.println("Visiting Question");
 	  
-	  return new QL4RegQuestion();
+	  return new QL4RegQuestion(); // TODO
   }
   
   /**
@@ -73,7 +82,7 @@ public class QL4Visitor extends QL4BaseVisitor<IQLTree> {
    * @param ctx contains the lhs and rhs
    * @return a plus object 
    */
-  public IQLTree visitPlusExpr(QL4Parser.PlusExprContext ctx) {
+  public QLTree visitPlusExpr(QL4Parser.PlusExprContext ctx) {
 	  /*
 	  IExpr lhs = ctx.lhs.accept(this);
 	  IExpr rhs = ctx.rhs.accept(this);

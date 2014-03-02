@@ -7,22 +7,22 @@ import java.util.List;
  * @author Sammie Katt
  *
  */
-public class QL4Form extends IQLTree {
+public class QL4Form extends QLTree {
 	
 	/**
 	 * The structures of the form, the upper most 
 	 * collection of all questions and conditionals
 	 */
-	IQLTree structures;
+	QLTree structures;
 	
 	/**
-	 * sets structures of the form 
-	 * @param structures is the structures tree
+	 * Constructor, setting input QLtree as structures
+	 * @param structures
 	 */
-	public void setStructures(IQLTree structures) {
+	public QL4Form(QLTree structures) {
 		this.structures = structures;
 	}
-	
+		
 	/**
 	 * Returns a string explaining its content
 	 */
