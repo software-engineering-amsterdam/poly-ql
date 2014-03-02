@@ -17,16 +17,7 @@ public class QL4Visitor extends QL4BaseVisitor<IQLTree> {
 
   // Handles the information printed
   boolean verbose = true;
-  
-  /*
-   *  contains all identifiers and their values
-   *  Is updated whenever a question is filled in 
-   *  TODO
-   */
-  // Map<String, Value> variables = new HashMap<String, Value>();
-  
-    ///////////////////// visiting upper structures
-  
+
   /**
    * Specifies behavior when visiting the form 
    * it will simply visit its structures and return the tree
@@ -36,20 +27,51 @@ public class QL4Visitor extends QL4BaseVisitor<IQLTree> {
    * @return the generated tree by visiting its childs
    */
   public IQLTree visitForm(QL4Parser.FormContext ctx) {
-    if (verbose) 
-      System.out.println("Visiting Form");
-
-    QL4Form form = new QL4Form();
-    
-    form.setStructures(ctx.structures().accept(this));    
-    return form;
+	  if (verbose) 
+	      System.out.println("Visiting Form");
+	
+	  QL4Form form = new QL4Form();
+	
+	  form.setStructures(ctx.structures().accept(this));    
+	  return form;
+  }
+  
+  /**
+   * Returns a structures object, containing its structure in a list
+   * 
+   * @param ctx is the structures context from which structure(s) are extracted
+   * @return the structures object
+   */
+  public IQLTree visitStructures(QL4Parser.StructuresContext ctx) {
+	  if (verbose)
+		  System.out.println("Visiting structures");
+		  
+	  QL4Structures structures= new QL4Structures();
+	  
+	  for (QL4Parser.StructureContext struct : ctx.structure()) {
+		  structures.addStructure(struct.accept(this));
+	  }
+	  
+	  return structures;
   }
 
   /**
-   * Returns the addition of the context when visiting
-   * the plus expression.
-   * @param ctx is the context of the addition
-   * @return a QLdouble, whose value is the evaluation of the expression
+   * Returns a question object, containing its content:
+   * Type, label, id and value
+   * @param ctx
+   * @return
+   */
+  public IQLTree visitRegQuestion(QL4Parser.RegQuestionContext ctx) {
+	  if (verbose) 
+		  System.out.println("Visiting Question");
+	  
+	  return new QL4RegQuestion();
+  }
+  
+  /**
+   * Returns a plus object with the appropriate lhs and rhs
+   * @param ctx contains the lhs and rhs
+   * @return a plus object 
    */
   public IQLTree visitPlusExpr(QL4Parser.PlusExprContext ctx) {
 	  /*

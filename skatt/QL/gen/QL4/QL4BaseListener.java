@@ -175,19 +175,6 @@ public class QL4BaseListener implements QL4Listener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterWorkflowStruct(@NotNull QL4Parser.WorkflowStructContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitWorkflowStruct(@NotNull QL4Parser.WorkflowStructContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterNeqExpr(@NotNull QL4Parser.NeqExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -351,6 +338,19 @@ public class QL4BaseListener implements QL4Listener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitNegExpr(@NotNull QL4Parser.NegExprContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterConditional(@NotNull QL4Parser.ConditionalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitConditional(@NotNull QL4Parser.ConditionalContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

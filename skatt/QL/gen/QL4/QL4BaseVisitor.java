@@ -116,14 +116,6 @@ public class QL4BaseVisitor<T> extends AbstractParseTreeVisitor<T> implements QL
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitWorkflowStruct(@NotNull QL4Parser.WorkflowStructContext ctx) { return visitChildren(ctx); }
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
 	@Override public T visitNeqExpr(@NotNull QL4Parser.NeqExprContext ctx) { return visitChildren(ctx); }
 
 	/**
@@ -221,6 +213,14 @@ public class QL4BaseVisitor<T> extends AbstractParseTreeVisitor<T> implements QL
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitNegExpr(@NotNull QL4Parser.NegExprContext ctx) { return visitChildren(ctx); }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitConditional(@NotNull QL4Parser.ConditionalContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}

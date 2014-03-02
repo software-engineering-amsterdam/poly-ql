@@ -143,17 +143,6 @@ public interface QL4Listener extends ParseTreeListener {
 	void exitIdent(@NotNull QL4Parser.IdentContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link QL4Parser#workflowStruct}.
-	 * @param ctx the parse tree
-	 */
-	void enterWorkflowStruct(@NotNull QL4Parser.WorkflowStructContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link QL4Parser#workflowStruct}.
-	 * @param ctx the parse tree
-	 */
-	void exitWorkflowStruct(@NotNull QL4Parser.WorkflowStructContext ctx);
-
-	/**
 	 * Enter a parse tree produced by {@link QL4Parser#neqExpr}.
 	 * @param ctx the parse tree
 	 */
@@ -295,6 +284,17 @@ public interface QL4Listener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitNegExpr(@NotNull QL4Parser.NegExprContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link QL4Parser#conditional}.
+	 * @param ctx the parse tree
+	 */
+	void enterConditional(@NotNull QL4Parser.ConditionalContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QL4Parser#conditional}.
+	 * @param ctx the parse tree
+	 */
+	void exitConditional(@NotNull QL4Parser.ConditionalContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link QL4Parser#bool}.

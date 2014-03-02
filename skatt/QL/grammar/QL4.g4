@@ -11,9 +11,8 @@ structures : structure+;
 
 structure :  
       question #questionStruct 
-      | ifcondition '{' structures '}' (elseifcondition '{' structures '}')* (elsecondition '{' structures '}')? #workflowStruct    
+      | ifcondition '{' structures '}' (elseifcondition '{' structures '}')* (elsecondition '{' structures '}')? #conditional    
       ;
-
 
 question: 
       IDENTIFIER ':' LABEL ':' TYPE ';' #regQuestion 

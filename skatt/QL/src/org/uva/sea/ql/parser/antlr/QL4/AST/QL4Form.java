@@ -22,4 +22,11 @@ public class QL4Form extends IQLTree {
 	public void setStructures(IQLTree structures) {
 		this.structures = structures;
 	}
+	
+	/**
+	 * Returns a string explaining its content
+	 */
+	public String toString() {
+		return "This form contains" + structures.toString();
+	}
 }

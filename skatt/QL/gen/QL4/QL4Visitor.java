@@ -98,13 +98,6 @@ public interface QL4Visitor<T> extends ParseTreeVisitor<T> {
 	T visitIdent(@NotNull QL4Parser.IdentContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link QL4Parser#workflowStruct}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitWorkflowStruct(@NotNull QL4Parser.WorkflowStructContext ctx);
-
-	/**
 	 * Visit a parse tree produced by {@link QL4Parser#neqExpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -194,6 +187,13 @@ public interface QL4Visitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitNegExpr(@NotNull QL4Parser.NegExprContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link QL4Parser#conditional}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitConditional(@NotNull QL4Parser.ConditionalContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link QL4Parser#bool}.

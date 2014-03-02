@@ -167,7 +167,7 @@ public class QL4Parser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
-	public static class WorkflowStructContext extends StructureContext {
+	public static class ConditionalContext extends StructureContext {
 		public ElseconditionContext elsecondition() {
 			return getRuleContext(ElseconditionContext.class,0);
 		}
@@ -186,18 +186,18 @@ public class QL4Parser extends Parser {
 		public List<StructuresContext> structures() {
 			return getRuleContexts(StructuresContext.class);
 		}
-		public WorkflowStructContext(StructureContext ctx) { copyFrom(ctx); }
+		public ConditionalContext(StructureContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QL4Listener ) ((QL4Listener)listener).enterWorkflowStruct(this);
+			if ( listener instanceof QL4Listener ) ((QL4Listener)listener).enterConditional(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QL4Listener ) ((QL4Listener)listener).exitWorkflowStruct(this);
+			if ( listener instanceof QL4Listener ) ((QL4Listener)listener).exitConditional(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof QL4Visitor ) return ((QL4Visitor<? extends T>)visitor).visitWorkflowStruct(this);
+			if ( visitor instanceof QL4Visitor ) return ((QL4Visitor<? extends T>)visitor).visitConditional(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -236,7 +236,7 @@ public class QL4Parser extends Parser {
 				}
 				break;
 			case IF:
-				_localctx = new WorkflowStructContext(_localctx);
+				_localctx = new ConditionalContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(24); ifcondition();
