@@ -41,13 +41,9 @@ public class QL4 {
     ParseTree tree = parser.form(); 
 
     // visit the tree with our own QL4 visitor
-    QL4Visitor visitor = new QL4Visitor();
-    visitor.visit(tree);
+    QL4Visitor ASTParser = new QL4Visitor();
+    IQLTree ast = tree.accept(ASTParser);
     
-    // extract questions and print them
-    List<Question> qList = visitor.getQuestions();
-    System.out.println(qList.size());
-    System.out.println(qList);
   }
   
   /**
