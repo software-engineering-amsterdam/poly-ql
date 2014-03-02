@@ -1,9 +1,6 @@
 package org.uva.sea.ql.parser.antlr.QL4;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import org.uva.sea.ql.parser.antlr.QL4.AST.*;
 
 import QL4.QL4BaseVisitor;
 import QL4.QL4Parser;
@@ -40,11 +37,12 @@ public class QL4Visitor extends QL4BaseVisitor<IQLTree> {
    */
   public IQLTree visitForm(QL4Parser.FormContext ctx) {
     if (verbose) 
-      System.out.println("Checking Form");
+      System.out.println("Visiting Form");
 
-    // visit the rest of the form and return result
-    this.visitStructures(ctx.structures());
-    return ctx.structures().accept(this);
+    QL4Form form = new QL4Form();
+    
+    form.setStructures(ctx.structures().accept(this));    
+    return form;
   }
 
   /**
@@ -59,6 +57,8 @@ public class QL4Visitor extends QL4BaseVisitor<IQLTree> {
 	  IExpr rhs = ctx.rhs.accept(this);
 	  return new Plus(lhs, rhs)
 	  */
+	  if (verbose) 
+		  System.out.println("Visiting plus expr");
 	  
 	  return null;
   }

@@ -1,11 +1,11 @@
 package org.uva.sea.ql.parser.antlr.QL4;
 
-import java.util.List;
-
 import javax.swing.JFileChooser;
 
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
+import org.uva.sea.ql.parser.antlr.QL4.AST.*;
+
 import QL4.*;
 
 /**
@@ -40,10 +40,11 @@ public class QL4 {
     // create a tree from the parser by initiating the top element
     ParseTree tree = parser.form(); 
 
-    // visit the tree with our own QL4 visitor
+    // visit the tree with our own QL4 visitor to get AST
     QL4Visitor ASTParser = new QL4Visitor();
     IQLTree ast = tree.accept(ASTParser);
     
+    System.out.println(ast);
   }
   
   /**
