@@ -14,14 +14,14 @@ let mapQLType qlType = match qlType with
                        | QLString -> TString
                        | QLInt -> TInt
                        | QLDecimal -> TDecimal
-
+// TODO: make parameter in type checker
 let identifiers = new Dictionary<string, expressionType>()
 
 let literalType exprType = 
     match exprType with
-    | Bool(_) -> TBool, exprType
-    | String(_) -> TString, exprType
-    | Int(_) -> TInt, exprType
+    | Bool(_)    -> TBool, exprType
+    | String(_)  -> TString, exprType
+    | Int(_)     -> TInt, exprType
     | Decimal(_) -> TDecimal, exprType
 
 let rec checkExpression expression =
@@ -32,10 +32,11 @@ let rec checkExpression expression =
     | Literal(expr) -> (fst <| literalType expr), expression
 
     | Neg(expr)  -> let type1,res1 = checkExpression expr
+                    let res = Neg(res1)
                     if type1.Equals(TBool) || type1.Equals(TError) then
-                        TBool, res1
+                        TBool, res
                     else
-                        TError, TypeError(res1, "Type error: expected boolean expression")
+                        TError, TypeError(res, "Type error: expected boolean expression")
 
     | BooleanOp(expr1, (booleanOp.Eq as op), expr2)
     | BooleanOp(expr1, (booleanOp.Ne as op), expr2) ->  let type1,res1 = checkExpression expr1
@@ -79,24 +80,18 @@ let rec checkExpression expression =
     | _ -> failwith "Unhandled type case (should not occur)"
 
 let rec checkStmts = 
-    let checkAssignment ass = let exprType, expr = checkExpression ass.Expression
-                              identifiers.Add(ass.ID, exprType)
-                              Assignment({ID = ass.ID; Label = ass.Label; Expression = expr})
-
-    let checkQuestion (ques:question) = identifiers.Add(ques.ID, mapQLType ques.Type)
-                                        Question(ques)
-
-    let checkConditional cond stmts = let exprType, expr = checkExpression cond
-                                      if exprType.Equals(TBool) || exprType.Equals(TError) then
-                                        Conditional(expr, checkStmts stmts)
-                                      else
-                                        Conditional(TypeError(expr, "Type error: expected boolean expression"), checkStmts stmts)
-
     let checkStmt stmt = 
         match stmt with
-        | Assignment(ass) -> checkAssignment ass
-        | Question(ques) -> checkQuestion ques
-        | Conditional(cond, stmts) -> checkConditional cond stmts
+        | Assignment(id, label, expression) ->  let exprType, expr = checkExpression expression
+                                                identifiers.Add(id, exprType)
+                                                Assignment(id, label, expr)
+        | Question(id, label, qlType) ->        identifiers.Add(id, mapQLType qlType)
+                                                stmt
+        | Conditional(cond, stmts) ->           let exprType, expr = checkExpression cond
+                                                if exprType.Equals(TBool) || exprType.Equals(TError) then
+                                                    Conditional(expr, checkStmts stmts)
+                                                else
+                                                    Conditional(TypeError(expr, "Type error: expected boolean expression"), checkStmts stmts)
         
     List.map checkStmt
 

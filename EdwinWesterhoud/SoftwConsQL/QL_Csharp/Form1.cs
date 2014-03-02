@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -16,9 +15,9 @@ namespace QL_Csharp
 
             // Fill demo presets
             _demoPresets.Add("Empty Form", "form formName { }");
-            _demoPresets.Add("Questions", "form formName { \r\n\tboolQ1: \"Does it work?\" boolean\r\n\tboolQ2: \"And with two questions?\" boolean\r\n}");
-            _demoPresets.Add("Conditional", "form formName {\r\n\tboolQ1: \"Display next question?\" boolean\r\n\tif (boolQ1) {\r\n\t\tboolQ2: \"Did you like it?\" boolean\r\n\t}\r\n}");
-            _demoPresets.Add("Assignment", "form formName {\r\n\tintQ1: \"Income?\" integer\r\n\t\"Tax amount\" intTax = intQ1 / 100 * 52\r\n}");
+            _demoPresets.Add("Questions", "form formName { \r\n\t\"Does it work?\" boolQ1: boolean\r\n\t\"And with two questions?\" boolQ2: boolean\r\n}");
+            _demoPresets.Add("Conditional", "form formName {\r\n\t\"Display next question?\" boolQ1: boolean\r\n\tif (boolQ1) {\r\n\t\t\"Did you like it?\" boolQ2: boolean\r\n\t}\r\n}");
+            _demoPresets.Add("Assignment", "form formName {\r\n\t\"Income?\" intQ1: integer\r\n\t\"Tax amount\" intTax = intQ1 / 100 * 52\r\n}");
             comboBoxDemos.Items.AddRange(_demoPresets.Keys.ToArray());
         }
 
