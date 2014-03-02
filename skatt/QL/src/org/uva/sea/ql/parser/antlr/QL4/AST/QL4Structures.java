@@ -17,11 +17,11 @@ public class QL4Structures extends QLTree {
 	List<QLTree> structures = new ArrayList<QLTree>();
 	
 	/**
-	 * Adds a structure to structures
-	 * @param structure is the structure to be added in the list of structures
+	 * Constructor, sets structures
+	 * @param structures 
 	 */
-	public void addStructure(QLTree structure) {
-		structures.add(structure);
+	public QL4Structures(List<QLTree> structures) {
+		this.structures = structures;
 	}
 	
 	/**
@@ -37,6 +37,5 @@ public class QL4Structures extends QLTree {
 		
 		return str;
 	}
-	
 	
 }

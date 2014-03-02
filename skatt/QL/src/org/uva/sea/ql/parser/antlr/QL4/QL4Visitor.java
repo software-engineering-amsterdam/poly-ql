@@ -1,6 +1,10 @@
 package org.uva.sea.ql.parser.antlr.QL4;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.uva.sea.ql.parser.antlr.QL4.AST.*;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.QLExpression;
 
 import QL4.QL4BaseVisitor;
 import QL4.QL4Parser;
@@ -43,17 +47,17 @@ public class QL4Visitor extends QL4BaseVisitor<QLTree> {
 	  if (verbose)
 		  System.out.println("Visiting structures");
 		  
-	  QL4Structures structures= new QL4Structures();
+	  List<QLTree> structures = new ArrayList<QLTree>();
 	  
 	  for (QL4Parser.StructureContext struct : ctx.structure()) {
-		  structures.addStructure(struct.accept(this));
+		  structures.add(struct.accept(this));
 	  }
 	  
-	  return structures;
+	  return new QL4Structures(structures);
   }
 
   /**
-   * Returns a conditional object 
+   * Returns a conditional object containing  
    * @param ctx the conditional context
    * @return a conditional object 
    */
@@ -61,7 +65,24 @@ public class QL4Visitor extends QL4BaseVisitor<QLTree> {
 	 if (verbose)  
 		 System.out.println("Visiting conditional");
 	 
-	 return new QL4Conditional();
+	 // define if/else (if available) conditions
+	 QLTree ifCondition = ctx.ifcondition().accept(this);
+	 QLTree elseCondition = null;
+	 
+	 if (ctx.elsecondition() != null) {
+		 elseCondition = ctx.elsecondition().accept(this);
+	 } 
+	 
+	 // define structures TODO: name them in grammar such that we can call them and actually call them
+	 
+	 // define elseifConditions and their structs by looping over them in ctx
+	 List<QLTree> elseifConditions = new ArrayList<QLTree>();
+	 
+	 for (QL4Parser.ElseifconditionContext elseif : ctx.elseifcondition()) {
+		 elseifConditions.add(elseif.accept(this));
+	 }
+	 
+	 return new QL4Conditional(ifCondition, elseCondition, elseifConditions);
   }
   
   /**
@@ -74,24 +95,12 @@ public class QL4Visitor extends QL4BaseVisitor<QLTree> {
 	  if (verbose) 
 		  System.out.println("Visiting Question");
 	  
-	  return new QL4RegQuestion(); // TODO
+	  QLTree id = ctx.IDENTIFIER().accept(this);
+	  QLTree label = ctx.LABEL().accept(this);
+	  QLTree type = ctx.TYPE().accept(this);
+	  
+	  return new QL4RegQuestion(id, label, type); 
   }
   
-  /**
-   * Returns a plus object with the appropriate lhs and rhs
-   * @param ctx contains the lhs and rhs
-   * @return a plus object 
-   */
-  public QLTree visitPlusExpr(QL4Parser.PlusExprContext ctx) {
-	  /*
-	  IExpr lhs = ctx.lhs.accept(this);
-	  IExpr rhs = ctx.rhs.accept(this);
-	  return new Plus(lhs, rhs)
-	  */
-	  if (verbose) 
-		  System.out.println("Visiting plus expr");
-	  
-	  return null;
-  }
   
 }

@@ -1,7 +1,5 @@
 package org.uva.sea.ql.parser.antlr.QL4.AST;
 
-import java.util.List;
-
 /**
  * Abstract syntax tree of the form construct in the QL4 grammar
  * @author Sammie Katt
@@ -27,6 +25,6 @@ public class QL4Form extends QLTree {
 	 * Returns a string explaining its content
 	 */
 	public String toString() {
-		return "This form contains" + structures.toString();
+		return "This form contains " + structures.toString();
 	}
 }
