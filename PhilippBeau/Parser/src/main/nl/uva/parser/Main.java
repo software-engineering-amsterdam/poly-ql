@@ -39,9 +39,9 @@ public class Main {
         for (ParserForm f : pf) {
             printRec(f);
 
-            // if (f.validate()) {
-            // System.out.println("All OK");
-            // }
+            if (f.validate()) {
+                System.out.println("All OK");
+            }
         }
     }
 

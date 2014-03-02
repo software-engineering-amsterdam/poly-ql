@@ -3,14 +3,20 @@ package main.nl.uva.parser.elements.type;
 import main.nl.uva.parser.elements.expressions.Expression;
 import main.nl.uva.parser.elements.statements.Statement;
 
-public class Bool extends Type {
+public class Variable extends Type {
 
-    private final String _value;
+    public static enum Types {
+        BOOL,
+        TEXT,
+        MONEY;
+    }
 
-    public Bool(final Statement parent, final String value) {
-        super("Boolean", parent);
+    private final String _name;
 
-        _value = value;
+    public Variable(final Statement parent, final String name) {
+        super("Variable", parent);
+
+        _name = name;
     }
 
     @Override
@@ -24,4 +30,5 @@ public class Bool extends Type {
         // TODO Auto-generated method stub
 
     }
+
 }

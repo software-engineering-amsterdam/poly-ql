@@ -1,34 +1,21 @@
 package main.nl.uva.parser.elements.type;
 
-import main.nl.uva.parser.ExpressionAlreadySetException;
 import main.nl.uva.parser.elements.expressions.Expression;
+import main.nl.uva.parser.elements.statements.Statement;
 
-public abstract class Type {
+public abstract class Type extends Expression {
 
-    protected Expression _expression = null;
+    protected Statement _expression = null;
 
     private final String _typeName;
 
-    public Type(final String typeName) {
+    public Type(final String typeName, final Statement parent) {
+        super(parent);
         _typeName = typeName;
-    }
-
-    /**
-     * Set the expression to the current type. If the expression was already set notify the user
-     * 
-     * @param expression
-     * @throws ExpressionAlreadySetException
-     */
-    public void addExpression(final Expression expression) throws ExpressionAlreadySetException {
-        if (_expression != null) {
-            throw new ExpressionAlreadySetException();
-        }
-
-        _expression = expression;
     }
 
     @Override
     public String toString() {
-        return _typeName;
+        return _typeName + (_expression != null ? _expression : "");
     }
 }

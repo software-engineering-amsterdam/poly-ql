@@ -1,10 +1,9 @@
 package main.nl.uva.parser.elements.statements;
 
-import main.nl.uva.parser.elements.expressions.Expression;
 
 public class IfElseStatement extends Statement {
 
-    public IfElseStatement(final Expression expression, final Statement parent) {
+    public IfElseStatement(final Statement parent) {
         super("", parent);
     }
 

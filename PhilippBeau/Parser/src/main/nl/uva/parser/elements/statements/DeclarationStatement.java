@@ -1,14 +1,14 @@
 package main.nl.uva.parser.elements.statements;
 
-import main.nl.uva.parser.elements.type.Type;
+import main.nl.uva.parser.elements.type.Variable.Types;
 
-public class SimpleStatement extends Statement {
+public class DeclarationStatement extends Statement {
 
     private final String _function;
 
-    private final Type _type;
+    private final Types _type;
 
-    public SimpleStatement(final String id, final Statement parent, final Type type,
+    public DeclarationStatement(final String id, final Statement parent, final Types type,
             final String function) {
         super(id, parent);
         _function = function;

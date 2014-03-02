@@ -1,14 +1,9 @@
 package main.nl.uva.parser.elements.statements;
 
-import main.nl.uva.parser.elements.expressions.Expression;
-
 public class IFStatement extends Statement {
 
-    private final Expression _expression;
-
-    public IFStatement(final Expression expression, final Statement parent) {
+    public IFStatement(final Statement parent) {
         super("", parent);
-        _expression = expression;
     }
 
     @Override
@@ -16,7 +11,7 @@ public class IFStatement extends Statement {
         boolean valid = _parent.validates(this);
 
         if (!valid) {
-            System.err.println(this + "Is very very wrong");
+            System.err.println(this + " -> is very very wrong");
         }
 
         return valid;
@@ -24,6 +19,6 @@ public class IFStatement extends Statement {
 
     @Override
     public String toString() {
-        return "IFStatement " + _id + _expression;
+        return "IFStatement " + _id;
     }
 }

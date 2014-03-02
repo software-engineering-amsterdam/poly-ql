@@ -3,6 +3,8 @@ package main.nl.uva.parser.elements.statements;
 import java.util.ArrayList;
 import java.util.List;
 
+import static main.nl.uva.parser.Utils.available;
+
 public abstract class Statement {
 
     protected final String _id;
@@ -14,6 +16,10 @@ public abstract class Statement {
     public Statement(final String id, final Statement parent) {
         _id = id;
         _parent = parent;
+
+        if (available(_parent)) {
+            _parent.addChild(this);
+        }
     }
 
     public void addChild(final Statement statement) {
