@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.uva.sea.ql.parser.antlr.QL4.AST.*;
-import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.QLExpression;
 
 import QL4.QL4BaseVisitor;
 import QL4.QL4Parser;
@@ -87,7 +86,7 @@ public class QL4Visitor extends QL4BaseVisitor<QLTree> {
   
   /**
    * Returns a question object, containing its content:
-   * Type, label, id and value
+   * Type, label, id and value (question.computed is false)
    * @param ctx
    * @return
    */
@@ -99,12 +98,12 @@ public class QL4Visitor extends QL4BaseVisitor<QLTree> {
 	  QLTree label = ctx.LABEL().accept(this);
 	  QLTree type = ctx.TYPE().accept(this);
 	  
-	  return new QL4RegQuestion(id, label, type); 
+	  return new QL4Question(id, label, type); 
   }
   
   /**
-   * Returns a compQuestion object, containing its content:
-   * Type, label, id and value
+   * Returns a Question object, containing its content:
+   * Type, label, id and value (question.computed is true)
    * @param ctx
    * @return
    */
@@ -117,6 +116,6 @@ public class QL4Visitor extends QL4BaseVisitor<QLTree> {
 	  QLTree type = ctx.TYPE().accept(this);
 	  QLTree value = ctx.expression().accept(this);
 	  
-	  return new QL4CompQuestion(id, label, type, value); 
+	  return new QL4Question(id, label, type, value); 
   }
 }
