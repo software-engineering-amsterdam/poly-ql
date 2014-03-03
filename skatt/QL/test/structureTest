@@ -1,0 +1,18 @@
+question1 : "This is a question1 label" : boolean;
+question2 : "This is a question2 label" : boolean;
+
+if (true) {
+    ifquestion : "This is a ifquestion label" : boolean;
+    if (false) {
+        questionifif : "This is a questionifif label" : boolean;
+    } elseif(false) {
+            deepestquestion : "This is the deepest question label" : boolean;
+    }
+} elseif (true) {
+    elseifquestion : "This is a elseifquestion label" : boolean;
+} else {
+    if (false) {
+        elseifquestion : "This is a elseifquestion label" : boolean;
+    }
+    elsequestion : "This is a question label of the else question" : boolean;
+}

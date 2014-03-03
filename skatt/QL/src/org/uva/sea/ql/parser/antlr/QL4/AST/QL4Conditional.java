@@ -58,7 +58,7 @@ public class QL4Conditional extends QLTree {
 			str += "\nElseif structure " + elseifStructures.get(i);
 		}
 		
-		str += "\nElse structure " + elseStructure;
+		str += "\nElse structure " + elseStructure	;
 
 		return str;
 	}
