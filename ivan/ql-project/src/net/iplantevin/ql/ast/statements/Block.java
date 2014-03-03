@@ -1,16 +1,14 @@
 package net.iplantevin.ql.ast.statements;
 
-import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
+import net.iplantevin.ql.ast.visitors.IASTVisitor;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 import java.util.ArrayList;
 
 /**
- * Created with IntelliJ IDEA.
- *
- * @user: Ivan
- * @date: 19-02-14
  * Block: a list of statements.
+ *
+ * @author Ivan
  */
 public class Block extends Statement {
     private final ArrayList<Statement> statements;
@@ -35,7 +33,7 @@ public class Block extends Statement {
     }
 
     @Override
-    public void accept(IQLASTVisitor visitor) {
+    public void accept(IASTVisitor visitor) {
         visitor.visit(this);
     }
 }

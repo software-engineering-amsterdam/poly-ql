@@ -20,21 +20,11 @@ type expression =
     | Neg           of expression
     | BooleanOp     of expression * booleanOp * expression
     | ArithmeticOp  of expression * arithmeticOp * expression
-    | TypeError     of expression * string
-
-type assignment = 
-    {   ID          : string;
-        Label       : string;
-        Expression  : expression }
-
-type question =
-    {   ID      : string;
-        Label   : string;
-        Type    : qlType }
+    | TypeError     of expression * string // TODO: make errors list parameter in type checker
 
 type statement =
-    | Assignment    of assignment
-    | Question      of question
+    | Assignment    of string * string * expression
+    | Question      of string * string * qlType
     | Conditional   of expression * statement list
 
 type questionaire = 
@@ -48,8 +38,9 @@ type public Position(line, column) =
     member public x.Column = column
 
 // Exception type for error reporting
-type public ParseErrorExceptionMessage(message, startPos, endPos) = 
+type public ParseErrorExceptionMessage(message, lastToken, startPos, endPos) = 
     member public x.Message  = message
+    member public x.LastToken  = lastToken
     member public x.StartPos = startPos
     member public x.EndPos   = endPos
 exception ParseErrorException of ParseErrorExceptionMessage

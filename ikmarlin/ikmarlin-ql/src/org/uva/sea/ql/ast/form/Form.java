@@ -2,10 +2,8 @@ package org.uva.sea.ql.ast.form;
 
 import org.uva.sea.ql.ast.expr.Ident;
 import org.uva.sea.ql.ast.stmt.Block;
-import org.uva.sea.ql.checker.FormVisitable;
-import org.uva.sea.ql.checker.FormVisitor;
 
-public class Form implements FormVisitable {
+public class Form {
 	private Ident ident;
 	private Block stmts;
 	
@@ -32,9 +30,4 @@ public class Form implements FormVisitable {
 		return form;
 	}
 
-	@Override
-	public void accept(FormVisitor fv) {
-		fv.visit(this);
-	}
-	
 }

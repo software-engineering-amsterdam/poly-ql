@@ -5,14 +5,12 @@ import net.iplantevin.ql.ast.expressions.Expression;
 import net.iplantevin.ql.ast.types.BooleanType;
 import net.iplantevin.ql.ast.types.Type;
 import net.iplantevin.ql.ast.types.TypeEnvironment;
-import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
+import net.iplantevin.ql.ast.visitors.IASTVisitor;
 
 /**
- * Created with IntelliJ IDEA.
- *
- * @user: Ivan
- * @date: 19-02-14
  * Greater than.
+ *
+ * @author Ivan
  */
 public class GT extends Binary {
     public GT(Expression left, Expression right, LineInfo lineInfo) {
@@ -20,17 +18,17 @@ public class GT extends Binary {
     }
 
     @Override
-    public Type getType(TypeEnvironment idTypeMap) {
+    public Type getType(TypeEnvironment idTypeStore) {
         return new BooleanType();
     }
 
     @Override
     public String toString() {
-        return getLeftExpr() + " > " + getRightExpr();
+        return getLeftHS() + " > " + getRightHS();
     }
 
     @Override
-    public void accept(IQLASTVisitor visitor) {
+    public void accept(IASTVisitor visitor) {
         visitor.visit(this);
     }
 }

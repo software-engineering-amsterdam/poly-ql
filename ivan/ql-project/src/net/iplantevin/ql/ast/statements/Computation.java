@@ -4,15 +4,13 @@ import net.iplantevin.ql.ast.expressions.Expression;
 import net.iplantevin.ql.ast.expressions.literals.ID;
 import net.iplantevin.ql.ast.expressions.literals.Str;
 import net.iplantevin.ql.ast.types.Type;
-import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
+import net.iplantevin.ql.ast.visitors.IASTVisitor;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 /**
- * Created with IntelliJ IDEA.
- *
- * @user: Ivan
- * @date: 19-02-14
  * Computed question. In addition to name, label and type, also has an Expression.
+ *
+ * @author Ivan
  */
 public class Computation extends Questionable {
     private final Expression expression;
@@ -33,7 +31,7 @@ public class Computation extends Questionable {
     }
 
     @Override
-    public void accept(IQLASTVisitor visitor) {
+    public void accept(IASTVisitor visitor) {
         visitor.visit(this);
     }
 }

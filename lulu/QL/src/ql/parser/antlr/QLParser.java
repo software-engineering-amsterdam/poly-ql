@@ -31,12 +31,12 @@ public class QLParser extends Parser {
 		T__21=1, T__20=2, T__19=3, T__18=4, T__17=5, T__16=6, T__15=7, T__14=8, 
 		T__13=9, T__12=10, T__11=11, T__10=12, T__9=13, T__8=14, T__7=15, T__6=16, 
 		T__5=17, T__4=18, T__3=19, T__2=20, T__1=21, T__0=22, Str=23, NEWLINE=24, 
-		WS=25, COMMENT=26, Ident=27, Int=28, Bool=29;
+		WS=25, COMMENT=26, Int=27, Bool=28, Ident=29;
 	public static final String[] tokenNames = {
 		"<INVALID>", "'form'", "')'", "'+'", "'-'", "'*'", "'('", "':'", "'int'", 
 		"'<'", "'!='", "'<='", "'&&'", "'||'", "'{'", "'>'", "'string'", "'/'", 
 		"'=='", "'boolean'", "'}'", "'>='", "'!'", "Str", "NEWLINE", "WS", "COMMENT", 
-		"Ident", "Int", "Bool"
+		"Int", "Bool", "Ident"
 	};
 	public static final int
 		RULE_form = 0, RULE_formItems = 1, RULE_question = 2, RULE_type = 3, RULE_unExpr = 4, 
@@ -273,7 +273,7 @@ public class QLParser extends Parser {
 	}
 
 	public static class TypeContext extends ParserRuleContext {
-		public Type result;
+		public TypeQue result;
 		public TypeContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -298,21 +298,21 @@ public class QLParser extends Parser {
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(65); match(19);
-				 ((TypeContext)_localctx).result =  new Bool();
+				 ((TypeContext)_localctx).result =  new BoolQue();
 				}
 				break;
 			case 8:
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(67); match(8);
-				 ((TypeContext)_localctx).result =  new Int();
+				 ((TypeContext)_localctx).result =  new IntQue();
 				}
 				break;
 			case 16:
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(69); match(16);
-				 ((TypeContext)_localctx).result =  new Str();
+				 ((TypeContext)_localctx).result =  new StrQue();
 				}
 				break;
 			default:
@@ -386,9 +386,9 @@ public class QLParser extends Parser {
 				break;
 			case 6:
 			case Str:
-			case Ident:
 			case Int:
 			case Bool:
+			case Ident:
 				enterOuterAlt(_localctx, 4);
 				{
 				setState(85); ((UnExprContext)_localctx).r = expr();
@@ -548,7 +548,7 @@ public class QLParser extends Parser {
 				      if ((((MulExprContext)_localctx).op!=null?((MulExprContext)_localctx).op.getText():null).equals("*")) {
 				        ((MulExprContext)_localctx).result =  new Mul(_localctx.result, ((MulExprContext)_localctx).rhs.result);
 				      }
-				      if ((((MulExprContext)_localctx).op!=null?((MulExprContext)_localctx).op.getText():null).equals("<=")) {
+				      if ((((MulExprContext)_localctx).op!=null?((MulExprContext)_localctx).op.getText():null).equals("/")) {
 				        ((MulExprContext)_localctx).result =  new Div(_localctx.result, ((MulExprContext)_localctx).rhs.result);      
 				      }
 				    
@@ -870,20 +870,20 @@ public class QLParser extends Parser {
 		"\u00a1\13\f\3\f\2\2\r\2\4\6\b\n\f\16\20\22\24\26\2\5\4\2\7\7\23\23\3\2"+
 		"\5\6\6\2\13\r\21\21\24\24\27\27\u00a8\2\30\3\2\2\2\4\35\3\2\2\2\6A\3\2"+
 		"\2\2\bI\3\2\2\2\nZ\3\2\2\2\fi\3\2\2\2\16k\3\2\2\2\20v\3\2\2\2\22\u0081"+
-		"\3\2\2\2\24\u008c\3\2\2\2\26\u0097\3\2\2\2\30\31\7\3\2\2\31\32\7\35\2"+
+		"\3\2\2\2\24\u008c\3\2\2\2\26\u0097\3\2\2\2\30\31\7\3\2\2\31\32\7\37\2"+
 		"\2\32\33\5\4\3\2\33\34\b\2\1\2\34\3\3\2\2\2\35\36\7\20\2\2\36$\7\32\2"+
 		"\2\37 \5\6\4\2 !\b\3\1\2!#\3\2\2\2\"\37\3\2\2\2#&\3\2\2\2$\"\3\2\2\2$"+
 		"%\3\2\2\2%\'\3\2\2\2&$\3\2\2\2\'(\7\26\2\2()\7\32\2\2)*\b\3\1\2*\5\3\2"+
-		"\2\2+,\7\35\2\2,-\7\t\2\2-.\7\31\2\2./\5\b\5\2/\60\7\32\2\2\60\61\b\4"+
-		"\1\2\61B\3\2\2\2\62\63\7\35\2\2\63\64\7\t\2\2\64\65\7\31\2\2\65\66\5\b"+
+		"\2\2+,\7\37\2\2,-\7\t\2\2-.\7\31\2\2./\5\b\5\2/\60\7\32\2\2\60\61\b\4"+
+		"\1\2\61B\3\2\2\2\62\63\7\37\2\2\63\64\7\t\2\2\64\65\7\31\2\2\65\66\5\b"+
 		"\5\2\66\67\7\b\2\2\678\5\26\f\28=\7\4\2\29>\7\33\2\2:;\7\33\2\2;<\7\34"+
 		"\2\2<>\7\33\2\2=9\3\2\2\2=:\3\2\2\2>?\3\2\2\2?@\b\4\1\2@B\3\2\2\2A+\3"+
 		"\2\2\2A\62\3\2\2\2B\7\3\2\2\2CD\7\25\2\2DJ\b\5\1\2EF\7\n\2\2FJ\b\5\1\2"+
 		"GH\7\22\2\2HJ\b\5\1\2IC\3\2\2\2IE\3\2\2\2IG\3\2\2\2J\t\3\2\2\2KL\7\5\2"+
 		"\2LM\5\n\6\2MN\b\6\1\2N[\3\2\2\2OP\7\6\2\2PQ\5\n\6\2QR\b\6\1\2R[\3\2\2"+
 		"\2ST\7\30\2\2TU\5\n\6\2UV\b\6\1\2V[\3\2\2\2WX\5\f\7\2XY\b\6\1\2Y[\3\2"+
-		"\2\2ZK\3\2\2\2ZO\3\2\2\2ZS\3\2\2\2ZW\3\2\2\2[\13\3\2\2\2\\]\7\36\2\2]"+
-		"j\b\7\1\2^_\7\37\2\2_j\b\7\1\2`a\7\31\2\2aj\b\7\1\2bc\7\35\2\2cj\b\7\1"+
+		"\2\2ZK\3\2\2\2ZO\3\2\2\2ZS\3\2\2\2ZW\3\2\2\2[\13\3\2\2\2\\]\7\35\2\2]"+
+		"j\b\7\1\2^_\7\36\2\2_j\b\7\1\2`a\7\31\2\2aj\b\7\1\2bc\7\37\2\2cj\b\7\1"+
 		"\2de\7\b\2\2ef\5\26\f\2fg\7\4\2\2gh\b\7\1\2hj\3\2\2\2i\\\3\2\2\2i^\3\2"+
 		"\2\2i`\3\2\2\2ib\3\2\2\2id\3\2\2\2j\r\3\2\2\2kl\5\n\6\2ls\b\b\1\2mn\t"+
 		"\2\2\2no\5\n\6\2op\b\b\1\2pr\3\2\2\2qm\3\2\2\2ru\3\2\2\2sq\3\2\2\2st\3"+

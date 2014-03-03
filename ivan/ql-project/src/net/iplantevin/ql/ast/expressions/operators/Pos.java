@@ -5,14 +5,12 @@ import net.iplantevin.ql.ast.expressions.Expression;
 import net.iplantevin.ql.ast.types.IntegerType;
 import net.iplantevin.ql.ast.types.Type;
 import net.iplantevin.ql.ast.types.TypeEnvironment;
-import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
+import net.iplantevin.ql.ast.visitors.IASTVisitor;
 
 /**
- * Created with IntelliJ IDEA.
- *
- * @user: Ivan
- * @date: 19-02-14
  * Unary +. Type is integer.
+ *
+ * @author Ivan
  */
 public class Pos extends Unary {
     public Pos(Expression expression, LineInfo lineInfo) {
@@ -20,7 +18,7 @@ public class Pos extends Unary {
     }
 
     @Override
-    public Type getType(TypeEnvironment idTypeMap) {
+    public Type getType(TypeEnvironment idTypeStore) {
         return new IntegerType();
     }
 
@@ -30,7 +28,7 @@ public class Pos extends Unary {
     }
 
     @Override
-    public void accept(IQLASTVisitor visitor) {
+    public void accept(IASTVisitor visitor) {
         visitor.visit(this);
     }
 }

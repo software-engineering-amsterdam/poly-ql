@@ -4,14 +4,13 @@ import net.iplantevin.ql.ast.expressions.Expression;
 import net.iplantevin.ql.ast.types.IntegerType;
 import net.iplantevin.ql.ast.types.Type;
 import net.iplantevin.ql.ast.types.TypeEnvironment;
-import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
+import net.iplantevin.ql.ast.visitors.IASTVisitor;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 /**
- * Created with IntelliJ IDEA.
+ * Integer.
  *
  * @author Ivan
- *         Integer.
  */
 public class Int extends Expression {
     private final Integer value;
@@ -22,7 +21,7 @@ public class Int extends Expression {
     }
 
     @Override
-    public Type getType(TypeEnvironment idTypeMap) {
+    public Type getType(TypeEnvironment idTypeStore) {
         return new IntegerType();
     }
 
@@ -36,7 +35,7 @@ public class Int extends Expression {
     }
 
     @Override
-    public void accept(IQLASTVisitor visitor) {
+    public void accept(IASTVisitor visitor) {
         visitor.visit(this);
     }
 }

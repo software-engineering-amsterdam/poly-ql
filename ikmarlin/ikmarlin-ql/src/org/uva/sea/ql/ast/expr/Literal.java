@@ -18,5 +18,4 @@ public abstract class Literal<T> extends Expr {
 		return String.valueOf(value);
 	}
 	
-
 }

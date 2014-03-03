@@ -1,10 +1,10 @@
 package org.uva.sea.ql.ast.stmt;
 
-import org.uva.sea.ql.checker.StmtVisitable;
-import org.uva.sea.ql.checker.StmtVisitor;
+import org.uva.sea.ql.checker.visitor.IStmtVisitable;
+import org.uva.sea.ql.checker.visitor.IStmtVisitor;
 
-public abstract class Stmt implements StmtVisitable {
+public abstract class Stmt implements IStmtVisitable {
 	
-	public abstract void accept(StmtVisitor sv);
+	public abstract void accept(IStmtVisitor sv);
 
 }

@@ -1,15 +1,13 @@
 package net.iplantevin.ql.ast.statements;
 
 import net.iplantevin.ql.ast.expressions.Expression;
-import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
+import net.iplantevin.ql.ast.visitors.IASTVisitor;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 /**
- * Created with IntelliJ IDEA.
- *
- * @user: Ivan
- * @date: 19-02-14
  * IfElse statement. Adds a body for the else to the Conditional body.
+ *
+ * @author Ivan
  */
 public class IfElse extends Conditional {
     private final Statement elseBody;
@@ -30,7 +28,7 @@ public class IfElse extends Conditional {
     }
 
     @Override
-    public void accept(IQLASTVisitor visitor) {
+    public void accept(IASTVisitor visitor) {
         visitor.visit(this);
     }
 }

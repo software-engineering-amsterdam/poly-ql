@@ -4,7 +4,7 @@ import net.iplantevin.ql.antlr.QLLexer;
 import net.iplantevin.ql.antlr.QLParser;
 import net.iplantevin.ql.ast.form.Form;
 import net.iplantevin.ql.ast.form.FormCollection;
-import net.iplantevin.ql.ast.visitors.typechecker.TypeCheckerVisitor;
+import net.iplantevin.ql.ast.visitors.TypeCheckerVisitor;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -43,9 +43,8 @@ public class QLASTBuilder {
 
         // Type Checking:
         for (Form form : formCollection.getForms()) {
-            TypeCheckerVisitor typeChecker = new TypeCheckerVisitor();
-            typeChecker.visit(form);
-            typeChecker.getExceptionCollection().printAllExceptions();
+            TypeCheckerVisitor typeChecker = TypeCheckerVisitor.checkNode(form);
+            typeChecker.printAllErrors();
         }
     }
 }

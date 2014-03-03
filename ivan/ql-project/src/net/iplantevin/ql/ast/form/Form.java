@@ -1,17 +1,16 @@
 package net.iplantevin.ql.ast.form;
 
-import net.iplantevin.ql.ast.QLASTNode;
+import net.iplantevin.ql.ast.ASTNode;
 import net.iplantevin.ql.ast.statements.Block;
-import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
+import net.iplantevin.ql.ast.visitors.IASTVisitor;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Ivan
- * Date: 19-02-14
  * Form objects have a name and a block of statements (body).
+ *
+ * @author Ivan
  */
-public class Form extends QLASTNode {
+public class Form extends ASTNode {
     private final String name;
     private final Block body;
 
@@ -35,7 +34,7 @@ public class Form extends QLASTNode {
     }
 
     @Override
-    public void accept(IQLASTVisitor visitor) {
+    public void accept(IASTVisitor visitor) {
         visitor.visit(this);
     }
 }

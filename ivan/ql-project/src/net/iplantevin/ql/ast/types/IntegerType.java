@@ -1,10 +1,9 @@
 package net.iplantevin.ql.ast.types;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Ivan
- * Date: 19-02-14
  * Integer is only compatible to itself.
+ *
+ * @author Ivan
  */
 public class IntegerType extends Type {
     @Override

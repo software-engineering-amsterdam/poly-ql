@@ -1,9 +1,7 @@
 package net.iplantevin.ql.tests;
 /**
- * Created with IntelliJ IDEA.
- * User: Ivan
- * Date: 13-02-14
  * Tests for antlr4 grammar
+ * @author Ivan
  */
 
 import net.iplantevin.ql.antlr.QLLexer;

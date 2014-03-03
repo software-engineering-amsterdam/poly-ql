@@ -14,12 +14,14 @@ options {
   package parser;
 
   import expr.*;
+  import expr.literals.*;
   import expr.arithmeticExpr.*;
   import expr.conditionalExpr.*;
   import expr.relationalExpr.*;
   import expr.signExpr.*;
   import expr.syntacticExpr.*;
-  import expr.types.*;
+  import types.*;
+  import typeChecker.*;
   import java.util.LinkedList;
 }
 
@@ -36,7 +38,9 @@ form returns [Form result]
     )*
   '}' 
   { 
-    $result=new Form (new Ident($IDENT.text), list); 
+    Form f=new Form (new Ident($IDENT.text), list); 
+    new IdentifiersTypeMatcher().match(f);
+    $result = f;
   };
   
 statement returns [Statement result]
@@ -68,7 +72,7 @@ if_block returns [IfBlock result]
     }
   )* '}'
   { 
-    $result = new IfBlock(new BooleanExpr($x.result), list);
+    $result = new IfBlock($x.result, list);
   }
   (
     ELSE '{'
@@ -82,7 +86,7 @@ if_block returns [IfBlock result]
       }
     )* 
     { 
-      $result = new IfBlock(new BooleanExpr($x.result), list, list2);
+      $result = new IfBlock($x.result, list, list2);
     }
     '}'
   )?
@@ -165,9 +169,9 @@ orExpr returns [Expression result]
     ;
 
 questiontype  returns [Type result]
-  : 'boolean' { $result = new Bool(); }
-  | 'money'   { $result = new Money(); }
-  | 'integer' { $result = new Int(); }
+  : 'boolean' { $result = new BoolType(); }
+  | 'money'   { $result = new MoneyType(); }
+  | 'integer' { $result = new IntType(); }
   ;
   
   // Tokens

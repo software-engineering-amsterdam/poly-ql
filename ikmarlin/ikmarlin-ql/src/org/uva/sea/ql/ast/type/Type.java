@@ -20,7 +20,7 @@ public abstract class Type {
 		return true;
 	}
 	
-	public boolean isCompatibleWithError(){
+	public boolean isCompatibleWithNull(){
 		return false;
 	}
 	
