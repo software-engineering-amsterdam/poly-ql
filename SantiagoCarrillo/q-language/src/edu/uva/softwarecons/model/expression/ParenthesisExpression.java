@@ -10,7 +10,7 @@ import edu.uva.softwarecons.visitor.IFormElementVisitor;
  */
 public class ParenthesisExpression implements Expression {
 
-    Expression expression;
+    public Expression expression;
 
     public ParenthesisExpression(Expression expression) {
         this.expression = expression;

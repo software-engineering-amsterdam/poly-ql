@@ -23,4 +23,9 @@ public class DateType extends Type {
     public void accept(IFormElementVisitor visitor) {
         visitor.visitDateType(this);
     }
+
+    @Override
+    public String toString() {
+        return "date";
+    }
 }

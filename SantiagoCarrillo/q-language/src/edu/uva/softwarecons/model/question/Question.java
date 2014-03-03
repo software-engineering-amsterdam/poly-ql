@@ -35,5 +35,8 @@ public class Question implements IFormElement {
         visitor.visitQuestion(this);
     }
 
-
+    @Override
+    public String toString() {
+        return "question ( "+id+": "+text+" "+type.toString()+" )";
+    }
 }

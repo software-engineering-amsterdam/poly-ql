@@ -5,24 +5,18 @@ import edu.uva.softwarecons.visitor.IFormElementVisitor;
 /**
  * Falconlabs
  * User: sancarbar
- * Date: 2/25/14
+ * Date: 2/27/14
  */
-public class DecimalType extends NumericType{
+public class NumericType extends Type{
 
-    public float value;
 
     @Override
     public Object getValue() {
-        return value;
+        return null;
     }
 
     @Override
     public void accept(IFormElementVisitor visitor) {
-        visitor.visitDecimalType(this);
-    }
 
-    @Override
-    public String toString() {
-        return "decimal";
     }
 }

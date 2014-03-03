@@ -47,11 +47,11 @@ public interface QuestionnaireVisitor<T> extends ParseTreeVisitor<T> {
 	T visitOr(@NotNull QuestionnaireParser.OrContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link QuestionnaireParser#typeExp}.
+	 * Visit a parse tree produced by {@link QuestionnaireParser#int}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitTypeExp(@NotNull QuestionnaireParser.TypeExpContext ctx);
+	T visitInt(@NotNull QuestionnaireParser.IntContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link QuestionnaireParser#compare}.

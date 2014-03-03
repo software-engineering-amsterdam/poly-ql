@@ -11,14 +11,10 @@ import edu.uva.softwarecons.visitor.IFormElementVisitor;
  */
 public class ComputedQuestion extends Question {
 
-    Expression expression;
+    public Expression expression;
 
     public ComputedQuestion(String id, String text, Type type, Expression expression) {
         super(id, text, type);
-        this.expression = expression;
-    }
-
-    public void setExpression(Expression expression) {
         this.expression = expression;
     }
 

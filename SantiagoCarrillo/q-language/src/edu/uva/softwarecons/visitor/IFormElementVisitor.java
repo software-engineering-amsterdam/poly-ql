@@ -1,7 +1,9 @@
 package edu.uva.softwarecons.visitor;
 
 import edu.uva.softwarecons.model.Form;
-import edu.uva.softwarecons.model.expression.*;
+import edu.uva.softwarecons.model.expression.BinaryExpression;
+import edu.uva.softwarecons.model.expression.IdExpression;
+import edu.uva.softwarecons.model.expression.ParenthesisExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.AddExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.DivExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.MulExpression;
@@ -10,7 +12,6 @@ import edu.uva.softwarecons.model.expression.bool.AndExpression;
 import edu.uva.softwarecons.model.expression.bool.NotExpression;
 import edu.uva.softwarecons.model.expression.bool.OrExpression;
 import edu.uva.softwarecons.model.expression.comparison.*;
-import edu.uva.softwarecons.model.operation.Operation;
 import edu.uva.softwarecons.model.question.ComputedQuestion;
 import edu.uva.softwarecons.model.question.IfElseQuestion;
 import edu.uva.softwarecons.model.question.IfQuestion;
@@ -60,19 +61,9 @@ public interface IFormElementVisitor {
 
     void visitNotEqualExpression(NotEqualExpression expression);
 
-    void visitBinaryExpression(BinaryExpression expression);
-
     void visitIdExpression(IdExpression expression);
 
     void visitParenthesisExpression(ParenthesisExpression expression);
-
-    void visitPrimitiveExpression(PrimitiveExpression expression);
-
-    void visitUnaryExpression(UnaryExpression expression);
-
-    void visitOperation(Operation operation);
-
-    void visitType(Type type);
 
     void visitBooleanType(BooleanType type);
 

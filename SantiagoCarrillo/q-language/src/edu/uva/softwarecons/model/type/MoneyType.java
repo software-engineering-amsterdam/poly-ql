@@ -9,9 +9,9 @@ import java.math.BigDecimal;
  * User: sancarbar
  * Date: 2/19/14
  */
-public class MoneyType extends Type{
+public class MoneyType extends NumericType{
 
-    private BigDecimal value;
+    public BigDecimal value;
 
     @Override
     public BigDecimal getValue() {
@@ -21,5 +21,10 @@ public class MoneyType extends Type{
     @Override
     public void accept(IFormElementVisitor visitor) {
         visitor.visitMoneyType(this);
+    }
+
+    @Override
+    public String toString() {
+        return "money";
     }
 }

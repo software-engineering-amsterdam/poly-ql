@@ -82,13 +82,13 @@ public class QuestionnaireBaseListener implements QuestionnaireListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTypeExp(@NotNull QuestionnaireParser.TypeExpContext ctx) { }
+	@Override public void enterInt(@NotNull QuestionnaireParser.IntContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitTypeExp(@NotNull QuestionnaireParser.TypeExpContext ctx) { }
+	@Override public void exitInt(@NotNull QuestionnaireParser.IntContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

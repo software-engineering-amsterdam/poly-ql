@@ -226,9 +226,7 @@ public class QuestionnaireParser extends Parser {
 				setState(25); match(4);
 				setState(26); match(STRING);
 				setState(27); type();
-				{
 				setState(28); expr(0);
-				}
 				}
 				break;
 
@@ -574,22 +572,20 @@ public class QuestionnaireParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
-	public static class TypeExpContext extends ExprContext {
-		public TypeContext type() {
-			return getRuleContext(TypeContext.class,0);
-		}
-		public TypeExpContext(ExprContext ctx) { copyFrom(ctx); }
+	public static class IntContext extends ExprContext {
+		public TerminalNode INT() { return getToken(QuestionnaireParser.INT, 0); }
+		public IntContext(ExprContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).enterTypeExp(this);
+			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).enterInt(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).exitTypeExp(this);
+			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).exitInt(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitTypeExp(this);
+			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitInt(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -771,17 +767,12 @@ public class QuestionnaireParser extends Parser {
 				setState(66); match(ID);
 				}
 				break;
-			case BOOL_TYPE:
-			case STRING_TYPE:
-			case INT_TYPE:
-			case DATE_TYPE:
-			case DECIMAL_TYPE:
-			case MONEY_TYPE:
+			case INT:
 				{
-				_localctx = new TypeExpContext(_localctx);
+				_localctx = new IntContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(67); type();
+				setState(67); match(INT);
 				}
 				break;
 			case 5:
@@ -942,7 +933,7 @@ public class QuestionnaireParser extends Parser {
 		"\63\62\3\2\2\2\64\65\3\2\2\2\65\63\3\2\2\2\65\66\3\2\2\2\66\67\3\2\2\2"+
 		"\678\7\b\2\28\7\3\2\2\29@\7\t\2\2:@\7\n\2\2;@\7\13\2\2<@\7\f\2\2=@\7\r"+
 		"\2\2>@\7\16\2\2?9\3\2\2\2?:\3\2\2\2?;\3\2\2\2?<\3\2\2\2?=\3\2\2\2?>\3"+
-		"\2\2\2@\t\3\2\2\2AB\b\6\1\2BC\7\23\2\2CK\5\n\6\bDK\7\36\2\2EK\5\b\5\2"+
+		"\2\2\2@\t\3\2\2\2AB\b\6\1\2BC\7\23\2\2CK\5\n\6\bDK\7\36\2\2EK\7\37\2\2"+
 		"FG\7\7\2\2GH\5\n\6\2HI\7\5\2\2IK\3\2\2\2JA\3\2\2\2JD\3\2\2\2JE\3\2\2\2"+
 		"JF\3\2\2\2K]\3\2\2\2LM\f\13\2\2MN\t\2\2\2N\\\5\n\6\fOP\f\n\2\2PQ\t\3\2"+
 		"\2Q\\\5\n\6\13RS\f\t\2\2ST\t\4\2\2T\\\5\n\6\nUV\f\7\2\2VW\7\24\2\2W\\"+

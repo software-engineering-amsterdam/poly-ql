@@ -58,7 +58,7 @@ public class QuestionnaireBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitTypeExp(@NotNull QuestionnaireParser.TypeExpContext ctx) { return visitChildren(ctx); }
+	@Override public T visitInt(@NotNull QuestionnaireParser.IntContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}

@@ -3,6 +3,7 @@ package edu.uva.softwarecons.grammar;
 import edu.uva.softwarecons.model.*;
 import edu.uva.softwarecons.model.expression.Expression;
 import edu.uva.softwarecons.model.expression.IdExpression;
+import edu.uva.softwarecons.model.expression.IntExpression;
 import edu.uva.softwarecons.model.expression.ParenthesisExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.AddExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.DivExpression;
@@ -103,10 +104,6 @@ public class QuestionnaireEvalVisitor extends QuestionnaireBaseVisitor<IFormElem
                 (Expression) ctx.expr().get(1).accept(this));
     }
 
-    @Override
-    public Type visitTypeExp(@NotNull QuestionnaireParser.TypeExpContext ctx) {
-        return (Type) ctx.type().accept(this);
-    }
 
 
     //TODO fix bad smell !!
@@ -152,6 +149,11 @@ public class QuestionnaireEvalVisitor extends QuestionnaireBaseVisitor<IFormElem
     @Override
     public IdExpression visitId(@NotNull QuestionnaireParser.IdContext ctx) {
         return new IdExpression(ctx.ID().getText());
+    }
+
+    @Override
+    public IFormElement visitInt(@NotNull QuestionnaireParser.IntContext ctx) {
+        return new IntExpression(Integer.parseInt(ctx.getText()));
     }
 
     @Override

@@ -64,15 +64,15 @@ public interface QuestionnaireListener extends ParseTreeListener {
 	void exitOr(@NotNull QuestionnaireParser.OrContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link QuestionnaireParser#typeExp}.
+	 * Enter a parse tree produced by {@link QuestionnaireParser#int}.
 	 * @param ctx the parse tree
 	 */
-	void enterTypeExp(@NotNull QuestionnaireParser.TypeExpContext ctx);
+	void enterInt(@NotNull QuestionnaireParser.IntContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link QuestionnaireParser#typeExp}.
+	 * Exit a parse tree produced by {@link QuestionnaireParser#int}.
 	 * @param ctx the parse tree
 	 */
-	void exitTypeExp(@NotNull QuestionnaireParser.TypeExpContext ctx);
+	void exitInt(@NotNull QuestionnaireParser.IntContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link QuestionnaireParser#compare}.

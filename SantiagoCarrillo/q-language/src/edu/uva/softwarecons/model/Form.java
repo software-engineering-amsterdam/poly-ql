@@ -14,9 +14,9 @@ import java.util.List;
  */
 public class Form implements IFormElement {
 
-    String id;
+    public String id;
 
-    List<Question> questions = new ArrayList<Question>();
+    public List<Question> questions = new ArrayList<Question>();
 
 
     public Form(String id) {
@@ -32,11 +32,4 @@ public class Form implements IFormElement {
         visitor.visitForm(this);
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public List<Question> getQuestions() {
-        return questions;
-    }
 }

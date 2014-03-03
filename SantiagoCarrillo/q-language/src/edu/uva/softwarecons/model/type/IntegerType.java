@@ -7,9 +7,9 @@ import edu.uva.softwarecons.visitor.IFormElementVisitor;
  * User: sancarbar
  * Date: 2/19/14
  */
-public class IntegerType extends Type{
+public class IntegerType extends NumericType{
 
-    private int value;
+    public int value;
 
     @Override
     public Integer getValue() {
@@ -19,5 +19,10 @@ public class IntegerType extends Type{
     @Override
     public void accept(IFormElementVisitor visitor) {
         visitor.visitIntegerType(this);
+    }
+
+    @Override
+    public String toString() {
+        return "integer";
     }
 }

@@ -14,10 +14,10 @@ public class ArithmeticOperation extends Operation {
 
         switch (operator){
             case ADD:
-//                if(leftOperand instanceof IntegerType && rightOperand instanceof IntegerType)
-//                    return  new IntegerType((Double) leftOperand.getValue() + (Double) rightOperand.getValue());
-//                else if(leftOperand instanceof MoneyType && rightOperand instanceof MoneyType)
-//                    return  new IntegerType((Float) leftOperand.getValue() + (Float) rightOperand.getValue());
+//                if(leftExpression instanceof IntegerType && rightExpression instanceof IntegerType)
+//                    return  new IntegerType((Double) leftExpression.getValue() + (Double) rightExpression.getValue());
+//                else if(leftExpression instanceof MoneyType && rightExpression instanceof MoneyType)
+//                    return  new IntegerType((Float) leftExpression.getValue() + (Float) rightExpression.getValue());
         }
 
         return null;

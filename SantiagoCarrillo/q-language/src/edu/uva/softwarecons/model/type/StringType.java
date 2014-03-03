@@ -20,4 +20,9 @@ public class StringType extends Type{
     public void accept(IFormElementVisitor visitor) {
         visitor.visitStringType(this);
     }
+
+    @Override
+    public String toString() {
+        return "string";
+    }
 }

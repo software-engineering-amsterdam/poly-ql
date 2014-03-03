@@ -22,4 +22,9 @@ public class BooleanType extends Type {
     public void accept(IFormElementVisitor visitor) {
         visitor.visitBooleanType(this);
     }
+
+    @Override
+    public String toString() {
+        return "boolean";
+    }
 }

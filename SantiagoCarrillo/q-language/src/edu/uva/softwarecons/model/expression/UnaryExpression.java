@@ -12,8 +12,9 @@ import edu.uva.softwarecons.visitor.IFormElementVisitor;
  */
 public abstract class UnaryExpression implements Expression {
 
-    private Expression expression;
+    public Expression expression;
 
+    public String id;
 
     public UnaryExpression(Expression expression) {
         this.expression = expression;

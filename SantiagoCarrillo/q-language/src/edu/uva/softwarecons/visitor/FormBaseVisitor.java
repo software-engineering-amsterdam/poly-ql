@@ -1,7 +1,9 @@
 package edu.uva.softwarecons.visitor;
 
 import edu.uva.softwarecons.model.Form;
-import edu.uva.softwarecons.model.expression.*;
+import edu.uva.softwarecons.model.expression.BinaryExpression;
+import edu.uva.softwarecons.model.expression.IdExpression;
+import edu.uva.softwarecons.model.expression.ParenthesisExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.AddExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.DivExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.MulExpression;
@@ -10,7 +12,6 @@ import edu.uva.softwarecons.model.expression.bool.AndExpression;
 import edu.uva.softwarecons.model.expression.bool.NotExpression;
 import edu.uva.softwarecons.model.expression.bool.OrExpression;
 import edu.uva.softwarecons.model.expression.comparison.*;
-import edu.uva.softwarecons.model.operation.Operation;
 import edu.uva.softwarecons.model.question.ComputedQuestion;
 import edu.uva.softwarecons.model.question.IfElseQuestion;
 import edu.uva.softwarecons.model.question.IfQuestion;
@@ -116,37 +117,12 @@ public class FormBaseVisitor implements IFormElementVisitor{
     }
 
     @Override
-    public void visitBinaryExpression(BinaryExpression expression) {
-
-    }
-
-    @Override
     public void visitIdExpression(IdExpression expression) {
 
     }
 
     @Override
     public void visitParenthesisExpression(ParenthesisExpression expression) {
-
-    }
-
-    @Override
-    public void visitPrimitiveExpression(PrimitiveExpression expression) {
-
-    }
-
-    @Override
-    public void visitUnaryExpression(UnaryExpression expression) {
-
-    }
-
-    @Override
-    public void visitOperation(Operation operation) {
-
-    }
-
-    @Override
-    public void visitType(Type type) {
 
     }
 

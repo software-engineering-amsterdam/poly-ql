@@ -1,13 +1,13 @@
 package edu.uva.softwarecons.visitor;
 
 import edu.uva.softwarecons.model.Form;
+import edu.uva.softwarecons.model.expression.BinaryExpression;
 import edu.uva.softwarecons.model.expression.IdExpression;
-import edu.uva.softwarecons.model.operation.Operation;
 import edu.uva.softwarecons.model.question.ComputedQuestion;
 import edu.uva.softwarecons.model.question.IfElseQuestion;
 import edu.uva.softwarecons.model.question.IfQuestion;
 import edu.uva.softwarecons.model.question.Question;
-import edu.uva.softwarecons.model.type.Type;
+import edu.uva.softwarecons.model.type.BooleanType;
 
 /**
  * Falconlabs
@@ -19,21 +19,22 @@ public class FormPrintVisitor extends FormBaseVisitor{
 
     @Override
     public void visitForm(Form form) {
-        System.out.println("form: " + form.getId());
-        for(Question question: form.getQuestions()){
+        System.out.println("form: " + form.id);
+        for(Question question: form.questions){
             question.accept(this);
         }
     }
 
     @Override
     public void visitQuestion(Question question) {
-        System.out.println("question( " + question.id + " ) ");
+        System.out.println(question);
     }
 
 
     @Override
     public void visitComputedQuestion(ComputedQuestion question) {
         System.out.println("computedQuestion( " + question.id + " ) ");
+        question.expression.accept(this);
     }
 
     @Override
@@ -65,17 +66,14 @@ public class FormPrintVisitor extends FormBaseVisitor{
     }
 
     @Override
-    public void visitOperation(Operation operation) {
-        System.out.print("Visiting operation");
-    }
-
-    @Override
-    public void visitType(Type type) {
-        System.out.print("Visiting type");
+    public void visitBooleanType(BooleanType type) {
+        System.out.print(" boolean ");
     }
 
     @Override
     public void visitIdExpression(IdExpression expression) {
         System.out.print(expression.id);
     }
+
+
 }
