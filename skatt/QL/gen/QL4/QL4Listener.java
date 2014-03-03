@@ -11,17 +11,6 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface QL4Listener extends ParseTreeListener {
 	/**
-	 * Enter a parse tree produced by {@link QL4Parser#multExpr}.
-	 * @param ctx the parse tree
-	 */
-	void enterMultExpr(@NotNull QL4Parser.MultExprContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link QL4Parser#multExpr}.
-	 * @param ctx the parse tree
-	 */
-	void exitMultExpr(@NotNull QL4Parser.MultExprContext ctx);
-
-	/**
 	 * Enter a parse tree produced by {@link QL4Parser#greExpr}.
 	 * @param ctx the parse tree
 	 */
@@ -31,6 +20,17 @@ public interface QL4Listener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitGreExpr(@NotNull QL4Parser.GreExprContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link QL4Parser#multExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterMultExpr(@NotNull QL4Parser.MultExprContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QL4Parser#multExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitMultExpr(@NotNull QL4Parser.MultExprContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link QL4Parser#andExpr}.
@@ -55,15 +55,26 @@ public interface QL4Listener extends ParseTreeListener {
 	void exitGeqExpr(@NotNull QL4Parser.GeqExprContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link QL4Parser#elseifcondition}.
+	 * Enter a parse tree produced by {@link QL4Parser#form}.
 	 * @param ctx the parse tree
 	 */
-	void enterElseifcondition(@NotNull QL4Parser.ElseifconditionContext ctx);
+	void enterForm(@NotNull QL4Parser.FormContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link QL4Parser#elseifcondition}.
+	 * Exit a parse tree produced by {@link QL4Parser#form}.
 	 * @param ctx the parse tree
 	 */
-	void exitElseifcondition(@NotNull QL4Parser.ElseifconditionContext ctx);
+	void exitForm(@NotNull QL4Parser.FormContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link QL4Parser#int}.
+	 * @param ctx the parse tree
+	 */
+	void enterInt(@NotNull QL4Parser.IntContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QL4Parser#int}.
+	 * @param ctx the parse tree
+	 */
+	void exitInt(@NotNull QL4Parser.IntContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link QL4Parser#lesExpr}.
@@ -88,6 +99,39 @@ public interface QL4Listener extends ParseTreeListener {
 	void exitPlusExpr(@NotNull QL4Parser.PlusExprContext ctx);
 
 	/**
+	 * Enter a parse tree produced by {@link QL4Parser#orExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterOrExpr(@NotNull QL4Parser.OrExprContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QL4Parser#orExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitOrExpr(@NotNull QL4Parser.OrExprContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link QL4Parser#structures}.
+	 * @param ctx the parse tree
+	 */
+	void enterStructures(@NotNull QL4Parser.StructuresContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QL4Parser#structures}.
+	 * @param ctx the parse tree
+	 */
+	void exitStructures(@NotNull QL4Parser.StructuresContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link QL4Parser#questionStruct}.
+	 * @param ctx the parse tree
+	 */
+	void enterQuestionStruct(@NotNull QL4Parser.QuestionStructContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QL4Parser#questionStruct}.
+	 * @param ctx the parse tree
+	 */
+	void exitQuestionStruct(@NotNull QL4Parser.QuestionStructContext ctx);
+
+	/**
 	 * Enter a parse tree produced by {@link QL4Parser#regQuestion}.
 	 * @param ctx the parse tree
 	 */
@@ -110,17 +154,6 @@ public interface QL4Listener extends ParseTreeListener {
 	void exitCompQuestion(@NotNull QL4Parser.CompQuestionContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link QL4Parser#dec}.
-	 * @param ctx the parse tree
-	 */
-	void enterDec(@NotNull QL4Parser.DecContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link QL4Parser#dec}.
-	 * @param ctx the parse tree
-	 */
-	void exitDec(@NotNull QL4Parser.DecContext ctx);
-
-	/**
 	 * Enter a parse tree produced by {@link QL4Parser#minExpr}.
 	 * @param ctx the parse tree
 	 */
@@ -132,127 +165,6 @@ public interface QL4Listener extends ParseTreeListener {
 	void exitMinExpr(@NotNull QL4Parser.MinExprContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link QL4Parser#ident}.
-	 * @param ctx the parse tree
-	 */
-	void enterIdent(@NotNull QL4Parser.IdentContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link QL4Parser#ident}.
-	 * @param ctx the parse tree
-	 */
-	void exitIdent(@NotNull QL4Parser.IdentContext ctx);
-
-	/**
-	 * Enter a parse tree produced by {@link QL4Parser#neqExpr}.
-	 * @param ctx the parse tree
-	 */
-	void enterNeqExpr(@NotNull QL4Parser.NeqExprContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link QL4Parser#neqExpr}.
-	 * @param ctx the parse tree
-	 */
-	void exitNeqExpr(@NotNull QL4Parser.NeqExprContext ctx);
-
-	/**
-	 * Enter a parse tree produced by {@link QL4Parser#eqExpr}.
-	 * @param ctx the parse tree
-	 */
-	void enterEqExpr(@NotNull QL4Parser.EqExprContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link QL4Parser#eqExpr}.
-	 * @param ctx the parse tree
-	 */
-	void exitEqExpr(@NotNull QL4Parser.EqExprContext ctx);
-
-	/**
-	 * Enter a parse tree produced by {@link QL4Parser#elsecondition}.
-	 * @param ctx the parse tree
-	 */
-	void enterElsecondition(@NotNull QL4Parser.ElseconditionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link QL4Parser#elsecondition}.
-	 * @param ctx the parse tree
-	 */
-	void exitElsecondition(@NotNull QL4Parser.ElseconditionContext ctx);
-
-	/**
-	 * Enter a parse tree produced by {@link QL4Parser#divExpr}.
-	 * @param ctx the parse tree
-	 */
-	void enterDivExpr(@NotNull QL4Parser.DivExprContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link QL4Parser#divExpr}.
-	 * @param ctx the parse tree
-	 */
-	void exitDivExpr(@NotNull QL4Parser.DivExprContext ctx);
-
-	/**
-	 * Enter a parse tree produced by {@link QL4Parser#form}.
-	 * @param ctx the parse tree
-	 */
-	void enterForm(@NotNull QL4Parser.FormContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link QL4Parser#form}.
-	 * @param ctx the parse tree
-	 */
-	void exitForm(@NotNull QL4Parser.FormContext ctx);
-
-	/**
-	 * Enter a parse tree produced by {@link QL4Parser#int}.
-	 * @param ctx the parse tree
-	 */
-	void enterInt(@NotNull QL4Parser.IntContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link QL4Parser#int}.
-	 * @param ctx the parse tree
-	 */
-	void exitInt(@NotNull QL4Parser.IntContext ctx);
-
-	/**
-	 * Enter a parse tree produced by {@link QL4Parser#ifcondition}.
-	 * @param ctx the parse tree
-	 */
-	void enterIfcondition(@NotNull QL4Parser.IfconditionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link QL4Parser#ifcondition}.
-	 * @param ctx the parse tree
-	 */
-	void exitIfcondition(@NotNull QL4Parser.IfconditionContext ctx);
-
-	/**
-	 * Enter a parse tree produced by {@link QL4Parser#questionStruct}.
-	 * @param ctx the parse tree
-	 */
-	void enterQuestionStruct(@NotNull QL4Parser.QuestionStructContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link QL4Parser#questionStruct}.
-	 * @param ctx the parse tree
-	 */
-	void exitQuestionStruct(@NotNull QL4Parser.QuestionStructContext ctx);
-
-	/**
-	 * Enter a parse tree produced by {@link QL4Parser#structures}.
-	 * @param ctx the parse tree
-	 */
-	void enterStructures(@NotNull QL4Parser.StructuresContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link QL4Parser#structures}.
-	 * @param ctx the parse tree
-	 */
-	void exitStructures(@NotNull QL4Parser.StructuresContext ctx);
-
-	/**
-	 * Enter a parse tree produced by {@link QL4Parser#orExpr}.
-	 * @param ctx the parse tree
-	 */
-	void enterOrExpr(@NotNull QL4Parser.OrExprContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link QL4Parser#orExpr}.
-	 * @param ctx the parse tree
-	 */
-	void exitOrExpr(@NotNull QL4Parser.OrExprContext ctx);
-
-	/**
 	 * Enter a parse tree produced by {@link QL4Parser#wrapExpr}.
 	 * @param ctx the parse tree
 	 */
@@ -262,6 +174,28 @@ public interface QL4Listener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitWrapExpr(@NotNull QL4Parser.WrapExprContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link QL4Parser#dec}.
+	 * @param ctx the parse tree
+	 */
+	void enterDec(@NotNull QL4Parser.DecContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QL4Parser#dec}.
+	 * @param ctx the parse tree
+	 */
+	void exitDec(@NotNull QL4Parser.DecContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link QL4Parser#ident}.
+	 * @param ctx the parse tree
+	 */
+	void enterIdent(@NotNull QL4Parser.IdentContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QL4Parser#ident}.
+	 * @param ctx the parse tree
+	 */
+	void exitIdent(@NotNull QL4Parser.IdentContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link QL4Parser#leqExpr}.
@@ -286,6 +220,17 @@ public interface QL4Listener extends ParseTreeListener {
 	void exitNegExpr(@NotNull QL4Parser.NegExprContext ctx);
 
 	/**
+	 * Enter a parse tree produced by {@link QL4Parser#neqExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterNeqExpr(@NotNull QL4Parser.NeqExprContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QL4Parser#neqExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitNeqExpr(@NotNull QL4Parser.NeqExprContext ctx);
+
+	/**
 	 * Enter a parse tree produced by {@link QL4Parser#conditional}.
 	 * @param ctx the parse tree
 	 */
@@ -306,4 +251,26 @@ public interface QL4Listener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitBool(@NotNull QL4Parser.BoolContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link QL4Parser#eqExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterEqExpr(@NotNull QL4Parser.EqExprContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QL4Parser#eqExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitEqExpr(@NotNull QL4Parser.EqExprContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link QL4Parser#divExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterDivExpr(@NotNull QL4Parser.DivExprContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QL4Parser#divExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitDivExpr(@NotNull QL4Parser.DivExprContext ctx);
 }

@@ -56,7 +56,9 @@ public class QL4Visitor extends QL4BaseVisitor<QLTree> {
   }
 
   /**
-   * Returns a conditional object containing  
+   * Returns a conditional object containing the expressions
+   * and structures of the if/elseif/else in the context
+   * TODO: Get elseif expressions and structures
    * @param ctx the conditional context
    * @return a conditional object 
    */
@@ -65,23 +67,25 @@ public class QL4Visitor extends QL4BaseVisitor<QLTree> {
 		 System.out.println("Visiting conditional");
 	 
 	 // define if/else (if available) conditions
-	 QLTree ifCondition = ctx.ifcondition().accept(this);
-	 QLTree elseCondition = null;
+	 QLTree ifExpr = ctx.ifexpr.accept(this);
+	 QLTree ifStruc = ctx.ifstruc.accept(this);
+	 QLTree elseStruc = null;
 	 
-	 if (ctx.elsecondition() != null) {
-		 elseCondition = ctx.elsecondition().accept(this);
+	 if (ctx.elsestruc != null) {
+		 elseStruc = ctx.elsestruc.accept(this);
 	 } 
 	 
-	 // define structures TODO: name them in grammar such that we can call them and actually call them
-	 
 	 // define elseifConditions and their structs by looping over them in ctx
-	 List<QLTree> elseifConditions = new ArrayList<QLTree>();
-	 
-	 for (QL4Parser.ElseifconditionContext elseif : ctx.elseifcondition()) {
+	 List<QLTree> elseifExprs = new ArrayList<QLTree>();
+	 List<QLTree> elseifStrucs = new ArrayList<QLTree>();
+	 /*
+	 for (QL4Parser.ExpressionContext elseifExpr : ctx.) {
 		 elseifConditions.add(elseif.accept(this));
 	 }
+	 */
 	 
-	 return new QL4Conditional(ifCondition, elseCondition, elseifConditions);
+	 return new QL4Conditional(ifExpr, elseifExprs, 
+			 ifStruc, elseifStrucs, elseStruc);
   }
   
   /**

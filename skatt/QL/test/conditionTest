@@ -1,4 +1,3 @@
-
 if (true) {
     question : "This is a question label" : boolean;
 } else {

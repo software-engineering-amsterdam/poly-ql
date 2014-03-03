@@ -16,27 +16,33 @@ import java.util.List;
 public class QL4Conditional extends QLTree {
 	
 	// holds the expressions in if and else conditions 
-	QLTree ifCondition, elseCondition;
+	QLTree ifCondition;
 	
 	// holds the elseif conditions 
 	List<QLTree> elseifConditions = new ArrayList<QLTree>();
 
 	// holds the structures of if and else conditions
-	QLTree ifStructures, elseStructures;
+	QLTree ifStructure, elseStructure;
 	
 	// holds the structures of the elseif conditions
 	List<QLTree> elseifStructures = new ArrayList<QLTree>();
 	
 	/**
-	 * Constructor, sets if, else and ifelse conditions 
+	 * Constructor, sets if and elseif conditions and
+	 * if, else and elseif structures 
 	 * @param ifCondition
+	 * @param elseifExprs 
 	 * @param elseCondition
+	 * @param elseStruc 
 	 * @param elseifConditions
 	 */
-	public QL4Conditional(QLTree ifCondition, QLTree elseCondition, List<QLTree> elseifConditions) {
+	public QL4Conditional(QLTree ifCondition, List<QLTree> elseifConditions, QLTree ifStructure, List<QLTree> elseifStructures, QLTree elseStructure) {
 		this.ifCondition = ifCondition;
-		this.elseCondition = elseCondition;
 		this.elseifConditions = elseifConditions;
+
+		this.ifStructure = ifStructure;
+		this.elseStructure = elseStructure;
+		this.elseifStructures = elseifStructures;
 	}
 	
 	/**
@@ -45,15 +51,14 @@ public class QL4Conditional extends QLTree {
 	public String toString() {
 		String str = "A conditional statement containing:" 
 				+ "\nIf condition: " + ifCondition
-				+ "\nIf Structures: " + ifStructures;
+				+ "\nIf Structures: " + ifStructure;
 		
 		for (int i = 0; i < elseifConditions.size(); i++) {
 			str += "\nElseif condition " + elseifConditions.get(i);
 			str += "\nElseif structure " + elseifStructures.get(i);
 		}
 		
-		str += "\nElse condition " + elseCondition
-				+ "\nElse structure " + elseStructures;
+		str += "\nElse structure " + elseStructure;
 
 		return str;
 	}

@@ -11,7 +11,7 @@ structures : structure+;
 
 structure :  
       question #questionStruct 
-      | ifcondition '{' structures '}' (elseifcondition '{' structures '}')* (elsecondition '{' structures '}')? #conditional    
+      | 'if' ifexpr=expression '{' ifstruc=structures '}' ('elseif' elseifexp=expression '{' elseifstruc=structures '}')* ('else'  '{' elsestruc=structures '}')? #conditional    
       ;
 
 question: 
@@ -47,11 +47,6 @@ expression:
       | IDENTIFIER #ident
       ;
 
-// lower level components
-ifcondition : IF expression;
-elseifcondition : ELSEIF expression;
-elsecondition : ELSE;
-
 LABEL: STRING;
 
 ////////// lexer
@@ -59,10 +54,6 @@ LABEL: STRING;
 COMMENT : '//' .*? -> skip ;
 
 TYPE: 'boolean' | 'string' | 'integer' | 'date' | 'decimal' | 'currency' ;
-
-IF: 'if';
-ELSEIF: 'elseif';
-ELSE: 'else'; 
 
 BOOLEAN : 'true' | 'false';
 IDENTIFIER:   ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*;
