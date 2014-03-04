@@ -9,7 +9,8 @@ namespace Algebra.QL.Extensions.TypeCheck.Expr
     public class ModuloExpr : BinaryExpr<ITypeCheckExpr>, ITypeCheckExpr
     {
         private static readonly ITypeCheckType ExpressionUpperBound = new RealType();
-        public Tuple<int, int> SourcePosition { get; set; }
+        public Tuple<int, int> SourceStartPosition { get; set; }
+        public Tuple<int, int> SourceEndPosition { get; set; }
 
         public ModuloExpr(ITypeCheckExpr l, ITypeCheckExpr r)
             : base(l, r)
@@ -24,8 +25,8 @@ namespace Algebra.QL.Extensions.TypeCheck.Expr
 
 			if (!a.CompatibleWith(ExpressionUpperBound) || !a.CompatibleWith(b))
 			{
-				errRep.ReportError(String.Format("Modulo not possible. Incompatible types: '{0}', '{1}'. Only numeric types are supported.",
-					a, b), SourcePosition);
+				errRep.ReportError(this, String.Format("Modulo not possible. Incompatible types: '{0}', '{1}'. Only numeric types are supported.",
+					a, b));
 
 				return ExpressionUpperBound;
 			}

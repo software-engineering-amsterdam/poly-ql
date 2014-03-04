@@ -81,7 +81,11 @@ namespace WPFParser
                 {
                     ResetTextBoxes();
 
-                    RunParser(new StreamReader(dialog.OpenFile()).ReadToEnd());
+                    string fileContents = new StreamReader(dialog.OpenFile()).ReadToEnd();
+                    customCodeBlock.Document.Blocks.Clear();
+                    customCodeBlock.AppendText(fileContents);
+
+                    RunParser(fileContents);
                 }
             };
 
@@ -92,7 +96,11 @@ namespace WPFParser
         {
             ResetTextBoxes();
 
-            RunParser(File.OpenText(@"..\..\..\..\..\Grammar\QL_Test.txt").ReadToEnd());
+            string defaultFileContents = File.OpenText(@"..\..\..\..\..\Grammar\QL_Test.txt").ReadToEnd();
+            customCodeBlock.Document.Blocks.Clear();
+            customCodeBlock.AppendText(defaultFileContents);
+
+            RunParser(defaultFileContents);
         }
 
         private void customCodeBtn_Click(object sender, RoutedEventArgs e)
@@ -100,7 +108,6 @@ namespace WPFParser
             ResetTextBoxes();
 
             RunParser(new TextRange(customCodeBlock.Document.ContentStart, customCodeBlock.Document.ContentEnd).Text);
-            tabControl.SelectedIndex = 0;
         }
 
         private void ResetTextBoxes()
@@ -114,6 +121,19 @@ namespace WPFParser
             Parser.Parse(code);
         }
 
+        private void PrintError(Tuple<int, int> sourceStartPos, Tuple<int, int> sourceEndPos, string msg, bool error)
+        {
+            //TextPointer docStart = customCodeBlock.Document.ContentStart.GetLineStartPosition(0);
+
+            //TextPointer start = docStart.GetLineStartPosition(sourceStartPos.Item1 - 1).GetPositionAtOffset(sourceStartPos.Item2);
+            //TextPointer end = docStart.GetLineStartPosition(sourceEndPos.Item1 - 1).GetPositionAtOffset(sourceEndPos.Item2);
+
+            //customCodeBlock.Selection.Select(start, end);
+            //customCodeBlock.Selection.ApplyPropertyValue(TextElement.BackgroundProperty, new SolidColorBrush(Colors.Red));
+
+            PrintError(msg, error);
+        }
+
         private void PrintError(string msg, bool error)
         {
             errorOutputBlock.Document.Blocks.Add(new Paragraph(new Run(msg)
@@ -122,11 +142,27 @@ namespace WPFParser
             }));
         }
 
-        private void OnReduction(int line, int column, object newObj)
+        private void OnReduction(Tuple<int, int> startPos, Tuple<int, int> endPos, object newObj)
         {
+            ITypeCheck typeCheckObj = null;
+
             if (newObj is ITypeCheck)
             {
-                ((ITypeCheck)newObj).SourcePosition = new Tuple<int, int>(line, column);
+                typeCheckObj = (ITypeCheck)newObj;
+            }
+            else if (newObj is Tuple<ITypeCheckExpr, IPrintExpr>)
+            {
+                typeCheckObj = ((Tuple<ITypeCheckExpr, IPrintExpr>)newObj).Item1;
+            }
+            else if (newObj is Tuple<ITypeCheckStmnt, IPrintStmnt>)
+            {
+                typeCheckObj = ((Tuple<ITypeCheckStmnt, IPrintStmnt>)newObj).Item1;
+            }
+
+            if(typeCheckObj != null)
+            {
+                typeCheckObj.SourceStartPosition = startPos;
+                typeCheckObj.SourceEndPosition = endPos;
             }
         }
 
@@ -165,15 +201,15 @@ namespace WPFParser
             PrintError("ERROR: Grammar file was not loaded", true);
         }
 
-        private void OnLexicalError(int line, int column, object token)
+        private void OnLexicalError(Tuple<int, int> pos, object token)
         {
-            PrintError(String.Format("ERROR: Unknown token '{0}' found on line {1} column {2}", token, line, column), true);
+            PrintError(String.Format("ERROR: Unknown token '{0}' found on line {1} column {2}", token, pos.Item1, pos.Item2), true);
         }
 
-        private void OnSyntaxError(int line, int column, object token, string expected)
+        private void OnSyntaxError(Tuple<int, int> pos, object token, string expected)
         {
             PrintError(String.Format("ERROR: Unexpected token '{0}' on line {1} column {2}. Expected: {3}",
-                token, line, column, expected), true);
+                token, pos.Item1, pos.Item2, expected), true);
         }
     }
 }

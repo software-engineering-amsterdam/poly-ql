@@ -8,7 +8,8 @@ namespace Algebra.QL.TypeCheck.Expr
 	public class IfElseExpr : TernaryExpr<ITypeCheckExpr>, ITypeCheckExpr
     {
 		private static readonly ITypeCheckType ExpressionUpperBound = new BoolType();
-        public Tuple<int, int> SourcePosition { get; set; }
+        public Tuple<int, int> SourceStartPosition { get; set; }
+        public Tuple<int, int> SourceEndPosition { get; set; }
 
 		public IfElseExpr(ITypeCheckExpr a, ITypeCheckExpr b, ITypeCheckExpr c)
             : base(a, b, c)
@@ -24,14 +25,14 @@ namespace Algebra.QL.TypeCheck.Expr
 
 			if (!a.CompatibleWith(ExpressionUpperBound))
 			{
-				errRep.ReportError(String.Format("Inline 'if/else' evaluation failed. Incompatible type: '{0}'. Only the bool type is supported.",
-					a), SourcePosition);
+				errRep.ReportError(this, String.Format("Inline 'if/else' evaluation failed. Incompatible type: '{0}'. Only the bool type is supported.",
+					a));
 			}
 
 			if (!b.CompatibleWith(c))
 			{
-				errRep.ReportError(String.Format("Inline 'if/else' return value conflict. Incompatible types: '{0}', '{1}'. Only similar types can be used in the true/false bodies.",
-					b, c), SourcePosition);
+				errRep.ReportError(this, String.Format("Inline 'if/else' return value conflict. Incompatible types: '{0}', '{1}'. Only similar types can be used in the true/false bodies.",
+					b, c));
 			}
 
 			return b.GetLeastUpperBound(c);

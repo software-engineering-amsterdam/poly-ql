@@ -7,7 +7,8 @@ namespace Algebra.QL.TypeCheck.Expr.Literals
 {
 	public abstract class LiteralExpr<V> : LiteralExpr<ITypeCheckType, V>, ITypeCheckExpr
 	{
-        public Tuple<int, int> SourcePosition { get; set; }
+        public Tuple<int, int> SourceStartPosition { get; set; }
+        public Tuple<int, int> SourceEndPosition { get; set; }
 
 		protected LiteralExpr(V value)
 			: base(value)

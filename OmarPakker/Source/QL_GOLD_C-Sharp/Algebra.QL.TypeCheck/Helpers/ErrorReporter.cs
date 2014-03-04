@@ -4,7 +4,7 @@ namespace Algebra.QL.TypeCheck.Helpers
 {
     public class ErrorReporter
     {
-        public delegate void OnTypeCheckErrorEventHandler(string msg, bool error);
+        public delegate void OnTypeCheckErrorEventHandler(Tuple<int, int> sourceStartPos, Tuple<int, int> sourceEndPos, string msg, bool error);
         public event OnTypeCheckErrorEventHandler OnTypeCheckError;
 
         public ErrorReporter()
@@ -12,19 +12,21 @@ namespace Algebra.QL.TypeCheck.Helpers
 
         }
 
-        public void ReportError(string msg, Tuple<int, int> pos)
+        public void ReportError(ITypeCheck item, string msg)
         {
             if (OnTypeCheckError != null)
             {
-                OnTypeCheckError(ConstructMessage("ERROR! " + msg, pos), true);
+                OnTypeCheckError(item.SourceStartPosition, item.SourceEndPosition,
+                    ConstructMessage("ERROR! " + msg, item.SourceStartPosition), true);
             }
         }
 
-        public void ReportWarning(string msg, Tuple<int, int> pos)
+        public void ReportWarning(ITypeCheck item, string msg)
         {
             if (OnTypeCheckError != null)
             {
-                OnTypeCheckError(ConstructMessage("WARNING! " + msg, pos), false);
+                OnTypeCheckError(item.SourceStartPosition, item.SourceEndPosition,
+                    ConstructMessage("WARNING! " + msg, item.SourceStartPosition), false);
             }
         }
 
@@ -32,10 +34,7 @@ namespace Algebra.QL.TypeCheck.Helpers
         {
             if (pos != null)
             {
-                msg += String.Format(" (line {0} column {1}).",
-                    //Line/column properties start on 0 so offset it to correct that.
-                    //Column points to the character index at the end of the statement.
-                    pos.Item1 + 1, pos.Item2 + 1);
+                msg += String.Format(" (line {0} column {1}).", pos.Item1, pos.Item2);
             }
             return msg;
         }

@@ -6,7 +6,8 @@ namespace Algebra.QL.TypeCheck.Stmnt
 {
 	public class CompStmnt : CompStmnt<ITypeCheckStmnt>, ITypeCheckStmnt
     {
-        public Tuple<int, int> SourcePosition { get; set; }
+        public Tuple<int, int> SourceStartPosition { get; set; }
+        public Tuple<int, int> SourceEndPosition { get; set; }
 
         public CompStmnt(ITypeCheckStmnt a, ITypeCheckStmnt b)
             : base(a, b)

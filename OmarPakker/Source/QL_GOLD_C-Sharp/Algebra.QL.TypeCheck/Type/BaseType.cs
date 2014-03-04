@@ -5,7 +5,8 @@ namespace Algebra.QL.TypeCheck.Type
 {
 	public class BaseType : ITypeCheckType
 	{
-        public Tuple<int, int> SourcePosition { get; set; }
+        public Tuple<int, int> SourceStartPosition { get; set; }
+        public Tuple<int, int> SourceEndPosition { get; set; }
         public virtual ITypeCheckType SuperType { get { return new BaseType(); } }
         public virtual ITypeCheckExpr DefaultValue { get { return null; } }
 

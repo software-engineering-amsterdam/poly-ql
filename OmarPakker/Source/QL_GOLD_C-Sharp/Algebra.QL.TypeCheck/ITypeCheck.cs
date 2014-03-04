@@ -4,6 +4,7 @@ namespace Algebra.QL.TypeCheck
 {
 	public interface ITypeCheck
 	{
-        Tuple<int, int> SourcePosition { get; set; }
+        Tuple<int, int> SourceStartPosition { get; set; }
+        Tuple<int, int> SourceEndPosition { get; set; }
 	}
 }

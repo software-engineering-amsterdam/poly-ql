@@ -7,7 +7,8 @@ namespace Algebra.QL.TypeCheck.Stmnt
 {
     public class QuestionStmnt : TextExprStmnt<ITypeCheckExpr>, ITypeCheckStmnt
     {
-        public Tuple<int, int> SourcePosition { get; set; }
+        public Tuple<int, int> SourceStartPosition { get; set; }
+        public Tuple<int, int> SourceEndPosition { get; set; }
 
         public QuestionStmnt(string text, ITypeCheckExpr e)
             : base(text, e)
@@ -21,8 +22,7 @@ namespace Algebra.QL.TypeCheck.Stmnt
 
             if (String.IsNullOrWhiteSpace(Text))
             {
-                errRep.ReportWarning("Empty question detected. Are you sure you want to leave this question blank?",
-                    SourcePosition);
+                errRep.ReportWarning(this, "Empty question detected. Are you sure you want to leave this question blank?");
             }
         }
     }

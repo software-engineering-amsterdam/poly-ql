@@ -7,7 +7,8 @@ namespace Algebra.QL.TypeCheck.Stmnt
 {
     public class LabelStmnt : TextExprStmnt<ITypeCheckExpr>, ITypeCheckStmnt
     {
-        public Tuple<int, int> SourcePosition { get; set; }
+        public Tuple<int, int> SourceStartPosition { get; set; }
+        public Tuple<int, int> SourceEndPosition { get; set; }
 
         public LabelStmnt(string text, ITypeCheckExpr e)
             : base(text, e)
@@ -21,8 +22,7 @@ namespace Algebra.QL.TypeCheck.Stmnt
 
             if (String.IsNullOrWhiteSpace(Text))
             {
-                errRep.ReportWarning("Label has no text. Are you sure you only want it to show data?",
-                    SourcePosition);
+                errRep.ReportWarning(this, "Label has no text. Are you sure you only want it to show data?");
             }
         }
     }

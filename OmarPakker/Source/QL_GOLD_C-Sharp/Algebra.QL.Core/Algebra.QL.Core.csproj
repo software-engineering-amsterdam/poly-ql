@@ -30,10 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GOLD Engine, Version=5.0.4337.25397, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\GOLD Engine.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
@@ -54,6 +50,10 @@
     <ProjectReference Include="..\Algebra.Core\Algebra.Core.csproj">
       <Project>{66c0e1d5-1aab-4d62-8a82-bed70bd9e348}</Project>
       <Name>Algebra.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GOLD.Engine\GOLD.Engine.csproj">
+      <Project>{b0511725-e9ab-4da1-9fcf-f45f2984dcdc}</Project>
+      <Name>GOLD.Engine</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

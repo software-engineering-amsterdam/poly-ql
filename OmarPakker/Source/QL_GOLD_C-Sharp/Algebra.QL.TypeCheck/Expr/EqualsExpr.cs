@@ -7,7 +7,8 @@ namespace Algebra.QL.TypeCheck.Expr
 {
 	public class EqualsExpr : BinaryExpr<ITypeCheckExpr>, ITypeCheckExpr
 	{
-        public Tuple<int, int> SourcePosition { get; set; }
+        public Tuple<int, int> SourceStartPosition { get; set; }
+        public Tuple<int, int> SourceEndPosition { get; set; }
 
 		public EqualsExpr(ITypeCheckExpr l, ITypeCheckExpr r)
             : base(l, r)
@@ -22,8 +23,8 @@ namespace Algebra.QL.TypeCheck.Expr
 
             if (!a.CompatibleWith(b))
             {
-                errRep.ReportError(String.Format("Comparison using '==' not possible. Incompatible types: '{0}', '{1}'.",
-                    a, b), SourcePosition);
+                errRep.ReportError(this, String.Format("Comparison using '==' not possible. Incompatible types: '{0}', '{1}'.",
+                    a, b));
             }
 
             return new BoolType();

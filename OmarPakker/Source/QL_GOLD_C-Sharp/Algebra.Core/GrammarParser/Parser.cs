@@ -1,38 +1,87 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.IO;
-using GOLD;
+using GOLD.Engine;
+using GOLD.Engine.Enums;
 
 namespace Algebra.Core.GrammarParser
 {
     public abstract class Parser : IParser
     {
-        public event Action<int, int, object> OnReduction;
+        public event Action<Tuple<int, int>, Tuple<int, int>, object> OnReduction;
         public event Action<object> OnCompletion;
         public event Action OnGroupError;
         public event Action OnInternalError;
         public event Action OnNotLoadedError;
-        public event Action<int, int, object> OnLexicalError;
-        public event Action<int, int, object, string> OnSyntaxError;
+        public event Action<Tuple<int, int>, object> OnLexicalError;
+        public event Action<Tuple<int, int>, object, string> OnSyntaxError;
 
-        private GOLD.Parser parser;
+        private GOLD.Engine.Parser parser;
 
         protected abstract ReadOnlyDictionary<string, short> Rules { get; }
 
         public Parser(bool trimReductions)
         {
-            parser = new GOLD.Parser();
+            parser = new GOLD.Engine.Parser();
             parser.TrimReductions = trimReductions;
-        }
 
-        public bool LoadGrammar(string grammarFilePath)
-        {
-            return parser.LoadTables(grammarFilePath);
+            parser.OnReduction += (start, end, obj) =>
+            {
+                object newObj = CreateObjectFor(obj);
+                obj.Tag = newObj;
+
+                if (OnReduction != null)
+                {
+                    OnReduction(start, end, newObj);
+                }
+            };
+            parser.OnCompletion += (obj) =>
+            {
+                if (OnCompletion != null)
+                {
+                    OnCompletion(obj);
+                }
+            };
+            parser.OnGroupError += () =>
+            {
+                if (OnGroupError != null)
+                {
+                    OnGroupError();
+                }
+            };
+            parser.OnNotLoadedError += () =>
+            {
+                if (OnNotLoadedError != null)
+                {
+                    OnNotLoadedError();
+                }
+            };
+            parser.OnInternalError += () =>
+            {
+                if (OnInternalError != null)
+                {
+                    OnInternalError();
+                }
+            };
+            parser.OnLexicalError += (pos, obj) =>
+            {
+                if (OnLexicalError != null)
+                {
+                    OnLexicalError(pos, obj);
+                }
+            };
+            parser.OnSyntaxError += (pos, obj, expected) =>
+            {
+                if (OnSyntaxError != null)
+                {
+                    OnSyntaxError(pos, obj, expected);
+                }
+            };
         }
 
         public bool LoadGrammar(BinaryReader reader)
         {
-            return parser.LoadTables(reader);
+            return parser.LoadEGT(reader);
         }
 
         public bool Parse(string text)
@@ -51,78 +100,7 @@ namespace Algebra.Core.GrammarParser
 
         private bool DoParse()
         {
-            while (true)
-            {
-                switch (parser.Parse())
-                {
-                    case ParseMessage.TokenRead:
-                        break;
-
-                    case ParseMessage.Reduction:
-                        //Create a custom object and store the reduction
-                        Reduction r = parser.CurrentReduction as Reduction;
-                        object newObj = CreateObjectFor(r);
-                        parser.CurrentReduction = newObj;
-
-                        if (OnReduction != null)
-                        {
-                            Position pos = parser.CurrentPosition();
-                            OnReduction(pos.Line, pos.Column, newObj);
-                        }
-                        break;
-
-                    case ParseMessage.Accept:
-                        //All good!
-                        if (OnCompletion != null)
-                        {
-                            OnCompletion(parser.CurrentReduction);
-                        }
-                        return true;
-
-                    case ParseMessage.GroupError:
-                        //Unexpected end of file (EOF)
-                        if (OnGroupError != null)
-                        {
-                            OnGroupError();
-                        }
-                        OnGroupError();
-                        return false;
-
-                    case ParseMessage.InternalError:
-                        //Something went wrong internally
-                        if (OnInternalError != null)
-                        {
-                            OnInternalError();
-                        }
-                        OnInternalError();
-                        return false;
-
-                    case ParseMessage.LexicalError:
-                        //Token not recognized
-                        if (OnLexicalError != null)
-                        {
-                            OnLexicalError(parser.CurrentPosition().Line, parser.CurrentPosition().Column, parser.CurrentToken().Data);
-                        }
-                        return false;
-
-                    case ParseMessage.NotLoadedError:
-                        //CGT wasn't loaded
-                        if (OnNotLoadedError != null)
-                        {
-                            OnNotLoadedError();
-                        }
-                        return false;
-
-                    case ParseMessage.SyntaxError:
-                        //Expected a different token
-                        if (OnSyntaxError != null)
-                        {
-                            OnSyntaxError(parser.CurrentPosition().Line, parser.CurrentPosition().Column,
-                                parser.CurrentToken().Data, parser.ExpectedSymbols().Text());
-                        }
-                        return false;
-                }
-            }
+            return parser.Parse();
         }
 
         protected abstract object CreateObjectFor(Reduction r);

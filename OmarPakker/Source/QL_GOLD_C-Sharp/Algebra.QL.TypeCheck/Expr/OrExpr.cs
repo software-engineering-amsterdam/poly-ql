@@ -8,7 +8,8 @@ namespace Algebra.QL.TypeCheck.Expr
 	public class OrExpr : BinaryExpr<ITypeCheckExpr>, ITypeCheckExpr
 	{
 		private static readonly ITypeCheckType ExpressionUpperBound = new BoolType();
-        public Tuple<int, int> SourcePosition { get; set; }
+        public Tuple<int, int> SourceStartPosition { get; set; }
+        public Tuple<int, int> SourceEndPosition { get; set; }
 
 		public OrExpr(ITypeCheckExpr l, ITypeCheckExpr r)
             : base(l, r)
@@ -23,8 +24,8 @@ namespace Algebra.QL.TypeCheck.Expr
 
             if (!a.CompatibleWith(ExpressionUpperBound) || !a.CompatibleWith(b))
             {
-                errRep.ReportError(String.Format("'||' not possible. Incompatible types: '{0}', '{1}'. Only the bool type is supported.",
-                    a, b), SourcePosition);
+                errRep.ReportError(this, String.Format("'||' not possible. Incompatible types: '{0}', '{1}'. Only the bool type is supported.",
+                    a, b));
 
 				return ExpressionUpperBound;
             }

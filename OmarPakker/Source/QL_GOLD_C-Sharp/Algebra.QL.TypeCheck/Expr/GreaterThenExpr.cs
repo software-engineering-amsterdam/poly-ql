@@ -8,7 +8,8 @@ namespace Algebra.QL.TypeCheck.Expr
 	public class GreaterThenExpr : BinaryExpr<ITypeCheckExpr>, ITypeCheckExpr
 	{
 		private static readonly ITypeCheckType ExpressionUpperBound = new RealType();
-        public Tuple<int, int> SourcePosition { get; set; }
+        public Tuple<int, int> SourceStartPosition { get; set; }
+        public Tuple<int, int> SourceEndPosition { get; set; }
 
 		public GreaterThenExpr(ITypeCheckExpr l, ITypeCheckExpr r)
             : base(l, r)
@@ -23,8 +24,8 @@ namespace Algebra.QL.TypeCheck.Expr
 
             if (!a.CompatibleWith(ExpressionUpperBound) || !a.CompatibleWith(b))
             {
-                errRep.ReportError(String.Format("Comparison using '>' not possible. Incompatible types: '{0}', '{1}'. Only numeric types are supported.",
-                    a, b), SourcePosition);
+                errRep.ReportError(this, String.Format("Comparison using '>' not possible. Incompatible types: '{0}', '{1}'. Only numeric types are supported.",
+                    a, b));
             }
 
             return new BoolType();

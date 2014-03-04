@@ -8,7 +8,8 @@ namespace Algebra.QL.TypeCheck.Expr
     public class NegateBoolExpr : UnaryExpr<ITypeCheckExpr>, ITypeCheckExpr
     {
         private static readonly ITypeCheckType NegationUpperBound = new BoolType();
-        public Tuple<int, int> SourcePosition { get; set; }
+        public Tuple<int, int> SourceStartPosition { get; set; }
+        public Tuple<int, int> SourceEndPosition { get; set; }
 
         public NegateBoolExpr(ITypeCheckExpr e)
             : base(e)
@@ -22,8 +23,8 @@ namespace Algebra.QL.TypeCheck.Expr
 
             if (!a.CompatibleWith(NegationUpperBound))
             {
-                errRep.ReportError(String.Format("Negation not possible. Incompatible type: '{0}'. Only bool types supported.",
-                    a), SourcePosition);
+                errRep.ReportError(this, String.Format("Negation not possible. Incompatible type: '{0}'. Only bool types supported.",
+                    a));
 
                 return NegationUpperBound;
             }
