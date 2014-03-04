@@ -2,13 +2,7 @@ package ast.expr.types;
 
 import ast.Visitor;
 
-public class IntType extends Types{
-
-	private int val;
-	
-	public int geVal(){
-		return val;
-	}
+public class IntType extends Type{
 
 	@Override
 	public <T> T accept(Visitor<T> visitor) {
@@ -16,18 +10,18 @@ public class IntType extends Types{
 	}
 
 	@Override
-	public boolean isCompatableTo(Types type) {
-		return this.isCompatableToInt();
+	public boolean isCompatibleTo(Type type) {
+		return this.isCompatibleToInt();
 	}
 	
 	@Override
-	public boolean isCompatableToInt(){
+	public boolean isCompatibleToInt(){
 		return true;
 	}
 
 	@Override
 	public String show() {
-		return "int";
+		return "integer";
 	}
 
 }

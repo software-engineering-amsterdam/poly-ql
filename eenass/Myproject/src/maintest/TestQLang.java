@@ -10,9 +10,13 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.RuleContext;
 import org.antlr.v4.runtime.Token;
 
+import typecheck.Symboles;
 import antlr.*;
-import ast.BaseVisitor;
+import ast.ASTNode;
 import ast.expr.Expr;
+import ast.statement.Form;
+import ast.visitors.BaseVisitor;
+import ast.visitors.EvalVisitor;
 
 public class TestQLang {
 
@@ -20,16 +24,19 @@ public class TestQLang {
 		File in = new File("C:\\Users\\E. Butrus\\Dropbox\\MASTER\\SoftwareCon\\poly-ql\\eenass\\Myproject\\src\\maintest\\test.txt");
 		ANTLRInputStream input = new ANTLRInputStream(new FileInputStream(in));
 		System.out.println("start test " + input);
-		Token token;
+		//Token token;
 		QLangLexer lexer = new QLangLexer(input);
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 		QLangParser parser = new QLangParser(tokens);
 		parser.setBuildParseTree(true);
-		RuleContext t = parser.unExpr();
-		t.inspect(parser);
-		Expr tree = parser.unExpr().result;
+//		RuleContext t = parser.form();
+//		t.inspect(parser);
+		ASTNode tree = parser.init().result;
 		BaseVisitor visitor = new BaseVisitor();
-		tree.accept(visitor);
+		System.out.println(tree.accept(visitor));
+//		Symboles s = new Symboles();
+//		EvalVisitor eval = new EvalVisitor(s);
+//		tree.accept(eval);
 	}
 
 }
