@@ -73,38 +73,6 @@ simpleType returns [Variable.Types type]
     | TEXT {$type = Variable.Types.TEXT;}
     ;
 
-//addSub returns [Operation op]
-//	: ADD {$op = new Add();}
-//	| SUB {$op = new Sub();}
-//	;
-	
-//divMult returns [Operation op]
-//	: MUL {$op = new Mul();}
-//	| DIV {$op = new Div();}
-//	;
-
-//booleanOp returns [Operation op]
-//	: AND {$op = new And();}
-//	| OR {$op = new Or();}
-//	;
-
-//arithmeticOp returns [Operation op]
-//	: MUL {$op = new Mul();}
-//	| ADD {$op = new Add();}
-//    | SUB {$op = new Sub();}
-//	| DIV {$op = new Div();}
-//    | MOD {$op = new Mod();}
-//    ;
-
-//comparisonOp returns [Operation op]
-//	: LOWER_THAN {$op = new LowerThan();}
-//    | GRATER_THAN {$op = new GraterThan();}
-//    | LOWER_EQUAL_THAN {$op = new LowerEqualThan();}
-//    | GRATER_EQUAL_THAN {$op = new GraterEqualThan();}
-//    | EQUAL {$op = new Equal();}
-//    | NOT_EQUAL {$op = new NotEqual();}
-//    ;
-
 boolLiteral
 	: TRUE  
     | FALSE 
