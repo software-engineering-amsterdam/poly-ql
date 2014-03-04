@@ -338,7 +338,7 @@ namespace GOLD.Engine
                     Production prod = grammarTables.Productions[parseAction.Value];
                     ParseResult result;
 
-                    //======== Create Reduction
+                    //Create Reduction
                     if (TrimReductions && prod.ContainsOneNonTerminal())
                     {
                         head = tokenStack.Pop();
@@ -362,17 +362,16 @@ namespace GOLD.Engine
                         result = ParseResult.ReduceNormal;
                     }
 
-                    //Goto
-                    ushort index = tokenStack.Peek().State;
+                    ushort nextActionIndex = tokenStack.Peek().State;
 
                     //If n is -1 here, then we have an Internal Table Error!!!
-                    int n = grammarTables.LRActionLists[index].IndexOf(prod.Head);
+                    int n = grammarTables.LRActionLists[nextActionIndex].IndexOf(prod.Head);
                     if (n == -1)
                     {
                         return ParseResult.InternalError;
                     }
 
-                    currentLALRState = grammarTables.LRActionLists[index][n].Value;
+                    currentLALRState = grammarTables.LRActionLists[nextActionIndex][n].Value;
 
                     head.State = currentLALRState;
                     tokenStack.Push(head);

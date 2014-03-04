@@ -45,7 +45,6 @@
     <Compile Include="Enums\GroupAdvanceMode.cs" />
     <Compile Include="Enums\GroupEndingMode.cs" />
     <Compile Include="Enums\LRActionType.cs" />
-    <None Include="Enums\ParseMessage.cs" />
     <Compile Include="Enums\ParseResult.cs" />
     <Compile Include="Enums\SymbolType.cs" />
     <Compile Include="FAEdge.cs" />

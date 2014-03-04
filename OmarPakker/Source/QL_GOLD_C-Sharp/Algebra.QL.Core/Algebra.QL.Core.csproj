@@ -2,6 +2,7 @@
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
+    <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{920A23F4-4B01-4CD2-B89C-44A59EE000E0}</ProjectGuid>
@@ -10,7 +11,9 @@
     <RootNamespace>Algebra.QL.Core</RootNamespace>
     <AssemblyName>Algebra.QL.Core</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Profile78</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -29,9 +32,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-  </ItemGroup>
   <ItemGroup>
     <Compile Include="Expr\LiteralExpr.cs" />
     <Compile Include="Factory\IQLFactory.cs" />
@@ -59,7 +59,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Grammar\QL_Grammar.egt" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>"$(SolutionDir)tools\GOLDbuild.exe" "$(SolutionDir)..\..\Grammar\QL_Grammar.grm" "$(ProjectDir)Grammar\QL_Grammar.egt"
 "$(SolutionDir)tools\GOLDtest.exe" "$(ProjectDir)Grammar\QL_Grammar.egt" "$(SolutionDir)..\..\Grammar\QL_Test.txt" "$(SolutionDir)..\..\Grammar\TestLog.txt"
