@@ -1,4 +1,3 @@
-// CSV.g  
 grammar FormGrammar; 
 
 @header{
@@ -24,15 +23,13 @@ block returns [List<Statement> data]
 	: (LINEEND)*? '{' LINEEND (child=statement { $data.add($child.current);})* '}' (LINEEND)*?;
 
 statement returns [Statement current]
-	: ID ':' STRING sType=simpleType LINEEND					
-	{
-		$current = new DeclarationStatement($ID.text, $sType.type, $STRING.text);
-	}
+	: ID ':' STRING sType=simpleType 
+	{$current = new DeclarationStatement($ID.text, $sType.type, $STRING.text);}
+	LINEEND 
 	
     | ID ':' STRING sType=simpleType '(' ex=expression')'  	
-    {
-    	$current = new ExpressionStatement($ID.text, $sType.type, $STRING.text, $ex.cEx);
-    } LINEEND
+    { $current = new ExpressionStatement($ID.text, $sType.type, $STRING.text, $ex.cEx);} 
+    LINEEND
     
     | 'if' '(' ex=expression ')' ifBlock=block 
     {$current = new IFStatement($ex.cEx, $ifBlock.data);} 				
