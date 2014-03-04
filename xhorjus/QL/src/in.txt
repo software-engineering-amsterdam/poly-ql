@@ -3,14 +3,14 @@ form Herp {
 	q1: "herp" money
 	q2: "twerp" money
 	
-	/*
+	/**
 	 * Multiline
 	 */
-	if (q1 > 100) {
+	if (q1 > 25) {
 		q3: "derp" boolean
 		q4: "derpa" money
 	}
 	else {
 		q3: "schermp" boolean
-	}	
+	}
 }

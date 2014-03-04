@@ -1,7 +1,7 @@
 package ql.ast.literal;
 
 import ql.ast.ElementInterfaceVisitor;
-import ql.ast.type.TypeBool;
+import ql.ast.type.TypeString;
 
 /**
  * String literal class
@@ -12,7 +12,7 @@ public class LiteralString extends LiteralInterface<String> {
 	}
 	
 	@Override
-	public TypeBool getType() {
+	public TypeString getType() {
 		return new TypeString();
 	}
 	

@@ -39,5 +39,7 @@ public class Test {
 	    // Create parsetree visitor, generate AST
 	    ASTVisitor eval  = new ASTVisitor();
 	    Questionnares qs = (Questionnares)eval.visit(tree);
+	    
+	    System.out.println("At the root level, amount of statements found was " + qs.getQuestionnare(0).countStatements());
 	}
 }

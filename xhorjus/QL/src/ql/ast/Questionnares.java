@@ -16,4 +16,8 @@ public class Questionnares {
 	public ArrayList<Questionnare> getQuestionnares() {
 		return this.questionnares;
 	}
+	
+	public Questionnare getQuestionnare(int i) {
+		return this.questionnares.get(i);
+	}
 }
