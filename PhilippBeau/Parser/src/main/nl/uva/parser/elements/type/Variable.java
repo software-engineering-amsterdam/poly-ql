@@ -1,8 +1,5 @@
 package main.nl.uva.parser.elements.type;
 
-import main.nl.uva.parser.elements.expressions.Expression;
-import main.nl.uva.parser.elements.statements.Statement;
-
 public class Variable extends Type {
 
     public static enum Types {
@@ -13,8 +10,8 @@ public class Variable extends Type {
 
     private final String _name;
 
-    public Variable(final Statement parent, final String name) {
-        super("Variable", parent);
+    public Variable(final String name) {
+        super("Variable");
 
         _name = name;
     }
@@ -26,9 +23,7 @@ public class Variable extends Type {
     }
 
     @Override
-    public void setRight(final Expression cEx) {
-        // TODO Auto-generated method stub
-
+    public void print() {
+        System.out.print(_name);
     }
-
 }

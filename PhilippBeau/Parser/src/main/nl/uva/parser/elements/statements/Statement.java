@@ -1,29 +1,17 @@
 package main.nl.uva.parser.elements.statements;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static main.nl.uva.parser.Utils.available;
-
 public abstract class Statement {
 
     protected final String _id;
 
-    protected final List<Statement> _childrens = new ArrayList<>();
+    protected Statement _parent;
 
-    protected final Statement _parent;
-
-    public Statement(final String id, final Statement parent) {
+    public Statement(final String id) {
         _id = id;
-        _parent = parent;
-
-        if (available(_parent)) {
-            _parent.addChild(this);
-        }
     }
 
-    public void addChild(final Statement statement) {
-        _childrens.add(statement);
+    public void setParent(final Statement parent) {
+        _parent = parent;
     }
 
     protected boolean isSameID(final Statement statement) {
@@ -31,12 +19,13 @@ public abstract class Statement {
     }
 
     public final boolean validate() {
-        Boolean valid = true;
-        for (Statement child : _childrens) {
-            valid = valid && child.validate();
-        }
-
-        return valid && validateImpl();
+        return true;
+        // Boolean valid = true;
+        // for (Statement child : _childrens) {
+        // valid = valid && child.validate();
+        // }
+        //
+        // return valid && validateImpl();
     }
 
     protected abstract boolean validateImpl();
@@ -45,15 +34,15 @@ public abstract class Statement {
         boolean valid = this.isSameID(statement);
 
         if (!valid) {
-            for (Statement child : _childrens) {
-                if (child.equals(statement)) {
-                    continue;
-                }
-
-                if (child.isSameID(statement)) {
-                    return true;
-                }
-            }
+            // for (Statement child : _childrens) {
+            // if (child.equals(statement)) {
+            // continue;
+            // }
+            //
+            // if (child.isSameID(statement)) {
+            // return true;
+            // }
+            // }
 
             if (_parent != null) {
                 valid = _parent.validates(statement);
@@ -63,7 +52,5 @@ public abstract class Statement {
         return valid;
     }
 
-    public List<Statement> getChildren() {
-        return _childrens;
-    }
+    public abstract void print();
 }

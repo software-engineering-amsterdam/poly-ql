@@ -4,8 +4,8 @@ import main.nl.uva.parser.elements.operations.Operation;
 
 public class ExpressionGenerator {
 
-    public static Expression generateExpression(final Expression left,
-            final Class<? extends Operation> between, final Expression right) {
+    public static AtomExpression generateExpression(final AtomExpression left,
+            final Class<? extends Operation> between, final AtomExpression right) {
 
         return null;
     }

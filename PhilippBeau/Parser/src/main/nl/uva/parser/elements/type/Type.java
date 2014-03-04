@@ -1,16 +1,16 @@
 package main.nl.uva.parser.elements.type;
 
-import main.nl.uva.parser.elements.expressions.Expression;
+import main.nl.uva.parser.elements.expressions.AtomExpression;
 import main.nl.uva.parser.elements.statements.Statement;
 
-public abstract class Type extends Expression {
+public abstract class Type extends AtomExpression {
 
     protected Statement _expression = null;
 
     private final String _typeName;
 
-    public Type(final String typeName, final Statement parent) {
-        super(parent);
+    public Type(final String typeName) {
+        super("");
         _typeName = typeName;
     }
 

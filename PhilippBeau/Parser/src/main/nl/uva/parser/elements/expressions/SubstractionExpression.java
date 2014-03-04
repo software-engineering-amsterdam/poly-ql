@@ -1,20 +1,9 @@
 package main.nl.uva.parser.elements.expressions;
 
-import main.nl.uva.parser.elements.statements.Statement;
+public class SubstractionExpression extends AdvancedExpression {
 
-public class SubstractionExpression extends Expression {
-
-    private Expression _right;
-
-    private final Expression _left;
-
-    public SubstractionExpression(final Statement parent, final Expression left) {
-        super(parent);
-        _left = left;
-    }
-
-    public void setRight(final Expression right) {
-        _right = right;
+    public SubstractionExpression(final Expression left, final Expression right) {
+        super(left, right);
     }
 
     @Override
@@ -23,4 +12,10 @@ public class SubstractionExpression extends Expression {
         return false;
     }
 
+    @Override
+    public void print() {
+        _left.print();
+        System.out.print(" - ");
+        _right.print();
+    }
 }

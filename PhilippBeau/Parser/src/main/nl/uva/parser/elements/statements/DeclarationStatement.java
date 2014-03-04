@@ -8,20 +8,20 @@ public class DeclarationStatement extends Statement {
 
     private final Types _type;
 
-    public DeclarationStatement(final String id, final Statement parent, final Types type,
-            final String function) {
-        super(id, parent);
+    public DeclarationStatement(final String id, final Types type, final String function) {
+        super(id);
         _function = function;
         _type = type;
     }
 
     @Override
-    public String toString() {
-        return "SimpleStatement " + " " + _function + " " + _type;
+    protected boolean validateImpl() {
+        return true;
     }
 
     @Override
-    protected boolean validateImpl() {
-        return true;
+    public void print() {
+        System.out.println(_id + " " + _function + " " + _type);
+
     }
 }

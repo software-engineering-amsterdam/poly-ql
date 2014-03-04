@@ -1,14 +1,11 @@
 package main.nl.uva.parser.elements.type;
 
-import main.nl.uva.parser.elements.expressions.Expression;
-import main.nl.uva.parser.elements.statements.Statement;
-
 public class Money extends Type {
 
     private final String _amount;
 
-    public Money(final Statement parent, final String amount) {
-        super("Money", parent);
+    public Money(final String amount) {
+        super("Money");
 
         _amount = amount;
     }
@@ -20,8 +17,7 @@ public class Money extends Type {
     }
 
     @Override
-    public void setRight(final Expression cEx) {
-        // TODO Auto-generated method stub
-
+    public void print() {
+        System.out.print(_amount);
     }
 }

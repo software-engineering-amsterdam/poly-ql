@@ -1,12 +1,9 @@
 package main.nl.uva.parser.elements.type;
 
-import main.nl.uva.parser.elements.expressions.Expression;
-import main.nl.uva.parser.elements.statements.Statement;
-
 public class Text extends Type {
 
-    public Text(final Statement parent) {
-        super("Text", parent);
+    public Text() {
+        super("Text");
     }
 
     @Override
@@ -16,8 +13,7 @@ public class Text extends Type {
     }
 
     @Override
-    public void setRight(final Expression cEx) {
-        // TODO Auto-generated method stub
-
+    public void print() {
+        System.out.print("Text");
     }
 }

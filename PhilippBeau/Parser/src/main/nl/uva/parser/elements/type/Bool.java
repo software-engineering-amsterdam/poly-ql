@@ -1,14 +1,11 @@
 package main.nl.uva.parser.elements.type;
 
-import main.nl.uva.parser.elements.expressions.Expression;
-import main.nl.uva.parser.elements.statements.Statement;
-
 public class Bool extends Type {
 
     private final String _value;
 
-    public Bool(final Statement parent, final String value) {
-        super("Boolean", parent);
+    public Bool(final String value) {
+        super("Boolean");
 
         _value = value;
     }
@@ -20,8 +17,7 @@ public class Bool extends Type {
     }
 
     @Override
-    public void setRight(final Expression cEx) {
-        // TODO Auto-generated method stub
-
+    public void print() {
+        System.out.print("Boolean");
     }
 }

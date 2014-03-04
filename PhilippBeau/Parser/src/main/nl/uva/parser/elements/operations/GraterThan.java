@@ -1,10 +1,10 @@
 package main.nl.uva.parser.elements.operations;
 
-import main.nl.uva.parser.elements.expressions.Expression;
+import main.nl.uva.parser.elements.expressions.AtomExpression;
 
 public class GraterThan extends Operation {
 
-    public GraterThan(final Expression left, final Expression right) {
+    public GraterThan(final AtomExpression left, final AtomExpression right) {
         super(left, right);
         // TODO Auto-generated constructor stub
     }

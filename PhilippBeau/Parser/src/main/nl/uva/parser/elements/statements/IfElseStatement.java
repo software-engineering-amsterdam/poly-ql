@@ -1,10 +1,20 @@
 package main.nl.uva.parser.elements.statements;
 
+import java.util.List;
+
+import main.nl.uva.parser.elements.expressions.Expression;
 
 public class IfElseStatement extends Statement {
 
-    public IfElseStatement(final Statement parent) {
-        super("", parent);
+    private final List<Statement> _ifChildren;
+    private final List<Statement> _elseChildren;
+
+    public IfElseStatement(final Expression expression, final List<Statement> ifChildren,
+            final List<Statement> elseChildren) {
+        super("");
+
+        _ifChildren = ifChildren;
+        _elseChildren = elseChildren;
     }
 
     @Override
@@ -22,5 +32,20 @@ public class IfElseStatement extends Statement {
         }
 
         return valid;
+    }
+
+    @Override
+    public void print() {
+        System.out.println(_id + " if " + _ifChildren.size());
+
+        for (Statement st : _ifChildren) {
+            st.print();
+        }
+
+        System.out.println(" else " + _elseChildren.size());
+
+        for (Statement st : _elseChildren) {
+            st.print();
+        }
     }
 }

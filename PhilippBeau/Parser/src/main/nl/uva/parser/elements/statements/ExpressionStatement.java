@@ -1,5 +1,6 @@
 package main.nl.uva.parser.elements.statements;
 
+import main.nl.uva.parser.elements.expressions.Expression;
 import main.nl.uva.parser.elements.type.Variable.Types;
 
 public class ExpressionStatement extends Statement {
@@ -8,21 +9,26 @@ public class ExpressionStatement extends Statement {
 
     private final String _function;
 
-    public ExpressionStatement(final String id, final Statement parent, final Types type,
-            final String function) {
-        super(id, parent);
+    private final Expression _expression;
 
+    public ExpressionStatement(final String id, final Types type, final String function,
+            final Expression expression) {
+        super(id);
+
+        _expression = expression;
         _function = function;
         _type = type;
     }
 
     @Override
-    public String toString() {
-        return "ExpressionStatement " + _id + " : " + _type + " ( " + " )";
+    protected boolean validateImpl() {
+        return true;
     }
 
     @Override
-    protected boolean validateImpl() {
-        return true;
+    public void print() {
+        System.out.print(_id + " " + _function + " : " + _type + "( ");
+        _expression.print();
+        System.out.println(" )");
     }
 }

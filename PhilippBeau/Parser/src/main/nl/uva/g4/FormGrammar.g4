@@ -15,63 +15,56 @@ forms returns [List<ParserForm> data]
 	;
 
 form returns [ParserForm f]
-	: 'form' id=ID {$f = new ParserForm($id.text, null);} block[$f] 
+	: 'form' id=ID children=block {$f = new ParserForm($id.text, $children.data);}  
 	;
 
 //Adds all subelements inside the block to the parent statement
-block[Statement parentStatement]
-	: (LINEEND)*? '{' LINEEND (child=statement[$parentStatement] 
-//		{
-//			$parentStatement.addChild($child.current);
-//		}
-	)* '}' (LINEEND)*?;
+block returns [List<Statement> data]
+@init {$data = new ArrayList<Statement>();}
+	: (LINEEND)*? '{' LINEEND (child=statement { $data.add($child.current);})* '}' (LINEEND)*?;
 
-statement[Statement parentStatement] returns [Statement current]
+statement returns [Statement current]
 	: ID ':' STRING sType=simpleType LINEEND					
 	{
-		$current = new DeclarationStatement($ID.text, $parentStatement, $sType.type, $STRING.text);
+		$current = new DeclarationStatement($ID.text, $sType.type, $STRING.text);
 	}
 	
-    | ID ':' STRING sType=simpleType  	
+    | ID ':' STRING sType=simpleType '(' ex=expression')'  	
     {
-    	$current = new ExpressionStatement($ID.text, $parentStatement, $sType.type, $STRING.text);
-    } '(' ex=expression[$current] ')' LINEEND
+    	$current = new ExpressionStatement($ID.text, $sType.type, $STRING.text, $ex.cEx);
+    } LINEEND
     
-    | 'if' 
-    {
-    	$current = new IFStatement($parentStatement);
-    } '(' ex=expression[$current] ')' block[$current]							
+    | 'if' '(' ex=expression ')' ifBlock=block 
+    {$current = new IFStatement($ex.cEx, $ifBlock.data);} 				
     
-    | 'if' 
-    {
-    	$current = new IfElseStatement($parentStatement);
-    } '(' ex=expression[$current] ')' block[$current] 'else' block[$current]
+    | 'if' '(' ex=expression ')' ifBlock=block 'else' elseBlock=block
+    { $current = new IfElseStatement($ex.cEx, $ifBlock.data, $elseBlock.data);} 
     ;
 
-expression[Statement pSt] returns [Expression cEx]
-	: left=boolExp[$pSt] {$cEx = $left.cEx;} 
+expression returns [Expression cEx]
+	: left=boolExp {$cEx = $left.cEx;} 
 	;
 
-boolExp[Statement pEx] returns [Expression cEx]
-	: left=addExp[$pEx] {$cEx = $left.cEx;} 
-  (AND {$cEx = new AndExpression($pEx, $cEx);} right=addExp[$cEx] {$cEx.setRight($right.cEx);} | OR {$cEx = new OrExpression($pEx, $cEx);} right=addExp[$cEx] {$cEx.setRight($right.cEx);})*
+boolExp returns [Expression cEx]
+	: left=addExp {$cEx = $left.cEx;} 
+  (AND right=addExp {$cEx = new AndExpression($left.cEx, $right.cEx);} | OR right=addExp {$cEx = new OrExpression($left.cEx, $right.cEx);})*
 	;
 
-addExp[Statement pEx] returns [Expression cEx]
-  : left=multExp[$pEx] {$cEx = $left.cEx;} 
-  (ADD {$cEx = new AdditionExpression($pEx, $cEx);}  right=multExp[$cEx] {$cEx.setRight($right.cEx);} | SUB {$cEx = new SubstractionExpression($pEx, $cEx);} right=multExp[$cEx] {$cEx.setRight($right.cEx);})*
+addExp returns [Expression cEx]
+  : left=multExp {$cEx = $left.cEx;} 
+  (ADD right=multExp {$cEx = new AdditionExpression($left.cEx, $right.cEx);} | SUB right=multExp {$cEx = new SubstractionExpression($left.cEx, $right.cEx);})*
   ;
 
-multExp[Statement pEx] returns [Expression cEx]
-  : left=atom[$pEx] {$cEx = $left.cEx;} 
-  (MUL {$cEx = new MultiplicationExpression($pEx, $cEx);} right=atom[$cEx] {$cEx.setRight($right.cEx);}| DIV {$cEx = new MultiplicationExpression($pEx, $cEx);} right=atom[$cEx] {$cEx.setRight($right.cEx);})*
+multExp returns [Expression cEx]
+  : left=atom {$cEx = $left.cEx;} 
+  (MUL right=atom {$cEx = new MultiplicationExpression($left.cEx, $right.cEx);} | DIV right=atom {$cEx = new MultiplicationExpression($left.cEx, $right.cEx);})*
   ;
 
-atom[Statement pEx] returns [Expression cEx]
-	: ID {$cEx = new Variable($pEx, $ID.text);}
-	| nL=numLiteral {$cEx = new Money($pEx, $nL.text);}
-	| bL=boolLiteral {$cEx = new Bool($pEx, $bL.text);}
-	| '(' bE=boolExp[$pEx] ')' {$cEx = $bE.cEx;}
+atom returns [Expression cEx]
+	: ID {$cEx = new Variable($ID.text);}
+	| nL=numLiteral {$cEx = new Money($nL.text);}
+	| bL=boolLiteral {$cEx = new Bool($bL.text);}
+	| '(' bE=boolExp ')' {$cEx = $bE.cEx;}
 	;
 
 simpleType returns [Variable.Types type]

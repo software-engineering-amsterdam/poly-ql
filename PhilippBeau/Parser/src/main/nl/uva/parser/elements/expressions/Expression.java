@@ -4,10 +4,8 @@ import main.nl.uva.parser.elements.statements.Statement;
 
 public abstract class Expression extends Statement {
 
-    public Expression(final Statement parent) {
-        super("", parent);
+    public Expression(String id) {
+        super(id);
     }
-
-    public abstract void setRight(Expression cEx);
 
 }

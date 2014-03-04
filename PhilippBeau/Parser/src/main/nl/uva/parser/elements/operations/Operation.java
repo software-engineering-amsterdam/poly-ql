@@ -1,13 +1,13 @@
 package main.nl.uva.parser.elements.operations;
 
-import main.nl.uva.parser.elements.expressions.Expression;
+import main.nl.uva.parser.elements.expressions.AtomExpression;
 
 public abstract class Operation {
 
-    protected final Expression _left;
-    protected final Expression _right;
+    protected final AtomExpression _left;
+    protected final AtomExpression _right;
 
-    public Operation(final Expression left, final Expression right) {
+    public Operation(final AtomExpression left, final AtomExpression right) {
         _left = left;
         _right = right;
     }
