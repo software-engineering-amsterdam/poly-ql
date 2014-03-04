@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
@@ -10,20 +12,24 @@ namespace QL
 {
     public class QLController
     {
+        private QLParser _parser;
+        private IParseTree _parseTree;
+        
         public Questionnaire AST { get; private set; }
         
         public List<string> LexerErrors { get; private set; }
         public List<string> ParserErrors { get; private set; }
         
-        public QLIdentifiers Identifiers { get; private set; }       
+        public QLIdManager IdManager { get; private set; }
+        public QLQuestionManager QuestionManager { get; private set; }     
         public QLTypeChecker TypeChecker { get; private set; }
-
-
+        
         public QLController()
         {
             LexerErrors = new List<string>();
             ParserErrors = new List<string>();
-            Identifiers = new QLIdentifiers();
+            IdManager = new QLIdManager();
+            QuestionManager = new QLQuestionManager();
             TypeChecker = new QLTypeChecker();
         }
 
@@ -34,16 +40,33 @@ namespace QL
             AntlrInputStream antlrInputStream = new AntlrInputStream(inputStream);
             QLLexer lexer = new QLLexer(antlrInputStream);
             CommonTokenStream tokens = new CommonTokenStream(lexer);
-            QLParser parser = new QLParser(tokens);
+            _parser = new QLParser(tokens);
 
+            //Replaxe lexer/parser error listeners
             lexer.RemoveErrorListeners();
-            parser.RemoveErrorListeners();
-
+            _parser.RemoveErrorListeners();
             lexer.AddErrorListener(new LexerErrorListener() { OnError = LexerErrors.Add });
-            parser.AddErrorListener(new ParserErrorListener() { OnError = ParserErrors.Add });
+            _parser.AddErrorListener(new ParserErrorListener() { OnError = ParserErrors.Add });
 
-            IParseTree parseTree = parser.questionnaire();
-            AST = parser.theQuestionnaire;
+            //set identifiers table
+            _parser.SetIdManager(IdManager);
+            _parser.SetQuestionManager(QuestionManager);
+
+            //build AST
+            _parseTree = _parser.questionnaire();
+            AST = _parser.GetAST();
+
+            //check for lexer/parser errors
+            if (LexerErrors.Any() || ParserErrors.Any())
+                return;
+
+            //Type checking
+            TypeChecker.Run(AST);
+        }
+
+        public string GetParseTreeString()
+        {
+            return _parseTree.ToStringTree(_parser);
         }
     }
 }

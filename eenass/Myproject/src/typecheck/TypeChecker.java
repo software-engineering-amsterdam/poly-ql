@@ -3,11 +3,19 @@ package typecheck;
 import ast.ASTNode;
 import ast.Visitor;
 import ast.expr.Expr;
-import ast.expr.IdentLiteral;
+import ast.expr.Identifier;
 import ast.expr.binExpr.*;
 import ast.expr.literal.*;
 import ast.expr.types.*;
 import ast.expr.unExpression.*;
+import ast.statement.Block;
+import ast.statement.ComputedQuestion;
+import ast.statement.Form;
+import ast.statement.IfStatement;
+import ast.statement.IfelseStatement;
+import ast.statement.Question;
+import ast.statement.Statement;
+import ast.statement.StatementList;
 
 public class TypeChecker implements Visitor<Boolean>{
 	
@@ -28,8 +36,8 @@ public class TypeChecker implements Visitor<Boolean>{
 	
 	public boolean isValidInt(Expr exp){
 		if (isValidExpr(exp)){
-			Types type = exp.typeof(symb_map);
-			if((type != null) && (type.isCompatableToInt())){
+			Type type = exp.typeof(symb_map);
+			if((type != null) && (type.isCompatibleToInt())){
 				return true;
 			}
 		}
@@ -45,8 +53,8 @@ public class TypeChecker implements Visitor<Boolean>{
 	
 	public boolean isValidBool(Expr exp){
 		if (isValidExpr(exp)){
-			Types type = exp.typeof(symb_map);
-			if((type != null) && (type.isCompatableToBool())){
+			Type type = exp.typeof(symb_map);
+			if((type != null) && (type.isCompatibleToBool())){
 				return true;
 			}
 		}
@@ -66,10 +74,10 @@ public class TypeChecker implements Visitor<Boolean>{
 		boolean isValid_rhs = isValidExpr(rhs);
 		
 		if(isValid_lhs && isValid_rhs){
-			Types t1 = lhs.typeof(symb_map);
-			Types t2 = rhs.typeof(symb_map);
+			Type t1 = lhs.typeof(symb_map);
+			Type t2 = rhs.typeof(symb_map);
 			
-			if((t1 != null && t2 != null) && (t1.isCompatableTo(t2))){
+			if((t1 != null && t2 != null) && (t1.isCompatibleTo(t2))){
 				return true;
 			}
 		}
@@ -158,7 +166,7 @@ public class TypeChecker implements Visitor<Boolean>{
 	}
 
 	@Override
-	public Boolean visit(IdentLiteral node) {
+	public Boolean visit(Identifier node) {
 		if(symb_map.containsSymb(node.getIdentName())){
 			return true;
 		}
@@ -188,6 +196,67 @@ public class TypeChecker implements Visitor<Boolean>{
 	@Override
 	public Boolean visit(StrType nodde) {
 		return true;
+	}
+
+	@Override
+	public Boolean visit(StatementList node) {
+		boolean result = true;
+		for(Statement s: node.getList()){
+			if(!s.accept(this)){
+				result = false;
+			}
+		}
+		return result;
+	}
+
+	@Override
+	public Boolean visit(Question node) {
+		return putIdentifier(node.getId(), node.getType());
+	}
+	
+	private boolean putIdentifier(Identifier id, Type type){
+		if(symb_map.containsSymb(id.getIdentName())){
+			return false;
+		}
+		symb_map.put(id.getIdentName(), type);
+		return true;		
+	}
+
+	@Override
+	public Boolean visit(ComputedQuestion node) {
+		boolean validId = putIdentifier(node.getId(), node.getType());
+		boolean validExpr = isValidExpr(node.getExpr());
+		boolean validType = true;
+		Type exprType = node.getExpr().typeof(symb_map);
+		if ((exprType != null) && (!exprType.isCompatibleTo(node.getType()))){
+			validType = false;
+		}
+		return (validId && validExpr && validType);
+	}
+
+	@Override
+	public Boolean visit(Block node) {
+		return visit(node.getStatements());
+	}
+
+	@Override
+	public Boolean visit(IfStatement node) {
+		boolean validExpr = isValidExpr(node.getExpr());
+		boolean validStatement = node.getStatements().accept(this);
+		return (validExpr && validStatement);
+	}
+
+	@Override
+	public Boolean visit(Form node) {
+		return node.getStatements().accept(this);
+	}
+
+	@Override
+	public Boolean visit(IfelseStatement node) {
+		boolean validExpr = isValidExpr(node.getExpr());
+		boolean validStatement_if = node.getStatements().accept(this);
+		boolean validStatement_else = node.getElseStatements().accept(this);
+		return (validExpr && validStatement_if && validStatement_else);
 	}
 
 }

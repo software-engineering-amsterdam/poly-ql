@@ -2,26 +2,26 @@ package ast.expr.types;
 
 import ast.ASTNode;
 
-public abstract class Types implements ASTNode{
+public abstract class Type implements ASTNode{
 	
 	private boolean unknown = true;
 	
-	public abstract boolean isCompatableTo(Types type); 	
+	public abstract boolean isCompatibleTo(Type type); 	
 	public abstract String show();
 
-	public boolean isCompatableToBool(){
+	public boolean isCompatibleToBool(){
 		return false;
 	}
 	
-	public boolean isCompatableToInt(){
+	public boolean isCompatibleToInt(){
 		return false;
 	}
 	
-	public boolean isCompatableToMoney() {
+	public boolean isCompatibleToMoney() {
 		return false;
 	}
 	
-	public boolean isCompatableToStr(){
+	public boolean isCompatibleToStr(){
 		return false;
 	}
 	

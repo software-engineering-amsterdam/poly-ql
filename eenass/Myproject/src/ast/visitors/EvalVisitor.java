@@ -2,12 +2,19 @@ package ast.visitors;
 
 import typecheck.Symboles;
 import ast.Visitor;
-import ast.expr.IdentLiteral;
+import ast.expr.Identifier;
 import ast.expr.binExpr.*;
 import ast.expr.evaluate.Value;
 import ast.expr.literal.*;
 import ast.expr.types.*;
 import ast.expr.unExpression.*;
+import ast.statement.Block;
+import ast.statement.ComputedQuestion;
+import ast.statement.Form;
+import ast.statement.IfStatement;
+import ast.statement.IfelseStatement;
+import ast.statement.Question;
+import ast.statement.StatementList;
 
 
 public class EvalVisitor implements Visitor<Value> {
@@ -116,7 +123,7 @@ public class EvalVisitor implements Visitor<Value> {
 	}
 
 	@Override
-	public Value visit(IdentLiteral node) {
+	public Value visit(Identifier node) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -147,6 +154,48 @@ public class EvalVisitor implements Visitor<Value> {
 
 	@Override
 	public Value visit(StrType node) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Value visit(StatementList node) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Value visit(Question node) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Value visit(ComputedQuestion node) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Value visit(Block node) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Value visit(IfStatement node) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Value visit(Form node) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Value visit(IfelseStatement node) {
 		// TODO Auto-generated method stub
 		return null;
 	}

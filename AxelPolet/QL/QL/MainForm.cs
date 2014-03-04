@@ -1,14 +1,6 @@
 ﻿using System;
-
-using System.Text;
 using System.Windows.Forms;
-using System.IO;
-
-using Antlr4.Runtime;
-using Antlr4.Runtime.Tree;
-
 using QL.QLClasses;
-
 using QL.TypeChecker;
 
 namespace QL
@@ -23,46 +15,43 @@ namespace QL
         private void btnParse_Click(object sender, EventArgs e)
         {
             txtOutput.Clear();
-            QLIdentifiers.Reset();
-            QLTypeChecker.ClearAdditionalErrors();
 
-            string inputString = txtInput.Text;
-            MemoryStream inputStream = new MemoryStream(Encoding.UTF8.GetBytes(inputString ?? ""));
+            QLController controller = new QLController();
+            controller.Run(txtInput.Text);
 
-            AntlrInputStream input = new AntlrInputStream(inputStream);
-            QLLexer lexer = new QLLexer(input);
-            CommonTokenStream tokens = new CommonTokenStream(lexer);
-            QLParser parser = new QLParser(tokens);
-
-            lexer.RemoveErrorListeners();
-            parser.RemoveErrorListeners();
-
-            lexer.AddErrorListener(new LexerErrorListener(){OnError = WriteError});
-            parser.AddErrorListener(new ParserErrorListener(){OnError = WriteError});
-
-            IParseTree tree = parser.questionnaire();
-            Questionnaire AST = parser.theQuestionnaire;
-
+            Questionnaire AST = controller.AST;
+            
             if (AST == null)
             {
                 WriteError("AST is null!!!");
-
-                txtOutput.Text += string.Format(@"{0}{0} Generated parse tree: 
-                                              {0} {1}"
-                                    , Environment.NewLine
-                                    , tree.ToStringTree(parser));
             }
             else
             {
-                QLTypeChecker typeChecker = new QLTypeChecker();
-                typeChecker.OnError += WriteError;
-                typeChecker.Check(AST);
+                foreach (string lexerError in controller.LexerErrors)
+                    WriteError(lexerError);
 
-                txtOutput.Text += string.Format(@"{0}{0} Generated parse tree: 
-                                              {0} {1}"
-                                    , Environment.NewLine
-                                    , tree.ToStringTree(parser));
+                foreach (string parserError in controller.ParserErrors)
+                    WriteError(parserError);
+
+                QLTypeChecker typeChecker = controller.TypeChecker;
+
+                foreach (QLTypeError typeError in typeChecker.TypeErrors)
+                {
+                    WriteError(string.Format("{6} QLTypeChecker: {0} {1}"  +
+                            "<At token '{2}' on line {3}, column {4}>{5}", 
+                            typeError.Message, Environment.NewLine, 
+                            typeError.TokenInfo.TokenText, 
+                            typeError.TokenInfo.TokenLine, 
+                            typeError.TokenInfo.TokenColumn, 
+                            Environment.NewLine,
+                            typeError.IsWarning ? "(Warning)" : "(Error)"));
+                }
             }
+
+            txtOutput.Text += string.Format(@"{0}{0} Generated parse tree: 
+                                              {0} {1}"
+                    , Environment.NewLine
+                    , controller.GetParseTreeString());
         }
             
         public void WriteError(string error)

@@ -45,6 +45,7 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="QLClasses\ASTBase.cs" />
     <Compile Include="QLClasses\Expressions\Binary\Conditional\And.cs" />
     <Compile Include="QLClasses\Expressions\Binary\Compare\CompareExpression.cs" />
     <Compile Include="QLClasses\Expressions\Binary\Compare\Operators\Equals.cs" />
@@ -64,11 +65,11 @@
     <Compile Include="QLClasses\Expressions\Literals\StringLiteral.cs" />
     <Compile Include="QLClasses\Expressions\Literals\IntLiteral.cs" />
     <Compile Include="QLController.cs" />
-    <Compile Include="TypeChecker\QLIdentifiers.cs" />
+    <Compile Include="TypeChecker\QLQuestionManager.cs" />
+    <Compile Include="TypeChecker\QLIdManager.cs" />
     <Compile Include="QLClasses\Expressions\ExpressionBase.cs" />
     <Compile Include="QLClasses\Expressions\Unary\UnaryExpression.cs" />
     <Compile Include="QLClasses\Expressions\Binary\BinaryExpression.cs" />
-    <Compile Include="TypeChecker\ITypeChecker.cs" />
     <Compile Include="QLClasses\Expressions\Unary\Neg.cs" />
     <Compile Include="QLClasses\Expressions\Unary\Not.cs" />
     <Compile Include="QLClasses\Expressions\Unary\Pos.cs" />
@@ -95,9 +96,7 @@
       <DependentUpon>QL.g4</DependentUpon>
     </Compile>
     <Compile Include="QLErrorListeners.cs" />
-    <Compile Include="QLLexer.cs" />
     <Compile Include="QLParser.cs" />
-    <Compile Include="TypeChecker\QLTypeError.cs" />
     <Compile Include="TypeChecker\QLTypeChecker.cs" />
     <Compile Include="QLClasses\QLTokenInfo.cs" />
     <EmbeddedResource Include="MainForm.resx">

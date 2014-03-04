@@ -3,7 +3,6 @@ grammar QL;
 @parser::members
 {
 	protected const int EOF = Eof;
-	public Questionnaire theQuestionnaire;
 }
 
 @lexer::members
@@ -35,7 +34,7 @@ grammar QL;
  */
  
 questionnaire
-	: FORM ASSIGN title=STRING body=codeblock							{theQuestionnaire = new Questionnaire{Title = $title.text, Body = $body.result};}
+	: FORM ASSIGN title=LIT_STRING body=codeblock						{_ASTRoot = new Questionnaire($title.text, $body.result);}
 	;
 
 statement returns [StatementBase result]
@@ -50,71 +49,75 @@ codeblock returns [List<StatementBase> result]
 
 questionStmt returns [Question result]
 	@init { ExpressionBase qExpression = null; }
-	: id=identifier ASSIGN lbl=STRING t=type 
+	: id=identifier ASSIGN lbl=LIT_STRING t=type 
 	  (LPARENS ( expr=expression {qExpression = $expr.result;} ) RPARENS)?	
-	{$result = new Question($id.result, $lbl.text, $t.result, qExpression){ Token = $ASSIGN };}
+	{$result = new Question(_qlQuestionManager, $id.result, $lbl.text, $t.result, qExpression){ AntlrToken = $ASSIGN };}
 	;
 
 ifStmt returns [StatementIf result]
 	@init { StatementIf elseIfStatement = null; }
 	: IF LPARENS cond=expression RPARENS body=codeblock													
-	  (elifSt=elseStmt {elseIfStatement = $elifSt.result;})?			{$result = new StatementIf(){Condition = $cond.result, Body = $body.result, ElseIfStatement = elseIfStatement };}																		
+	  (elifSt=elseStmt {elseIfStatement = $elifSt.result;})?			{$result = new StatementIf($cond.result, $body.result, elseIfStatement){ AntlrToken = $IF };}																		
 	;													
 
 elseStmt returns [StatementIf result]
-	: ELSE ifSt=ifStmt													{$result = $ifSt.result;}							//else if
-	| ELSE body=codeblock												{$result = new StatementIf(){Body = $body.result};}	//else
+	: ELSE ifSt=ifStmt													{$result = $ifSt.result;}											//else if
+	| ELSE body=codeblock												{$result = new StatementIf(null, $body.result){ AntlrToken = $ELSE };}//else
 	;													
 
 expression returns [ExpressionBase result]
-	: l=expression MUL r=expression										{ $result = new Mul(){LeftExpression = $l.result, RightExpression = $r.result, TokenInfo=$l.result.TokenInfo};}
-	| l=expression DIV r=expression										{ $result = new Div(){LeftExpression = $l.result, RightExpression = $r.result, TokenInfo=$l.result.TokenInfo};}
-	| l=expression PLUS r=expression									{ $result = new Add(){LeftExpression = $l.result, RightExpression = $r.result, TokenInfo=$l.result.TokenInfo};}
-	| l=expression MIN r=expression										{ $result = new Sub(){LeftExpression = $l.result, RightExpression = $r.result, TokenInfo=$l.result.TokenInfo};}
-	| l=expression EQ r=expression										{ $result = new CompareExpression(){LeftExpression = $l.result, RightExpression = $r.result, CompareOperator = new Equals(), TokenInfo=$l.result.TokenInfo};}
-	| l=expression GT r=expression										{ $result = new CompareExpression(){LeftExpression = $l.result, RightExpression = $r.result, CompareOperator = new GrTh(), TokenInfo=$l.result.TokenInfo};}
-	| l=expression GTE r=expression										{ $result = new CompareExpression(){LeftExpression = $l.result, RightExpression = $r.result, CompareOperator = new GrThEq(), TokenInfo=$l.result.TokenInfo};}
-	| l=expression ST r=expression										{ $result = new CompareExpression(){LeftExpression = $l.result, RightExpression = $r.result, CompareOperator = new SmTh(), TokenInfo=$l.result.TokenInfo};}
-	| l=expression STE r=expression										{ $result = new CompareExpression(){LeftExpression = $l.result, RightExpression = $r.result, CompareOperator = new SmThEq(), TokenInfo=$l.result.TokenInfo};}
-	| l=expression AND r=expression										{ $result = new And(){LeftExpression = $l.result, RightExpression = $r.result, Token = $AND}; }
-	| l=expression OR r=expression										{ $result = new Or(){LeftExpression = $l.result, RightExpression = $r.result, Token = $OR}; }
-	| PLUS x=expression													{ $result = new Pos{InnerExpression = $x.result, TokenInfo=$x.result.TokenInfo};} 
-    | MIN x=expression													{ $result = new Neg{InnerExpression = $x.result, TokenInfo=$x.result.TokenInfo};}
-    | NOT x=expression													{ $result = new Not{InnerExpression = $x.result, TokenInfo=$x.result.TokenInfo};}
+	: l=expression MUL r=expression										{ $result = new Mul($l.result, $r.result){ AntlrToken = $MUL}; }
+	| l=expression DIV r=expression										{ $result = new Div($l.result, $r.result){ AntlrToken = $DIV}; }
+	| l=expression PLUS r=expression									{ $result = new Add($l.result, $r.result){ AntlrToken = $PLUS}; }
+	| l=expression MIN r=expression										{ $result = new Sub($l.result, $r.result){ AntlrToken = $MIN}; }
+	| l=expression EQ r=expression										{ $result = new CompareExpression($l.result, $r.result, new Equals()){ AntlrToken = $EQ}; }
+	| l=expression GT r=expression										{ $result = new CompareExpression($l.result, $r.result, new GrTh()){ AntlrToken = $GT}; }
+	| l=expression GTE r=expression										{ $result = new CompareExpression($l.result, $r.result, new GrThEq()){ AntlrToken = $GTE}; }
+	| l=expression ST r=expression										{ $result = new CompareExpression($l.result, $r.result, new SmTh()){ AntlrToken = $ST}; }
+	| l=expression STE r=expression										{ $result = new CompareExpression($l.result, $r.result, new SmThEq()){ AntlrToken = $STE}; }
+	| l=expression AND r=expression										{ $result = new And($l.result, $r.result){ AntlrToken = $AND}; }
+	| l=expression OR r=expression										{ $result = new Or($l.result, $r.result){ AntlrToken = $OR}; }
+	| PLUS x=expression													{ $result = new Pos($x.result){ AntlrToken = $PLUS}; }
+    | MIN x=expression													{ $result = new Neg($x.result){ AntlrToken = $MIN}; }
+    | NOT x=expression													{ $result = new Not($x.result){ AntlrToken = $NOT}; }
 	| lit = literal														{ $result = $lit.result; }
 	;
 
 literal returns [ExpressionBase result]
-	: BOOL																{$result = new BoolLiteral(bool.Parse($BOOL.text)){Token=$BOOL};}
-	| INT 																{$result = new IntLiteral(int.Parse($INT.text)){Token=$INT};}
-	| STRING															{$result = new StringLiteral($STRING.text){Token=$STRING};}
+	: LIT_BOOL															{$result = new BoolLiteral(bool.Parse($LIT_BOOL.text)){ AntlrToken=$LIT_BOOL };}
+	| LIT_INT 															{$result = new IntLiteral(int.Parse($LIT_INT.text)){ AntlrToken=$LIT_INT };}
+	| LIT_STRING														{$result = new StringLiteral($LIT_STRING.text){ AntlrToken=$LIT_STRING };}
 	| id = identifier													{$result = $id.result;}
 	;
 
 identifier returns [QIdentifier result]
-	: ID																{$result = new QIdentifier($ID.text){Token=$ID};}
+	: ID																{$result = new QIdentifier($ID.text, _qlIdManager){ AntlrToken=$ID };} //also pass _qlIdManager (from partial class)
 	;
 
 type returns [QBaseType result]
-	: TYPE_BOOL															{$result = new QBool(){Token=$TYPE_BOOL};}											
-	| TYPE_INT															{$result = new QInt(){Token=$TYPE_INT};}
-	| TYPE_STRING														{$result = new QString(){Token=$TYPE_STRING};}
+	: QBOOL																{$result = new QBool{ AntlrToken=$QBOOL };}											
+	| QINT																{$result = new QInt { AntlrToken=$QINT };}
+	| QSTRING															{$result = new QString{ AntlrToken=$QSTRING };}
 	;
 
 /*
  * Lexer Rules
  */
 
-FORM : 'FORM';
-ID : ([a-z][A-Z0-9]+);	
+FORM : 'qform';
 
-TYPE_BOOL: 'bool';
-TYPE_INT: 'int';
-TYPE_STRING: 'string';
+QBOOL: 'bool';
+QINT: 'int';
+QSTRING: 'string';
 
-BOOL: 'true' | 'false';
-INT : [0-9]+;
-STRING: '"'.*?'"';
+LIT_BOOL: 'true' | 'false';
+LIT_INT : [0-9]+;
+LIT_STRING: '"'.*?'"';
+
+IF: 'if';
+ELSE : 'else';
+
+ID : ([a-z][A-Za-z0-9]+);	//id has lowest precedence
 
 LPARENS: '(';
 RPARENS: ')';
@@ -123,9 +126,6 @@ RBRACKET: '}';
 
 ASSIGN: '=';
 SEMICOLON: ';';
-
-IF: 'if';
-ELSE : 'else';
 
 AND: '&&';
 OR: '||';

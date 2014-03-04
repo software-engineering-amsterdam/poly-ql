@@ -2,13 +2,13 @@ package ast.expr;
 
 import typecheck.Symboles;
 import ast.Visitor;
-import ast.expr.types.Types;
+import ast.expr.types.Type;
 
-public class IdentLiteral extends Expr{
+public class Identifier extends Expr{
 	
 	private final String identName;
 
-	public IdentLiteral(String identName) {
+	public Identifier(String identName) {
 		this.identName = identName;
 	}
 
@@ -23,16 +23,11 @@ public class IdentLiteral extends Expr{
 	}
 
 	@Override
-	public Types typeof(Symboles symb) {
+	public Type typeof(Symboles symb) {
 		if (symb.containsSymb(this.getIdentName())){
 			return symb.getType(this.getIdentName());
 		}
 		return null;
-	}
-
-	@Override
-	public String show() {
-		return identName;
 	}
 
 }

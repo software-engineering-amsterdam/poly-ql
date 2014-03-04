@@ -4,7 +4,7 @@ import typecheck.Symboles;
 import ast.Visitor;
 import ast.expr.Expr;
 import ast.expr.types.IntType;
-import ast.expr.types.Types;
+import ast.expr.types.Type;
 
 public class Add extends BinExpr{
 
@@ -17,13 +17,9 @@ public class Add extends BinExpr{
 	}
 
 	@Override
-	public Types typeof(Symboles symb) {
+	public Type typeof(Symboles symb) {
 		return new IntType();
 		
 	}
 	
-	public String show(){
-		return "(" + show_lhs() + " + " + show_rhs() + ")";
-	}
-
 }

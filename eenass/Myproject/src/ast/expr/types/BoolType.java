@@ -2,18 +2,7 @@ package ast.expr.types;
 
 import ast.Visitor;
 
-public class BoolType extends Types {
-	
-	private boolean val;
-
-	public boolean isVal() {
-		return val;
-	}
-	
-	public void setVal(boolean val){
-		this.setKnown();
-		this.val = val;
-	}
+public class BoolType extends Type {
 
 	@Override
 	public <T> T accept(Visitor<T> visitor) {
@@ -21,12 +10,12 @@ public class BoolType extends Types {
 	}
 
 	@Override
-	public boolean isCompatableTo(Types type) {
-		return type.isCompatableToBool();
+	public boolean isCompatibleTo(Type type) {
+		return type.isCompatibleToBool();
 	}
 	
 	@Override
-	public boolean isCompatableToBool(){
+	public boolean isCompatibleToBool(){
 		return true;
 	}
 
