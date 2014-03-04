@@ -12,7 +12,7 @@ public abstract class UnaryOperator extends Expression{
 		
 	}
 	
-	public Expression returnExpr(){
+	public Expression getExpr(){
 		return this.expr;
 	}
 

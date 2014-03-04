@@ -5,9 +5,7 @@ import org.uva.sea.ql.ast.IVisitor;
 public class NullType extends Type {
 
 	@Override
-	public void accept(IVisitor visitor) {
-		// TODO Auto-generated method stub
-		
+	public void accept(IVisitor visitor) {		
 	}
 
 	@Override

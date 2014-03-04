@@ -7,9 +7,9 @@ import org.uva.sea.ql.ast.type.Type;
 
 public class Question extends Statement  {
 
-	private Identifier name;
-	private StringLiteral label;
-	private Type type;
+	private final Identifier name;
+	private final StringLiteral label;
+	private final Type type;
 	
 	
 	public Question(Identifier questionname, StringLiteral label,

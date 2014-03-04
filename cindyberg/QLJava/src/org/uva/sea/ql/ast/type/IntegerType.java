@@ -2,7 +2,7 @@ package org.uva.sea.ql.ast.type;
 
 import org.uva.sea.ql.ast.IVisitor;
 
-public class IntType extends Type{
+public class IntegerType extends Type{
 
 
 	public void accept(IVisitor visitor) {

@@ -5,8 +5,8 @@ import org.uva.sea.ql.ast.StatementVisitor;
 
 public class Form extends Statement{
 
-	private Identifier name;
-	private QuestionSet questionset;
+	private final Identifier name;
+	private final QuestionSet questionset;
 	
 	public Form(Identifier formname, QuestionSet questionset) {
 		

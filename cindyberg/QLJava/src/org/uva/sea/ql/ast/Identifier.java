@@ -5,7 +5,7 @@ import org.uva.sea.ql.typechecker.TypeEnvironment;
 
 public class Identifier extends Expression {
 
-	private String name;
+	private final String name;
 	
 	public Identifier(String name) {
 		
@@ -34,10 +34,8 @@ public class Identifier extends Expression {
 	public boolean equals(Object other) {
 	    if (other instanceof Identifier) {
 	        return name.equals(((Identifier) other).getName());
-	    }
-	    
+	    } 
 	    return false;
-
 	}
 	
 	@Override
