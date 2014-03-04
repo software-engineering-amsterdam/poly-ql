@@ -16,9 +16,9 @@ public class Main {
     public static void main(String[] args) throws Exception {
         String inputFile = null;
 
-        if ( args.length>0 ) inputFile = args[0];
+        if (args.length > 0) inputFile = args[0];
         InputStream inputStream = System.in;
-        if ( inputFile!=null ) inputStream = new FileInputStream(inputFile);
+        if (inputFile != null) inputStream = new FileInputStream(inputFile);
 
         ANTLRInputStream input = new ANTLRInputStream(inputStream);
         QuestionnaireLexer lexer = new QuestionnaireLexer(input);
@@ -26,7 +26,7 @@ public class Main {
         QuestionnaireParser parser = new QuestionnaireParser(tokens);
         ParseTree tree = parser.questionnaire(); // parse
         QuestionnaireEvalVisitor questionnaireEvalVisitor = new QuestionnaireEvalVisitor();
-        Form form  = (Form) questionnaireEvalVisitor.visit(tree);
+        Form form = (Form) questionnaireEvalVisitor.visit(tree);
 //        form.accept(new FormPrintVisitor());
         TypeChecker typeChecker = new TypeChecker();
         typeChecker.checkForm(form);

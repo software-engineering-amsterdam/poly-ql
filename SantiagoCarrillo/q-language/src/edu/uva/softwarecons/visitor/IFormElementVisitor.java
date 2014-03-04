@@ -3,6 +3,7 @@ package edu.uva.softwarecons.visitor;
 import edu.uva.softwarecons.model.Form;
 import edu.uva.softwarecons.model.expression.BinaryExpression;
 import edu.uva.softwarecons.model.expression.IdExpression;
+import edu.uva.softwarecons.model.expression.IntExpression;
 import edu.uva.softwarecons.model.expression.ParenthesisExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.AddExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.DivExpression;
@@ -62,6 +63,8 @@ public interface IFormElementVisitor {
     void visitNotEqualExpression(NotEqualExpression expression);
 
     void visitIdExpression(IdExpression expression);
+
+    void visitIntExpression(IntExpression expression);
 
     void visitParenthesisExpression(ParenthesisExpression expression);
 

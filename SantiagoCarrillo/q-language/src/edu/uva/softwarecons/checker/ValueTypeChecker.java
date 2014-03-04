@@ -4,6 +4,7 @@ import edu.uva.softwarecons.checker.error.InvalidTypeError;
 import edu.uva.softwarecons.checker.error.QuestionnaireError;
 import edu.uva.softwarecons.model.expression.Expression;
 import edu.uva.softwarecons.model.expression.IdExpression;
+import edu.uva.softwarecons.model.expression.IntExpression;
 import edu.uva.softwarecons.model.expression.ParenthesisExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.AddExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.DivExpression;
@@ -14,6 +15,7 @@ import edu.uva.softwarecons.model.expression.bool.NotExpression;
 import edu.uva.softwarecons.model.expression.bool.OrExpression;
 import edu.uva.softwarecons.model.expression.comparison.*;
 import edu.uva.softwarecons.model.type.BooleanType;
+import edu.uva.softwarecons.model.type.IntegerType;
 import edu.uva.softwarecons.model.type.NumericType;
 import edu.uva.softwarecons.model.type.Type;
 import edu.uva.softwarecons.visitor.FormBaseVisitor;
@@ -35,114 +37,106 @@ public class ValueTypeChecker extends FormBaseVisitor {
 
     private String currentQuestionId;
 
-    private Type expectedType;
+    private Class expectedType;
 
     public ValueTypeChecker(Map<String, Type> questionTypes) {
         this.questionTypes = questionTypes;
     }
 
-    public void validateType(String questionId, Expression expression, Type checkType){
+    public void validateType(String questionId, Expression expression, Class checkType){
         this.currentQuestionId = questionId;
         this.expectedType = checkType;
         expression.accept(this);
     }
 
     @Override
-    public void visitParenthesisExpression(ParenthesisExpression expression) {
-        expression.expression.accept(this);
-    }
-
-    @Override
-    public void visitMulExpression(MulExpression expression) {
-        expression.leftExpression.accept(this);
-        expression.rightExpression.accept(this);
-    }
-
-    @Override
-    public void visitDivExpression(DivExpression expression) {
-        expression.leftExpression.accept(this);
-        expression.rightExpression.accept(this);
-    }
-
-    @Override
-    public void visitAddExpression(AddExpression expression) {
-        expression.leftExpression.accept(this);
-        expression.rightExpression.accept(this);
-    }
-
-    @Override
-    public void visitSubExpression(SubExpression expression) {
-        expression.leftExpression.accept(this);
-        expression.rightExpression.accept(this);
-    }
-
-    @Override
     public void visitEqualExpression(EqualExpression expression) {
-        expression.leftExpression.accept(this);
-        expression.rightExpression.accept(this);
+        validateBinaryExpressionTerm(expression.leftExpression);
+        validateBinaryExpressionTerm(expression.rightExpression);
     }
 
     @Override
     public void visitGreaterEqualExpression(GreaterEqualExpression expression) {
-        expression.leftExpression.accept(this);
-        expression.rightExpression.accept(this);
+        validateBinaryExpressionTerm(expression.leftExpression);
+        validateBinaryExpressionTerm(expression.rightExpression);
+    }
+
+    @Override
+    public void visitAddExpression(AddExpression expression) {
+        validateBinaryExpressionTerm(expression.leftExpression);
+        validateBinaryExpressionTerm(expression.rightExpression);
+    }
+
+    @Override
+    public void visitMulExpression(MulExpression expression) {
+        validateBinaryExpressionTerm(expression.leftExpression);
+        validateBinaryExpressionTerm(expression.rightExpression);
+    }
+
+    @Override
+    public void visitDivExpression(DivExpression expression) {
+        validateBinaryExpressionTerm(expression.leftExpression);
+        validateBinaryExpressionTerm(expression.rightExpression);
+    }
+
+    @Override
+    public void visitSubExpression(SubExpression expression) {
+        validateBinaryExpressionTerm(expression.leftExpression);
+        validateBinaryExpressionTerm(expression.rightExpression);
     }
 
     @Override
     public void visitGreaterExpression(GreaterExpression expression) {
-        expression.leftExpression.accept(this);
-        expression.rightExpression.accept(this);
+        super.visitGreaterExpression(expression);
     }
 
     @Override
     public void visitLessEqualExpression(LessEqualExpression expression) {
-        expression.leftExpression.accept(this);
-        expression.rightExpression.accept(this);
+        validateBinaryExpressionTerm(expression.leftExpression);
+        validateBinaryExpressionTerm(expression.rightExpression);
     }
 
     @Override
     public void visitLessExpression(LessExpression expression) {
-        expression.leftExpression.accept(this);
-        expression.rightExpression.accept(this);
+        validateBinaryExpressionTerm(expression.leftExpression);
+        validateBinaryExpressionTerm(expression.rightExpression);
     }
 
     @Override
     public void visitNotEqualExpression(NotEqualExpression expression) {
-        expression.leftExpression.accept(this);
-        expression.rightExpression.accept(this);
+        validateBinaryExpressionTerm(expression.leftExpression);
+        validateBinaryExpressionTerm(expression.rightExpression);
+    }
+
+    private void validateBinaryExpressionTerm(Expression expression) {
+        if(IdExpression.class.isInstance(expression)){
+            validateIdExpressionType(((IdExpression) expression), NumericType.class, NumericType.class);
+        }else
+            expression.accept(this);
     }
 
     @Override
-    public void visitAndExpression(AndExpression expression) {
-        expression.leftExpression.accept(this);
-        expression.rightExpression.accept(this);
+    public void visitIntExpression(IntExpression expression) {
+        System.out.print("visit integer: "+expression);
     }
 
-    @Override
-    public void visitOrExpression(OrExpression expression) {
-        expression.leftExpression.accept(this);
-        expression.rightExpression.accept(this);
-    }
 
-    @Override
-    public void visitNotExpression(NotExpression expression) {
-        expression.expression.accept(this);
-    }
 
     @Override
     public void visitIdExpression(IdExpression expression) {
         if(NumericType.class.equals(expectedType.getClass())){
-            if(questionTypes.containsKey(expression.id) &&
-                    !(questionTypes.get(expression.id) instanceof NumericType)){
-                errors.add(new InvalidTypeError(currentQuestionId,
-                        expectedType, questionTypes.get(expression.id)));
-            }
+            validateIdExpressionType(expression, NumericType.class, expectedType);
+
         }else if(BooleanType.class.equals(expectedType.getClass())){
-            if(questionTypes.containsKey(expression.id) &&
-                    !(BooleanType.class.equals(questionTypes.get(expression.id).getClass()))){
-                errors.add(new InvalidTypeError(currentQuestionId,
-                        expectedType, questionTypes.get(expression.id)));
-            }
+            validateIdExpressionType(expression, BooleanType.class, expectedType);
+        }
+    }
+
+    private void validateIdExpressionType(IdExpression expression, Class typeClass, Class expectedType) {
+        if(questionTypes.containsKey(expression.id) &&
+                !(typeClass.isInstance(questionTypes.get(expression.id)))){
+            errors.add(new InvalidTypeError(currentQuestionId, expression.id,
+                    expectedType, questionTypes.get(expression.id).getClass()));
         }
     }
 }
