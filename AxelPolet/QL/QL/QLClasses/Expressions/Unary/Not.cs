@@ -7,17 +7,25 @@ namespace QL.QLClasses.Expressions.Unary
 {
     public class Not : UnaryExpression
     {
+        public Not(ExpressionBase innerExpression) : base(innerExpression)
+        {
+        }
+
         public override ExpressionBase GetResult()
         {
             return new BoolLiteral(!Convert.ToBoolean(InnerExpression.GetResult()));
         }
 
-        public override bool CheckType(ref QLTypeError error)
+        public override bool CheckType(QLTypeErrors typeErrors)
         {
             if (!(InnerExpression.GetResultType() is QBool))
             {
-                error.Message = string.Format("The NOT (!) operator can only be applied on booleans! Got QType '{0}', with valuetype '{1}'", InnerExpression, InnerExpression.GetType());
-                error.TokenInfo = InnerExpression.TokenInfo;
+                typeErrors.ReportError(new QLTypeError
+                {
+                    Message = string.Format("The NOT (!) operator can only be applied on booleans! Got QType '{0}', with valuetype '{1}'",
+                            InnerExpression, InnerExpression.GetType()),
+                    TokenInfo = InnerExpression.TokenInfo
+                });
 
                 return false;
             }

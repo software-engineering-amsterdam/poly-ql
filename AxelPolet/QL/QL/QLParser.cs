@@ -1,17 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using Antlr4.Runtime;
+﻿using QL.QLClasses;
+using QL.TypeChecker;
 
 namespace QL
 {
-    partial class QLParser : IAntlrErrorListener<IToken>
+    partial class QLParser
     {
-        public void SyntaxError(IRecognizer recognizer, IToken offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
+        private Questionnaire _ASTRoot;
+        private QLIdManager _qlIdManager;
+        private QLQuestionManager _qlQuestionManager;
+
+        public Questionnaire GetAST()
         {
-            //base.SyntaxError(recognizer, offendingSymbol, line, charPositionInLine, msg, e);
-            Console.WriteLine("Parser error at line {0}, char {1}", line, charPositionInLine);
+            return _ASTRoot;
+        }
+
+        public void SetIdManager(QLIdManager qlIdManager)
+        {
+            _qlIdManager = qlIdManager;
+        }
+
+        public void SetQuestionManager(QLQuestionManager qlQuestionManager)
+        {
+            _qlQuestionManager = qlQuestionManager;
         }
     }
 }

@@ -1,62 +1,45 @@
-﻿using QL.QLClasses.Types;
+﻿using System.Windows.Forms;
+using QL.QLClasses.Types;
 using QL.TypeChecker;
 
 namespace QL.QLClasses.Expressions.Identifier
 {
     public class QIdentifier : ExpressionBase
     {
-        public string Identifier { get; private set; }
-        public bool Referenced { get; set; }
-        
-        public QBaseType InnerType { get; set; }
-        public ExpressionBase InnerValue { get; set; }
+        private readonly bool _referenced;
+        private QBaseType _innerType;
+        private ExpressionBase _innerValue;
 
-        public QIdentifier(string identifier)
+        public string Name { get; private set; }
+        public QLIdManager QlIdManager { get; private set; }
+
+        public QIdentifier(string name, QLIdManager idManager)
         {
-            Identifier = identifier;
-            Referenced = true;
+            _referenced = true;
+
+            Name = name;
+            QlIdManager = idManager;
         }
 
-        public QIdentifier(string identifier, QBaseType type, ExpressionBase value = null)
+        public QIdentifier(string name, QBaseType type, QLIdManager idManager, ExpressionBase value = null)
         {
-            Identifier = identifier;
-            Referenced = false;
-            InnerType = type;
-            InnerValue = value;
-        }
+            _referenced = false;
+            _innerType = type;
+            _innerValue = value;
 
-        public void DeclareSelf()
-        {
-            if (!Referenced)
-            {
-                if (QLIdentifiers.IsDefined(Identifier))
-                {
-                    QLTypeError error = new QLTypeError();
-
-                    error.Message = string.Format("Identifier '{0}' already defined!", Identifier);
-                    error.TokenInfo = TokenInfo;
-
-                    QLTypeChecker.SaveQLError(error);
-                }
-                else
-                {
-                    QLIdentifiers.AddIdentifier(Identifier, this);
-                }
-            }
+            Name = name;
+            QlIdManager = idManager;
         }
 
         public override QBaseType GetResultType()
         {
-            if (InnerType != null)
-                return InnerType;
+            if (_innerType != null)
+                return _innerType;
 
-            if (Referenced)
+            if (_referenced)
             {
-                if (!QLIdentifiers.IsDefined(Identifier))
-                    return null;
-
-                QIdentifier refId = QLIdentifiers.GetIdentifier(Identifier);
-                return InnerType = refId.GetResultType();
+                QIdentifier refId = QlIdManager.GetIdentifierByString(Name);
+                return _innerType = refId.GetResultType();
             }
 
             return null;
@@ -64,16 +47,13 @@ namespace QL.QLClasses.Expressions.Identifier
 
         public override ExpressionBase GetResult()
         {
-            if (InnerValue != null)
-                return InnerValue;//.GetResult();
+            if (_innerValue != null)
+                return _innerValue;
 
-            if (Referenced)
+            if (_referenced)
             {
-                if (!QLIdentifiers.IsDefined(Identifier))
-                    return null;
-
-                QIdentifier refId = QLIdentifiers.GetIdentifier(Identifier);
-                return InnerValue = refId.GetResult();
+                QIdentifier refId = QlIdManager.GetIdentifierByString(Name);
+                return _innerValue = refId.GetResult();
             }
 
             return null;
@@ -81,42 +61,34 @@ namespace QL.QLClasses.Expressions.Identifier
 
         #region TypeChecker Implementation
 
-        public override bool CheckType(ref QLTypeError error)
+        public override bool CheckType(QLTypeErrors typeErrors)
         {
-            if (Referenced && !QLIdentifiers.IsDefined(Identifier))
+            if (!_referenced)
             {
-                error.Message = string.Format("Referenced identifier '{0}' is not defined!", Identifier);
-                error.TokenInfo = TokenInfo;
-                return false;
-            }
-
-            if (Referenced)
-            {
-                if (GetResult() == null)
+                if (QlIdManager.Exists(Name))
                 {
-                    error.Message = string.Format("Referenced identifier '{0}' has no value!", Identifier);
-                    error.TokenInfo = TokenInfo;
+                    typeErrors.ReportError(new QLTypeError
+                    {
+                        Message = string.Format("Identifier '{0}' is already defined!", Name),
+                        TokenInfo = TokenInfo
+                    });
                     return false;
                 }
-            }
-            
 
-            if (InnerValue != null)
+                QlIdManager.AddId(Name, this);
+            }
+            else
             {
-                QBaseType valueType = InnerValue.GetResultType();
-                if (valueType != null)
+                if (!QlIdManager.Exists(Name))
                 {
-                    if (!(GetResultType().GetType().IsCompatibleWith(InnerValue.GetResultType())))
+                    typeErrors.ReportError(new QLTypeError
                     {
-                        error.Message = string.Format("Identifier '{0}' expected a value of type '{1}', got '{2}'",
-                            Identifier, InnerType.GetType(), InnerValue.GetResultType());
-                        error.TokenInfo = TokenInfo;
-                        return false;
-                    }
+                        Message = string.Format("Referenced identifier '{0}' is not defined!", Name),
+                        TokenInfo = TokenInfo
+                    });
+                    return false;
                 }
-
-                return InnerValue.CheckType(ref error);
-            }
+            }           
 
             return true;
         }

@@ -5,12 +5,18 @@ namespace QL.QLClasses.Expressions.Binary
 {
     public abstract class BinaryExpression : ExpressionBase
     {
-        public ExpressionBase LeftExpression { get; set; }
-        public ExpressionBase RightExpression { get; set; }
+        protected ExpressionBase LeftExpression; //{ get; set; }
+        protected ExpressionBase RightExpression; //{ get; set; }
 
-        public override bool CheckType(ref QLTypeError error)
+        public BinaryExpression(ExpressionBase leftExpression, ExpressionBase rightExpression)
         {
-            return LeftExpression.CheckType(ref error) && RightExpression.CheckType(ref error);
+            LeftExpression = leftExpression;
+            RightExpression = rightExpression;
+        }
+
+        public override bool CheckType(QLTypeErrors typeErrors)
+        {
+            return LeftExpression.CheckType(typeErrors) && RightExpression.CheckType(typeErrors);
         }
 
         public override QBaseType GetResultType()

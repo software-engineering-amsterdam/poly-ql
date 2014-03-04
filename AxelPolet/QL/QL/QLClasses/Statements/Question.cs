@@ -7,41 +7,54 @@ namespace QL.QLClasses.Statements
 {
     public class Question : StatementBase
     {
-        public QIdentifier Name { get; set; }
-        public string Label { get; set; }
-        public QBaseType Type { get; set; }
-        public ExpressionBase Value { get; set; }
+        private QIdentifier _name;
+        private string _label;
+        private QBaseType _type;
+        private ExpressionBase _value;
+        private QLQuestionManager _questionManager;
 
-        public Question(QIdentifier identifier, string label, QBaseType type, ExpressionBase expression = null)
+        public Question(QLQuestionManager questionManager, QIdentifier identifier, string label, QBaseType type, ExpressionBase expression = null)
         {
-            Label = label;
-            Type = type;
-            Value = expression;
+            _label = label;
+            _type = type;
+            _value = expression;
 
-            Name = identifier;
-            Name.Referenced = false;
-            Name.InnerType = type;
+            _name = new QIdentifier(identifier.Name, type, identifier.QlIdManager, expression);
+            _name.TokenInfo = identifier.TokenInfo;
 
-            if (expression != null)
-                Name.InnerValue = expression;
-
-            Name.DeclareSelf();
+            _questionManager = questionManager;
         }
 
-        public override bool CheckType(ref QLTypeError error)
+        public override bool CheckType(QLTypeErrors typeErrors)
         {
-            if (!Name.CheckType(ref error))
+            //check identifier first
+            if (!_name.CheckType(typeErrors))
                 return false;
 
-            if (Value != null)
+            if (!_questionManager.LabelExists(_label))
             {
-                if (!Value.CheckType(ref error))
+                typeErrors.ReportError(new QLTypeError
+                {
+                    IsWarning = true,
+                    Message = string.Format("(Question) Declared label already exists: '{0}'", _label),
+                    TokenInfo = _name.TokenInfo
+                });
+            }
+
+            if (_value != null)
+            {
+                if (!_value.CheckType(typeErrors))
                     return false;
 
-                if (!Type.GetType().IsCompatibleWith(Value.GetResultType()))
+                if (!_type.GetType().IsCompatibleWith(_value.GetResultType()))
                 {
-                    error.Message = string.Format("(Question) Assigned value does not match declared type. Type: '{0}' ValueType: '{1}'", Type.GetType(), Value.GetType());
-                    error.TokenInfo = Name.TokenInfo;
+                    typeErrors.ReportError(new QLTypeError
+                    {
+                        Message = string.Format(
+                                "(Question) Assigned value does not match declared type. Expected type: '{0}', Given value: '{1}'",
+                                _type.GetType(), _value.GetResultType()),
+                        TokenInfo = _name.TokenInfo
+                    });
 
                     return false;
                 }

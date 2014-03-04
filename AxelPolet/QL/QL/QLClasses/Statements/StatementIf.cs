@@ -7,40 +7,44 @@ namespace QL.QLClasses.Statements
 {
     public class StatementIf : StatementBase
     {
-        public ExpressionBase Condition { get; set; }
-        public List<StatementBase> Body { get; set; }
-        public StatementIf ElseIfStatement { get; set; }
+        private ExpressionBase _condition;
+        private List<StatementBase> _body;
+        private StatementIf _elseIfStatement;
 
-        public StatementIf()
+        public StatementIf(ExpressionBase condition, List<StatementBase> body, StatementIf elseIfStatement = null)
         {
-            Body = new List<StatementBase>();
+            _condition = condition;
+            _body = body;
+            _elseIfStatement = elseIfStatement;
         }
 
-        public override bool CheckType(ref QLTypeError error)
+        public override bool CheckType(QLTypeErrors typeErrors)
         {
             //when else statement, condition is null
-            if (Condition != null)
+            if (_condition != null)
             {
-                if (!Condition.CheckType(ref error))
+                if (!_condition.CheckType(typeErrors))
                     return false;
 
-                if (!(Condition.GetResultType() is QBool))
+                if (!_condition.GetResultType().IsCompatibleWith(new QBool()))
                 {
-                    error.Message = string.Format("Condition is not a boolean. Got QType '{0}', with valuetype '{1}'", Condition, Condition.GetResultType());
-                    error.TokenInfo = Condition.TokenInfo;
-                    
+                    typeErrors.ReportError(new QLTypeError
+                    {
+                        Message = string.Format("Condition is not a boolean. Got QType '{0}'", _condition.GetResultType()),
+                        TokenInfo = _condition.TokenInfo
+                    });
                     return false;
                 }
             }
             
-            foreach (StatementBase statement in Body)
+            foreach (StatementBase statement in _body)
             {
-                if (!statement.CheckType(ref error))
+                if (!statement.CheckType(typeErrors))
                     return false;
             }
 
-            if (ElseIfStatement != null)
-                return ElseIfStatement.CheckType(ref error);
+            if (_elseIfStatement != null)
+                return _elseIfStatement.CheckType(typeErrors);
 
             return true;
         }
