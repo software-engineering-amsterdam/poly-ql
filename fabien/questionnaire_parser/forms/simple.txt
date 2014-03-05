@@ -1,4 +1,19 @@
 form Hello {
-  what is this?
-  boolean fu
+  
+  what Is this?
+  integer fu /*  sadfdf */
+ 
+  required "true" // no 
+  error "yes"
+  
+  if (2 && false) {
+      Again?
+      integer fpoo
+  }
+  else {
+    Oh dear?
+    integer bar
+  }
+  
+  put "This is a test" (foo)
 }

@@ -1,7 +1,6 @@
 form Hello {
-  what is this?
-  boolean fu
+  How much money can you spend?
+  money fu
   
-  put "Your day is now" (3 * fu)
-  put "Your day is now" (4 * fu)
+  put "Great that would save" (10 * fu)
 }

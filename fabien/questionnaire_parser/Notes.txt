@@ -1,0 +1,50 @@
+Computation
+
+- TypeErrors geen AST nodes maken
+
+- Question list
+
+  - id
+  - question itself
+  - settings
+  - options
+  
+    
+
+- Operator
+    - Left
+        Computation | reference | value
+        
+    - Right
+        Computation | reference | value
+        
+        
+
+Typechecker
+    - bool && bool = true
+    
+    
+    
+    
+    
+Node
+    
+    
+    Children:
+        List of nodes with certain type. Iterate on nodes:
+        
+        
+        Question:
+            Add question element
+        
+        Put:
+            Add put element
+        
+        Expression: 
+            Generate parent-div
+            
+            # Call __iter__ on this node
+            Add children to div
+        
+    
+    
