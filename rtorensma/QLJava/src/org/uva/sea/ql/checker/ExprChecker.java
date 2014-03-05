@@ -86,7 +86,7 @@ public class ExprChecker implements ExprVisitor<Boolean> {
 
 	@Override
 	public Boolean visit(Ident expr) {
-		if(!this.typeEnv.containsKey(expr)) {
+		if (!this.typeEnv.containsKey(expr)) {
 			this.errors.add(String.format("Identifier %s isn't defined", expr));
 			return false;
 		}
