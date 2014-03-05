@@ -1,6 +1,6 @@
 package org.uva.sea.ql.parser.antlr.QL4.AST.Expression;
 
-import org.uva.sea.ql.parser.antlr.QL4.AST.QL4Tree;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Tree;
 
 /**
  * Represents a braced expression in QL4 AST
@@ -8,9 +8,9 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.QL4Tree;
  *
  */
 public class BraceExpr extends Expression {
-	QL4Tree bracedExpr;
+	Tree bracedExpr;
 	
-	public BraceExpr(QL4Tree expr) {
+	public BraceExpr(Tree expr) {
 		this.bracedExpr = expr;
 	}
 	

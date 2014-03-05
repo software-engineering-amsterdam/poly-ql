@@ -1,6 +1,6 @@
 package org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary;
 
-import org.uva.sea.ql.parser.antlr.QL4.AST.QL4Tree;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Expression;
 
 /**
  * Represents the not equal exression in QL4 AST
@@ -9,7 +9,7 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.QL4Tree;
  */
 public class NeqExpr extends BinaryExpr {
 
-	public NeqExpr(QL4Tree lhs, QL4Tree rhs) {
+	public NeqExpr(Expression lhs, Expression rhs) {
 		super(lhs, rhs);
 	}
 

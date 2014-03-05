@@ -1,6 +1,5 @@
 package org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary;
 
-import org.uva.sea.ql.parser.antlr.QL4.AST.QL4Tree;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Expression;
 
 /**
@@ -13,10 +12,10 @@ public abstract class BinaryExpr extends Expression {
 	/**
 	 * The left hand and right hand side of the binair expression
 	 */
-	QL4Tree lhs;
-	QL4Tree rhs;
+	Expression lhs;
+	Expression rhs;
 	
-	public BinaryExpr(QL4Tree lhs, QL4Tree rhs) {
+	public BinaryExpr(Expression lhs, Expression rhs) {
 		this.lhs = lhs;
 		this.rhs = rhs;
 	}

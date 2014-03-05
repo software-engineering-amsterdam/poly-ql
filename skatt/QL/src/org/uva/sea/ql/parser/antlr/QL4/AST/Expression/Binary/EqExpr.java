@@ -1,6 +1,6 @@
 package org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary;
 
-import org.uva.sea.ql.parser.antlr.QL4.AST.QL4Tree;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Expression;
 
 /**
  * Represents Equality expression in QL4 AST
@@ -9,7 +9,7 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.QL4Tree;
  */
 public class EqExpr extends BinaryExpr {
 
-	public EqExpr(QL4Tree lhs, QL4Tree rhs) {
+	public EqExpr(Expression lhs, Expression rhs) {
 		super(lhs, rhs);
 	}
 

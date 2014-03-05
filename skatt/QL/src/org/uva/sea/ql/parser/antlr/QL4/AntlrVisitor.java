@@ -6,9 +6,10 @@ import java.util.List;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Conditional;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Form;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Question;
-import org.uva.sea.ql.parser.antlr.QL4.AST.QL4Structures;
-import org.uva.sea.ql.parser.antlr.QL4.AST.QL4Tree;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Structures;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Tree;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.BraceExpr;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Expression;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.AndExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.DivExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.EqExpr;
@@ -34,7 +35,7 @@ import QL4.QL4Parser;
  * @author Sammie Katt
  *
  */
-public class AntlrVisitor extends QL4BaseVisitor<QL4Tree> {
+public class AntlrVisitor extends QL4BaseVisitor<Tree> {
 
   /**
    * Specifies behavior when visiting the form 
@@ -48,14 +49,14 @@ public class AntlrVisitor extends QL4BaseVisitor<QL4Tree> {
   /**
    * Returns a structures object, containing its structure in a list
    */
-  public QL4Tree visitStructures(QL4Parser.StructuresContext ctx) {
-	  List<QL4Tree> structures = new ArrayList<QL4Tree>();
+  public Tree visitStructures(QL4Parser.StructuresContext ctx) {
+	  List<Tree> structures = new ArrayList<Tree>();
 
 	  for (QL4Parser.StructureContext struct : ctx.structure()) {
 		  structures.add(struct.accept(this));
 	  }
 	  
-	  return new QL4Structures(structures);
+	  return new Structures(structures);
   }
 
   /**
@@ -65,17 +66,17 @@ public class AntlrVisitor extends QL4BaseVisitor<QL4Tree> {
   public Conditional visitConditional(QL4Parser.ConditionalContext ctx) {
 
 	 // define if/else (if available) conditions and structures
-	 QL4Tree ifExpr = ctx.ifexpr.accept(this);
-	 QL4Tree ifStruc = ctx.ifstruc.accept(this);
+	 Tree ifExpr = ctx.ifexpr.accept(this);
+	 Tree ifStruc = ctx.ifstruc.accept(this);
 	 
-	 QL4Tree elseStruc = null;
+	 Tree elseStruc = null;
 	 if (ctx.elsestruc != null) {
 		 elseStruc = ctx.elsestruc.accept(this);
 	 } 
 	 
 	 // define elseifConditions and their structs by looping over them in ctx
-	 List<QL4Tree> elseifExprs = new ArrayList<QL4Tree>();
-	 List<QL4Tree> elseifStrucs = new ArrayList<QL4Tree>();
+	 List<Tree> elseifExprs = new ArrayList<Tree>();
+	 List<Tree> elseifStrucs = new ArrayList<Tree>();
 
 	 // start i = 1, as first expression is always if
 	 for (int i=1; i < ctx.expression().size(); i++) {
@@ -92,9 +93,9 @@ public class AntlrVisitor extends QL4BaseVisitor<QL4Tree> {
    * Type, label, id and value (question.computed is false)
    */
   public Question visitRegQuestion(QL4Parser.RegQuestionContext ctx) {
-	  QL4Tree id = new QL4Identifier(ctx.IDENTIFIER().getText());
-	  QL4Tree label = new QL4Label(ctx.LABEL().getText());
-	  QL4Tree type = new QL4Type(ctx.TYPE().getText());
+	  Tree id = new QL4Identifier(ctx.IDENTIFIER().getText());
+	  Tree label = new QL4Label(ctx.LABEL().getText());
+	  Tree type = new QL4Type(ctx.TYPE().getText());
 	  
 	  return new Question(id, label, type); 
   }
@@ -105,10 +106,10 @@ public class AntlrVisitor extends QL4BaseVisitor<QL4Tree> {
    * Type, label, id and value (question.computed is true)
    */
   public Question visitCompQuestion(QL4Parser.CompQuestionContext ctx) {
-	  QL4Tree id = new QL4Identifier(ctx.IDENTIFIER().getText());
-	  QL4Tree label = new QL4Label(ctx.LABEL().getText());
-	  QL4Tree type = new QL4Type(ctx.TYPE().getText());
-	  QL4Tree value = ctx.expression().accept(this);
+	  Tree id = new QL4Identifier(ctx.IDENTIFIER().getText());
+	  Tree label = new QL4Label(ctx.LABEL().getText());
+	  Tree type = new QL4Type(ctx.TYPE().getText());
+	  Tree value = ctx.expression().accept(this);
 	  
 	  return new Question(id, label, type, value); 
   }
@@ -119,29 +120,29 @@ public class AntlrVisitor extends QL4BaseVisitor<QL4Tree> {
   }
   
   public MultExpr visitMultExpr(QL4Parser.MultExprContext ctx) {
-	  QL4Tree lhs = ctx.lhs.accept(this);
-	  QL4Tree rhs = ctx.rhs.accept(this);
+	  Expression lhs = (Expression) ctx.lhs.accept(this);
+	  Expression rhs = (Expression) ctx.rhs.accept(this);
 	  
 	  return new MultExpr(lhs, rhs);	  
   }
   
   public DivExpr visitDivExpr(QL4Parser.DivExprContext ctx) {
-	  QL4Tree lhs = ctx.lhs.accept(this);
-	  QL4Tree rhs = ctx.rhs.accept(this);
+	  Expression lhs = (Expression) ctx.lhs.accept(this);
+	  Expression rhs = (Expression) ctx.rhs.accept(this);
 	  
 	  return new DivExpr(lhs, rhs);	  
   }
   
   public PlusExpr visitPlusExpr(QL4Parser.PlusExprContext ctx) {
-	  QL4Tree lhs = ctx.lhs.accept(this);
-	  QL4Tree rhs = ctx.rhs.accept(this);
+	  Expression lhs = (Expression) ctx.lhs.accept(this);
+	  Expression rhs = (Expression) ctx.rhs.accept(this);
 	  
 	  return new PlusExpr(lhs, rhs);	  
   }
   
   public MinExpr visitMinExpr(QL4Parser.MinExprContext ctx) {
-	  QL4Tree lhs = ctx.lhs.accept(this);
-	  QL4Tree rhs = ctx.rhs.accept(this);
+	  Expression lhs = (Expression) ctx.lhs.accept(this);
+	  Expression rhs = (Expression) ctx.rhs.accept(this);
 	  
 	  return new MinExpr(lhs, rhs);	  
   }
@@ -149,36 +150,36 @@ public class AntlrVisitor extends QL4BaseVisitor<QL4Tree> {
   //////////////////////// visiting binair logical expressions
 
   public AndExpr visitAndExpr(QL4Parser.AndExprContext ctx) {
-	  QL4Tree lhs = ctx.lhs.accept(this);
-	  QL4Tree rhs = ctx.rhs.accept(this);
+	  Expression lhs = (Expression) ctx.lhs.accept(this);
+	  Expression rhs = (Expression) ctx.rhs.accept(this);
 	  
 	  return new AndExpr(lhs, rhs);	  
   }
   
   public OrExpr visitOrExpr(QL4Parser.OrExprContext ctx) {
-	  QL4Tree lhs = ctx.lhs.accept(this);
-	  QL4Tree rhs = ctx.rhs.accept(this);
+	  Expression lhs = (Expression) ctx.lhs.accept(this);
+	  Expression rhs = (Expression) ctx.rhs.accept(this);
 	  
 	  return new OrExpr(lhs, rhs);	  
   }
   
   public EqExpr visitEqExpr(QL4Parser.EqExprContext ctx) {
-	  QL4Tree lhs = ctx.lhs.accept(this);
-	  QL4Tree rhs = ctx.rhs.accept(this);
+	  Expression lhs = (Expression) ctx.lhs.accept(this);
+	  Expression rhs = (Expression) ctx.rhs.accept(this);
 	  
 	  return new EqExpr(lhs, rhs);	  
   }
   
   public NeqExpr visitNeqExpr(QL4Parser.NeqExprContext ctx) {
-	  QL4Tree lhs = ctx.lhs.accept(this);
-	  QL4Tree rhs = ctx.rhs.accept(this);
+	  Expression lhs = (Expression) ctx.lhs.accept(this);
+	  Expression rhs = (Expression) ctx.rhs.accept(this);
 	  
 	  return new NeqExpr(lhs, rhs);	  
   }
   
   public GeqExpr visitGeqExpr(QL4Parser.GeqExprContext ctx) {
-	  QL4Tree lhs = ctx.lhs.accept(this);
-	  QL4Tree rhs = ctx.rhs.accept(this);
+	  Expression lhs = (Expression) ctx.lhs.accept(this);
+	  Expression rhs = (Expression) ctx.rhs.accept(this);
 	  
 	  return new GeqExpr(lhs, rhs);	  
   }

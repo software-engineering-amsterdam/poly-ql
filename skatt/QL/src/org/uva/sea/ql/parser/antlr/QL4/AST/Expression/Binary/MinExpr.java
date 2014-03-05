@@ -1,6 +1,6 @@
 package org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary;
 
-import org.uva.sea.ql.parser.antlr.QL4.AST.QL4Tree;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Expression;
 
 /**
  * Represents a min expression in the QL4 AST
@@ -9,7 +9,7 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.QL4Tree;
  */
 public class MinExpr extends BinaryExpr {
 
-	public MinExpr(QL4Tree lhs, QL4Tree rhs) {
+	public MinExpr(Expression lhs, Expression rhs) {
 		super(lhs, rhs);
 	}
 	

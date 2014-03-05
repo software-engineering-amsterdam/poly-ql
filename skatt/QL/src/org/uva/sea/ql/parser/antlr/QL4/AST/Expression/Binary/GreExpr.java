@@ -1,15 +1,15 @@
 package org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary;
 
-import org.uva.sea.ql.parser.antlr.QL4.AST.QL4Tree;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Expression;
 
 /**
  * Represents the greater than expression in QL4 AST
- * @author Sammie
+ * @author Sammie Katt
  *
  */
 public class GreExpr extends BinaryExpr {
 
-	public GreExpr(QL4Tree lhs, QL4Tree rhs) {
+	public GreExpr(Expression lhs, Expression rhs) {
 		super(lhs, rhs);
 	}
 

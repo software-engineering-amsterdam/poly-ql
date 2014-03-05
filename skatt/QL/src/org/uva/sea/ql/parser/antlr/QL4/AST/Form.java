@@ -5,19 +5,19 @@ package org.uva.sea.ql.parser.antlr.QL4.AST;
  * @author Sammie Katt
  *
  */
-public class Form extends QL4Tree {
+public class Form extends Tree {
 	
 	/**
 	 * The structures of the form, the upper most 
 	 * collection of all questions and conditionals
 	 */
-	QL4Tree structures;
+	Tree structures;
 	
 	/**
 	 * Constructor, setting input QLtree as structures
 	 * @param structures
 	 */
-	public Form(QL4Tree structures) {
+	public Form(Tree structures) {
 		this.structures = structures;
 	}
 		

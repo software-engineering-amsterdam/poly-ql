@@ -8,12 +8,12 @@ package org.uva.sea.ql.parser.antlr.QL4.AST;
  * @author Sammie Katt
  *
  */
-public class Question extends QL4Tree {
+public class Question extends Tree {
 	boolean computed;
-	QL4Tree id; 
-	QL4Tree label;
-	QL4Tree type;
-	QL4Tree value;
+	Tree id; 
+	Tree label;
+	Tree type;
+	Tree value;
 	
 	/**
 	 * Constructor, Sets the id, label and type
@@ -22,14 +22,14 @@ public class Question extends QL4Tree {
 	 * @param label
 	 * @param type
 	 */
-	public Question(QL4Tree id, QL4Tree label, QL4Tree type) {
+	public Question(Tree id, Tree label, Tree type) {
 		this.computed = false;
 		this.id = id;
 		this.label = label;
 		this.type = type;
 	}
 	
-	public Question(QL4Tree id, QL4Tree label, QL4Tree type, QL4Tree value) {
+	public Question(Tree id, Tree label, Tree type, Tree value) {
 		this.computed = true;
 		this.id = id;
 		this.label = label;
