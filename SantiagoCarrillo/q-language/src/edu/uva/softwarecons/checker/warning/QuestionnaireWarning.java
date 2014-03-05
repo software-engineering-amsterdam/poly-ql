@@ -7,9 +7,14 @@ package edu.uva.softwarecons.checker.warning;
  */
 public class QuestionnaireWarning {
 
-    public String message;
+    private String message;
 
     public QuestionnaireWarning(String message) {
         this.message = message;
+    }
+
+    @Override
+    public String toString() {
+        return message;
     }
 }

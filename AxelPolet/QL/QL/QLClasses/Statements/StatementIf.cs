@@ -7,9 +7,9 @@ namespace QL.QLClasses.Statements
 {
     public class StatementIf : StatementBase
     {
-        private ExpressionBase _condition;
-        private List<StatementBase> _body;
-        private StatementIf _elseIfStatement;
+        private readonly ExpressionBase _condition;
+        private readonly List<StatementBase> _body;
+        private readonly StatementIf _elseIfStatement;
 
         public StatementIf(ExpressionBase condition, List<StatementBase> body, StatementIf elseIfStatement = null)
         {

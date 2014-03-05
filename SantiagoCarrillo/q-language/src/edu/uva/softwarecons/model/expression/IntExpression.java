@@ -1,6 +1,8 @@
 package edu.uva.softwarecons.model.expression;
 
-import edu.uva.softwarecons.visitor.IFormElementVisitor;
+import edu.uva.softwarecons.model.type.Type;
+import edu.uva.softwarecons.visitor.expression.IExpressionElementVisitor;
+import edu.uva.softwarecons.visitor.form.IFormElementVisitor;
 
 /**
  * Falconlabs
@@ -9,14 +11,23 @@ import edu.uva.softwarecons.visitor.IFormElementVisitor;
  */
 public class IntExpression implements Expression{
 
-    int value;
+    private final int value;
 
     public IntExpression(int value) {
         this.value = value;
     }
 
     @Override
-    public void accept(IFormElementVisitor visitor) {
+    public Type eval() {
+        return null;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    @Override
+    public void accept(IExpressionElementVisitor visitor) {
         visitor.visitIntExpression(this);
     }
 }

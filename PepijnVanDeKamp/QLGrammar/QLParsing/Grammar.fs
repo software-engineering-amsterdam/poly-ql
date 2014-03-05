@@ -7,49 +7,50 @@ module Grammar =
         | QL_Money
         | QL_Integer
 
-    type Question =
-        { QuestionId : string;
-        QuestionString : string;
-        QuestionType : QuestionType }
-
-    type Condition =
-        { Conditions : Condition list
-          Questions: Question list
-        }
-
-    type Form =
-        { Name : string;
-          QuestionList : Question list;
-          //Conditions : Condition list;
-         } 
-         override m.ToString() = sprintf "%A" m
 
     type NumericOperator = 
-         | Add
+         | Plus
          | Minus
-         | Multiply
+         | Times
          | Divide
 
     type BinaryOperator =
          | Equals
          | NotEquals
-         | GreatherThan
-         | LessThen
-         | GreaterEqualThan
-         | GreatherLessThan
+         | GreaterThan
+         | LessThan
+         | GreaterEqualsThan
+         | LessEqualsThan
 
     type Literal = 
-         | Boolean
-         | Integer
-         | Money
+         | Boolean of bool
+         | Integer of int
+         | String of string
 
     type Expression =
-        | ID
-        | Neg of Expression
-        | ArithmicExpression of Expression * NumericOperator * Expression
-        | BinaryExpression of Expression * BinaryOperator * Expression
-        | Literal
+         | Id of string
+         | Neg of Expression
+         | ArithmicExpression of Expression * NumericOperator * Expression
+         | BinaryExpression of Expression * BinaryOperator * Expression
+         | LiteralStatement of Literal
         
+
+    type Statement = 
+    | Question of string * string * QuestionType
+    | Condition of Expression * Statement list
+
+//    type Statement = 
+//        | QuestionStatement of Question
+//        | ConditionStatement of Condition
+
+
+    type Form =
+        { Name : string;
+          //QuestionList : Question list;
+          StatementList : Statement list;
+          //Conditions : Condition list;
+         } 
+         override m.ToString() = sprintf "%A" m
 
  
 

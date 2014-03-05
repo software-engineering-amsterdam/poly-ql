@@ -8,6 +8,6 @@ package edu.uva.softwarecons.checker.error;
 public class ConditionInvalidTypeError extends QuestionnaireError{
 
     public ConditionInvalidTypeError(String id) {
-        super("The expression with ID: "+id+" is not a Boolean Type");
+        super("The argument with ID: "+id+" is not a Boolean Type");
     }
 }

@@ -7,9 +7,14 @@ package edu.uva.softwarecons.checker.error;
  */
 public class QuestionnaireError{
 
-    String message;
+    private String message;
 
     public QuestionnaireError(String message) {
         this.message = message;
+    }
+
+    @Override
+    public String toString() {
+        return message;
     }
 }

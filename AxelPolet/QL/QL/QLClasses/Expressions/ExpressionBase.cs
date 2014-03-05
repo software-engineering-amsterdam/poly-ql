@@ -1,6 +1,4 @@
-﻿using Antlr4.Runtime;
-using QL.QLClasses.Types;
-using QL.TypeChecker;
+﻿using QL.QLClasses.Types;
 
 namespace QL.QLClasses.Expressions
 {

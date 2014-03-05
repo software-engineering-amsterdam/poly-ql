@@ -1,36 +1,22 @@
 from grammar import *
-
-# command line parsing
 from util import *
 
-import xml.etree.ElementTree as ET
-
-    
 if __name__ == '__main__': 
 
     try:
-        xml = form.parseFile( options.filename ).asXML()
-        print xml
-        
+        parsed = form.parseFile( options.filename, parseAll=True)
+        #print parsed.dump()
     except IOError:
         #print "File %s not found\n" % options.filename
         raise
-        
     
-    form = Form(ET.fromstring(xml))
     
-    form.printQuestions()
+    for node in parsed[1:]:
         
-    '''
-        
-    for child in root:
-        node = Node(child.tag)
-        
-        form.addNode(node)
-        
-        if child.tag == "question":
-            question = Question( child )
-            
-        if child.tag == "expression":
-    '''         
-        
+        print node.asDict()
+        print node.condition[0]
+        print node.condition[1]
+        print node.condition[2]
+    
+    #for node in parsed:
+    #    print node.getName()

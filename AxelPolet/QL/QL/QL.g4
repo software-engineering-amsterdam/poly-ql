@@ -49,9 +49,14 @@ codeblock returns [List<StatementBase> result]
 
 questionStmt returns [Question result]
 	@init { ExpressionBase qExpression = null; }
-	: id=identifier ASSIGN lbl=LIT_STRING t=type 
+	: ID ASSIGN lbl=LIT_STRING t=type 
 	  (LPARENS ( expr=expression {qExpression = $expr.result;} ) RPARENS)?	
-	{$result = new Question(_qlQuestionManager, $id.result, $lbl.text, $t.result, qExpression){ AntlrToken = $ASSIGN };}
+	{
+		if(qExpression == null)
+			$result = new Question(_qlMemoryManager, $ID.text, $lbl.text, $t.result){ AntlrToken = $ID };
+		else
+			$result = new ComputedQuestion(_qlMemoryManager, $ID.text, $lbl.text, $t.result, qExpression){ AntlrToken = $ID };
+	}
 	;
 
 ifStmt returns [StatementIf result]
@@ -66,7 +71,10 @@ elseStmt returns [StatementIf result]
 	;													
 
 expression returns [ExpressionBase result]
-	: l=expression MUL r=expression										{ $result = new Mul($l.result, $r.result){ AntlrToken = $MUL}; }
+	: PLUS x=expression													{ $result = new Pos($x.result){ AntlrToken = $PLUS}; }
+    | MIN x=expression													{ $result = new Neg($x.result){ AntlrToken = $MIN}; }
+    | NOT x=expression													{ $result = new Not($x.result){ AntlrToken = $NOT}; }
+	| l=expression MUL r=expression										{ $result = new Mul($l.result, $r.result){ AntlrToken = $MUL}; }
 	| l=expression DIV r=expression										{ $result = new Div($l.result, $r.result){ AntlrToken = $DIV}; }
 	| l=expression PLUS r=expression									{ $result = new Add($l.result, $r.result){ AntlrToken = $PLUS}; }
 	| l=expression MIN r=expression										{ $result = new Sub($l.result, $r.result){ AntlrToken = $MIN}; }
@@ -77,9 +85,6 @@ expression returns [ExpressionBase result]
 	| l=expression STE r=expression										{ $result = new CompareExpression($l.result, $r.result, new SmThEq()){ AntlrToken = $STE}; }
 	| l=expression AND r=expression										{ $result = new And($l.result, $r.result){ AntlrToken = $AND}; }
 	| l=expression OR r=expression										{ $result = new Or($l.result, $r.result){ AntlrToken = $OR}; }
-	| PLUS x=expression													{ $result = new Pos($x.result){ AntlrToken = $PLUS}; }
-    | MIN x=expression													{ $result = new Neg($x.result){ AntlrToken = $MIN}; }
-    | NOT x=expression													{ $result = new Not($x.result){ AntlrToken = $NOT}; }
 	| lit = literal														{ $result = $lit.result; }
 	;
 
@@ -91,7 +96,7 @@ literal returns [ExpressionBase result]
 	;
 
 identifier returns [QIdentifier result]
-	: ID																{$result = new QIdentifier($ID.text, _qlIdManager){ AntlrToken=$ID };} //also pass _qlIdManager (from partial class)
+	: ID																{$result = new QIdentifier(_qlMemoryManager, $ID.text){ AntlrToken=$ID };} //also pass _qlMemoryManager (from partial class)
 	;
 
 type returns [QBaseType result]

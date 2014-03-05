@@ -1,6 +1,10 @@
 // Generated from /Users/Sinan/Documents/NetBeansProjects/Software Construction/sinan/Software Construction/src/softwareconstruction/SinansGrammer.g by ANTLR 4.2
 
     package softwareconstruction;
+    import softwareconstruction.*;
+    import softwareconstruction.form.*;
+    import softwareconstruction.questions.*;
+    import softwareconstruction.literals.*;
     import java.util.ArrayList;
 
 import org.antlr.v4.runtime.misc.NotNull;
@@ -11,6 +15,17 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  * {@link SinansGrammerParser}.
  */
 public interface SinansGrammerListener extends ParseTreeListener {
+	/**
+	 * Enter a parse tree produced by {@link SinansGrammerParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterExpression(@NotNull SinansGrammerParser.ExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SinansGrammerParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitExpression(@NotNull SinansGrammerParser.ExpressionContext ctx);
+
 	/**
 	 * Enter a parse tree produced by {@link SinansGrammerParser#form}.
 	 * @param ctx the parse tree
@@ -32,6 +47,17 @@ public interface SinansGrammerListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitItem(@NotNull SinansGrammerParser.ItemContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link SinansGrammerParser#ifstatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterIfstatement(@NotNull SinansGrammerParser.IfstatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SinansGrammerParser#ifstatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitIfstatement(@NotNull SinansGrammerParser.IfstatementContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link SinansGrammerParser#conditional}.

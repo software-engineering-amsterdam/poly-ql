@@ -1,7 +1,7 @@
 package edu.uva.softwarecons.main;
 
 import edu.uva.softwarecons.checker.TypeChecker;
-import edu.uva.softwarecons.grammar.QuestionnaireEvalVisitor;
+import edu.uva.softwarecons.grammar.QuestionnaireBuilderVisitor;
 import edu.uva.softwarecons.grammar.QuestionnaireLexer;
 import edu.uva.softwarecons.grammar.QuestionnaireParser;
 import edu.uva.softwarecons.model.Form;
@@ -25,8 +25,8 @@ public class Main {
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         QuestionnaireParser parser = new QuestionnaireParser(tokens);
         ParseTree tree = parser.questionnaire(); // parse
-        QuestionnaireEvalVisitor questionnaireEvalVisitor = new QuestionnaireEvalVisitor();
-        Form form = (Form) questionnaireEvalVisitor.visit(tree);
+        QuestionnaireBuilderVisitor questionnaireBuilderVisitor = new QuestionnaireBuilderVisitor();
+        Form form = (Form) questionnaireBuilderVisitor.visit(tree);
 //        form.accept(new FormPrintVisitor());
         TypeChecker typeChecker = new TypeChecker();
         typeChecker.checkForm(form);

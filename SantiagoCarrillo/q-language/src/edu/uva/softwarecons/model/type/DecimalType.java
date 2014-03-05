@@ -1,6 +1,7 @@
 package edu.uva.softwarecons.model.type;
 
-import edu.uva.softwarecons.visitor.IFormElementVisitor;
+import edu.uva.softwarecons.visitor.form.IFormElementVisitor;
+import edu.uva.softwarecons.visitor.type.ITypeElementVisitor;
 
 /**
  * Falconlabs
@@ -9,7 +10,11 @@ import edu.uva.softwarecons.visitor.IFormElementVisitor;
  */
 public class DecimalType extends NumericType{
 
-    public float value;
+    private final float value;
+
+    public DecimalType(float value) {
+        this.value = value;
+    }
 
     @Override
     public Object getValue() {
@@ -17,12 +22,12 @@ public class DecimalType extends NumericType{
     }
 
     @Override
-    public void accept(IFormElementVisitor visitor) {
-        visitor.visitDecimalType(this);
+    public String toString() {
+        return "decimal";
     }
 
     @Override
-    public String toString() {
-        return "decimal";
+    public void accept(ITypeElementVisitor visitor) {
+        visitor.visitDecimalType(this);
     }
 }

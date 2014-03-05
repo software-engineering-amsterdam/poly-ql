@@ -9,6 +9,17 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface QuestionnaireListener extends ParseTreeListener {
 	/**
+	 * Enter a parse tree produced by {@link QuestionnaireParser#else}.
+	 * @param ctx the parse tree
+	 */
+	void enterElse(@NotNull QuestionnaireParser.ElseContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QuestionnaireParser#else}.
+	 * @param ctx the parse tree
+	 */
+	void exitElse(@NotNull QuestionnaireParser.ElseContext ctx);
+
+	/**
 	 * Enter a parse tree produced by {@link QuestionnaireParser#simpleQuestion}.
 	 * @param ctx the parse tree
 	 */
@@ -18,17 +29,6 @@ public interface QuestionnaireListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitSimpleQuestion(@NotNull QuestionnaireParser.SimpleQuestionContext ctx);
-
-	/**
-	 * Enter a parse tree produced by {@link QuestionnaireParser#ifElse}.
-	 * @param ctx the parse tree
-	 */
-	void enterIfElse(@NotNull QuestionnaireParser.IfElseContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link QuestionnaireParser#ifElse}.
-	 * @param ctx the parse tree
-	 */
-	void exitIfElse(@NotNull QuestionnaireParser.IfElseContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link QuestionnaireParser#computedQuestion}.
