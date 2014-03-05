@@ -1,0 +1,7 @@
+package org.uva.sea.ql.parser.antlr.QL4.AST.Value;
+
+import org.uva.sea.ql.parser.antlr.QL4.AST.QL4Tree;
+
+public abstract class QL4Value extends QL4Tree {
+
+}
