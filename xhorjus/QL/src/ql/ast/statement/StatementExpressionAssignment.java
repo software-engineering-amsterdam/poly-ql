@@ -8,7 +8,7 @@ import ql.ast.expression.ExpressionInterface;
  * An assignment consists of a question ID, its contents, 
  * a type and an expression.
  */
-public class StatementExpressionAssignment implements StatementInterface {
+public class StatementExpressionAssignment implements StatementInterface, StatementAssignmentInterface {
 	private String ID;
 	private String content;
 	private StatementTypeInterface type;

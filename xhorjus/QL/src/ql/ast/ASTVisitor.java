@@ -45,15 +45,15 @@ public class ASTVisitor extends TestBaseVisitor<Object> {
 	public ASTVisitor() { }
 
 	/* Visit a questionnare item */
-	@Override public Questionnare visitQuestionnare(@NotNull TestParser.QuestionnareContext ctx) {
-		Questionnare questionnare = new Questionnare();
+	@Override public Questionnaire visitQuestionnare(@NotNull TestParser.QuestionnareContext ctx) {
+		Questionnaire questionnaire = new Questionnaire();
 
 		/* For every 'form' object in the questionnare, add it to the Questionnare */
 		for(TestParser.FormContext frm : ctx.form()) {
-			questionnare.add(this.visitForm(frm));
+			questionnaire.add(this.visitForm(frm));
 		}
 
-		return questionnare;
+		return questionnaire;
 	}
 
 	/* Visit a form rule */

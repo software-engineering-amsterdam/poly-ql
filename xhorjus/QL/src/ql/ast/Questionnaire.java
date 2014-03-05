@@ -5,11 +5,11 @@ import java.util.ArrayList;
 /**
  * Questionnare class: contains a list of Forms.
  */
-public class Questionnare {
+public class Questionnaire {
 	private ArrayList<Form> forms;
 	
 	/* Constructor */
-	public Questionnare() {
+	public Questionnaire() {
 		this.forms = new ArrayList<Form>();
 	}
 	
