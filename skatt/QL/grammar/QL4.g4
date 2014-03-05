@@ -11,7 +11,7 @@ structures : structure+;
 
 structure :  
       question #questionStruct 
-      | 'if' ifexpr=expression '{' ifstruc=structures '}' ('elseif' elseifexp=expression '{' elseifstruc=structures '}')* ('else'  '{' elsestruc=structures '}')? #conditional    
+      | 'if' ifexpr=expression '{' ifstruc=structures '}' ('elseif' expression '{' structures '}')* ('else'  '{' elsestruc=structures '}')? #conditional    
       ;
 
 question: 

@@ -65,6 +65,10 @@ public class QL4Visitor extends QL4BaseVisitor<QL4Tree> {
   /**
    * Returns a conditional object containing the expressions
    * and structures of the if/elseif/else in the context
+   * 
+   * TODO: figure out conditionals 
+   * TODO: name elseif statements
+   * 
    * @param ctx the conditional context
    * @return a conditional object 
    */
@@ -84,11 +88,12 @@ public class QL4Visitor extends QL4BaseVisitor<QL4Tree> {
 	 // define elseifConditions and their structs by looping over them in ctx
 	 List<QL4Tree> elseifExprs = new ArrayList<QL4Tree>();
 	 List<QL4Tree> elseifStrucs = new ArrayList<QL4Tree>();
-	 /*
-	 for (QL4Parser.ExpressionContext elseifExpr : ctx.) {
-		 elseifConditions.add(elseif.accept(this));
+
+	 // start i = 1, as first expression is always if
+	 for (int i=1; i < ctx.expression().size(); i++) {
+		 elseifExprs.add(ctx.expression(i).accept(this));
+		 elseifStrucs.add(ctx.structures(i).accept(this));
 	 }
-	 */
 	 
 	 return new QL4Conditional(ifExpr, elseifExprs, 
 			 ifStruc, elseifStrucs, elseStruc);

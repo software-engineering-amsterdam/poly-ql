@@ -49,16 +49,15 @@ public class QL4Conditional extends QL4Tree {
 	 * Standard to string, returning content of conditional in a string form
 	 */
 	public String toString() {
-		String str = "A conditional statement containing:" 
-				+ "\nIf condition: " + ifCondition
-				+ "\nIf Structures: " + ifStructure;
+		String str = "If " + ifCondition
+				+ "\nthen " + ifStructure;
 		
 		for (int i = 0; i < elseifConditions.size(); i++) {
-			str += "\nElseif condition " + elseifConditions.get(i);
-			str += "\nElseif structure " + elseifStructures.get(i);
+			str += "\nElseif " + elseifConditions.get(i);
+			str += "\nthen " + elseifStructures.get(i);
 		}
 		
-		str += "\nElse structure " + elseStructure	;
+		str += "\nElse " + elseStructure;
 
 		return str;
 	}

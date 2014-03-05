@@ -1,5 +1,7 @@
 if (true) {
     question : "This is a question label" : boolean;
+} elseif (false) {
+    elseifquestion : "This is a question label of the elseif question" : boolean;
 } else {
     elsequestion : "This is a question label of the else question" : boolean;
 }

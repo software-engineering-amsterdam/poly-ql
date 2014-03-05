@@ -28,11 +28,11 @@ public class QL4Structures extends QL4Tree {
 	 * Returns the content of structures in the form of a string
 	 */
 	public String toString() {
-		String str = "Structure containing: \n";
+		String str = "Structure: ";
 		
 		// for each structure in structures add its description to the string
 		for (QL4Tree struct : structures) {
-			str += struct.toString() + "\n";
+			str += "\n" + struct.toString();
 		}
 		
 		return str;

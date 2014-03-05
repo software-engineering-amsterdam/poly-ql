@@ -169,8 +169,6 @@ public class QL4Parser extends Parser {
 	public static class ConditionalContext extends StructureContext {
 		public ExpressionContext ifexpr;
 		public StructuresContext ifstruc;
-		public ExpressionContext elseifexp;
-		public StructuresContext elseifstruc;
 		public StructuresContext elsestruc;
 		public ExpressionContext expression(int i) {
 			return getRuleContext(ExpressionContext.class,i);
@@ -249,9 +247,9 @@ public class QL4Parser extends Parser {
 					{
 					{
 					setState(23); match(22);
-					setState(24); ((ConditionalContext)_localctx).elseifexp = expression(0);
+					setState(24); expression(0);
 					setState(25); match(14);
-					setState(26); ((ConditionalContext)_localctx).elseifstruc = structures();
+					setState(26); structures();
 					setState(27); match(19);
 					}
 					}
