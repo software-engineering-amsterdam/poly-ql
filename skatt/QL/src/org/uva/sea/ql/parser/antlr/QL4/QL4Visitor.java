@@ -8,6 +8,7 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.QL4Form;
 import org.uva.sea.ql.parser.antlr.QL4.AST.QL4Question;
 import org.uva.sea.ql.parser.antlr.QL4.AST.QL4Structures;
 import org.uva.sea.ql.parser.antlr.QL4.AST.QL4Tree;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Value.QL4Bool;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Value.QL4Identifier;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Value.QL4Label;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Value.QL4Type;
@@ -32,9 +33,6 @@ public class QL4Visitor extends QL4BaseVisitor<QL4Tree> {
    * Specifies behavior when visiting the form 
    * it will simply visit its structures and return the tree
    * generated throughout the visiting process
-   * 
-   * @param ctx is the context of the structures
-   * @return the generated tree by visiting its childs
    */
   public QL4Tree visitForm(QL4Parser.FormContext ctx) {
 	  if (verbose) 
@@ -45,9 +43,6 @@ public class QL4Visitor extends QL4BaseVisitor<QL4Tree> {
   
   /**
    * Returns a structures object, containing its structure in a list
-   * 
-   * @param ctx is the structures context from which structure(s) are extracted
-   * @return the structures object
    */
   public QL4Tree visitStructures(QL4Parser.StructuresContext ctx) {
 	  if (verbose)
@@ -65,9 +60,6 @@ public class QL4Visitor extends QL4BaseVisitor<QL4Tree> {
   /**
    * Returns a conditional object containing the expressions
    * and structures of the if/elseif/else in the context
-   * 
-   * @param ctx the conditional context
-   * @return a conditional object 
    */
   public QL4Tree visitConditional(QL4Parser.ConditionalContext ctx) {
 	 if (verbose)  
@@ -99,8 +91,6 @@ public class QL4Visitor extends QL4BaseVisitor<QL4Tree> {
   /**
    * Returns a question object, containing its content:
    * Type, label, id and value (question.computed is false)
-   * @param ctx regquestion context
-   * @return a ql4question object
    */
   public QL4Tree visitRegQuestion(QL4Parser.RegQuestionContext ctx) {
 	  if (verbose) 
@@ -116,8 +106,6 @@ public class QL4Visitor extends QL4BaseVisitor<QL4Tree> {
   /**
    * Returns a Question object, containing its content:
    * Type, label, id and value (question.computed is true)
-   * @param ctx computed question context
-   * @return a qlquestion object
    */
   public QL4Tree visitCompQuestion(QL4Parser.CompQuestionContext ctx) {
 	  if (verbose) 
@@ -129,5 +117,9 @@ public class QL4Visitor extends QL4BaseVisitor<QL4Tree> {
 	  QL4Tree value = ctx.expression().accept(this);
 	  
 	  return new QL4Question(id, label, type, value); 
+  }
+  
+  public QL4Tree visitBool(QL4Parser.BoolContext ctx) {
+	  return new QL4Bool(ctx.getText());
   }
 }
