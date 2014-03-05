@@ -33,18 +33,6 @@ import ql.ast.statement.StatementString;
 import ql.ast.statement.StatementTypeInterface;
 import antlr4.TestBaseVisitor;
 import antlr4.TestParser;
-import antlr4.TestParser.AddContext;
-import antlr4.TestParser.DivContext;
-import antlr4.TestParser.EqContext;
-import antlr4.TestParser.GtContext;
-import antlr4.TestParser.GtEqContext;
-import antlr4.TestParser.LtContext;
-import antlr4.TestParser.LtEqContext;
-import antlr4.TestParser.ModContext;
-import antlr4.TestParser.MulContext;
-import antlr4.TestParser.NegContext;
-import antlr4.TestParser.NeqContext;
-import antlr4.TestParser.SubContext;
 
 public class ASTVisitor extends TestBaseVisitor<Object> {
 	public ASTVisitor() { }
@@ -78,10 +66,10 @@ public class ASTVisitor extends TestBaseVisitor<Object> {
 	}
 
 	/* Visit the negation operator */
-	@Override public OperatorNeg visitNeg(@NotNull TestParser.NegContext ctx) { 
+	@Override public OperatorNeg visitNeg(@NotNull TestParser.NegContext ctx) {
 		return new OperatorNeg(
-				(ExpressionInterface) ((NegContext) ctx.getParent()).expr().accept(this) 
-				);
+			(ExpressionInterface) ctx.expr().accept(this) 
+		);
 	}
 
 	/* Visit Parentheses */
@@ -147,88 +135,88 @@ public class ASTVisitor extends TestBaseVisitor<Object> {
 	/* Visit less than operator */
 	@Override public OperatorLt visitLt(@NotNull TestParser.LtContext ctx) { 
 		return new OperatorLt(
-				(ExpressionInterface) ((LtContext)ctx.getParent()).expr(0).accept(this), 
-				(ExpressionInterface) ((LtContext)ctx.getParent()).expr(1).accept(this) 				
+				(ExpressionInterface) ctx.expr(0).accept(this), 
+				(ExpressionInterface) ctx.expr(1).accept(this) 				
 				);
 	}
 
 	/* Visit LtEq (<=) operator */
 	@Override public OperatorLtEq visitLtEq(@NotNull TestParser.LtEqContext ctx) { 
 		return new OperatorLtEq(
-				(ExpressionInterface) ((LtEqContext) ctx.getParent()).expr(0).accept(this), 
-				(ExpressionInterface) ((LtEqContext) ctx.getParent()).expr(1).accept(this) 
+				(ExpressionInterface) ctx.expr(0).accept(this), 
+				(ExpressionInterface) ctx.expr(1).accept(this) 
 				);				
 	}
 
 	/* Visit a greater than statement */
 	@Override public OperatorGt visitGt(@NotNull TestParser.GtContext ctx) {
 		return new OperatorGt(
-				(ExpressionInterface) ((GtContext)ctx.getParent()).expr(0).accept(this), 
-				(ExpressionInterface) ((GtContext)ctx.getParent()).expr(1).accept(this) 				
+				(ExpressionInterface) ctx.expr(0).accept(this), 
+				(ExpressionInterface) ctx.expr(1).accept(this) 				
 				);		
 	}
 
 	/* Visit the greater than or equal operator */
 	@Override public Object visitGtEq(@NotNull TestParser.GtEqContext ctx) { 
 		return new OperatorGtEq(
-				(ExpressionInterface) ((GtEqContext)ctx.getParent()).expr(0).accept(this), 
-				(ExpressionInterface) ((GtEqContext)ctx.getParent()).expr(1).accept(this) 				
+				(ExpressionInterface) ctx.expr(0).accept(this), 
+				(ExpressionInterface) ctx.expr(1).accept(this) 				
 				);		
 	}
 
 	/* Visit not equal operator */
 	@Override public OperatorNeq visitNeq(@NotNull TestParser.NeqContext ctx) { 
 		return new OperatorNeq(
-				(ExpressionInterface) ((NeqContext)ctx.getParent()).expr(0).accept(this), 
-				(ExpressionInterface) ((NeqContext)ctx.getParent()).expr(1).accept(this) 				
+				(ExpressionInterface) ctx.expr(0).accept(this), 
+				(ExpressionInterface) ctx.expr(1).accept(this) 				
 				);
 	}
 
 	/* Visit an equal to operator */
 	@Override public OperatorEq visitEq(@NotNull TestParser.EqContext ctx) { 
 		return new OperatorEq(
-				(ExpressionInterface) ((EqContext)ctx.getParent()).expr(0).accept(this), 
-				(ExpressionInterface) ((EqContext)ctx.getParent()).expr(1).accept(this) 				
+				(ExpressionInterface) ctx.expr(0).accept(this), 
+				(ExpressionInterface) ctx.expr(1).accept(this) 				
 				);
 	}
 
 	/* Visit a modulo statement */
 	@Override public OperatorMod visitMod(@NotNull TestParser.ModContext ctx) { 
 		return new OperatorMod( 
-				(ExpressionInterface) ((ModContext) ctx.getParent()).expr(0).accept(this), 
-				(ExpressionInterface) ((ModContext) ctx.getParent()).expr(1).accept(this) 
+				(ExpressionInterface) ctx.expr(0).accept(this), 
+				(ExpressionInterface) ctx.expr(1).accept(this) 
 				);		
 	}
 
 	/* Visit the addition operator */
 	@Override public OperatorAdd visitAdd(@NotNull TestParser.AddContext ctx) { 
 		return new OperatorAdd( 
-				(ExpressionInterface) ((AddContext) ctx.getParent()).expr(0).accept(this), 
-				(ExpressionInterface) ((AddContext) ctx.getParent()).expr(1).accept(this) 
+				(ExpressionInterface) ctx.expr(0).accept(this), 
+				(ExpressionInterface) ctx.expr(1).accept(this) 
 				);
 	}
 
 	/* Visit the subtraction operator */
 	@Override public OperatorSub visitSub(@NotNull TestParser.SubContext ctx) { 
 		return new OperatorSub( 
-				(ExpressionInterface) ((SubContext) ctx.getParent()).expr(0).accept(this), 
-				(ExpressionInterface) ((SubContext) ctx.getParent()).expr(1).accept(this) 
+				(ExpressionInterface) ctx.expr(0).accept(this), 
+				(ExpressionInterface) ctx.expr(1).accept(this) 
 				);
 	}
 
 	/* Visit a division statement */
 	@Override public OperatorDiv visitDiv(@NotNull TestParser.DivContext ctx) {
 		return new OperatorDiv( 
-				(ExpressionInterface) ((DivContext) ctx.getParent()).expr(0).accept(this), 
-				(ExpressionInterface) ((DivContext) ctx.getParent()).expr(1).accept(this) 
+				(ExpressionInterface) ctx.expr(0).accept(this), 
+				(ExpressionInterface) ctx.expr(1).accept(this) 
 				);
 	}
 
 	/* Visit a multiply operator */
 	@Override public OperatorMul visitMul(@NotNull TestParser.MulContext ctx) { 
 		return new OperatorMul( 
-				(ExpressionInterface) ((MulContext) ctx.getParent()).expr(0).accept(this), 
-				(ExpressionInterface) ((MulContext) ctx.getParent()).expr(1).accept(this) 
+				(ExpressionInterface) ctx.expr(0).accept(this), 
+				(ExpressionInterface) ctx.expr(1).accept(this) 
 				);
 	}
 
