@@ -19,10 +19,10 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.MultExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.NeqExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.OrExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.PlusExpr;
-import org.uva.sea.ql.parser.antlr.QL4.AST.Value.QL4Bool;
-import org.uva.sea.ql.parser.antlr.QL4.AST.Value.QL4Identifier;
-import org.uva.sea.ql.parser.antlr.QL4.AST.Value.QL4Label;
-import org.uva.sea.ql.parser.antlr.QL4.AST.Value.QL4Type;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Bool;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Identifier;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Label;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Type;
 
 import QL4.QL4BaseVisitor;
 import QL4.QL4Parser;
@@ -93,9 +93,9 @@ public class AntlrVisitor extends QL4BaseVisitor<Tree> {
    * Type, label, id and value (question.computed is false)
    */
   public Question visitRegQuestion(QL4Parser.RegQuestionContext ctx) {
-	  Tree id = new QL4Identifier(ctx.IDENTIFIER().getText());
-	  Tree label = new QL4Label(ctx.LABEL().getText());
-	  Tree type = new QL4Type(ctx.TYPE().getText());
+	  Tree id = new Identifier(ctx.IDENTIFIER().getText());
+	  Tree label = new Label(ctx.LABEL().getText());
+	  Tree type = new Type(ctx.TYPE().getText());
 	  
 	  return new Question(id, label, type); 
   }
@@ -106,9 +106,9 @@ public class AntlrVisitor extends QL4BaseVisitor<Tree> {
    * Type, label, id and value (question.computed is true)
    */
   public Question visitCompQuestion(QL4Parser.CompQuestionContext ctx) {
-	  Tree id = new QL4Identifier(ctx.IDENTIFIER().getText());
-	  Tree label = new QL4Label(ctx.LABEL().getText());
-	  Tree type = new QL4Type(ctx.TYPE().getText());
+	  Tree id = new Identifier(ctx.IDENTIFIER().getText());
+	  Tree label = new Label(ctx.LABEL().getText());
+	  Tree type = new Type(ctx.TYPE().getText());
 	  Tree value = ctx.expression().accept(this);
 	  
 	  return new Question(id, label, type, value); 
@@ -186,7 +186,7 @@ public class AntlrVisitor extends QL4BaseVisitor<Tree> {
   
   //////////////////////// visiting QL4 primitives (bool, string etc)
   
-  public QL4Bool visitBool(QL4Parser.BoolContext ctx) {
-	  return new QL4Bool(ctx.getText());
+  public Bool visitBool(QL4Parser.BoolContext ctx) {
+	  return new Bool(ctx.getText());
   }
 }

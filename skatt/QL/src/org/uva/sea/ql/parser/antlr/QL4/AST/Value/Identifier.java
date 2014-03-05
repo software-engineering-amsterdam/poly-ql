@@ -5,7 +5,7 @@ package org.uva.sea.ql.parser.antlr.QL4.AST.Value;
  * @author Sammie Katt
  *
  */
-public class QL4Identifier extends QL4Value {
+public class Identifier extends Value {
 	/**
 	 * The actual value of the identifier
 	 */
@@ -15,7 +15,7 @@ public class QL4Identifier extends QL4Value {
 	 * Constructor, setting value of the identifier class
 	 * @param value
 	 */
-	public QL4Identifier(String value) {
+	public Identifier(String value) {
 		this.value = value;
 	}
 	

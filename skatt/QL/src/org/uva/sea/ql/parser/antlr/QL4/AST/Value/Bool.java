@@ -5,7 +5,7 @@ package org.uva.sea.ql.parser.antlr.QL4.AST.Value;
  * @author Sammie Katt
  *
  */
-public class QL4Bool extends QL4Value {
+public class Bool extends Value {
 
 	boolean value;
 	
@@ -14,7 +14,7 @@ public class QL4Bool extends QL4Value {
 	 * Converts string input to boolean
 	 * Ignores cases (so tRue is considered true)
 	 */
-	public QL4Bool(String stringValue) {
+	public Bool(String stringValue) {
 		this.value = (stringValue.equalsIgnoreCase("true")) ? true : false;
 	}
 	
