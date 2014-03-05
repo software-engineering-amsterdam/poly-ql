@@ -27,4 +27,9 @@ public class Int extends Expr {
 	public Type typeOf(Map<Ident, Type> typeEnv) {
 		return new org.uva.sea.ql.ast.types.Int();
 	}
+	
+	@Override
+	public String toString() {
+		return "" + this.value;
+	}
 }
