@@ -149,26 +149,27 @@ public class ExprChecker implements ExprVisitor<Boolean> {
 	}
 	
 	private boolean checkUnaryExpr(UnaryExpr expr, Type type) {
-		boolean result = expr.getExpr().accept(this);
+		if (!expr.getExpr().accept(this)) {
+			return false;
+		}
 		
 		Type exprType = expr.getExpr().typeOf(typeEnv);
 		
 		if (!exprType.isCompatibleTo(type)) {
 			errors.add(String.format("Invalid type for operator '%s' in expression '%s': %s is of type %s",
 									  expr.getSymbol(), expr, expr.getExpr(), exprType));
-			result = false;
+			return false;
 		}
 		
-		return result;
+		return true;
 	}
 	
 	private boolean checkBinaryExpr(BinaryExpr expr, Type type) {
-		boolean result = true;
 		boolean leftTypeCorrect = expr.getLhs().accept(this);
 		boolean rightTypeCorrect = expr.getRhs().accept(this);
 		
 		if (!leftTypeCorrect || !rightTypeCorrect) {
-			result = false;
+			return false;
 		}
 		
 		Type leftType = expr.getLhs().typeOf(typeEnv);
@@ -177,24 +178,23 @@ public class ExprChecker implements ExprVisitor<Boolean> {
 		if (!leftType.isCompatibleTo(type)) {
 			errors.add(String.format("Invalid type for operator '%s' in expression '%s': %s is of type %s",
 									  expr.getSymbol(), expr, expr.getLhs(), leftType));
-			result = false;
+			return false;
 		}
 		if (!rightType.isCompatibleTo(type)) {
 			errors.add(String.format("Invalid type for operator '%s' in expression '%s': %s is of type %s",
 									  expr.getSymbol(), expr, expr.getRhs(), rightType));
-			result = false;
+			return false;
 		}
 		
-		return result;
+		return true;
 	}
 	
 	private boolean checkForCompatibleTypes(BinaryExpr expr) {
-		boolean result = true;
 		boolean leftTypeCorrect = expr.getLhs().accept(this);
 		boolean rightTypeCorrect = expr.getRhs().accept(this);
 		
 		if (!leftTypeCorrect || !rightTypeCorrect) {
-			result = false;
+			return false;
 		}
 		
 		Type leftType = expr.getLhs().typeOf(typeEnv);
@@ -204,10 +204,10 @@ public class ExprChecker implements ExprVisitor<Boolean> {
 			errors.add(String.format("Expressions of operator '%s' have incompatible types in expression '%s': " +
 									 "%s is of type %s and %s is of type %s", 
 									 expr.getSymbol(), expr, expr.getLhs(), leftType, expr.getRhs(), rightType));
-			result = false;
+			return false;
 		}
 		
-		return result;
+		return true;
 	}
 	
 	public List<String> getErrors() {
