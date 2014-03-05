@@ -11,13 +11,13 @@ let parse_str str checkTypes = let lexbuf = Lexing.LexBuffer<_>.FromString str
                                    if checkTypes then
                                         typeCheck ast
                                    else
-                                        ast
+                                        ast, new TypeCheckInfo(ast.ID)
                                with err ->
                                        let message = err.Message
                                        let s_pos = lexbuf.StartPos
                                        let e_pos = lexbuf.EndPos
-                                       let startPos = Position(s_pos.Line+1, s_pos.Column+1)
-                                       let endPos = Position(e_pos.Line+1, e_pos.Column+1)
+                                       let startPos = Position(s_pos.Line+1, s_pos.Column+1, s_pos.AbsoluteOffset)
+                                       let endPos = Position(e_pos.Line+1, e_pos.Column+1, e_pos.AbsoluteOffset)
                                        let lastToken = new System.String(lexbuf.Lexeme)
                                        raise << ParseErrorException <| ParseErrorExceptionMessage(message, lastToken, startPos, endPos)
 
