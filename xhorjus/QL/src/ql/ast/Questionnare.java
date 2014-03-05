@@ -1,42 +1,30 @@
 package ql.ast;
-import java.util.List;
 
-import ql.ast.statement.StatementInterface;
+import java.util.ArrayList;
 
 /**
- * Questionnare class, containing a list of statements
+ * Questionnare class: contains a list of Forms.
  */
-public class Questionnare implements ElementInterface {
-	private String id;
-	private List<StatementInterface> statements;
+public class Questionnare {
+	private ArrayList<Form> forms;
 	
-	public Questionnare(String id, List<StatementInterface> statements) {
-		this.id = id;
-		this.statements = statements;
+	/* Constructor */
+	public Questionnare() {
+		this.forms = new ArrayList<Form>();
 	}
 	
-	public String getID() { 
-		return this.id; 
+	/* Add a form */
+	public void add(Form form) {
+		this.forms.add(form);
 	}
 	
-	public List<StatementInterface> getStatements() { 
-		return this.statements; 
+	/* Get all forms */
+	public ArrayList<Form> getForms() {
+		return this.forms;
 	}
 	
-	@Override 
-	public void accept(ElementInterfaceVisitor visitor) {
-		for(ElementInterface statement : this.statements) {
-			statement.accept(visitor);
-		}
-		
-		visitor.visit(this);
-	}
-	
-	public int countStatements() {
-		return this.statements.size();
-	}
-	
-	public StatementInterface getStatement(int i) {
-		return this.statements.get(i);
+	/* Get a form */
+	public Form getForm(int i) {
+		return this.forms.get(i);
 	}
 }
