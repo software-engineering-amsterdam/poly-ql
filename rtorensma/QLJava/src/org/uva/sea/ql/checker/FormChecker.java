@@ -103,9 +103,8 @@ public class FormChecker implements FormVisitor<Boolean> {
 										   ifStatement.getCond(), ifStatement.getCond().typeOf(this.typeEnv)));
 		}
 		
-		if (!ifStatement.getBody().accept(this)) {
-			result = false;
-		}
+		result &= ifStatement.getBody().accept(this);
+		
 		return result;
 	}
 
@@ -119,12 +118,9 @@ public class FormChecker implements FormVisitor<Boolean> {
 										   elseStatement.getCond(), elseStatement.getCond().typeOf(this.typeEnv)));
 		}
 		
-		if (!elseStatement.getBody().accept(this)) {
-			result = false;
-		}
-		if (!elseStatement.getElseBody().accept(this)) {
-			result = false;
-		}
+		result &= elseStatement.getBody().accept(this);
+		result &= elseStatement.getElseBody().accept(this);
+		
 		return result;
 	}
 	
@@ -133,9 +129,7 @@ public class FormChecker implements FormVisitor<Boolean> {
 		boolean result = true;
 		
 		for (Stat s : stat.getStats()) {
-			if(!s.accept(this)) {
-				result = false;
-			}
+			result &= s.accept(this);
 		}
 		
 		return result;
