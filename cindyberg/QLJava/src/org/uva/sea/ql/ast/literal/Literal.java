@@ -15,8 +15,21 @@ public abstract class Literal<T> extends Expression {
 		return this.value;
 	}
 	
-	public String show(){
+	public String toString(){
 		return value.toString();
+	}
+	
+	@Override
+	public boolean equals(Object other) {
+	    if (other instanceof Literal) {
+	        return value.equals(((Literal<?>) other).value);
+	    } 
+	    return false;
+	}
+	
+	@Override
+	public int hashCode(){
+		return toString().hashCode();
 	}
 
 }

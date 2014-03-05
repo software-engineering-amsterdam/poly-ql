@@ -29,7 +29,7 @@ namespace QL.QLClasses.Expressions.Binary.Compare
                 typeErrors.ReportError(new QLTypeError
                 {
                     Message = string.Format("Cannot compare values of different types! Left: '{0}', Right: '{1}'",
-                            LeftExpression.GetResultType(), RightExpression.GetResultType()),
+                            LeftExpression.GetResultType(), RightExpression.GetResultType()), 
                     TokenInfo = LeftExpression.TokenInfo
                 });
                 return false;
@@ -40,7 +40,7 @@ namespace QL.QLClasses.Expressions.Binary.Compare
                 typeErrors.ReportError(new QLTypeError
                 {
                     Message = string.Format("String values can only be compared on equality! _compareOperator: '{0}'",
-                            _compareOperator),
+                            _compareOperator), 
                     TokenInfo = _compareOperator.TokenInfo
                 });
                 return false;

@@ -1,9 +1,9 @@
 package net.iplantevin.ql.ast.expressions;
 
+import net.iplantevin.ql.ast.LineInfo;
 import net.iplantevin.ql.ast.types.Type;
 import net.iplantevin.ql.ast.types.TypeEnvironment;
 import net.iplantevin.ql.ast.visitors.IASTVisitor;
-import org.antlr.v4.runtime.ParserRuleContext;
 
 /**
  * Parentheses (forced precedence).
@@ -13,8 +13,8 @@ import org.antlr.v4.runtime.ParserRuleContext;
 public class Par extends Expression {
     private final Expression expression;
 
-    public Par(Expression expression, ParserRuleContext ctx) {
-        super(ctx);
+    public Par(Expression expression, LineInfo lineInfo) {
+        super(lineInfo);
         this.expression = expression;
     }
 
@@ -33,7 +33,7 @@ public class Par extends Expression {
     }
 
     @Override
-    public void accept(IASTVisitor visitor) {
-        visitor.visit(this);
+    public <T> T accept(IASTVisitor<T> visitor) {
+        return visitor.visit(this);
     }
 }

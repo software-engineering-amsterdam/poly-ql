@@ -7,8 +7,8 @@ import java.util.Map;
 
 import org.uva.sea.ql.ast.ASTNode;
 import org.uva.sea.ql.ast.Identifier;
-import org.uva.sea.ql.ast.literal.BoolLiteral;
-import org.uva.sea.ql.ast.literal.IntLiteral;
+import org.uva.sea.ql.ast.literal.BooleanLiteral;
+import org.uva.sea.ql.ast.literal.IntegerLiteral;
 import org.uva.sea.ql.ast.literal.StringLiteral;
 
 public class QLLexer implements QLTokens {
@@ -17,8 +17,8 @@ public class QLLexer implements QLTokens {
 	static {
 		KEYWORDS = new HashMap<String, Integer>();
 		
-		KEYWORDS.put("true", BOOLEAN);
-		KEYWORDS.put("false", BOOLEAN);
+		KEYWORDS.put("true", BOOLEANLITERAL);
+		KEYWORDS.put("false", BOOLEANLITERAL);
 		KEYWORDS.put("form", FORM);
 		KEYWORDS.put("if", IF);
 		KEYWORDS.put("else", ELSE);
@@ -191,7 +191,7 @@ public class QLLexer implements QLTokens {
 			    	String name = sb.toString();
 			    	yylval = new StringLiteral(name);
 			    	nextChar();
-			    	return token = STRING;
+			    	return token = STRINGLITERAL;
 			    }
 			   
 			
@@ -202,8 +202,8 @@ public class QLLexer implements QLTokens {
 			    			n = 10 * n + (c - '0');
 			    			nextChar(); 
 			    		} while (Character.isDigit(c)); 
-			    		yylval = new IntLiteral(n);
-			    		return token = INTEGER;
+			    		yylval = new IntegerLiteral(n);
+			    		return token = INTEGERLITERAL;
 			    	}
 			    	if (Character.isLetter(c)) {
 			    		StringBuilder sb = new StringBuilder();
@@ -213,8 +213,8 @@ public class QLLexer implements QLTokens {
 			    		}
 			    		while (Character.isLetterOrDigit(c));
 			    		String name = sb.toString();
-			    		if(name == "true"){new BoolLiteral(true);}
-			    		if(name == "false"){new BoolLiteral(false);}
+			    		if(name.equals("true")){yylval = new BooleanLiteral(true);}
+			    		if(name.equals("false")){yylval = new BooleanLiteral(false);}
 			    		if (KEYWORDS.containsKey(name)) {
 			    			return token = KEYWORDS.get(name);
 			    		}

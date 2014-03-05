@@ -1,7 +1,7 @@
 package net.iplantevin.ql.ast.statements;
 
 import net.iplantevin.ql.ast.ASTNode;
-import org.antlr.v4.runtime.ParserRuleContext;
+import net.iplantevin.ql.ast.LineInfo;
 
 /**
  * Main statement abstract class. Extended by all kinds of statements.
@@ -9,7 +9,7 @@ import org.antlr.v4.runtime.ParserRuleContext;
  * @author Ivan
  */
 public abstract class Statement extends ASTNode {
-    public Statement(ParserRuleContext ctx) {
-        super(ctx);
+    public Statement(LineInfo lineInfo) {
+        super(lineInfo);
     }
 }

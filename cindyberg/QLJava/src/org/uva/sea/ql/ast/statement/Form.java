@@ -5,26 +5,24 @@ import org.uva.sea.ql.ast.StatementVisitor;
 
 public class Form extends Statement{
 
-	private Identifier name;
-	private QuestionSet questionset;
+	private final Identifier name;
+	private final Questions body;
 	
-	public Form(Identifier formname, QuestionSet questionset) {
-		
+	public Form(Identifier formname, Questions body) {		
 		this.name = formname;
-		this.questionset = questionset;
+		this.body = body;
 	}
 
-	public Identifier getFormName(){
+	public Identifier getName(){
 		return name;
 	}
 	
-	public QuestionSet getQuestionSet(){
-		return questionset;
+	public Questions getBody(){
+		return body;
 	}
 	
 	public void accept(StatementVisitor visitor) {
 		visitor.visit(this);
-		
 	}
 
 }

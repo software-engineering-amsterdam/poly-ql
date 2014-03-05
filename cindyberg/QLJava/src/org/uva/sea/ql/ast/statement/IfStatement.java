@@ -3,25 +3,22 @@ package org.uva.sea.ql.ast.statement;
 import org.uva.sea.ql.ast.Expression;
 import org.uva.sea.ql.ast.StatementVisitor;
 
-public class If extends Statement{
+public class IfStatement extends Statement{
 
-	private Expression conditional;
-	private QuestionSet questionset;
+	private final Expression conditional;
+	private final Questions body;
 	
-	public If(Expression expr, QuestionSet questionset) {
-		
+	public IfStatement(Expression expr, Questions body) {	
 		this.conditional = expr;
-		this.questionset = questionset;
-	
-		// TODO Auto-generated constructor stub
+		this.body = body;
 	}
 	
 	public Expression getConditional(){
 		return this.conditional;
 	}
 	
-	public QuestionSet getQuestionSet(){
-		return this.questionset;
+	public Questions getIfBody(){
+		return this.body;
 	}
 
 	public void accept(StatementVisitor visitor) {

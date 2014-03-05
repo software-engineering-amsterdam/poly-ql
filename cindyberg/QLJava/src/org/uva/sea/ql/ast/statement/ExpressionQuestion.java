@@ -6,14 +6,14 @@ import org.uva.sea.ql.ast.StatementVisitor;
 import org.uva.sea.ql.ast.literal.StringLiteral;
 import org.uva.sea.ql.ast.type.Type;
 
-public class ExprQuestion extends Statement{
+public class ExpressionQuestion extends Statement{
 	
-	private Identifier name;
-	private StringLiteral label;
-	private Type type;
-	private Expression expression;
+	private final Identifier name;
+	private final StringLiteral label;
+	private final Type type;
+	private final Expression expression;
 
-	public ExprQuestion(Identifier questionname, StringLiteral label,
+	public ExpressionQuestion(Identifier questionname, StringLiteral label,
 			Type type, Expression expr) {
 		
 		this.name = questionname;

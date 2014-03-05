@@ -6,7 +6,6 @@ import net.iplantevin.ql.ast.types.StringType;
 import net.iplantevin.ql.ast.types.Type;
 import net.iplantevin.ql.ast.types.TypeEnvironment;
 import net.iplantevin.ql.ast.visitors.IASTVisitor;
-import org.antlr.v4.runtime.ParserRuleContext;
 
 /**
  * String.
@@ -15,11 +14,6 @@ import org.antlr.v4.runtime.ParserRuleContext;
  */
 public class Str extends Expression {
     private final String text;
-
-    public Str(String text, ParserRuleContext ctx) {
-        super(ctx);
-        this.text = text;
-    }
 
     public Str(String text, LineInfo lineInfo) {
         super(lineInfo);
@@ -41,7 +35,7 @@ public class Str extends Expression {
     }
 
     @Override
-    public void accept(IASTVisitor visitor) {
-        visitor.visit(this);
+    public <T> T accept(IASTVisitor<T> visitor) {
+        return visitor.visit(this);
     }
 }

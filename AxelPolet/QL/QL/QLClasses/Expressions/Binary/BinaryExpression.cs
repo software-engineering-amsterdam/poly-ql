@@ -5,8 +5,8 @@ namespace QL.QLClasses.Expressions.Binary
 {
     public abstract class BinaryExpression : ExpressionBase
     {
-        protected ExpressionBase LeftExpression; //{ get; set; }
-        protected ExpressionBase RightExpression; //{ get; set; }
+        protected ExpressionBase LeftExpression;
+        protected ExpressionBase RightExpression; 
 
         public BinaryExpression(ExpressionBase leftExpression, ExpressionBase rightExpression)
         {

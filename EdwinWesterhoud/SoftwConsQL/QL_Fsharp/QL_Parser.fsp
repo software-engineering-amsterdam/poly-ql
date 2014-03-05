@@ -42,7 +42,6 @@ start:
                                     {   ID          = $2;
                                         Statements  = $4 }
                                 }
-    | { failwith "Empty file" }
 
 stmtList:
     |               { [] }
