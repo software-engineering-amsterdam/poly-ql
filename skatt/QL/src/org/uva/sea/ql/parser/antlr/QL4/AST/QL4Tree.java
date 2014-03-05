@@ -6,6 +6,6 @@ package org.uva.sea.ql.parser.antlr.QL4.AST;
  * @author Sammie Katt
  *
  */
-public abstract class QLTree {
+public abstract class QL4Tree {
 
 }

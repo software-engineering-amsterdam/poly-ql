@@ -1,6 +1,6 @@
 package org.uva.sea.ql.parser.antlr.QL4.AST.Expression;
 
-import org.uva.sea.ql.parser.antlr.QL4.AST.QLTree;
+import org.uva.sea.ql.parser.antlr.QL4.AST.QL4Tree;
 
 /**
  * Class for abstract syntax trees of expressions for QL4. 
@@ -9,6 +9,6 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.QLTree;
  * @author Sammie Katt
  *
  */
-public abstract class QLExpression extends QLTree {
+public abstract class QL4Expression extends QL4Tree {
 	
 }

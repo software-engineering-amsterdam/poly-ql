@@ -9,18 +9,18 @@ import java.util.List;
  * @author Sammie Katt
  *
  */
-public class QL4Structures extends QLTree {
+public class QL4Structures extends QL4Tree {
 	
 	/**
 	 * A list of all the structures in 'structure'
 	 */
-	List<QLTree> structures = new ArrayList<QLTree>();
+	List<QL4Tree> structures = new ArrayList<QL4Tree>();
 	
 	/**
 	 * Constructor, sets structures
 	 * @param structures 
 	 */
-	public QL4Structures(List<QLTree> structures) {
+	public QL4Structures(List<QL4Tree> structures) {
 		this.structures = structures;
 	}
 	
@@ -31,7 +31,7 @@ public class QL4Structures extends QLTree {
 		String str = "Structure containing: \n";
 		
 		// for each structure in structures add its description to the string
-		for (QLTree struct : structures) {
+		for (QL4Tree struct : structures) {
 			str += struct.toString() + "\n";
 		}
 		

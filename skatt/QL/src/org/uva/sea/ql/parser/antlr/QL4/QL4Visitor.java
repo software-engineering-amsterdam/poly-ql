@@ -3,7 +3,14 @@ package org.uva.sea.ql.parser.antlr.QL4;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.uva.sea.ql.parser.antlr.QL4.AST.*;
+import org.uva.sea.ql.parser.antlr.QL4.AST.QL4Conditional;
+import org.uva.sea.ql.parser.antlr.QL4.AST.QL4Form;
+import org.uva.sea.ql.parser.antlr.QL4.AST.QL4Question;
+import org.uva.sea.ql.parser.antlr.QL4.AST.QL4Structures;
+import org.uva.sea.ql.parser.antlr.QL4.AST.QL4Tree;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Value.QL4Identifier;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Value.QL4Label;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Value.QL4Type;
 
 import QL4.QL4BaseVisitor;
 import QL4.QL4Parser;
@@ -16,7 +23,7 @@ import QL4.QL4Parser;
  * @author Sammie Katt
  *
  */
-public class QL4Visitor extends QL4BaseVisitor<QLTree> {
+public class QL4Visitor extends QL4BaseVisitor<QL4Tree> {
 
   // Handles the information printed
   boolean verbose = true;
@@ -29,7 +36,7 @@ public class QL4Visitor extends QL4BaseVisitor<QLTree> {
    * @param ctx is the context of the structures
    * @return the generated tree by visiting its childs
    */
-  public QLTree visitForm(QL4Parser.FormContext ctx) {
+  public QL4Tree visitForm(QL4Parser.FormContext ctx) {
 	  if (verbose) 
 	      System.out.println("Visiting Form");
 	
@@ -42,11 +49,11 @@ public class QL4Visitor extends QL4BaseVisitor<QLTree> {
    * @param ctx is the structures context from which structure(s) are extracted
    * @return the structures object
    */
-  public QLTree visitStructures(QL4Parser.StructuresContext ctx) {
+  public QL4Tree visitStructures(QL4Parser.StructuresContext ctx) {
 	  if (verbose)
 		  System.out.println("Visiting structures");
 		  
-	  List<QLTree> structures = new ArrayList<QLTree>();
+	  List<QL4Tree> structures = new ArrayList<QL4Tree>();
 	  
 	  for (QL4Parser.StructureContext struct : ctx.structure()) {
 		  structures.add(struct.accept(this));
@@ -58,26 +65,25 @@ public class QL4Visitor extends QL4BaseVisitor<QLTree> {
   /**
    * Returns a conditional object containing the expressions
    * and structures of the if/elseif/else in the context
-   * TODO: Get elseif expressions and structures
    * @param ctx the conditional context
    * @return a conditional object 
    */
-  public QLTree visitConditional(QL4Parser.ConditionalContext ctx) {
+  public QL4Tree visitConditional(QL4Parser.ConditionalContext ctx) {
 	 if (verbose)  
 		 System.out.println("Visiting conditional");
 	 
 	 // define if/else (if available) conditions
-	 QLTree ifExpr = ctx.ifexpr.accept(this);
-	 QLTree ifStruc = ctx.ifstruc.accept(this);
-	 QLTree elseStruc = null;
+	 QL4Tree ifExpr = ctx.ifexpr.accept(this);
+	 QL4Tree ifStruc = ctx.ifstruc.accept(this);
+	 QL4Tree elseStruc = null;
 	 
 	 if (ctx.elsestruc != null) {
 		 elseStruc = ctx.elsestruc.accept(this);
 	 } 
 	 
 	 // define elseifConditions and their structs by looping over them in ctx
-	 List<QLTree> elseifExprs = new ArrayList<QLTree>();
-	 List<QLTree> elseifStrucs = new ArrayList<QLTree>();
+	 List<QL4Tree> elseifExprs = new ArrayList<QL4Tree>();
+	 List<QL4Tree> elseifStrucs = new ArrayList<QL4Tree>();
 	 /*
 	 for (QL4Parser.ExpressionContext elseifExpr : ctx.) {
 		 elseifConditions.add(elseif.accept(this));
@@ -91,16 +97,16 @@ public class QL4Visitor extends QL4BaseVisitor<QLTree> {
   /**
    * Returns a question object, containing its content:
    * Type, label, id and value (question.computed is false)
-   * @param ctx
-   * @return
+   * @param ctx regquestion context
+   * @return a ql4question object
    */
-  public QLTree visitRegQuestion(QL4Parser.RegQuestionContext ctx) {
+  public QL4Tree visitRegQuestion(QL4Parser.RegQuestionContext ctx) {
 	  if (verbose) 
 		  System.out.println("Visiting RegQuestion");
 	  
-	  QLTree id = ctx.IDENTIFIER().accept(this);
-	  QLTree label = ctx.LABEL().accept(this);
-	  QLTree type = ctx.TYPE().accept(this);
+	  QL4Tree id = new QL4Identifier(ctx.IDENTIFIER().getText());
+	  QL4Tree label = new QL4Label(ctx.LABEL().getText());
+	  QL4Tree type = new QL4Type(ctx.TYPE().getText());
 	  
 	  return new QL4Question(id, label, type); 
   }
@@ -108,17 +114,17 @@ public class QL4Visitor extends QL4BaseVisitor<QLTree> {
   /**
    * Returns a Question object, containing its content:
    * Type, label, id and value (question.computed is true)
-   * @param ctx
-   * @return
+   * @param ctx computed question context
+   * @return a qlquestion object
    */
-  public QLTree visitCompQuestion(QL4Parser.CompQuestionContext ctx) {
+  public QL4Tree visitCompQuestion(QL4Parser.CompQuestionContext ctx) {
 	  if (verbose) 
 		  System.out.println("Visiting CompQuestion");
 	  
-	  QLTree id = ctx.IDENTIFIER().accept(this);
-	  QLTree label = ctx.LABEL().accept(this);
-	  QLTree type = ctx.TYPE().accept(this);
-	  QLTree value = ctx.expression().accept(this);
+	  QL4Tree id = new QL4Identifier(ctx.IDENTIFIER().getText());
+	  QL4Tree label = new QL4Label(ctx.LABEL().getText());
+	  QL4Tree type = new QL4Type(ctx.TYPE().getText());
+	  QL4Tree value = ctx.expression().accept(this);
 	  
 	  return new QL4Question(id, label, type, value); 
   }

@@ -42,7 +42,7 @@ public class QL4 {
 
     // visit the tree with our own QL4 visitor to get AST
     QL4Visitor ASTParser = new QL4Visitor();
-    QLTree ast = tree.accept(ASTParser);
+    QL4Tree ast = tree.accept(ASTParser);
     
     System.out.println(ast);
   }

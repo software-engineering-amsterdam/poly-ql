@@ -13,19 +13,19 @@ import java.util.List;
  * @author Sammie Katt
  *
  */
-public class QL4Conditional extends QLTree {
+public class QL4Conditional extends QL4Tree {
 	
 	// holds the expressions in if and else conditions 
-	QLTree ifCondition;
+	QL4Tree ifCondition;
 	
 	// holds the elseif conditions 
-	List<QLTree> elseifConditions = new ArrayList<QLTree>();
+	List<QL4Tree> elseifConditions = new ArrayList<QL4Tree>();
 
 	// holds the structures of if and else conditions
-	QLTree ifStructure, elseStructure;
+	QL4Tree ifStructure, elseStructure;
 	
 	// holds the structures of the elseif conditions
-	List<QLTree> elseifStructures = new ArrayList<QLTree>();
+	List<QL4Tree> elseifStructures = new ArrayList<QL4Tree>();
 	
 	/**
 	 * Constructor, sets if and elseif conditions and
@@ -36,7 +36,7 @@ public class QL4Conditional extends QLTree {
 	 * @param elseStruc 
 	 * @param elseifConditions
 	 */
-	public QL4Conditional(QLTree ifCondition, List<QLTree> elseifConditions, QLTree ifStructure, List<QLTree> elseifStructures, QLTree elseStructure) {
+	public QL4Conditional(QL4Tree ifCondition, List<QL4Tree> elseifConditions, QL4Tree ifStructure, List<QL4Tree> elseifStructures, QL4Tree elseStructure) {
 		this.ifCondition = ifCondition;
 		this.elseifConditions = elseifConditions;
 
