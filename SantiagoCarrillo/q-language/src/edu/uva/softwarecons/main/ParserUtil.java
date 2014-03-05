@@ -34,7 +34,7 @@ public class ParserUtil {
             lexer = new QuestionnaireLexer(input);
             tokens = new CommonTokenStream(lexer);
             parser = new QuestionnaireParser(tokens);
-            tree = parser.questionnaire(); // parse
+            tree = parser.questionnaire();
         } catch (IOException e) {
             e.printStackTrace();
         }

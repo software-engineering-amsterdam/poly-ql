@@ -1,12 +1,8 @@
 package edu.uva.softwarecons.model.question;
 
-import edu.uva.softwarecons.grammar.QuestionnaireParser;
 import edu.uva.softwarecons.model.type.Type;
 import edu.uva.softwarecons.visitor.IFormElement;
 import edu.uva.softwarecons.visitor.IFormElementVisitor;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Falconlabs

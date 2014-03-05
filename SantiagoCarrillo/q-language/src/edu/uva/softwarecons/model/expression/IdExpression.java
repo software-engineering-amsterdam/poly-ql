@@ -1,6 +1,5 @@
 package edu.uva.softwarecons.model.expression;
 
-import edu.uva.softwarecons.visitor.IFormElement;
 import edu.uva.softwarecons.visitor.IFormElementVisitor;
 
 /**

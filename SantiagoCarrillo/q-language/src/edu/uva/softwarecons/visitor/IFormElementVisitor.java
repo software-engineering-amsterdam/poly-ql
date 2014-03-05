@@ -1,7 +1,6 @@
 package edu.uva.softwarecons.visitor;
 
 import edu.uva.softwarecons.model.Form;
-import edu.uva.softwarecons.model.expression.BinaryExpression;
 import edu.uva.softwarecons.model.expression.IdExpression;
 import edu.uva.softwarecons.model.expression.IntExpression;
 import edu.uva.softwarecons.model.expression.ParenthesisExpression;

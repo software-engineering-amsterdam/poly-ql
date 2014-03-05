@@ -1,6 +1,5 @@
 package edu.uva.softwarecons.model.type;
 
-import edu.uva.softwarecons.grammar.QuestionnaireLexer;
 import edu.uva.softwarecons.visitor.IFormElement;
 
 /**

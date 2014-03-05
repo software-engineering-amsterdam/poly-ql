@@ -1,7 +1,5 @@
 package edu.uva.softwarecons.checker.error;
 
-import edu.uva.softwarecons.model.type.Type;
-
 /**
  * Falconlabs
  * User: sancarbar
