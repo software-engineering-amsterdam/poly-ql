@@ -1,5 +1,10 @@
 package org.uva.sea.ql.parser.antlr.QL4.AST;
 
+import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Expression;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Identifier;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Label;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Value.QuestionType;
+
 /**
  * Abstract syntax tree of the regQuestion construct in the QL4 grammar
  * Contains a id, type, label and value 
@@ -10,10 +15,10 @@ package org.uva.sea.ql.parser.antlr.QL4.AST;
  */
 public class Question extends QLTree {
 	boolean computed;
-	QLTree id; 
-	QLTree label;
-	QLTree type;
-	QLTree value;
+	Identifier id; 
+	Label label;
+	QuestionType type;
+	Expression value;
 	
 	/**
 	 * Constructor, Sets the id, label and type
@@ -22,14 +27,14 @@ public class Question extends QLTree {
 	 * @param label
 	 * @param type
 	 */
-	public Question(QLTree id, QLTree label, QLTree type) {
+	public Question(Identifier id, Label label, QuestionType type) {
 		this.computed = false;
 		this.id = id;
 		this.label = label;
 		this.type = type;
 	}
 	
-	public Question(QLTree id, QLTree label, QLTree type, QLTree value) {
+	public Question(Identifier id, Label label, QuestionType type, Expression value) {
 		this.computed = true;
 		this.id = id;
 		this.label = label;

@@ -5,9 +5,9 @@ import java.util.List;
 
 import org.uva.sea.ql.parser.antlr.QL4.AST.Conditional;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Form;
+import org.uva.sea.ql.parser.antlr.QL4.AST.QLTree;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Question;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Structures;
-import org.uva.sea.ql.parser.antlr.QL4.AST.QLTree;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.BraceExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Expression;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.AndExpr;
@@ -22,7 +22,7 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.PlusExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Bool;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Identifier;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Label;
-import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Type;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Value.QuestionType;
 
 import QL4.QL4BaseVisitor;
 import QL4.QL4Parser;
@@ -93,9 +93,9 @@ public class AntlrVisitor extends QL4BaseVisitor<QLTree> {
    * Type, label, id and value (question.computed is false)
    */
   public Question visitRegQuestion(QL4Parser.RegQuestionContext ctx) {
-	  QLTree id = new Identifier(ctx.IDENTIFIER().getText());
-	  QLTree label = new Label(ctx.LABEL().getText());
-	  QLTree type = new Type(ctx.TYPE().getText());
+	  Identifier id = new Identifier(ctx.IDENTIFIER().getText());
+	  Label label = new Label(ctx.LABEL().getText());
+	  QuestionType type = new QuestionType(ctx.TYPE().getText());
 	  
 	  return new Question(id, label, type); 
   }
@@ -106,10 +106,10 @@ public class AntlrVisitor extends QL4BaseVisitor<QLTree> {
    * Type, label, id and value (question.computed is true)
    */
   public Question visitCompQuestion(QL4Parser.CompQuestionContext ctx) {
-	  QLTree id = new Identifier(ctx.IDENTIFIER().getText());
-	  QLTree label = new Label(ctx.LABEL().getText());
-	  QLTree type = new Type(ctx.TYPE().getText());
-	  QLTree value = ctx.expression().accept(this);
+	  Identifier id = new Identifier(ctx.IDENTIFIER().getText());
+	  Label label = new Label(ctx.LABEL().getText());
+	  QuestionType type = new QuestionType(ctx.TYPE().getText());
+	  Expression value = (Expression) ctx.expression().accept(this);
 	  
 	  return new Question(id, label, type, value); 
   }

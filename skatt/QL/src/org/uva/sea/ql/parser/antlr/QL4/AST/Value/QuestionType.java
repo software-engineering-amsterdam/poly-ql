@@ -5,10 +5,10 @@ package org.uva.sea.ql.parser.antlr.QL4.AST.Value;
  * @author Sammie Katt
  *
  */
-public class Type extends Value {
+public class QuestionType extends Value {
 	String value;
 	
-	public Type(String value) {
+	public QuestionType(String value) {
 		this.value = value;
 	}
 	
