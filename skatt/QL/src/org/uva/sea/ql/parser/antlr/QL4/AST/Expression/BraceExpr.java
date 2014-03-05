@@ -7,10 +7,10 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.QL4Tree;
  * @author Sammie Katt
  *
  */
-public class QL4BraceExpr extends QL4Expression {
+public class BraceExpr extends Expression {
 	QL4Tree bracedExpr;
 	
-	public QL4BraceExpr(QL4Tree expr) {
+	public BraceExpr(QL4Tree expr) {
 		this.bracedExpr = expr;
 	}
 	

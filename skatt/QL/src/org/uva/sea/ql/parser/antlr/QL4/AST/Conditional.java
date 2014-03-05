@@ -11,7 +11,7 @@ import java.util.List;
  * @author Sammie Katt
  *
  */
-public class QL4Conditional extends QL4Tree {
+public class Conditional extends QL4Tree {
 	
 	// holds the expressions in if and else conditions 
 	QL4Tree ifCondition;
@@ -34,7 +34,7 @@ public class QL4Conditional extends QL4Tree {
 	 * @param elseStruc 
 	 * @param elseifConditions
 	 */
-	public QL4Conditional(QL4Tree ifCondition, List<QL4Tree> elseifConditions, QL4Tree ifStructure, List<QL4Tree> elseifStructures, QL4Tree elseStructure) {
+	public Conditional(QL4Tree ifCondition, List<QL4Tree> elseifConditions, QL4Tree ifStructure, List<QL4Tree> elseifStructures, QL4Tree elseStructure) {
 		this.ifCondition = ifCondition;
 		this.elseifConditions = elseifConditions;
 

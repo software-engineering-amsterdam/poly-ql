@@ -41,7 +41,7 @@ public class QL4 {
     ParseTree tree = parser.form(); 
 
     // visit the tree with our own QL4 visitor to get AST
-    QL4Visitor ASTParser = new QL4Visitor();
+    AntlrVisitor ASTParser = new AntlrVisitor();
     QL4Tree ast = tree.accept(ASTParser);
     
     System.out.println(ast);

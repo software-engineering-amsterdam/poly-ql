@@ -9,6 +9,6 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.QL4Tree;
  * @author Sammie Katt
  *
  */
-public abstract class QL4Expression extends QL4Tree {
+public abstract class Expression extends QL4Tree {
 	
 }

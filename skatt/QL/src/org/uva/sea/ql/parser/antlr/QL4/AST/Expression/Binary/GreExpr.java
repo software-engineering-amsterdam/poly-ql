@@ -1,4 +1,4 @@
-package org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binair;
+package org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary;
 
 import org.uva.sea.ql.parser.antlr.QL4.AST.QL4Tree;
 
@@ -7,9 +7,9 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.QL4Tree;
  * @author Sammie
  *
  */
-public class QL4GreExpr extends QL4BinairExpr {
+public class GreExpr extends BinaryExpr {
 
-	public QL4GreExpr(QL4Tree lhs, QL4Tree rhs) {
+	public GreExpr(QL4Tree lhs, QL4Tree rhs) {
 		super(lhs, rhs);
 	}
 
