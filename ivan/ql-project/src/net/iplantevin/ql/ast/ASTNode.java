@@ -18,7 +18,7 @@ public abstract class ASTNode {
         return lineInfo;
     }
 
-    public abstract void accept(IASTVisitor visitor);
+    public abstract <T> T accept(IASTVisitor<T> visitor);
 
     @Override
     public abstract String toString();
