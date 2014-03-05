@@ -9,6 +9,10 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.QL4Question;
 import org.uva.sea.ql.parser.antlr.QL4.AST.QL4Structures;
 import org.uva.sea.ql.parser.antlr.QL4.AST.QL4Tree;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.QL4BraceExpr;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binair.QL4DivExpr;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binair.QL4MinExpr;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binair.QL4MultExpr;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binair.QL4PlusExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.QL4Bool;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.QL4Identifier;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.QL4Label;
@@ -124,9 +128,49 @@ public class QL4Visitor extends QL4BaseVisitor<QL4Tree> {
   //////////////////////// visiting expressions
   public QL4Tree visitBraceExpr(QL4Parser.BraceExprContext ctx) {
 	  if (verbose) 
-		  System.out.println("Visiting braced expression");
+		  System.out.println("Visiting Mult expression");
 
-		  return new QL4BraceExpr(ctx.expression().accept(this));
+	  return new QL4BraceExpr(ctx.expression().accept(this));
+  }
+  
+  public QL4Tree visitMultExpr(QL4Parser.MultExprContext ctx) {
+	  if (verbose) 
+		  System.out.println("Visiting Mult expression");
+	  
+	  QL4Tree lhs = ctx.lhs.accept(this);
+	  QL4Tree rhs = ctx.rhs.accept(this);
+	  
+	  return new QL4MultExpr(lhs, rhs);	  
+  }
+  
+  public QL4Tree visitDivExpr(QL4Parser.DivExprContext ctx) {
+	  if (verbose) 
+		  System.out.println("Visiting Div expression");
+	  
+	  QL4Tree lhs = ctx.lhs.accept(this);
+	  QL4Tree rhs = ctx.rhs.accept(this);
+	  
+	  return new QL4DivExpr(lhs, rhs);	  
+  }
+  
+  public QL4Tree visitPlusExpr(QL4Parser.PlusExprContext ctx) {
+	  if (verbose) 
+		  System.out.println("Visiting Plus expression");
+	  
+	  QL4Tree lhs = ctx.lhs.accept(this);
+	  QL4Tree rhs = ctx.rhs.accept(this);
+	  
+	  return new QL4PlusExpr(lhs, rhs);	  
+  }
+  
+  public QL4Tree visitMinExpr(QL4Parser.MinExprContext ctx) {
+	  if (verbose) 
+		  System.out.println("Visiting Min expression");
+	  
+	  QL4Tree lhs = ctx.lhs.accept(this);
+	  QL4Tree rhs = ctx.rhs.accept(this);
+	  
+	  return new QL4MinExpr(lhs, rhs);	  
   }
   
   //////////////////////// visiting QL4 primitives (bool, string etc)

@@ -14,6 +14,6 @@ public class QL4DivExpr extends QL4BinairExpr {
 	}
 
 	public String toString() {
-		return "Div( " + lhs.toString() + ", " + rhs.toString();
+		return "Div( " + lhs.toString() + ", " + rhs.toString() + ")";
 	}
 }

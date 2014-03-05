@@ -14,6 +14,6 @@ public class QL4MinExpr extends QL4BinairExpr {
 	}
 	
 	public String toString() {
-		return "Min( " + lhs.toString() + ", " + rhs.toString();
+		return "Min( " + lhs.toString() + ", " + rhs.toString() + ")";
 	}
 }

@@ -14,6 +14,6 @@ public class QL4MultExpr extends QL4BinairExpr {
 	}
 	
 	public String toString() {
-		return "Mult( " + lhs.toString() + ", " + rhs.toString();
+		return "Mult( " + lhs.toString() + ", " + rhs.toString() + ")";
 	}
 }
