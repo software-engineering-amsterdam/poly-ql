@@ -23,11 +23,11 @@ public class Identifier extends Expression {
 	@Override
 	public <T> T accept(ExpressionVisitor<T> visitor) {
 		return visitor.visit(this);
-		
 	}
 	
 	public Type typeOf(TypeEnvironment environment){
-		return environment.getType(this);
+		assert (environment.isDeclared(this));
+		return environment.ofType(this);
 	}
 	
 	@Override

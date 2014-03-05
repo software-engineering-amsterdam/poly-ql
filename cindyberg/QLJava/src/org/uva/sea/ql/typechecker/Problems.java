@@ -9,39 +9,34 @@ public class Problems {
 	private List<String> errors; 
 
 
-	public Problems(ArrayList<String> warnings, ArrayList<String> errors) {
-		this.warnings = warnings;
-		this.errors = errors;
+	public Problems() {
+		warnings = new ArrayList<String>();
+		errors = new ArrayList<String>();
 	}
 	
 	public void addError(String s){
 		errors.add(s);
 	}
 	
-	public void addWarnings(String s){
+	public void addWarning(String s){
 		warnings.add(s);
 	}
 	
 	public void printWarnings(){
-		int totalWarnings = warnings.size();
-		System.out.println("WARNINGS [" + totalWarnings + "]");
-		if(totalWarnings > 0){
-			for(String warning : warnings){
-				System.out.println(warning);
-			}
-		}
-		
+		print(warnings, "WARNINGS");
 	}
 	
 	public void printErrors(){
-		int totalErrors = errors.size();
-		System.out.println("Errors [" + totalErrors + "]");
-		if(totalErrors > 0){
-			for(String error : errors){
-				System.out.println(error);
-				
-			}
-		}
+		print(errors,"ERRORS");
 	}
+	
+	private void print(List<String> problems, String label){
+		int totalErrors = problems.size();
+		System.out.println(label +" [" + totalErrors + "]");
+		for(String problem : problems){
+			System.out.println(problem);
 
+		}
+	
+	}
 }

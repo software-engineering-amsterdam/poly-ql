@@ -6,22 +6,19 @@ import org.uva.sea.ql.ast.StatementVisitor;
 public class IfStatement extends Statement{
 
 	private final Expression conditional;
-	private final QuestionSet questionset;
+	private final Questions body;
 	
-	public IfStatement(Expression expr, QuestionSet questionset) {
-		
+	public IfStatement(Expression expr, Questions body) {	
 		this.conditional = expr;
-		this.questionset = questionset;
-	
-		// TODO Auto-generated constructor stub
+		this.body = body;
 	}
 	
 	public Expression getConditional(){
 		return this.conditional;
 	}
 	
-	public QuestionSet getQuestionSet(){
-		return this.questionset;
+	public Questions getIfBody(){
+		return this.body;
 	}
 
 	public void accept(StatementVisitor visitor) {

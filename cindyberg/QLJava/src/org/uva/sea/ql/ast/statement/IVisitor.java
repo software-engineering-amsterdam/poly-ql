@@ -8,6 +8,6 @@ public interface IVisitor {
 	void visit(IfStatement ifconditional);
 	void visit(IfElseStatement ifelseconditional);
 	void visit(Form form);
-	void visit(QuestionSet questionset);
+	void visit(Questions questionset);
 
 }

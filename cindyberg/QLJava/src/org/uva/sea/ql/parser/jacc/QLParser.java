@@ -2396,19 +2396,19 @@ class QLParser implements QLTokens {
     }
 
     private int yyr5() { // form : FORM IDENTIFIER '{' statements '}'
-        {yyrv = new Form(((Identifier)yysv[yysp-4]),((QuestionSet)yysv[yysp-2]));}
+        {yyrv = new Form(((Identifier)yysv[yysp-4]),((Questions)yysv[yysp-2]));}
         yysv[yysp-=5] = yyrv;
         return 5;
     }
 
     private int yyr13() { // ifThen : IF '(' expression ')' '{' statements '}'
-        {yyrv = new IfStatement(((Expression)yysv[yysp-5]),((QuestionSet)yysv[yysp-2]));}
+        {yyrv = new IfStatement(((Expression)yysv[yysp-5]),((Questions)yysv[yysp-2]));}
         yysv[yysp-=7] = yyrv;
         return 6;
     }
 
     private int yyr14() { // ifThenElse : IF '(' expression ')' '{' statements '}' ELSE '{' statements '}'
-        {yyrv = new IfElseStatement(((Expression)yysv[yysp-9]),((QuestionSet)yysv[yysp-6]),((QuestionSet)yysv[yysp-2]));}
+        {yyrv = new IfElseStatement(((Expression)yysv[yysp-9]),((Questions)yysv[yysp-6]),((Questions)yysv[yysp-2]));}
         yysv[yysp-=11] = yyrv;
         return 7;
     }
@@ -2466,13 +2466,13 @@ class QLParser implements QLTokens {
     }
 
     private int yyr6() { // statements : statement statements
-        {yyrv = new QuestionSet(((Statement)yysv[yysp-2]),((QuestionSet)yysv[yysp-1]));}
+        {yyrv = new Questions(((Statement)yysv[yysp-2]),((Questions)yysv[yysp-1]));}
         yysv[yysp-=2] = yyrv;
         return yypstatements();
     }
 
     private int yyr7() { // statements : statement
-        {yyrv = new QuestionSet(((Statement)yysv[yysp-1]));}
+        {yyrv = new Questions(((Statement)yysv[yysp-1]));}
         yysv[yysp-=1] = yyrv;
         return yypstatements();
     }

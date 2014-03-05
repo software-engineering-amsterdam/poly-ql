@@ -1,6 +1,5 @@
 package org.uva.sea.ql.ast;
 
-
-public class ASTNode {
+public abstract class ASTNode {
 
 }

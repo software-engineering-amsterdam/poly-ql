@@ -20,7 +20,7 @@ import org.uva.sea.ql.ast.statement.Form;
 import org.uva.sea.ql.ast.statement.IfStatement;
 import org.uva.sea.ql.ast.statement.IfElseStatement;
 import org.uva.sea.ql.ast.statement.Question;
-import org.uva.sea.ql.ast.statement.QuestionSet;
+import org.uva.sea.ql.ast.statement.Questions;
 import org.uva.sea.ql.ast.statement.Statement;
 import org.uva.sea.ql.ast.type.*;
 
@@ -53,7 +53,7 @@ public interface IVisitor {
 	void visit(IfStatement ifconditional);
 	void visit(IfElseStatement ifelseconditional);
 	void visit(Form form);
-	void visit(QuestionSet questionset);
+	void visit(Questions questionset);
 	
 	void visit(BooleanType bool);
 	void visit(IntegerType integer);

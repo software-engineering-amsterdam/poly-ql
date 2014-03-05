@@ -21,12 +21,14 @@ import org.uva.sea.ql.ast.operators.comparison.NEq;
 import org.uva.sea.ql.ast.operators.logical.And;
 import org.uva.sea.ql.ast.operators.logical.Not;
 import org.uva.sea.ql.ast.operators.logical.Or;
+import org.uva.sea.ql.ast.type.MissingType;
 import org.uva.sea.ql.ast.type.Type;
 
 public class ExpressionChecker implements ExpressionVisitor<Boolean> {
 
 	private TypeEnvironment environment;
 	private Problems problems;
+	private MissingType UNDEFINED = new MissingType(); 
 	
 	public ExpressionChecker(TypeEnvironment environment, Problems problems) {
 		this.environment = environment;
@@ -39,17 +41,25 @@ public class ExpressionChecker implements ExpressionVisitor<Boolean> {
 		return expression.accept(checker);
 	}
 	
-	public Boolean checkNormalExpression(Type type, Expression side){
+	private Boolean checkBinaryExpression(Type type, Expression left, Expression right){
+		checkType(type, left);
+		checkType(type, right);
+		return left.accept(this) && right.accept(this);
+	}
 
-		if(!(side.typeOf(environment).equals(type)))
-		{
-			problems.addError(side.toString() + " is not of type " + type.toString()); 
-			return false;
+	private void checkType(Type type, Expression expression) {
+		if(expression.typeOf(environment).equals(UNDEFINED)){}
+		else if (!expression.typeOf(environment).equals(type)){
+			problems.addError(expression.toString() +" is not of type " + type.toString());
 		}
-		return(checkExpression(environment,problems,side));
 	}
 	
-	public Boolean checkComparison(Type type, Expression left, Expression right){
+	private Boolean checkUnaryExpression(Type type, Expression side){
+		checkType(type,side);
+		return side.accept(this);
+	}
+	
+	private Boolean checkComparison(Type type, Expression left, Expression right){
 		if(!left.typeOf(environment).isCompatibleWith(right.typeOf(environment))){
 			problems.addError(left.toString() + " cannot be compared with " + right.toString());
 			return false;
@@ -65,36 +75,27 @@ public class ExpressionChecker implements ExpressionVisitor<Boolean> {
 
 
 	public Boolean visit(Add add) {
-		
-		boolean left = checkNormalExpression(add.typeOf(environment), add.getLeftHand());
-		boolean right = checkNormalExpression(add.typeOf(environment), add.getRightHand());
-		return left && right;
+		return checkBinaryExpression(add.typeOf(environment), add.getLeftHand(),add.getRightHand());
 	}
 
 	public Boolean visit(Sub sub) {
-		boolean left = checkNormalExpression(sub.typeOf(environment), sub.getLeftHand());
-		boolean right = checkNormalExpression(sub.typeOf(environment), sub.getRightHand());
-		return left && right;
+		return checkBinaryExpression(sub.typeOf(environment), sub.getLeftHand(), sub.getRightHand());
 	}
 
 	public Boolean visit(Div div) {
-		boolean left = checkNormalExpression(div.typeOf(environment), div.getLeftHand());
-		boolean right = checkNormalExpression(div.typeOf(environment), div.getRightHand());
-		return left && right;
+		return checkBinaryExpression(div.typeOf(environment), div.getLeftHand(), div.getRightHand());
 	}
 
 	public Boolean visit(Mul mul) {
-		boolean left = checkNormalExpression(mul.typeOf(environment), mul.getLeftHand());
-		boolean right = checkNormalExpression(mul.typeOf(environment), mul.getRightHand());
-		return left && right;
+		return checkBinaryExpression(mul.typeOf(environment), mul.getLeftHand(), mul.getRightHand());
 	}
 
 	public Boolean visit(Neg neg) {
-		return checkNormalExpression(neg.typeOf(environment), neg.getExpr());
+		return checkUnaryExpression(neg.typeOf(environment), neg.getExpr());
 	}
 
 	public Boolean visit(Pos pos) {
-		return checkNormalExpression(pos.typeOf(environment), pos.getExpr());
+		return checkUnaryExpression(pos.typeOf(environment), pos.getExpr());
 	}
 
 	public Boolean visit(Eq eq) {
@@ -122,19 +123,15 @@ public class ExpressionChecker implements ExpressionVisitor<Boolean> {
 	}
 
 	public Boolean visit(And and) {
-		boolean left = checkNormalExpression(and.typeOf(environment), and.getLeftHand());
-		boolean right = checkNormalExpression(and.typeOf(environment), and.getRightHand());
-		return left && right;
+		return checkBinaryExpression(and.typeOf(environment), and.getLeftHand(), and.getRightHand());
 	}
 
 	public Boolean visit(Or or) {
-		boolean left = checkNormalExpression(or.typeOf(environment), or.getLeftHand());
-		boolean right = checkNormalExpression(or.typeOf(environment), or.getRightHand());
-		return left && right;
+		return checkBinaryExpression(or.typeOf(environment), or.getLeftHand(), or.getRightHand());
 	}
 
 	public Boolean visit(Not not) {
-		return checkNormalExpression(not.typeOf(environment),not.getExpr());
+		return checkUnaryExpression(not.typeOf(environment),not.getExpr());
 	}
 
 
@@ -153,7 +150,11 @@ public class ExpressionChecker implements ExpressionVisitor<Boolean> {
 	}
 
 	public Boolean visit(Identifier identifier) {
-		return true;
+		if(environment.isDeclared(identifier)){
+			return true;
+		}
+		problems.addError(identifier.getName() + " is not declared ");
+		return false;
 	}
 
 }

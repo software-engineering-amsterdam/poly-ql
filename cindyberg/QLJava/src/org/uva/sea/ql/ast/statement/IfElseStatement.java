@@ -6,25 +6,25 @@ import org.uva.sea.ql.ast.StatementVisitor;
 public class IfElseStatement extends Statement {
 
 	private final Expression conditional;
-	private final QuestionSet questionsetIf;
-	private final QuestionSet questionsetElse;
+	private final Questions ifBody;
+	private final Questions elseBody;
 	
-	public IfElseStatement(Expression expr, QuestionSet questionsetIf, QuestionSet questionsetElse) {
+	public IfElseStatement(Expression expr, Questions ifBody, Questions elseBody) {
 		this.conditional = expr;
-		this.questionsetIf = questionsetIf;
-		this.questionsetElse = questionsetElse;
+		this.ifBody = ifBody;
+		this.elseBody = elseBody;
 	}
 	
 	public Expression getConditional(){
 		return this.conditional;
 	}
 
-	public QuestionSet getIfQuestionSet(){
-		return this.questionsetIf;
+	public Questions getIfQuestionSet(){
+		return this.ifBody;
 	}
 	
-	public QuestionSet getElseQuestionSet(){
-		return this.questionsetElse;
+	public Questions getElseQuestionSet(){
+		return this.elseBody;
 	}
 	
 	public void accept(StatementVisitor visitor) {

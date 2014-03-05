@@ -41,7 +41,7 @@ import org.uva.sea.ql.ast.type.*;
 //nonterminals
 %type <ASTNode> astnode
 %type <Form> form
-%type <QuestionSet> statements
+%type <Questions> statements
 %type <Statement> statement
 %type <Question> question
 %type <IfStatement> ifThen
@@ -67,8 +67,8 @@ import org.uva.sea.ql.ast.*;
  form : FORM IDENTIFIER '{' statements '}' {$$ = new Form($2,$4);}
  	  ; 
 
- statements : statement statements {$$ = new QuestionSet($1,$2);}
- 		    | statement			   {$$ = new QuestionSet($1);}
+ statements : statement statements {$$ = new Questions($1,$2);}
+ 		    | statement			   {$$ = new Questions($1);}
  		    ;
  		    
  statement : question

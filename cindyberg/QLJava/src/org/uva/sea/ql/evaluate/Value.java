@@ -4,7 +4,6 @@ public abstract class Value {
 	
 	public abstract Object getValue();
 
-	//default exception throwen?
 	public Value add(Value value){
 		return null; 
 	}

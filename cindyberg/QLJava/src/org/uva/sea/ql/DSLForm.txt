@@ -1,9 +1,9 @@
 form FORM1 {
 	variable : "Wil je meer vragen?" boolean
-	varx : "testje" integer (varx+2) //cyclic dependency :(
+	varx : "testje" integer (varx+2)
 	var : "heb je een huis?" boolean
-	var : "hoeveel kost je huis?" integer
-	if(variable){
+	var : "hoeveel kost je huis?" integer (hoi + 1) 
+	if(vraag1){
 		vraag1 : "getalletjes?" integer
 		vraag2 : "meer getalletjes!" integer (true)
 		vraag3 : "getalletjes?" boolean (true) //comments about stuff

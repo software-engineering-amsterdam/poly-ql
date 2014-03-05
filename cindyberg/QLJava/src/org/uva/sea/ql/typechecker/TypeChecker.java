@@ -1,26 +1,25 @@
 package org.uva.sea.ql.typechecker;
 
-import java.util.ArrayList;
-
 import org.junit.Test;
 import org.uva.sea.ql.ast.statement.Form;
+import org.uva.sea.ql.parser.jacc.ParseException;
 import org.uva.sea.ql.parser.jacc.Parser;
 
 /* 
  cyclic dependencies between questions
 */
 public class TypeChecker {
-	
+
 	private Problems problems;
 	private Parser parser;
 
 	public TypeChecker(){ 
 		parser = new Parser();
-		
+
 	}
-	
+
 	@Test
-	public void testForms(){
+	public void testForms() throws ParseException{
 		String form1 = "form FORM { Var : \"label\" integer }";
 		System.out.println("\n check form1... \n");
 		checkDSL(form1);
@@ -46,21 +45,21 @@ public class TypeChecker {
 				+ " Vari3 : \"bool\" boolean (Vari&&Vari2)} }"; 
 		System.out.println("\n check form5... \n ");
 		checkDSL(form5);	
-		
+
 	}
-	public void checkDSL(String inputDSL){
+	public void checkDSL(String inputDSL) throws ParseException{
 		Form tree = (Form) parser.parser(inputDSL);
-		problems = new Problems(new ArrayList<String>(),new ArrayList<String>());
+		problems = new Problems();
 		StatementChecker statementchecker = new StatementChecker(new TypeEnvironment(), problems);
 		tree.accept(statementchecker);
 
 		printProblems();
 
 	}
-	
+
 	private void printProblems(){
 		problems.printErrors();
 		problems.printWarnings();
 	}
-	
+
 }
