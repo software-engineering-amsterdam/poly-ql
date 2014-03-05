@@ -49,41 +49,36 @@ public class FormChecker implements FormVisitor<Boolean> {
 			result &= s.accept(this);
 		}
 		
-		// Check for cyclic dependencies  is not neccesary because questions can only
-		// refer to already defined questions.
-		// if (x) { y: "Y?" boolean }
-		// if (y) { x: "X?" boolean }
-		// will not validate because question x isn't defined 
-		// when it is used in the condition of the first  if statement.
-		
 		return result;
 	}
 	
 	@Override
 	public Boolean visit(Question question) {
-		boolean result = true;
 		if (this.typeEnv.containsKey(question.getName())) {
 			this.errors.add(String.format("Question identifier '%s' already defined in question %s", 
 										   question.getName(), question.getLabel()));
-			result = false;
+			return false;
 		}
 		else {
 			this.typeEnv.put(question.getName(),question.getType());
 		}
 		
-		return result;
+		return true;
 	}
 
 	@Override
 	public Boolean visit(Computed computed) {
-		boolean result = ExprChecker.check(computed.getExpr(), this.typeEnv, this.errors);
 		if (this.typeEnv.containsKey(computed.getName())) {
 			this.errors.add(String.format("Question identifier '%s' already defined in computed question %s",
 										   computed.getName(), computed.getLabel()));
-			result = false;
+			return false;
 		}
 		else {
 			this.typeEnv.put(computed.getName(),computed.getType());
+		}
+		
+		if (!ExprChecker.check(computed.getExpr(), this.typeEnv, this.errors)) {
+			return false;
 		}
 		
 		if (!computed.getExpr().typeOf(this.typeEnv).getClass().equals(computed.getType().getClass()))
@@ -92,10 +87,10 @@ public class FormChecker implements FormVisitor<Boolean> {
 										  "but evaluated to be of type '%s'",
 										   computed.getExpr(), computed.getName(), computed.getType(),
 										   computed.getExpr().typeOf(this.typeEnv)));
-			result = false;
+			return false;
 		}
 		
-		return result;
+		return true;
 	}
 	
 	@Override
