@@ -7,7 +7,7 @@ import java.util.Map;
  * This helper class is a wrapper for a map between identifiers (string values)
  * and their value (Value object).
  */
-class ValueStore {
+public class ValueStore {
     private final Map<String, Value> values;
 
     public ValueStore() {

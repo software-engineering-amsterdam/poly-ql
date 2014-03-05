@@ -15,6 +15,31 @@ public class BoolVal extends Value {
     }
 
     @Override
+    public Value and(Value argument) {
+        return argument.boolAnd(this);
+    }
+
+    @Override
+    public Value or(Value argument) {
+        return argument.boolOr(this);
+    }
+
+    @Override
+    public Value not() {
+        return new BoolVal(!value);
+    }
+
+    @Override
+    public Value boolAnd(BoolVal argument) {
+        return new BoolVal(value && argument.getValue());
+    }
+
+    @Override
+    public Value boolOr(BoolVal argument) {
+        return new BoolVal(value || argument.getValue());
+    }
+
+    @Override
     public boolean equals(Object object) {
         if (object instanceof BoolVal) {
             Boolean castedValue = ((BoolVal) object).getValue();

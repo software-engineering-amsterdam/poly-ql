@@ -15,6 +15,100 @@ public class IntVal extends Value {
     }
 
     @Override
+    public Value add(Value argument) {
+        return argument.intAdd(this);
+    }
+
+    @Override
+    public Value sub(Value argument) {
+        return argument.intSub(this);
+    }
+
+    @Override
+    public Value mul(Value argument) {
+        return argument.intMul(this);
+    }
+
+    @Override
+    public Value div(Value argument) {
+        return argument.intDiv(this);
+    }
+
+    @Override
+    public Value geq(Value argument) {
+        return argument.intGeq(this);
+    }
+
+    @Override
+    public Value gt(Value argument) {
+        return argument.intGt(this);
+    }
+
+    @Override
+    public Value leq(Value argument) {
+        return argument.intLeq(this);
+    }
+
+    @Override
+    public Value lt(Value argument) {
+        return argument.lt(this);
+    }
+
+    @Override
+    public Value neg() {
+        return new IntVal(-value);
+    }
+
+    @Override
+    public Value pos() {
+        return this;
+    }
+
+    // Methods for double dispatch.
+    // Note: order is reversed!! If val1.sub(val2) is called, this will result
+    // in val2.intSub(val1), where val1 - val2 must actually be performed!
+    @Override
+    protected Value intAdd(IntVal argument) {
+        return new IntVal(argument.getValue() + value);
+    }
+
+    @Override
+    protected Value intSub(IntVal argument) {
+        return new IntVal(argument.getValue() - value);
+    }
+
+    @Override
+    protected Value intMul(IntVal argument) {
+        return new IntVal(argument.getValue() * value);
+    }
+
+    @Override
+    protected Value intDiv(IntVal argument) {
+        return new IntVal(argument.getValue() / value);
+    }
+
+    @Override
+    protected Value intGeq(IntVal argument) {
+        return new BoolVal(argument.getValue() >= value);
+    }
+
+    @Override
+    protected Value intGt(IntVal argument) {
+        return new BoolVal(argument.getValue() > value);
+    }
+
+    @Override
+    protected Value intLeq(IntVal argument) {
+        return new BoolVal(argument.getValue() <= value);
+    }
+
+    @Override
+    protected Value intLt(IntVal argument) {
+        return new BoolVal(argument.getValue() < value);
+    }
+
+
+    @Override
     public boolean equals(Object object) {
         if (object instanceof IntVal) {
             Integer castedInt = ((IntVal) object).getValue();

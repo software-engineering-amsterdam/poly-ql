@@ -8,6 +8,7 @@ import net.iplantevin.ql.ast.expressions.literals.Int;
 import net.iplantevin.ql.ast.expressions.literals.Str;
 import net.iplantevin.ql.ast.expressions.operators.Add;
 import net.iplantevin.ql.ast.expressions.operators.And;
+import net.iplantevin.ql.ast.expressions.operators.Binary;
 import net.iplantevin.ql.ast.expressions.operators.Div;
 import net.iplantevin.ql.ast.expressions.operators.EQ;
 import net.iplantevin.ql.ast.expressions.operators.GEQ;
@@ -21,6 +22,7 @@ import net.iplantevin.ql.ast.expressions.operators.Not;
 import net.iplantevin.ql.ast.expressions.operators.Or;
 import net.iplantevin.ql.ast.expressions.operators.Pos;
 import net.iplantevin.ql.ast.expressions.operators.Sub;
+import net.iplantevin.ql.ast.expressions.operators.Unary;
 import net.iplantevin.ql.ast.form.Form;
 import net.iplantevin.ql.ast.form.FormCollection;
 import net.iplantevin.ql.ast.statements.Block;
@@ -30,9 +32,6 @@ import net.iplantevin.ql.ast.statements.IfElse;
 import net.iplantevin.ql.ast.statements.Question;
 import net.iplantevin.ql.ast.visitors.IASTVisitor;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Visitor that takes an expression and returns the appropriate value.
  *
@@ -41,17 +40,28 @@ import java.util.Map;
 public class EvaluationVisitor implements IASTVisitor<Value> {
     private final ValueStore values;
 
-    private EvaluationVisitor() {
-        values = new ValueStore();
+    public EvaluationVisitor(ValueStore values) {
+        this.values = values;
     }
 
-    public static Value evaluateExpression(Expression expression) {
-        EvaluationVisitor evaluator = new EvaluationVisitor();
-        return expression.accept(evaluator);
+    public Value evaluate(Expression expression) {
+        return expression.accept(this);
+    }
+
+    private Value leftValue(Binary expression) {
+        return expression.getLeftHS().accept(this);
+    }
+
+    private Value rightValue(Binary expression) {
+        return expression.getRightHS().accept(this);
+    }
+
+    private Value unaryValue(Unary expression) {
+        return expression.getExpression().accept(this);
     }
 
     /////////////////////////////////////////////
-    // Visitor methods
+    // Non-Expression visitor methods
     /////////////////////////////////////////////
     @Override
     public Value visit(FormCollection formCollection) {
@@ -88,103 +98,106 @@ public class EvaluationVisitor implements IASTVisitor<Value> {
         return null;
     }
 
+    /////////////////////////////////////////////
+    // Expression visitor methods
+    /////////////////////////////////////////////
     @Override
     public Value visit(Par par) {
-        return null;
+        return par.getExpression().accept(this);
     }
 
     @Override
     public Value visit(Add add) {
-        return null;
+        return leftValue(add).add(rightValue(add));
     }
 
     @Override
     public Value visit(And and) {
-        return null;
+        return leftValue(and).and(rightValue(and));
     }
 
     @Override
     public Value visit(Div div) {
-        return null;
+        return leftValue(div).div(rightValue(div));
     }
 
     @Override
     public Value visit(EQ eq) {
-        return null;
+        return leftValue(eq).equal(rightValue(eq));
     }
 
     @Override
     public Value visit(GEQ geq) {
-        return null;
+        return leftValue(geq).geq(rightValue(geq));
     }
 
     @Override
     public Value visit(GT gt) {
-        return null;
+        return leftValue(gt).gt(rightValue(gt));
     }
 
     @Override
     public Value visit(LEQ leq) {
-        return null;
+        return leftValue(leq).leq(rightValue(leq));
     }
 
     @Override
     public Value visit(LT lt) {
-        return null;
+        return leftValue(lt).lt(rightValue(lt));
     }
 
     @Override
     public Value visit(Mul mul) {
-        return null;
+        return leftValue(mul).mul(rightValue(mul));
     }
 
     @Override
     public Value visit(Neg neg) {
-        return null;
+        return unaryValue(neg).neg();
     }
 
     @Override
     public Value visit(NEQ neq) {
-        return null;
+        return leftValue(neq).notEqual(rightValue(neq));
     }
 
     @Override
     public Value visit(Not not) {
-        return null;
+        return unaryValue(not).not();
     }
 
     @Override
     public Value visit(Or or) {
-        return null;
+        return leftValue(or).or(rightValue(or));
     }
 
     @Override
     public Value visit(Pos pos) {
-        return null;
+        return unaryValue(pos).pos();
     }
 
     @Override
     public Value visit(Sub sub) {
-        return null;
+        return leftValue(sub).sub(rightValue(sub));
     }
 
     @Override
     public Value visit(Bool bool) {
-        return null;
+        return new BoolVal(bool.getValue());
     }
 
     @Override
     public Value visit(ID id) {
-        return null;
+        return values.get(id.getName());
     }
 
     @Override
     public Value visit(Int integer) {
-        return null;
+        return new IntVal(integer.getValue());
     }
 
     @Override
     public Value visit(Str str) {
-        return null;
+        return new StrVal(str.getText());
     }
 }

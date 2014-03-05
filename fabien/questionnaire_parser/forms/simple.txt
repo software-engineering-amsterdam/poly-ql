@@ -1,19 +1,6 @@
 form Hello {
   
-  what Is this?
-  integer fu /*  sadfdf */
- 
-  required "true" // no 
-  error "yes"
+  if (foo && bar || hello) {
   
-  if (2 && false) {
-      Again?
-      integer fpoo
   }
-  else {
-    Oh dear?
-    integer bar
-  }
-  
-  put "This is a test" (foo)
 }

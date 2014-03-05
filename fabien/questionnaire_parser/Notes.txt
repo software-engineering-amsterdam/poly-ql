@@ -1,3 +1,16 @@
+Difference in assertion error (bug made by programmer) and user error (for the questionanaire users)
+
+
+Question
+    - answerable
+    - computed
+    
+Visiting
+    - Visitor itself should be able to decide where to visit (top-down, child first)
+
+Duplicate label checking
+    - Don't initialize a list for identifiers and keep appending identifiers in it for duplicate checking
+    
 Computation
 
 - TypeErrors geen AST nodes maken
