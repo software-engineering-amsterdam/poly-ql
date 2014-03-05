@@ -13,7 +13,7 @@ import construction.QuestionElements.*;
 
 @members {
 /** Map variable name to Integer object holding value */
-HashMap<String,IType> memory = new HashMap<String,IType>();
+Map<String,IType> memory = new HashMap<String,IType>();
 }
 
 questionaire returns [QuestionForm form] @init {$form = new QuestionForm();}:
@@ -31,7 +31,7 @@ questionentry returns [Question question] @init {} :
     IDENTIFIER ':' STRING type
     {$question = new Question($IDENTIFIER.text,$STRING.text,$type.t,$IDENTIFIER.line);};
 
-conditional returns [ConditionalQuestion cq] @init {ArrayList<GeneralQuestion> gql = new ArrayList();} :
+conditional returns [ConditionalQuestion cq] @init {List<GeneralQuestion> gql = new ArrayList();} :
     'if' '(' exp {$cq = new ConditionalQuestion($exp.ex,($exp.start).getLine());} ')' 
     '{' (item {$cq.add($item.question);})* '}' 
     ('else' '{' (item {$cq.add($item.question);})*  '}')*;

@@ -3,15 +3,15 @@ test: "hoi dit" money
 ah: "vraag" boolean
 bla: "hoe dan" boolean
 bla: "hoe dan" money
-ca: "lala" boolean(bla and ah)
-if(ca or false)
+ca: "lala" boolean(ca and ah)
+if(c or false)
 	{
 	if(1+1)
 		{
 		da: "did" boolean
 		}
 	}
-if(ah > 10)
+if(da> 10)
 	{
 	tra: "la" boolean
 	}
