@@ -77,6 +77,17 @@ public interface QL4Listener extends ParseTreeListener {
 	void exitInt(@NotNull QL4Parser.IntContext ctx);
 
 	/**
+	 * Enter a parse tree produced by {@link QL4Parser#braceExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterBraceExpr(@NotNull QL4Parser.BraceExprContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QL4Parser#braceExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitBraceExpr(@NotNull QL4Parser.BraceExprContext ctx);
+
+	/**
 	 * Enter a parse tree produced by {@link QL4Parser#lesExpr}.
 	 * @param ctx the parse tree
 	 */
@@ -163,17 +174,6 @@ public interface QL4Listener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitMinExpr(@NotNull QL4Parser.MinExprContext ctx);
-
-	/**
-	 * Enter a parse tree produced by {@link QL4Parser#wrapExpr}.
-	 * @param ctx the parse tree
-	 */
-	void enterWrapExpr(@NotNull QL4Parser.WrapExprContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link QL4Parser#wrapExpr}.
-	 * @param ctx the parse tree
-	 */
-	void exitWrapExpr(@NotNull QL4Parser.WrapExprContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link QL4Parser#dec}.

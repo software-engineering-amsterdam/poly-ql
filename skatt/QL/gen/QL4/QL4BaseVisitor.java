@@ -68,6 +68,14 @@ public class QL4BaseVisitor<T> extends AbstractParseTreeVisitor<T> implements QL
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitBraceExpr(@NotNull QL4Parser.BraceExprContext ctx) { return visitChildren(ctx); }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitLesExpr(@NotNull QL4Parser.LesExprContext ctx) { return visitChildren(ctx); }
 
 	/**
@@ -125,14 +133,6 @@ public class QL4BaseVisitor<T> extends AbstractParseTreeVisitor<T> implements QL
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitMinExpr(@NotNull QL4Parser.MinExprContext ctx) { return visitChildren(ctx); }
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitWrapExpr(@NotNull QL4Parser.WrapExprContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}

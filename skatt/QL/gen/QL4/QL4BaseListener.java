@@ -97,6 +97,19 @@ public class QL4BaseListener implements QL4Listener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterBraceExpr(@NotNull QL4Parser.BraceExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBraceExpr(@NotNull QL4Parser.BraceExprContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterLesExpr(@NotNull QL4Parser.LesExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -195,19 +208,6 @@ public class QL4BaseListener implements QL4Listener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitMinExpr(@NotNull QL4Parser.MinExprContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterWrapExpr(@NotNull QL4Parser.WrapExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitWrapExpr(@NotNull QL4Parser.WrapExprContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

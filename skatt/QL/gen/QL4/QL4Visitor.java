@@ -56,6 +56,13 @@ public interface QL4Visitor<T> extends ParseTreeVisitor<T> {
 	T visitInt(@NotNull QL4Parser.IntContext ctx);
 
 	/**
+	 * Visit a parse tree produced by {@link QL4Parser#braceExpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBraceExpr(@NotNull QL4Parser.BraceExprContext ctx);
+
+	/**
 	 * Visit a parse tree produced by {@link QL4Parser#lesExpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -110,13 +117,6 @@ public interface QL4Visitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitMinExpr(@NotNull QL4Parser.MinExprContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link QL4Parser#wrapExpr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitWrapExpr(@NotNull QL4Parser.WrapExprContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link QL4Parser#dec}.

@@ -6,8 +6,6 @@ import java.util.List;
 /**
  * Abstract syntax tree of the conditional construct in the QL4 grammar
  * 
- * TODO: Add structures implementation in constructor
- * 
  * Holds an if expression, possibly ifelse expression,
  * possibly else expression and their corresponding structures
  * @author Sammie Katt

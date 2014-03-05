@@ -509,6 +509,25 @@ public class QL4Parser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
+	public static class BraceExprContext extends ExpressionContext {
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
+		}
+		public BraceExprContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof QL4Listener ) ((QL4Listener)listener).enterBraceExpr(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof QL4Listener ) ((QL4Listener)listener).exitBraceExpr(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QL4Visitor ) return ((QL4Visitor<? extends T>)visitor).visitBraceExpr(this);
+			else return visitor.visitChildren(this);
+		}
+	}
 	public static class LesExprContext extends ExpressionContext {
 		public ExpressionContext lhs;
 		public ExpressionContext rhs;
@@ -578,25 +597,6 @@ public class QL4Parser extends Parser {
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof QL4Visitor ) return ((QL4Visitor<? extends T>)visitor).visitOrExpr(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	public static class WrapExprContext extends ExpressionContext {
-		public ExpressionContext expression() {
-			return getRuleContext(ExpressionContext.class,0);
-		}
-		public WrapExprContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QL4Listener ) ((QL4Listener)listener).enterWrapExpr(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QL4Listener ) ((QL4Listener)listener).exitWrapExpr(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof QL4Visitor ) return ((QL4Visitor<? extends T>)visitor).visitWrapExpr(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -820,7 +820,7 @@ public class QL4Parser extends Parser {
 				break;
 			case 5:
 				{
-				_localctx = new WrapExprContext(_localctx);
+				_localctx = new BraceExprContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
 				setState(64); match(5);

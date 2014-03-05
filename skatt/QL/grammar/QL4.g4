@@ -21,7 +21,7 @@ question:
 
 // expressions
 expression: 
-      '(' expression ')' #wrapExpr  
+      '(' expression ')' #braceExpr  
         
         // math expressions
       | lhs=expression '*' rhs=expression #multExpr

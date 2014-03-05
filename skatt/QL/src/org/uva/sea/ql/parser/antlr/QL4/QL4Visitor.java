@@ -66,9 +66,6 @@ public class QL4Visitor extends QL4BaseVisitor<QL4Tree> {
    * Returns a conditional object containing the expressions
    * and structures of the if/elseif/else in the context
    * 
-   * TODO: figure out conditionals 
-   * TODO: name elseif statements
-   * 
    * @param ctx the conditional context
    * @return a conditional object 
    */
