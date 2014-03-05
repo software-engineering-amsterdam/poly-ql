@@ -16,6 +16,12 @@ import org.uva.sea.ql.ast.stat.Stat;
 import org.uva.sea.ql.ast.types.Bool;
 import org.uva.sea.ql.ast.types.Type;
 
+//Check for cyclic dependencies  is not neccesary because questions can only
+// refer to already defined questions.
+// if (x) { y: "Y?" boolean }
+// if (y) { x: "X?" boolean }
+// will not validate because question x isn't defined 
+// when it is used in the condition of the first  if statement.
 public class FormChecker implements FormVisitor<Boolean> {
 	
 	private final Map<Ident, Type> typeEnv;
@@ -40,9 +46,7 @@ public class FormChecker implements FormVisitor<Boolean> {
 	public Boolean visit(Form form) {
 		boolean result = true;
 		for (Stat s : form.getBody().getStats()) {
-			if(!s.accept(this)) {
-				result = false;
-			}
+			result &= s.accept(this);
 		}
 		
 		// Check for cyclic dependencies  is not neccesary because questions can only
