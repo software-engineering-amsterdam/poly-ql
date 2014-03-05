@@ -11,19 +11,19 @@ import java.util.List;
  * @author Sammie Katt
  *
  */
-public class Conditional extends Tree {
+public class Conditional extends QLTree {
 	
 	// holds the expressions in if and else conditions 
-	Tree ifCondition;
+	QLTree ifCondition;
 	
 	// holds the elseif conditions 
-	List<Tree> elseifConditions = new ArrayList<Tree>();
+	List<QLTree> elseifConditions = new ArrayList<QLTree>();
 
 	// holds the structures of if and else conditions
-	Tree ifStructure, elseStructure;
+	QLTree ifStructure, elseStructure;
 	
 	// holds the structures of the elseif conditions
-	List<Tree> elseifStructures = new ArrayList<Tree>();
+	List<QLTree> elseifStructures = new ArrayList<QLTree>();
 	
 	/**
 	 * Constructor, sets if and elseif conditions and
@@ -34,7 +34,7 @@ public class Conditional extends Tree {
 	 * @param elseStruc 
 	 * @param elseifConditions
 	 */
-	public Conditional(Tree ifCondition, List<Tree> elseifConditions, Tree ifStructure, List<Tree> elseifStructures, Tree elseStructure) {
+	public Conditional(QLTree ifCondition, List<QLTree> elseifConditions, QLTree ifStructure, List<QLTree> elseifStructures, QLTree elseStructure) {
 		this.ifCondition = ifCondition;
 		this.elseifConditions = elseifConditions;
 

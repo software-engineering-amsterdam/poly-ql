@@ -9,18 +9,18 @@ import java.util.List;
  * @author Sammie Katt
  *
  */
-public class Structures extends Tree {
+public class Structures extends QLTree {
 	
 	/**
 	 * A list of all the structures in 'structure'
 	 */
-	List<Tree> structures = new ArrayList<Tree>();
+	List<QLTree> structures = new ArrayList<QLTree>();
 	
 	/**
 	 * Constructor, sets structures
 	 * @param structures 
 	 */
-	public Structures(List<Tree> structures) {
+	public Structures(List<QLTree> structures) {
 		this.structures = structures;
 	}
 	
@@ -31,7 +31,7 @@ public class Structures extends Tree {
 		String str = "Structure: ";
 		
 		// for each structure in structures add its description to the string
-		for (Tree struct : structures) {
+		for (QLTree struct : structures) {
 			str += "\n" + struct.toString();
 		}
 		

@@ -7,7 +7,7 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Conditional;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Form;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Question;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Structures;
-import org.uva.sea.ql.parser.antlr.QL4.AST.Tree;
+import org.uva.sea.ql.parser.antlr.QL4.AST.QLTree;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.BraceExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Expression;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.AndExpr;
@@ -35,7 +35,7 @@ import QL4.QL4Parser;
  * @author Sammie Katt
  *
  */
-public class AntlrVisitor extends QL4BaseVisitor<Tree> {
+public class AntlrVisitor extends QL4BaseVisitor<QLTree> {
 
   /**
    * Specifies behavior when visiting the form 
@@ -49,8 +49,8 @@ public class AntlrVisitor extends QL4BaseVisitor<Tree> {
   /**
    * Returns a structures object, containing its structure in a list
    */
-  public Tree visitStructures(QL4Parser.StructuresContext ctx) {
-	  List<Tree> structures = new ArrayList<Tree>();
+  public QLTree visitStructures(QL4Parser.StructuresContext ctx) {
+	  List<QLTree> structures = new ArrayList<QLTree>();
 
 	  for (QL4Parser.StructureContext struct : ctx.structure()) {
 		  structures.add(struct.accept(this));
@@ -66,17 +66,17 @@ public class AntlrVisitor extends QL4BaseVisitor<Tree> {
   public Conditional visitConditional(QL4Parser.ConditionalContext ctx) {
 
 	 // define if/else (if available) conditions and structures
-	 Tree ifExpr = ctx.ifexpr.accept(this);
-	 Tree ifStruc = ctx.ifstruc.accept(this);
+	 QLTree ifExpr = ctx.ifexpr.accept(this);
+	 QLTree ifStruc = ctx.ifstruc.accept(this);
 	 
-	 Tree elseStruc = null;
+	 QLTree elseStruc = null;
 	 if (ctx.elsestruc != null) {
 		 elseStruc = ctx.elsestruc.accept(this);
 	 } 
 	 
 	 // define elseifConditions and their structs by looping over them in ctx
-	 List<Tree> elseifExprs = new ArrayList<Tree>();
-	 List<Tree> elseifStrucs = new ArrayList<Tree>();
+	 List<QLTree> elseifExprs = new ArrayList<QLTree>();
+	 List<QLTree> elseifStrucs = new ArrayList<QLTree>();
 
 	 // start i = 1, as first expression is always if
 	 for (int i=1; i < ctx.expression().size(); i++) {
@@ -93,9 +93,9 @@ public class AntlrVisitor extends QL4BaseVisitor<Tree> {
    * Type, label, id and value (question.computed is false)
    */
   public Question visitRegQuestion(QL4Parser.RegQuestionContext ctx) {
-	  Tree id = new Identifier(ctx.IDENTIFIER().getText());
-	  Tree label = new Label(ctx.LABEL().getText());
-	  Tree type = new Type(ctx.TYPE().getText());
+	  QLTree id = new Identifier(ctx.IDENTIFIER().getText());
+	  QLTree label = new Label(ctx.LABEL().getText());
+	  QLTree type = new Type(ctx.TYPE().getText());
 	  
 	  return new Question(id, label, type); 
   }
@@ -106,10 +106,10 @@ public class AntlrVisitor extends QL4BaseVisitor<Tree> {
    * Type, label, id and value (question.computed is true)
    */
   public Question visitCompQuestion(QL4Parser.CompQuestionContext ctx) {
-	  Tree id = new Identifier(ctx.IDENTIFIER().getText());
-	  Tree label = new Label(ctx.LABEL().getText());
-	  Tree type = new Type(ctx.TYPE().getText());
-	  Tree value = ctx.expression().accept(this);
+	  QLTree id = new Identifier(ctx.IDENTIFIER().getText());
+	  QLTree label = new Label(ctx.LABEL().getText());
+	  QLTree type = new Type(ctx.TYPE().getText());
+	  QLTree value = ctx.expression().accept(this);
 	  
 	  return new Question(id, label, type, value); 
   }
