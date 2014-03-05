@@ -53,7 +53,7 @@ import java.util.Map;
  *
  * @author Ivan
  */
-public class TypeCheckerVisitor implements IASTVisitor {
+public class TypeCheckerVisitor implements IASTVisitor<Void> {
     private final List<ASTError> errors;
     private final TypeEnvironment idTypeStore;
     private final Map<String, Questionable> labels;
@@ -199,149 +199,175 @@ public class TypeCheckerVisitor implements IASTVisitor {
     // Visitor methods
     /////////////////////////////////////////////
     @Override
-    public void visit(FormCollection formCollection) {
+    public Void visit(FormCollection formCollection) {
         // Nothing special (yet).
         // NOTE: should only call visit on individual forms!! (Since checking
         //   is on a per-form basis.) Otherwise, just returns.
         // TODO: proper notice if this method is called.
-        return;
+        return null;
     }
 
     @Override
-    public void visit(Form form) {
+    public Void visit(Form form) {
         form.getBody().accept(this);
+        return null;
     }
 
     @Override
-    public void visit(Block block) {
+    public Void visit(Block block) {
         for (Statement statement : block.getStatements()) {
             statement.accept(this);
         }
+        return null;
     }
 
     @Override
-    public void visit(Computation computation) {
+    public Void visit(Computation computation) {
         checkComputation(computation);
         addIdentifier(computation);
         addQuestionableLabel(computation);
+        return null;
     }
 
     @Override
-    public void visit(If ifStat) {
+    public Void visit(If ifStat) {
         checkCondition(ifStat.getCondition());
         ifStat.getBody().accept(this);
+        return null;
     }
 
     @Override
-    public void visit(IfElse ifElse) {
+    public Void visit(IfElse ifElse) {
         checkCondition(ifElse.getCondition());
         ifElse.getBody().accept(this);
         ifElse.getElseBody().accept(this);
+        return null;
     }
 
     @Override
-    public void visit(Question question) {
+    public Void visit(Question question) {
         addIdentifier(question);
         addQuestionableLabel(question);
+        return null;
     }
 
     @Override
-    public void visit(Par par) {
+    public Void visit(Par par) {
         par.getExpression().accept(this);
+        return null;
     }
 
     @Override
-    public void visit(Add add) {
+    public Void visit(Add add) {
         checkNumeric(add);
+        return null;
     }
 
     @Override
-    public void visit(And and) {
+    public Void visit(And and) {
         checkLogical(and);
+        return null;
     }
 
     @Override
-    public void visit(Div div) {
+    public Void visit(Div div) {
         checkNumeric(div);
+        return null;
     }
 
     @Override
-    public void visit(EQ eq) {
+    public Void visit(EQ eq) {
         checkEquality(eq);
+        return null;
     }
 
     @Override
-    public void visit(GEQ geq) {
+    public Void visit(GEQ geq) {
         checkComparison(geq);
+        return null;
     }
 
     @Override
-    public void visit(GT gt) {
+    public Void visit(GT gt) {
         checkComparison(gt);
+        return null;
     }
 
     @Override
-    public void visit(LEQ leq) {
+    public Void visit(LEQ leq) {
         checkComparison(leq);
+        return null;
     }
 
     @Override
-    public void visit(LT lt) {
+    public Void visit(LT lt) {
         checkComparison(lt);
+        return null;
     }
 
     @Override
-    public void visit(Mul mul) {
+    public Void visit(Mul mul) {
         checkNumeric(mul);
+        return null;
     }
 
     @Override
-    public void visit(Neg neg) {
+    public Void visit(Neg neg) {
         checkUnary(neg);
+        return null;
     }
 
     @Override
-    public void visit(NEQ neq) {
+    public Void visit(NEQ neq) {
         checkEquality(neq);
+        return null;
     }
 
     @Override
-    public void visit(Not not) {
+    public Void visit(Not not) {
         checkUnary(not);
+        return null;
     }
 
     @Override
-    public void visit(Or or) {
+    public Void visit(Or or) {
         checkLogical(or);
+        return null;
     }
 
     @Override
-    public void visit(Pos pos) {
+    public Void visit(Pos pos) {
         checkUnary(pos);
+        return null;
     }
 
     @Override
-    public void visit(Sub sub) {
+    public Void visit(Sub sub) {
         checkNumeric(sub);
+        return null;
     }
 
     @Override
-    public void visit(Bool bool) {
+    public Void visit(Bool bool) {
         // Do nothing.
+        return null;
     }
 
     @Override
-    public void visit(ID id) {
+    public Void visit(ID id) {
         // Do nothing.
+        return null;
     }
 
     @Override
-    public void visit(Int integer) {
+    public Void visit(Int integer) {
         // Do nothing.
+        return null;
     }
 
     @Override
-    public void visit(Str str) {
+    public Void visit(Str str) {
         // Do nothing.
+        return null;
     }
 }
