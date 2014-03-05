@@ -64,9 +64,9 @@
     <Compile Include="QLClasses\Expressions\Literals\BoolLiteral.cs" />
     <Compile Include="QLClasses\Expressions\Literals\StringLiteral.cs" />
     <Compile Include="QLClasses\Expressions\Literals\IntLiteral.cs" />
+    <Compile Include="QLClasses\Statements\ComputedQuestion.cs" />
     <Compile Include="QLController.cs" />
-    <Compile Include="TypeChecker\QLQuestionManager.cs" />
-    <Compile Include="TypeChecker\QLIdManager.cs" />
+    <Compile Include="TypeChecker\QLMemoryManager.cs" />
     <Compile Include="QLClasses\Expressions\ExpressionBase.cs" />
     <Compile Include="QLClasses\Expressions\Unary\UnaryExpression.cs" />
     <Compile Include="QLClasses\Expressions\Binary\BinaryExpression.cs" />
@@ -99,19 +99,6 @@
     <Compile Include="QLParser.cs" />
     <Compile Include="TypeChecker\QLTypeChecker.cs" />
     <Compile Include="QLClasses\QLTokenInfo.cs" />
-    <EmbeddedResource Include="MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -130,7 +117,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

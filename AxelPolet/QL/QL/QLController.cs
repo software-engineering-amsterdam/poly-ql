@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -20,20 +19,18 @@ namespace QL
         public List<string> LexerErrors { get; private set; }
         public List<string> ParserErrors { get; private set; }
         
-        public QLIdManager IdManager { get; private set; }
-        public QLQuestionManager QuestionManager { get; private set; }     
+        public QLMemoryManager MemoryManager { get; private set; }  
         public QLTypeChecker TypeChecker { get; private set; }
         
         public QLController()
         {
             LexerErrors = new List<string>();
             ParserErrors = new List<string>();
-            IdManager = new QLIdManager();
-            QuestionManager = new QLQuestionManager();
+            MemoryManager = new QLMemoryManager();
             TypeChecker = new QLTypeChecker();
         }
 
-        public void Run(string inputString)
+        public Questionnaire Run(string inputString)
         {
             MemoryStream inputStream = new MemoryStream(Encoding.UTF8.GetBytes(inputString ?? ""));
 
@@ -48,20 +45,20 @@ namespace QL
             lexer.AddErrorListener(new LexerErrorListener() { OnError = LexerErrors.Add });
             _parser.AddErrorListener(new ParserErrorListener() { OnError = ParserErrors.Add });
 
-            //set identifiers table
-            _parser.SetIdManager(IdManager);
-            _parser.SetQuestionManager(QuestionManager);
+            //set manager on partial parser class
+            _parser.SetIdManager(MemoryManager);
 
             //build AST
             _parseTree = _parser.questionnaire();
             AST = _parser.GetAST();
 
             //check for lexer/parser errors
-            if (LexerErrors.Any() || ParserErrors.Any())
-                return;
+            if (!LexerErrors.Any() && !ParserErrors.Any())
+            {
+                TypeChecker.Run(AST);
+            }
 
-            //Type checking
-            TypeChecker.Run(AST);
+            return AST;
         }
 
         public string GetParseTreeString()
