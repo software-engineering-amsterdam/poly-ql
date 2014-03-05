@@ -1,0 +1,21 @@
+form doei {
+test: "hoi dit" money
+ah: "vraag" boolean
+bla: "hoe dan" boolean
+bla: "hoe dan" money
+ca: "lala" boolean(bla and ah)
+if(ca or false)
+	{
+	if(1+1)
+		{
+		da: "did" boolean
+		}
+	}
+if(ah > 10)
+	{
+	tra: "la" boolean
+	}
+ else { 
+ zwa: "vraag" money
+ }
+}
