@@ -1,5 +1,6 @@
 form FORM1 {
 	variable : "Wil je meer vragen?" boolean
+	varx : "testje" integer (varx+2) //cyclic dependency :(
 	var : "heb je een huis?" boolean
 	var : "hoeveel kost je huis?" integer
 	if(variable){

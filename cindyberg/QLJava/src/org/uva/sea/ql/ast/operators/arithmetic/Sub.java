@@ -19,7 +19,7 @@ public class Sub extends BinaryOperator {
 		
 	}
 	
-	public String show(){
+	public String toString(){
 		return "-";
 	}
 

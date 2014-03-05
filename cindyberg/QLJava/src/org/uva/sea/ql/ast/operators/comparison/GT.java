@@ -20,7 +20,7 @@ public class GT extends BinaryOperator {
 		
 	}
 	
-	public String show(){
+	public String toString(){
 		return ">";
 	}
 

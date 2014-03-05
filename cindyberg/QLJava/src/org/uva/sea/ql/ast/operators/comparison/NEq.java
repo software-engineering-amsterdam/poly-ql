@@ -18,7 +18,7 @@ public class NEq extends BinaryOperator{
 		
 	}
 	
-	public String show(){
+	public String toString(){
 		return "!=";
 	}
 

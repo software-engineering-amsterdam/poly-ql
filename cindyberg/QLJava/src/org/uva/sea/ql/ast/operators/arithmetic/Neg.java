@@ -18,7 +18,7 @@ public class Neg extends UnaryOperator {
 		
 	}
 	
-	public String show(){
+	public String toString(){
 		return "-";
 	}
 

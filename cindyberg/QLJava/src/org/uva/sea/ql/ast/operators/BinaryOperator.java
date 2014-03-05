@@ -21,4 +21,6 @@ import org.uva.sea.ql.ast.Expression;
 			return right;
 		}
 		
+		public abstract String toString();
+		
 }

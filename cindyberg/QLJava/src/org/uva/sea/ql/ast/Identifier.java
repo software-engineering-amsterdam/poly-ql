@@ -17,7 +17,7 @@ public class Identifier extends Expression {
 		return this.name;
 	}
 	
-	public String show(){
+	public String toString(){
 		return name;};
 
 	@Override

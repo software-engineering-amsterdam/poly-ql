@@ -19,7 +19,7 @@ public class GEq extends BinaryOperator{
 		
 	}
 	
-	public String show(){
+	public String toString(){
 		return ">=";
 	}
 

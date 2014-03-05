@@ -19,7 +19,7 @@ public class Not extends UnaryOperator {
 		
 	}
 	
-	public String show(){
+	public String toString(){
 		return "!";
 	}
 

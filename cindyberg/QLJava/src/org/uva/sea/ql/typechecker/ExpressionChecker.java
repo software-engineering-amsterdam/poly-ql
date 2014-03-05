@@ -41,9 +41,9 @@ public class ExpressionChecker implements ExpressionVisitor<Boolean> {
 	
 	public Boolean checkNormalExpression(Type type, Expression side){
 
-		if(!(side.typeOf(environment).show() == type.show()))
+		if(!(side.typeOf(environment).equals(type)))
 		{
-			problems.addError(side.show() + " is not of type " + type.show()); //find a way to get left + right here
+			problems.addError(side.toString() + " is not of type " + type.toString()); 
 			return false;
 		}
 		return(checkExpression(environment,problems,side));
@@ -51,7 +51,7 @@ public class ExpressionChecker implements ExpressionVisitor<Boolean> {
 	
 	public Boolean checkComparison(Type type, Expression left, Expression right){
 		if(!left.typeOf(environment).isCompatibleWith(right.typeOf(environment))){
-			problems.addError(left.show() + " cannot be compared with " + right.show());
+			problems.addError(left.toString() + " cannot be compared with " + right.toString());
 			return false;
 		}
 

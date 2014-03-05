@@ -17,7 +17,7 @@ public class Add extends BinaryOperator {
 	}
 
 	
-	public String show(){
+	public String toString(){
 		return "+";
 	}
 

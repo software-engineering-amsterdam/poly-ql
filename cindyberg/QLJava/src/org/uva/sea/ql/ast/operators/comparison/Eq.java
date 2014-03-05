@@ -20,7 +20,7 @@ public class Eq extends BinaryOperator {
 		
 	}
 	
-	public String show(){
+	public String toString(){
 		return "==";
 	}
 

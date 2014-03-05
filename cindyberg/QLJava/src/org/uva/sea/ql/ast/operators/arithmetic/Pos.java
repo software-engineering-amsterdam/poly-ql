@@ -20,7 +20,7 @@ public class Pos extends UnaryOperator {
 	}
 
 	@Override
-	public String show() {
+	public String toString() {
 		return "";
 	}
 

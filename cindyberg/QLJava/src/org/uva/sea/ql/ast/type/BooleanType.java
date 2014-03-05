@@ -9,7 +9,7 @@ public class BooleanType extends Type{
 		
 	}
 	
-	public String show(){
+	public String toString(){
 		return "boolean";
 	}
 

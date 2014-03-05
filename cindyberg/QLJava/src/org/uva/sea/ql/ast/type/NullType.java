@@ -9,7 +9,7 @@ public class NullType extends Type {
 	}
 
 	@Override
-	public String show() {
+	public String toString() {
 		return "No Type Available";
 	}
 
