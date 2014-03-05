@@ -3,7 +3,8 @@ package edu.uva.softwarecons.model.expression.logical;
 import edu.uva.softwarecons.model.expression.Expression;
 import edu.uva.softwarecons.model.expression.UnaryExpression;
 import edu.uva.softwarecons.model.type.Type;
-import edu.uva.softwarecons.visitor.IFormElementVisitor;
+import edu.uva.softwarecons.visitor.expression.IExpressionElementVisitor;
+import edu.uva.softwarecons.visitor.form.IFormElementVisitor;
 
 /**
  * Falconlabs
@@ -18,12 +19,13 @@ public class NotExpression extends UnaryExpression {
     }
 
     @Override
-    public void accept(IFormElementVisitor visitor) {
-        visitor.visitNotExpression(this);
+    public Type eval() {
+        return null;
     }
 
     @Override
-    public Type eval() {
-        return null;
+    public void accept(IExpressionElementVisitor visitor) {
+        visitor.visitNotExpression(this);
+
     }
 }

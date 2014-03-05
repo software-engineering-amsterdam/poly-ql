@@ -1,7 +1,8 @@
 package edu.uva.softwarecons.model.expression;
 
 import edu.uva.softwarecons.model.type.Type;
-import edu.uva.softwarecons.visitor.IFormElementVisitor;
+import edu.uva.softwarecons.visitor.expression.IExpressionElementVisitor;
+import edu.uva.softwarecons.visitor.form.IFormElementVisitor;
 
 /**
  * Falconlabs
@@ -17,16 +18,16 @@ public class ParenthesisExpression implements Expression {
     }
 
     @Override
-    public void accept(IFormElementVisitor visitor) {
-         visitor.visitParenthesisExpression(this);
-    }
-
-    @Override
     public Type eval() {
         return null;
     }
 
     public Expression getArgument() {
         return argument;
+    }
+
+    @Override
+    public void accept(IExpressionElementVisitor visitor) {
+        visitor.visitParenthesisExpression(this);
     }
 }

@@ -12,7 +12,7 @@ import edu.uva.softwarecons.model.expression.comparison.*;
 import edu.uva.softwarecons.model.type.BooleanType;
 import edu.uva.softwarecons.model.type.NumericType;
 import edu.uva.softwarecons.model.type.Type;
-import edu.uva.softwarecons.visitor.FormBaseVisitor;
+import edu.uva.softwarecons.visitor.form.FormBaseVisitor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,7 +104,7 @@ public class ExpressionTypeChecker extends FormBaseVisitor {
     }
 
     private void validateBinaryExpressionTerm(Expression expression) {
-        if(IdExpression.class.isInstance(expression)){
+        if(expression.equals(new IdExpression(""))){
             validateIdExpressionType(((IdExpression) expression), NumericType.class, NumericType.class);
         }else
             expression.accept(this);

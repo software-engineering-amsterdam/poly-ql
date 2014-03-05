@@ -1,6 +1,7 @@
 package edu.uva.softwarecons.model.type;
 
-import edu.uva.softwarecons.visitor.IFormElementVisitor;
+import edu.uva.softwarecons.visitor.form.IFormElementVisitor;
+import edu.uva.softwarecons.visitor.type.ITypeElementVisitor;
 
 /**
  * Falconlabs
@@ -20,10 +21,6 @@ public class StringType extends Type{
         return value;
     }
 
-    @Override
-    public void accept(IFormElementVisitor visitor) {
-        visitor.visitStringType(this);
-    }
 
     @Override
     public String toString() {
@@ -33,5 +30,10 @@ public class StringType extends Type{
     @Override
     public boolean equals(Object o) {
         return o instanceof StringType;
+    }
+
+    @Override
+    public void accept(ITypeElementVisitor visitor) {
+        visitor.visitStringType(this);
     }
 }

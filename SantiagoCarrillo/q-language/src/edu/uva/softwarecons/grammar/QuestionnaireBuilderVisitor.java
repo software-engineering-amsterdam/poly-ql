@@ -15,7 +15,9 @@ import edu.uva.softwarecons.model.expression.logical.NotExpression;
 import edu.uva.softwarecons.model.expression.logical.OrExpression;
 import edu.uva.softwarecons.model.question.*;
 import edu.uva.softwarecons.model.type.*;
-import edu.uva.softwarecons.visitor.IFormElement;
+import edu.uva.softwarecons.visitor.IQuestionnaireElement;
+import edu.uva.softwarecons.visitor.expression.IExpressionElement;
+import edu.uva.softwarecons.visitor.form.IFormElement;
 import org.antlr.v4.runtime.misc.NotNull;
 
 import java.util.ArrayList;
@@ -26,7 +28,7 @@ import java.util.List;
  * User: sancarbar
  * Date: 2/26/14
  */
-public class QuestionnaireBuilderVisitor extends QuestionnaireBaseVisitor<IFormElement> {
+public class QuestionnaireBuilderVisitor extends QuestionnaireBaseVisitor<IQuestionnaireElement> {
 
     @Override
     public IFormElement visitQuestionnaire(@NotNull QuestionnaireParser.QuestionnaireContext ctx) {
@@ -158,7 +160,7 @@ public class QuestionnaireBuilderVisitor extends QuestionnaireBaseVisitor<IFormE
     }
 
     @Override
-    public IFormElement visitInt(@NotNull QuestionnaireParser.IntContext ctx) {
+    public IExpressionElement visitInt(@NotNull QuestionnaireParser.IntContext ctx) {
         return new IntExpression(Integer.parseInt(ctx.getText()));
     }
 

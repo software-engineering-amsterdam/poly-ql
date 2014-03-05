@@ -1,6 +1,7 @@
 package edu.uva.softwarecons.model.type;
 
-import edu.uva.softwarecons.visitor.IFormElementVisitor;
+import edu.uva.softwarecons.visitor.form.IFormElementVisitor;
+import edu.uva.softwarecons.visitor.type.ITypeElementVisitor;
 
 /**
  * Falconlabs
@@ -21,17 +22,12 @@ public class DecimalType extends NumericType{
     }
 
     @Override
-    public void accept(IFormElementVisitor visitor) {
-        visitor.visitDecimalType(this);
-    }
-
-    @Override
     public String toString() {
         return "decimal";
     }
 
     @Override
-    public boolean equals(Object o) {
-        return o instanceof DecimalType;
+    public void accept(ITypeElementVisitor visitor) {
+        visitor.visitDecimalType(this);
     }
 }

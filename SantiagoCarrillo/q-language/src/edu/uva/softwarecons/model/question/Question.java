@@ -1,6 +1,6 @@
 package edu.uva.softwarecons.model.question;
 
-import edu.uva.softwarecons.visitor.IFormElement;
+import edu.uva.softwarecons.visitor.form.IFormElement;
 
 /**
  * Falconlabs

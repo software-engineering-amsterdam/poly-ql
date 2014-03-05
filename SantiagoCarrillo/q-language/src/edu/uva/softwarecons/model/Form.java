@@ -1,11 +1,9 @@
 package edu.uva.softwarecons.model;
 
-import edu.uva.softwarecons.model.question.BasicQuestion;
 import edu.uva.softwarecons.model.question.Question;
-import edu.uva.softwarecons.visitor.IFormElement;
-import edu.uva.softwarecons.visitor.IFormElementVisitor;
+import edu.uva.softwarecons.visitor.form.IFormElement;
+import edu.uva.softwarecons.visitor.form.IFormElementVisitor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

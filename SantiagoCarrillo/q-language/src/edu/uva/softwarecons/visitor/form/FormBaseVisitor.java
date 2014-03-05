@@ -1,4 +1,4 @@
-package edu.uva.softwarecons.visitor;
+package edu.uva.softwarecons.visitor.form;
 
 import edu.uva.softwarecons.model.Form;
 import edu.uva.softwarecons.model.expression.IdExpression;
@@ -17,13 +17,15 @@ import edu.uva.softwarecons.model.question.ComputedQuestion;
 import edu.uva.softwarecons.model.question.ElseQuestion;
 import edu.uva.softwarecons.model.question.IfQuestion;
 import edu.uva.softwarecons.model.type.*;
+import edu.uva.softwarecons.visitor.expression.IExpressionElementVisitor;
+import edu.uva.softwarecons.visitor.type.ITypeElementVisitor;
 
 /**
  * Falconlabs
  * User: sancarbar
  * Date: 2/27/14
  */
-public class FormBaseVisitor implements IFormElementVisitor {
+public class FormBaseVisitor implements IFormElementVisitor, IExpressionElementVisitor, ITypeElementVisitor {
 
 
     @Override

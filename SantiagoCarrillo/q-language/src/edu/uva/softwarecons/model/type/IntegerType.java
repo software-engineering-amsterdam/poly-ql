@@ -1,6 +1,7 @@
 package edu.uva.softwarecons.model.type;
 
-import edu.uva.softwarecons.visitor.IFormElementVisitor;
+import edu.uva.softwarecons.visitor.form.IFormElementVisitor;
+import edu.uva.softwarecons.visitor.type.ITypeElementVisitor;
 
 /**
  * Falconlabs
@@ -20,10 +21,6 @@ public class IntegerType extends NumericType{
         return value;
     }
 
-    @Override
-    public void accept(IFormElementVisitor visitor) {
-        visitor.visitIntegerType(this);
-    }
 
     @Override
     public String toString() {
@@ -31,7 +28,7 @@ public class IntegerType extends NumericType{
     }
 
     @Override
-    public boolean equals(Object o) {
-        return o instanceof IntegerType;
+    public void accept(ITypeElementVisitor visitor) {
+        visitor.visitIntegerType(this);
     }
 }

@@ -12,7 +12,7 @@ import edu.uva.softwarecons.model.question.Question;
 import edu.uva.softwarecons.model.type.BooleanType;
 import edu.uva.softwarecons.model.type.NumericType;
 import edu.uva.softwarecons.model.type.Type;
-import edu.uva.softwarecons.visitor.FormBaseVisitor;
+import edu.uva.softwarecons.visitor.form.FormBaseVisitor;
 
 import java.util.*;
 
@@ -72,21 +72,15 @@ public class TypeChecker extends FormBaseVisitor {
             if(q instanceof BasicQuestion)
                 validateDuplicatedQuestion((BasicQuestion) q);
         }
+        if(null != question.getElseQuestion()){
+            for(Question q: question.getElseQuestion().getQuestions()){
+                q.accept(this);
+                if(q instanceof BasicQuestion)
+                    validateDuplicatedQuestion((BasicQuestion) q);
+            }
+        }
         ifQuestions.add(question);
     }
-
-//    @Override
-//    public void (IfElseQuestion question) {
-//        question.expression.accept(this);
-//        for(BasicQuestion q: question.questions){
-//            q.accept(this);
-//            validateDuplicatedQuestion(q);
-//        }
-//        for(BasicQuestion q: question.elseQuestions){
-//            q.accept(this);
-//            validateDuplicatedQuestion(q);
-//        }
-//    }
 
 
 

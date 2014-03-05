@@ -3,7 +3,8 @@ package edu.uva.softwarecons.model.expression.arithmetic;
 import edu.uva.softwarecons.model.expression.BinaryExpression;
 import edu.uva.softwarecons.model.expression.Expression;
 import edu.uva.softwarecons.model.type.Type;
-import edu.uva.softwarecons.visitor.IFormElementVisitor;
+import edu.uva.softwarecons.visitor.expression.IExpressionElementVisitor;
+import edu.uva.softwarecons.visitor.form.IFormElementVisitor;
 
 /**
  * Falconlabs
@@ -23,7 +24,7 @@ public class DivExpression extends BinaryExpression {
     }
 
     @Override
-    public void accept(IFormElementVisitor visitor) {
+    public void accept(IExpressionElementVisitor visitor) {
         visitor.visitDivExpression(this);
     }
 }

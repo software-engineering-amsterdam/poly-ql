@@ -1,7 +1,7 @@
 package edu.uva.softwarecons.model.expression;
 
 import edu.uva.softwarecons.model.type.Type;
-import edu.uva.softwarecons.visitor.IFormElementVisitor;
+import edu.uva.softwarecons.visitor.expression.IExpressionElementVisitor;
 
 /**
  * Falconlabs
@@ -21,12 +21,17 @@ public class IdExpression implements Expression {
     }
 
     @Override
-    public void accept(IFormElementVisitor visitor) {
+    public void accept(IExpressionElementVisitor visitor) {
         visitor.visitIdExpression(this);
     }
 
     @Override
     public Type eval() {
         return null;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof IdExpression;
     }
 }

@@ -1,6 +1,7 @@
 package edu.uva.softwarecons.model.type;
 
-import edu.uva.softwarecons.visitor.IFormElementVisitor;
+import edu.uva.softwarecons.visitor.form.IFormElementVisitor;
+import edu.uva.softwarecons.visitor.type.ITypeElementVisitor;
 
 /**
  * Falconlabs
@@ -20,12 +21,6 @@ public class BooleanType extends Type {
         return checked;
     }
 
-
-    @Override
-    public void accept(IFormElementVisitor visitor) {
-        visitor.visitBooleanType(this);
-    }
-
     @Override
     public String toString() {
         return "boolean";
@@ -34,5 +29,10 @@ public class BooleanType extends Type {
     @Override
     public boolean equals(Object o) {
         return o instanceof BooleanType;
+    }
+
+    @Override
+    public void accept(ITypeElementVisitor visitor) {
+        visitor.visitBooleanType(this);
     }
 }

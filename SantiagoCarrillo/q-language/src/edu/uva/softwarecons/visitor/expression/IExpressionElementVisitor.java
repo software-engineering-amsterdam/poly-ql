@@ -1,6 +1,5 @@
-package edu.uva.softwarecons.visitor;
+package edu.uva.softwarecons.visitor.expression;
 
-import edu.uva.softwarecons.model.Form;
 import edu.uva.softwarecons.model.expression.IdExpression;
 import edu.uva.softwarecons.model.expression.IntExpression;
 import edu.uva.softwarecons.model.expression.ParenthesisExpression;
@@ -12,28 +11,13 @@ import edu.uva.softwarecons.model.expression.comparison.*;
 import edu.uva.softwarecons.model.expression.logical.AndExpression;
 import edu.uva.softwarecons.model.expression.logical.NotExpression;
 import edu.uva.softwarecons.model.expression.logical.OrExpression;
-import edu.uva.softwarecons.model.question.BasicQuestion;
-import edu.uva.softwarecons.model.question.ComputedQuestion;
-import edu.uva.softwarecons.model.question.ElseQuestion;
-import edu.uva.softwarecons.model.question.IfQuestion;
-import edu.uva.softwarecons.model.type.*;
 
 /**
  * Falconlabs
  * User: sancarbar
- * Date: 2/26/14
+ * Date: 3/5/14
  */
-public interface IFormElementVisitor {
-
-    void visitForm(Form form);
-
-    void visitComputedQuestion(ComputedQuestion question);
-
-    void visitIfQuestion(IfQuestion question);
-
-    void visitElseQuestion(ElseQuestion question);
-
-    void visitQuestion(BasicQuestion question);
+public interface IExpressionElementVisitor {
 
     void visitAddExpression(AddExpression expression);
 
@@ -66,18 +50,4 @@ public interface IFormElementVisitor {
     void visitIntExpression(IntExpression expression);
 
     void visitParenthesisExpression(ParenthesisExpression expression);
-
-    void visitBooleanType(BooleanType type);
-
-    void visitDateType(DateType type);
-
-    void visitDecimalType(DecimalType type);
-
-    void visitIntegerType(IntegerType type);
-
-    void visitMoneyType(MoneyType type);
-
-    void visitStringType(StringType type);
-
-
 }
