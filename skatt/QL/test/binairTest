@@ -1,0 +1,15 @@
+if true + false {
+    plusquestion : "This is a plsu question label" : boolean;
+} 
+
+if (true * true) {
+    multquestion : "This is a mult question label" : boolean;
+}
+
+if (true - false) / true {
+    complicatedquestion : "This is a complicated question label" : boolean;
+}
+
+if true / false + true {
+    nicerquestion : "This is a nicer question label" : boolean;
+}
