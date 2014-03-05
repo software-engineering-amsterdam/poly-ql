@@ -9,10 +9,10 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.QL4Question;
 import org.uva.sea.ql.parser.antlr.QL4.AST.QL4Structures;
 import org.uva.sea.ql.parser.antlr.QL4.AST.QL4Tree;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.QL4BraceExpr;
-import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Value.QL4Bool;
-import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Value.QL4Identifier;
-import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Value.QL4Label;
-import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Value.QL4Type;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Value.QL4Bool;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Value.QL4Identifier;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Value.QL4Label;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Value.QL4Type;
 
 import QL4.QL4BaseVisitor;
 import QL4.QL4Parser;
