@@ -8,6 +8,7 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.QL4Form;
 import org.uva.sea.ql.parser.antlr.QL4.AST.QL4Question;
 import org.uva.sea.ql.parser.antlr.QL4.AST.QL4Structures;
 import org.uva.sea.ql.parser.antlr.QL4.AST.QL4Tree;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.QL4BraceExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Value.QL4Bool;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Value.QL4Identifier;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Value.QL4Label;
@@ -27,7 +28,7 @@ import QL4.QL4Parser;
 public class QL4Visitor extends QL4BaseVisitor<QL4Tree> {
 
   // Handles the information printed
-  boolean verbose = true;
+  boolean verbose = false;
 
   /**
    * Specifies behavior when visiting the form 
@@ -103,6 +104,7 @@ public class QL4Visitor extends QL4BaseVisitor<QL4Tree> {
 	  return new QL4Question(id, label, type); 
   }
   
+
   /**
    * Returns a Question object, containing its content:
    * Type, label, id and value (question.computed is true)
@@ -118,8 +120,21 @@ public class QL4Visitor extends QL4BaseVisitor<QL4Tree> {
 	  
 	  return new QL4Question(id, label, type, value); 
   }
+
+  //////////////////////// visiting expressions
+  public QL4Tree visitBraceExpr(QL4Parser.BraceExprContext ctx) {
+	  if (verbose) 
+		  System.out.println("Visiting braced expression");
+
+		  return new QL4BraceExpr(ctx.expression().accept(this));
+  }
+  
+  //////////////////////// visiting QL4 primitives (bool, string etc)
   
   public QL4Tree visitBool(QL4Parser.BoolContext ctx) {
+	  if (verbose) 
+		  System.out.println("Visiting boolean");
+	  
 	  return new QL4Bool(ctx.getText());
   }
 }
