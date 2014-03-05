@@ -5,7 +5,6 @@ import net.iplantevin.ql.ast.expressions.Expression;
 import net.iplantevin.ql.ast.types.Type;
 import net.iplantevin.ql.ast.types.TypeEnvironment;
 import net.iplantevin.ql.ast.visitors.IASTVisitor;
-import org.antlr.v4.runtime.ParserRuleContext;
 
 /**
  * Identifier.
@@ -14,11 +13,6 @@ import org.antlr.v4.runtime.ParserRuleContext;
  */
 public class ID extends Expression {
     private final String name;
-
-    public ID(String name, ParserRuleContext ctx) {
-        super(ctx);
-        this.name = name;
-    }
 
     public ID(String name, LineInfo lineInfo) {
         super(lineInfo);

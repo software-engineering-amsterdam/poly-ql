@@ -34,7 +34,7 @@ public class TypeEnvironment {
         return getIdentifier(identifier).getDeclaredType();
     }
 
-    public TypeError addIdentifier(ID identifier, Type type) {
+    public TypeError declareIdentifier(ID identifier, Type type) {
         if (isDeclared(identifier)) {
             if (!getDeclaredType(identifier).equals(type)) {
                 String message = "type mismatch on already declared identifier '" +

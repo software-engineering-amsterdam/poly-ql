@@ -9,10 +9,31 @@ import net.iplantevin.ql.ast.expressions.literals.Bool;
 import net.iplantevin.ql.ast.expressions.literals.ID;
 import net.iplantevin.ql.ast.expressions.literals.Int;
 import net.iplantevin.ql.ast.expressions.literals.Str;
-import net.iplantevin.ql.ast.expressions.operators.*;
+import net.iplantevin.ql.ast.expressions.operators.Add;
+import net.iplantevin.ql.ast.expressions.operators.And;
+import net.iplantevin.ql.ast.expressions.operators.Binary;
+import net.iplantevin.ql.ast.expressions.operators.Div;
+import net.iplantevin.ql.ast.expressions.operators.EQ;
+import net.iplantevin.ql.ast.expressions.operators.GEQ;
+import net.iplantevin.ql.ast.expressions.operators.GT;
+import net.iplantevin.ql.ast.expressions.operators.LEQ;
+import net.iplantevin.ql.ast.expressions.operators.LT;
+import net.iplantevin.ql.ast.expressions.operators.Mul;
+import net.iplantevin.ql.ast.expressions.operators.NEQ;
+import net.iplantevin.ql.ast.expressions.operators.Neg;
+import net.iplantevin.ql.ast.expressions.operators.Not;
+import net.iplantevin.ql.ast.expressions.operators.Or;
+import net.iplantevin.ql.ast.expressions.operators.Pos;
+import net.iplantevin.ql.ast.expressions.operators.Sub;
+import net.iplantevin.ql.ast.expressions.operators.Unary;
 import net.iplantevin.ql.ast.form.Form;
 import net.iplantevin.ql.ast.form.FormCollection;
-import net.iplantevin.ql.ast.statements.*;
+import net.iplantevin.ql.ast.statements.Block;
+import net.iplantevin.ql.ast.statements.Computation;
+import net.iplantevin.ql.ast.statements.If;
+import net.iplantevin.ql.ast.statements.IfElse;
+import net.iplantevin.ql.ast.statements.Question;
+import net.iplantevin.ql.ast.statements.Statement;
 import net.iplantevin.ql.ast.types.BooleanType;
 import net.iplantevin.ql.ast.types.IntegerType;
 import net.iplantevin.ql.ast.types.StringType;
@@ -44,7 +65,7 @@ public class QLASTBuilderVisitor<Object> extends QLBaseVisitor {
         for (QLParser.FormContext formCtx : ctx.form()) {
             forms.add((Form) formCtx.accept(this));
         }
-        return new FormCollection(forms, ctx);
+        return new FormCollection(forms, new LineInfo(ctx));
     }
 
     /**
@@ -54,7 +75,7 @@ public class QLASTBuilderVisitor<Object> extends QLBaseVisitor {
     public Form visitForm(@NotNull QLParser.FormContext ctx) {
         String name = ctx.ID().getText();
         Block body = (Block) ctx.block().accept(this);
-        return new Form(name, body, ctx);
+        return new Form(name, body, new LineInfo(ctx));
     }
 
     /**
@@ -66,7 +87,7 @@ public class QLASTBuilderVisitor<Object> extends QLBaseVisitor {
         for (QLParser.StatContext statCtx : ctx.stat()) {
             statements.add((Statement) statCtx.accept(this));
         }
-        return new Block(statements, ctx);
+        return new Block(statements, new LineInfo(ctx));
     }
 
     /**
@@ -77,7 +98,7 @@ public class QLASTBuilderVisitor<Object> extends QLBaseVisitor {
         Expression condition = (Expression) ctx.expr().accept(this);
         Statement body = (Statement) ctx.stat().get(0).accept(this);
         Statement elseBody = (Statement) ctx.stat().get(1).accept(this);
-        return new IfElse(condition, body, elseBody, ctx);
+        return new IfElse(condition, body, elseBody, new LineInfo(ctx));
     }
 
     /**
@@ -87,7 +108,7 @@ public class QLASTBuilderVisitor<Object> extends QLBaseVisitor {
     public If visitIf(@NotNull QLParser.IfContext ctx) {
         Expression condition = (Expression) ctx.expr().accept(this);
         Statement body = (Statement) ctx.stat().accept(this);
-        return new If(condition, body, ctx);
+        return new If(condition, body, new LineInfo(ctx));
     }
 
     /**
@@ -114,7 +135,7 @@ public class QLASTBuilderVisitor<Object> extends QLBaseVisitor {
         Str label = new Str(ctx.STR().getText(), lineInfo);
 
         Expression expression = (Expression) ctx.expr().accept(this);
-        return new Computation(name, label, type, expression, ctx);
+        return new Computation(name, label, type, expression, new LineInfo(ctx));
     }
 
     /**
@@ -131,7 +152,7 @@ public class QLASTBuilderVisitor<Object> extends QLBaseVisitor {
         lineInfo = new LineInfo(ctx.STR().getSymbol().getLine(),
                 ctx.STR().getSymbol().getCharPositionInLine());
         Str label = new Str(ctx.STR().getText(), lineInfo);
-        return new Question(name, label, type, ctx);
+        return new Question(name, label, type, new LineInfo(ctx));
     }
 
     /**
@@ -163,7 +184,7 @@ public class QLASTBuilderVisitor<Object> extends QLBaseVisitor {
      */
     @Override
     public Bool visitTrue(@NotNull QLParser.TrueContext ctx) {
-        return new Bool(true, ctx);
+        return new Bool(true, new LineInfo(ctx));
     }
 
     /**
@@ -171,7 +192,7 @@ public class QLASTBuilderVisitor<Object> extends QLBaseVisitor {
      */
     @Override
     public Bool visitFalse(@NotNull QLParser.FalseContext ctx) {
-        return new Bool(false, ctx);
+        return new Bool(false, new LineInfo(ctx));
     }
 
     /**
@@ -297,7 +318,7 @@ public class QLASTBuilderVisitor<Object> extends QLBaseVisitor {
      */
     @Override
     public ID visitIdentifier(@NotNull QLParser.IdentifierContext ctx) {
-        return new ID(ctx.ID().getText(), ctx);
+        return new ID(ctx.ID().getText(), new LineInfo(ctx));
     }
 
     /**
@@ -306,7 +327,7 @@ public class QLASTBuilderVisitor<Object> extends QLBaseVisitor {
     @Override
     public Int visitInteger(@NotNull QLParser.IntegerContext ctx) {
         String stringValue = ctx.INT().getText();
-        return new Int(Integer.valueOf(stringValue), ctx);
+        return new Int(Integer.valueOf(stringValue), new LineInfo(ctx));
     }
 
     /**
@@ -314,7 +335,7 @@ public class QLASTBuilderVisitor<Object> extends QLBaseVisitor {
      */
     @Override
     public Str visitString(@NotNull QLParser.StringContext ctx) {
-        return new Str(ctx.STR().getText(), ctx);
+        return new Str(ctx.STR().getText(), new LineInfo(ctx));
     }
 
     /**
@@ -322,6 +343,6 @@ public class QLASTBuilderVisitor<Object> extends QLBaseVisitor {
      */
     @Override
     public Par visitParantheses(@NotNull QLParser.ParanthesesContext ctx) {
-        return new Par((Expression) ctx.expr().accept(this), ctx);
+        return new Par((Expression) ctx.expr().accept(this), new LineInfo(ctx));
     }
 }

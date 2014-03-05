@@ -4,7 +4,6 @@ import net.iplantevin.ql.ast.ASTNode;
 import net.iplantevin.ql.ast.LineInfo;
 import net.iplantevin.ql.ast.types.Type;
 import net.iplantevin.ql.ast.types.TypeEnvironment;
-import org.antlr.v4.runtime.ParserRuleContext;
 
 /**
  * Abstract Expression class that implements the ASTNode interface. All kinds
@@ -13,10 +12,6 @@ import org.antlr.v4.runtime.ParserRuleContext;
  * @author Ivan
  */
 public abstract class Expression extends ASTNode {
-    public Expression(ParserRuleContext ctx) {
-        super(ctx);
-    }
-
     public Expression(LineInfo lineInfo) {
         super(lineInfo);
     }

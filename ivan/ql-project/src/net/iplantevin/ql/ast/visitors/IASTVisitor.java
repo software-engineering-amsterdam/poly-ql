@@ -5,10 +5,28 @@ import net.iplantevin.ql.ast.expressions.literals.Bool;
 import net.iplantevin.ql.ast.expressions.literals.ID;
 import net.iplantevin.ql.ast.expressions.literals.Int;
 import net.iplantevin.ql.ast.expressions.literals.Str;
-import net.iplantevin.ql.ast.expressions.operators.*;
+import net.iplantevin.ql.ast.expressions.operators.Add;
+import net.iplantevin.ql.ast.expressions.operators.And;
+import net.iplantevin.ql.ast.expressions.operators.Div;
+import net.iplantevin.ql.ast.expressions.operators.EQ;
+import net.iplantevin.ql.ast.expressions.operators.GEQ;
+import net.iplantevin.ql.ast.expressions.operators.GT;
+import net.iplantevin.ql.ast.expressions.operators.LEQ;
+import net.iplantevin.ql.ast.expressions.operators.LT;
+import net.iplantevin.ql.ast.expressions.operators.Mul;
+import net.iplantevin.ql.ast.expressions.operators.NEQ;
+import net.iplantevin.ql.ast.expressions.operators.Neg;
+import net.iplantevin.ql.ast.expressions.operators.Not;
+import net.iplantevin.ql.ast.expressions.operators.Or;
+import net.iplantevin.ql.ast.expressions.operators.Pos;
+import net.iplantevin.ql.ast.expressions.operators.Sub;
 import net.iplantevin.ql.ast.form.Form;
 import net.iplantevin.ql.ast.form.FormCollection;
-import net.iplantevin.ql.ast.statements.*;
+import net.iplantevin.ql.ast.statements.Block;
+import net.iplantevin.ql.ast.statements.Computation;
+import net.iplantevin.ql.ast.statements.If;
+import net.iplantevin.ql.ast.statements.IfElse;
+import net.iplantevin.ql.ast.statements.Question;
 
 /**
  * General interface for visiting the AST. Abstract classes can of course not

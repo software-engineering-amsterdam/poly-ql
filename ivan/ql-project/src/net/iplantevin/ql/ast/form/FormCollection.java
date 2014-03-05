@@ -1,8 +1,8 @@
 package net.iplantevin.ql.ast.form;
 
 import net.iplantevin.ql.ast.ASTNode;
+import net.iplantevin.ql.ast.LineInfo;
 import net.iplantevin.ql.ast.visitors.IASTVisitor;
-import org.antlr.v4.runtime.ParserRuleContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,9 +20,9 @@ public class FormCollection extends ASTNode {
      *
      * @param forms list of Form objects.
      */
-    public FormCollection(List<Form> forms, ParserRuleContext ctx) {
+    public FormCollection(List<Form> forms, LineInfo lineInfo) {
         // TODO: error handling.
-        super(ctx);
+        super(lineInfo);
         this.forms = forms;
     }
 
@@ -31,8 +31,8 @@ public class FormCollection extends ASTNode {
      *
      * @param form a Form.
      */
-    public FormCollection(Form form, ParserRuleContext ctx) {
-        super(ctx);
+    public FormCollection(Form form, LineInfo lineInfo) {
+        super(lineInfo);
         forms = new ArrayList<Form>();
         forms.add(form);
     }
