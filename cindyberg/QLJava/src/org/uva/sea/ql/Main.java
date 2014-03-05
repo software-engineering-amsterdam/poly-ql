@@ -8,15 +8,15 @@ import org.uva.sea.ql.typechecker.TypeChecker;
 
 public class Main {
 	
-	public static void main(String [] args) throws FileNotFoundException
-	{
+	private static final String INPUTFILE = "C:\\Users\\Cindy\\Documents\\Github\\poly-ql\\cindyberg\\QLJava\\src\\org\\uva\\sea\\ql\\DSLForm.txt";
+
+
+	public static void main(String [] args) throws FileNotFoundException{
 		runDSL();
 	}
 	
 	public static void runDSL() throws FileNotFoundException{
-		Scanner input =  new Scanner(new File(""
-				+ "C:\\Users\\Cindy\\Documents\\Github\\poly-ql\\"
-				+ "cindyberg\\QLJava\\src\\org\\uva\\sea\\ql\\DSLForm.txt"));
+		Scanner input =  new Scanner(new File(INPUTFILE));
 		String DSLFORM = "" ;
 		while(input.hasNextLine()){
 			

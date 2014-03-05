@@ -26,8 +26,4 @@ public class TypeEnvironment {
 	public void addIdentifier(Identifier id, Type type){
 		types.put(id,type);
 	}
-	
-	public HashMap<Identifier,Type> getEnvironment(){
-		return types;
-	}
 }

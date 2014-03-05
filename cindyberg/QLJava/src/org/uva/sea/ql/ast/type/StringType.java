@@ -10,7 +10,7 @@ public class StringType extends Type{
 		
 	}
 	
-	public String show(){
+	public String toString(){
 		return "string";
 	}
 	

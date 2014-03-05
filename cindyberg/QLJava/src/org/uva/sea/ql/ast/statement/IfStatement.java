@@ -3,12 +3,12 @@ package org.uva.sea.ql.ast.statement;
 import org.uva.sea.ql.ast.Expression;
 import org.uva.sea.ql.ast.StatementVisitor;
 
-public class If extends Statement{
+public class IfStatement extends Statement{
 
-	private Expression conditional;
-	private QuestionSet questionset;
+	private final Expression conditional;
+	private final QuestionSet questionset;
 	
-	public If(Expression expr, QuestionSet questionset) {
+	public IfStatement(Expression expr, QuestionSet questionset) {
 		
 		this.conditional = expr;
 		this.questionset = questionset;

@@ -15,7 +15,7 @@ public abstract class Literal<T> extends Expression {
 		return this.value;
 	}
 	
-	public String show(){
+	public String toString(){
 		return value.toString();
 	}
 

@@ -3,10 +3,10 @@ package org.uva.sea.ql.ast.statement;
 
 public interface IVisitor {
 	
-	void visit(ExprQuestion exprquestion);
+	void visit(ExpressionQuestion exprquestion);
 	void visit(Question question);
-	void visit(If ifconditional);
-	void visit(IfElse ifelseconditional);
+	void visit(IfStatement ifconditional);
+	void visit(IfElseStatement ifelseconditional);
 	void visit(Form form);
 	void visit(QuestionSet questionset);
 

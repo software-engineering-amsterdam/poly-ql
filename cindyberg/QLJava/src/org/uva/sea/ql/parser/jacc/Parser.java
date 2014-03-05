@@ -22,9 +22,4 @@ public class Parser {
 		return parser.getResult();
 		
 		}
-	
-	static void error(String msg) {
-		   System.out.println("ERROR: " + msg);
-		   System.exit(1);
-		}
 }
