@@ -8,14 +8,14 @@ import edu.uva.softwarecons.model.expression.arithmetic.AddExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.DivExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.MulExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.SubExpression;
-import edu.uva.softwarecons.model.expression.bool.AndExpression;
-import edu.uva.softwarecons.model.expression.bool.NotExpression;
-import edu.uva.softwarecons.model.expression.bool.OrExpression;
 import edu.uva.softwarecons.model.expression.comparison.*;
+import edu.uva.softwarecons.model.expression.logical.AndExpression;
+import edu.uva.softwarecons.model.expression.logical.NotExpression;
+import edu.uva.softwarecons.model.expression.logical.OrExpression;
+import edu.uva.softwarecons.model.question.BasicQuestion;
 import edu.uva.softwarecons.model.question.ComputedQuestion;
-import edu.uva.softwarecons.model.question.IfElseQuestion;
+import edu.uva.softwarecons.model.question.ElseQuestion;
 import edu.uva.softwarecons.model.question.IfQuestion;
-import edu.uva.softwarecons.model.question.Question;
 import edu.uva.softwarecons.model.type.*;
 
 /**
@@ -37,17 +37,17 @@ public class FormBaseVisitor implements IFormElementVisitor {
     }
 
     @Override
-    public void visitIfElseQuestion(IfElseQuestion question) {
-
-    }
-
-    @Override
     public void visitIfQuestion(IfQuestion question) {
 
     }
 
     @Override
-    public void visitQuestion(Question question) {
+    public void visitElseQuestion(ElseQuestion question) {
+
+    }
+
+    @Override
+    public void visitQuestion(BasicQuestion question) {
 
     }
 
@@ -95,84 +95,84 @@ public class FormBaseVisitor implements IFormElementVisitor {
 
     @Override
     public void visitAddExpression(AddExpression expression) {
-        expression.leftExpression.accept(this);
-        expression.rightExpression.accept(this);
+        expression.getLeftExpression().accept(this);
+        expression.getRightExpression().accept(this);
     }
 
     @Override
     public void visitDivExpression(DivExpression expression) {
-        expression.leftExpression.accept(this);
-        expression.rightExpression.accept(this);
+        expression.getLeftExpression().accept(this);
+        expression.getRightExpression().accept(this);
     }
 
     @Override
     public void visitMulExpression(MulExpression expression) {
-        expression.leftExpression.accept(this);
-        expression.rightExpression.accept(this);
+        expression.getLeftExpression().accept(this);
+        expression.getRightExpression().accept(this);
     }
 
     @Override
     public void visitSubExpression(SubExpression expression) {
-        expression.leftExpression.accept(this);
-        expression.rightExpression.accept(this);
+        expression.getLeftExpression().accept(this);
+        expression.getRightExpression().accept(this);
     }
 
     @Override
     public void visitAndExpression(AndExpression expression) {
-        expression.leftExpression.accept(this);
-        expression.rightExpression.accept(this);
+        expression.getLeftExpression().accept(this);
+        expression.getRightExpression().accept(this);
     }
 
     @Override
     public void visitOrExpression(OrExpression expression) {
-        expression.leftExpression.accept(this);
-        expression.rightExpression.accept(this);
+        expression.getLeftExpression().accept(this);
+        expression.getRightExpression().accept(this);
     }
 
     @Override
     public void visitEqualExpression(EqualExpression expression) {
-        expression.leftExpression.accept(this);
-        expression.rightExpression.accept(this);
+        expression.getLeftExpression().accept(this);
+        expression.getRightExpression().accept(this);
     }
 
     @Override
     public void visitGreaterEqualExpression(GreaterEqualExpression expression) {
-        expression.leftExpression.accept(this);
-        expression.rightExpression.accept(this);
+        expression.getLeftExpression().accept(this);
+        expression.getRightExpression().accept(this);
     }
 
     @Override
     public void visitGreaterExpression(GreaterExpression expression) {
-        expression.leftExpression.accept(this);
-        expression.rightExpression.accept(this);
+        expression.getLeftExpression().accept(this);
+        expression.getRightExpression().accept(this);
     }
 
     @Override
     public void visitLessEqualExpression(LessEqualExpression expression) {
-        expression.leftExpression.accept(this);
-        expression.rightExpression.accept(this);
+        expression.getLeftExpression().accept(this);
+        expression.getRightExpression().accept(this);
     }
 
     @Override
     public void visitLessExpression(LessExpression expression) {
-        expression.leftExpression.accept(this);
-        expression.rightExpression.accept(this);
+        expression.getLeftExpression().accept(this);
+        expression.getRightExpression().accept(this);
     }
 
     @Override
     public void visitNotEqualExpression(NotEqualExpression expression) {
-        expression.leftExpression.accept(this);
-        expression.rightExpression.accept(this);
+        expression.getLeftExpression().accept(this);
+        expression.getRightExpression().accept(this);
     }
 
     @Override
     public void visitNotExpression(NotExpression expression) {
-        expression.expression.accept(this);
+        expression.getArgument().accept(this);
     }
 
     @Override
     public void visitParenthesisExpression(ParenthesisExpression expression) {
-        expression.expression.accept(this);
+        expression.getArgument().accept(this);
     }
 
 

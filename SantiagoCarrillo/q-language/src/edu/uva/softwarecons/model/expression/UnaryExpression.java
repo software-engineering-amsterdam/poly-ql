@@ -7,12 +7,14 @@ package edu.uva.softwarecons.model.expression;
  */
 public abstract class UnaryExpression implements Expression {
 
-    public Expression expression;
+    private final Expression argument;
 
-    public String id;
 
-    public UnaryExpression(Expression expression) {
-        this.expression = expression;
+    public UnaryExpression(Expression argument) {
+        this.argument = argument;
     }
 
+    public Expression getArgument() {
+        return argument;
+    }
 }

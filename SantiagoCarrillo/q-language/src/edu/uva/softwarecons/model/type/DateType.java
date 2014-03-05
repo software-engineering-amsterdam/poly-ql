@@ -11,8 +11,11 @@ import java.util.Date;
  */
 public class DateType extends Type {
 
-    private Date date;
+    private final Date date;
 
+    public DateType(Date date) {
+        this.date = date;
+    }
 
     @Override
     public Date getValue() {
@@ -27,5 +30,10 @@ public class DateType extends Type {
     @Override
     public String toString() {
         return "date";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof DateType;
     }
 }

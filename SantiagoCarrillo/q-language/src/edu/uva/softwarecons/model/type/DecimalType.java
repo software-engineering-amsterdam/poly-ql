@@ -9,7 +9,11 @@ import edu.uva.softwarecons.visitor.IFormElementVisitor;
  */
 public class DecimalType extends NumericType{
 
-    public float value;
+    private final float value;
+
+    public DecimalType(float value) {
+        this.value = value;
+    }
 
     @Override
     public Object getValue() {
@@ -24,5 +28,10 @@ public class DecimalType extends NumericType{
     @Override
     public String toString() {
         return "decimal";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof DecimalType;
     }
 }

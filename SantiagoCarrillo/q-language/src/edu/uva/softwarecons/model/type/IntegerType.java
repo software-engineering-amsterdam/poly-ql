@@ -9,7 +9,11 @@ import edu.uva.softwarecons.visitor.IFormElementVisitor;
  */
 public class IntegerType extends NumericType{
 
-    public int value;
+    private final int value;
+
+    public IntegerType(int value) {
+        this.value = value;
+    }
 
     @Override
     public Integer getValue() {
@@ -24,5 +28,10 @@ public class IntegerType extends NumericType{
     @Override
     public String toString() {
         return "integer";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof IntegerType;
     }
 }

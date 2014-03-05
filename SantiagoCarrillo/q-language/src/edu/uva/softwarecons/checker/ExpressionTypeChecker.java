@@ -4,7 +4,6 @@ import edu.uva.softwarecons.checker.error.InvalidTypeError;
 import edu.uva.softwarecons.checker.error.QuestionnaireError;
 import edu.uva.softwarecons.model.expression.Expression;
 import edu.uva.softwarecons.model.expression.IdExpression;
-import edu.uva.softwarecons.model.expression.IntExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.AddExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.DivExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.MulExpression;
@@ -24,17 +23,17 @@ import java.util.Map;
  * User: sancarbar
  * Date: 3/3/14
  */
-public class ValueTypeChecker extends FormBaseVisitor {
+public class ExpressionTypeChecker extends FormBaseVisitor {
 
-    public List<QuestionnaireError> errors = new ArrayList<QuestionnaireError>();
+    private List<QuestionnaireError> errors = new ArrayList<QuestionnaireError>();
 
-    public Map<String, Type> questionTypes;
+    private Map<String, Type> questionTypes;
 
     private String currentQuestionId;
 
     private Class expectedType;
 
-    public ValueTypeChecker(Map<String, Type> questionTypes) {
+    public ExpressionTypeChecker(Map<String, Type> questionTypes) {
         this.questionTypes = questionTypes;
     }
 
@@ -46,61 +45,62 @@ public class ValueTypeChecker extends FormBaseVisitor {
 
     @Override
     public void visitEqualExpression(EqualExpression expression) {
-        validateBinaryExpressionTerm(expression.leftExpression);
-        validateBinaryExpressionTerm(expression.rightExpression);
+        validateBinaryExpressionTerm(expression.getLeftExpression());
+        validateBinaryExpressionTerm(expression.getRightExpression());
     }
 
     @Override
     public void visitGreaterEqualExpression(GreaterEqualExpression expression) {
-        validateBinaryExpressionTerm(expression.leftExpression);
-        validateBinaryExpressionTerm(expression.rightExpression);
+        validateBinaryExpressionTerm(expression.getLeftExpression());
+        validateBinaryExpressionTerm(expression.getRightExpression());
     }
 
     @Override
     public void visitAddExpression(AddExpression expression) {
-        validateBinaryExpressionTerm(expression.leftExpression);
-        validateBinaryExpressionTerm(expression.rightExpression);
+        validateBinaryExpressionTerm(expression.getLeftExpression());
+        validateBinaryExpressionTerm(expression.getRightExpression());
     }
 
     @Override
     public void visitMulExpression(MulExpression expression) {
-        validateBinaryExpressionTerm(expression.leftExpression);
-        validateBinaryExpressionTerm(expression.rightExpression);
+        validateBinaryExpressionTerm(expression.getLeftExpression());
+        validateBinaryExpressionTerm(expression.getRightExpression());
     }
 
     @Override
     public void visitDivExpression(DivExpression expression) {
-        validateBinaryExpressionTerm(expression.leftExpression);
-        validateBinaryExpressionTerm(expression.rightExpression);
+        validateBinaryExpressionTerm(expression.getLeftExpression());
+        validateBinaryExpressionTerm(expression.getRightExpression());
     }
 
     @Override
     public void visitSubExpression(SubExpression expression) {
-        validateBinaryExpressionTerm(expression.leftExpression);
-        validateBinaryExpressionTerm(expression.rightExpression);
+        validateBinaryExpressionTerm(expression.getLeftExpression());
+        validateBinaryExpressionTerm(expression.getRightExpression());
     }
 
     @Override
     public void visitGreaterExpression(GreaterExpression expression) {
-        super.visitGreaterExpression(expression);
+        validateBinaryExpressionTerm(expression.getLeftExpression());
+        validateBinaryExpressionTerm(expression.getRightExpression());
     }
 
     @Override
     public void visitLessEqualExpression(LessEqualExpression expression) {
-        validateBinaryExpressionTerm(expression.leftExpression);
-        validateBinaryExpressionTerm(expression.rightExpression);
+        validateBinaryExpressionTerm(expression.getLeftExpression());
+        validateBinaryExpressionTerm(expression.getRightExpression());
     }
 
     @Override
     public void visitLessExpression(LessExpression expression) {
-        validateBinaryExpressionTerm(expression.leftExpression);
-        validateBinaryExpressionTerm(expression.rightExpression);
+        validateBinaryExpressionTerm(expression.getLeftExpression());
+        validateBinaryExpressionTerm(expression.getRightExpression());
     }
 
     @Override
     public void visitNotEqualExpression(NotEqualExpression expression) {
-        validateBinaryExpressionTerm(expression.leftExpression);
-        validateBinaryExpressionTerm(expression.rightExpression);
+        validateBinaryExpressionTerm(expression.getLeftExpression());
+        validateBinaryExpressionTerm(expression.getRightExpression());
     }
 
     private void validateBinaryExpressionTerm(Expression expression) {
@@ -109,12 +109,6 @@ public class ValueTypeChecker extends FormBaseVisitor {
         }else
             expression.accept(this);
     }
-
-    @Override
-    public void visitIntExpression(IntExpression expression) {
-        System.out.print("visit integer: "+expression);
-    }
-
 
 
     @Override
@@ -128,10 +122,14 @@ public class ValueTypeChecker extends FormBaseVisitor {
     }
 
     private void validateIdExpressionType(IdExpression expression, Class typeClass, Class expectedType) {
-        if(questionTypes.containsKey(expression.id) &&
-                !(typeClass.isInstance(questionTypes.get(expression.id)))){
-            errors.add(new InvalidTypeError(currentQuestionId, expression.id,
-                    expectedType, questionTypes.get(expression.id).getClass()));
+        if(questionTypes.containsKey(expression.getId()) &&
+                !(typeClass.isInstance(questionTypes.get(expression.getId())))){
+            errors.add(new InvalidTypeError(currentQuestionId, expression.getId(),
+                    expectedType, questionTypes.get(expression.getId()).getClass()));
         }
+    }
+
+    public List<QuestionnaireError> getErrors() {
+        return errors;
     }
 }

@@ -9,7 +9,11 @@ import edu.uva.softwarecons.visitor.IFormElementVisitor;
  */
 public class StringType extends Type{
 
-    private String value;
+    private final String value;
+
+    public StringType(String value) {
+        this.value = value;
+    }
 
     @Override
     public String getValue() {
@@ -24,5 +28,10 @@ public class StringType extends Type{
     @Override
     public String toString() {
         return "string";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof StringType;
     }
 }

@@ -1,8 +1,7 @@
-package edu.uva.softwarecons.model.expression.bool;
+package edu.uva.softwarecons.model.expression.logical;
 
 import edu.uva.softwarecons.model.expression.BinaryExpression;
 import edu.uva.softwarecons.model.expression.Expression;
-import edu.uva.softwarecons.model.operation.Operator;
 import edu.uva.softwarecons.model.type.Type;
 import edu.uva.softwarecons.visitor.IFormElementVisitor;
 
@@ -11,12 +10,12 @@ import edu.uva.softwarecons.visitor.IFormElementVisitor;
  * User: sancarbar
  * Date: 2/20/14
  */
-public class AndExpression extends BinaryExpression {
+public class OrExpression extends BinaryExpression{
 
-    public AndExpression(Expression leftOperand, Expression rightOperand) {
+    public OrExpression(Expression leftOperand, Expression rightOperand) {
         super(leftOperand, rightOperand);
-        operator = Operator.AND;
     }
+
 
     @Override
     public Type eval() {
@@ -25,6 +24,6 @@ public class AndExpression extends BinaryExpression {
 
     @Override
     public void accept(IFormElementVisitor visitor) {
-        visitor.visitAndExpression(this);
+        visitor.visitOrExpression(this);
     }
 }

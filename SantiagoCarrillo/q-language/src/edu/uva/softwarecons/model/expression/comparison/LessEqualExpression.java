@@ -2,7 +2,6 @@ package edu.uva.softwarecons.model.expression.comparison;
 
 import edu.uva.softwarecons.model.expression.BinaryExpression;
 import edu.uva.softwarecons.model.expression.Expression;
-import edu.uva.softwarecons.model.operation.Operator;
 import edu.uva.softwarecons.model.type.Type;
 import edu.uva.softwarecons.visitor.IFormElementVisitor;
 
@@ -16,7 +15,6 @@ public class LessEqualExpression extends BinaryExpression{
 
     public LessEqualExpression(Expression leftOperand, Expression rightOperand) {
         super(leftOperand, rightOperand);
-        operator = Operator.LEq;
     }
 
     @Override

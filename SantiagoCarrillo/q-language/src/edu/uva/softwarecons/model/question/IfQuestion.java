@@ -1,9 +1,9 @@
 package edu.uva.softwarecons.model.question;
 
 import edu.uva.softwarecons.model.expression.Expression;
+import edu.uva.softwarecons.model.type.Type;
 import edu.uva.softwarecons.visitor.IFormElementVisitor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,17 +11,30 @@ import java.util.List;
  * User: sancarbar
  * Date: 2/26/14
  */
-public class IfQuestion extends Question {
+public class IfQuestion implements Question {
 
-    public Expression expression;
+    private final Expression expression;
 
-    public List<Question> questions = new ArrayList<Question>();
+    private final List<Question> questions;
 
-    public IfQuestion() {
+    private final ElseQuestion elseQuestion;
+
+    public IfQuestion(Expression expression, List<Question> questions, ElseQuestion elseQuestion) {
+        this.expression = expression;
+        this.questions = questions;
+        this.elseQuestion = elseQuestion;
     }
 
-    public void addQuestion(Question question){
-        questions.add(question);
+    public Expression getExpression() {
+        return expression;
+    }
+
+    public List<Question> getQuestions() {
+        return questions;
+    }
+
+    public ElseQuestion getElseQuestion() {
+        return elseQuestion;
     }
 
     @Override

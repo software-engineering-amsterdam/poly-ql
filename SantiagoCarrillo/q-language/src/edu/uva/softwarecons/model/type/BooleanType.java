@@ -9,8 +9,11 @@ import edu.uva.softwarecons.visitor.IFormElementVisitor;
  */
 public class BooleanType extends Type {
 
-    private boolean checked;
+    private final boolean checked;
 
+    public BooleanType(boolean checked) {
+        this.checked = checked;
+    }
 
     @Override
     public Boolean getValue() {
@@ -26,5 +29,10 @@ public class BooleanType extends Type {
     @Override
     public String toString() {
         return "boolean";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof BooleanType;
     }
 }

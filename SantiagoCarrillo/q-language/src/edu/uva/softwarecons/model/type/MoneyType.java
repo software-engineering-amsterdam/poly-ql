@@ -11,7 +11,11 @@ import java.math.BigDecimal;
  */
 public class MoneyType extends NumericType{
 
-    public BigDecimal value;
+    private final BigDecimal value;
+
+    public MoneyType(BigDecimal value) {
+        this.value = value;
+    }
 
     @Override
     public BigDecimal getValue() {
@@ -26,5 +30,10 @@ public class MoneyType extends NumericType{
     @Override
     public String toString() {
         return "money";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof NumericType;
     }
 }

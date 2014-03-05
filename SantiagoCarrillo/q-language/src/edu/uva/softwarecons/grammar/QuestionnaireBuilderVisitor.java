@@ -9,93 +9,96 @@ import edu.uva.softwarecons.model.expression.arithmetic.AddExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.DivExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.MulExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.SubExpression;
-import edu.uva.softwarecons.model.expression.bool.AndExpression;
-import edu.uva.softwarecons.model.expression.bool.NotExpression;
-import edu.uva.softwarecons.model.expression.bool.OrExpression;
 import edu.uva.softwarecons.model.expression.comparison.*;
-import edu.uva.softwarecons.model.question.ComputedQuestion;
-import edu.uva.softwarecons.model.question.IfElseQuestion;
-import edu.uva.softwarecons.model.question.IfQuestion;
-import edu.uva.softwarecons.model.question.Question;
+import edu.uva.softwarecons.model.expression.logical.AndExpression;
+import edu.uva.softwarecons.model.expression.logical.NotExpression;
+import edu.uva.softwarecons.model.expression.logical.OrExpression;
+import edu.uva.softwarecons.model.question.*;
 import edu.uva.softwarecons.model.type.*;
 import edu.uva.softwarecons.visitor.IFormElement;
 import org.antlr.v4.runtime.misc.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Falconlabs
  * User: sancarbar
  * Date: 2/26/14
  */
-public class QuestionnaireEvalVisitor extends QuestionnaireBaseVisitor<IFormElement>{
+public class QuestionnaireBuilderVisitor extends QuestionnaireBaseVisitor<IFormElement> {
 
     @Override
     public IFormElement visitQuestionnaire(@NotNull QuestionnaireParser.QuestionnaireContext ctx) {
-        Form form = new Form(ctx.ID().getText());
-        for(QuestionnaireParser.QuestionContext question: ctx.question()){
-            form.addQuestion((Question) question.accept(this));
+        List<Question> questions = new ArrayList<Question>();
+        for (QuestionnaireParser.QuestionContext question : ctx.question()) {
+            questions.add((Question) question.accept(this));
         }
-        return form;
+        return new Form(ctx.ID().getText(), questions);
     }
 
     @Override
-    public Question visitSimpleQuestion(@NotNull QuestionnaireParser.SimpleQuestionContext ctx) {
-        return new Question(ctx.ID().getText(),ctx.STRING().getText(), (Type) ctx.type().accept(this));
+    public BasicQuestion visitSimpleQuestion(@NotNull QuestionnaireParser.SimpleQuestionContext ctx) {
+        return new BasicQuestion(ctx.ID().getText(), ctx.STRING().getText(), (Type) ctx.type().accept(this));
     }
 
     @Override
     public ComputedQuestion visitComputedQuestion(@NotNull QuestionnaireParser.ComputedQuestionContext ctx) {
-        return new ComputedQuestion(ctx.ID().getText(),ctx.STRING().getText(), (Type) ctx.type().accept(this), (Expression) ctx.expr().accept(this));
+        return new ComputedQuestion(ctx.ID().getText(), ctx.STRING().getText(), (Type) ctx.type().accept(this), (Expression) ctx.expr().accept(this));
     }
 
     @Override
     public BooleanType visitBoolean(@NotNull QuestionnaireParser.BooleanContext ctx) {
-        return new BooleanType();
+        return new BooleanType(false);
     }
 
     @Override
     public StringType visitString(@NotNull QuestionnaireParser.StringContext ctx) {
-        return new StringType();
+        return new StringType(null);
     }
 
     @Override
     public IntegerType visitInteger(@NotNull QuestionnaireParser.IntegerContext ctx) {
-        return new IntegerType();
+        return new IntegerType(0);
     }
 
     @Override
     public DateType visitDate(@NotNull QuestionnaireParser.DateContext ctx) {
-        return new DateType();
+        return new DateType(null);
     }
 
     @Override
     public DecimalType visitDecimal(@NotNull QuestionnaireParser.DecimalContext ctx) {
-        return new DecimalType();
+        return new DecimalType(0);
     }
 
     @Override
     public MoneyType visitMoney(@NotNull QuestionnaireParser.MoneyContext ctx) {
-        return new MoneyType();
+        return new MoneyType(null);
     }
+
 
     @Override
     public IfQuestion visitIf(@NotNull QuestionnaireParser.IfContext ctx) {
-        IfQuestion question = null == ctx.elsestat() ? new IfQuestion() : (IfElseQuestion) ctx.elsestat().accept(this);
-        question.expression = (Expression) ctx.expr().accept(this);
-        for(QuestionnaireParser.QuestionContext q : ctx.question()){
-            question.addQuestion((Question) q.accept(this));
+        List<Question> questions = new ArrayList<Question>();
+        for (QuestionnaireParser.QuestionContext q : ctx.question()) {
+            questions.add((Question) q.accept(this));
         }
-        return question;
+        ElseQuestion elseQuestion = null;
+        if (null != ctx.elsestat())
+            elseQuestion = (ElseQuestion) ctx.elsestat().accept(this);
+        return new IfQuestion((Expression) ctx.expr().accept(this), questions, elseQuestion);
     }
 
     @Override
-    public IfElseQuestion visitIfElse(@NotNull QuestionnaireParser.IfElseContext ctx) {
-        IfElseQuestion ifElseQuestion = new IfElseQuestion();
-        for(QuestionnaireParser.QuestionContext q : ctx.question()){
-            ifElseQuestion.addElseQuestion((Question) q.accept(this));
+    public ElseQuestion visitElse(@NotNull QuestionnaireParser.ElseContext ctx) {
+        List<Question> questions = new ArrayList<Question>();
+        for (QuestionnaireParser.QuestionContext q : ctx.question()) {
+            questions.add((BasicQuestion) q.accept(this));
         }
-        return ifElseQuestion;
-    }
+        return new ElseQuestion(questions);
 
+    }
 
 
     @Override
@@ -105,49 +108,52 @@ public class QuestionnaireEvalVisitor extends QuestionnaireBaseVisitor<IFormElem
     }
 
 
-
     //TODO fix bad smell !!
     @Override
     public Expression visitCompare(@NotNull QuestionnaireParser.CompareContext ctx) {
-        if(null != ctx.Eq())
+        if (null != ctx.Eq())
             return new EqualExpression((Expression) ctx.expr().get(0).accept(this),
                     (Expression) ctx.expr().get(1).accept(this));
-        else if(null != ctx.GEq())
+        if (null != ctx.GEq())
             return new GreaterEqualExpression((Expression) ctx.expr().get(0).accept(this),
                     (Expression) ctx.expr().get(1).accept(this));
-        else if(null != ctx.GT())
+        if (null != ctx.GT())
             return new GreaterExpression((Expression) ctx.expr().get(0).accept(this),
                     (Expression) ctx.expr().get(1).accept(this));
-        else if(null != ctx.LEq())
+        if (null != ctx.LEq())
             return new LessEqualExpression((Expression) ctx.expr().get(0).accept(this),
                     (Expression) ctx.expr().get(1).accept(this));
-        else if(null != ctx.LT())
+        if (null != ctx.LT())
             return new LessExpression((Expression) ctx.expr().get(0).accept(this),
                     (Expression) ctx.expr().get(1).accept(this));
-        else if(null != ctx.NEq())
+        if (null != ctx.NEq())
             return new NotEqualExpression((Expression) ctx.expr().get(0).accept(this),
                     (Expression) ctx.expr().get(1).accept(this));
+        assert false : "BUG: unknown compare argument";
         return null;
-
     }
 
     @Override
     public Expression visitMulDiv(@NotNull QuestionnaireParser.MulDivContext ctx) {
-        return (null != ctx.MUL()) ?
-                new MulExpression((Expression) ctx.expr().get(0).accept(this),
-                        (Expression) ctx.expr().get(1).accept(this)):
-                new DivExpression((Expression) ctx.expr().get(0).accept(this),
-                        (Expression) ctx.expr().get(1).accept(this));
+        if (null != ctx.MUL())
+            return new MulExpression((Expression) ctx.expr().get(0).accept(this),
+                    (Expression) ctx.expr().get(1).accept(this));
+        if (null != ctx.DIV())
+            return new DivExpression((Expression) ctx.expr().get(0).accept(this),
+                    (Expression) ctx.expr().get(1).accept(this));
+        assert false : "BUG: unknown MulDiv argument";
+        return null;
     }
 
     @Override
     public AndExpression visitAnd(@NotNull QuestionnaireParser.AndContext ctx) {
-        return  new AndExpression((Expression) ctx.expr().get(0).accept(this),
+        return new AndExpression((Expression) ctx.expr().get(0).accept(this),
                 (Expression) ctx.expr().get(1).accept(this));
     }
 
     @Override
     public IdExpression visitId(@NotNull QuestionnaireParser.IdContext ctx) {
+
         return new IdExpression(ctx.ID().getText());
     }
 
@@ -163,11 +169,14 @@ public class QuestionnaireEvalVisitor extends QuestionnaireBaseVisitor<IFormElem
 
     @Override
     public Expression visitAddSub(@NotNull QuestionnaireParser.AddSubContext ctx) {
-        return (null != ctx.SUB()) ?
-                new SubExpression((Expression) ctx.expr().get(0).accept(this),
-                        (Expression) ctx.expr().get(1).accept(this)):
-                new AddExpression((Expression) ctx.expr().get(0).accept(this),
-                        (Expression) ctx.expr().get(1).accept(this));
+        if (null != ctx.SUB())
+            return new SubExpression((Expression) ctx.expr().get(0).accept(this),
+                    (Expression) ctx.expr().get(1).accept(this));
+        if (null != ctx.SUB())
+            return new AddExpression((Expression) ctx.expr().get(0).accept(this),
+                    (Expression) ctx.expr().get(1).accept(this));
+        assert false : "BUG: unknown AddSub argument";
+        return null;
     }
 
     @Override

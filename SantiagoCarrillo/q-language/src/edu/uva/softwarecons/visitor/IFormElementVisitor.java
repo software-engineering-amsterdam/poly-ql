@@ -8,14 +8,14 @@ import edu.uva.softwarecons.model.expression.arithmetic.AddExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.DivExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.MulExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.SubExpression;
-import edu.uva.softwarecons.model.expression.bool.AndExpression;
-import edu.uva.softwarecons.model.expression.bool.NotExpression;
-import edu.uva.softwarecons.model.expression.bool.OrExpression;
 import edu.uva.softwarecons.model.expression.comparison.*;
+import edu.uva.softwarecons.model.expression.logical.AndExpression;
+import edu.uva.softwarecons.model.expression.logical.NotExpression;
+import edu.uva.softwarecons.model.expression.logical.OrExpression;
+import edu.uva.softwarecons.model.question.BasicQuestion;
 import edu.uva.softwarecons.model.question.ComputedQuestion;
-import edu.uva.softwarecons.model.question.IfElseQuestion;
+import edu.uva.softwarecons.model.question.ElseQuestion;
 import edu.uva.softwarecons.model.question.IfQuestion;
-import edu.uva.softwarecons.model.question.Question;
 import edu.uva.softwarecons.model.type.*;
 
 /**
@@ -29,11 +29,11 @@ public interface IFormElementVisitor {
 
     void visitComputedQuestion(ComputedQuestion question);
 
-    void visitIfElseQuestion(IfElseQuestion question);
-
     void visitIfQuestion(IfQuestion question);
 
-    void visitQuestion(Question question);
+    void visitElseQuestion(ElseQuestion question);
+
+    void visitQuestion(BasicQuestion question);
 
     void visitAddExpression(AddExpression expression);
 

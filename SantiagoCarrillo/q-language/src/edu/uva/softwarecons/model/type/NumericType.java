@@ -19,4 +19,9 @@ public class NumericType extends Type{
     public void accept(IFormElementVisitor visitor) {
 
     }
+
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof NumericType;
+    }
 }

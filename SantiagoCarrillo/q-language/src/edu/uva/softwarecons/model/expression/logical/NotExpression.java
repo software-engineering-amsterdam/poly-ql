@@ -1,7 +1,8 @@
-package edu.uva.softwarecons.model.expression.bool;
+package edu.uva.softwarecons.model.expression.logical;
 
 import edu.uva.softwarecons.model.expression.Expression;
 import edu.uva.softwarecons.model.expression.UnaryExpression;
+import edu.uva.softwarecons.model.type.Type;
 import edu.uva.softwarecons.visitor.IFormElementVisitor;
 
 /**
@@ -19,5 +20,10 @@ public class NotExpression extends UnaryExpression {
     @Override
     public void accept(IFormElementVisitor visitor) {
         visitor.visitNotExpression(this);
+    }
+
+    @Override
+    public Type eval() {
+        return null;
     }
 }
