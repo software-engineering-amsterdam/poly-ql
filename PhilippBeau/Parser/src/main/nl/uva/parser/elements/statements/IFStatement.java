@@ -35,7 +35,7 @@ public class IFStatement extends Statement {
 
     @Override
     public void print() {
-        System.out.print(_id + " ");
+        System.out.print("IfStatement " + _id + " ");
         _expression.print();
         System.out.println(_children.size());
 

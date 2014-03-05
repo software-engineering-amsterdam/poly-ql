@@ -1,6 +1,6 @@
 package main.nl.uva.parser.elements.expressions;
 
-public abstract class AdvancedExpression extends AtomExpression {
+public abstract class AdvancedExpression extends Expression {
 
     protected Expression _left;
     protected Expression _right;

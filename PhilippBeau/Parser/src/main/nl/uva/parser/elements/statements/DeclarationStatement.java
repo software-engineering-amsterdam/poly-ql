@@ -21,7 +21,7 @@ public class DeclarationStatement extends Statement {
 
     @Override
     public void print() {
-        System.out.println(_id + " " + _function + " " + _type);
+        System.out.println("DeclarationStatement " + _id + " " + _function + " " + _type);
 
     }
 }

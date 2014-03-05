@@ -1,29 +1,35 @@
 package main.nl.uva.parser.elements.type;
 
-public class Variable extends Type {
+import main.nl.uva.parser.elements.expressions.Expression;
 
-    public static enum Types {
-        BOOL,
-        TEXT,
-        MONEY;
-    }
+public class Variable extends Expression {
 
     private final String _name;
 
-    public Variable(final String name) {
+    private final Type _type;
+
+    private final String _value;
+
+    public Variable(final Type type, final String name, final String value) {
         super("Variable");
 
+        _type = type;
         _name = name;
+        _value = value;
     }
 
     @Override
     protected boolean validateImpl() {
-        // TODO Auto-generated method stub
         return false;
     }
 
     @Override
     public void print() {
         System.out.print(_name);
+    }
+
+    @Override
+    public Type isOfType() {
+        return _type;
     }
 }

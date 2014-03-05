@@ -2,7 +2,6 @@ grammar FormGrammar;
 
 @header{
 	import main.nl.uva.parser.elements.expressions.*;
-	import main.nl.uva.parser.elements.operations.*;
 	import main.nl.uva.parser.elements.statements.*;
 	import main.nl.uva.parser.elements.expressions.*;
 	import main.nl.uva.parser.elements.type.*;
@@ -58,9 +57,9 @@ multExp returns [Expression cEx]
   ;
 
 atom returns [Expression cEx]
-	: ID {$cEx = new Variable($ID.text);}
-	| nL=numLiteral {$cEx = new Money($nL.text);}
-	| bL=boolLiteral {$cEx = new Bool($bL.text);}
+	: ID {$cEx = new VariableContainer($ID.text);}
+	| nL=numLiteral {$cEx = new Variable(new Money(), "", $nL.text);}
+	| bL=boolLiteral {$cEx = new Variable(new Bool(), "", $bL.text);}
 	| '(' bE=boolExp ')' {$cEx = $bE.cEx;}
 	;
 

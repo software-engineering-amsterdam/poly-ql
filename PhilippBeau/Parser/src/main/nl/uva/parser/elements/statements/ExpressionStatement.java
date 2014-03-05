@@ -27,7 +27,7 @@ public class ExpressionStatement extends Statement {
 
     @Override
     public void print() {
-        System.out.print(_id + " " + _function + " : " + _type + "( ");
+        System.out.print("ExpressionStatement " + _id + " " + _function + " : " + _type + "( ");
         _expression.print();
         System.out.println(" )");
     }
