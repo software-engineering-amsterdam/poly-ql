@@ -24,21 +24,21 @@ expression:
       '(' expression ')' #wrapExpr  
         
         // math expressions
-      | expression '*' expression #multExpr
-      | expression '/' expression #divExpr
-      | expression '+' expression #plusExpr
-      | expression '-' expression #minExpr
+      | lhs=expression '*' rhs=expression #multExpr
+      | lhs=expression '/' rhs=expression #divExpr
+      | lhs=expression '+' rhs=expression #plusExpr
+      | lhs=expression '-' rhs=expression #minExpr
       
       // logical expressions
       | '!' expression #negExpr
-      | expression '&&' expression #andExpr
-      | expression '||' expression #orExpr 
-      | expression '==' expression #eqExpr
-      | expression '>=' expression #geqExpr
-      | expression '<=' expression #leqExpr
-      | expression '>' expression #greExpr
-      | expression '<' expression #lesExpr
-      | expression '!=' expression #neqExpr
+      | lhs=expression '&&' rhs=expression #andExpr
+      | lhs=expression '||' rhs=expression #orExpr 
+      | lhs=expression '==' rhs=expression #eqExpr
+      | lhs=expression '>=' rhs=expression #geqExpr
+      | lhs=expression '<=' rhs=expression #leqExpr
+      | lhs=expression '>' rhs=expression #greExpr
+      | lhs=expression '<' rhs=expression #lesExpr
+      | lhs=expression '!=' rhs=expression #neqExpr
       
       // single elements expressions
       | BOOLEAN #bool

@@ -399,6 +399,8 @@ public class QL4Parser extends Parser {
 		}
 	}
 	public static class GreExprContext extends ExpressionContext {
+		public ExpressionContext lhs;
+		public ExpressionContext rhs;
 		public ExpressionContext expression(int i) {
 			return getRuleContext(ExpressionContext.class,i);
 		}
@@ -421,6 +423,8 @@ public class QL4Parser extends Parser {
 		}
 	}
 	public static class MultExprContext extends ExpressionContext {
+		public ExpressionContext lhs;
+		public ExpressionContext rhs;
 		public ExpressionContext expression(int i) {
 			return getRuleContext(ExpressionContext.class,i);
 		}
@@ -443,6 +447,8 @@ public class QL4Parser extends Parser {
 		}
 	}
 	public static class AndExprContext extends ExpressionContext {
+		public ExpressionContext lhs;
+		public ExpressionContext rhs;
 		public ExpressionContext expression(int i) {
 			return getRuleContext(ExpressionContext.class,i);
 		}
@@ -465,6 +471,8 @@ public class QL4Parser extends Parser {
 		}
 	}
 	public static class GeqExprContext extends ExpressionContext {
+		public ExpressionContext lhs;
+		public ExpressionContext rhs;
 		public ExpressionContext expression(int i) {
 			return getRuleContext(ExpressionContext.class,i);
 		}
@@ -504,6 +512,8 @@ public class QL4Parser extends Parser {
 		}
 	}
 	public static class LesExprContext extends ExpressionContext {
+		public ExpressionContext lhs;
+		public ExpressionContext rhs;
 		public ExpressionContext expression(int i) {
 			return getRuleContext(ExpressionContext.class,i);
 		}
@@ -526,6 +536,8 @@ public class QL4Parser extends Parser {
 		}
 	}
 	public static class PlusExprContext extends ExpressionContext {
+		public ExpressionContext lhs;
+		public ExpressionContext rhs;
 		public ExpressionContext expression(int i) {
 			return getRuleContext(ExpressionContext.class,i);
 		}
@@ -548,6 +560,8 @@ public class QL4Parser extends Parser {
 		}
 	}
 	public static class OrExprContext extends ExpressionContext {
+		public ExpressionContext lhs;
+		public ExpressionContext rhs;
 		public ExpressionContext expression(int i) {
 			return getRuleContext(ExpressionContext.class,i);
 		}
@@ -606,6 +620,8 @@ public class QL4Parser extends Parser {
 		}
 	}
 	public static class MinExprContext extends ExpressionContext {
+		public ExpressionContext lhs;
+		public ExpressionContext rhs;
 		public ExpressionContext expression(int i) {
 			return getRuleContext(ExpressionContext.class,i);
 		}
@@ -645,6 +661,8 @@ public class QL4Parser extends Parser {
 		}
 	}
 	public static class LeqExprContext extends ExpressionContext {
+		public ExpressionContext lhs;
+		public ExpressionContext rhs;
 		public ExpressionContext expression(int i) {
 			return getRuleContext(ExpressionContext.class,i);
 		}
@@ -686,6 +704,8 @@ public class QL4Parser extends Parser {
 		}
 	}
 	public static class NeqExprContext extends ExpressionContext {
+		public ExpressionContext lhs;
+		public ExpressionContext rhs;
 		public ExpressionContext expression(int i) {
 			return getRuleContext(ExpressionContext.class,i);
 		}
@@ -725,6 +745,8 @@ public class QL4Parser extends Parser {
 		}
 	}
 	public static class EqExprContext extends ExpressionContext {
+		public ExpressionContext lhs;
+		public ExpressionContext rhs;
 		public ExpressionContext expression(int i) {
 			return getRuleContext(ExpressionContext.class,i);
 		}
@@ -747,6 +769,8 @@ public class QL4Parser extends Parser {
 		}
 	}
 	public static class DivExprContext extends ExpressionContext {
+		public ExpressionContext lhs;
+		public ExpressionContext rhs;
 		public ExpressionContext expression(int i) {
 			return getRuleContext(ExpressionContext.class,i);
 		}
@@ -855,132 +879,144 @@ public class QL4Parser extends Parser {
 					case 1:
 						{
 						_localctx = new MultExprContext(new ExpressionContext(_parentctx, _parentState));
+						((MultExprContext)_localctx).lhs = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(74);
 						if (!(precpred(_ctx, 17))) throw new FailedPredicateException(this, "precpred(_ctx, 17)");
 						setState(75); match(3);
-						setState(76); expression(18);
+						setState(76); ((MultExprContext)_localctx).rhs = expression(18);
 						}
 						break;
 
 					case 2:
 						{
 						_localctx = new DivExprContext(new ExpressionContext(_parentctx, _parentState));
+						((DivExprContext)_localctx).lhs = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(77);
 						if (!(precpred(_ctx, 16))) throw new FailedPredicateException(this, "precpred(_ctx, 16)");
 						setState(78); match(16);
-						setState(79); expression(17);
+						setState(79); ((DivExprContext)_localctx).rhs = expression(17);
 						}
 						break;
 
 					case 3:
 						{
 						_localctx = new PlusExprContext(new ExpressionContext(_parentctx, _parentState));
+						((PlusExprContext)_localctx).lhs = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(80);
 						if (!(precpred(_ctx, 15))) throw new FailedPredicateException(this, "precpred(_ctx, 15)");
 						setState(81); match(2);
-						setState(82); expression(16);
+						setState(82); ((PlusExprContext)_localctx).rhs = expression(16);
 						}
 						break;
 
 					case 4:
 						{
 						_localctx = new MinExprContext(new ExpressionContext(_parentctx, _parentState));
+						((MinExprContext)_localctx).lhs = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(83);
 						if (!(precpred(_ctx, 14))) throw new FailedPredicateException(this, "precpred(_ctx, 14)");
 						setState(84); match(4);
-						setState(85); expression(15);
+						setState(85); ((MinExprContext)_localctx).rhs = expression(15);
 						}
 						break;
 
 					case 5:
 						{
 						_localctx = new AndExprContext(new ExpressionContext(_parentctx, _parentState));
+						((AndExprContext)_localctx).lhs = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(86);
 						if (!(precpred(_ctx, 12))) throw new FailedPredicateException(this, "precpred(_ctx, 12)");
 						setState(87); match(12);
-						setState(88); expression(13);
+						setState(88); ((AndExprContext)_localctx).rhs = expression(13);
 						}
 						break;
 
 					case 6:
 						{
 						_localctx = new OrExprContext(new ExpressionContext(_parentctx, _parentState));
+						((OrExprContext)_localctx).lhs = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(89);
 						if (!(precpred(_ctx, 11))) throw new FailedPredicateException(this, "precpred(_ctx, 11)");
 						setState(90); match(13);
-						setState(91); expression(12);
+						setState(91); ((OrExprContext)_localctx).rhs = expression(12);
 						}
 						break;
 
 					case 7:
 						{
 						_localctx = new EqExprContext(new ExpressionContext(_parentctx, _parentState));
+						((EqExprContext)_localctx).lhs = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(92);
 						if (!(precpred(_ctx, 10))) throw new FailedPredicateException(this, "precpred(_ctx, 10)");
 						setState(93); match(18);
-						setState(94); expression(11);
+						setState(94); ((EqExprContext)_localctx).rhs = expression(11);
 						}
 						break;
 
 					case 8:
 						{
 						_localctx = new GeqExprContext(new ExpressionContext(_parentctx, _parentState));
+						((GeqExprContext)_localctx).lhs = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(95);
 						if (!(precpred(_ctx, 9))) throw new FailedPredicateException(this, "precpred(_ctx, 9)");
 						setState(96); match(20);
-						setState(97); expression(10);
+						setState(97); ((GeqExprContext)_localctx).rhs = expression(10);
 						}
 						break;
 
 					case 9:
 						{
 						_localctx = new LeqExprContext(new ExpressionContext(_parentctx, _parentState));
+						((LeqExprContext)_localctx).lhs = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(98);
 						if (!(precpred(_ctx, 8))) throw new FailedPredicateException(this, "precpred(_ctx, 8)");
 						setState(99); match(11);
-						setState(100); expression(9);
+						setState(100); ((LeqExprContext)_localctx).rhs = expression(9);
 						}
 						break;
 
 					case 10:
 						{
 						_localctx = new GreExprContext(new ExpressionContext(_parentctx, _parentState));
+						((GreExprContext)_localctx).lhs = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(101);
 						if (!(precpred(_ctx, 7))) throw new FailedPredicateException(this, "precpred(_ctx, 7)");
 						setState(102); match(15);
-						setState(103); expression(8);
+						setState(103); ((GreExprContext)_localctx).rhs = expression(8);
 						}
 						break;
 
 					case 11:
 						{
 						_localctx = new LesExprContext(new ExpressionContext(_parentctx, _parentState));
+						((LesExprContext)_localctx).lhs = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(104);
 						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
 						setState(105); match(8);
-						setState(106); expression(7);
+						setState(106); ((LesExprContext)_localctx).rhs = expression(7);
 						}
 						break;
 
 					case 12:
 						{
 						_localctx = new NeqExprContext(new ExpressionContext(_parentctx, _parentState));
+						((NeqExprContext)_localctx).lhs = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(107);
 						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
 						setState(108); match(9);
-						setState(109); expression(6);
+						setState(109); ((NeqExprContext)_localctx).rhs = expression(6);
 						}
 						break;
 					}
