@@ -47,7 +47,7 @@ import java.util.ArrayList;
  *
  * @author Ivan
  */
-public class QLASTBuilderVisitor<Object> extends QLBaseVisitor {
+public class ASTBuilderVisitor<Object> extends QLBaseVisitor {
     /**
      *
      */

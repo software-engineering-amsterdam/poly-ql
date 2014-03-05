@@ -16,7 +16,7 @@ import java.io.InputStream;
 /**
  * @author Ivan
  */
-public class QLASTBuilder {
+public class ASTBuilder {
     public static void main(String[] args) throws IOException {
         String inputFile = "/Users/Ivan/Documents/Master SE/Software " +
                 "Construction/poly-ql/ivan/ql-project/src/net/iplantevin/ql/questionnaires/";
@@ -36,7 +36,7 @@ public class QLASTBuilder {
         ParseTree tree = parser.forms(); // parse
         //System.out.println(tree.toStringTree(parser));
 
-        QLASTBuilderVisitor builder = new QLASTBuilderVisitor();
+        ASTBuilderVisitor builder = new ASTBuilderVisitor();
         FormCollection formCollection;
         formCollection = builder.visitForms((QLParser.FormsContext) tree);
         System.out.println(formCollection);
