@@ -2,7 +2,6 @@ package edu.uva.softwarecons.model.expression.bool;
 
 import edu.uva.softwarecons.model.expression.Expression;
 import edu.uva.softwarecons.model.expression.UnaryExpression;
-import edu.uva.softwarecons.model.operation.Operator;
 import edu.uva.softwarecons.visitor.IFormElementVisitor;
 
 /**

@@ -31,4 +31,12 @@ public class Questionnare implements ElementInterface {
 		
 		visitor.visit(this);
 	}
+	
+	public int countStatements() {
+		return this.statements.size();
+	}
+	
+	public StatementInterface getStatement(int i) {
+		return this.statements.get(i);
+	}
 }

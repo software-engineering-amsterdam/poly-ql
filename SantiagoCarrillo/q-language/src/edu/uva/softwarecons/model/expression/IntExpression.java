@@ -17,6 +17,6 @@ public class IntExpression implements Expression{
 
     @Override
     public void accept(IFormElementVisitor visitor) {
-
+        visitor.visitIntExpression(this);
     }
 }

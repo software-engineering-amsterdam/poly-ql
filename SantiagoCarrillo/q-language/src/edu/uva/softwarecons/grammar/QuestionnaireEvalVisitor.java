@@ -1,6 +1,6 @@
 package edu.uva.softwarecons.grammar;
 
-import edu.uva.softwarecons.model.*;
+import edu.uva.softwarecons.model.Form;
 import edu.uva.softwarecons.model.expression.Expression;
 import edu.uva.softwarecons.model.expression.IdExpression;
 import edu.uva.softwarecons.model.expression.IntExpression;

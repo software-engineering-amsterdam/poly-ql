@@ -1,7 +1,5 @@
 package edu.uva.softwarecons.model.expression.arithmetic;
 
-import com.sun.tools.corba.se.idl.constExpr.BinaryExpr;
-import com.sun.tools.corba.se.idl.constExpr.EvaluationException;
 import edu.uva.softwarecons.model.expression.BinaryExpression;
 import edu.uva.softwarecons.model.expression.Expression;
 import edu.uva.softwarecons.model.operation.Operator;

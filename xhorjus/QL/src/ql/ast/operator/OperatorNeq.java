@@ -2,22 +2,15 @@ package ql.ast.operator;
 
 import ql.ast.ElementInterfaceVisitor;
 import ql.ast.expression.ExpressionInterface;
-import ql.ast.type.TypeBool;
-import ql.ast.type.TypeInterface;
 
 /** 
- * Not equal to operator
+ * Equal to operator
  */
-public class OperatorNeq extends BinaryOperator {
+public class OperatorNeq extends OperatorRelational {
 	public OperatorNeq(ExpressionInterface left, ExpressionInterface right) {
 		super(left, right);
 	}
 	
-	@Override
-	public TypeInterface getType() {
-		return new TypeBool();
-	}
-
 	@Override
 	public void accept(ElementInterfaceVisitor visitor) {
 		visitor.visit(this);

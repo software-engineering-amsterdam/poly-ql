@@ -1,12 +1,10 @@
 package org.uva.sea.ql.typechecker;
 
-import java.util.List;
-
 import org.uva.sea.ql.ast.Expression;
 import org.uva.sea.ql.ast.ExpressionVisitor;
 import org.uva.sea.ql.ast.Identifier;
-import org.uva.sea.ql.ast.literal.BoolLiteral;
-import org.uva.sea.ql.ast.literal.IntLiteral;
+import org.uva.sea.ql.ast.literal.BooleanLiteral;
+import org.uva.sea.ql.ast.literal.IntegerLiteral;
 import org.uva.sea.ql.ast.literal.StringLiteral;
 import org.uva.sea.ql.ast.operators.arithmetic.Add;
 import org.uva.sea.ql.ast.operators.arithmetic.Div;
@@ -28,36 +26,36 @@ import org.uva.sea.ql.ast.type.Type;
 public class ExpressionChecker implements ExpressionVisitor<Boolean> {
 
 	private TypeEnvironment environment;
-	private List<Error> errorlist;
+	private Problems problems;
 	
-	public ExpressionChecker(TypeEnvironment environment, List<Error> errorlist) {
+	public ExpressionChecker(TypeEnvironment environment, Problems problems) {
 		this.environment = environment;
-		this.errorlist = errorlist;
+		this.problems = problems;
 	}
 	
-	public static Boolean checkExpression(TypeEnvironment environment, List<Error> errorlist, Expression expression){
+	public static Boolean checkExpression(TypeEnvironment environment, Problems problems, Expression expression){
 
-		ExpressionChecker checker = new ExpressionChecker(environment,errorlist);
+		ExpressionChecker checker = new ExpressionChecker(environment,problems);
 		return expression.accept(checker);
 	}
 	
 	public Boolean checkNormalExpression(Type type, Expression side){
 
-		if(!(side.typeOf(environment).show() == type.show()))
+		if(!(side.typeOf(environment).equals(type)))
 		{
-			newError(side.show() + " is not of type " + type.show()); //find a way to get left + right here
+			problems.addError(side.toString() + " is not of type " + type.toString()); 
 			return false;
 		}
-		return(checkExpression(environment,errorlist,side));
+		return(checkExpression(environment,problems,side));
 	}
 	
 	public Boolean checkComparison(Type type, Expression left, Expression right){
 		if(!left.typeOf(environment).isCompatibleWith(right.typeOf(environment))){
-			newError(left.show() + " cannot be compared with " + right.show());
+			problems.addError(left.toString() + " cannot be compared with " + right.toString());
 			return false;
 		}
 
-		return checkExpression(environment,errorlist,left) && checkExpression(environment,errorlist,right);
+		return checkExpression(environment,problems,left) && checkExpression(environment,problems,right);
 		
 	}
 
@@ -68,84 +66,84 @@ public class ExpressionChecker implements ExpressionVisitor<Boolean> {
 
 	public Boolean visit(Add add) {
 		
-		boolean left = checkNormalExpression(add.typeOf(environment), add.returnLeft());
-		boolean right = checkNormalExpression(add.typeOf(environment), add.returnRight());
+		boolean left = checkNormalExpression(add.typeOf(environment), add.getLeftHand());
+		boolean right = checkNormalExpression(add.typeOf(environment), add.getRightHand());
 		return left && right;
 	}
 
 	public Boolean visit(Sub sub) {
-		boolean left = checkNormalExpression(sub.typeOf(environment), sub.returnLeft());
-		boolean right = checkNormalExpression(sub.typeOf(environment), sub.returnRight());
+		boolean left = checkNormalExpression(sub.typeOf(environment), sub.getLeftHand());
+		boolean right = checkNormalExpression(sub.typeOf(environment), sub.getRightHand());
 		return left && right;
 	}
 
 	public Boolean visit(Div div) {
-		boolean left = checkNormalExpression(div.typeOf(environment), div.returnLeft());
-		boolean right = checkNormalExpression(div.typeOf(environment), div.returnRight());
+		boolean left = checkNormalExpression(div.typeOf(environment), div.getLeftHand());
+		boolean right = checkNormalExpression(div.typeOf(environment), div.getRightHand());
 		return left && right;
 	}
 
 	public Boolean visit(Mul mul) {
-		boolean left = checkNormalExpression(mul.typeOf(environment), mul.returnLeft());
-		boolean right = checkNormalExpression(mul.typeOf(environment), mul.returnRight());
+		boolean left = checkNormalExpression(mul.typeOf(environment), mul.getLeftHand());
+		boolean right = checkNormalExpression(mul.typeOf(environment), mul.getRightHand());
 		return left && right;
 	}
 
 	public Boolean visit(Neg neg) {
-		return checkNormalExpression(neg.typeOf(environment), neg.returnExpr());
+		return checkNormalExpression(neg.typeOf(environment), neg.getExpr());
 	}
 
 	public Boolean visit(Pos pos) {
-		return checkNormalExpression(pos.typeOf(environment), pos.returnExpr());
+		return checkNormalExpression(pos.typeOf(environment), pos.getExpr());
 	}
 
 	public Boolean visit(Eq eq) {
-		return checkComparison(eq.typeOf(environment), eq.returnLeft(), eq.returnRight());
+		return checkComparison(eq.typeOf(environment), eq.getLeftHand(), eq.getRightHand());
 	}
 
 	public Boolean visit(GEq geq) {
-		return checkComparison(geq.typeOf(environment), geq.returnLeft(), geq.returnRight());
+		return checkComparison(geq.typeOf(environment), geq.getLeftHand(), geq.getRightHand());
 	}
 
 	public Boolean visit(GT gt) {
-		return checkComparison(gt.typeOf(environment), gt.returnLeft(), gt.returnRight());
+		return checkComparison(gt.typeOf(environment), gt.getLeftHand(), gt.getRightHand());
 	}
 
 	public Boolean visit(LEq leq) {
-		return checkComparison(leq.typeOf(environment), leq.returnLeft(), leq.returnRight());
+		return checkComparison(leq.typeOf(environment), leq.getLeftHand(), leq.getRightHand());
 	}
 
 	public Boolean visit(LT lt) {
-		return checkComparison(lt.typeOf(environment), lt.returnLeft(), lt.returnRight());
+		return checkComparison(lt.typeOf(environment), lt.getLeftHand(), lt.getRightHand());
 	}
 
 	public Boolean visit(NEq neq) {
-		return checkComparison(neq.typeOf(environment), neq.returnLeft(), neq.returnRight());
+		return checkComparison(neq.typeOf(environment), neq.getLeftHand(), neq.getRightHand());
 	}
 
 	public Boolean visit(And and) {
-		boolean left = checkNormalExpression(and.typeOf(environment), and.returnLeft());
-		boolean right = checkNormalExpression(and.typeOf(environment), and.returnRight());
+		boolean left = checkNormalExpression(and.typeOf(environment), and.getLeftHand());
+		boolean right = checkNormalExpression(and.typeOf(environment), and.getRightHand());
 		return left && right;
 	}
 
 	public Boolean visit(Or or) {
-		boolean left = checkNormalExpression(or.typeOf(environment), or.returnLeft());
-		boolean right = checkNormalExpression(or.typeOf(environment), or.returnRight());
+		boolean left = checkNormalExpression(or.typeOf(environment), or.getLeftHand());
+		boolean right = checkNormalExpression(or.typeOf(environment), or.getRightHand());
 		return left && right;
 	}
 
 	public Boolean visit(Not not) {
-		return checkNormalExpression(not.typeOf(environment),not.returnExpr());
+		return checkNormalExpression(not.typeOf(environment),not.getExpr());
 	}
 
 
-	public Boolean visit(IntLiteral intLiteral) {
+	public Boolean visit(IntegerLiteral intLiteral) {
 		return true;
 	}
 
 
-	public Boolean visit(BoolLiteral boolLiteral) {
+	public Boolean visit(BooleanLiteral boolLiteral) {
 		return true;
 	}
 
@@ -156,10 +154,6 @@ public class ExpressionChecker implements ExpressionVisitor<Boolean> {
 
 	public Boolean visit(Identifier identifier) {
 		return true;
-	}
-	
-	private void newError(String error) {
-		errorlist.add(new Error(error));
 	}
 
 }

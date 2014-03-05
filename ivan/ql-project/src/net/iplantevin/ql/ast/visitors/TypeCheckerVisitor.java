@@ -7,11 +7,37 @@ import net.iplantevin.ql.ast.expressions.literals.Bool;
 import net.iplantevin.ql.ast.expressions.literals.ID;
 import net.iplantevin.ql.ast.expressions.literals.Int;
 import net.iplantevin.ql.ast.expressions.literals.Str;
-import net.iplantevin.ql.ast.expressions.operators.*;
+import net.iplantevin.ql.ast.expressions.operators.Add;
+import net.iplantevin.ql.ast.expressions.operators.And;
+import net.iplantevin.ql.ast.expressions.operators.Binary;
+import net.iplantevin.ql.ast.expressions.operators.Div;
+import net.iplantevin.ql.ast.expressions.operators.EQ;
+import net.iplantevin.ql.ast.expressions.operators.GEQ;
+import net.iplantevin.ql.ast.expressions.operators.GT;
+import net.iplantevin.ql.ast.expressions.operators.LEQ;
+import net.iplantevin.ql.ast.expressions.operators.LT;
+import net.iplantevin.ql.ast.expressions.operators.Mul;
+import net.iplantevin.ql.ast.expressions.operators.NEQ;
+import net.iplantevin.ql.ast.expressions.operators.Neg;
+import net.iplantevin.ql.ast.expressions.operators.Not;
+import net.iplantevin.ql.ast.expressions.operators.Or;
+import net.iplantevin.ql.ast.expressions.operators.Pos;
+import net.iplantevin.ql.ast.expressions.operators.Sub;
+import net.iplantevin.ql.ast.expressions.operators.Unary;
 import net.iplantevin.ql.ast.form.Form;
 import net.iplantevin.ql.ast.form.FormCollection;
-import net.iplantevin.ql.ast.statements.*;
-import net.iplantevin.ql.ast.types.*;
+import net.iplantevin.ql.ast.statements.Block;
+import net.iplantevin.ql.ast.statements.Computation;
+import net.iplantevin.ql.ast.statements.If;
+import net.iplantevin.ql.ast.statements.IfElse;
+import net.iplantevin.ql.ast.statements.Question;
+import net.iplantevin.ql.ast.statements.Questionable;
+import net.iplantevin.ql.ast.statements.Statement;
+import net.iplantevin.ql.ast.types.BooleanType;
+import net.iplantevin.ql.ast.types.IntegerType;
+import net.iplantevin.ql.ast.types.Type;
+import net.iplantevin.ql.ast.types.TypeEnvironment;
+import net.iplantevin.ql.ast.types.UndefinedType;
 import net.iplantevin.ql.errors.ASTError;
 import net.iplantevin.ql.errors.DuplicateLabelError;
 import net.iplantevin.ql.errors.TypeError;
@@ -27,7 +53,7 @@ import java.util.Map;
  *
  * @author Ivan
  */
-public class TypeCheckerVisitor implements IASTVisitor {
+public class TypeCheckerVisitor implements IASTVisitor<Void> {
     private final List<ASTError> errors;
     private final TypeEnvironment idTypeStore;
     private final Map<String, Questionable> labels;
@@ -90,7 +116,7 @@ public class TypeCheckerVisitor implements IASTVisitor {
     /////////////////////////////////////////////
     private void addIdentifier(Questionable questionable) {
         TypeError typeError = idTypeStore.
-                addIdentifier(questionable.getName(), questionable.getType());
+                declareIdentifier(questionable.getName(), questionable.getType());
         if (typeError != null) {
             addError(typeError);
         }
@@ -119,7 +145,7 @@ public class TypeCheckerVisitor implements IASTVisitor {
                     message,
                     expression,
                     expectedType,
-                    expression.getType(idTypeStore)
+                    actualType
             );
             addError(typeError);
         }
@@ -173,149 +199,175 @@ public class TypeCheckerVisitor implements IASTVisitor {
     // Visitor methods
     /////////////////////////////////////////////
     @Override
-    public void visit(FormCollection formCollection) {
+    public Void visit(FormCollection formCollection) {
         // Nothing special (yet).
         // NOTE: should only call visit on individual forms!! (Since checking
         //   is on a per-form basis.) Otherwise, just returns.
         // TODO: proper notice if this method is called.
-        return;
+        return null;
     }
 
     @Override
-    public void visit(Form form) {
+    public Void visit(Form form) {
         form.getBody().accept(this);
+        return null;
     }
 
     @Override
-    public void visit(Block block) {
+    public Void visit(Block block) {
         for (Statement statement : block.getStatements()) {
             statement.accept(this);
         }
+        return null;
     }
 
     @Override
-    public void visit(Computation computation) {
+    public Void visit(Computation computation) {
         checkComputation(computation);
         addIdentifier(computation);
         addQuestionableLabel(computation);
+        return null;
     }
 
     @Override
-    public void visit(If ifStat) {
+    public Void visit(If ifStat) {
         checkCondition(ifStat.getCondition());
         ifStat.getBody().accept(this);
+        return null;
     }
 
     @Override
-    public void visit(IfElse ifElse) {
+    public Void visit(IfElse ifElse) {
         checkCondition(ifElse.getCondition());
         ifElse.getBody().accept(this);
         ifElse.getElseBody().accept(this);
+        return null;
     }
 
     @Override
-    public void visit(Question question) {
+    public Void visit(Question question) {
         addIdentifier(question);
         addQuestionableLabel(question);
+        return null;
     }
 
     @Override
-    public void visit(Par par) {
+    public Void visit(Par par) {
         par.getExpression().accept(this);
+        return null;
     }
 
     @Override
-    public void visit(Add add) {
+    public Void visit(Add add) {
         checkNumeric(add);
+        return null;
     }
 
     @Override
-    public void visit(And and) {
+    public Void visit(And and) {
         checkLogical(and);
+        return null;
     }
 
     @Override
-    public void visit(Div div) {
+    public Void visit(Div div) {
         checkNumeric(div);
+        return null;
     }
 
     @Override
-    public void visit(EQ eq) {
+    public Void visit(EQ eq) {
         checkEquality(eq);
+        return null;
     }
 
     @Override
-    public void visit(GEQ geq) {
+    public Void visit(GEQ geq) {
         checkComparison(geq);
+        return null;
     }
 
     @Override
-    public void visit(GT gt) {
+    public Void visit(GT gt) {
         checkComparison(gt);
+        return null;
     }
 
     @Override
-    public void visit(LEQ leq) {
+    public Void visit(LEQ leq) {
         checkComparison(leq);
+        return null;
     }
 
     @Override
-    public void visit(LT lt) {
+    public Void visit(LT lt) {
         checkComparison(lt);
+        return null;
     }
 
     @Override
-    public void visit(Mul mul) {
+    public Void visit(Mul mul) {
         checkNumeric(mul);
+        return null;
     }
 
     @Override
-    public void visit(Neg neg) {
+    public Void visit(Neg neg) {
         checkUnary(neg);
+        return null;
     }
 
     @Override
-    public void visit(NEQ neq) {
+    public Void visit(NEQ neq) {
         checkEquality(neq);
+        return null;
     }
 
     @Override
-    public void visit(Not not) {
+    public Void visit(Not not) {
         checkUnary(not);
+        return null;
     }
 
     @Override
-    public void visit(Or or) {
+    public Void visit(Or or) {
         checkLogical(or);
+        return null;
     }
 
     @Override
-    public void visit(Pos pos) {
+    public Void visit(Pos pos) {
         checkUnary(pos);
+        return null;
     }
 
     @Override
-    public void visit(Sub sub) {
+    public Void visit(Sub sub) {
         checkNumeric(sub);
+        return null;
     }
 
     @Override
-    public void visit(Bool bool) {
+    public Void visit(Bool bool) {
         // Do nothing.
+        return null;
     }
 
     @Override
-    public void visit(ID id) {
+    public Void visit(ID id) {
         // Do nothing.
+        return null;
     }
 
     @Override
-    public void visit(Int integer) {
+    public Void visit(Int integer) {
         // Do nothing.
+        return null;
     }
 
     @Override
-    public void visit(Str str) {
+    public Void visit(Str str) {
         // Do nothing.
+        return null;
     }
 }

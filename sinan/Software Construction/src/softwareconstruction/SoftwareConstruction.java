@@ -5,6 +5,9 @@
  */
 package softwareconstruction;
 
+import softwareconstruction.form.Form;
+import softwareconstruction.questions.Question;
+import softwareconstruction.questions.ConditionalQuestion;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -43,19 +46,17 @@ public class SoftwareConstruction {
             SinansGrammerLexer lexer = new SinansGrammerLexer(input);
             CommonTokenStream tokens = new CommonTokenStream(lexer);
             SinansGrammerParser parser = new SinansGrammerParser(tokens);
-//            ParseTree tree = parser.form();
-            Form form = parser.form().fo;
-//            System.out.println(form.getFormName());
-//            System.out.println(form.getItems());
-            for(Object o : form.getItems()){
-                if(o instanceof Question){
-                    System.out.println(o.toString());
-                }
-                if(o instanceof ConditionalQuestion){
-                    System.out.println("IF:");
-                    printCondition((ConditionalQuestion) o, 1);
-                }
-            }
+            ParseTree tree = parser.form();
+//            Form form = parser.form().fo;
+//            for(Object o : form.getItems()){
+//                if(o instanceof Question){
+//                    System.out.println(o.toString());
+//                }
+//                if(o instanceof ConditionalQuestion){
+//                    System.out.println("IF:");
+//                    printCondition((ConditionalQuestion) o, 1);
+//                }
+//            }
 //            Form form = parser.form().fo;
 //            System.out.println(form.getQuestion());
 //            System.out.println(tree.toStringTree(parser));

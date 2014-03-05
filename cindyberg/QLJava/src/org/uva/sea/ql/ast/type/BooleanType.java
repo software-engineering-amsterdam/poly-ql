@@ -2,26 +2,23 @@ package org.uva.sea.ql.ast.type;
 
 import org.uva.sea.ql.ast.IVisitor;
 
-public class IntType extends Type{
-
+public class BooleanType extends Type{
 
 	public void accept(IVisitor visitor) {
 		visitor.visit(this);
 		
 	}
 	
-	public String show(){
-		return "int";
+	public String toString(){
+		return "boolean";
 	}
+
 	
-	@Override
-	public boolean isCompatibleWithInteger(){
+	public boolean isCompatibleWithBoolean() {
 		return true;
 	}
 	
 	public boolean isCompatibleWith(Type t){
-		return t.isCompatibleWithInteger();
+		return t.isCompatibleWithBoolean();
 	}
-	
-
 }

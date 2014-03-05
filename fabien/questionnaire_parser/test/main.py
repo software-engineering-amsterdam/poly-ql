@@ -53,6 +53,7 @@ class ParserTestCase(unittest.TestCase):
     def test_put(self):
         self.assertMatch(put, "put \"Your answer was\" () ")
         self.assertMatch(put, "put \"Your answer was\" (foo * 3)")
+        self.assertMatch(put, "put \"Your answer was\" (foo * 3 * 3)")
         self.assertMatch(put, "put \"Your answer was\" (foo * (3 + bar))")
         self.assertMatch(put, "put (foo * 3)")
    
