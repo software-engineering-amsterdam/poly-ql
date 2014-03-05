@@ -1,0 +1,7 @@
+{
+  "name": "angular",
+  "version": "1.2.13-build.2255+sha.72894f0",
+  "main": "./angular.js",
+  "dependencies": {
+  }
+}

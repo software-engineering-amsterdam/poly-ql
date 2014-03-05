@@ -1,0 +1,31 @@
+
+<div class="container">
+	<div class="row">
+	    <div class="col-sm-3">
+	    	<p>Input:</p>
+			<textarea ng-model="input" ng-change="parse()"></textarea>
+		</div>
+		<div class="col-sm-3">
+	    	<p>AST:</p>
+			<textarea ng-model="ast"></textarea>
+		</div>
+		<div class="col-sm-3">
+	    	<p>Declared:</p>
+			<textarea ng-model="declared"></textarea>
+		</div>
+		<div class="col-sm-3">
+	    	<p>Messages:</p>
+			<textarea ng-model="messages"></textarea>
+		</div>
+	</div>
+</div>
+
+<div class="container">
+	<div class="row">
+		<div class="col-xs-12"> 
+			<div ng-show="failed" class="alert alert-danger">	
+			{{ failedMessage }}
+			</div>
+		</div>
+	</div>
+</div>
