@@ -8,44 +8,28 @@ public class IfElseStatement extends Statement {
 
     private final List<Statement> _ifChildren;
     private final List<Statement> _elseChildren;
+    private final Expression _expression;
 
     public IfElseStatement(final Expression expression, final List<Statement> ifChildren,
             final List<Statement> elseChildren) {
-        super("");
 
         _ifChildren = ifChildren;
         _elseChildren = elseChildren;
+        _expression = expression;
     }
 
     @Override
     public String toString() {
-        return "IfElseStatement ";
-    }
-
-    @Override
-    protected boolean validateImpl() {
-
-        boolean valid = _parent.validates(this);
-
-        if (!valid) {
-            System.err.println(this + "Is very very wrong");
+        String erg = "if ( " + _expression + " ) { \n";
+        for (Statement child : _ifChildren) {
+            erg += child + "\n";
         }
 
-        return valid;
-    }
-
-    @Override
-    public void print() {
-        System.out.println(_id + " if " + _ifChildren.size());
-
-        for (Statement st : _ifChildren) {
-            st.print();
+        erg += "} else {\n";
+        for (Statement child : _elseChildren) {
+            erg += child + "\n";
         }
 
-        System.out.println(" else " + _elseChildren.size());
-
-        for (Statement st : _elseChildren) {
-            st.print();
-        }
+        return erg + "} \n";
     }
 }

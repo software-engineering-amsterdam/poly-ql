@@ -4,6 +4,7 @@ grammar FormGrammar;
 	import main.nl.uva.parser.elements.expressions.*;
 	import main.nl.uva.parser.elements.statements.*;
 	import main.nl.uva.parser.elements.expressions.*;
+	import main.nl.uva.parser.elements.expressions.atoms.*;
 	import main.nl.uva.parser.elements.type.*;
 }
 
@@ -23,11 +24,11 @@ block returns [List<Statement> data]
 
 statement returns [Statement current]
 	: ID ':' STRING sType=simpleType 
-	{$current = new DeclarationStatement($ID.text, $sType.type, $STRING.text);}
+	{$current = new DeclarationStatement(new Variable($sType.type, $ID.text), $STRING.text);}
 	LINEEND 
 	
     | ID ':' STRING sType=simpleType '(' ex=expression')'  	
-    { $current = new ExpressionStatement($ID.text, $sType.type, $STRING.text, $ex.cEx);} 
+    { $current = new ExpressionStatement(new Variable($sType.type, $ID.text, $ex.cEx), $STRING.text);} 
     LINEEND
     
     | 'if' '(' ex=expression ')' ifBlock=block 
@@ -57,16 +58,16 @@ multExp returns [Expression cEx]
   ;
 
 atom returns [Expression cEx]
-	: ID {$cEx = new VariableContainer($ID.text);}
-	| nL=numLiteral {$cEx = new Variable(new Money(), "", $nL.text);}
-	| bL=boolLiteral {$cEx = new Variable(new Bool(), "", $bL.text);}
+	: ID {$cEx = new VariableAtom($ID.text);}
+	| nL=numLiteral {$cEx = new MoneyAtom($nL.text);}
+	| bL=boolLiteral {$cEx = new BoolAtom($bL.text);}
 	| '(' bE=boolExp ')' {$cEx = $bE.cEx;}
 	;
 
-simpleType returns [Variable.Types type]
-	: BOOLEAN {$type = Variable.Types.BOOL;}
-    | MONEY {$type = Variable.Types.MONEY;}
-    | TEXT {$type = Variable.Types.TEXT;}
+simpleType returns [Type.Of type]
+	: BOOLEAN {$type = Type.Of.BOOLEAN;}
+    | MONEY {$type = Type.Of.MONEY;}
+    | TEXT {$type = Type.Of.TEXT;}
     ;
 
 boolLiteral

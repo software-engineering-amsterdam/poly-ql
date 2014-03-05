@@ -6,7 +6,6 @@ public abstract class AdvancedExpression extends Expression {
     protected Expression _right;
 
     public AdvancedExpression(final Expression left, final Expression right) {
-        super("");
 
         _left = left;
         _right = right;

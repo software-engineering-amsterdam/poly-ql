@@ -1,18 +1,19 @@
-package main.nl.uva.parser.elements.type;
+package main.nl.uva.parser.elements.expressions.atoms;
 
-public class Bool extends Type {
+import main.nl.uva.parser.elements.expressions.Expression;
+
+public class BoolAtom extends Expression {
 
     private final static String TRUE = "true";
     private final static String FALSE = "false";
 
-    private boolean _value = false;
+    private final boolean _value;
 
-    public Bool() {
-        super(Type.Of.BOOLEAN);
+    public BoolAtom() {
+        _value = false;
     }
 
-    public Bool(final String value) {
-        super(Type.Of.BOOLEAN);
+    public BoolAtom(final String value) {
 
         assert isBoolean(value);
         _value = parseBoolean(value);
@@ -24,5 +25,10 @@ public class Bool extends Type {
 
     private static boolean parseBoolean(final String value) {
         return value.toLowerCase().equals(TRUE);
+    }
+
+    @Override
+    public String toString() {
+        return "Bool: " + _value;
     }
 }

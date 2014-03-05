@@ -1,27 +1,20 @@
 package main.nl.uva.parser.elements.statements;
 
-import main.nl.uva.parser.elements.type.Variable.Types;
+import main.nl.uva.parser.elements.type.Variable;
 
 public class DeclarationStatement extends Statement {
 
     private final String _function;
 
-    private final Types _type;
+    private final Variable _variable;
 
-    public DeclarationStatement(final String id, final Types type, final String function) {
-        super(id);
+    public DeclarationStatement(final Variable variable, final String function) {
         _function = function;
-        _type = type;
+        _variable = variable;
     }
 
     @Override
-    protected boolean validateImpl() {
-        return true;
-    }
-
-    @Override
-    public void print() {
-        System.out.println("DeclarationStatement " + _id + " " + _function + " " + _type);
-
+    public String toString() {
+        return _variable + " " + _function;
     }
 }

@@ -6,30 +6,22 @@ public class Variable extends Expression {
 
     private final String _name;
 
-    private final Type _type;
+    private final Type.Of _type;
 
-    private final String _value;
+    private final Expression _value;
 
-    public Variable(final Type type, final String name, final String value) {
-        super("Variable");
-
+    public Variable(final Type.Of type, final String name, final Expression value) {
         _type = type;
         _name = name;
         _value = value;
     }
 
-    @Override
-    protected boolean validateImpl() {
-        return false;
+    public Variable(final Type.Of type, final String name) {
+        this(type, name, Type.Of.getAtomFor(type));
     }
 
     @Override
-    public void print() {
-        System.out.print(_name);
-    }
-
-    @Override
-    public Type isOfType() {
-        return _type;
+    public String toString() {
+        return "( " + _type.toString() + " " + _name + " " + _value + " )";
     }
 }

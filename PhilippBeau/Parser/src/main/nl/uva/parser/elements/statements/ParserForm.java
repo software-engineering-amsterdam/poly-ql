@@ -6,28 +6,22 @@ public class ParserForm extends Statement {
 
     private final List<Statement> _children;
 
-    public ParserForm(final String id, final List<Statement> children) {
-        super(id);
+    private final String _id;
 
+    public ParserForm(final String id, final List<Statement> children) {
+
+        _id = id;
         _children = children;
     }
 
     @Override
     public String toString() {
-        return _id;
-    }
+        String erg = _id + "\n";
 
-    @Override
-    protected boolean validateImpl() {
-        return true;
-    }
-
-    @Override
-    public void print() {
-        System.out.println(_id + " " + _children.size());
-
-        for (Statement st : _children) {
-            st.print();
+        for (Statement child : _children) {
+            erg += child + "\n";
         }
+
+        return erg;
     }
 }

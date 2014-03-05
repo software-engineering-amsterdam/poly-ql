@@ -7,15 +7,7 @@ public class SubstractionExpression extends AdvancedExpression {
     }
 
     @Override
-    protected boolean validateImpl() {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    @Override
-    public void print() {
-        _left.print();
-        System.out.print(" - ");
-        _right.print();
+    public String toString() {
+        return _left + " - " + _right;
     }
 }
