@@ -95,12 +95,14 @@ public class FormChecker implements FormVisitor<Boolean> {
 	
 	@Override
 	public Boolean visit(IfThen ifStatement) {
-		boolean result = ExprChecker.check(ifStatement.getCond(), this.typeEnv, this.errors);
-		
+		boolean result = true;
 		if (!ifStatement.getCond().typeOf(this.typeEnv).isCompatibleTo(new Bool())) {
-			result = false;
 			this.errors.add(String.format("Expression of if statement isn't compatible to type boolean: %s is of type %s",
 										   ifStatement.getCond(), ifStatement.getCond().typeOf(this.typeEnv)));
+			result = false;
+		}
+		else {
+			result = ExprChecker.check(ifStatement.getCond(), this.typeEnv, this.errors);
 		}
 		
 		result &= ifStatement.getBody().accept(this);
@@ -110,12 +112,14 @@ public class FormChecker implements FormVisitor<Boolean> {
 
 	@Override
 	public Boolean visit(IfThenElse elseStatement) {
-		boolean result = ExprChecker.check(elseStatement.getCond(), this.typeEnv, this.errors);
-		
+		boolean result = true;
 		if (!elseStatement.getCond().typeOf(this.typeEnv).isCompatibleTo(new Bool())) {
-			result = false;
 			this.errors.add(String.format("Expression of if-else statement isn't compatible to type boolean: %s is of type %s",
 										   elseStatement.getCond(), elseStatement.getCond().typeOf(this.typeEnv)));
+			result = false;
+		}
+		else {
+			result = ExprChecker.check(elseStatement.getCond(), this.typeEnv, this.errors);
 		}
 		
 		result &= elseStatement.getBody().accept(this);
