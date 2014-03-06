@@ -6,7 +6,7 @@ package org.uva.sea.ql.parser.antlr.QL4.AST.Value;
  *
  */
 public class QuestionType extends Value {
-	String value;
+	private final String value;
 	
 	public QuestionType(String value) {
 		this.value = value;

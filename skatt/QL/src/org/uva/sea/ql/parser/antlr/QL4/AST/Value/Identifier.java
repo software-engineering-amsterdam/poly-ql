@@ -9,7 +9,7 @@ public class Identifier extends Value {
 	/**
 	 * The actual value of the identifier
 	 */
-	String value;
+	private final String value;
 	
 	/**
 	 * Constructor, setting value of the identifier class

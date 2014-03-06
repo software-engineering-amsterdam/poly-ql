@@ -6,7 +6,7 @@ package org.uva.sea.ql.parser.antlr.QL4.AST.Value;
  *
  */
 public class Label extends Value {
-	String value;
+	private final String value;
 	
 	public Label(String value) {
 		this.value = value;

@@ -7,7 +7,7 @@ package org.uva.sea.ql.parser.antlr.QL4.AST.Value;
  */
 public class Bool extends Value {
 
-	boolean value;
+	private final boolean value;
 	
 	/**
 	 * Constructor instantiates object and sets its value
