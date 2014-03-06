@@ -19,7 +19,7 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.MultExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.NeqExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.OrExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.PlusExpr;
-import org.uva.sea.ql.parser.antlr.QL4.AST.Value.ASTBool;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Bool;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Identifier;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Label;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.QuestionType;
@@ -186,7 +186,7 @@ public class AntlrVisitor extends QL4BaseVisitor<QLTree> {
   
   //////////////////////// visiting QL4 primitives (bool, string etc)
   
-  public ASTBool visitBool(QL4Parser.BoolContext ctx) {
-	  return new ASTBool(ctx.getText());
+  public Bool visitBool(QL4Parser.BoolContext ctx) {
+	  return new Bool(ctx.getText());
   }
 }
