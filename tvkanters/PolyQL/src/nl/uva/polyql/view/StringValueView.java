@@ -30,7 +30,6 @@ public class StringValueView extends ValueView<StringValue> {
 
             @Override
             public void keyReleased(final KeyEvent arg0) {
-                System.out.println(mTextArea.getText());
                 onNewInput();
             }
 

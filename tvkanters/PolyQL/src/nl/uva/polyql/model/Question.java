@@ -21,6 +21,7 @@ public class Question extends Rule {
     private boolean mValueValid = true;
 
     private final Set<OnUpdateListener> mUpdateListeners = new HashSet<>();
+    private final Set<VisibilityListener> mVisibilityListeners = new HashSet<>();
 
     protected Question(final RuleContainer parent, final String id, final String label, final String type) {
         this(parent, id, label, Type.valueOf(type.toUpperCase()));
@@ -68,8 +69,8 @@ public class Question extends Rule {
             mValueValid = false;
         }
 
-        for (final OnUpdateListener valueListener : mUpdateListeners) {
-            valueListener.onQuestionUpdate(this);
+        for (final OnUpdateListener listener : mUpdateListeners) {
+            listener.onQuestionUpdate(this);
         }
 
         return mValueValid;
@@ -104,7 +105,10 @@ public class Question extends Rule {
     }
 
     public ValueView<?> getView() {
-        return mValue.getView(this);
+        final ValueView<?> view = mValue.getView(this);
+        mVisibilityListeners.add(view);
+        view.onParentVisibilityUpdate(isVisible());
+        return view;
     }
 
     public void addUpdateListener(final OnUpdateListener listener) {
@@ -120,6 +124,18 @@ public class Question extends Rule {
     }
 
     @Override
+    public boolean isVisible() {
+        return getParent().isVisible();
+    }
+
+    @Override
+    public void onParentVisibilityUpdate(final boolean visible) {
+        for (final VisibilityListener listener : mVisibilityListeners) {
+            listener.onParentVisibilityUpdate(visible);
+        }
+    }
+
+    @Override
     public String toString() {
         return mId + " = " + mValue;
     }
@@ -131,9 +147,13 @@ public class Question extends Rule {
     public interface OnUpdateListener {
 
         /**
-         * Called when the question's value is update, e.g., when the user types in the question's
+         * Called when the question's value is updated. E.g., when the user types in the question's
          * field.
+         * 
+         * @param question
+         *            The question that called the method
          */
         public void onQuestionUpdate(final Question question);
     }
+
 }

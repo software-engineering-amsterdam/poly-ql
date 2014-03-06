@@ -23,11 +23,11 @@ public class Initialiser {
             final QuestionnaireParser parser = new QuestionnaireParser(tokens);
             final FormContext tree = parser.form();
 
-            System.out.println("==========================");
+            Log.i("==========================");
 
-            System.out.println(tree.toStringTree(parser));
+            Log.i(tree.toStringTree(parser));
 
-            System.out.println("==========================");
+            Log.i("==========================");
 
             printRuleContainer(tree.f, 0);
 
@@ -45,7 +45,7 @@ public class Initialiser {
         }
 
         for (final Rule rule : form.getChildRules()) {
-            System.out.println(indent + rule);
+            Log.i(indent + rule);
 
             if (rule instanceof RuleContainer) {
                 printRuleContainer((RuleContainer) rule, level + 1);

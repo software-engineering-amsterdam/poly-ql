@@ -2,7 +2,7 @@ package nl.uva.polyql.model;
 
 import java.util.List;
 
-public abstract class Rule {
+public abstract class Rule implements VisibilityListener {
 
     private final RuleContainer mParent;
 
@@ -15,5 +15,7 @@ public abstract class Rule {
     }
 
     public abstract List<Question> getQuestions();
+
+    public abstract boolean isVisible();
 
 }

@@ -8,6 +8,7 @@ import nl.uva.polyql.model.values.BooleanValue;
 public class IfStatement extends RuleContainer implements Question.OnUpdateListener {
 
     protected final Expression mExpression;
+    private boolean mSatisfied;
 
     protected IfStatement(final RuleContainer parent, final Expression expression) {
         super(parent);
@@ -17,19 +18,47 @@ public class IfStatement extends RuleContainer implements Question.OnUpdateListe
         }
 
         mExpression = expression;
+        mSatisfied = checkSatisfaction();
 
         for (final Question question : mExpression.getReferencedQuestions()) {
             question.addUpdateListener(this);
         }
     }
 
+    @Override
+    public boolean isVisible() {
+        return mSatisfied && getParent().isVisible();
+    }
+
     public boolean isSatisfied() {
+        return mSatisfied;
+    }
+
+    private boolean checkSatisfaction() {
         return ((BooleanValue) mExpression.getValue()).getValue();
     }
 
     @Override
     public void onQuestionUpdate(final Question question) {
-        // TODO: Update visibility of the statement
+        final boolean oldVisible = isVisible();
+        final boolean satisfied = checkSatisfaction();
+
+        if (satisfied != mSatisfied) {
+            mSatisfied = satisfied;
+
+            final boolean newVisible = isVisible();
+            if (oldVisible != newVisible) {
+                onParentVisibilityUpdate(newVisible);
+            }
+        }
+    }
+
+    @Override
+    public void onParentVisibilityUpdate(final boolean visible) {
+        final boolean statementVisible = isVisible();
+        for (final Rule rule : getChildRules()) {
+            rule.onParentVisibilityUpdate(statementVisible);
+        }
     }
 
     @Override

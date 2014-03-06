@@ -7,11 +7,11 @@ form exampleForm {
     
     // Comments here
     if (!truthwhy2 | false || (2 + 6 * 3 * 9 - 4 - (4 + 5)) > 2 / 0) {
-    	wonga: "How much is it worth?" (10)
+    	wonga: "How much is it worth?" number
     	morethandoublewonga: "WHY THAT'S ROUGHLY DOUBLE!" (wonga * 2 + 1)
-	    if (-wonga > -4 - -morethandoublewonga) {
+	    if (-wonga > -100 - -morethandoublewonga) {
 	    	wonga2: "What's the price of pie?" number
-	    	wonga3: "Triple that!" (wonga2 * 3)
+	    	wonga3: "Triple that!" ("Triple: " + wonga2 * 3)
 	    } else {
 	    	elsequestion: "Or else?" string
 	    }

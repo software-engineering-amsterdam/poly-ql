@@ -4,12 +4,13 @@ import java.awt.Component;
 import java.util.Objects;
 
 import nl.uva.polyql.model.Question;
+import nl.uva.polyql.model.VisibilityListener;
 import nl.uva.polyql.model.values.BooleanValue;
 import nl.uva.polyql.model.values.NumberValue;
 import nl.uva.polyql.model.values.StringValue;
 import nl.uva.polyql.model.values.Value;
 
-public abstract class ValueView<T extends Value<?>> implements Question.OnUpdateListener {
+public abstract class ValueView<T extends Value<?>> implements Question.OnUpdateListener, VisibilityListener {
 
     private final Question mQuestion;
 
@@ -35,6 +36,11 @@ public abstract class ValueView<T extends Value<?>> implements Question.OnUpdate
     @Override
     public void onQuestionUpdate(final Question question) {
         setValue(question.getValue(), true);
+    }
+
+    @Override
+    public void onParentVisibilityUpdate(final boolean visible) {
+        getComponent().setVisible(visible);
     }
 
     public Question getQuestion() {

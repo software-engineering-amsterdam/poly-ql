@@ -31,9 +31,12 @@ public class Form extends RuleContainer {
     }
 
     @Override
-    public String toString() {
-        return "FORM " + mLabel;
+    public boolean isVisible() {
+        return true;
     }
+
+    @Override
+    public void onParentVisibilityUpdate(final boolean visible) {}
 
     private void addWarning(final String warning) {
         mWarnings.add(warning);
@@ -42,6 +45,11 @@ public class Form extends RuleContainer {
 
     public List<String> getWarnings() {
         return mWarnings;
+    }
+
+    @Override
+    public String toString() {
+        return "FORM " + mLabel;
     }
 
 }

@@ -32,7 +32,6 @@ public class NumberValueView extends ValueView<NumberValue> {
 
             @Override
             public void keyReleased(final KeyEvent arg0) {
-                System.out.println(mTextArea.getText());
                 onNewInput();
             }
 

@@ -33,11 +33,11 @@ public class ParserTest {
         final Question question = form.getQuestion("num");
         final IfStatement ifStatement = (IfStatement) form.getChildRules().get(1);
 
-        assertFalse(ifStatement.isSatisfied());
+        assertFalse(ifStatement.isVisible());
 
         question.setValueFromInput("10");
 
-        assertTrue(ifStatement.isSatisfied());
+        assertTrue(ifStatement.isVisible());
     }
 
     @Test

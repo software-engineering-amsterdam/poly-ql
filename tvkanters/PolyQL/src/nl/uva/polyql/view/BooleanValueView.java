@@ -26,7 +26,6 @@ public class BooleanValueView extends ValueView<BooleanValue> {
         mCheckBox.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(final ItemEvent arg0) {
-                System.out.println(mCheckBox.isSelected() ? "Y" : "N");
                 onNewInput();
             }
         });

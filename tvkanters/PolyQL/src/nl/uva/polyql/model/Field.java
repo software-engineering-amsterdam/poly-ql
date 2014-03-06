@@ -26,8 +26,6 @@ public class Field extends Question implements Question.OnUpdateListener {
     @Override
     public void onQuestionUpdate(final Question question) {
         setValue(mExpression.getValue());
-
-        // TODO: Update displayed value of the field
     }
 
     @Override
