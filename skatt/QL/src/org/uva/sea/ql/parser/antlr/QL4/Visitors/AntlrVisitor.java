@@ -53,10 +53,10 @@ public class AntlrVisitor extends QL4BaseVisitor<QLTree> {
    * Returns a structures object, containing its structure in a list
    */
   public QLTree visitStructures(QL4Parser.StructuresContext ctx) {
-	  List<Structures> structures = new ArrayList<Structures>();
+	  List<QLTree> structures = new ArrayList<QLTree>();
 
 	  for (QL4Parser.StructureContext struct : ctx.structure()) {
-		  structures.add((Structures) struct.accept(this));
+		  structures.add(struct.accept(this));
 	  }
 	  
 	  return new Structures(structures);

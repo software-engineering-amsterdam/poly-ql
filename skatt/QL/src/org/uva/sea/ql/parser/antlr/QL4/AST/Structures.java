@@ -13,13 +13,13 @@ public class Structures extends QLTree {
 	/**
 	 * A list of all the structures in 'structure'
 	 */
-	final private List<Structures> structures;
+	final private List<QLTree> structures;
 	
 	/**
 	 * Constructor, sets structures
 	 * @param structures 
 	 */
-	public Structures(List<Structures> structures) {
+	public Structures(List<QLTree> structures) {
 		this.structures = structures;
 	}
 	

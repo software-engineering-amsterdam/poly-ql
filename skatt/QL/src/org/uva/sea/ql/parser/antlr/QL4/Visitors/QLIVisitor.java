@@ -20,7 +20,7 @@ public interface QLIVisitor {
 
 	// All the visit functions necessary for a visitor to operate
 	public List<QLErrorMsg> visit(QLTree tree);
-	public List<QLErrorMsg> visit(Form Form);
+	public List<QLErrorMsg> visit(Form form);
 	public List<QLErrorMsg> visit(Question question);
 	public List<QLErrorMsg> visit(Structures struc);
 	public List<QLErrorMsg> visit(Conditional condition);
