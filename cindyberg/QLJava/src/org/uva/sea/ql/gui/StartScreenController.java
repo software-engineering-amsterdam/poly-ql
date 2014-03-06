@@ -11,35 +11,40 @@ import org.uva.sea.ql.typechecker.Problems;
 import org.uva.sea.ql.typechecker.StatementChecker;
 import org.uva.sea.ql.typechecker.TypeEnvironment;
 
-public class TypeChecker {
-
-	private Problems problems;
-	private Parser parser;
+public class StartScreenController {
 	
-	public TypeChecker(){
-		parser = new Parser();
-		problems = new Problems();
+	private Parser parser;
+	private Problems problems;
+	
+	public StartScreenController(){
+		
+		this.parser = new Parser();
+		this.problems = new Problems();
 		
 	}
-	
-	public Problems run(String INPUT) throws FileNotFoundException, ParseException{
+
+	public Problems runTypeChecker(String INPUT) throws FileNotFoundException, ParseException {
 		Scanner input =  new Scanner(new File(INPUT));
-		String DSLFORM = "" ;
+		String FORM = "" ;
 		while(input.hasNextLine()){
 
 			String line = input.nextLine();
-			DSLFORM = DSLFORM + '\n' + line;
+			FORM = FORM + '\n' + line;
 
 		}
 		input.close();
-		checkDSL(DSLFORM);
-		return problems;
+		checkDSL(parseDSL(FORM));
+		return problems;	
 	}
 	
-	
-	public void checkDSL(String inputDSL) throws ParseException{
-		Form tree = (Form) parser.parser(inputDSL);
+	private void checkDSL(Form form) throws ParseException{
 		StatementChecker statementchecker = new StatementChecker(new TypeEnvironment(), problems);
-		tree.accept(statementchecker);
+		form.accept(statementchecker);
 	}
+	
+	private Form parseDSL(String inputDSL) throws ParseException{
+		return (Form) parser.parser(inputDSL);
+	}
+	
+
 }
