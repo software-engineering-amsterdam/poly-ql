@@ -9,7 +9,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Grammar", "Grammar", "{A69D
 		..\..\Grammar\QL_Grammar.grm = ..\..\Grammar\QL_Grammar.grm
 		..\..\Grammar\QL_Grammar_Extended.grm = ..\..\Grammar\QL_Grammar_Extended.grm
 		..\..\Grammar\QL_Test.txt = ..\..\Grammar\QL_Test.txt
-		..\..\Grammar\TestLog.txt = ..\..\Grammar\TestLog.txt
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QL_Tests", "QL_Tests\QL_Tests.csproj", "{4F1463CF-FBE1-49DE-9B7B-6EB32CBF12EE}"
@@ -29,6 +28,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algebra.QL.Extensions.TypeCheck", "Algebra.QL.Extensions.TypeCheck\Algebra.QL.Extensions.TypeCheck.csproj", "{961E46C7-F25C-4811-98EF-65BA97D9FB97}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GOLD.Engine", "GOLD.Engine\GOLD.Engine.csproj", "{B0511725-E9AB-4DA1-9FCF-F45F2984DCDC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algebra.QL.Form", "Algebra.QL.Form\Algebra.QL.Form.csproj", "{2515A850-E8E8-4212-9559-54D4178FC1B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -72,6 +73,10 @@ Global
 		{B0511725-E9AB-4DA1-9FCF-F45F2984DCDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0511725-E9AB-4DA1-9FCF-F45F2984DCDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0511725-E9AB-4DA1-9FCF-F45F2984DCDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2515A850-E8E8-4212-9559-54D4178FC1B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2515A850-E8E8-4212-9559-54D4178FC1B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2515A850-E8E8-4212-9559-54D4178FC1B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2515A850-E8E8-4212-9559-54D4178FC1B0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

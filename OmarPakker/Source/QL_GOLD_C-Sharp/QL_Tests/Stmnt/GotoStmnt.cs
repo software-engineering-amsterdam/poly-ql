@@ -1,7 +1,7 @@
 ﻿
 namespace QL_Tests.Stmnt
 {
-    public class GotoStmnt : Algebra.QL.Core.Stmnt.GotoStmnt, ITestStmnt
+    public class GotoStmnt : Algebra.QL.Extensions.Stmnt.GotoStmnt, ITestStmnt
     {
 		public GotoStmnt(string gotoName)
             : base(gotoName)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using GOLD.Engine.Enums;
 
@@ -50,7 +51,7 @@ namespace GOLD.Engine
             return (ushort)((b1 << 8) + b0);
         }
 
-        internal Tuple<EGTEntryType, object> ReadEntry()
+        private Tuple<EGTEntryType, object> ReadEntry()
         {
             if(!IsRecordComplete())
             {
@@ -96,49 +97,41 @@ namespace GOLD.Engine
         internal string ReadString()
         {
             Tuple<EGTEntryType, object> e = ReadEntry();
-            if (e.Item1 == EGTEntryType.String)
-            {
-                return (string)e.Item2;
-            }
-
-            throw new IOException(String.Format("Type mismatch in file. Read '{0}' but expected '{1}' at ",
+            
+            Debug.Assert(e.Item1 == EGTEntryType.String, String.Format("Type mismatch in file. Read '{0}' but expected '{1}' at ",
                 e.Item1, EGTEntryType.String, binaryReader.BaseStream.Position));
+
+            return (string)e.Item2;
         }
 
         internal ushort ReadUInt16()
         {
             Tuple<EGTEntryType, object> e = ReadEntry();
-            if (e.Item1 == EGTEntryType.UInt16)
-            {
-                return (ushort)e.Item2;
-            }
 
-            throw new IOException(String.Format("Type mismatch in file. Read '{0}' but expected '{1}' at ",
+            Debug.Assert(e.Item1 == EGTEntryType.UInt16, String.Format("Type mismatch in file. Read '{0}' but expected '{1}' at ",
                 e.Item1, EGTEntryType.UInt16, binaryReader.BaseStream.Position));
+
+            return (ushort)e.Item2;
         }
 
         internal bool ReadBoolean()
         {
             Tuple<EGTEntryType, object> e = ReadEntry();
-            if (e.Item1 == EGTEntryType.Boolean)
-            {
-                return (bool)e.Item2;
-            }
 
-            throw new IOException(String.Format("Type mismatch in file. Read '{0}' but expected '{1}' at ",
+            Debug.Assert(e.Item1 == EGTEntryType.Boolean, String.Format("Type mismatch in file. Read '{0}' but expected '{1}' at ",
                 e.Item1, EGTEntryType.Boolean, binaryReader.BaseStream.Position));
+
+            return (bool)e.Item2;
         }
 
         internal byte ReadByte()
         {
             Tuple<EGTEntryType, object> e = ReadEntry();
-            if (e.Item1 == EGTEntryType.Byte)
-            {
-                return (byte)e.Item2;
-            }
 
-            throw new IOException(String.Format("Type mismatch in file. Read '{0}' but expected '{1}' at ",
+            Debug.Assert(e.Item1 == EGTEntryType.Byte, String.Format("Type mismatch in file. Read '{0}' but expected '{1}' at ",
                 e.Item1, EGTEntryType.Byte, binaryReader.BaseStream.Position));
+
+            return (byte)e.Item2;
         }
 
         internal bool GetNextRecord()

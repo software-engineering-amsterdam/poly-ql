@@ -2,7 +2,7 @@
 
 namespace Algebra.QL.Print.Stmnt
 {
-    public class GotoStmnt : Algebra.QL.Core.Stmnt.GotoStmnt, IPrintStmnt
+    public class GotoStmnt : Algebra.QL.Extensions.Stmnt.GotoStmnt, IPrintStmnt
     {
         public GotoStmnt(string gotoName)
             : base(gotoName)

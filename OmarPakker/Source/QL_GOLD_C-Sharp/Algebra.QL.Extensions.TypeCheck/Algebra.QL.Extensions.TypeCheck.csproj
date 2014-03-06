@@ -36,8 +36,9 @@
     <Compile Include="Expr\Literals\DateLiteral.cs" />
     <Compile Include="Expr\ModuloExpr.cs" />
     <Compile Include="Expr\PowerExpr.cs" />
-    <Compile Include="Factory\QLTypeCheckExtensionsFactory.cs" />
+    <Compile Include="Factory\ExtTypeCheckFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Stmnt\GotoStmnt.cs" />
     <Compile Include="Stmnt\LoopStmnt.cs" />
     <Compile Include="Type\DateType.cs" />
   </ItemGroup>

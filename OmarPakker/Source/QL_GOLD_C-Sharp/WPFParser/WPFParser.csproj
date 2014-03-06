@@ -61,6 +61,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MergedFactory\TypeCheckPrintFormFactory.cs" />
     <Compile Include="MergedFactory\TypeCheckPrintFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -104,6 +105,10 @@
     <ProjectReference Include="..\Algebra.QL.Extensions\Algebra.QL.Extensions.csproj">
       <Project>{c3cb2fb3-25c0-4fdb-b99c-7eb72927d0d1}</Project>
       <Name>Algebra.QL.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Algebra.QL.Form\Algebra.QL.Form.csproj">
+      <Project>{2515a850-e8e8-4212-9559-54d4178fc1b0}</Project>
+      <Name>Algebra.QL.Form</Name>
     </ProjectReference>
     <ProjectReference Include="..\Algebra.QL.Print\Algebra.QL.Print.csproj">
       <Project>{39772314-1749-44c2-b22a-7fc5113892b0}</Project>

@@ -12,11 +12,11 @@ namespace QL_Tests.Tests
 {
 	public class ParseTests
 	{
-        private QLParser<ITestExpr, ITestStmnt, ITestType, TestFactory> parser;
+        private Parser<ITestExpr, ITestStmnt, ITestType, TestFactory> parser;
 
 		public ParseTests()
 		{
-            parser = new QLParser<ITestExpr, ITestStmnt, ITestType, TestFactory>(new TestFactory());
+            parser = new Parser<ITestExpr, ITestStmnt, ITestType, TestFactory>(new TestFactory());
 
             Assembly a = parser.GetType().Assembly;
             parser.LoadGrammar(new BinaryReader(a.GetManifestResourceStream("Algebra.QL.Core.Grammar.QL_Grammar.egt")));

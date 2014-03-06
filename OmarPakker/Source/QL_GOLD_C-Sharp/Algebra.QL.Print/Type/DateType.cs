@@ -6,7 +6,7 @@ namespace Algebra.QL.Print.Type
 {
 	public class DateType : BaseType
 	{
-        public override IPrintExpr DefaultValue { get { return new DateLiteral(DateTime.MinValue); } }
+        public override IPrintExpr DefaultValue { get { return new DateLiteral(DateTime.UtcNow); } }
 
 		public DateType()
 		{

@@ -42,7 +42,6 @@
     <Compile Include="Factory\FactoryUnion.cs" />
     <Compile Include="Factory\IFactory.cs" />
     <Compile Include="GrammarParser\Parser.cs" />
-    <Compile Include="GrammarParser\IParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -33,11 +33,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Factory\IQLExtensionsFactory.cs" />
-    <Compile Include="Factory\QLExtensionsFactoryCombination.cs" />
-    <Compile Include="Grammar\ExtensionsParser.cs" />
+    <Compile Include="Factory\IExtFactory.cs" />
+    <Compile Include="Factory\ExtFactoryCombination.cs" />
+    <Compile Include="Grammar\ExtParser.cs" />
     <Compile Include="Grammar\GrammarData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Stmnt\GotoStmnt.cs" />
     <Compile Include="Stmnt\LoopStmnt.cs" />
   </ItemGroup>
   <ItemGroup>

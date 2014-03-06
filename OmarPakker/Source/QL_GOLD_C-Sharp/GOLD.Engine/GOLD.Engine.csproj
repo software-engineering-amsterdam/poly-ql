@@ -45,7 +45,6 @@
     <Compile Include="Enums\GroupAdvanceMode.cs" />
     <Compile Include="Enums\GroupEndingMode.cs" />
     <Compile Include="Enums\LRActionType.cs" />
-    <Compile Include="Enums\ParseResult.cs" />
     <Compile Include="Enums\SymbolType.cs" />
     <Compile Include="FAEdge.cs" />
     <Compile Include="FAState.cs" />
@@ -57,7 +56,6 @@
     <Compile Include="LRAction.cs" />
     <Compile Include="LRActionList.cs" />
     <Compile Include="Parser.cs" />
-    <Compile Include="ParserException.cs" />
     <Compile Include="Production.cs" />
     <Compile Include="ProductionList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

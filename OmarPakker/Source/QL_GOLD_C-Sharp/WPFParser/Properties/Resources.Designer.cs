@@ -10,6 +10,7 @@
 
 namespace WPFParser.Properties
 {
+    using System;
 
 
     /// <summary>
@@ -42,7 +43,7 @@ namespace WPFParser.Properties
         {
             get
             {
-                if ((resourceMan == null))
+                if (object.ReferenceEquals(resourceMan, null))
                 {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WPFParser.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;

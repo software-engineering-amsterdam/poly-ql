@@ -3,7 +3,7 @@
 "Version"  = 'v1'
 "About"    = 'A grammar for Questionaires.'
 
-"Start Symbol"   = <Forms>
+"Start Symbol"   = <Form>
 "Case Sensitive" = True
 
 ! -------------------------------------------------
@@ -39,9 +39,6 @@ Comment End   = '*/'
 ! -------------------------------------------------
 ! Rules
 ! -------------------------------------------------
-<Forms>       ::= <Form> <Forms>
-               |  <Form>
-
 <Form>        ::= form Identifier <Block>
 
 <Block>       ::= '{' <Statements> '}'
@@ -52,7 +49,6 @@ Comment End   = '*/'
 <Statement>   ::= if '(' <Expression> ')' <Statement> <OptElse>
                |  <Block>
                |  <Question>
-               |  goto Identifier ';'
 
 ! GOLD parser will choose 'shift' over 'reduce' for this,
 ! which we want since we want the 'else' to associate with
