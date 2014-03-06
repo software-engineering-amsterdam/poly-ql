@@ -16,7 +16,6 @@ import ast.ASTNode;
 import ast.expr.Expr;
 import ast.statement.Form;
 import ast.visitors.BaseVisitor;
-import ast.visitors.EvalVisitor;
 
 public class TestQLang {
 
@@ -34,9 +33,6 @@ public class TestQLang {
 //		ASTNode tree = parser.init().result;
 //		BaseVisitor visitor = new BaseVisitor();
 //		System.out.println(tree.accept(visitor));
-////		Symboles s = new Symboles();
-//		EvalVisitor eval = new EvalVisitor(s);
-//		tree.accept(eval);
 	}
 
 }

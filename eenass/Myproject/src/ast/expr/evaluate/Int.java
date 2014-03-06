@@ -24,7 +24,7 @@ public class Int extends Value{
 	
 	@Override
 	public Value sub(Value val){
-		return val.addInt(this);
+		return val.subInt(this);
 	}
 	
 	@Override
@@ -34,7 +34,7 @@ public class Int extends Value{
 	
 	@Override
 	public Value div(Value val){
-		return val.addInt(this);
+		return val.divInt(this);
 	}
 	
 	@Override
@@ -44,12 +44,63 @@ public class Int extends Value{
 	
 	@Override
 	public Value mul(Value val){
-		return val.addInt(this);
+		return val.mulInt(this);
 	}
 	
 	@Override
 	protected Value mulInt(Int val){
-		return new Int(val.getValue() + getValue());
+		return new Int(val.getValue() * getValue());
 	}
+	
+	@Override
+	public Value gt(Value val){
+		return val.gtInt(this);
+	}
+	
+	@Override
+	protected Value gtInt(Int val){
+		return new Bool(val.getValue() > getValue());
+	}
+	
+	@Override
+	public Value lt(Value val){
+		return val.ltInt(this);
+	}
+	
+	@Override
+	protected Value ltInt(Int val){
+		return new Bool(val.getValue() < getValue());
+	}
+	
+	@Override
+	public Value geq(Value val){
+		return val.geqInt(this);
+	}
+	
+	@Override
+	protected Value geqInt(Int val){
+		return new Bool(val.getValue() >= getValue());
+	}
+	
+	@Override
+	public Value leq(Value val){
+		return val.leqInt(this);
+	}
+	
+	@Override
+	protected Value leqInt(Int val){
+		return new Bool(val.getValue() < getValue());
+	}
+	
+	@Override
+	public Value pos(){
+		return new Int(+ getValue());
+	}
+	
+	@Override
+	public Value neg(){
+		return new Int(- getValue());
+	}
+
 
 }
