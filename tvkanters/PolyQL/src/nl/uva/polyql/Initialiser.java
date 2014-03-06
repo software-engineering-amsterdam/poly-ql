@@ -3,12 +3,14 @@ package nl.uva.polyql;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-import nl.uva.polyql.antlr4.*;
+import nl.uva.polyql.antlr4.QuestionnaireLexer;
+import nl.uva.polyql.antlr4.QuestionnaireParser;
 import nl.uva.polyql.antlr4.QuestionnaireParser.FormContext;
 import nl.uva.polyql.model.Rule;
 import nl.uva.polyql.model.RuleContainer;
 
-import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
 
 public class Initialiser {
 
@@ -29,6 +31,8 @@ public class Initialiser {
 
             printRuleContainer(tree.f, 0);
 
+            new FormFrame(tree.f);
+
         } catch (final IOException ex) {
             ex.printStackTrace();
         }
@@ -40,7 +44,7 @@ public class Initialiser {
             indent += " ";
         }
 
-        for (final Rule rule : form.getRules()) {
+        for (final Rule rule : form.getChildRules()) {
             System.out.println(indent + rule);
 
             if (rule instanceof RuleContainer) {

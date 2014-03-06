@@ -2,6 +2,7 @@ package nl.uva.polyql.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -9,7 +10,7 @@ import nl.uva.polyql.model.expressions.Expression;
 
 public abstract class RuleContainer extends Rule {
 
-    private final List<Rule> mRules = new ArrayList<>();
+    private final List<Rule> mChildRules = new ArrayList<>();
     private final Map<String, Question> mQuestions = new HashMap<>();
 
     protected RuleContainer(final RuleContainer parent) {
@@ -30,20 +31,20 @@ public abstract class RuleContainer extends Rule {
 
     private void addQuestion(final Question question) {
         mQuestions.put(question.getId(), question);
-        mRules.add(question);
+        mChildRules.add(question);
 
-        addLabel(question.getContent());
+        addLabel(question.getLabel());
     }
 
     public IfStatement addIfStatement(final Expression expression) {
         final IfStatement child = new IfStatement(this, expression);
-        mRules.add(child);
+        mChildRules.add(child);
         return child;
     }
 
     public IfStatement addElseStatement(final Expression expression) {
         final IfStatement child = new ElseStatement(this, expression);
-        mRules.add(child);
+        mChildRules.add(child);
         return child;
     }
 
@@ -52,8 +53,17 @@ public abstract class RuleContainer extends Rule {
      * 
      * @return This container's rules
      */
-    public List<Rule> getRules() {
-        return mRules;
+    public List<Rule> getChildRules() {
+        return mChildRules;
+    }
+
+    @Override
+    public List<Question> getQuestions() {
+        final List<Question> questions = new LinkedList<>();
+        for (final Rule rule : mChildRules) {
+            questions.addAll(rule.getQuestions());
+        }
+        return questions;
     }
 
     /**

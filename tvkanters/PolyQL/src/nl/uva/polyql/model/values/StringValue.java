@@ -1,11 +1,14 @@
 package nl.uva.polyql.model.values;
 
 import nl.uva.polyql.exceptions.UnsupportedOperandTypeException;
+import nl.uva.polyql.model.Question;
 import nl.uva.polyql.model.expressions.modifiers.Modifier;
 import nl.uva.polyql.model.expressions.operators.bool.BooleanOperator;
 import nl.uva.polyql.model.expressions.operators.number.NumberOperator;
 import nl.uva.polyql.model.expressions.operators.string.StringOperator;
 import nl.uva.polyql.model.types.Type;
+import nl.uva.polyql.view.StringValueView;
+import nl.uva.polyql.view.ValueView;
 
 public class StringValue extends Value<String> {
 
@@ -18,6 +21,16 @@ public class StringValue extends Value<String> {
     @Override
     public Type getType() {
         return TYPE;
+    }
+
+    @Override
+    public ValueView<?> getView(final Question question) {
+        return new StringValueView(question);
+    }
+
+    @Override
+    public void setViewValue(final ValueView<?> view) {
+        view.setComponentValue(this);
     }
 
     @Override

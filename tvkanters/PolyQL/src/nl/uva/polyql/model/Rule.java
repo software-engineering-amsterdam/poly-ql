@@ -1,5 +1,7 @@
 package nl.uva.polyql.model;
 
+import java.util.List;
+
 public abstract class Rule {
 
     private final RuleContainer mParent;
@@ -11,5 +13,7 @@ public abstract class Rule {
     public RuleContainer getParent() {
         return mParent;
     }
+
+    public abstract List<Question> getQuestions();
 
 }

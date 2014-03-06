@@ -1,6 +1,8 @@
 package nl.uva.polyql.model;
 
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import nl.uva.polyql.Log;
@@ -8,6 +10,7 @@ import nl.uva.polyql.exceptions.DuplicateQuestionIdException;
 import nl.uva.polyql.model.types.StringType;
 import nl.uva.polyql.model.types.Type;
 import nl.uva.polyql.model.values.Value;
+import nl.uva.polyql.view.ValueView;
 
 public class Question extends Rule {
 
@@ -41,7 +44,7 @@ public class Question extends Rule {
         return mId;
     }
 
-    public String getContent() {
+    public String getLabel() {
         return mLabel;
     }
 
@@ -49,20 +52,45 @@ public class Question extends Rule {
         return mType;
     }
 
-    public void setValue(final Value<?> value) {
-        mValue = value;
+    /**
+     * Sets this question's value and determines if the value is valid.
+     * 
+     * @param value
+     *            The new value
+     * 
+     * @return True iff the value is valid (not null)
+     */
+    public boolean setValue(final Value<?> value) {
+        if (value != null) {
+            mValue = value;
+            mValueValid = true;
+        } else {
+            mValueValid = false;
+        }
 
         for (final OnUpdateListener valueListener : mUpdateListeners) {
             valueListener.onQuestionUpdate(this);
         }
+
+        return mValueValid;
     }
 
-    public void setValueFromInput(final String input) {
-        final Value<?> value = mType.getType().parseInput(input);
-        mValueValid = value != null;
-        setValue(value);
+    /**
+     * Sets this question's value and determines if the value is valid. The string given will be
+     * parsed to the appropriate format.
+     * 
+     * @param input
+     *            The value that the end-user entered
+     * 
+     * @return True iff the value is valid (not null)
+     */
+    public boolean setValueFromInput(final String input) {
+        return setValue(mType.getType().parseInput(input));
     }
 
+    /**
+     * @return The question's value or null if it's invalid
+     */
     public Value<?> getValue() {
         return mValue;
     }
@@ -71,9 +99,24 @@ public class Question extends Rule {
         return mValueValid;
     }
 
+    public boolean isEditable() {
+        return true;
+    }
+
+    public ValueView<?> getView() {
+        return mValue.getView(this);
+    }
+
     public void addUpdateListener(final OnUpdateListener listener) {
         Log.i("LISTENER " + listener + " ADDED TO " + this);
         mUpdateListeners.add(listener);
+    }
+
+    @Override
+    public List<Question> getQuestions() {
+        final List<Question> questions = new LinkedList<>();
+        questions.add(this);
+        return questions;
     }
 
     @Override

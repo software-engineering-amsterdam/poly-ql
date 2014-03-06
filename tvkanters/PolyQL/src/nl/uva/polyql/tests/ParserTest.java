@@ -31,7 +31,7 @@ public class ParserTest {
     public void testIfStatement() {
         final Form form = ParserHelper.parseResourceForm("ifstatement");
         final Question question = form.getQuestion("num");
-        final IfStatement ifStatement = (IfStatement) form.getRules().get(1);
+        final IfStatement ifStatement = (IfStatement) form.getChildRules().get(1);
 
         assertFalse(ifStatement.isSatisfied());
 
