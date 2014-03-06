@@ -30,4 +30,9 @@ public class IntExpression implements Expression{
     public void accept(IExpressionElementVisitor visitor) {
         visitor.visitIntExpression(this);
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(value);
+    }
 }

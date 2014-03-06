@@ -13,18 +13,12 @@ import static org.junit.Assert.assertEquals;
 /**
  * Falconlabs
  * User: sancarbar
- * Date: 2/13/14
+ * Date: 3/6/14
  */
-
-public class GrammarTests {
-
+public class QuestionnaireBuilderTest {
 
     ParserUtil parserUtil;
 
-    /**
-     * Sets up the test fixture.
-     * (Called before every test case method.)
-     */
     @Before
     public void setUp() {
         parserUtil = new ParserUtil();
