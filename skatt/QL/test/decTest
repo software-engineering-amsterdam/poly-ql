@@ -1,0 +1,7 @@
+if (1.1 + 0.2) == 4 {
+    question : "This is a question label" : boolean;
+} elseif 1.001 {
+    elseifquestion : "This is a question label of the elseif question" : boolean;
+} else {
+    elsequestion : "This is a question label of the else question" : boolean;
+}
