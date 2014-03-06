@@ -1,7 +1,6 @@
 package main.nl.uva.parser.elements.expressions;
 
 import main.nl.uva.parser.elements.type.Type;
-import main.nl.uva.parser.elements.type.Type.Of;
 
 public class Variable extends Expression {
 
@@ -32,5 +31,9 @@ public class Variable extends Expression {
 
     private boolean validateType() {
         return true;
+    }
+
+    public String getName() {
+        return _name;
     }
 }

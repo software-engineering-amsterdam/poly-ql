@@ -2,6 +2,8 @@ package main.nl.uva.parser.elements.statements;
 
 import java.util.List;
 
+import main.nl.uva.parser.elements.expressions.Variable;
+
 public class ParserForm extends Statement {
 
     private final List<Statement> _children;
@@ -23,5 +25,10 @@ public class ParserForm extends Statement {
         }
 
         return erg;
+    }
+
+    @Override
+    public Variable findVariable(final String variableName) {
+        return findVariableInChildren(_children, variableName);
     }
 }

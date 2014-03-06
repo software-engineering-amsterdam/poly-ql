@@ -3,6 +3,7 @@ package main.nl.uva.parser.elements.statements;
 import java.util.List;
 
 import main.nl.uva.parser.elements.expressions.Expression;
+import main.nl.uva.parser.elements.expressions.Variable;
 
 public class IfElseStatement extends Statement {
 
@@ -31,5 +32,16 @@ public class IfElseStatement extends Statement {
         }
 
         return erg + "} \n";
+    }
+
+    @Override
+    public Variable findVariable(final String variableName) {
+        Variable result = findVariableInChildren(_ifChildren, variableName);
+
+        if (result == null) {
+            result = findVariableInChildren(_elseChildren, variableName);
+        }
+
+        return result;
     }
 }

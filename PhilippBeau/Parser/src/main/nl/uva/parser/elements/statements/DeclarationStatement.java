@@ -17,4 +17,13 @@ public class DeclarationStatement extends Statement {
     public String toString() {
         return _variable + " " + _function;
     }
+
+    @Override
+    public Variable findVariable(final String _variableName) {
+        if (_variable.getName().equals(_variableName)) {
+            return _variable;
+        }
+
+        return null;
+    }
 }

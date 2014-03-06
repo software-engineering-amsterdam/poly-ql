@@ -21,4 +21,9 @@ public abstract class Expression extends Statement {
 
     @Override
     public abstract boolean validate();
+
+    @Override
+    public Variable findVariable(final String _variableName) {
+        return null;
+    }
 }
