@@ -18,11 +18,11 @@ public class IFStatement extends Statement {
 
     @Override
     public String toString() {
-        String erg = "if ( " + _expression + " ) { \n";
+        String erg = "if ( " + _expression + " ) \n{ \n";
         for (Statement child : _children) {
             erg += child + "\n";
         }
 
-        return erg + " } \n";
+        return erg + "} \n";
     }
 }

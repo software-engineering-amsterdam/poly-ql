@@ -1,6 +1,6 @@
 package main.nl.uva.parser.elements.statements;
 
-import main.nl.uva.parser.elements.type.Variable;
+import main.nl.uva.parser.elements.expressions.Variable;
 
 public class DeclarationStatement extends Statement {
 

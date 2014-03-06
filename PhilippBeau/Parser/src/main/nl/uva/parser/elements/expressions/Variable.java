@@ -1,12 +1,11 @@
-package main.nl.uva.parser.elements.type;
+package main.nl.uva.parser.elements.expressions;
 
-import main.nl.uva.parser.elements.expressions.Expression;
+import main.nl.uva.parser.elements.type.Type;
+import main.nl.uva.parser.elements.type.Type.Of;
 
 public class Variable extends Expression {
 
     private final String _name;
-
-    private final Type.Of _type;
 
     private final Expression _value;
 
@@ -23,5 +22,15 @@ public class Variable extends Expression {
     @Override
     public String toString() {
         return "( " + _type.toString() + " " + _name + " " + _value + " )";
+    }
+
+    @Override
+    public boolean validate() {
+
+        return true;
+    }
+
+    private boolean validateType() {
+        return true;
     }
 }

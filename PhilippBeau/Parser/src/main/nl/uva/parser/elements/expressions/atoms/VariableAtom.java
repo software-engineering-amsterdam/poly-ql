@@ -1,7 +1,7 @@
 package main.nl.uva.parser.elements.expressions.atoms;
 
 import main.nl.uva.parser.elements.expressions.Expression;
-import main.nl.uva.parser.elements.type.Variable;
+import main.nl.uva.parser.elements.expressions.Variable;
 
 public class VariableAtom extends Expression {
 
@@ -20,5 +20,14 @@ public class VariableAtom extends Expression {
     @Override
     public String toString() {
         return _variableName;
+    }
+
+    @Override
+    public boolean validate() {
+        if (_parent == null) {
+            return false;
+        }
+
+        Variable linkedVariable = _parent.findVariable(_variableName);
     }
 }

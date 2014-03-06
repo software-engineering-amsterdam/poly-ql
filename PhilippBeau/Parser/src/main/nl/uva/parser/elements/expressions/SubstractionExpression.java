@@ -10,4 +10,10 @@ public class SubstractionExpression extends AdvancedExpression {
     public String toString() {
         return _left + " - " + _right;
     }
+
+    @Override
+    public boolean validate() {
+        // TODO Auto-generated method stub
+        return false;
+    }
 }

@@ -8,7 +8,7 @@ public abstract class Statement {
         _parent = parent;
     }
 
-    public final boolean validate() {
+    public boolean validate() {
         return true;
     }
 }
