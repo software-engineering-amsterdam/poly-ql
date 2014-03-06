@@ -2,13 +2,16 @@ package org.uva.sea.ql.parser.antlr.QL4.AST;
 
 import java.util.List;
 
+import org.uva.sea.ql.parser.antlr.QL4.TypeChecker.QLErrorMsg;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.QLIVisitor;
+
 /**
  * Abstract syntax tree of the structures construct in the QL4 grammar
  * Contains an array list of structures
  * @author Sammie Katt
  *
  */
-public class Structures extends QLTree {
+public class Structures implements QLTree {
 	
 	/**
 	 * A list of all the structures in 'structure'
@@ -35,6 +38,10 @@ public class Structures extends QLTree {
 		}
 		
 		return str;
+	}
+	
+	public List<QLErrorMsg> accept(QLIVisitor visitor) {
+		return visitor.visit(this);
 	}
 	
 }

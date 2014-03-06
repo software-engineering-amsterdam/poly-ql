@@ -12,9 +12,7 @@ import org.uva.sea.ql.parser.antlr.QL4.Visitors.QLIVisitor;
  * @author Sammie Katt
  *
  */
-public abstract class QLTree {
+public interface QLTree {
 	
-	public List<QLErrorMsg> accept(QLIVisitor visitor) {
-		return visitor.visit(this);
-	}
+	public List<QLErrorMsg> accept(QLIVisitor visitor);
 }

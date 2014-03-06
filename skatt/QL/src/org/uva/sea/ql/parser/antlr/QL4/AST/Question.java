@@ -1,9 +1,13 @@
 package org.uva.sea.ql.parser.antlr.QL4.AST;
 
+import java.util.List;
+
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Expression;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Identifier;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Label;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.QuestionType;
+import org.uva.sea.ql.parser.antlr.QL4.TypeChecker.QLErrorMsg;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.QLIVisitor;
 
 /**
  * Abstract syntax tree of the regQuestion construct in the QL4 grammar
@@ -13,7 +17,7 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Value.QuestionType;
  * @author Sammie Katt
  *
  */
-public class Question extends QLTree {
+public class Question implements QLTree {
 	final private boolean computed;
 	final private Identifier id; 
 	final private Label label;
@@ -47,5 +51,9 @@ public class Question extends QLTree {
 	 */
 	public String toString() {
 		return "Question " + id + " of type " + type + " and label " + label;
+	}
+	
+	public List<QLErrorMsg> accept(QLIVisitor visitor) {
+		return visitor.visit(this);
 	}
 }
