@@ -44,4 +44,10 @@ public class BasicQuestion implements Question {
     public String getText() {
         return text;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        BasicQuestion question = ((BasicQuestion) o);
+        return id.equals(question.id) && text.equals(question.text) && type.equals(question.type);
+    }
 }

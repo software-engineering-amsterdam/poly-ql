@@ -19,10 +19,6 @@ public class QuestionnaireBuilderTest {
 
     ParserUtil parserUtil;
 
-    /**
-     * Sets up the test fixture.
-     * (Called before every test case method.)
-     */
     @Before
     public void setUp() {
         parserUtil = new ParserUtil();

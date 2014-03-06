@@ -16,7 +16,7 @@ import static org.junit.Assert.assertEquals;
  * Date: 2/13/14
  */
 
-public class GrammarTests {
+public class GrammarTest {
 
 
 
