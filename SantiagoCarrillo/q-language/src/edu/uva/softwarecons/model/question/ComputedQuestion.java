@@ -32,5 +32,8 @@ public class ComputedQuestion extends BasicQuestion {
         return id+": "+text + " "+type + "(";
     }
 
-
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof ComputedQuestion;
+    }
 }

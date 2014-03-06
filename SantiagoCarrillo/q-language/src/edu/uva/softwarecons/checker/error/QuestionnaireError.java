@@ -15,6 +15,6 @@ public class QuestionnaireError{
 
     @Override
     public String toString() {
-        return message;
+        return "Error: "+message;
     }
 }
