@@ -7,10 +7,14 @@ package org.uva.sea.ql.parser.antlr.QL4.AST.Value;
  */
 public class Number extends Value {
 
-	String value;
+	private final String value;
 	
 	public Number(String value) {
 		this.value = value;
+	}
+	
+	public String toString() {
+		return value;
 	}
 
 }
