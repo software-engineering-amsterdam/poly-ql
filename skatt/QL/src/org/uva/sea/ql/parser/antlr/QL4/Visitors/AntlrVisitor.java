@@ -1,4 +1,4 @@
-package org.uva.sea.ql.parser.antlr.QL4;
+package org.uva.sea.ql.parser.antlr.QL4.Visitors;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,6 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Form;
 import org.uva.sea.ql.parser.antlr.QL4.AST.QLTree;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Question;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Structures;
-import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.BraceExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Expression;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.AndExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.DivExpr;
@@ -19,6 +18,7 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.MultExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.NeqExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.OrExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.PlusExpr;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Unary.BraceExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Bool;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Decimal;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Identifier;
@@ -118,7 +118,8 @@ public class AntlrVisitor extends QL4BaseVisitor<QLTree> {
 
   //////////////////////// visiting binair math expressions
   public BraceExpr visitBraceExpr(QL4Parser.BraceExprContext ctx) {
-	  return new BraceExpr(ctx.expression().accept(this));
+	  Expression expr = (Expression) ctx.expression().accept(this);
+	  return new BraceExpr(expr);
   }
   
   public MultExpr visitMultExpr(QL4Parser.MultExprContext ctx) {

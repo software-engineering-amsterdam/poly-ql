@@ -1,6 +1,5 @@
-package org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary;
+package org.uva.sea.ql.parser.antlr.QL4.AST.Expression;
 
-import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Expression;
 
 /**
  * Abstract class for all binair expressions. Contains a lhs and rhs
