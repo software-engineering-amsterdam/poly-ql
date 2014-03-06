@@ -1,10 +1,10 @@
 package edu.uva.softwarecons.main;
 
-import edu.uva.softwarecons.checker.TypeChecker;
 import edu.uva.softwarecons.grammar.QuestionnaireBuilderVisitor;
 import edu.uva.softwarecons.grammar.QuestionnaireLexer;
 import edu.uva.softwarecons.grammar.QuestionnaireParser;
 import edu.uva.softwarecons.model.Form;
+import edu.uva.softwarecons.visitor.form.FormPrettyPrintVisitor;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -27,9 +27,10 @@ public class Main {
         ParseTree tree = parser.questionnaire(); // parse
         QuestionnaireBuilderVisitor questionnaireBuilderVisitor = new QuestionnaireBuilderVisitor();
         Form form = (Form) questionnaireBuilderVisitor.visit(tree);
-//        form.accept(new FormPrintVisitor());
-        TypeChecker typeChecker = new TypeChecker();
-        typeChecker.checkForm(form);
-        System.out.print("");
+        FormPrettyPrintVisitor formPrettyPrintVisitor = new FormPrettyPrintVisitor();
+        formPrettyPrintVisitor.visitForm(form);
+//        TypeChecker typeChecker = new TypeChecker();
+//        typeChecker.checkForm(form);
+//        System.out.print("");
     }
 }

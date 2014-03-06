@@ -10,11 +10,11 @@ import edu.uva.softwarecons.visitor.form.IFormElementVisitor;
  */
 public class BasicQuestion implements Question {
 
-    private String id;
+    protected String id;
 
-    private String text;
+    protected String text;
 
-    private Type type;
+    protected Type type;
 
 
     public BasicQuestion(String id, String text, Type type) {
@@ -30,7 +30,7 @@ public class BasicQuestion implements Question {
 
     @Override
     public String toString() {
-        return "question ( "+id+": "+text+" "+ (null != type ? type.toString() : "" ) +" )";
+        return ""+id+": "+text+" "+ (null != type ? type.toString() : "" );
     }
 
     public String getId() {

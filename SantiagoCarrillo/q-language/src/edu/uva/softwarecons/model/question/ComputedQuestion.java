@@ -26,4 +26,11 @@ public class ComputedQuestion extends BasicQuestion {
     public void accept(IFormElementVisitor visitor) {
         visitor.visitComputedQuestion(this);
     }
+
+    @Override
+    public String toString() {
+        return id+": "+text + " "+type + "(";
+    }
+
+
 }
