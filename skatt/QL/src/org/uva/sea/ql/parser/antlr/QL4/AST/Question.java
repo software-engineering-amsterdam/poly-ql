@@ -14,11 +14,11 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Value.QuestionType;
  *
  */
 public class Question extends QLTree {
-	boolean computed;
-	Identifier id; 
-	Label label;
-	QuestionType type;
-	Expression value;
+	final private boolean computed;
+	final private Identifier id; 
+	final private Label label;
+	final private QuestionType type;
+	private Expression value;
 	
 	/**
 	 * Constructor, Sets the id, label and type

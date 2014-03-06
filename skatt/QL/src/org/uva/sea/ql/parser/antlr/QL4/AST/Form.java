@@ -11,13 +11,13 @@ public class Form extends QLTree {
 	 * The structures of the form, the upper most 
 	 * collection of all questions and conditionals
 	 */
-	QLTree structures;
+	final private Structures structures;
 	
 	/**
 	 * Constructor, setting input QLtree as structures
 	 * @param structures
 	 */
-	public Form(QLTree structures) {
+	public Form(Structures structures) {
 		this.structures = structures;
 	}
 		

@@ -1,7 +1,8 @@
 package org.uva.sea.ql.parser.antlr.QL4.AST;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Expression;
 
 /**
  * Abstract syntax tree of the conditional construct in the QL4 grammar
@@ -14,16 +15,16 @@ import java.util.List;
 public class Conditional extends QLTree {
 	
 	// holds the expressions in if and else conditions 
-	QLTree ifCondition;
+	final private Expression ifCondition;
 	
 	// holds the elseif conditions 
-	List<QLTree> elseifConditions = new ArrayList<QLTree>();
+	final private List<Expression> elseifConditions;
 
 	// holds the structures of if and else conditions
-	QLTree ifStructure, elseStructure;
+	final private Structures ifStructure, elseStructure;
 	
 	// holds the structures of the elseif conditions
-	List<QLTree> elseifStructures = new ArrayList<QLTree>();
+	final private List<Structures> elseifStructures;
 	
 	/**
 	 * Constructor, sets if and elseif conditions and
@@ -34,7 +35,7 @@ public class Conditional extends QLTree {
 	 * @param elseStruc 
 	 * @param elseifConditions
 	 */
-	public Conditional(QLTree ifCondition, List<QLTree> elseifConditions, QLTree ifStructure, List<QLTree> elseifStructures, QLTree elseStructure) {
+	public Conditional(Expression ifCondition, List<Expression> elseifConditions, Structures ifStructure, List<Structures> elseifStructures, Structures elseStructure) {
 		this.ifCondition = ifCondition;
 		this.elseifConditions = elseifConditions;
 

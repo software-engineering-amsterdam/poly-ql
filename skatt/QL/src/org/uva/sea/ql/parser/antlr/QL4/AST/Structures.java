@@ -1,6 +1,5 @@
 package org.uva.sea.ql.parser.antlr.QL4.AST;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,13 +13,13 @@ public class Structures extends QLTree {
 	/**
 	 * A list of all the structures in 'structure'
 	 */
-	List<QLTree> structures = new ArrayList<QLTree>();
+	final private List<Structures> structures;
 	
 	/**
 	 * Constructor, sets structures
 	 * @param structures 
 	 */
-	public Structures(List<QLTree> structures) {
+	public Structures(List<Structures> structures) {
 		this.structures = structures;
 	}
 	

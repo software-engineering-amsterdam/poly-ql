@@ -52,8 +52,9 @@ public class QL4 {
 		
 		// typecheck abstract tree
 		UndefinedCheck ASTChecker = new UndefinedCheck();
-		List<QLErrorMsg> checkks = ast.accept(ASTChecker);
+		List<QLErrorMsg> checks = ast.accept(ASTChecker);
 		
+		System.out.println(checks);
 	}
 
 	/**

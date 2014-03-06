@@ -46,17 +46,17 @@ public class AntlrVisitor extends QL4BaseVisitor<QLTree> {
    * generated throughout the visiting process
    */
   public Form visitForm(QL4Parser.FormContext ctx) {
-	  return new Form(ctx.structures().accept(this));
+	  return new Form((Structures) ctx.structures().accept(this));
   }
   
   /**
    * Returns a structures object, containing its structure in a list
    */
   public QLTree visitStructures(QL4Parser.StructuresContext ctx) {
-	  List<QLTree> structures = new ArrayList<QLTree>();
+	  List<Structures> structures = new ArrayList<Structures>();
 
 	  for (QL4Parser.StructureContext struct : ctx.structure()) {
-		  structures.add(struct.accept(this));
+		  structures.add((Structures) struct.accept(this));
 	  }
 	  
 	  return new Structures(structures);
@@ -69,22 +69,22 @@ public class AntlrVisitor extends QL4BaseVisitor<QLTree> {
   public Conditional visitConditional(QL4Parser.ConditionalContext ctx) {
 
 	 // define if/else (if available) conditions and structures
-	 QLTree ifExpr = ctx.ifexpr.accept(this);
-	 QLTree ifStruc = ctx.ifstruc.accept(this);
+	 Expression ifExpr = (Expression) ctx.ifexpr.accept(this);
+	 Structures ifStruc = (Structures) ctx.ifstruc.accept(this);
 	 
-	 QLTree elseStruc = null;
+	 Structures elseStruc = null;
 	 if (ctx.elsestruc != null) {
-		 elseStruc = ctx.elsestruc.accept(this);
+		 elseStruc = (Structures) ctx.elsestruc.accept(this);
 	 } 
 	 
 	 // define elseifConditions and their structs by looping over them in ctx
-	 List<QLTree> elseifExprs = new ArrayList<QLTree>();
-	 List<QLTree> elseifStrucs = new ArrayList<QLTree>();
+	 List<Expression > elseifExprs = new ArrayList<Expression >();
+	 List<Structures> elseifStrucs = new ArrayList<Structures>();
 
 	 // start i = 1, as first expression is always if
 	 for (int i=1; i < ctx.expression().size(); i++) {
-		 elseifExprs.add(ctx.expression(i).accept(this));
-		 elseifStrucs.add(ctx.structures(i).accept(this));
+		 elseifExprs.add( (Expression) ctx.expression(i).accept(this));
+		 elseifStrucs.add( (Structures) ctx.structures(i).accept(this));
 	 }
 	 
 	 return new Conditional(ifExpr, elseifExprs, 
