@@ -12,8 +12,8 @@ public class LeqExpr extends BinaryExpr {
 	public LeqExpr(Expression lhs, Expression rhs) {
 		super(lhs, rhs);
 	}
-
+	
 	public String toString() {
-		return "LessOrEq(" + lhs.toString() + ", " + rhs.toString() + ")";
+		return "Leq(" + super.toString() + ")";
 	}
 }

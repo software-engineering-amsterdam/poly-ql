@@ -12,8 +12,8 @@ public class NeqExpr extends BinaryExpr {
 	public NeqExpr(Expression lhs, Expression rhs) {
 		super(lhs, rhs);
 	}
-
+	
 	public String toString() {
-		return "NotEqual(" + lhs.toString() + ", " + rhs.toString() + ")";
+		return "Neq(" + super.toString() + ")";
 	}
 }

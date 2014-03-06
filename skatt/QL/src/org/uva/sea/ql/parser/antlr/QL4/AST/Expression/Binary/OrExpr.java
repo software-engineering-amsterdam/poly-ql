@@ -12,8 +12,8 @@ public class OrExpr extends BinaryExpr {
 	public OrExpr(Expression lhs, Expression rhs) {
 		super(lhs, rhs);
 	}
-
+	
 	public String toString() {
-		return "Or(" + lhs.toString() + ", " + rhs.toString() + ")";
+		return "Or(" + super.toString() + ")";
 	}
 }

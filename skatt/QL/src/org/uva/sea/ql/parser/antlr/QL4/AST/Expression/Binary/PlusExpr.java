@@ -14,6 +14,6 @@ public class PlusExpr extends BinaryExpr{
 	}
 	
 	public String toString() {
-		return "Plus( " + lhs.toString() + ", " + rhs.toString() + ")";
+		return "Add(" + super.toString() + ")";
 	}
 }

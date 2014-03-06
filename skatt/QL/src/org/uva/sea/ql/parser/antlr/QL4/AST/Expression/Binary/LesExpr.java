@@ -12,8 +12,8 @@ public class LesExpr extends BinaryExpr {
 	public LesExpr(Expression lhs, Expression rhs) {
 		super(lhs, rhs);
 	}
-
+	
 	public String toString() {
-		return "LessThan(" + lhs.toString() + ", " + rhs.toString() + ")";
+		return "Les(" + super.toString() + ")";
 	}
 }

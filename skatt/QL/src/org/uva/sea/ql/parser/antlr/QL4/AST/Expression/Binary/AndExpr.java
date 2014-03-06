@@ -14,7 +14,7 @@ public class AndExpr extends BinaryExpr {
 	}
 	
 	public String toString() {
-		return "And(" + lhs.toString() + ", " + rhs.toString() + ")";
+		return "And(" + super.toString() + ")";
 	}
 
 }

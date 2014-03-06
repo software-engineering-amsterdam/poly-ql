@@ -14,6 +14,6 @@ public class MinExpr extends BinaryExpr {
 	}
 	
 	public String toString() {
-		return "Min( " + lhs.toString() + ", " + rhs.toString() + ")";
+		return "Min(" + super.toString() + ")";
 	}
 }

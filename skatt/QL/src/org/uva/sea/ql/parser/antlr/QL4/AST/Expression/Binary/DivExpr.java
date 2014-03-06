@@ -12,8 +12,8 @@ public class DivExpr extends BinaryExpr {
 	public DivExpr(Expression lhs, Expression rhs) {
 		super(lhs, rhs);
 	}
-
+	
 	public String toString() {
-		return "Div( " + lhs.toString() + ", " + rhs.toString() + ")";
+		return "Div(" + super.toString() + ")";
 	}
 }

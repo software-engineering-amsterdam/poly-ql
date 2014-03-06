@@ -12,8 +12,8 @@ public class GreExpr extends BinaryExpr {
 	public GreExpr(Expression lhs, Expression rhs) {
 		super(lhs, rhs);
 	}
-
+	
 	public String toString() {
-		return "GreaterThan(" + lhs.toString() + ", " + rhs.toString() + ")";
+		return "Gre(" + super.toString() + ")";
 	}
 }

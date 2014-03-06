@@ -14,6 +14,6 @@ public class MultExpr extends BinaryExpr {
 	}
 	
 	public String toString() {
-		return "Mult( " + lhs.toString() + ", " + rhs.toString() + ")";
+		return "Mult(" + super.toString() + ")";
 	}
 }

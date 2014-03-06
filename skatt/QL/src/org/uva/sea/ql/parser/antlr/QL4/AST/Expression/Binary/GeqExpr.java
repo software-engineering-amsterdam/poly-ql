@@ -12,8 +12,8 @@ public class GeqExpr extends BinaryExpr {
 	public GeqExpr(Expression lhs, Expression rhs) {
 		super(lhs, rhs);
 	}
-
+	
 	public String toString() {
-		return "GreatOrEq(" + lhs.toString() + ", " + rhs.toString() + ")";
+		return "Geq(" + super.toString() + ")";
 	}
 }

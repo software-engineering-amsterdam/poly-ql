@@ -12,8 +12,8 @@ public class EqExpr extends BinaryExpr {
 	public EqExpr(Expression lhs, Expression rhs) {
 		super(lhs, rhs);
 	}
-
+	
 	public String toString() {
-		return "Equals(" + lhs.toString() + ", " + rhs.toString() + ")";
+		return "Eq(" + super.toString() + ")";
 	}
 }

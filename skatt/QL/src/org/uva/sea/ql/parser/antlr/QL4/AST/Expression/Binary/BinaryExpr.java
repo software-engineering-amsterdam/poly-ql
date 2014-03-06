@@ -12,11 +12,15 @@ public abstract class BinaryExpr extends Expression {
 	/**
 	 * The left hand and right hand side of the binair expression
 	 */
-	Expression lhs;
-	Expression rhs;
+	private final Expression lhs;
+	private final Expression rhs;
 	
 	public BinaryExpr(Expression lhs, Expression rhs) {
 		this.lhs = lhs;
 		this.rhs = rhs;
+	}
+	
+	public String toString() {
+		return lhs.toString() + ", " + rhs.toString();
 	}
 }
