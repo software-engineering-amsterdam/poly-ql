@@ -26,7 +26,7 @@ public class TypeCheckerTest {
 		ErrorList errors= new ErrorList();
 		TypeChecker checker = new TypeChecker(symb, errors);
 		boolean result = checker.check_symb(tree, symb, errors);
-		if(!result) System.out.println(checker.get_errorList());
+		if(!result) System.out.print(checker.get_errorList());
 		assertEquals(expected, result);
 		
 	}
@@ -64,5 +64,66 @@ public class TypeCheckerTest {
 		test(false, "form form1 { id1: \"Value?\" string(123) }");
 		test(false, "form form1 { id1: \"Value?\" string(true) }");
 	}
+	
+	@Test
+	public void testBinExpr(){
+		test(true, "form form1 { q1 : \"a question\" integer(4 + 2) }");
+		test(false, "form form1 { q1 : \"a question\" integer(4 + (3 - true) * 2) }");
+		test(false, "form form1 { q1 : \"a question\" integer(17 / false)}");
+		test(true, "form form1 { q1 : \"a question\" boolean(true && true) }");
+		test(false, "form form1 { q1 : \"a question\" boolean( false || 1) }");
+		test(true, "form form1 { q1 : \"a question\" boolean(false || false) }");
+		test(false, "form form1 { q1 : \"a question\" boolean(false || test) }");
+	}
+	
+	@Test
+	public void testUnExpr(){
+		test(true, "form form1 { q1 : \"a question\" boolean(!q1)}");
+		test(true, "form form1 { q1 : \"a question\" integer(+q1)}");
+		test(false, "form form1 { q1 : \"a question\" boolean(!1)}");
+		test(false, "form form1 { q1 : \"a question\" boolean(!test)}");
+		test(true, "form form1 { q1 : \"a question\" integer(-q1)}");
+		test(false, "form form1 { q1 : \"a question\" boolean(-true)}");
+	}
+	
+	@Test
+	public void testIfstatement(){
+		test(true, "form form1 { x : \"a question\" boolean"+
+					"\nif(x == true) {q1 : \"a question\" boolean(true)}}");
+		test(false, "form form1 { x : \"a question\" boolean"+
+				"\nif(x == 1) {q1 : \"a question\" boolean(true)}}");
+		test(false, "form form1 { x : \"a question\" boolean"+
+				"\nif(x == test) {q1 : \"a question\" boolean(true)}}");
+		test(true, "form form1 { x : \"a question\" integer"+
+				"\nif(x >= 1) {q1 : \"a question\" boolean(true)}}");
+		test(true, "form form1 { x : \"a question\" boolean"+
+				"\nif(!x != true) {q1 : \"a question\" boolean(true)}}");
+		test(false, "form form1 { x : \"a question\" integer"+
+			"\nif(x < bla) {q1 : \"a question\" boolean(true)}}");
+	}
+	
+	@Test
+	public void testIfElsestatement(){
+		test(true, "form form1 { x : \"a question\" boolean"+
+				"\nif(x == true) {q1 : \"a question\" boolean(true)}"+
+		"\nelse{q2 : \"a question2\" boolean}}");
+		test(false, "form form1 { x : \"a question\" boolean"+
+				"\nif(x == true) {q1 : \"a question\" boolean(true)}"+
+		"\nelse{q1 : \"a question2\" boolean(true)}}");
+		test(false, "form form1 { x : \"a question\" boolean"+
+				"\nif(x > 5) {q1 : \"a question\" boolean(true)}"+
+		"\nelse{q2 : \"a question2\" boolean}}");		
+	}
+	
+	@Test
+	public void testBlock(){
+		test(true, "form form1 { x : \"a question\" boolean"+
+		"\nq1 : \"a question\" boolean(true)}");
+		test(false, "form form1 { q1 : \"a question\" boolean"+
+				"\nq1 : \"a question\" boolean(true)}");		
+	}
+	
+	
+	
 
 }

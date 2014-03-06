@@ -39,41 +39,41 @@ public class TypeChecker implements Visitor<Boolean>{
 		return exp.accept(this);		
 	}
 	
-	public boolean isValidInt(Expr exp, String token){
+	public boolean isValidInt(Expr exp, String side, String token){
 		if (isValidExpr(exp)){
 			Type type = exp.typeof(symb_map);
 			if((type != null) && (type.isCompatibleToInt())){
 				return true;
 			}
 			else{
-				errors.addError("Invalid Type at " + token);
+				errors.addError("Invalid Type at " + side + " " + token);
 			}
 		}
 		return false;
 	}
 	
-	public boolean isValidInt(Expr lhs, Expr rhs){
-		boolean isValid_lhs = isValidInt(lhs, "left side");
-		boolean isValid_rhs = isValidInt(rhs, "right side");		
+	public boolean isValidInt(Expr lhs, Expr rhs, String token){
+		boolean isValid_lhs = isValidInt(lhs, "left side", token);
+		boolean isValid_rhs = isValidInt(rhs, "right side", token);		
 		return (isValid_lhs && isValid_rhs);
 	}
 	
-	public boolean isValidBool(Expr exp, String token){
+	public boolean isValidBool(Expr exp, String side, String token){
 		if (isValidExpr(exp)){
 			Type type = exp.typeof(symb_map);
 			if((type != null) && (type.isCompatibleToBool())){
 				return true;
 			}
 			else{
-				errors.addError("Invalid Type at " + token);
+				errors.addError("Invalid Type at " + side + "  " + token);
 			}
 		}
 		return false;
 	}
 	
-	public boolean isValidBool(Expr lhs, Expr rhs){
-		boolean isValid_lhs = isValidBool(lhs, "left side");
-		boolean isValid_rhs = isValidBool(rhs, "right side");
+	public boolean isValidBool(Expr lhs, Expr rhs, String token){
+		boolean isValid_lhs = isValidBool(lhs, "left side", token);
+		boolean isValid_rhs = isValidBool(rhs, "right side", token);
 		return (isValid_lhs && isValid_rhs);
 	}	
 	
@@ -117,32 +117,32 @@ public class TypeChecker implements Visitor<Boolean>{
 	
 	@Override
 	public Boolean visit(Pos node) {
-		return isValidInt(node.getOperand(), "+");
+		return isValidInt(node.getOperand(), "", "+");
 	}
 
 	@Override
 	public Boolean visit(Neg node) {
-		return isValidInt(node.getOperand(), "-");
+		return isValidInt(node.getOperand(), "", "-");
 	}
 
 	@Override
 	public Boolean visit(Not node) {
-		return isValidBool(node.getOperand(), "!");
+		return isValidBool(node.getOperand(), "", "!");
 	}
 
 	@Override
 	public Boolean visit(Add node) {
-		return isValidInt(node.get_lhs(), node.get_rhs());
+		return isValidInt(node.get_lhs(), node.get_rhs(), "+");
 	}
 
 	@Override
 	public Boolean visit(And node) {
-		return isValidBool(node.get_lhs(), node.get_rhs());
+		return isValidBool(node.get_lhs(), node.get_rhs(), "&&");
 	}
 
 	@Override
 	public Boolean visit(Div node) {
-		return isValidInt(node.get_lhs(), node.get_rhs());
+		return isValidInt(node.get_lhs(), node.get_rhs(), "/");
 	}
 
 	@Override
@@ -172,7 +172,7 @@ public class TypeChecker implements Visitor<Boolean>{
 
 	@Override
 	public Boolean visit(Mul node) {
-		return isValidInt(node.get_lhs(), node.get_rhs());
+		return isValidInt(node.get_lhs(), node.get_rhs(), "*");
 	}
 
 	@Override
@@ -182,12 +182,12 @@ public class TypeChecker implements Visitor<Boolean>{
 
 	@Override
 	public Boolean visit(Or node) {
-		return isValidBool(node.get_lhs(), node.get_rhs());
+		return isValidBool(node.get_lhs(), node.get_rhs(), "||");
 	}
 
 	@Override
 	public Boolean visit(Sub node) {
-		return isValidInt(node.get_lhs(), node.get_rhs());
+		return isValidInt(node.get_lhs(), node.get_rhs(), "-");
 	}
 
 	@Override
@@ -249,6 +249,7 @@ public class TypeChecker implements Visitor<Boolean>{
 	
 	private boolean putIdentifier(Identifier id, Type type){
 		if(symb_map.containsSymb(id.getIdentName())){
+			errors.addError("Invalid identifier (already used) " + id.getIdentName());
 			return false;
 		}
 		symb_map.put(id.getIdentName(), type);
@@ -274,7 +275,7 @@ public class TypeChecker implements Visitor<Boolean>{
 
 	@Override
 	public Boolean visit(IfStatement node) {
-		boolean validExpr = isValidBool(node.getExpr(), "if");
+		boolean validExpr = isValidBool(node.getExpr(), "", "if");
 		boolean validStatement = node.getStatements().accept(this);
 		return (validExpr && validStatement);
 	}
