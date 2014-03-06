@@ -19,6 +19,7 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.NeqExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.OrExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.PlusExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Unary.BraceExpr;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Unary.NegExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Bool;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Decimal;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Identifier;
@@ -116,11 +117,19 @@ public class AntlrVisitor extends QL4BaseVisitor<QLTree> {
 	  return new Question(id, label, type, value); 
   }
 
-  //////////////////////// visiting binair math expressions
+
+  //////////////////////// unary expressions
   public BraceExpr visitBraceExpr(QL4Parser.BraceExprContext ctx) {
 	  Expression expr = (Expression) ctx.expression().accept(this);
 	  return new BraceExpr(expr);
   }
+  
+  public NegExpr visitNegExpr(QL4Parser.NegExprContext ctx) {
+	  Expression expr = (Expression) ctx.expression().accept(this);
+	  return new NegExpr(expr);
+  }
+  
+  //////////////////////// visiting binary math expressions
   
   public MultExpr visitMultExpr(QL4Parser.MultExprContext ctx) {
 	  Expression lhs = (Expression) ctx.lhs.accept(this);
@@ -150,7 +159,7 @@ public class AntlrVisitor extends QL4BaseVisitor<QLTree> {
 	  return new MinExpr(lhs, rhs);	  
   }
   
-  //////////////////////// visiting binair logical expressions
+  //////////////////////// visiting binary logical expressions
 
   public AndExpr visitAndExpr(QL4Parser.AndExprContext ctx) {
 	  Expression lhs = (Expression) ctx.lhs.accept(this);
