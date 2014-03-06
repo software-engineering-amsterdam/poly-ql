@@ -12,6 +12,11 @@ public class UndefinedVal extends Value {
     }
 
     @Override
+    public boolean isUndefined() {
+        return true;
+    }
+
+    @Override
     public boolean equals(Object object) {
         // Undefined isn't equal to anything.
         return false;

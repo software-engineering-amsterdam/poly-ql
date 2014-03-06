@@ -2,9 +2,10 @@ package ast.statement;
 
 import java.util.ArrayList;
 
+import ast.ASTNode;
 import ast.Visitor;
 
-public class StatementList extends Statement{
+public class StatementList implements ASTNode{
 	
 	private final ArrayList<Statement> list;
 	

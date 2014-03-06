@@ -51,7 +51,7 @@ public class IntVal extends Value {
 
     @Override
     public Value lt(Value argument) {
-        return argument.lt(this);
+        return argument.intLt(this);
     }
 
     @Override

@@ -11,17 +11,12 @@ public class StrType extends Type {
 
 	@Override
 	public boolean isCompatibleTo(Type type) {
-		return this.isCompatibleToStr();
+		return (this.isCompatibleToStr() && !type.isCompatibleToBool() && !type.isCompatibleToInt());
 	}
 	
 	@Override
 	public boolean isCompatibleToStr(){
 		return true;
-	}
-
-	@Override
-	public String show() {
-		return "string";
 	}
 
 }

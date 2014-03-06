@@ -11,17 +11,12 @@ public class BoolType extends Type {
 
 	@Override
 	public boolean isCompatibleTo(Type type) {
-		return type.isCompatibleToBool();
+		return (type.isCompatibleToBool() && !type.isCompatibleToInt() && !type.isCompatibleToStr());
 	}
 	
 	@Override
 	public boolean isCompatibleToBool(){
 		return true;
-	}
-
-	@Override
-	public String show() {
-		return "boolean";
 	}
 
 }

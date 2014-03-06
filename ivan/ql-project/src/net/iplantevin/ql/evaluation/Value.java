@@ -14,6 +14,15 @@ public abstract class Value {
     // so the return type of the abstract method is Object.
     public abstract Object getValue();
 
+    /**
+     * Since |equals| cannot be used with UndefinedVal, another way is necessary
+     * to know whether you've got an UndefinedVal.
+     * @return whether this Value is an UndefinedVal.
+     */
+    public boolean isUndefined() {
+        return false;
+    }
+
     // Equality operations, the only ones that work between all Value subtypes.
     public BoolVal equal(Value argument) {
         return new BoolVal(this.equals(argument));

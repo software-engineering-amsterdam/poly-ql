@@ -133,10 +133,11 @@ COMMENT
     ;
 NewLine: '\r'?'\n'| '\n' ;
 
+Bool: 'true' | 'false';
+
 Ident:   ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*;
 
 Int: ('0'..'9')+;
 
 Str: '"' (.)*? '"';
 
-Bool: 'true' | 'false';

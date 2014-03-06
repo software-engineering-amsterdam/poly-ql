@@ -29,12 +29,12 @@ public class TestQLang {
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 		QLangParser parser = new QLangParser(tokens);
 		parser.setBuildParseTree(true);
-//		RuleContext t = parser.form();
-//		t.inspect(parser);
-		ASTNode tree = parser.init().result;
-		BaseVisitor visitor = new BaseVisitor();
-		System.out.println(tree.accept(visitor));
-//		Symboles s = new Symboles();
+		RuleContext t = parser.form();
+		t.inspect(parser);
+//		ASTNode tree = parser.init().result;
+//		BaseVisitor visitor = new BaseVisitor();
+//		System.out.println(tree.accept(visitor));
+////		Symboles s = new Symboles();
 //		EvalVisitor eval = new EvalVisitor(s);
 //		tree.accept(eval);
 	}

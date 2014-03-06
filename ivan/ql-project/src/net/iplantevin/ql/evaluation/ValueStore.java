@@ -22,8 +22,7 @@ public class ValueStore {
         if (values.containsKey(identifier)) {
             return values.get(identifier);
         } else {
-            // Todo: actual Value of null type?
-            return null;
+            return new UndefinedVal();
         }
     }
 }
