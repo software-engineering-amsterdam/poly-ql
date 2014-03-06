@@ -35,7 +35,7 @@ public class Main extends Application {
                 FileChooser fileChooser = new FileChooser();
                 fileChooser.setTitle("Open Resource File");
                 File selectedFile = fileChooser.showOpenDialog(primaryStage);
-                System.out.println("Selected file: " + selectedFile.getName());
+//                System.out.println("Selected file: " + selectedFile.getName());
             }
         });
         menuFile.getItems().add(menuItem);

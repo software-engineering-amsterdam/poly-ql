@@ -8,6 +8,6 @@ package edu.uva.softwarecons.checker.error;
 public class CyclicDependencyError extends QuestionnaireError{
 
     public CyclicDependencyError(String questionID) {
-        super("The question with ID: "+questionID+" has a cyclic dependency");
+        super("The question with ID: '"+questionID+"' has a cyclic dependency");
     }
 }

@@ -9,6 +9,6 @@ public class DuplicateQuestionError extends QuestionnaireError{
 
 
     public DuplicateQuestionError(String id) {
-        super("The question with ID: "+id+" is duplicated");
+        super("The question with ID: '"+id+"' is duplicated");
     }
 }

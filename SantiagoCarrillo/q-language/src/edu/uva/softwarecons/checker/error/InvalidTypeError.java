@@ -10,12 +10,12 @@ public class InvalidTypeError extends QuestionnaireError{
     public InvalidTypeError(String id, String expectedType, String definedType) {
         super("Expected type: "+expectedType+" but got "+
                 definedType+
-                " for argument: "+id);
+                " for argument: '"+id+"'");
     }
 
     public InvalidTypeError(String questionId, String expressionId, String expectedType, String definedType) {
         super("Expected type: "+expectedType+" but got "+
                 definedType+
-                " for question: "+questionId+" and argument: "+expressionId);
+                " for question: "+questionId+" and argument: '"+expressionId+"'");
     }
 }
