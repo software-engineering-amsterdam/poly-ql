@@ -30,13 +30,26 @@ public class Problems {
 		print(errors,"ERRORS");
 	}
 	
+	public List<String> getProblems(){
+		List<String> allProblems = new ArrayList<String>();
+		for(String s : warnings){
+			allProblems.add(s);
+		}
+		for(String s: errors){
+			allProblems.add(s);
+		}
+		return allProblems;
+	}
+	
+	public Boolean hasProblems(){
+		return (warnings.size() == 0 && errors.size() == 0);
+	}
+	
 	private void print(List<String> problems, String label){
 		int totalErrors = problems.size();
 		System.out.println(label +" [" + totalErrors + "]");
 		for(String problem : problems){
 			System.out.println(problem);
-
 		}
-	
 	}
 }
