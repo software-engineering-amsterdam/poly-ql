@@ -1,7 +1,7 @@
 package net.iplantevin.ql.ast.statements;
 
+import net.iplantevin.ql.ast.LineInfo;
 import net.iplantevin.ql.ast.visitors.IASTVisitor;
-import org.antlr.v4.runtime.ParserRuleContext;
 
 import java.util.ArrayList;
 
@@ -13,8 +13,8 @@ import java.util.ArrayList;
 public class Block extends Statement {
     private final ArrayList<Statement> statements;
 
-    public Block(ArrayList<Statement> statements, ParserRuleContext ctx) {
-        super(ctx);
+    public Block(ArrayList<Statement> statements, LineInfo lineInfo) {
+        super(lineInfo);
         this.statements = statements;
     }
 
@@ -33,7 +33,7 @@ public class Block extends Statement {
     }
 
     @Override
-    public void accept(IASTVisitor visitor) {
-        visitor.visit(this);
+    public <T> T accept(IASTVisitor<T> visitor) {
+        return visitor.visit(this);
     }
 }

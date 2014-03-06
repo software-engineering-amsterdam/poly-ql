@@ -1,4 +1,5 @@
-﻿using QL.TypeChecker;
+﻿using Antlr4.Runtime;
+using QL.TypeChecker;
 
 namespace QL.QLClasses.Types
 {
@@ -9,10 +10,19 @@ namespace QL.QLClasses.Types
             return this;
         }
 
-        public override bool CheckType(ref QLTypeError error)
+        public override string ToString()
+        {
+            return "QInt";
+        }
+
+        #region TypeChecker Implementation
+
+        public override bool CheckType(QLTypeErrors typeErrors)
         {
             return true;
         }
+
+        #endregion
 
         #region Double Dispatch Implementation
 

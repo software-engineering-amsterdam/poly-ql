@@ -1,8 +1,8 @@
 package net.iplantevin.ql.ast.statements;
 
+import net.iplantevin.ql.ast.LineInfo;
 import net.iplantevin.ql.ast.expressions.Expression;
 import net.iplantevin.ql.ast.visitors.IASTVisitor;
-import org.antlr.v4.runtime.ParserRuleContext;
 
 /**
  * IfElse statement. Adds a body for the else to the Conditional body.
@@ -12,8 +12,8 @@ import org.antlr.v4.runtime.ParserRuleContext;
 public class IfElse extends Conditional {
     private final Statement elseBody;
 
-    public IfElse(Expression condition, Statement body, Statement elseBody, ParserRuleContext ctx) {
-        super(condition, body, ctx);
+    public IfElse(Expression condition, Statement body, Statement elseBody, LineInfo lineInfo) {
+        super(condition, body, lineInfo);
 
         this.elseBody = elseBody;
     }
@@ -28,7 +28,7 @@ public class IfElse extends Conditional {
     }
 
     @Override
-    public void accept(IASTVisitor visitor) {
-        visitor.visit(this);
+    public <T> T accept(IASTVisitor<T> visitor) {
+        return visitor.visit(this);
     }
 }

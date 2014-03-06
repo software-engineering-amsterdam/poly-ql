@@ -6,25 +6,17 @@ import org.uva.sea.ql.ast.ASTNode;
 
 public class Parser {
 	
-	public ASTNode parser(String input){
+	public ASTNode parser(String input) throws ParseException{
 
 		QLLexer lexer = new QLLexer(new StringReader(input));
 		lexer.nextToken();
 		QLParser parser = new QLParser(lexer);
 		
-		try{
-			parser.parse(); 
-		}
-		catch(NullPointerException e){
-			throw e;		
+		if(!parser.parse()){
+			throw new ParseException("parse error");
 		}
 		
 		return parser.getResult();
 		
-		}
-	
-	static void error(String msg) {
-		   System.out.println("ERROR: " + msg);
-		   System.exit(1);
 		}
 }

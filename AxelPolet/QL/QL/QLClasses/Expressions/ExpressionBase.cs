@@ -1,25 +1,10 @@
-﻿using Antlr4.Runtime;
-using QL.QLClasses.Types;
-using QL.TypeChecker;
+﻿using QL.QLClasses.Types;
 
 namespace QL.QLClasses.Expressions
 {
-    public abstract class ExpressionBase : ITypeChecker
+    public abstract class ExpressionBase : ASTBase
     {
-        public QLTokenInfo TokenInfo { get; set; }
-
-        public IToken Token
-        {
-            set { TokenInfo = new QLTokenInfo(value);}
-        }
-        
         public abstract QBaseType GetResultType();
         public abstract ExpressionBase GetResult();
-
-        #region TypeChecker Implementation
-
-        public abstract bool CheckType(ref QLTypeError error);
-
-        #endregion
     }
 }

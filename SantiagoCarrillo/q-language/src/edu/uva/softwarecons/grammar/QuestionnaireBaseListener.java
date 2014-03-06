@@ -17,6 +17,19 @@ public class QuestionnaireBaseListener implements QuestionnaireListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterElse(@NotNull QuestionnaireParser.ElseContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitElse(@NotNull QuestionnaireParser.ElseContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterSimpleQuestion(@NotNull QuestionnaireParser.SimpleQuestionContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -24,19 +37,6 @@ public class QuestionnaireBaseListener implements QuestionnaireListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitSimpleQuestion(@NotNull QuestionnaireParser.SimpleQuestionContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterIfElse(@NotNull QuestionnaireParser.IfElseContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitIfElse(@NotNull QuestionnaireParser.IfElseContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

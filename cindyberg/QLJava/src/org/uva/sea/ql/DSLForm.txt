@@ -1,16 +1,21 @@
 form FORM1 {
-	variable : "dit is een label" boolean
-	var : "nnog een keer var" boolean
-	var : "nog een keer ander type" integer
-	if(variable){
-		boe : "label" integer
-		boe : "label2" integer
-		boe2 : "label" boolean (true < boe) true not working yet
-		boe2 : "label" boolean (1 < 3)
-		boe3 : "label" boolean (1 < boe2)
-		boe4 : "label" boolean ( 1 != boe4)
+	variable : "Wil je meer vragen?" boolean
+	varx : "testje" integer (varx+2)
+	var : "heb je een huis?" boolean
+	var : "hoeveel kost je huis?" integer (hoi + 1) 
+	if(vraag1){
+		vraag1 : "getalletjes?" integer
+		vraag2 : "meer getalletjes!" integer (true)
+		vraag3 : "getalletjes?" boolean (true) //comments about stuff
+		vraag4 : "wil je dit invullen?" boolean (1 < 3)
+		vraag5 : "wil je dit invullen?" boolean (1 < vraag2)
+		vraag6 : "automatische boolean sanity check!" boolean (1 != vraag1)
 	}
-	if(1 + 2){
-		bla : "label" boolean
+	else{
+		geenExtra : "jammer, klik om af te sluiten" boolean
 	}
+	/*
+	comment block!
+	*/
 }
+

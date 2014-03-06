@@ -18,7 +18,7 @@ public class QuestionnaireBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitSimpleQuestion(@NotNull QuestionnaireParser.SimpleQuestionContext ctx) { return visitChildren(ctx); }
+	@Override public T visitElse(@NotNull QuestionnaireParser.ElseContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}
@@ -26,7 +26,7 @@ public class QuestionnaireBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitIfElse(@NotNull QuestionnaireParser.IfElseContext ctx) { return visitChildren(ctx); }
+	@Override public T visitSimpleQuestion(@NotNull QuestionnaireParser.SimpleQuestionContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}

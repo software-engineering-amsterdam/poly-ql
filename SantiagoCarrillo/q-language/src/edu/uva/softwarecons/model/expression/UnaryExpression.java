@@ -1,10 +1,5 @@
 package edu.uva.softwarecons.model.expression;
 
-import edu.uva.softwarecons.model.operation.Operator;
-import edu.uva.softwarecons.model.type.Type;
-import edu.uva.softwarecons.visitor.IFormElement;
-import edu.uva.softwarecons.visitor.IFormElementVisitor;
-
 /**
  * Falconlabs
  * User: sancarbar
@@ -12,12 +7,14 @@ import edu.uva.softwarecons.visitor.IFormElementVisitor;
  */
 public abstract class UnaryExpression implements Expression {
 
-    public Expression expression;
+    private final Expression argument;
 
-    public String id;
 
-    public UnaryExpression(Expression expression) {
-        this.expression = expression;
+    public UnaryExpression(Expression argument) {
+        this.argument = argument;
     }
 
+    public Expression getArgument() {
+        return argument;
+    }
 }

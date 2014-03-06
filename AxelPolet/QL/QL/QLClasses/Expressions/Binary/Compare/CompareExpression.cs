@@ -7,30 +7,42 @@ namespace QL.QLClasses.Expressions.Binary.Compare
 {
     public class CompareExpression : BinaryExpression
     {
-        public OperatorBase CompareOperator { get; set; }
+        private readonly OperatorBase _compareOperator;
+
+        public CompareExpression(ExpressionBase leftExpression, ExpressionBase rightExpression, OperatorBase compareOperator) : base(leftExpression, rightExpression)
+        {
+            _compareOperator = compareOperator;
+        }
 
         public override ExpressionBase GetResult()
         {
-            return new BoolLiteral(Convert.ToBoolean(CompareOperator.Compare(LeftExpression, RightExpression)));
+            return new BoolLiteral(Convert.ToBoolean(_compareOperator.Compare(LeftExpression, RightExpression)));
         }
 
-        public override bool CheckType(ref QLTypeError error)
+        public override bool CheckType(QLTypeErrors typeErrors)
         {
-            base.CheckType(ref error);
+            if (!base.CheckType(typeErrors))
+                return false;
 
             if (!LeftExpression.GetResultType().IsCompatibleWith(RightExpression.GetResultType()))
             {
-                error.Message = string.Format("Cannot compare values of different types! Left: '{0}', Right: '{1}'", LeftExpression.GetResultType(), RightExpression.GetResultType());
-                error.TokenInfo = LeftExpression.TokenInfo;
-
+                typeErrors.ReportError(new QLTypeError
+                {
+                    Message = string.Format("Cannot compare values of different types! Left: '{0}', Right: '{1}'",
+                            LeftExpression.GetResultType(), RightExpression.GetResultType()), 
+                    TokenInfo = LeftExpression.TokenInfo
+                });
                 return false;
             }
 
-            if (LeftExpression.GetResultType().IsCompatibleWithQString(null) && RightExpression.GetResultType().IsCompatibleWithQString(null) && !(CompareOperator is Equals))
+            if (LeftExpression.GetResultType().IsCompatibleWithQString(null) && RightExpression.GetResultType().IsCompatibleWithQString(null) && !(_compareOperator is Equals))
             {
-                error.Message = string.Format("String values can only be compared on equality! CompareOperator: '{0}'", CompareOperator);
-                error.TokenInfo = CompareOperator.TokenInfo;
-
+                typeErrors.ReportError(new QLTypeError
+                {
+                    Message = string.Format("String values can only be compared on equality! _compareOperator: '{0}'",
+                            _compareOperator), 
+                    TokenInfo = _compareOperator.TokenInfo
+                });
                 return false;
             }
             return true;

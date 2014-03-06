@@ -1,6 +1,10 @@
 // Generated from /Users/Sinan/Documents/NetBeansProjects/Software Construction/sinan/Software Construction/src/softwareconstruction/SinansGrammer.g by ANTLR 4.2
 
     package softwareconstruction;
+    import softwareconstruction.*;
+    import softwareconstruction.form.*;
+    import softwareconstruction.questions.*;
+    import softwareconstruction.literals.*;
     import java.util.ArrayList;
 
 
@@ -15,6 +19,19 @@ import org.antlr.v4.runtime.tree.TerminalNode;
  * of the available methods.
  */
 public class SinansGrammerBaseListener implements SinansGrammerListener {
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExpression(@NotNull SinansGrammerParser.ExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExpression(@NotNull SinansGrammerParser.ExpressionContext ctx) { }
+
 	/**
 	 * {@inheritDoc}
 	 *
@@ -40,6 +57,19 @@ public class SinansGrammerBaseListener implements SinansGrammerListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitItem(@NotNull SinansGrammerParser.ItemContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIfstatement(@NotNull SinansGrammerParser.IfstatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIfstatement(@NotNull SinansGrammerParser.IfstatementContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

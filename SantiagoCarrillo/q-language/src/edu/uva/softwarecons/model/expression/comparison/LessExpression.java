@@ -2,9 +2,9 @@ package edu.uva.softwarecons.model.expression.comparison;
 
 import edu.uva.softwarecons.model.expression.BinaryExpression;
 import edu.uva.softwarecons.model.expression.Expression;
-import edu.uva.softwarecons.model.operation.Operator;
 import edu.uva.softwarecons.model.type.Type;
-import edu.uva.softwarecons.visitor.IFormElementVisitor;
+import edu.uva.softwarecons.visitor.expression.IExpressionElementVisitor;
+import edu.uva.softwarecons.visitor.form.IFormElementVisitor;
 
 /**
  * Falconlabs
@@ -15,7 +15,6 @@ public class LessExpression extends BinaryExpression{
 
     public LessExpression(Expression leftOperand, Expression rightOperand) {
         super(leftOperand, rightOperand);
-        operator = Operator.LT;
     }
 
     @Override
@@ -24,7 +23,7 @@ public class LessExpression extends BinaryExpression{
     }
 
     @Override
-    public void accept(IFormElementVisitor visitor) {
+    public void accept(IExpressionElementVisitor visitor) {
         visitor.visitLessExpression(this);
     }
 }

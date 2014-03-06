@@ -34,19 +34,19 @@ public class TypeEnvironment {
         return getIdentifier(identifier).getDeclaredType();
     }
 
-    public TypeError addIdentifier(ID identifier, Type type) {
+    public TypeError declareIdentifier(ID identifier, Type type) {
         if (isDeclared(identifier)) {
             if (!getDeclaredType(identifier).equals(type)) {
                 String message = "type mismatch on already declared identifier '" +
                         identifier.getName() + "' (declared at " +
                         getIdentifier(identifier).getDeclaredLineInfo() + ") !";
-                TypeError typeException = new TypeError(
+                TypeError typeError = new TypeError(
                         message,
                         identifier,
                         getDeclaredType(identifier),
                         type
                 );
-                return typeException;
+                return typeError;
             }
         } else {
             idTypeStore.put(identifier.getName(),

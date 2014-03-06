@@ -4,11 +4,11 @@ import CommonLexerRules;
 questionnaire:   'form' ID '{' question+ '}';
 
 question: ID ':' STRING type                                 # simpleQuestion
-    |     ID ':' STRING type expr                            # computedQuestion
+    |     ID ':' STRING type '(' expr ')'                    # computedQuestion
 	|	  'if' '(' expr ')' '{' question+ '}'   elsestat?    # if
     ;
 
-elsestat: 'else' '{' question+ '}'    # ifElse;
+elsestat: 'else' '{' question+ '}'    # else;
    
 type: BOOL_TYPE        # boolean
 	| STRING_TYPE      # string

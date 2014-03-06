@@ -1,6 +1,7 @@
 package edu.uva.softwarecons.model.type;
 
-import edu.uva.softwarecons.visitor.IFormElementVisitor;
+import edu.uva.softwarecons.visitor.form.IFormElementVisitor;
+import edu.uva.softwarecons.visitor.type.ITypeElementVisitor;
 
 import java.math.BigDecimal;
 
@@ -11,20 +12,25 @@ import java.math.BigDecimal;
  */
 public class MoneyType extends NumericType{
 
-    public BigDecimal value;
+    private final BigDecimal value;
+
+    public MoneyType(BigDecimal value) {
+        this.value = value;
+    }
 
     @Override
     public BigDecimal getValue() {
         return value;
     }
 
-    @Override
-    public void accept(IFormElementVisitor visitor) {
-        visitor.visitMoneyType(this);
-    }
 
     @Override
     public String toString() {
         return "money";
+    }
+
+    @Override
+    public void accept(ITypeElementVisitor visitor) {
+        visitor.visitMoneyType(this);
     }
 }
