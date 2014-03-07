@@ -2,7 +2,7 @@
 
 namespace Algebra.QL.Form.Stmnt
 {
-    public interface IFormStmnt
+    public interface IFormStmnt : IForm
     {
         FrameworkElement BuildForm();
     }

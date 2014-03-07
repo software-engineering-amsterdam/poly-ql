@@ -22,7 +22,7 @@ namespace Algebra.QL.Form.Stmnt
 
             TypeEnvironment.Instance.ResetVariables();
 
-            return sPanel;
+            return new ScrollViewer() { Content = sPanel };
         }
     }
 }

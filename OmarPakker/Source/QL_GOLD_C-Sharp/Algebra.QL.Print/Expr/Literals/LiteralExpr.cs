@@ -17,5 +17,10 @@ namespace Algebra.QL.Print.Expr.Literals
         {
             return new[] { new Run(Value.ToString()) };
         }
+
+        public override string ToString()
+        {
+            return Value.ToString();
+        }
     }
 }

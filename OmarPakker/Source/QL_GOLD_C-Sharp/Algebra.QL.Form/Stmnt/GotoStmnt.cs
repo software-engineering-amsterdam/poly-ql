@@ -14,7 +14,7 @@ namespace Algebra.QL.Form.Stmnt
         public FrameworkElement BuildForm()
         {
             //TODO: Implement Goto
-            return new Button() { Content = GotoName };
+            return new Button() { Width = 200, Content = GotoName };
         }
     }
 }

@@ -6,17 +6,17 @@ namespace Algebra.QL.TypeCheck.Type
 {
 	public class StringType : BaseType
 	{
-        public override ITypeCheckType SuperType { get { return new BaseType(); } }
         public override ITypeCheckExpr DefaultValue { get { return new StringLiteral(String.Empty); } }
+        public override ITypeCheckType SuperType { get { return new BaseType(); } }
 
-		public StringType()
-		{
+        public StringType()
+        {
 
-		}
+        }
 
-		public override string ToString()
-		{
-			return "string";
-		}
-	}
+        public override string ToString()
+        {
+            return "string";
+        }
+    }
 }

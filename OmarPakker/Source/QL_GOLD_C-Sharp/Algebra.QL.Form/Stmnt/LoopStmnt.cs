@@ -19,11 +19,11 @@ namespace Algebra.QL.Form.Stmnt
         {
             StackPanel sp = new StackPanel();
             Expression.BuildForm();
-            FillChildren(sp, (int)Expression.ExpressionValue);
+            FillChildren(sp, System.Convert.ToInt32(Expression.ExpressionValue));
 
             Expression.ValueChanged += () =>
             {
-                FillChildren(sp, (int)Expression.ExpressionValue);
+                FillChildren(sp, System.Convert.ToInt32(Expression.ExpressionValue));
             };
             
             return sp;

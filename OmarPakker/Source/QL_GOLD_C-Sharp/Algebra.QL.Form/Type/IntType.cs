@@ -1,15 +1,15 @@
 ﻿using System;
-using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using Algebra.QL.Form.Expr;
 using Algebra.QL.Form.Expr.Literals;
+using Xceed.Wpf.Toolkit;
 
 namespace Algebra.QL.Form.Type
 {
 	public class IntType : RealType
 	{
         public override IFormExpr DefaultValue { get { return new IntLiteral(0); } }
+        public override IFormType SuperType { get { return new RealType(); } }
 
 		public IntType()
 		{
@@ -18,24 +18,21 @@ namespace Algebra.QL.Form.Type
 
         public override FrameworkElement BuildElement(IFormExpr value, object initialValue, bool editable)
         {
-            TextBox tb = new TextBox()
+            IntegerUpDown iud = new IntegerUpDown()
             {
                 Width = 200,
                 IsEnabled = editable,
-                Text = Convert.ToString(initialValue)
+                Value = Convert.ToInt32(initialValue)
             };
-            tb.TextChanged += (s, e) =>
+            iud.ValueChanged += (s, e) =>
             {
-                tb.Text = String.IsNullOrWhiteSpace(tb.Text) ? "0"
-                    : String.Join("", tb.Text.Where(c => Char.IsNumber(c)));
-
-                value.ExpressionValue = Convert.ToInt32(tb.Text);
+                value.ExpressionValue = iud.Value;
             };
             value.ValueChanged += () =>
             {
-                tb.Text = Convert.ToString(value.ExpressionValue);
+                iud.Value = Convert.ToInt32(value.ExpressionValue);
             };
-            return tb;
+            return iud;
         }
 
 		public override string ToString()

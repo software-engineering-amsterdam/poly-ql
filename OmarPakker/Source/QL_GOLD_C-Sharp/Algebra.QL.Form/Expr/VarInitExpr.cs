@@ -20,21 +20,24 @@ namespace Algebra.QL.Form.Expr
             
 		}
 
+        private void OnValueChanged()
+        {
+            if (ValueChanged != null)
+            {
+                ValueChanged();
+            }
+        }
+
         public IFormType BuildForm()
         {
             TypeEnvironment.Instance.DeclareVariable(this);
 
-            IFormType type = Value.BuildForm();
+            Value.BuildForm();
 
-            Value.ValueChanged += () =>
-            {
-                if (ValueChanged != null)
-                {
-                    ValueChanged();
-                }
-            };
+            Value.ValueChanged -= OnValueChanged;
+            Value.ValueChanged += OnValueChanged;
 
-            return type;
+            return Type;
         }
     }
 }

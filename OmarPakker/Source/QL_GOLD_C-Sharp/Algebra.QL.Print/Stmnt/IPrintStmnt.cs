@@ -2,7 +2,7 @@
 
 namespace Algebra.QL.Print.Stmnt
 {
-    public interface IPrintStmnt
+    public interface IPrintStmnt : IPrint
     {
         Block BuildDocument();
     }

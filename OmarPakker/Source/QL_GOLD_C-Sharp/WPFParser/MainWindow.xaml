@@ -30,6 +30,7 @@
                     </Grid.RowDefinitions>
                     
                     <RichTextBox Name="customCodeBlock" Grid.Row="0" Background="#1E1E1E" Foreground="LightGray"
+                        ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Auto"
                         SelectionChanged="CustomCodeBlock_SelectionChanged">
                         <RichTextBox.Resources>
                             <Style TargetType="{x:Type Paragraph}">
@@ -76,7 +77,8 @@
             </TabItem>
 
             <TabItem Header="Code Printout">
-                <RichTextBox Name="printOutputBlock" IsReadOnly="True" Background="#1E1E1E" Foreground="LightGray">
+                <RichTextBox Name="printOutputBlock" IsReadOnly="True" Background="#1E1E1E" Foreground="LightGray"
+                    ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Auto">
                     <RichTextBox.Resources>
                         <Style TargetType="{x:Type Paragraph}">
                             <Setter Property="Margin" Value="0"/>
@@ -93,7 +95,8 @@
         <GridSplitter Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Top" 
              ResizeBehavior="PreviousAndNext" Height="5" Background="Gray" />
 
-        <RichTextBox Name="errorOutputBlock" Grid.Row="3" IsReadOnly="True" Background="#1E1E1E">
+        <RichTextBox Name="errorOutputBlock" Grid.Row="3" IsReadOnly="True" Background="#1E1E1E"
+            ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Auto">
             <RichTextBox.Resources>
                 <Style TargetType="{x:Type Paragraph}">
                     <Setter Property="Margin" Value="2"/>

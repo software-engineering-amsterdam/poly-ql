@@ -19,25 +19,28 @@ namespace Algebra.QL.Form.Expr
             
         }
 
+        private void OnValueChanged()
+        {
+            if (ValueChanged != null)
+            {
+                ValueChanged();
+            }
+        }
+
         public IFormType BuildForm()
         {
             Expr1.BuildForm();
-            //TODO: If/Else should return the upperbound type
             IFormType a = Expr2.BuildForm();
             IFormType b = Expr3.BuildForm();
 
-            Action onValueChanged = () =>
-            {
-                if (ValueChanged != null)
-                {
-                    ValueChanged();
-                }
-            };
-            Expr1.ValueChanged += onValueChanged;
-            Expr2.ValueChanged += onValueChanged;
-            Expr3.ValueChanged += onValueChanged;
+            Expr1.ValueChanged -= OnValueChanged;
+            Expr2.ValueChanged -= OnValueChanged;
+            Expr3.ValueChanged -= OnValueChanged;
+            Expr1.ValueChanged += OnValueChanged;
+            Expr2.ValueChanged += OnValueChanged;
+            Expr3.ValueChanged += OnValueChanged;
 
-            return a;
+            return a.GetLeastUpperBound(b);
         }
     }
 }

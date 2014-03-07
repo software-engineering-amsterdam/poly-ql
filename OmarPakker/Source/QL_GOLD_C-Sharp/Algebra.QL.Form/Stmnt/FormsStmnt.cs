@@ -14,21 +14,14 @@ namespace Algebra.QL.Form.Stmnt
 
         public FrameworkElement BuildForm()
         {
-            //TODO: Forms should not display at the same time but one at a time
-            Grid g = new Grid();
-            g.ShowGridLines = true;
-            g.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(0, GridUnitType.Auto) });
-            g.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(0, GridUnitType.Auto) });
+            Style s = new Style();
+            s.Setters.Add(new Setter(UIElement.VisibilityProperty, Visibility.Collapsed));
 
-            FrameworkElement el1 = Statement1.BuildForm();
-            Grid.SetColumn(el1, 0);
-            FrameworkElement el2 = Statement2.BuildForm();
-            Grid.SetColumn(el2, 1);
+            TabControl t = new TabControl();// { ItemContainerStyle = s };
+            t.Items.Add(Statement1.BuildForm());
+            t.Items.Add(Statement2.BuildForm());
 
-            g.Children.Add(el1);
-            g.Children.Add(el2);
-            
-            return g;
+            return t;
         }
     }
 }

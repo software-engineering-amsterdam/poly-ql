@@ -4,41 +4,36 @@ using Algebra.QL.TypeCheck.Expr;
 namespace Algebra.QL.TypeCheck.Type
 {
 	//TODO: Get rid of UnknownType?
-	public sealed class UnknownType : ITypeCheckType
-	{
+    public class UnknownType : ITypeCheckType
+    {
         public Tuple<int, int> SourceStartPosition { get; set; }
         public Tuple<int, int> SourceEndPosition { get; set; }
-        public ITypeCheckType SuperType { get { return new UnknownType(); } }
-		public ITypeCheckExpr DefaultValue { get { return null; } }
+        public ITypeCheckExpr DefaultValue { get { return null; } }
+        public ITypeCheckType SuperType { get { return null; } }
 
         public UnknownType()
         {
 
         }
+        
+        public bool CompatibleWith(ITypeCheckType other)
+        {
+            return true;
+        }
+
+        public bool IsChildOf(ITypeCheckType other)
+        {
+            return true;
+        }
 
         public ITypeCheckType GetLeastUpperBound(ITypeCheckType other)
-		{
-			return this;
-		}
-
-        public bool CompatibleWith(ITypeCheckType other)
-		{
-			return false;
-		}
-
-        public override bool Equals(object obj)
         {
-            return GetType().Equals(obj.GetType());
+            return other;
         }
 
-        public override int GetHashCode()
+        public override string ToString()
         {
-            return GetType().GetHashCode();
+            return "unknown";
         }
-
-		public override string ToString()
-		{
-			return "unknown";
-		}
-	}
+    }
 }

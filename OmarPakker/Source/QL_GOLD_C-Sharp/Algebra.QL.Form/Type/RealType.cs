@@ -1,15 +1,15 @@
 ﻿using System;
-using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using Algebra.QL.Form.Expr;
 using Algebra.QL.Form.Expr.Literals;
+using Xceed.Wpf.Toolkit;
 
 namespace Algebra.QL.Form.Type
 {
 	public class RealType : BaseType
 	{
         public override IFormExpr DefaultValue { get { return new RealLiteral(0); } }
+        public override IFormType SuperType { get { return new BaseType(); } }
 
 		public RealType()
 		{
@@ -18,37 +18,22 @@ namespace Algebra.QL.Form.Type
 
         public override FrameworkElement BuildElement(IFormExpr value, object initialValue, bool editable)
         {
-            TextBox tb = new TextBox()
+            DoubleUpDown iud = new DoubleUpDown()
             {
                 Width = 200,
                 IsEnabled = editable,
-                Text = Convert.ToString(initialValue)
+                Increment = 0.01,
+                Value = Convert.ToDouble(initialValue)
             };
-            tb.TextChanged += (s, e) =>
+            iud.ValueChanged += (s, e) =>
             {
-                bool hasDot = false;
-                tb.Text = String.IsNullOrWhiteSpace(tb.Text) ? "0"
-                    : String.Join("", tb.Text.Where(c => 
-                        {
-                            if(Char.IsNumber(c))
-                            {
-                                return true;
-                            }
-                            else if (!hasDot && c == '.')
-                            {
-                                hasDot = true;
-                                return true;
-                            }
-                            return false;
-                        }));
-
-                value.ExpressionValue = Convert.ToDouble(tb.Text);
+                value.ExpressionValue = iud.Value;
             };
             value.ValueChanged += () =>
             {
-                tb.Text = Convert.ToString(value.ExpressionValue);
+                iud.Value = Convert.ToDouble(value.ExpressionValue);
             };
-            return tb;
+            return iud;
         }
 
 		public override string ToString()

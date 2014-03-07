@@ -9,6 +9,7 @@ namespace Algebra.QL.Form.Type
 	public class BoolType : BaseType
 	{
         public override IFormExpr DefaultValue { get { return new BoolLiteral(false); } }
+        public override IFormType SuperType { get { return new BaseType(); } }
 
 		public BoolType()
 		{

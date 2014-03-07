@@ -10,10 +10,5 @@ namespace Algebra.QL.Core.Expr
         {
             Value = value;
         }
-
-        public override string ToString()
-        {
-            return Value.ToString();
-        }
     }
 }

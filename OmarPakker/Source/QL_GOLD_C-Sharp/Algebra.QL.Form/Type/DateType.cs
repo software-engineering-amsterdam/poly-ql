@@ -8,7 +8,8 @@ namespace Algebra.QL.Form.Type
 {
 	public class DateType : BaseType
 	{
-        public override IFormExpr DefaultValue { get { return new DateLiteral(DateTime.UtcNow); } }
+        public override IFormExpr DefaultValue { get { return new DateLiteral(DateTime.UtcNow.Date); } }
+        public override IFormType SuperType { get { return new BaseType(); } }
 
 		public DateType()
 		{

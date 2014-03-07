@@ -3,7 +3,7 @@ using Algebra.QL.Print.Expr;
 
 namespace Algebra.QL.Print.Type
 {
-    public interface IPrintType
+    public interface IPrintType : IPrint
     {
         IPrintExpr DefaultValue { get; }
 

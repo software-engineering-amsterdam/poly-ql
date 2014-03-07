@@ -43,6 +43,7 @@
     <Compile Include="Factory\IFactory.cs" />
     <Compile Include="GrammarParser\Parser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Type\ITypeBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GOLD.Engine\GOLD.Engine.csproj">

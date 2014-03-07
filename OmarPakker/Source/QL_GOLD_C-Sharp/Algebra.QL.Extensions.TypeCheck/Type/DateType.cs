@@ -5,15 +5,15 @@ using Algebra.QL.TypeCheck.Type;
 
 namespace Algebra.QL.Extensions.TypeCheck.Type
 {
-	public class DateType : BaseType
+    public class DateType : BaseType
 	{
+        public override ITypeCheckExpr DefaultValue { get { return new DateLiteral(DateTime.UtcNow.Date); } }
         public override ITypeCheckType SuperType { get { return new BaseType(); } }
-        public override ITypeCheckExpr DefaultValue { get { return new DateLiteral(DateTime.UtcNow); } }
 
-		public DateType()
-		{
+        public DateType()
+        {
 
-		}
+        }
 
 		public override string ToString()
 		{

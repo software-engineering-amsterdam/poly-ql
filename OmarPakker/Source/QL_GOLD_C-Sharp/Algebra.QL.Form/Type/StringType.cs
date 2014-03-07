@@ -9,6 +9,7 @@ namespace Algebra.QL.Form.Type
 	public class StringType : BaseType
 	{
         public override IFormExpr DefaultValue { get { return new StringLiteral(String.Empty); } }
+        public override IFormType SuperType { get { return new BaseType(); } }
 
 		public StringType()
 		{

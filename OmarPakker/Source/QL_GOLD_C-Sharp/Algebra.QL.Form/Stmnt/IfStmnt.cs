@@ -15,16 +15,15 @@ namespace Algebra.QL.Form.Stmnt
 
         public FrameworkElement BuildForm()
         {
-            FrameworkElement trueElem = IfTrueBody.BuildForm();
             StackPanel sp = new StackPanel();
-            sp.Children.Add(trueElem);
+            sp.Children.Add(IfTrueBody.BuildForm());
 
             CheckExpression.BuildForm();
-            trueElem.Visibility = (bool)CheckExpression.ExpressionValue ? Visibility.Visible : Visibility.Collapsed;
+            sp.Visibility = (bool)CheckExpression.ExpressionValue ? Visibility.Visible : Visibility.Collapsed;
 
             CheckExpression.ValueChanged += () =>
             {
-                trueElem.Visibility = (bool)CheckExpression.ExpressionValue ? Visibility.Visible : Visibility.Collapsed;
+                sp.Visibility = (bool)CheckExpression.ExpressionValue ? Visibility.Visible : Visibility.Collapsed;
             };
 
             return sp;
