@@ -1,6 +1,7 @@
 package org.uva.sea.ql;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CommonTokenStream;
@@ -11,7 +12,7 @@ import org.uva.sea.ql.parser.antlr.QLParser;
 
 public class Compiler {
 
-	private ArrayList<String> errors = new ArrayList<String>();
+	private List<String> errors = new ArrayList<String>();
 
 	public Form compile(String src) {
 		try {
@@ -31,7 +32,7 @@ public class Compiler {
 		}
 	}
 
-	public ArrayList<String> getAllErrors() {
+	public List<String> getAllErrors() {
 		return errors;
 	}
 	

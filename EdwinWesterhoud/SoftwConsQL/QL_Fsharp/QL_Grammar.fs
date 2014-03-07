@@ -4,52 +4,43 @@ open System
 // Question types
 type qlType = QLBool | QLString | QLInt | QLDecimal
 
-// Expression types
-type exprType =
+// Literals
+type literal =
     | Bool      of bool
     | String    of string
     | Int       of int
     | Decimal   of float
 
-// EXPRESSION
+// Expression
 type booleanOp = And | Or | Lt | Gt | Le | Ge | Eq | Ne
 type arithmeticOp = Plus | Minus | Mult | Div
 type expression =
     | ID            of string
-    | Expr          of exprType
+    | Literal       of literal
     | Neg           of expression
     | BooleanOp     of expression * booleanOp * expression
     | ArithmeticOp  of expression * arithmeticOp * expression
-    | TypeError     of expression * string
-
-type assignment = 
-    {   ID          : string;
-        Label       : string;
-        Expression  : expression }
-
-type question =
-    {   ID      : string;
-        Label   : string;
-        Type    : qlType }
 
 type statement =
-    | Assignment    of assignment
-    | Question      of question
+    | Assignment    of string * string * expression
+    | Question      of string * string * qlType
     | Conditional   of expression * statement list
 
 type questionaire = 
     {   ID          : string;
         Statements  : statement list }
-    override m.ToString() = sprintf "%+A" m
+    override this.ToString() = sprintf "%+A" this
 
 
-type public Position(line, column) =
-    member public x.Line = line
-    member public x.Column = column
+type public Position(line, column, character) =
+    member public this.Line : int = line
+    member public this.Column : int = column
+    member public this.Character : int = character
 
 // Exception type for error reporting
-type public ParseErrorExceptionMessage(message, startPos, endPos) = 
-    member public x.Message  = message
-    member public x.StartPos = startPos
-    member public x.EndPos   = endPos
+type public ParseErrorExceptionMessage(message, lastToken, startPos, endPos) = 
+    member public this.Message : string = message
+    member public this.LastToken : string = lastToken
+    member public this.StartPos : Position = startPos
+    member public this.EndPos : Position  = endPos
 exception ParseErrorException of ParseErrorExceptionMessage

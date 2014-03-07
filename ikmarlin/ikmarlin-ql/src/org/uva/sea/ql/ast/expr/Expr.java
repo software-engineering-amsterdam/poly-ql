@@ -1,16 +1,13 @@
 package org.uva.sea.ql.ast.expr;
 
 import org.uva.sea.ql.ast.type.Type;
-import org.uva.sea.ql.checker.ExprVisitable;
-import org.uva.sea.ql.checker.ExprVisitor;;
+import org.uva.sea.ql.checker.visitor.IExprVisitable;
 
-public abstract class Expr implements ExprVisitable {
+public abstract class Expr implements IExprVisitable {
 	
 	public abstract Type hasType();
 	
 	@Override
-	public abstract <T> T accept(ExprVisitor<T> qlv);
-	
-	@Override
 	public abstract String toString();
+	
 }

@@ -1,58 +1,32 @@
 package org.uva.sea.ql.checker;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.uva.sea.ql.ast.form.Form;
-import org.uva.sea.ql.ast.stmt.AnswerableQuestion;
-import org.uva.sea.ql.ast.stmt.Block;
-import org.uva.sea.ql.ast.stmt.ComputedQuestion;
-import org.uva.sea.ql.ast.stmt.ConditionalQuestion;
-import org.uva.sea.ql.ast.stmt.Question;
-import org.uva.sea.ql.ast.stmt.Stmt;
 import org.uva.sea.ql.ast.type.Type;
+import org.uva.sea.ql.checker.visitor.SymbolCollectorStmtVisitor;
 
-public class SymbolCollector implements StmtVisitor {
+public class SymbolCollector {
 
-	public HashMap<String, Type> symbolTable;
+	private SymbolCollectorStmtVisitor sv;
 	
 	public SymbolCollector(){
-		this.symbolTable = new HashMap<String, Type>();
+		this.sv = new SymbolCollectorStmtVisitor();
 	}
 	
-	public HashMap<String, Type> populateTable(Form form){
-		visit(form);
-		return this.symbolTable;
-	}
-	
-	@Override
-	public void visit(AnswerableQuestion stmt) {
-		addSymbol(stmt);
+	public Map<String, List<Type>> getSymbolTable(Form form){
+		form.getBlock().accept(sv);
+		return sv.getSymbolTable();
 	}
 
-	@Override
-	public void visit(ComputedQuestion stmt) {
-		addSymbol(stmt);
-	}
-
-	@Override
-	public void visit(ConditionalQuestion stmt) {
-		stmt.getBody().accept(this);
-	}
-
-	@Override
-	public void visit(Block stmt) {
-		for(Stmt s:stmt.getStatements()){
-			s.accept(this);
+	public Map<String, Type> getSingleTypeSymbolsTable(Map<String, List<Type>> duplicatesSymbolTable){
+		Map<String, Type> symbolTable = new HashMap<String, Type>();
+		for(Map.Entry<String, List<Type>> entry : duplicatesSymbolTable.entrySet()){
+			symbolTable.put(entry.getKey(), entry.getValue().get(0));
 		}
-	}
-	
-	@Override
-	public void visit(Form stmt) {
-		stmt.getBlock().accept(this);
-	}
-	
-	private void addSymbol(Question q){
-		this.symbolTable.put(q.getIdent().getName(), q.getType().hasType());
+		return symbolTable;
 	}
 
 }

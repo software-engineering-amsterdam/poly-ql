@@ -3,6 +3,9 @@ package ql.ast.expression;
 import ql.ast.type.*;
 import ql.ast.*;
 
+/**
+ * Expression class for parentheses
+ */
 public class ExpressionParentheses implements ExpressionInterface {
 	ExpressionInterface expression;
 	

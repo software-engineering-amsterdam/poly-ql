@@ -1,0 +1,95 @@
+﻿%{   
+open System
+open QL.Grammar
+open Microsoft.FSharp.Collections   
+%}   
+ 
+%token <string> ID   
+%token <int> INT    
+%token <string> STRING
+%token <bool> BOOL
+ 
+%token FORM
+%token QL_BOOLEAN
+%token QL_INTEGER
+%token QL_MONEY
+%token QL_STRING
+%token BOOL_TRUE
+%token BOOL_FALSE
+%token IF
+%token ASS
+%token BRACKET_OPEN
+%token BRACKET_CLOSE
+%token PARENS_OPEN
+%token PARENS_CLOSE
+%token PLUS
+%token MINUS
+%token DIVIDE
+%token TIMES
+%token EQUALS
+%token NOT_EQUALS
+%token NOT
+%token LESS_THAN
+%token GREATER_THAN
+%token LESS_EQUALS_THAN
+%token GREATER_EQUALS_THAN
+%token EOF
+
+// Associativity and Precedences - Lowest precedence comes first
+%left EQUALS NOT_EQUALS LESS_THAN GREATER_THAN LESS_EQUALS_THAN GREATER_EQUALS_THAN
+%left PLUS MINUS
+%left TIMES DIVIDE
+%left NOT
+
+// start   
+%start start   
+%type <QL.Grammar.Form> start   
+ 
+%%   
+ 
+start:  FORM ID BRACKET_OPEN Statement_List BRACKET_CLOSE
+        EOF                 {
+                                {  Name = $2; 
+                                   StatementList = $4; }
+                            }             
+
+Statement_List:
+    |                                             { [] }
+	| Statement				                      { [$1] }
+	| Statement Statement_List	                  { $1 :: $2 }
+
+Statement:
+    | Question                                    { $1 }
+	| Condition                                   { $1 }
+
+Question: ID ASS STRING QuestionType              { Question($1,$3,$4) } 
+
+QuestionType:
+	|	QL_BOOLEAN				                  { QL_Boolean }
+	|   QL_INTEGER				                  { QL_Integer }
+	|   QL_MONEY				                  { QL_Money }
+	|   QL_STRING				                  { QL_String }
+
+Condition: IF PARENS_OPEN Expression PARENS_CLOSE BRACKET_OPEN Statement_List BRACKET_CLOSE  { Condition($3,$6) } 
+
+Expression:
+    | PARENS_OPEN Expression PARENS_CLOSE         { $2 }
+    | ID                                          { Id($1) }
+    | INT                                         { LiteralStatement(Integer($1)) }
+    | BOOL                                        { LiteralStatement(Boolean($1)) }
+    | STRING                                      { LiteralStatement(String($1)) }
+	| BOOL_TRUE                                   { LiteralStatement(Boolean(true)) }
+    | BOOL_FALSE                                  { LiteralStatement(Boolean(false)) }
+    | NOT Expression		                      { Neg($2) }
+	| Expression PLUS Expression                  { ArithmicExpression($1,Plus,$3) }
+    | Expression MINUS Expression                 { ArithmicExpression($1,Minus,$3) }
+    | Expression DIVIDE Expression                { ArithmicExpression($1,Divide,$3) }
+    | Expression TIMES Expression                 { ArithmicExpression($1,Times,$3) }
+    | Expression EQUALS Expression                { BinaryExpression($1,Equals,$3) }
+    | Expression NOT_EQUALS Expression            { BinaryExpression($1,NotEquals,$3) }
+    | Expression LESS_THAN Expression             { BinaryExpression($1,LessThan,$3) }
+    | Expression LESS_EQUALS_THAN Expression      { BinaryExpression($1,LessEqualsThan,$3) }
+    | Expression GREATER_THAN Expression          { BinaryExpression($1,GreaterThan,$3) }
+    | Expression GREATER_EQUALS_THAN Expression   { BinaryExpression($1,GreaterEqualsThan,$3) }
+
+%%

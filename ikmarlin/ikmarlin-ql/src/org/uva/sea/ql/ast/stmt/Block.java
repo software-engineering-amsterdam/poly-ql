@@ -1,12 +1,13 @@
 package org.uva.sea.ql.ast.stmt;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import org.uva.sea.ql.checker.StmtVisitor;
+import org.uva.sea.ql.checker.visitor.IStmtVisitor;
 
 public class Block extends Stmt {
 	
-	private ArrayList<Stmt> stmts;
+	private List<Stmt> stmts;
 	
 	public Block(){
 		this.stmts = new ArrayList<Stmt>();
@@ -16,12 +17,12 @@ public class Block extends Stmt {
 		this.stmts.add(stmt);
 	}
 	
-	public ArrayList<Stmt> getStatements(){
+	public List<Stmt> getStatements(){
 		return this.stmts;
 	}
 	
 	@Override
-	public void accept(StmtVisitor sv) {
+	public void accept(IStmtVisitor sv) {
 		sv.visit(this);
 	}
 	

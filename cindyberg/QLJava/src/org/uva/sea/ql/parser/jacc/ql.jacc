@@ -16,10 +16,12 @@ import org.uva.sea.ql.ast.type.*;
 %start top 
 
 %token <Identifier> IDENTIFIER
-%token <IntLiteral> INTEGER
-%token <MoneyLiteral> MONEY
-%token <StringLiteral> STRING
-%token <BoolLiteral> BOOLEAN
+%token <IntegerLiteral> INTEGERLITERAL
+%token <MoneyLiteral> MONEYLITERAL
+%token <StringLiteral> STRINGLITERAL
+%token <BooleanLiteral> BOOLEANLITERAL
+%token BOOLEAN INTEGER STRING MONEY
+
 
 //operators
 %token '*' '/' '+' '-' AND OR NEQ EQ '<' LEQ '>' GEQ '!' '='
@@ -39,11 +41,11 @@ import org.uva.sea.ql.ast.type.*;
 //nonterminals
 %type <ASTNode> astnode
 %type <Form> form
-%type <QuestionSet> statements
+%type <Questions> statements
 %type <Statement> statement
 %type <Question> question
-%type <If> ifThen
-%type <IfElse> ifThenElse
+%type <IfStatement> ifThen
+%type <IfElseStatement> ifThenElse
 %type <Expression> expression
 %type <Type> type
 
@@ -65,8 +67,8 @@ import org.uva.sea.ql.ast.*;
  form : FORM IDENTIFIER '{' statements '}' {$$ = new Form($2,$4);}
  	  ; 
 
- statements : statement statements {$$ = new QuestionSet($1,$2);}
- 		    | statement			   {$$ = new QuestionSet($1);}
+ statements : statement statements {$$ = new Questions($1,$2);}
+ 		    | statement			   {$$ = new Questions($1);}
  		    ;
  		    
  statement : question
@@ -74,14 +76,14 @@ import org.uva.sea.ql.ast.*;
        	   | ifThenElse
  		   ;
  		   
- question : IDENTIFIER ':' STRING type '(' expression ')' {$$ = new ExprQuestion($1,$3,$4,$6);}
- 		  | IDENTIFIER ':' STRING type                    {$$ = new Question($1,$3,$4);}
+ question : IDENTIFIER ':' STRINGLITERAL type '(' expression ')' {$$ = new ExpressionQuestion($1,$3,$4,$6);}
+ 		  | IDENTIFIER ':' STRINGLITERAL type                    {$$ = new Question($1,$3,$4);}
           ;
   
- ifThen : IF '(' expression ')' '{' statements '}' {$$ = new If($3,$6);}
+ ifThen : IF '(' expression ')' '{' statements '}' {$$ = new IfStatement($3,$6);}
  	    ;   
  	       
- ifThenElse : IF '(' expression ')' '{' statements '}' ELSE '{' statements '}'{$$ = new IfElse($3,$6,$10);} 
+ ifThenElse : IF '(' expression ')' '{' statements '}' ELSE '{' statements '}'{$$ = new IfElseStatement($3,$6,$10);} 
  			;
  
  expression : logical
@@ -89,9 +91,9 @@ import org.uva.sea.ql.ast.*;
  			| comparison
  		    | '(' expression ')'		{ $$ = $2; }
  		    | IDENTIFIER     			{ $$ = $1; }
-		    | INTEGER					{ $$ = $1; }
-		    | BOOLEAN					{ $$ = $1; }
-		    | STRING					{ $$ = $1; }
+		    | INTEGERLITERAL			{ $$ = $1; }
+		    | BOOLEANLITERAL			{ $$ = $1; }
+		    | STRINGLITERAL				{ $$ = $1; }
 		    ;			
  			
 arithmetic : '+' expression	%prec UPLUS { $$ = new Pos($2); }
@@ -116,8 +118,8 @@ comparison : expression EQ expression 	{ $$ = new Eq($1, $3); }
      	   ;
 		   
  type : STRING  { $$ = new StringType(); }
-      | INTEGER { $$ = new IntType(); }
-      | BOOLEAN { $$ = new BoolType(); }
+      | INTEGER { $$ = new IntegerType(); }
+      | BOOLEAN { $$ = new BooleanType(); }
       | MONEY   { $$ = new MoneyType(); }
       ;
 

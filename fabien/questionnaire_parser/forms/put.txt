@@ -1,0 +1,6 @@
+form Hello {
+  How much money can you spend?
+  money fu
+  
+  put "Great that would save" (10 * fu)
+}

@@ -1,9 +1,8 @@
 package org.uva.sea.ql.ast.stmt;
 
 import org.uva.sea.ql.ast.expr.Expr;
-import org.uva.sea.ql.checker.StmtVisitor;
 
-public class ConditionalQuestion extends Stmt {
+public abstract class ConditionalQuestion extends Stmt {
 	
 	private Expr condition;
 	private Block body;
@@ -30,15 +29,11 @@ public class ConditionalQuestion extends Stmt {
 	}
 
 	@Override
-	public void accept(StmtVisitor sv) {
-		sv.visit(this);
-	}
-
-	@Override
 	public String toString(){
 		String question = "[";
 		question += getCondition().toString();
 		question += getBody().toString();
 		question += "]";
 		return question;
-	}}
+	}
+}

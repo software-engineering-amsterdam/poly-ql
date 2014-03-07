@@ -1,0 +1,8 @@
+form Types {
+    qBool: "Label here" boolean
+    qNum: "Label here" number
+    
+    qEqBoolBool: "Label here as well" (qBool == qBool)
+    qPlusNumNum: "Label here as well" (qNum + qNum)
+    qPlusBoolNum: "Label here as well" (qBool + qNum)
+}

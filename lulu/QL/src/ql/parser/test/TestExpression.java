@@ -15,6 +15,8 @@ import ql.ast.expr.operation.andor.*;
 import ql.ast.expr.operation.mul.*;
 import ql.ast.expr.operation.rel.*;
 import ql.ast.expr.operation.un.*;
+import ql.ast.value.Bool;
+import ql.ast.value.Int;
 import ql.parser.antlr.FormParser;
 
 public class TestExpression {
@@ -43,6 +45,16 @@ public class TestExpression {
 		assertEquals(Mul.class, parser.parseExpr("a * (b + c)").getClass());
 	}
 	
+	@Test
+	public void testDiv() throws ParseError, IOException {
+		assertEquals(Div.class, parser.parseExpr("a / b").getClass());
+		assertEquals(Div.class, parser.parseExpr("a * b / c").getClass());
+		assertEquals(Div.class, parser.parseExpr("a / (b * c)").getClass());
+		assertEquals(Div.class, parser.parseExpr("(a * b) / c").getClass());
+		assertEquals(Div.class, parser.parseExpr("(a / b)").getClass());
+		assertEquals(Div.class, parser.parseExpr("(a + b) / c").getClass());
+		assertEquals(Div.class, parser.parseExpr("a / (b + c)").getClass());
+	}
 	@Test
 	public void testRel() throws ParseError, IOException {
 		assertEquals(LT.class, parser.parseExpr("a < b").getClass());
@@ -73,5 +85,48 @@ public class TestExpression {
 		assertEquals(IntExpr.class, parser.parseExpr("234234234").getClass());
 	}
 	
+	@Test
+	public void testCalculate() throws ParseError, IOException {
+		assertEquals(new Integer(4), ((Int)parser.parseExpr("1+3").eval()).getValue());
+		assertEquals(new Integer(5), ((Int)parser.parseExpr("1+3+1").eval()).getValue());
+		assertEquals(new Integer(6), ((Int)parser.parseExpr("1+ (3+2)").eval()).getValue());
+		assertEquals(new Integer(-2), ((Int)parser.parseExpr("1-3").eval()).getValue());
+		assertEquals(new Integer(3), ((Int)parser.parseExpr("1+3-1").eval()).getValue());
+		assertEquals(new Integer(5), ((Int)parser.parseExpr("10- (3+2)").eval()).getValue());
+		assertEquals(new Integer(8), ((Int)parser.parseExpr("2*4").eval()).getValue());
+		assertEquals(new Integer(12), ((Int)parser.parseExpr("2+5*2").eval()).getValue());
+		assertEquals(new Integer(2), ((Int)parser.parseExpr("6 / 3").eval()).getValue());
+		assertEquals(new Integer(4), ((Int)parser.parseExpr("7-6/2").eval()).getValue());
+		assertEquals(new Integer(4), ((Int)parser.parseExpr("-1+5").eval()).getValue());
+		assertEquals(new Integer(4), ((Int)parser.parseExpr("--4").eval()).getValue());
+		assertEquals(new Integer(-4), ((Int)parser.parseExpr("+-4").eval()).getValue());
+		assertEquals(new Integer(3), ((Int)parser.parseExpr("+4-1").eval()).getValue());
+		assertEquals(new Integer(7), ((Int)parser.parseExpr("+4-(-3)").eval()).getValue());
+	}
 	
+	@Test
+	public void testTF() throws ParseError, IOException {
+		assertTrue(((Bool)parser.parseExpr(" true && true").eval()).getValue());
+		assertFalse(((Bool)parser.parseExpr("true && false").eval()).getValue());
+		assertFalse(((Bool)parser.parseExpr("false && false").eval()).getValue());
+		assertTrue(((Bool)parser.parseExpr("true || false").eval()).getValue());
+		assertFalse(((Bool)parser.parseExpr("false || false").eval()).getValue());
+		assertTrue(((Bool)parser.parseExpr("1==1").eval()).getValue());
+		assertTrue(((Bool)parser.parseExpr("(1+2)==(0+3+0)").eval()).getValue());
+		assertTrue(((Bool)parser.parseExpr("true==true").eval()).getValue());
+		assertFalse(((Bool)parser.parseExpr("true==false").eval()).getValue());
+		assertFalse(((Bool)parser.parseExpr("1==3").eval()).getValue());
+		assertFalse(((Bool)parser.parseExpr("\"abc\"==\"bcd\"").eval()).getValue());
+		assertTrue(((Bool)parser.parseExpr("\"abc\"==\"abc\"").eval()).getValue());
+		assertFalse(((Bool)parser.parseExpr("\"abc\"!=\"abc\"").eval()).getValue());
+		assertTrue(((Bool)parser.parseExpr("\"abc\"!=\"bld\"").eval()).getValue());
+		assertTrue(((Bool)parser.parseExpr("1<3").eval()).getValue());
+		assertFalse(((Bool)parser.parseExpr("1>3").eval()).getValue());
+		assertTrue(((Bool)parser.parseExpr("1<=3").eval()).getValue());
+		assertFalse(((Bool)parser.parseExpr("1>=3").eval()).getValue());
+		assertTrue(((Bool)parser.parseExpr("(1<=3) || (4<2)").eval()).getValue());
+		assertTrue(((Bool)parser.parseExpr("(1<=3)&&(9>4)").eval()).getValue());
+		assertFalse(((Bool)parser.parseExpr("(!(1<=3)&&(9>4))").eval()).getValue());
+		assertTrue(((Bool)parser.parseExpr("!(1>3)").eval()).getValue());
+	}
 }

@@ -3,7 +3,7 @@ package org.uva.sea.ql.ast.operators.logical;
 import org.uva.sea.ql.ast.Expression;
 import org.uva.sea.ql.ast.ExpressionVisitor;
 import org.uva.sea.ql.ast.operators.BinaryOperator;
-import org.uva.sea.ql.ast.type.BoolType;
+import org.uva.sea.ql.ast.type.BooleanType;
 import org.uva.sea.ql.ast.type.Type;
 import org.uva.sea.ql.typechecker.TypeEnvironment;
 
@@ -19,12 +19,12 @@ public class And extends BinaryOperator {
 		
 	}
 	
-	public String show(){
+	public String toString(){
 		return "&&";
 	}
 
 	public Type typeOf(TypeEnvironment environment) {
-		return new BoolType();
+		return new BooleanType();
 	}
 
 }

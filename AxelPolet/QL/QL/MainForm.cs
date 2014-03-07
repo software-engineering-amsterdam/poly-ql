@@ -1,22 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.IO;
-using System.Reflection;
-
-using Antlr4.Runtime;
-using Antlr4.Runtime.Tree;
-
 using QL.QLClasses;
-using QL.QLClasses.Statements;
-using QL.QLClasses.Expressions.Conditions;
-
 using QL.TypeChecker;
 
 namespace QL
@@ -30,55 +16,46 @@ namespace QL
 
         private void btnParse_Click(object sender, EventArgs e)
         {
-            txtOutput.Clear();
-            Identifiers.Reset();
+            txtMessages.Clear();
+            pnlErrors.Controls.Clear();
+            
+            QLController controller = new QLController();
+            Questionnaire AST = controller.Run(txtInput.Text);
 
-            string inputString = txtInput.Text;
-            MemoryStream inputStream = new MemoryStream(Encoding.UTF8.GetBytes(inputString ?? ""));
+            foreach (string lexerError in controller.LexerErrors)
+                WriteError(lexerError);
 
-            AntlrInputStream input = new AntlrInputStream(inputStream);
-            QLLexer lexer = new QLLexer(input);
-            CommonTokenStream tokens = new CommonTokenStream(lexer);
-            QLParser parser = new QLParser(tokens);
+            foreach (string parserError in controller.ParserErrors)
+                WriteError(parserError);
 
-            lexer.RemoveErrorListeners();
-            parser.RemoveErrorListeners();
+            QLTypeChecker typeChecker = controller.TypeChecker;
 
-            lexer.AddErrorListener(new LexerErrorListener(){OnError = WriteError});
-            parser.AddErrorListener(new ParserErrorListener(){OnError = WriteError});
+            int yPos = 0;
 
-            IParseTree tree = parser.questionnaire();
-            Questionnaire AST = parser.theQuestionnaire;
-
-            if (AST == null)
+            foreach (QLTypeError typeError in typeChecker.TypeErrors.OrderBy((te) => te.IsWarning))
             {
-                WriteError("AST is null!!!");
+                string error = string.Format("{5} QLTypeChecker: {0} {1}" +
+                                             "<At token '{2}' on line {3}, column {4}>",
+                    typeError.Message, Environment.NewLine,
+                    typeError.TokenInfo.TokenText,
+                    typeError.TokenInfo.TokenLine,
+                    typeError.TokenInfo.TokenColumn,
+                    typeError.IsWarning ? "(Warning)" : "(Error)");
 
-                txtOutput.Text += string.Format(@"{0}{0} Generated parse tree: 
+                pnlErrors.Controls.Add(new Label{Location = new Point(0, yPos), Text = error, ForeColor = Color.White, BackColor = typeError.IsWarning ? Color.Orange : Color.Red, Width = pnlErrors.Width, Height = 30});
+                yPos += 35;
+            }
+
+
+            txtMessages.Text += string.Format(@"{0}{0} Generated parse tree: 
                                               {0} {1}"
-                                    , Environment.NewLine
-                                    , tree.ToStringTree(parser));
-            }
-            else
-            {
-                QLTypeChecker typeChecker = new QLTypeChecker();
-                typeChecker.OnError += WriteError;
-                typeChecker.Check(AST);
-
-                txtOutput.Text += string.Format(@"{0}{0} Generated parse tree: 
-                                              {0} {1}
-                                              {0} {2}
-                                              {0} {3}"
-                                    , Environment.NewLine
-                                    , tree.ToStringTree(parser)
-                                    , AST.ID
-                                    , AST.Title);
-            }
+                    , Environment.NewLine
+                    , controller.GetParseTreeString());
         }
             
         public void WriteError(string error)
         {
-            txtOutput.Text += Environment.NewLine + error;
+            txtMessages.Text += Environment.NewLine + error;
         }
     }
 }

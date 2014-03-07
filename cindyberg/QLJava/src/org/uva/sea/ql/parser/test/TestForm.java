@@ -4,11 +4,12 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 import org.uva.sea.ql.ast.statement.Form;
+import org.uva.sea.ql.parser.jacc.ParseException;
 
 public class TestForm extends TestParser {
 	
 	@Test
-	public void testForms(){
+	public void testForms() throws ParseException{
 		
 		 
 		assertEquals(parser.parser("form fName { "

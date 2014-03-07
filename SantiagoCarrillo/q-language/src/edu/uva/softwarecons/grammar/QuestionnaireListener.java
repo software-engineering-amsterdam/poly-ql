@@ -9,6 +9,17 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface QuestionnaireListener extends ParseTreeListener {
 	/**
+	 * Enter a parse tree produced by {@link QuestionnaireParser#else}.
+	 * @param ctx the parse tree
+	 */
+	void enterElse(@NotNull QuestionnaireParser.ElseContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QuestionnaireParser#else}.
+	 * @param ctx the parse tree
+	 */
+	void exitElse(@NotNull QuestionnaireParser.ElseContext ctx);
+
+	/**
 	 * Enter a parse tree produced by {@link QuestionnaireParser#simpleQuestion}.
 	 * @param ctx the parse tree
 	 */
@@ -20,26 +31,15 @@ public interface QuestionnaireListener extends ParseTreeListener {
 	void exitSimpleQuestion(@NotNull QuestionnaireParser.SimpleQuestionContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link QuestionnaireParser#expQuestion}.
+	 * Enter a parse tree produced by {@link QuestionnaireParser#computedQuestion}.
 	 * @param ctx the parse tree
 	 */
-	void enterExpQuestion(@NotNull QuestionnaireParser.ExpQuestionContext ctx);
+	void enterComputedQuestion(@NotNull QuestionnaireParser.ComputedQuestionContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link QuestionnaireParser#expQuestion}.
+	 * Exit a parse tree produced by {@link QuestionnaireParser#computedQuestion}.
 	 * @param ctx the parse tree
 	 */
-	void exitExpQuestion(@NotNull QuestionnaireParser.ExpQuestionContext ctx);
-
-	/**
-	 * Enter a parse tree produced by {@link QuestionnaireParser#ifElse}.
-	 * @param ctx the parse tree
-	 */
-	void enterIfElse(@NotNull QuestionnaireParser.IfElseContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link QuestionnaireParser#ifElse}.
-	 * @param ctx the parse tree
-	 */
-	void exitIfElse(@NotNull QuestionnaireParser.IfElseContext ctx);
+	void exitComputedQuestion(@NotNull QuestionnaireParser.ComputedQuestionContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link QuestionnaireParser#integer}.
@@ -130,6 +130,17 @@ public interface QuestionnaireListener extends ParseTreeListener {
 	void exitAnd(@NotNull QuestionnaireParser.AndContext ctx);
 
 	/**
+	 * Enter a parse tree produced by {@link QuestionnaireParser#id}.
+	 * @param ctx the parse tree
+	 */
+	void enterId(@NotNull QuestionnaireParser.IdContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QuestionnaireParser#id}.
+	 * @param ctx the parse tree
+	 */
+	void exitId(@NotNull QuestionnaireParser.IdContext ctx);
+
+	/**
 	 * Enter a parse tree produced by {@link QuestionnaireParser#not}.
 	 * @param ctx the parse tree
 	 */
@@ -196,6 +207,17 @@ public interface QuestionnaireListener extends ParseTreeListener {
 	void exitMoney(@NotNull QuestionnaireParser.MoneyContext ctx);
 
 	/**
+	 * Enter a parse tree produced by {@link QuestionnaireParser#boolean}.
+	 * @param ctx the parse tree
+	 */
+	void enterBoolean(@NotNull QuestionnaireParser.BooleanContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QuestionnaireParser#boolean}.
+	 * @param ctx the parse tree
+	 */
+	void exitBoolean(@NotNull QuestionnaireParser.BooleanContext ctx);
+
+	/**
 	 * Enter a parse tree produced by {@link QuestionnaireParser#parenthesis}.
 	 * @param ctx the parse tree
 	 */
@@ -205,26 +227,4 @@ public interface QuestionnaireListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitParenthesis(@NotNull QuestionnaireParser.ParenthesisContext ctx);
-
-	/**
-	 * Enter a parse tree produced by {@link QuestionnaireParser#bool}.
-	 * @param ctx the parse tree
-	 */
-	void enterBool(@NotNull QuestionnaireParser.BoolContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link QuestionnaireParser#bool}.
-	 * @param ctx the parse tree
-	 */
-	void exitBool(@NotNull QuestionnaireParser.BoolContext ctx);
-
-	/**
-	 * Enter a parse tree produced by {@link QuestionnaireParser#variable}.
-	 * @param ctx the parse tree
-	 */
-	void enterVariable(@NotNull QuestionnaireParser.VariableContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link QuestionnaireParser#variable}.
-	 * @param ctx the parse tree
-	 */
-	void exitVariable(@NotNull QuestionnaireParser.VariableContext ctx);
 }

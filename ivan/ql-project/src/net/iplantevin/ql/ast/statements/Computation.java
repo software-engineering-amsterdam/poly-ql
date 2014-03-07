@@ -1,0 +1,37 @@
+package net.iplantevin.ql.ast.statements;
+
+import net.iplantevin.ql.ast.LineInfo;
+import net.iplantevin.ql.ast.expressions.Expression;
+import net.iplantevin.ql.ast.expressions.literals.ID;
+import net.iplantevin.ql.ast.expressions.literals.Str;
+import net.iplantevin.ql.ast.types.Type;
+import net.iplantevin.ql.ast.visitors.IASTVisitor;
+
+/**
+ * Computed question. In addition to name, label and type, also has an Expression.
+ *
+ * @author Ivan
+ */
+public class Computation extends Questionable {
+    private final Expression expression;
+
+    public Computation(ID name, Str label, Type type, Expression expression, LineInfo lineInfo) {
+        super(name, label, type, lineInfo);
+
+        this.expression = expression;
+    }
+
+    public Expression getExpression() {
+        return expression;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "(" + expression.toString() + ")\n";
+    }
+
+    @Override
+    public <T> T accept(IASTVisitor<T> visitor) {
+        return visitor.visit(this);
+    }
+}

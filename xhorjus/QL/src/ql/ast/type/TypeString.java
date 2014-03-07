@@ -4,6 +4,9 @@ import ql.ast.statement.StatementBoolean;
 import ql.ast.statement.StatementMoney;
 import ql.ast.statement.StatementString;
 
+/** 
+ * "string" token class
+ */
 public class TypeString implements TypeInterface {
 	public TypeString() { }
 
@@ -22,4 +25,8 @@ public class TypeString implements TypeInterface {
 		return true;
 	}
 
+	@Override
+	public String toStr() {
+		return "string";
+	}
 }

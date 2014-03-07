@@ -2,10 +2,8 @@ package org.uva.sea.ql.ast.form;
 
 import org.uva.sea.ql.ast.expr.Ident;
 import org.uva.sea.ql.ast.stmt.Block;
-import org.uva.sea.ql.ast.stmt.Stmt;
-import org.uva.sea.ql.checker.StmtVisitor;
 
-public class Form extends Stmt {
+public class Form {
 	private Ident ident;
 	private Block stmts;
 	
@@ -32,9 +30,4 @@ public class Form extends Stmt {
 		return form;
 	}
 
-	@Override
-	public void accept(StmtVisitor sv) {
-		sv.visit(this);
-	}
-	
 }

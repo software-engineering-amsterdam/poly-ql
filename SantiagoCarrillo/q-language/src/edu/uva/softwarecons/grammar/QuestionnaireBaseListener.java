@@ -17,6 +17,19 @@ public class QuestionnaireBaseListener implements QuestionnaireListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterElse(@NotNull QuestionnaireParser.ElseContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitElse(@NotNull QuestionnaireParser.ElseContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterSimpleQuestion(@NotNull QuestionnaireParser.SimpleQuestionContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -30,26 +43,13 @@ public class QuestionnaireBaseListener implements QuestionnaireListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExpQuestion(@NotNull QuestionnaireParser.ExpQuestionContext ctx) { }
+	@Override public void enterComputedQuestion(@NotNull QuestionnaireParser.ComputedQuestionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExpQuestion(@NotNull QuestionnaireParser.ExpQuestionContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterIfElse(@NotNull QuestionnaireParser.IfElseContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitIfElse(@NotNull QuestionnaireParser.IfElseContext ctx) { }
+	@Override public void exitComputedQuestion(@NotNull QuestionnaireParser.ComputedQuestionContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
@@ -160,6 +160,19 @@ public class QuestionnaireBaseListener implements QuestionnaireListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterId(@NotNull QuestionnaireParser.IdContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitId(@NotNull QuestionnaireParser.IdContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterNot(@NotNull QuestionnaireParser.NotContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -238,6 +251,19 @@ public class QuestionnaireBaseListener implements QuestionnaireListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterBoolean(@NotNull QuestionnaireParser.BooleanContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBoolean(@NotNull QuestionnaireParser.BooleanContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterParenthesis(@NotNull QuestionnaireParser.ParenthesisContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -245,32 +271,6 @@ public class QuestionnaireBaseListener implements QuestionnaireListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitParenthesis(@NotNull QuestionnaireParser.ParenthesisContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterBool(@NotNull QuestionnaireParser.BoolContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitBool(@NotNull QuestionnaireParser.BoolContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterVariable(@NotNull QuestionnaireParser.VariableContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitVariable(@NotNull QuestionnaireParser.VariableContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

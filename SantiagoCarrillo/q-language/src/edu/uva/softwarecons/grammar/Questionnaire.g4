@@ -4,13 +4,13 @@ import CommonLexerRules;
 questionnaire:   'form' ID '{' question+ '}';
 
 question: ID ':' STRING type                                 # simpleQuestion
-    |     ID ':' STRING type (expr)                          # expQuestion
+    |     ID ':' STRING type '(' expr ')'                    # computedQuestion
 	|	  'if' '(' expr ')' '{' question+ '}'   elsestat?    # if
     ;
 
-elsestat: 'else' '{' question+ '}'    # ifElse;
+elsestat: 'else' '{' question+ '}'    # else;
    
-type: BOOL_TYPE        # bool
+type: BOOL_TYPE        # boolean
 	| STRING_TYPE      # string
     | INT_TYPE         # integer
     | DATE_TYPE        # date
@@ -25,8 +25,8 @@ expr:   expr (MUL|DIV) expr                         # mulDiv
     |   NOT expr                                    # not
     |   expr (AND) expr                             # and
     |   expr (OR) expr                              # or
-    |   ID                                          # variable
     |   INT                                         # int
+    |   ID                                          # id
     |   '(' expr ')'                                # parenthesis
     ;
 

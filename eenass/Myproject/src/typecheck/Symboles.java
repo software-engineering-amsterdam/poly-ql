@@ -2,20 +2,20 @@ package typecheck;
 
 import java.util.HashMap;
 
-import ast.expr.types.Types;
+import ast.expr.types.Type;
 
 public class Symboles {
-	private final HashMap<String, Types> symboles;
+	private final HashMap<String, Type> symboles;
 	
 	public Symboles(){
 		symboles = new HashMap<>();
 	}
 	
-	public void put(String symb, Types type){
+	public void put(String symb, Type type){
 		symboles.put(symb, type);
 	}
 	
-	public Types getType(String symb){
+	public Type getType(String symb){
 		return symboles.get(symb);
 	}
 	

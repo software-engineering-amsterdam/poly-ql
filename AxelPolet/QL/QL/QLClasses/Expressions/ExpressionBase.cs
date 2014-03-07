@@ -1,23 +1,10 @@
-﻿using System;
-using Antlr4.Runtime;
-using QL.Interfaces;
-using QL.TypeChecker;
+﻿using QL.QLClasses.Types;
 
 namespace QL.QLClasses.Expressions
 {
-    public abstract class ExpressionBase : ITypeChecker
+    public abstract class ExpressionBase : ASTBase
     {
-        public int TokenLine { get; set; }
-        public int TokenColumn { get; set; }
-        public string TokenText { get; set; }
-
-        public IToken Token
-        {
-            set { TokenLine = value.Line; TokenColumn = value.Column; TokenText = value.Text; }
-        }
-
-        public abstract bool CheckType(ref QLException error);
-        public new abstract Type GetType();
-        public abstract object Result();
+        public abstract QBaseType GetResultType();
+        public abstract ExpressionBase GetResult();
     }
 }

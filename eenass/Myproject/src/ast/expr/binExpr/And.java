@@ -4,7 +4,7 @@ import typecheck.Symboles;
 import ast.Visitor;
 import ast.expr.Expr;
 import ast.expr.types.BoolType;
-import ast.expr.types.Types;
+import ast.expr.types.Type;
 
 public class And extends BinExpr{
 
@@ -18,14 +18,8 @@ public class And extends BinExpr{
 	}
 
 	@Override
-	public Types typeof(Symboles symb) {
+	public Type typeof(Symboles symb) {
 		return new BoolType();
 	}
-
-	@Override
-	public String show() {
-		return "&&";
-	}
-	
 
 }
