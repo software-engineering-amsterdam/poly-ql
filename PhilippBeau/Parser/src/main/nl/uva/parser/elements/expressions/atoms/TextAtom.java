@@ -18,4 +18,9 @@ public class TextAtom extends Expression {
     public String toString() {
         return "Text: " + _value;
     }
+
+    @Override
+    public boolean validate() {
+        return true;
+    }
 }

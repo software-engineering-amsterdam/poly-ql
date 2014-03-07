@@ -12,6 +12,8 @@ public class Variable extends Expression {
         _type = type;
         _name = name;
         _value = value;
+
+        _value.setParent(this);
     }
 
     public Variable(final Type.Of type, final String name) {
@@ -25,8 +27,7 @@ public class Variable extends Expression {
 
     @Override
     public boolean validate() {
-
-        return true;
+        return _value.validate();
     }
 
     private boolean validateType() {

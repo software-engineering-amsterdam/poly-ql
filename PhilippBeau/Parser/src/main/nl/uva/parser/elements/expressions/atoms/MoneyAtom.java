@@ -18,4 +18,9 @@ public class MoneyAtom extends Expression {
     public String toString() {
         return "Money: " + _value;
     }
+
+    @Override
+    public boolean validate() {
+        return true;
+    }
 }

@@ -5,6 +5,7 @@ form Box1HouseOwning {
     if (hasSoldHouse && test) {
         sellingPrice: "Price the house was sold for:" money
         privateDebt: "Private debts for the sold house:" money
+        test: "Did you enter a loan for maintenance/reconstruction?" boolean
         valueResidue: "Value residue:" money(sellingPrice - privateDebt)
     }
 }

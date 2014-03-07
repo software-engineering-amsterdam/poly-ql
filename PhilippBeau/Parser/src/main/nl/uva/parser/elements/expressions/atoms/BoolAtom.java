@@ -31,4 +31,9 @@ public class BoolAtom extends Expression {
     public String toString() {
         return "Bool: " + _value;
     }
+
+    @Override
+    public boolean validate() {
+        return true;
+    }
 }

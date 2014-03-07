@@ -10,20 +10,24 @@ public abstract class Expression extends Statement {
     public Expression() {}
 
     public Type.Of getType() {
-        // if (_type == null) {
-        // _type = findType();
-        // }
 
         return _type;
     }
 
-    // protected abstract Type.Of findType();
+    @Override
+    public Variable getVariable(final String variableName) {
+        return null;
+    }
 
     @Override
     public abstract boolean validate();
 
     @Override
-    public Variable findVariable(final String _variableName) {
+    public Variable findVariable(final String variableName, final Statement scopeEnd) {
+        if (_parent != null) {
+            return _parent.findVariable(variableName, this);
+        }
+
         return null;
     }
 }

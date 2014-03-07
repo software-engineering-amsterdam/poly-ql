@@ -4,7 +4,7 @@ import java.util.List;
 
 import main.nl.uva.parser.elements.expressions.Variable;
 
-public class ParserForm extends Statement {
+public class ParserForm extends BlockStatement {
 
     private final List<Statement> _children;
 
@@ -14,6 +14,8 @@ public class ParserForm extends Statement {
 
         _id = id;
         _children = children;
+
+        setParentForChildren(_children);
     }
 
     @Override
@@ -28,7 +30,12 @@ public class ParserForm extends Statement {
     }
 
     @Override
-    public Variable findVariable(final String variableName) {
-        return findVariableInChildren(_children, variableName);
+    public Variable findVariable(final String variableName, final Statement scopeEnd) {
+        return findVariableInChildren(_children, variableName, scopeEnd);
+    }
+
+    @Override
+    public boolean validate() {
+        return validateStatements(_children);
     }
 }

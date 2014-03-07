@@ -28,6 +28,11 @@ public class VariableAtom extends Expression {
             return false;
         }
 
-        Variable linkedVariable = _parent.findVariable(_variableName);
+        _linkedVariable = _parent.findVariable(_variableName, this);
+        if (_linkedVariable == null) {
+            System.err.println("Error: " + _variableName + " not found");
+        }
+
+        return _linkedVariable != null;
     }
 }

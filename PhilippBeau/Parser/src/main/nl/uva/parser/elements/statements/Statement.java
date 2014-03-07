@@ -12,26 +12,36 @@ public abstract class Statement {
         _parent = parent;
     }
 
-    public boolean validate() {
-        return true;
-    }
+    public abstract boolean validate();
 
-    public abstract Variable findVariable(String variableName);
+    public abstract Variable findVariable(final String variableName, final Statement scopeEnd);
+
+    public abstract Variable getVariable(final String variableName);
 
     protected static Variable findVariableInChildren(final List<Statement> children,
-            final String variableName) {
+            final String variableName, final Statement scopeEnd) {
         Variable result = null;
         for (Statement statement : children) {
-            if (statement instanceof DeclarationStatement
-                    || statement instanceof ExpressionStatement) {
-                result = statement.findVariable(variableName);
+            if (statement == scopeEnd) {
+                return null;
             }
+
+            result = statement.getVariable(variableName);
 
             if (result != null) {
                 return result;
             }
         }
 
-        return result;
+        return null;
+    }
+
+    protected static boolean validateStatements(final List<Statement> statements) {
+        boolean valid = true;
+        for (Statement child : statements) {
+            valid = child.validate() && valid;
+        }
+
+        return valid;
     }
 }

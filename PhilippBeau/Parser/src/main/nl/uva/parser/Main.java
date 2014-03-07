@@ -40,6 +40,8 @@ public class Main {
 
             if (f.validate()) {
                 System.out.println("All OK");
+            } else {
+                System.out.println("All WRONG");
             }
         }
     }

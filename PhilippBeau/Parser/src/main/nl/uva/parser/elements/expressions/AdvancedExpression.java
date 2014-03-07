@@ -13,4 +13,11 @@ public abstract class AdvancedExpression extends Expression {
         _left.setParent(this);
         _right.setParent(this);
     }
+
+    @Override
+    public boolean validate() {
+        boolean left = _left.validate();
+        boolean right = _right.validate();
+        return left && right;
+    }
 }
