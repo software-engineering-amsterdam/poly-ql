@@ -52,4 +52,12 @@ public class Problems {
 			System.out.println(problem);
 		}
 	}
+	
+	public List<String> getErrors(){
+		return errors;
+	}
+	
+	public List<String> getWarnings(){
+		return warnings;
+	}
 }

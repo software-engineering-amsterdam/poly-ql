@@ -1,8 +1,6 @@
 package org.uva.sea.ql.gui;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Scanner;
 
 import org.uva.sea.ql.ast.statement.Form;
 import org.uva.sea.ql.parser.jacc.ParseException;
@@ -24,16 +22,7 @@ public class StartScreenController {
 	}
 
 	public Problems runTypeChecker(String INPUT) throws FileNotFoundException, ParseException {
-		Scanner input =  new Scanner(new File(INPUT));
-		String FORM = "" ;
-		while(input.hasNextLine()){
-
-			String line = input.nextLine();
-			FORM = FORM + '\n' + line;
-
-		}
-		input.close();
-		checkDSL(parseDSL(FORM));
+		checkDSL(parseDSL(INPUT));
 		return problems;	
 	}
 	
