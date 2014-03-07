@@ -36,4 +36,6 @@ public abstract class Type {
 
     @Override
     public abstract boolean equals(Object object);
+
+    public abstract <T> T accept(ITypeVisitor<T> visitor);
 }
