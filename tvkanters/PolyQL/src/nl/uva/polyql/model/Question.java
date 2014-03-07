@@ -20,7 +20,7 @@ public class Question extends Rule {
     private Value<?> mValue;
     private boolean mValueValid = true;
 
-    private final Set<OnUpdateListener> mUpdateListeners = new HashSet<>();
+    private final Set<ValueListener> mUpdateListeners = new HashSet<>();
     private final Set<VisibilityListener> mVisibilityListeners = new HashSet<>();
 
     protected Question(final RuleContainer parent, final String id, final String label, final String type) {
@@ -69,29 +69,13 @@ public class Question extends Rule {
             mValueValid = false;
         }
 
-        for (final OnUpdateListener listener : mUpdateListeners) {
+        for (final ValueListener listener : mUpdateListeners) {
             listener.onQuestionUpdate(this);
         }
 
         return mValueValid;
     }
 
-    /**
-     * Sets this question's value and determines if the value is valid. The string given will be
-     * parsed to the appropriate format.
-     * 
-     * @param input
-     *            The value that the end-user entered
-     * 
-     * @return True iff the value is valid (not null)
-     */
-    public boolean setValueFromInput(final String input) {
-        return setValue(mType.getType().parseInput(input));
-    }
-
-    /**
-     * @return The question's value or null if it's invalid
-     */
     public Value<?> getValue() {
         return mValue;
     }
@@ -104,14 +88,14 @@ public class Question extends Rule {
         return true;
     }
 
-    public ValueView<?> getView() {
-        final ValueView<?> view = mValue.getView(this);
+    public ValueView getView() {
+        final ValueView view = mValue.getView(this);
         mVisibilityListeners.add(view);
         view.onParentVisibilityUpdate(isVisible());
         return view;
     }
 
-    public void addUpdateListener(final OnUpdateListener listener) {
+    public void addUpdateListener(final ValueListener listener) {
         Log.i("LISTENER " + listener + " ADDED TO " + this);
         mUpdateListeners.add(listener);
     }
@@ -144,7 +128,7 @@ public class Question extends Rule {
      * The interface for that must be implemented to receive callbacks when the question's value is
      * update, e.g., when the user types in the question's field.
      */
-    public interface OnUpdateListener {
+    public interface ValueListener {
 
         /**
          * Called when the question's value is updated. E.g., when the user types in the question's

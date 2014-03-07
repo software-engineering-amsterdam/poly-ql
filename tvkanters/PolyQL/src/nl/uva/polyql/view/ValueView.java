@@ -10,10 +10,9 @@ import nl.uva.polyql.model.values.NumberValue;
 import nl.uva.polyql.model.values.StringValue;
 import nl.uva.polyql.model.values.Value;
 
-public abstract class ValueView<T extends Value<?>> implements Question.OnUpdateListener, VisibilityListener {
+public abstract class ValueView implements Question.ValueListener, VisibilityListener {
 
     private final Question mQuestion;
-
     private Value<?> mValue;
 
     public ValueView(final Question question) {
@@ -22,11 +21,10 @@ public abstract class ValueView<T extends Value<?>> implements Question.OnUpdate
         init();
 
         setValue(mQuestion.getValue(), true);
-        setEnabled(mQuestion.isEditable());
+        setEditable(mQuestion.isEditable());
     }
 
-    protected void onNewInput() {
-        final T value = getValueFromInput();
+    protected void onNewInput(final Value<?> value) {
         if (!Objects.equals(value, mValue)) {
             setValue(value, false);
             mQuestion.setValue(value);
@@ -51,8 +49,6 @@ public abstract class ValueView<T extends Value<?>> implements Question.OnUpdate
 
     public abstract Component getComponent();
 
-    public abstract T getValueFromInput();
-
     private void setValue(final Value<?> value, final boolean updateSelf) {
         mValue = value;
         setValid(value != null);
@@ -68,7 +64,7 @@ public abstract class ValueView<T extends Value<?>> implements Question.OnUpdate
 
     public abstract void setComponentValue(StringValue value);
 
-    public abstract void setEnabled(boolean enabled);
+    public abstract void setEditable(boolean enabled);
 
     protected abstract void setValid(boolean valid);
 

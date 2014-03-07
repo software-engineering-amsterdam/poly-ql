@@ -29,9 +29,9 @@ public abstract class Value<T> {
         return mValue;
     }
 
-    public abstract ValueView<?> getView(Question question);
+    public abstract ValueView getView(Question question);
 
-    public abstract void setViewValue(ValueView<?> view);
+    public abstract void setViewValue(ValueView view);
 
     public abstract Type getType();
 

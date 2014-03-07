@@ -12,7 +12,7 @@ import nl.uva.polyql.model.values.BooleanValue;
 import nl.uva.polyql.model.values.NumberValue;
 import nl.uva.polyql.model.values.StringValue;
 
-public class StringValueView extends ValueView<StringValue> {
+public class StringValueView extends ValueView {
 
     private JTextArea mTextArea;
 
@@ -23,14 +23,13 @@ public class StringValueView extends ValueView<StringValue> {
     @Override
     protected void init() {
         mTextArea = new JTextArea();
-
         mTextArea.addKeyListener(new KeyListener() {
             @Override
-            public void keyTyped(final KeyEvent arg0) {}
+            public void keyTyped(final KeyEvent e) {}
 
             @Override
-            public void keyReleased(final KeyEvent arg0) {
-                onNewInput();
+            public void keyReleased(final KeyEvent e) {
+                onNewInput(new StringValue(mTextArea.getText()));
             }
 
             @Override
@@ -41,11 +40,6 @@ public class StringValueView extends ValueView<StringValue> {
     @Override
     public Component getComponent() {
         return mTextArea;
-    }
-
-    @Override
-    public StringValue getValueFromInput() {
-        return new StringValue(mTextArea.getText());
     }
 
     @Override
@@ -64,7 +58,7 @@ public class StringValueView extends ValueView<StringValue> {
     }
 
     @Override
-    public void setEnabled(final boolean enabled) {
+    public void setEditable(final boolean enabled) {
         mTextArea.setEnabled(enabled);
     }
 

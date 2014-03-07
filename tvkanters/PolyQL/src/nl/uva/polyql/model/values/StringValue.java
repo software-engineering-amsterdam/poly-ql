@@ -24,12 +24,12 @@ public class StringValue extends Value<String> {
     }
 
     @Override
-    public ValueView<?> getView(final Question question) {
+    public ValueView getView(final Question question) {
         return new StringValueView(question);
     }
 
     @Override
-    public void setViewValue(final ValueView<?> view) {
+    public void setViewValue(final ValueView view) {
         view.setComponentValue(this);
     }
 

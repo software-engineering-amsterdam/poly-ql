@@ -5,7 +5,7 @@ import nl.uva.polyql.model.expressions.Expression;
 import nl.uva.polyql.model.types.Type;
 import nl.uva.polyql.model.values.BooleanValue;
 
-public class IfStatement extends RuleContainer implements Question.OnUpdateListener {
+public class IfStatement extends RuleContainer implements Question.ValueListener {
 
     protected final Expression mExpression;
     private boolean mSatisfied;

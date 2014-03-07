@@ -12,7 +12,7 @@ import nl.uva.polyql.model.values.BooleanValue;
 import nl.uva.polyql.model.values.NumberValue;
 import nl.uva.polyql.model.values.StringValue;
 
-public class BooleanValueView extends ValueView<BooleanValue> {
+public class BooleanValueView extends ValueView {
 
     private JCheckBox mCheckBox;
 
@@ -25,8 +25,8 @@ public class BooleanValueView extends ValueView<BooleanValue> {
         mCheckBox = new JCheckBox();
         mCheckBox.addItemListener(new ItemListener() {
             @Override
-            public void itemStateChanged(final ItemEvent arg0) {
-                onNewInput();
+            public void itemStateChanged(final ItemEvent e) {
+                onNewInput(new BooleanValue(mCheckBox.isSelected()));
             }
         });
     }
@@ -34,11 +34,6 @@ public class BooleanValueView extends ValueView<BooleanValue> {
     @Override
     public Component getComponent() {
         return mCheckBox;
-    }
-
-    @Override
-    public BooleanValue getValueFromInput() {
-        return new BooleanValue(mCheckBox.isSelected());
     }
 
     @Override
@@ -57,7 +52,7 @@ public class BooleanValueView extends ValueView<BooleanValue> {
     }
 
     @Override
-    public void setEnabled(final boolean enabled) {
+    public void setEditable(final boolean enabled) {
         mCheckBox.setEnabled(enabled);
     }
 

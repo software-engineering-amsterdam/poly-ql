@@ -15,7 +15,7 @@ import nl.uva.polyql.model.values.BooleanValue;
 import nl.uva.polyql.model.values.NumberValue;
 import nl.uva.polyql.model.values.StringValue;
 
-public class NumberValueView extends ValueView<NumberValue> {
+public class NumberValueView extends ValueView {
 
     private JTextArea mTextArea;
 
@@ -28,11 +28,11 @@ public class NumberValueView extends ValueView<NumberValue> {
         mTextArea = new JTextArea();
         mTextArea.addKeyListener(new KeyListener() {
             @Override
-            public void keyTyped(final KeyEvent arg0) {}
+            public void keyTyped(final KeyEvent e) {}
 
             @Override
-            public void keyReleased(final KeyEvent arg0) {
-                onNewInput();
+            public void keyReleased(final KeyEvent e) {
+                onNewInput(new NumberType().parseInput(mTextArea.getText()));
             }
 
             @Override
@@ -51,11 +51,6 @@ public class NumberValueView extends ValueView<NumberValue> {
     }
 
     @Override
-    public NumberValue getValueFromInput() {
-        return new NumberType().parseInput(mTextArea.getText());
-    }
-
-    @Override
     public void setComponentValue(final BooleanValue value) {
         throw new InvalidParameterException("Booleans are invalid values for number views");
     }
@@ -66,7 +61,7 @@ public class NumberValueView extends ValueView<NumberValue> {
     }
 
     @Override
-    public void setEnabled(final boolean enabled) {
+    public void setEditable(final boolean enabled) {
         mTextArea.setEnabled(enabled);
     }
 

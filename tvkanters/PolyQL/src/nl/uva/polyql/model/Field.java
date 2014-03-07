@@ -3,7 +3,7 @@ package nl.uva.polyql.model;
 import nl.uva.polyql.model.expressions.Expression;
 import nl.uva.polyql.view.ValueView;
 
-public class Field extends Question implements Question.OnUpdateListener {
+public class Field extends Question implements Question.ValueListener {
 
     private final Expression mExpression;
 
@@ -29,8 +29,8 @@ public class Field extends Question implements Question.OnUpdateListener {
     }
 
     @Override
-    public ValueView<?> getView() {
-        final ValueView<?> view = super.getView();
+    public ValueView getView() {
+        final ValueView view = super.getView();
         addUpdateListener(view);
         return view;
     }

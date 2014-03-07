@@ -16,6 +16,7 @@ import nl.uva.polyql.model.IfStatement;
 import nl.uva.polyql.model.Question;
 import nl.uva.polyql.model.expressions.modifiers.ModifierHelper;
 import nl.uva.polyql.model.types.Type;
+import nl.uva.polyql.model.values.NumberValue;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -35,7 +36,7 @@ public class ParserTest {
 
         assertFalse(ifStatement.isVisible());
 
-        question.setValueFromInput("10");
+        question.setValue(new NumberValue(10.0));
 
         assertTrue(ifStatement.isVisible());
     }

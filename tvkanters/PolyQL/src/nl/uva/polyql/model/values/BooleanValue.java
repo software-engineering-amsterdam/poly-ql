@@ -24,12 +24,12 @@ public class BooleanValue extends Value<Boolean> {
     }
 
     @Override
-    public ValueView<?> getView(final Question question) {
+    public ValueView getView(final Question question) {
         return new BooleanValueView(question);
     }
 
     @Override
-    public void setViewValue(final ValueView<?> view) {
+    public void setViewValue(final ValueView view) {
         view.setComponentValue(this);
     }
 

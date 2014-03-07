@@ -24,12 +24,12 @@ public class NumberValue extends Value<Double> {
     }
 
     @Override
-    public ValueView<?> getView(final Question question) {
+    public ValueView getView(final Question question) {
         return new NumberValueView(question);
     }
 
     @Override
-    public void setViewValue(final ValueView<?> view) {
+    public void setViewValue(final ValueView view) {
         view.setComponentValue(this);
     }
 
