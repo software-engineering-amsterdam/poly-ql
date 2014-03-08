@@ -3,7 +3,7 @@ package org.uva.sea.ql.parser.antlr.QL4.AST.Expression;
 import java.util.List;
 
 import org.uva.sea.ql.parser.antlr.QL4.TypeChecker.QLErrorMsg;
-import org.uva.sea.ql.parser.antlr.QL4.Visitors.QLIVisitor;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.IQLVisitor;
 
 
 /**
@@ -25,7 +25,7 @@ public abstract class UnaryExpr extends Expression {
 		return expr.toString();
 	}
 	
-	public List<QLErrorMsg> accept(QLIVisitor visitor) {
+	public List<QLErrorMsg> accept(IQLVisitor visitor) {
 		return visitor.visit(this);
 	}
 }

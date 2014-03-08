@@ -11,7 +11,7 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.BinaryExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.UnaryExpr;
 import org.uva.sea.ql.parser.antlr.QL4.TypeChecker.QLErrorMsg;
 
-public class QLVisitor implements QLIVisitor {
+public class QLVisitor implements IQLVisitor {
 
 	@Override
 	public List<QLErrorMsg> visit(QLTree tree) {
@@ -20,7 +20,6 @@ public class QLVisitor implements QLIVisitor {
 
 	@Override
 	public List<QLErrorMsg> visit(Form form) {
-		System.out.println(form.getClass().getName());
 		return null;
 	}
 

@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Expression;
 import org.uva.sea.ql.parser.antlr.QL4.TypeChecker.QLErrorMsg;
-import org.uva.sea.ql.parser.antlr.QL4.Visitors.QLIVisitor;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.IQLVisitor;
 
 /**
  * Abstract syntax tree of the conditional construct in the QL4 grammar
@@ -63,7 +63,7 @@ public class Conditional implements QLTree {
 		return str;
 	}
 
-	public List<QLErrorMsg> accept(QLIVisitor visitor) {
+	public List<QLErrorMsg> accept(IQLVisitor visitor) {
 		return visitor.visit(this);
 	}
 }

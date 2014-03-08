@@ -3,7 +3,7 @@ package org.uva.sea.ql.parser.antlr.QL4.AST;
 import java.util.List;
 
 import org.uva.sea.ql.parser.antlr.QL4.TypeChecker.QLErrorMsg;
-import org.uva.sea.ql.parser.antlr.QL4.Visitors.QLIVisitor;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.IQLVisitor;
 
 /**
  * Abstract syntax tree of the form construct in the QL4 grammar
@@ -33,7 +33,10 @@ public class Form implements QLTree {
 		return "This form contains " + structures.toString();
 	}
 	
-	public List<QLErrorMsg> accept(QLIVisitor visitor) {
+	/**
+	 * When visited, return self 
+	 */
+	public List<QLErrorMsg> accept(IQLVisitor visitor) {
 		return visitor.visit(this);
 	}
 }

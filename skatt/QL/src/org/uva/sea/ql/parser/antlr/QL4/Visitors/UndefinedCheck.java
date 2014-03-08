@@ -8,5 +8,5 @@ package org.uva.sea.ql.parser.antlr.QL4.Visitors;
  * @author Sammie Katt
  *
  */
-public class UndefinedCheck extends QLVisitor implements QLIVisitor {
+public class UndefinedCheck extends QLVisitor implements IQLVisitor {
 }

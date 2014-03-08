@@ -3,7 +3,7 @@ package org.uva.sea.ql.parser.antlr.QL4.AST;
 import java.util.List;
 
 import org.uva.sea.ql.parser.antlr.QL4.TypeChecker.QLErrorMsg;
-import org.uva.sea.ql.parser.antlr.QL4.Visitors.QLIVisitor;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.IQLVisitor;
 
 
 /**
@@ -14,5 +14,5 @@ import org.uva.sea.ql.parser.antlr.QL4.Visitors.QLIVisitor;
  */
 public interface QLTree {
 	
-	public List<QLErrorMsg> accept(QLIVisitor visitor);
+	public List<QLErrorMsg> accept(IQLVisitor visitor);
 }

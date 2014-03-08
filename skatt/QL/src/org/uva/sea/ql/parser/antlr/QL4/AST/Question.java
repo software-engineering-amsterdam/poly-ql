@@ -7,7 +7,7 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Identifier;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Label;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.QuestionType;
 import org.uva.sea.ql.parser.antlr.QL4.TypeChecker.QLErrorMsg;
-import org.uva.sea.ql.parser.antlr.QL4.Visitors.QLIVisitor;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.IQLVisitor;
 
 /**
  * Abstract syntax tree of the regQuestion construct in the QL4 grammar
@@ -53,7 +53,7 @@ public class Question implements QLTree {
 		return "Question " + id + " of type " + type + " and label " + label;
 	}
 	
-	public List<QLErrorMsg> accept(QLIVisitor visitor) {
+	public List<QLErrorMsg> accept(IQLVisitor visitor) {
 		return visitor.visit(this);
 	}
 }
