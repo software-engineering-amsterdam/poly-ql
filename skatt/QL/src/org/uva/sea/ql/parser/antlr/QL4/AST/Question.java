@@ -56,4 +56,22 @@ public class Question implements QLTree {
 	public List<QLErrorMsg> accept(IQLVisitor visitor) {
 		return visitor.visit(this);
 	}
+
+	////////////// getters for visitors
+	
+	public Identifier getIdentifier() {
+		return id;
+	}
+
+	public Label getLabel() {
+		return label;
+	}
+
+	public QuestionType getType() {
+		return type;
+	}
+
+	public Expression getValue() {
+		return value;
+	}
 }

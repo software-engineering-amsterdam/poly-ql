@@ -39,4 +39,8 @@ public class Form implements QLTree {
 	public List<QLErrorMsg> accept(IQLVisitor visitor) {
 		return visitor.visit(this);
 	}
+
+	public Structures getStructures() {
+		return structures;
+	}
 }
