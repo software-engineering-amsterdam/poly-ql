@@ -11,7 +11,7 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Form;
 import org.uva.sea.ql.parser.antlr.QL4.TypeChecker.QLErrorMsg;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.AntlrVisitor;
-import org.uva.sea.ql.parser.antlr.QL4.Visitors.QLVisitor;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.QLErrorVisitor;
 
 import QL4.QL4Lexer;
 import QL4.QL4Parser;
@@ -56,7 +56,7 @@ public class QL4 {
 		System.out.println(ast);
 		
 		// typecheck abstract tree
-		QLVisitor ASTChecker = new QLVisitor();
+		QLErrorVisitor ASTChecker = new QLErrorVisitor();
 		List<QLErrorMsg> checks = ast.accept(ASTChecker);
 		
 		System.out.println(checks);
