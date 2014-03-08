@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using Algebra.QL.Core.Stmnt;
 using Algebra.QL.Form.Expr;
@@ -21,17 +22,17 @@ namespace Algebra.QL.Form.Stmnt
             sp.Children.Add(trueElem);
             sp.Children.Add(falseElem);
 
-            CheckExpression.BuildForm();
-            bool value = (bool)CheckExpression.ExpressionValue;
-            trueElem.Visibility = value ? Visibility.Visible : Visibility.Collapsed;
-            falseElem.Visibility = !value ? Visibility.Visible : Visibility.Collapsed;
-
-            CheckExpression.ValueChanged += () =>
+            Action onValueChanged = () =>
             {
-                bool newValue = (bool)CheckExpression.ExpressionValue;
-                trueElem.Visibility = newValue ? Visibility.Visible : Visibility.Collapsed;
-                falseElem.Visibility = !newValue ? Visibility.Visible : Visibility.Collapsed;
+                bool value = (bool)CheckExpression.ExpressionValue;
+                trueElem.Visibility = value ? Visibility.Visible : Visibility.Collapsed;
+                falseElem.Visibility = !value ? Visibility.Visible : Visibility.Collapsed;
             };
+
+            CheckExpression.BuildForm();
+            CheckExpression.ValueChanged -= onValueChanged;
+            CheckExpression.ValueChanged += onValueChanged;
+            onValueChanged();
 
             return sp;
         }

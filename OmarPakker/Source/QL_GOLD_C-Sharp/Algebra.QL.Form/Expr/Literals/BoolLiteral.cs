@@ -11,10 +11,5 @@ namespace Algebra.QL.Form.Expr.Literals
         {
 
         }
-
-        public override string ToString()
-        {
-            return base.ToString().ToLowerInvariant();
-        }
     }
 }

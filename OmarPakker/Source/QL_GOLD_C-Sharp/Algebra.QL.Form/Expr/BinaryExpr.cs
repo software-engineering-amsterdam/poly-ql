@@ -6,7 +6,12 @@ namespace Algebra.QL.Form.Expr
 {
     public abstract class BinaryExpr : BinaryExpr<IFormExpr>, IFormExpr
     {
-        public event Action ValueChanged;
+        public event Action ValueChanged
+        {
+            add { Expr1.ValueChanged += value; Expr2.ValueChanged += value; }
+            remove { Expr1.ValueChanged -= value; Expr2.ValueChanged -= value; }
+        }
+
         public abstract object ExpressionValue { get; set; }
 
         public BinaryExpr(IFormExpr l, IFormExpr r)
@@ -15,23 +20,10 @@ namespace Algebra.QL.Form.Expr
             
         }
 
-        private void OnValueChanged()
-        {
-            if (ValueChanged != null)
-            {
-                ValueChanged();
-            }
-        }
-
         public IFormType BuildForm()
         {
             IFormType a = Expr1.BuildForm();
             IFormType b = Expr2.BuildForm();
-
-            Expr1.ValueChanged -= OnValueChanged;
-            Expr2.ValueChanged -= OnValueChanged;
-            Expr1.ValueChanged += OnValueChanged;
-            Expr2.ValueChanged += OnValueChanged;
 
             return a.GetLeastUpperBound(b);
         }

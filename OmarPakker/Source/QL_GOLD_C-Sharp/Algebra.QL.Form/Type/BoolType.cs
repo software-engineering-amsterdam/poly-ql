@@ -16,13 +16,9 @@ namespace Algebra.QL.Form.Type
 
 		}
 
-        public override FrameworkElement BuildElement(IFormExpr value, object initialValue, bool editable)
+        public override FrameworkElement BuildElement(IFormExpr value, bool editable)
         {
-            CheckBox cb = new CheckBox()
-            {
-                IsEnabled = editable,
-                IsChecked = Convert.ToBoolean(initialValue)
-            };
+            CheckBox cb = new CheckBox() { IsEnabled = editable };
             cb.Checked += (s, e) =>
             {
                 value.ExpressionValue = true;
@@ -31,16 +27,16 @@ namespace Algebra.QL.Form.Type
             {
                 value.ExpressionValue = false;
             };
-            value.ValueChanged += () =>
+
+            Action onValueChanged = () =>
             {
                 cb.IsChecked = Convert.ToBoolean(value.ExpressionValue);
             };
+            value.ValueChanged -= onValueChanged;
+            value.ValueChanged += onValueChanged;
+            onValueChanged();
+
             return cb;
         }
-
-		public override string ToString()
-		{
-			return "bool";
-		}
 	}
 }

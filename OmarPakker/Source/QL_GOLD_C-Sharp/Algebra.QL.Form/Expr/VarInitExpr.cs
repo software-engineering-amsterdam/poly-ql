@@ -7,7 +7,12 @@ namespace Algebra.QL.Form.Expr
 {
     public class VarInitExpr : VarInitExpr<IFormExpr, IFormType>, IFormExpr
     {
-        public event Action ValueChanged;
+        public event Action ValueChanged
+        {
+            add { Value.ValueChanged += value; }
+            remove { Value.ValueChanged -= value; }
+        }
+
         public object ExpressionValue
         {
             get { return Value.ExpressionValue; }
@@ -20,22 +25,11 @@ namespace Algebra.QL.Form.Expr
             
 		}
 
-        private void OnValueChanged()
-        {
-            if (ValueChanged != null)
-            {
-                ValueChanged();
-            }
-        }
-
         public IFormType BuildForm()
         {
             TypeEnvironment.Instance.DeclareVariable(this);
 
             Value.BuildForm();
-
-            Value.ValueChanged -= OnValueChanged;
-            Value.ValueChanged += OnValueChanged;
 
             return Type;
         }

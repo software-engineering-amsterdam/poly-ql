@@ -14,7 +14,7 @@ namespace Algebra.QL.Form.Type
 
 		}
 
-        public virtual FrameworkElement BuildElement(IFormExpr value, object initialValue, bool editable)
+        public virtual FrameworkElement BuildElement(IFormExpr value, bool editable)
         {
             return null;
         }

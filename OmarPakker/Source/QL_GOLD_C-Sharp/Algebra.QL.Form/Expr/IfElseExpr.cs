@@ -6,7 +6,12 @@ namespace Algebra.QL.Form.Expr
 {
     public class IfElseExpr : TernaryExpr<IFormExpr>, IFormExpr
     {
-        public event Action ValueChanged;
+        public event Action ValueChanged
+        {
+            add { Expr1.ValueChanged += value; Expr2.ValueChanged += value; Expr3.ValueChanged += value; }
+            remove { Expr1.ValueChanged -= value; Expr2.ValueChanged -= value; Expr3.ValueChanged -= value; }
+        }
+
         public object ExpressionValue
         {
             get { return (bool)Expr1.ExpressionValue ? Expr2.ExpressionValue : Expr3.ExpressionValue; }
@@ -19,26 +24,11 @@ namespace Algebra.QL.Form.Expr
             
         }
 
-        private void OnValueChanged()
-        {
-            if (ValueChanged != null)
-            {
-                ValueChanged();
-            }
-        }
-
         public IFormType BuildForm()
         {
             Expr1.BuildForm();
             IFormType a = Expr2.BuildForm();
             IFormType b = Expr3.BuildForm();
-
-            Expr1.ValueChanged -= OnValueChanged;
-            Expr2.ValueChanged -= OnValueChanged;
-            Expr3.ValueChanged -= OnValueChanged;
-            Expr1.ValueChanged += OnValueChanged;
-            Expr2.ValueChanged += OnValueChanged;
-            Expr3.ValueChanged += OnValueChanged;
 
             return a.GetLeastUpperBound(b);
         }

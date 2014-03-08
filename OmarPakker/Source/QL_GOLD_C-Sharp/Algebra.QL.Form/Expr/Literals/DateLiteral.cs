@@ -12,10 +12,5 @@ namespace Algebra.QL.Form.Expr.Literals
         {
 
         }
-
-        public override string ToString()
-        {
-            return Value.ToString("yyyy-MM-dd HH:mm:ss zzz");
-        }
     }
 }

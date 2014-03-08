@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using Algebra.QL.Core.Stmnt;
 using Algebra.QL.Form.Expr;
@@ -18,13 +19,15 @@ namespace Algebra.QL.Form.Stmnt
             StackPanel sp = new StackPanel();
             sp.Children.Add(IfTrueBody.BuildForm());
 
-            CheckExpression.BuildForm();
-            sp.Visibility = (bool)CheckExpression.ExpressionValue ? Visibility.Visible : Visibility.Collapsed;
-
-            CheckExpression.ValueChanged += () =>
+            Action onValueChanged = () =>
             {
                 sp.Visibility = (bool)CheckExpression.ExpressionValue ? Visibility.Visible : Visibility.Collapsed;
             };
+
+            CheckExpression.BuildForm();
+            CheckExpression.ValueChanged -= onValueChanged;
+            CheckExpression.ValueChanged += onValueChanged;
+            onValueChanged();
 
             return sp;
         }

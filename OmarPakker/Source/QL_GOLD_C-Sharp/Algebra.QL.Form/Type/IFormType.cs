@@ -8,6 +8,6 @@ namespace Algebra.QL.Form.Type
     {
         IFormExpr DefaultValue { get; }
 
-        FrameworkElement BuildElement(IFormExpr value, object initialValue, bool editable);
+        FrameworkElement BuildElement(IFormExpr value, bool editable);
     }
 }

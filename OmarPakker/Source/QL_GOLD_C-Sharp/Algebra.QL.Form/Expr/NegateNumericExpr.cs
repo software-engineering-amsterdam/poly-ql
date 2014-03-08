@@ -6,7 +6,12 @@ namespace Algebra.QL.Form.Expr
 {
 	public class NegateNumericExpr : UnaryExpr<IFormExpr>, IFormExpr
 	{
-        public event Action ValueChanged;
+        public event Action ValueChanged
+        {
+            add { Expr1.ValueChanged += value; }
+            remove { Expr1.ValueChanged -= value; }
+        }
+
         public object ExpressionValue
         {
             get { return -Convert.ToDouble(Expr1.ExpressionValue); }
@@ -21,14 +26,6 @@ namespace Algebra.QL.Form.Expr
 
         public IFormType BuildForm()
         {
-            Expr1.ValueChanged += () =>
-            {
-                if (ValueChanged != null)
-                {
-                    ValueChanged();
-                }
-            };
-
             return Expr1.BuildForm();
         }
     }

@@ -16,28 +16,23 @@ namespace Algebra.QL.Form.Type
 
 		}
 
-        public override FrameworkElement BuildElement(IFormExpr value, object initialValue, bool editable)
+        public override FrameworkElement BuildElement(IFormExpr value, bool editable)
         {
-            IntegerUpDown iud = new IntegerUpDown()
-            {
-                Width = 200,
-                IsEnabled = editable,
-                Value = Convert.ToInt32(initialValue)
-            };
+            IntegerUpDown iud = new IntegerUpDown() { Width = 200, IsEnabled = editable };
             iud.ValueChanged += (s, e) =>
             {
                 value.ExpressionValue = iud.Value;
             };
-            value.ValueChanged += () =>
+
+            Action onValueChanged = () =>
             {
                 iud.Value = Convert.ToInt32(value.ExpressionValue);
             };
+            value.ValueChanged -= onValueChanged;
+            value.ValueChanged += onValueChanged;
+            onValueChanged();
+
             return iud;
         }
-
-		public override string ToString()
-		{
-			return "int";
-		}
 	}
 }

@@ -16,28 +16,23 @@ namespace Algebra.QL.Form.Type
 
 		}
 
-        public override FrameworkElement BuildElement(IFormExpr value, object initialValue, bool editable)
+        public override FrameworkElement BuildElement(IFormExpr value, bool editable)
         {
-            DatePicker dp = new DatePicker()
-            {
-                Width = 200,
-                IsEnabled = editable,
-                SelectedDate = Convert.ToDateTime(initialValue)
-            };
+            DatePicker dp = new DatePicker() { Width = 200, IsEnabled = editable };
             dp.SelectedDateChanged += (s, e) =>
             {
                 value.ExpressionValue = dp.SelectedDate;
             };
-            value.ValueChanged += () =>
+
+            Action onValueChanged = () =>
             {
                 dp.SelectedDate = Convert.ToDateTime(value.ExpressionValue);
             };
+            value.ValueChanged -= onValueChanged;
+            value.ValueChanged += onValueChanged;
+            onValueChanged();
+
             return dp;
         }
-
-		public override string ToString()
-		{
-			return "date";
-		}
 	}
 }
