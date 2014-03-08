@@ -43,5 +43,9 @@ public class Structures implements QLTree {
 	public List<QLErrorMsg> accept(IQLVisitor visitor) {
 		return visitor.visit(this);
 	}
+
+	public List<QLTree> getStructures() {
+		return structures;
+	}
 	
 }

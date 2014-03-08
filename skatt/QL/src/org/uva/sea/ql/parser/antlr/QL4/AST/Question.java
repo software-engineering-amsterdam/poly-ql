@@ -74,4 +74,8 @@ public class Question implements QLTree {
 	public Expression getValue() {
 		return value;
 	}
+	
+	public Boolean isComputed() {
+		return computed;
+	}
 }

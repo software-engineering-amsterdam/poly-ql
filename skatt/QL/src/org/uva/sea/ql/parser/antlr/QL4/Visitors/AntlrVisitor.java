@@ -81,6 +81,7 @@ public class AntlrVisitor extends QL4BaseVisitor<QLTree> {
 	 List<Expression > elseifExprs = new ArrayList<Expression >();
 	 List<Structures> elseifStrucs = new ArrayList<Structures>();
 
+	 System.out.println(ctx.expression().size());
 	 // start i = 1, as first expression is always if
 	 for (int i=1; i < ctx.expression().size(); i++) {
 		 elseifExprs.add( (Expression) ctx.expression(i).accept(this));

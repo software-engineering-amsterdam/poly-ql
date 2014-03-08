@@ -66,4 +66,24 @@ public class Conditional implements QLTree {
 	public List<QLErrorMsg> accept(IQLVisitor visitor) {
 		return visitor.visit(this);
 	}
+
+	public Expression getIfExpression() {
+		return ifCondition;
+	}
+
+	public Structures getIfStructures() {
+		return ifStructure;
+	}
+
+	public List<Expression> getElseIfExpr() {
+		return elseifConditions;
+	}
+
+	public List<Structures> getElseIfStructs() {
+		return elseifStructures;
+	}
+
+	public Structures getElseStruct() {
+		return elseStructure;
+	}
 }
