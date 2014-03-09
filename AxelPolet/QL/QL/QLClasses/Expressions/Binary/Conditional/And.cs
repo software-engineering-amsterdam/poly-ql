@@ -12,7 +12,7 @@ namespace QL.QLClasses.Expressions.Binary.Conditional
 
         public override ExpressionBase GetResult()
         {
-            return new BoolLiteral(Convert.ToBoolean(LeftExpression.GetResult()) && Convert.ToBoolean(RightExpression.GetResult()));
+            return new BoolLiteral(Convert.ToBoolean(LeftExpression.GetResult().ToString()) && Convert.ToBoolean(RightExpression.GetResult().ToString()));
         }
 
         public override bool CheckType(QLTypeErrors typeErrors)

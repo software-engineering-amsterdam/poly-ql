@@ -11,6 +11,6 @@ namespace QL.QLClasses
             set { TokenInfo = new QLTokenInfo(value); }
         }
 
-        public abstract bool CheckType(QLTypeErrors errors);  
+        public abstract bool CheckType(QLTypeErrors errors);
     }
 }

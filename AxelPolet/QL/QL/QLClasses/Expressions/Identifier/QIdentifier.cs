@@ -21,7 +21,7 @@ namespace QL.QLClasses.Expressions.Identifier
 
         public override ExpressionBase GetResult()
         {
-            return _memory.GetDeclaredValue(_name);
+            return _memory.GetDeclaredValue(_name).GetResult();
         }
 
         #region TypeChecker Implementation

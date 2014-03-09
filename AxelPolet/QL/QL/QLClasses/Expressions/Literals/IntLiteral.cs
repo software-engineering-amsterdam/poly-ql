@@ -19,12 +19,17 @@ namespace QL.QLClasses.Expressions.Literals
 
         public override ExpressionBase GetResult()
         {
-            return null;
+            return this;
         }
 
         public override bool CheckType(QLTypeErrors typeErrors)
         {
             return true;
+        }
+
+        public override string ToString()
+        {
+            return _value.ToString();
         }
     }
 }
