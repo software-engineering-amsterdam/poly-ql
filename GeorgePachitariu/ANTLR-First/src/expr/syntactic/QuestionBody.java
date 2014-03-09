@@ -1,15 +1,15 @@
-package expr.syntacticExpr;
+package expr.syntactic;
 
 import typeChecker.ASTVisitor;
-import expr.Expr;
+import expr.ASTNode;
 
-public class QuestionBody implements Expr {
-	String questionBody;
-	
+public class QuestionBody implements ASTNode {
+	protected String questionBody;
+
 	public QuestionBody(String questionBody) {
 		this.questionBody=questionBody;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (!(obj instanceof QuestionBody))
@@ -22,7 +22,7 @@ public class QuestionBody implements Expr {
 	public void accept(ASTVisitor visitor) {
 		visitor.visit(this);
 	}
-	
+
 	@Override
 	public String toString() {
 		return this.questionBody;

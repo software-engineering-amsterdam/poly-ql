@@ -1,16 +1,17 @@
-package expr.syntacticExpr;
+package expr.syntactic;
 
 import java.util.LinkedList;
 import java.util.List;
 
 import expr.Expression;
 import typeChecker.ASTVisitor;
+import typeChecker.IdentifiersTypeMatcher;
 
 
 public class IfBlock extends Statement {
-	private Expression condition;
-	private List<Statement> thenStatements;
-	private List<Statement> elseStatements;
+	protected Expression condition;
+	protected List<Statement> thenStatements;
+	protected List<Statement> elseStatements;
 
 	public IfBlock(Expression condition, List<Statement> thenStatements) {
 		super();
@@ -33,9 +34,9 @@ public class IfBlock extends Statement {
 		IfBlock ifBlock=(IfBlock) obj;
 		return this.condition.equals(ifBlock.condition) &&
 				this.thenStatements.equals(ifBlock.thenStatements) &&
-				  this.elseStatements.equals(ifBlock.elseStatements);
+				this.elseStatements.equals(ifBlock.elseStatements);
 	}
-	
+
 	@Override
 	public void accept(ASTVisitor visitor) {
 		visitor.visit(this);
@@ -45,18 +46,18 @@ public class IfBlock extends Statement {
 		for(Statement s : this.elseStatements)
 			s.accept(visitor);
 	}
-	
-	public boolean isExpressionBoolean() { 
-		return this.condition.getType().isBoolean();
+
+	public boolean isExpressionBoolean(IdentifiersTypeMatcher typeMatcher) { 
+		return this.condition.getType(typeMatcher).isBoolean();
 	}
-	
+
 	@Override
 	public String toString() {
 		String str = "if(" + this.condition.toString() + ") \n {";
 		for(Statement s: thenStatements)
 			str+=s.toString() + "\n";
 		str+= "} \n";
-		
+
 		if(this.elseStatements.size()>0) {
 			str+= " else { \n";
 			for(Statement s: elseStatements)

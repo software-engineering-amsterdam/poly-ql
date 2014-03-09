@@ -2,13 +2,13 @@ package expr.literals;
 
 import expr.Expression;
 import typeChecker.ASTVisitor;
-import types.BoolType;
+import typeChecker.IdentifiersTypeMatcher;
 import types.IntType;
 import types.Type;
 
 
 public class Int extends Expression {
-	private int value;
+	protected int value;
 
 	public Int(int value) {
 		super();
@@ -22,27 +22,27 @@ public class Int extends Expression {
 		Int expr=(Int) obj;
 		return expr.value == this.value;
 	}
-	
+
 	@Override
 	public void accept(ASTVisitor visitor) {
 		visitor.visit(this);
 	}
-	
+
 	@Override
 	public String toString() {
 		return "int";
 	}
-	
+
 	@Override
-	public Type getType() {
+	public Type getType(IdentifiersTypeMatcher typeMatcher) {
 		return new IntType();
 	}
-	
+
 	@Override
-	public boolean areOperandsTypeValid() {
+	public boolean areOperandsTypeValid(IdentifiersTypeMatcher typeMatcher) {
 		return true;
 	}
-	
+
 	@Override
 	public boolean containsTreeNode(Expression e) {
 		if(e.equals(this))
