@@ -5,11 +5,16 @@ namespace QL.QLClasses.Expressions.Unary
 {
     public class UnaryExpression : ExpressionBase
     {
-        public ExpressionBase InnerExpression { get; set; }
+        protected ExpressionBase InnerExpression;// { get; private set; }
 
-        public override bool CheckType(ref QLTypeError error)
+        public UnaryExpression(ExpressionBase innerExpression)
         {
-            return InnerExpression.CheckType(ref error);
+            InnerExpression = innerExpression;
+        }
+
+        public override bool CheckType(QLTypeErrors typeErrors)
+        {
+            return InnerExpression.CheckType(typeErrors);
         }
 
         public override QBaseType GetResultType()

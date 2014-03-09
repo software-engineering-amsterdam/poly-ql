@@ -3,7 +3,7 @@ package org.uva.sea.ql.ast.operators.arithmetic;
 import org.uva.sea.ql.ast.Expression;
 import org.uva.sea.ql.ast.ExpressionVisitor;
 import org.uva.sea.ql.ast.operators.BinaryOperator;
-import org.uva.sea.ql.ast.type.IntType;
+import org.uva.sea.ql.ast.type.IntegerType;
 import org.uva.sea.ql.ast.type.Type;
 import org.uva.sea.ql.typechecker.TypeEnvironment;
 
@@ -19,12 +19,12 @@ public class Div extends BinaryOperator {
 		
 	}
 	
-	public String show(){
+	public String toString(){
 		return "/";
 	}
 
 	public Type typeOf(TypeEnvironment environment) {
 		
-		return new IntType();
+		return new IntegerType();
 	}
 }

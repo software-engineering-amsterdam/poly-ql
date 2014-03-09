@@ -13,15 +13,14 @@ import org.uva.sea.ql.ast.Expression;
 			this.right = right;
 		}
 		
-		public Expression returnLeft(){
+		public Expression getLeftHand(){
 			return left;
 		}
 		
-		public Expression returnRight(){
+		public Expression getRightHand(){
 			return right;
 		}
 		
+		public abstract String toString();
 		
-		
-
 }

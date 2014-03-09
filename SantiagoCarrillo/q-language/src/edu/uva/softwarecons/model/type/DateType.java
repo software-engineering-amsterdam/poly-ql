@@ -1,6 +1,7 @@
 package edu.uva.softwarecons.model.type;
 
-import edu.uva.softwarecons.visitor.IFormElementVisitor;
+import edu.uva.softwarecons.visitor.form.IFormElementVisitor;
+import edu.uva.softwarecons.visitor.type.ITypeElementVisitor;
 
 import java.util.Date;
 
@@ -11,8 +12,11 @@ import java.util.Date;
  */
 public class DateType extends Type {
 
-    private Date date;
+    private final Date date;
 
+    public DateType(Date date) {
+        this.date = date;
+    }
 
     @Override
     public Date getValue() {
@@ -20,7 +24,17 @@ public class DateType extends Type {
     }
 
     @Override
-    public void accept(IFormElementVisitor visitor) {
+    public String toString() {
+        return "date";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof DateType;
+    }
+
+    @Override
+    public void accept(ITypeElementVisitor visitor) {
         visitor.visitDateType(this);
     }
 }

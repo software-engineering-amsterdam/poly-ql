@@ -2,32 +2,62 @@
 module QlParser
 type token = 
   | EOF
+  | GREATER_EQUALS_THAN
+  | LESS_EQUALS_THAN
+  | GREATER_THAN
+  | LESS_THAN
+  | NOT
+  | NOT_EQUALS
+  | EQUALS
+  | TIMES
+  | DIVIDE
+  | MINUS
+  | PLUS
   | PARENS_CLOSE
   | PARENS_OPEN
   | BRACKET_CLOSE
   | BRACKET_OPEN
   | ASS
-  | MONEY
-  | INTEGER
-  | BOOLEAN
+  | IF
+  | BOOL_FALSE
+  | BOOL_TRUE
+  | QL_STRING
+  | QL_MONEY
+  | QL_INTEGER
+  | QL_BOOLEAN
   | FORM
+  | BOOL of (bool)
   | STRING of (string)
-  | FLOAT of (float)
   | INT of (int)
   | ID of (string)
 type tokenId = 
     | TOKEN_EOF
+    | TOKEN_GREATER_EQUALS_THAN
+    | TOKEN_LESS_EQUALS_THAN
+    | TOKEN_GREATER_THAN
+    | TOKEN_LESS_THAN
+    | TOKEN_NOT
+    | TOKEN_NOT_EQUALS
+    | TOKEN_EQUALS
+    | TOKEN_TIMES
+    | TOKEN_DIVIDE
+    | TOKEN_MINUS
+    | TOKEN_PLUS
     | TOKEN_PARENS_CLOSE
     | TOKEN_PARENS_OPEN
     | TOKEN_BRACKET_CLOSE
     | TOKEN_BRACKET_OPEN
     | TOKEN_ASS
-    | TOKEN_MONEY
-    | TOKEN_INTEGER
-    | TOKEN_BOOLEAN
+    | TOKEN_IF
+    | TOKEN_BOOL_FALSE
+    | TOKEN_BOOL_TRUE
+    | TOKEN_QL_STRING
+    | TOKEN_QL_MONEY
+    | TOKEN_QL_INTEGER
+    | TOKEN_QL_BOOLEAN
     | TOKEN_FORM
+    | TOKEN_BOOL
     | TOKEN_STRING
-    | TOKEN_FLOAT
     | TOKEN_INT
     | TOKEN_ID
     | TOKEN_end_of_input
@@ -35,9 +65,12 @@ type tokenId =
 type nonTerminalId = 
     | NONTERM__startstart
     | NONTERM_start
-    | NONTERM_Question_List
+    | NONTERM_Statement_List
+    | NONTERM_Statement
     | NONTERM_Question
     | NONTERM_QuestionType
+    | NONTERM_Condition
+    | NONTERM_Expression
 /// This function maps integers indexes to symbolic token ids
 val tagOfToken: token -> int
 

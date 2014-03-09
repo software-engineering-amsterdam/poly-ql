@@ -1,23 +1,24 @@
 package net.iplantevin.ql.ast.statements;
 
-import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
-import org.antlr.v4.runtime.ParserRuleContext;
+import net.iplantevin.ql.ast.LineInfo;
+import net.iplantevin.ql.ast.visitors.IASTVisitor;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
+ * Block: a list of statements.
+ *
  * @author Ivan
- *         Block: a list of statements.
  */
 public class Block extends Statement {
-    private final ArrayList<Statement> statements;
+    private final List<Statement> statements;
 
-    public Block(ArrayList<Statement> statements, ParserRuleContext ctx) {
-        super(ctx);
+    public Block(List<Statement> statements, LineInfo lineInfo) {
+        super(lineInfo);
         this.statements = statements;
     }
 
-    public ArrayList<Statement> getStatements() {
+    public List<Statement> getStatements() {
         return statements;
     }
 
@@ -32,7 +33,7 @@ public class Block extends Statement {
     }
 
     @Override
-    public void accept(IQLASTVisitor visitor) {
-        visitor.visit(this);
+    public <T> T accept(IASTVisitor<T> visitor) {
+        return visitor.visit(this);
     }
 }

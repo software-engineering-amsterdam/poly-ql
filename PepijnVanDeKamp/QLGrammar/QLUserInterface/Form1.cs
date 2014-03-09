@@ -27,7 +27,7 @@ namespace QLUserInterface
         private void btnParse_Click(object sender, EventArgs e)
         {
             var _form = QL.Parsing.Parse(txtInput.Text);
-            txtOutput.Text = _form.ToString();
+            txtOutput.Text = _form.ToString().Replace("\n",Environment.NewLine);
         }
     }
 }

@@ -1,10 +1,9 @@
 package net.iplantevin.ql.ast.types;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Ivan
- * Date: 19-02-14
  * Boolean is only compatible with itself.
+ *
+ * @author Ivan
  */
 public class BooleanType extends Type {
 
@@ -21,6 +20,11 @@ public class BooleanType extends Type {
     @Override
     public boolean equals(Object object) {
         return object instanceof BooleanType;
+    }
+
+    @Override
+    public <T> T accept(ITypeVisitor<T> visitor) {
+        return visitor.visit(this);
     }
 
     @Override

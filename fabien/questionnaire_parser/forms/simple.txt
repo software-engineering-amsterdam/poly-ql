@@ -1,4 +1,6 @@
 form Hello {
-  what is this?
-  boolean fu
+  
+  if (foo && bar || hello) {
+  
+  }
 }

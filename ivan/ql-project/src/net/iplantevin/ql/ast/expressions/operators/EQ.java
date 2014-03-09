@@ -5,11 +5,12 @@ import net.iplantevin.ql.ast.expressions.Expression;
 import net.iplantevin.ql.ast.types.BooleanType;
 import net.iplantevin.ql.ast.types.Type;
 import net.iplantevin.ql.ast.types.TypeEnvironment;
-import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
+import net.iplantevin.ql.ast.visitors.IASTVisitor;
 
 /**
+ * Equality.
+ *
  * @author Ivan
- *         Equality.
  */
 public class EQ extends Binary {
     public EQ(Expression left, Expression right, LineInfo lineInfo) {
@@ -17,17 +18,17 @@ public class EQ extends Binary {
     }
 
     @Override
-    public Type getType(TypeEnvironment idTypeMap) {
+    public Type getType(TypeEnvironment idTypeStore) {
         return new BooleanType();
     }
 
     @Override
     public String toString() {
-        return getLeftExpr() + " == " + getRightExpr();
+        return getLeftHS() + " == " + getRightHS();
     }
 
     @Override
-    public void accept(IQLASTVisitor visitor) {
-        visitor.visit(this);
+    public <T> T accept(IASTVisitor<T> visitor) {
+        return visitor.visit(this);
     }
 }

@@ -45,6 +45,7 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="QLClasses\ASTBase.cs" />
     <Compile Include="QLClasses\Expressions\Binary\Conditional\And.cs" />
     <Compile Include="QLClasses\Expressions\Binary\Compare\CompareExpression.cs" />
     <Compile Include="QLClasses\Expressions\Binary\Compare\Operators\Equals.cs" />
@@ -63,12 +64,12 @@
     <Compile Include="QLClasses\Expressions\Literals\BoolLiteral.cs" />
     <Compile Include="QLClasses\Expressions\Literals\StringLiteral.cs" />
     <Compile Include="QLClasses\Expressions\Literals\IntLiteral.cs" />
+    <Compile Include="QLClasses\Statements\ComputedQuestion.cs" />
     <Compile Include="QLController.cs" />
-    <Compile Include="TypeChecker\QLIdentifiers.cs" />
+    <Compile Include="TypeChecker\QLMemoryManager.cs" />
     <Compile Include="QLClasses\Expressions\ExpressionBase.cs" />
     <Compile Include="QLClasses\Expressions\Unary\UnaryExpression.cs" />
     <Compile Include="QLClasses\Expressions\Binary\BinaryExpression.cs" />
-    <Compile Include="TypeChecker\ITypeChecker.cs" />
     <Compile Include="QLClasses\Expressions\Unary\Neg.cs" />
     <Compile Include="QLClasses\Expressions\Unary\Not.cs" />
     <Compile Include="QLClasses\Expressions\Unary\Pos.cs" />
@@ -95,24 +96,9 @@
       <DependentUpon>QL.g4</DependentUpon>
     </Compile>
     <Compile Include="QLErrorListeners.cs" />
-    <Compile Include="QLLexer.cs" />
     <Compile Include="QLParser.cs" />
-    <Compile Include="TypeChecker\QLTypeError.cs" />
     <Compile Include="TypeChecker\QLTypeChecker.cs" />
     <Compile Include="QLClasses\QLTokenInfo.cs" />
-    <EmbeddedResource Include="MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -131,7 +117,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

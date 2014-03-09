@@ -3,7 +3,7 @@ package ast.expr.literal;
 import typecheck.Symboles;
 import ast.Visitor;
 import ast.expr.types.StrType;
-import ast.expr.types.Types;
+import ast.expr.types.Type;
 
 public class StrLiteral extends Literals{
 	
@@ -19,17 +19,11 @@ public class StrLiteral extends Literals{
 	}
 
 	@Override
-	public Types typeof(Symboles symb) {
+	public Type typeof(Symboles symb) {
 		return new StrType();
 	}
 
 	public String getVal() {
 		return this.val;
 	}
-
-	@Override
-	public String show() {
-		return val.toString();
-	}
-
 }

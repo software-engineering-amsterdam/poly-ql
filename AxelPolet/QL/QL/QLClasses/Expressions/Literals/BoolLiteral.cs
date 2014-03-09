@@ -1,5 +1,4 @@
-﻿using System;
-using QL.QLClasses.Types;
+﻿using QL.QLClasses.Types;
 using QL.TypeChecker;
 
 namespace QL.QLClasses.Expressions.Literals
@@ -23,7 +22,7 @@ namespace QL.QLClasses.Expressions.Literals
             return null;
         }
 
-        public override bool CheckType(ref QLTypeError error)
+        public override bool CheckType(QLTypeErrors typeErrors)
         {
             return true;
         }

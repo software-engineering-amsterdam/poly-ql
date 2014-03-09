@@ -1,41 +1,16 @@
-// Output created by jacc on Wed Feb 12 12:27:34 CET 2014
+// Output created by jacc on Tue Mar 04 16:01:42 CET 2014
 
 package org.uva.sea.ql.parser.jacc;
 
-import org.uva.sea.ql.ast.ASTNode;
-import org.uva.sea.ql.ast.Expression;
-import org.uva.sea.ql.ast.Identifier;
-import org.uva.sea.ql.ast.literal.BoolLiteral;
-import org.uva.sea.ql.ast.literal.IntLiteral;
-import org.uva.sea.ql.ast.literal.StringLiteral;
-import org.uva.sea.ql.ast.operators.arithmetic.Add;
-import org.uva.sea.ql.ast.operators.arithmetic.Div;
-import org.uva.sea.ql.ast.operators.arithmetic.Mul;
-import org.uva.sea.ql.ast.operators.arithmetic.Neg;
-import org.uva.sea.ql.ast.operators.arithmetic.Pos;
-import org.uva.sea.ql.ast.operators.arithmetic.Sub;
-import org.uva.sea.ql.ast.operators.comparison.Eq;
-import org.uva.sea.ql.ast.operators.comparison.GEq;
-import org.uva.sea.ql.ast.operators.comparison.GT;
-import org.uva.sea.ql.ast.operators.comparison.LEq;
-import org.uva.sea.ql.ast.operators.comparison.LT;
-import org.uva.sea.ql.ast.operators.comparison.NEq;
-import org.uva.sea.ql.ast.operators.logical.And;
-import org.uva.sea.ql.ast.operators.logical.Not;
-import org.uva.sea.ql.ast.operators.logical.Or;
-import org.uva.sea.ql.ast.statement.ExprQuestion;
-import org.uva.sea.ql.ast.statement.Form;
-import org.uva.sea.ql.ast.statement.If;
-import org.uva.sea.ql.ast.statement.IfElse;
-import org.uva.sea.ql.ast.statement.Question;
-import org.uva.sea.ql.ast.statement.QuestionSet;
-import org.uva.sea.ql.ast.statement.Statement;
-import org.uva.sea.ql.ast.type.BoolType;
-import org.uva.sea.ql.ast.type.IntType;
-import org.uva.sea.ql.ast.type.MoneyType;
-import org.uva.sea.ql.ast.type.StringType;
-import org.uva.sea.ql.ast.type.Type;
+import org.uva.sea.ql.ast.*;
+import org.uva.sea.ql.ast.literal.*;
+import org.uva.sea.ql.ast.operators.arithmetic.*;
+import org.uva.sea.ql.ast.operators.logical.*;
+import org.uva.sea.ql.ast.operators.comparison.*;
+import org.uva.sea.ql.ast.statement.*;
+import org.uva.sea.ql.ast.type.*;
 
+import org.uva.sea.ql.ast.*;
 
 class QLParser implements QLTokens {
     private int yyss = 100;
@@ -132,10 +107,10 @@ class QLParser implements QLTokens {
                     }
                 case 85:
                     switch (yytok) {
-                        case '}':
-                        case IDENTIFIER:
                         case ENDINPUT:
                         case IF:
+                        case '}':
+                        case IDENTIFIER:
                             yyn = yyr9();
                             continue;
                     }
@@ -149,10 +124,10 @@ class QLParser implements QLTokens {
                     }
                 case 86:
                     switch (yytok) {
-                        case '}':
-                        case IDENTIFIER:
                         case ENDINPUT:
                         case IF:
+                        case '}':
+                        case IDENTIFIER:
                             yyn = yyr10();
                             continue;
                     }
@@ -175,10 +150,10 @@ class QLParser implements QLTokens {
                     }
                 case 88:
                     switch (yytok) {
-                        case '}':
-                        case IDENTIFIER:
                         case ENDINPUT:
                         case IF:
+                        case '}':
+                        case IDENTIFIER:
                             yyn = yyr8();
                             continue;
                     }
@@ -533,7 +508,7 @@ class QLParser implements QLTokens {
                     }
                 case 114:
                     switch (yytok) {
-                        case STRING:
+                        case STRINGLITERAL:
                             yyn = 55;
                             continue;
                     }
@@ -842,10 +817,10 @@ class QLParser implements QLTokens {
                         case '(':
                             yyn = 69;
                             continue;
-                        case '}':
-                        case IDENTIFIER:
                         case ENDINPUT:
                         case IF:
+                        case '}':
+                        case IDENTIFIER:
                             yyn = yyr12();
                             continue;
                     }
@@ -863,11 +838,11 @@ class QLParser implements QLTokens {
                     }
                 case 141:
                     switch (yytok) {
-                        case '}':
-                        case IDENTIFIER:
                         case '(':
                         case ENDINPUT:
                         case IF:
+                        case '}':
+                        case IDENTIFIER:
                             yyn = yyr40();
                             continue;
                     }
@@ -885,11 +860,11 @@ class QLParser implements QLTokens {
                     }
                 case 142:
                     switch (yytok) {
-                        case '}':
-                        case IDENTIFIER:
                         case '(':
                         case ENDINPUT:
                         case IF:
+                        case '}':
+                        case IDENTIFIER:
                             yyn = yyr39();
                             continue;
                     }
@@ -907,11 +882,11 @@ class QLParser implements QLTokens {
                     }
                 case 143:
                     switch (yytok) {
-                        case '}':
-                        case IDENTIFIER:
                         case '(':
                         case ENDINPUT:
                         case IF:
+                        case '}':
+                        case IDENTIFIER:
                             yyn = yyr41();
                             continue;
                     }
@@ -929,11 +904,11 @@ class QLParser implements QLTokens {
                     }
                 case 144:
                     switch (yytok) {
-                        case '}':
-                        case IDENTIFIER:
                         case '(':
                         case ENDINPUT:
                         case IF:
+                        case '}':
+                        case IDENTIFIER:
                             yyn = yyr38();
                             continue;
                     }
@@ -1058,10 +1033,10 @@ class QLParser implements QLTokens {
                     }
                 case 152:
                     switch (yytok) {
-                        case '}':
-                        case IDENTIFIER:
                         case ENDINPUT:
                         case IF:
+                        case '}':
+                        case IDENTIFIER:
                             yyn = yyr11();
                             continue;
                     }
@@ -1082,10 +1057,10 @@ class QLParser implements QLTokens {
                         case ELSE:
                             yyn = 75;
                             continue;
-                        case '}':
-                        case IDENTIFIER:
                         case ENDINPUT:
                         case IF:
+                        case '}':
+                        case IDENTIFIER:
                             yyn = yyr13();
                             continue;
                     }
@@ -1156,10 +1131,10 @@ class QLParser implements QLTokens {
                     }
                 case 157:
                     switch (yytok) {
-                        case '}':
-                        case IDENTIFIER:
                         case ENDINPUT:
                         case IF:
+                        case '}':
+                        case IDENTIFIER:
                             yyn = yyr14();
                             continue;
                     }
@@ -1192,7 +1167,7 @@ class QLParser implements QLTokens {
 
     private int yys0() {
         switch (yytok) {
-            case BOOLEAN:
+            case BOOLEANLITERAL:
                 return 12;
             case FORM:
                 return 13;
@@ -1200,9 +1175,9 @@ class QLParser implements QLTokens {
                 return 14;
             case IF:
                 return 15;
-            case INTEGER:
+            case INTEGERLITERAL:
                 return 16;
-            case STRING:
+            case STRINGLITERAL:
                 return 17;
             case '!':
                 return 18;
@@ -1218,19 +1193,19 @@ class QLParser implements QLTokens {
 
     private int yys3() {
         switch (yytok) {
+            case NEQ:
+            case '-':
+            case GEQ:
+            case '+':
+            case '*':
+            case '/':
+            case ')':
+            case '<':
+            case LEQ:
+            case EQ:
+            case ENDINPUT:
             case '>':
             case OR:
-            case '-':
-            case NEQ:
-            case GEQ:
-            case '/':
-            case '+':
-            case '<':
-            case '*':
-            case ')':
-            case LEQ:
-            case ENDINPUT:
-            case EQ:
             case AND:
                 return yyr17();
         }
@@ -1271,19 +1246,19 @@ class QLParser implements QLTokens {
 
     private int yys8() {
         switch (yytok) {
+            case NEQ:
+            case '-':
+            case GEQ:
+            case '+':
+            case '*':
+            case '/':
+            case ')':
+            case '<':
+            case LEQ:
+            case EQ:
+            case ENDINPUT:
             case '>':
             case OR:
-            case '-':
-            case NEQ:
-            case GEQ:
-            case '/':
-            case '+':
-            case '<':
-            case '*':
-            case ')':
-            case LEQ:
-            case ENDINPUT:
-            case EQ:
             case AND:
                 return yyr15();
         }
@@ -1292,19 +1267,19 @@ class QLParser implements QLTokens {
 
     private int yys11() {
         switch (yytok) {
+            case NEQ:
+            case '-':
+            case GEQ:
+            case '+':
+            case '*':
+            case '/':
+            case ')':
+            case '<':
+            case LEQ:
+            case EQ:
+            case ENDINPUT:
             case '>':
             case OR:
-            case '-':
-            case NEQ:
-            case GEQ:
-            case '/':
-            case '+':
-            case '<':
-            case '*':
-            case ')':
-            case LEQ:
-            case ENDINPUT:
-            case EQ:
             case AND:
                 return yyr16();
         }
@@ -1313,19 +1288,19 @@ class QLParser implements QLTokens {
 
     private int yys12() {
         switch (yytok) {
+            case NEQ:
+            case '-':
+            case GEQ:
+            case '+':
+            case '*':
+            case '/':
+            case ')':
+            case '<':
+            case LEQ:
+            case EQ:
+            case ENDINPUT:
             case '>':
             case OR:
-            case '-':
-            case NEQ:
-            case GEQ:
-            case '/':
-            case '+':
-            case '<':
-            case '*':
-            case ')':
-            case LEQ:
-            case ENDINPUT:
-            case EQ:
             case AND:
                 return yyr21();
         }
@@ -1336,18 +1311,18 @@ class QLParser implements QLTokens {
         switch (yytok) {
             case ':':
                 return 35;
+            case NEQ:
+            case '-':
+            case GEQ:
+            case '+':
+            case '/':
+            case '*':
+            case '<':
+            case LEQ:
+            case EQ:
+            case ENDINPUT:
             case '>':
             case OR:
-            case '/':
-            case '-':
-            case NEQ:
-            case GEQ:
-            case '<':
-            case '+':
-            case '*':
-            case LEQ:
-            case ENDINPUT:
-            case EQ:
             case AND:
                 return yyr19();
         }
@@ -1356,19 +1331,19 @@ class QLParser implements QLTokens {
 
     private int yys16() {
         switch (yytok) {
+            case NEQ:
+            case '-':
+            case GEQ:
+            case '+':
+            case '*':
+            case '/':
+            case ')':
+            case '<':
+            case LEQ:
+            case EQ:
+            case ENDINPUT:
             case '>':
             case OR:
-            case '-':
-            case NEQ:
-            case GEQ:
-            case '/':
-            case '+':
-            case '<':
-            case '*':
-            case ')':
-            case LEQ:
-            case ENDINPUT:
-            case EQ:
             case AND:
                 return yyr20();
         }
@@ -1377,19 +1352,19 @@ class QLParser implements QLTokens {
 
     private int yys17() {
         switch (yytok) {
+            case NEQ:
+            case '-':
+            case GEQ:
+            case '+':
+            case '*':
+            case '/':
+            case ')':
+            case '<':
+            case LEQ:
+            case EQ:
+            case ENDINPUT:
             case '>':
             case OR:
-            case '-':
-            case NEQ:
-            case GEQ:
-            case '/':
-            case '+':
-            case '<':
-            case '*':
-            case ')':
-            case LEQ:
-            case ENDINPUT:
-            case EQ:
             case AND:
                 return yyr22();
         }
@@ -1398,11 +1373,11 @@ class QLParser implements QLTokens {
 
     private int yys18() {
         switch (yytok) {
-            case BOOLEAN:
+            case BOOLEANLITERAL:
                 return 12;
-            case INTEGER:
+            case INTEGERLITERAL:
                 return 16;
-            case STRING:
+            case STRINGLITERAL:
                 return 17;
             case '!':
                 return 18;
@@ -1420,11 +1395,11 @@ class QLParser implements QLTokens {
 
     private int yys19() {
         switch (yytok) {
-            case BOOLEAN:
+            case BOOLEANLITERAL:
                 return 12;
-            case INTEGER:
+            case INTEGERLITERAL:
                 return 16;
-            case STRING:
+            case STRINGLITERAL:
                 return 17;
             case '!':
                 return 18;
@@ -1442,11 +1417,11 @@ class QLParser implements QLTokens {
 
     private int yys20() {
         switch (yytok) {
-            case BOOLEAN:
+            case BOOLEANLITERAL:
                 return 12;
-            case INTEGER:
+            case INTEGERLITERAL:
                 return 16;
-            case STRING:
+            case STRINGLITERAL:
                 return 17;
             case '!':
                 return 18;
@@ -1464,11 +1439,11 @@ class QLParser implements QLTokens {
 
     private int yys21() {
         switch (yytok) {
-            case BOOLEAN:
+            case BOOLEANLITERAL:
                 return 12;
-            case INTEGER:
+            case INTEGERLITERAL:
                 return 16;
-            case STRING:
+            case STRINGLITERAL:
                 return 17;
             case '!':
                 return 18;
@@ -1486,11 +1461,11 @@ class QLParser implements QLTokens {
 
     private int yys22() {
         switch (yytok) {
-            case BOOLEAN:
+            case BOOLEANLITERAL:
                 return 12;
-            case INTEGER:
+            case INTEGERLITERAL:
                 return 16;
-            case STRING:
+            case STRINGLITERAL:
                 return 17;
             case '!':
                 return 18;
@@ -1508,11 +1483,11 @@ class QLParser implements QLTokens {
 
     private int yys23() {
         switch (yytok) {
-            case BOOLEAN:
+            case BOOLEANLITERAL:
                 return 12;
-            case INTEGER:
+            case INTEGERLITERAL:
                 return 16;
-            case STRING:
+            case STRINGLITERAL:
                 return 17;
             case '!':
                 return 18;
@@ -1530,11 +1505,11 @@ class QLParser implements QLTokens {
 
     private int yys24() {
         switch (yytok) {
-            case BOOLEAN:
+            case BOOLEANLITERAL:
                 return 12;
-            case INTEGER:
+            case INTEGERLITERAL:
                 return 16;
-            case STRING:
+            case STRINGLITERAL:
                 return 17;
             case '!':
                 return 18;
@@ -1552,11 +1527,11 @@ class QLParser implements QLTokens {
 
     private int yys25() {
         switch (yytok) {
-            case BOOLEAN:
+            case BOOLEANLITERAL:
                 return 12;
-            case INTEGER:
+            case INTEGERLITERAL:
                 return 16;
-            case STRING:
+            case STRINGLITERAL:
                 return 17;
             case '!':
                 return 18;
@@ -1574,11 +1549,11 @@ class QLParser implements QLTokens {
 
     private int yys26() {
         switch (yytok) {
-            case BOOLEAN:
+            case BOOLEANLITERAL:
                 return 12;
-            case INTEGER:
+            case INTEGERLITERAL:
                 return 16;
-            case STRING:
+            case STRINGLITERAL:
                 return 17;
             case '!':
                 return 18;
@@ -1596,11 +1571,11 @@ class QLParser implements QLTokens {
 
     private int yys27() {
         switch (yytok) {
-            case BOOLEAN:
+            case BOOLEANLITERAL:
                 return 12;
-            case INTEGER:
+            case INTEGERLITERAL:
                 return 16;
-            case STRING:
+            case STRINGLITERAL:
                 return 17;
             case '!':
                 return 18;
@@ -1618,11 +1593,11 @@ class QLParser implements QLTokens {
 
     private int yys28() {
         switch (yytok) {
-            case BOOLEAN:
+            case BOOLEANLITERAL:
                 return 12;
-            case INTEGER:
+            case INTEGERLITERAL:
                 return 16;
-            case STRING:
+            case STRINGLITERAL:
                 return 17;
             case '!':
                 return 18;
@@ -1640,11 +1615,11 @@ class QLParser implements QLTokens {
 
     private int yys29() {
         switch (yytok) {
-            case BOOLEAN:
+            case BOOLEANLITERAL:
                 return 12;
-            case INTEGER:
+            case INTEGERLITERAL:
                 return 16;
-            case STRING:
+            case STRINGLITERAL:
                 return 17;
             case '!':
                 return 18;
@@ -1662,11 +1637,11 @@ class QLParser implements QLTokens {
 
     private int yys30() {
         switch (yytok) {
-            case BOOLEAN:
+            case BOOLEANLITERAL:
                 return 12;
-            case INTEGER:
+            case INTEGERLITERAL:
                 return 16;
-            case STRING:
+            case STRINGLITERAL:
                 return 17;
             case '!':
                 return 18;
@@ -1684,11 +1659,11 @@ class QLParser implements QLTokens {
 
     private int yys31() {
         switch (yytok) {
-            case BOOLEAN:
+            case BOOLEANLITERAL:
                 return 12;
-            case INTEGER:
+            case INTEGERLITERAL:
                 return 16;
-            case STRING:
+            case STRINGLITERAL:
                 return 17;
             case '!':
                 return 18;
@@ -1706,11 +1681,11 @@ class QLParser implements QLTokens {
 
     private int yys32() {
         switch (yytok) {
-            case BOOLEAN:
+            case BOOLEANLITERAL:
                 return 12;
-            case INTEGER:
+            case INTEGERLITERAL:
                 return 16;
-            case STRING:
+            case STRINGLITERAL:
                 return 17;
             case '!':
                 return 18;
@@ -1728,11 +1703,11 @@ class QLParser implements QLTokens {
 
     private int yys33() {
         switch (yytok) {
-            case BOOLEAN:
+            case BOOLEANLITERAL:
                 return 12;
-            case INTEGER:
+            case INTEGERLITERAL:
                 return 16;
-            case STRING:
+            case STRINGLITERAL:
                 return 17;
             case '!':
                 return 18;
@@ -1750,11 +1725,11 @@ class QLParser implements QLTokens {
 
     private int yys36() {
         switch (yytok) {
-            case BOOLEAN:
+            case BOOLEANLITERAL:
                 return 12;
-            case INTEGER:
+            case INTEGERLITERAL:
                 return 16;
-            case STRING:
+            case STRINGLITERAL:
                 return 17;
             case '!':
                 return 18;
@@ -1772,19 +1747,19 @@ class QLParser implements QLTokens {
 
     private int yys37() {
         switch (yytok) {
+            case NEQ:
+            case '-':
+            case GEQ:
+            case '+':
+            case '*':
+            case '/':
+            case ')':
+            case '<':
+            case LEQ:
+            case EQ:
+            case ENDINPUT:
             case '>':
             case OR:
-            case '-':
-            case NEQ:
-            case GEQ:
-            case '/':
-            case '+':
-            case '<':
-            case '*':
-            case ')':
-            case LEQ:
-            case ENDINPUT:
-            case EQ:
             case AND:
                 return yyr29();
         }
@@ -1793,19 +1768,19 @@ class QLParser implements QLTokens {
 
     private int yys38() {
         switch (yytok) {
+            case NEQ:
+            case '-':
+            case GEQ:
+            case '+':
+            case '*':
+            case '/':
+            case ')':
+            case '<':
+            case LEQ:
+            case EQ:
+            case ENDINPUT:
             case '>':
             case OR:
-            case '-':
-            case NEQ:
-            case GEQ:
-            case '/':
-            case '+':
-            case '<':
-            case '*':
-            case ')':
-            case LEQ:
-            case ENDINPUT:
-            case EQ:
             case AND:
                 return yyr19();
         }
@@ -1846,19 +1821,19 @@ class QLParser implements QLTokens {
 
     private int yys40() {
         switch (yytok) {
+            case NEQ:
+            case '-':
+            case GEQ:
+            case '+':
+            case '*':
+            case '/':
+            case ')':
+            case '<':
+            case LEQ:
+            case EQ:
+            case ENDINPUT:
             case '>':
             case OR:
-            case '-':
-            case NEQ:
-            case GEQ:
-            case '/':
-            case '+':
-            case '<':
-            case '*':
-            case ')':
-            case LEQ:
-            case ENDINPUT:
-            case EQ:
             case AND:
                 return yyr23();
         }
@@ -1867,19 +1842,19 @@ class QLParser implements QLTokens {
 
     private int yys41() {
         switch (yytok) {
+            case NEQ:
+            case '-':
+            case GEQ:
+            case '+':
+            case '*':
+            case '/':
+            case ')':
+            case '<':
+            case LEQ:
+            case EQ:
+            case ENDINPUT:
             case '>':
             case OR:
-            case '-':
-            case NEQ:
-            case GEQ:
-            case '/':
-            case '+':
-            case '<':
-            case '*':
-            case ')':
-            case LEQ:
-            case ENDINPUT:
-            case EQ:
             case AND:
                 return yyr24();
         }
@@ -1928,15 +1903,15 @@ class QLParser implements QLTokens {
                 return 30;
             case '/':
                 return 31;
-            case '>':
-            case '<':
-            case OR:
             case NEQ:
             case GEQ:
             case ')':
+            case '<':
             case LEQ:
-            case ENDINPUT:
             case EQ:
+            case ENDINPUT:
+            case '>':
+            case OR:
             case AND:
                 return yyr32();
         }
@@ -1953,15 +1928,15 @@ class QLParser implements QLTokens {
                 return 30;
             case '/':
                 return 31;
-            case '>':
-            case '<':
-            case OR:
             case NEQ:
             case GEQ:
             case ')':
+            case '<':
             case LEQ:
-            case ENDINPUT:
             case EQ:
+            case ENDINPUT:
+            case '>':
+            case OR:
             case AND:
                 return yyr36();
         }
@@ -1978,15 +1953,15 @@ class QLParser implements QLTokens {
                 return 30;
             case '/':
                 return 31;
-            case '>':
-            case '<':
-            case OR:
             case NEQ:
             case GEQ:
             case ')':
+            case '<':
             case LEQ:
-            case ENDINPUT:
             case EQ:
+            case ENDINPUT:
+            case '>':
+            case OR:
             case AND:
                 return yyr37();
         }
@@ -2003,15 +1978,15 @@ class QLParser implements QLTokens {
                 return 30;
             case '/':
                 return 31;
-            case '>':
-            case '<':
-            case OR:
             case NEQ:
             case GEQ:
             case ')':
+            case '<':
             case LEQ:
-            case ENDINPUT:
             case EQ:
+            case ENDINPUT:
+            case '>':
+            case OR:
             case AND:
                 return yyr33();
         }
@@ -2040,9 +2015,9 @@ class QLParser implements QLTokens {
                 return 32;
             case '>':
                 return 33;
-            case OR:
             case ')':
             case ENDINPUT:
+            case OR:
             case AND:
                 return yyr31();
         }
@@ -2051,19 +2026,19 @@ class QLParser implements QLTokens {
 
     private int yys48() {
         switch (yytok) {
+            case NEQ:
+            case '-':
+            case GEQ:
+            case '+':
+            case '*':
+            case '/':
+            case ')':
+            case '<':
+            case LEQ:
+            case EQ:
+            case ENDINPUT:
             case '>':
             case OR:
-            case '-':
-            case NEQ:
-            case GEQ:
-            case '/':
-            case '+':
-            case '<':
-            case '*':
-            case ')':
-            case LEQ:
-            case ENDINPUT:
-            case EQ:
             case AND:
                 return yyr25();
         }
@@ -2076,17 +2051,17 @@ class QLParser implements QLTokens {
                 return 28;
             case '/':
                 return 31;
-            case '>':
-            case OR:
-            case '-':
             case NEQ:
+            case '-':
             case GEQ:
-            case '<':
             case '+':
             case ')':
+            case '<':
             case LEQ:
-            case ENDINPUT:
             case EQ:
+            case ENDINPUT:
+            case '>':
+            case OR:
             case AND:
                 return yyr27();
         }
@@ -2099,17 +2074,17 @@ class QLParser implements QLTokens {
                 return 28;
             case '/':
                 return 31;
-            case '>':
-            case OR:
-            case '-':
             case NEQ:
+            case '-':
             case GEQ:
-            case '<':
             case '+':
             case ')':
+            case '<':
             case LEQ:
-            case ENDINPUT:
             case EQ:
+            case ENDINPUT:
+            case '>':
+            case OR:
             case AND:
                 return yyr28();
         }
@@ -2118,19 +2093,19 @@ class QLParser implements QLTokens {
 
     private int yys51() {
         switch (yytok) {
+            case NEQ:
+            case '-':
+            case GEQ:
+            case '+':
+            case '*':
+            case '/':
+            case ')':
+            case '<':
+            case LEQ:
+            case EQ:
+            case ENDINPUT:
             case '>':
             case OR:
-            case '-':
-            case NEQ:
-            case GEQ:
-            case '/':
-            case '+':
-            case '<':
-            case '*':
-            case ')':
-            case LEQ:
-            case ENDINPUT:
-            case EQ:
             case AND:
                 return yyr26();
         }
@@ -2147,15 +2122,15 @@ class QLParser implements QLTokens {
                 return 30;
             case '/':
                 return 31;
-            case '>':
-            case '<':
-            case OR:
             case NEQ:
             case GEQ:
             case ')':
+            case '<':
             case LEQ:
-            case ENDINPUT:
             case EQ:
+            case ENDINPUT:
+            case '>':
+            case OR:
             case AND:
                 return yyr35();
         }
@@ -2172,15 +2147,15 @@ class QLParser implements QLTokens {
                 return 30;
             case '/':
                 return 31;
-            case '>':
-            case '<':
-            case OR:
             case NEQ:
             case GEQ:
             case ')':
+            case '<':
             case LEQ:
-            case ENDINPUT:
             case EQ:
+            case ENDINPUT:
+            case '>':
+            case OR:
             case AND:
                 return yyr34();
         }
@@ -2221,19 +2196,19 @@ class QLParser implements QLTokens {
 
     private int yys57() {
         switch (yytok) {
+            case NEQ:
+            case '-':
+            case GEQ:
+            case '+':
+            case '*':
+            case '/':
+            case ')':
+            case '<':
+            case LEQ:
+            case EQ:
+            case ENDINPUT:
             case '>':
             case OR:
-            case '-':
-            case NEQ:
-            case GEQ:
-            case '/':
-            case '+':
-            case '<':
-            case '*':
-            case ')':
-            case LEQ:
-            case ENDINPUT:
-            case EQ:
             case AND:
                 return yyr18();
         }
@@ -2242,11 +2217,11 @@ class QLParser implements QLTokens {
 
     private int yys69() {
         switch (yytok) {
-            case BOOLEAN:
+            case BOOLEANLITERAL:
                 return 12;
-            case INTEGER:
+            case INTEGERLITERAL:
                 return 16;
-            case STRING:
+            case STRINGLITERAL:
                 return 17;
             case '!':
                 return 18;
@@ -2378,19 +2353,19 @@ class QLParser implements QLTokens {
         return yypexpression();
     }
 
-    private int yyr20() { // expression : INTEGER
-        { yyrv = ((IntLiteral)yysv[yysp-1]); }
+    private int yyr20() { // expression : INTEGERLITERAL
+        { yyrv = ((IntegerLiteral)yysv[yysp-1]); }
         yysv[yysp-=1] = yyrv;
         return yypexpression();
     }
 
-    private int yyr21() { // expression : BOOLEAN
-        { yyrv = ((BoolLiteral)yysv[yysp-1]); }
+    private int yyr21() { // expression : BOOLEANLITERAL
+        { yyrv = ((BooleanLiteral)yysv[yysp-1]); }
         yysv[yysp-=1] = yyrv;
         return yypexpression();
     }
 
-    private int yyr22() { // expression : STRING
+    private int yyr22() { // expression : STRINGLITERAL
         { yyrv = ((StringLiteral)yysv[yysp-1]); }
         yysv[yysp-=1] = yyrv;
         return yypexpression();
@@ -2421,19 +2396,19 @@ class QLParser implements QLTokens {
     }
 
     private int yyr5() { // form : FORM IDENTIFIER '{' statements '}'
-        {yyrv = new Form(((Identifier)yysv[yysp-4]),((QuestionSet)yysv[yysp-2]));}
+        {yyrv = new Form(((Identifier)yysv[yysp-4]),((Questions)yysv[yysp-2]));}
         yysv[yysp-=5] = yyrv;
         return 5;
     }
 
     private int yyr13() { // ifThen : IF '(' expression ')' '{' statements '}'
-        {yyrv = new If(((Expression)yysv[yysp-5]),((QuestionSet)yysv[yysp-2]));}
+        {yyrv = new IfStatement(((Expression)yysv[yysp-5]),((Questions)yysv[yysp-2]));}
         yysv[yysp-=7] = yyrv;
         return 6;
     }
 
     private int yyr14() { // ifThenElse : IF '(' expression ')' '{' statements '}' ELSE '{' statements '}'
-        {yyrv = new IfElse(((Expression)yysv[yysp-9]),((QuestionSet)yysv[yysp-6]),((QuestionSet)yysv[yysp-2]));}
+        {yyrv = new IfElseStatement(((Expression)yysv[yysp-9]),((Questions)yysv[yysp-6]),((Questions)yysv[yysp-2]));}
         yysv[yysp-=11] = yyrv;
         return 7;
     }
@@ -2456,13 +2431,13 @@ class QLParser implements QLTokens {
         return 8;
     }
 
-    private int yyr11() { // question : IDENTIFIER ':' STRING type '(' expression ')'
-        {yyrv = new ExprQuestion(((Identifier)yysv[yysp-7]),((StringLiteral)yysv[yysp-5]),((Type)yysv[yysp-4]),((Expression)yysv[yysp-2]));}
+    private int yyr11() { // question : IDENTIFIER ':' STRINGLITERAL type '(' expression ')'
+        {yyrv = new ExpressionQuestion(((Identifier)yysv[yysp-7]),((StringLiteral)yysv[yysp-5]),((Type)yysv[yysp-4]),((Expression)yysv[yysp-2]));}
         yysv[yysp-=7] = yyrv;
         return 9;
     }
 
-    private int yyr12() { // question : IDENTIFIER ':' STRING type
+    private int yyr12() { // question : IDENTIFIER ':' STRINGLITERAL type
         {yyrv = new Question(((Identifier)yysv[yysp-4]),((StringLiteral)yysv[yysp-2]),((Type)yysv[yysp-1]));}
         yysv[yysp-=4] = yyrv;
         return 9;
@@ -2491,13 +2466,13 @@ class QLParser implements QLTokens {
     }
 
     private int yyr6() { // statements : statement statements
-        {yyrv = new QuestionSet(((Statement)yysv[yysp-2]),((QuestionSet)yysv[yysp-1]));}
+        {yyrv = new Questions(((Statement)yysv[yysp-2]),((Questions)yysv[yysp-1]));}
         yysv[yysp-=2] = yyrv;
         return yypstatements();
     }
 
     private int yyr7() { // statements : statement
-        {yyrv = new QuestionSet(((Statement)yysv[yysp-1]));}
+        {yyrv = new Questions(((Statement)yysv[yysp-1]));}
         yysv[yysp-=1] = yyrv;
         return yypstatements();
     }
@@ -2554,13 +2529,13 @@ class QLParser implements QLTokens {
     }
 
     private int yyr39() { // type : INTEGER
-        { yyrv = new IntType(); }
+        { yyrv = new IntegerType(); }
         yysv[yysp-=1] = yyrv;
         return 61;
     }
 
     private int yyr40() { // type : BOOLEAN
-        { yyrv = new BoolType(); }
+        { yyrv = new BooleanType(); }
         yysv[yysp-=1] = yyrv;
         return 61;
     }

@@ -7,14 +7,14 @@ grammar Test;
 	package antlr4;
 }
 
-//questionnare : expr;
 questionnare    : form*;
 form            : 'form' ID block;
 block           : '{' statement* '}'; 
 
-statement       : 'if' LP expr RP block                # StatementIf
-				| 'if' '(' expr ')' block 'else' block # StatementIfElse
-				| QUESTIONTITLE ':' STRING qtype       # StatementAssignment 
+statement       : 'if' LP expr RP block                       # StatementIf
+				| 'if' '(' expr ')' block 'else' block        # StatementIfElse
+				| QUESTIONTITLE ':' STRING qtype '(' expr ')' # StatementExpressionAssignment				
+				| QUESTIONTITLE ':' STRING qtype              # StatementAssignment 
 				;
 				
 qtype           : 'boolean' # StatementBoolean

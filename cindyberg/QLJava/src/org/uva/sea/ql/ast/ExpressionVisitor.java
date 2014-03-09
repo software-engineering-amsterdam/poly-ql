@@ -26,8 +26,8 @@ public interface ExpressionVisitor<T>{
 	T visit(Or or);
 	T visit(Not not);
 	
-	T visit(IntLiteral intLiteral);
-	T visit(BoolLiteral boolLiteral);
+	T visit(IntegerLiteral intLiteral);
+	T visit(BooleanLiteral boolLiteral);
 	T visit(StringLiteral stringLiteral);
 	T visit(Identifier identifier);
 	

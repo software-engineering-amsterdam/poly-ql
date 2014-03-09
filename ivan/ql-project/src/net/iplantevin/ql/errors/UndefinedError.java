@@ -1,17 +1,17 @@
 package net.iplantevin.ql.errors;
 
-import net.iplantevin.ql.ast.QLASTNode;
+import net.iplantevin.ql.ast.ASTNode;
 
 /**
  * @author Ivan
  */
 public class UndefinedError extends ASTError {
-    public UndefinedError(String message, QLASTNode node) {
+    public UndefinedError(String message, ASTNode node) {
         super(message, node);
     }
 
     @Override
     public String toString() {
-        return "Undefined exception: " + super.toString();
+        return "UNDEFINED ERROR: " + super.toString();
     }
 }

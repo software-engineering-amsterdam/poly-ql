@@ -9,9 +9,12 @@ open Microsoft.FSharp.Text.Lexing
 let keywords =   
     [   
         "form", FORM;  
-        "boolean", BOOLEAN;
-        "integer", INTEGER;
-        "money", MONEY;
+        "boolean", QL_BOOLEAN;
+        "integer", QL_INTEGER;
+        "money", QL_MONEY;
+        "true", BOOL_TRUE;
+        "false", BOOL_FALSE;
+        "if", IF;
     ] |> Map.ofList   
  
 let ops =   
@@ -21,6 +24,18 @@ let ops =
         "}", BRACKET_CLOSE;
         "(", PARENS_OPEN;
         ")", PARENS_CLOSE;
+        "+", PLUS;
+        "-", MINUS;
+        "/", DIVIDE;
+        "*", TIMES;
+        "==", EQUALS;
+        "!=", NOT_EQUALS;
+        "!", NOT;
+        "<", LESS_THAN;
+        ">", GREATER_THAN;
+        "<=", LESS_EQUALS_THAN;
+        ">=", GREATER_EQUALS_THAN;
+
 
     ] |> Map.ofList   
 }  
@@ -33,7 +48,7 @@ let digit       = ['0'-'9']
 let int         = '-'?digit+   
 let float       = '-'?digit+ '.' digit+   
 let identifier  = char(char|digit|['-' '_' '.'])*   
-let symbol      = ['{' '}' ':'] 
+let symbol      = '{' | '}' | ':' | '(' | ')' | '+' | '-' | '/' | '*' | "==" | "!=" | '!' | '<' | '>' | "<=" | ">="
 let whitespace  = [' ' '\t']   
 let newline     = "\n\r" | '\n' | '\r'  
  
@@ -41,7 +56,7 @@ rule tokenize = parse
 | whitespace    { tokenize lexbuf }   
 | newline       { lexbuf.EndPos <- lexbuf.EndPos.NextLine; tokenize lexbuf; }   
 | int           { INT(Int32.Parse(LexBuffer<_>.LexemeString lexbuf)) }   
-| float         { FLOAT(Double.Parse(LexBuffer<_>.LexemeString lexbuf)) }   
+//| float         { FLOAT(Double.Parse(LexBuffer<_>.LexemeString lexbuf)) }   
 | identifier    { match keywords.TryFind(LexBuffer<_>.LexemeString lexbuf) with   
                   | Some(token) -> token   
                   | None -> ID(LexBuffer<_>.LexemeString lexbuf) }      

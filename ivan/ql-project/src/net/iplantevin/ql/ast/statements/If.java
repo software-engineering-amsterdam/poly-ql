@@ -1,16 +1,17 @@
 package net.iplantevin.ql.ast.statements;
 
+import net.iplantevin.ql.ast.LineInfo;
 import net.iplantevin.ql.ast.expressions.Expression;
-import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
-import org.antlr.v4.runtime.ParserRuleContext;
+import net.iplantevin.ql.ast.visitors.IASTVisitor;
 
 /**
+ * If statement.
+ *
  * @author Ivan
- *         If statement.
  */
 public class If extends Conditional {
-    public If(Expression condition, Statement body, ParserRuleContext ctx) {
-        super(condition, body, ctx);
+    public If(Expression condition, Statement body, LineInfo lineInfo) {
+        super(condition, body, lineInfo);
     }
 
     @Override
@@ -19,7 +20,7 @@ public class If extends Conditional {
     }
 
     @Override
-    public void accept(IQLASTVisitor visitor) {
-        visitor.visit(this);
+    public <T> T accept(IASTVisitor<T> visitor) {
+        return visitor.visit(this);
     }
 }

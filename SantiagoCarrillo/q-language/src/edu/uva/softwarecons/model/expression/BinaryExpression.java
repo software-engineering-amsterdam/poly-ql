@@ -1,9 +1,5 @@
 package edu.uva.softwarecons.model.expression;
 
-import edu.uva.softwarecons.model.operation.Operator;
-import edu.uva.softwarecons.model.type.Type;
-import edu.uva.softwarecons.visitor.IFormElement;
-
 /**
  * Falconlabs
  * User: sancarbar
@@ -11,17 +7,21 @@ import edu.uva.softwarecons.visitor.IFormElement;
  */
 public abstract class BinaryExpression implements Expression {
 
-    protected Expression leftOperand;
+    private final Expression leftExpression;
 
-    protected Expression rightOperand;
-
-    protected Operator operator;
+    private final Expression rightExpression;
 
 
-    protected BinaryExpression(Expression leftOperand, Expression rightOperand) {
-        this.leftOperand = leftOperand;
-        this.rightOperand = rightOperand;
+    protected BinaryExpression(Expression leftExpression, Expression rightExpression) {
+        this.leftExpression = leftExpression;
+        this.rightExpression = rightExpression;
     }
 
-    public abstract Type eval();
+    public Expression getLeftExpression() {
+        return leftExpression;
+    }
+
+    public Expression getRightExpression() {
+        return rightExpression;
+    }
 }

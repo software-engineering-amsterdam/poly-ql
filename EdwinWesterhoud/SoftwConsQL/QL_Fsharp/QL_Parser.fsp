@@ -22,13 +22,11 @@ open Microsoft.FSharp.Collections
 %token QLBOOL QLSTRING QLINT QLDECIMAL
 %token EQ NE LT LE GT GE AND OR PLUS MINUS MULT DIV NOT
 
-%left EQ NE
-%left LT LE GT GE
 %left AND OR
-%right NOT
-
+%left EQ NE LT LE GT GE
 %left PLUS MINUS
 %left MULT DIV
+%right NOT
 
 %token END
 
@@ -44,7 +42,6 @@ start:
                                     {   ID          = $2;
                                         Statements  = $4 }
                                 }
-    | { failwith "Empty file" }
 
 stmtList:
     |               { [] }
@@ -52,28 +49,20 @@ stmtList:
     | stmt stmtList { $1 :: $2 }
 
 stmt:
-    | assignment    { Assignment($1) }
-    | question      { Question($1) }
+    | assignment    { $1 }
+    | question      { $1 }
     | conditional   { $1 }
 
 assignment:
-    LABEL IDENTIFIER ASSIGN expression  { {
-                                            ID         = $2;
-                                            Label      = $1;
-                                            Expression = $4;
-                                        } }
+    LABEL IDENTIFIER ASSIGN expression  { Assignment($2, $1, $4) }
 
 question:
-    IDENTIFIER COLON LABEL qlType   { { 
-                                        ID      = $1;
-                                        Label   = $3;
-                                        Type    = $4;
-                                    } }
+    LABEL IDENTIFIER COLON qlType       { Question($2, $1, $4) }
 
 conditional:
     IF B_OPEN expression B_CLOSE CB_OPEN
         stmtList
-    CB_CLOSE                    { Conditional($3, $6) }
+    CB_CLOSE                            { Conditional($3, $6) }
 
 qlType:
     | QLBOOL    { QLBool }

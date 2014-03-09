@@ -21,4 +21,9 @@ public class TypeNull implements TypeInterface {
 	public Boolean compatibleWith(StatementString type) {
 		return false;
 	}
+
+	@Override
+	public String toStr() {
+		return "null";
+	}
 }

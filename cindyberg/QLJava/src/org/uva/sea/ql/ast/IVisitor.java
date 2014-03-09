@@ -15,12 +15,12 @@ import org.uva.sea.ql.ast.operators.comparison.NEq;
 import org.uva.sea.ql.ast.operators.logical.And;
 import org.uva.sea.ql.ast.operators.logical.Not;
 import org.uva.sea.ql.ast.operators.logical.Or;
-import org.uva.sea.ql.ast.statement.ExprQuestion;
+import org.uva.sea.ql.ast.statement.ExpressionQuestion;
 import org.uva.sea.ql.ast.statement.Form;
-import org.uva.sea.ql.ast.statement.If;
-import org.uva.sea.ql.ast.statement.IfElse;
+import org.uva.sea.ql.ast.statement.IfStatement;
+import org.uva.sea.ql.ast.statement.IfElseStatement;
 import org.uva.sea.ql.ast.statement.Question;
-import org.uva.sea.ql.ast.statement.QuestionSet;
+import org.uva.sea.ql.ast.statement.Questions;
 import org.uva.sea.ql.ast.statement.Statement;
 import org.uva.sea.ql.ast.type.*;
 
@@ -48,15 +48,15 @@ public interface IVisitor {
 	void visit(Expression expression);
 	//void visit(ASTNode e);
 	
-	void visit(ExprQuestion exprquestion);
+	void visit(ExpressionQuestion exprquestion);
 	void visit(Question question);
-	void visit(If ifconditional);
-	void visit(IfElse ifelseconditional);
+	void visit(IfStatement ifconditional);
+	void visit(IfElseStatement ifelseconditional);
 	void visit(Form form);
-	void visit(QuestionSet questionset);
+	void visit(Questions questionset);
 	
-	void visit(BoolType bool);
-	void visit(IntType integer);
+	void visit(BooleanType bool);
+	void visit(IntegerType integer);
 	void visit(StringType string);
 	void visit(MoneyType money);
 	void visit(Type type);

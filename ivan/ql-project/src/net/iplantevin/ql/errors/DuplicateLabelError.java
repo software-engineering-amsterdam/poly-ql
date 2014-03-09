@@ -17,12 +17,12 @@ public class DuplicateLabelError extends ASTError {
 
     @Override
     public String toString() {
-        return "Duplicate label warning: " + getMessage() + "\n" +
+        return "DUPLICATE LABEL warning: " + getMessage() + "\n" +
                 "Label at location " + newQuestionable.getLabel().getLineInfo() +
                 " in question:\n" +
                 newQuestionable +
                 "already used in question:\n" +
                 originalQuestionable +
-                "at location " + originalQuestionable.getLineInfo();
+                "at location " + originalQuestionable.getLineInfo() + "\n";
     }
 }

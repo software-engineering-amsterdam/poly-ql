@@ -5,20 +5,15 @@ import net.iplantevin.ql.ast.expressions.Expression;
 import net.iplantevin.ql.ast.types.StringType;
 import net.iplantevin.ql.ast.types.Type;
 import net.iplantevin.ql.ast.types.TypeEnvironment;
-import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
-import org.antlr.v4.runtime.ParserRuleContext;
+import net.iplantevin.ql.ast.visitors.IASTVisitor;
 
 /**
+ * String.
+ *
  * @author Ivan
- *         String.
  */
 public class Str extends Expression {
     private final String text;
-
-    public Str(String text, ParserRuleContext ctx) {
-        super(ctx);
-        this.text = text;
-    }
 
     public Str(String text, LineInfo lineInfo) {
         super(lineInfo);
@@ -26,7 +21,7 @@ public class Str extends Expression {
     }
 
     @Override
-    public Type getType(TypeEnvironment idTypeMap) {
+    public Type getType(TypeEnvironment idTypeStore) {
         return new StringType();
     }
 
@@ -40,7 +35,7 @@ public class Str extends Expression {
     }
 
     @Override
-    public void accept(IQLASTVisitor visitor) {
-        visitor.visit(this);
+    public <T> T accept(IASTVisitor<T> visitor) {
+        return visitor.visit(this);
     }
 }

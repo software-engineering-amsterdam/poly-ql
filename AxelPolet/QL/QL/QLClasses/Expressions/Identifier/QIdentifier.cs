@@ -5,117 +5,37 @@ namespace QL.QLClasses.Expressions.Identifier
 {
     public class QIdentifier : ExpressionBase
     {
-        public string Identifier { get; private set; }
-        public bool Referenced { get; set; }
-        
-        public QBaseType InnerType { get; set; }
-        public ExpressionBase InnerValue { get; set; }
+        private readonly QLMemoryManager _memory;
+        private readonly string _name;
 
-        public QIdentifier(string identifier)
+        public QIdentifier(QLMemoryManager memoryManager, string name)
         {
-            Identifier = identifier;
-            Referenced = true;
-        }
-
-        public QIdentifier(string identifier, QBaseType type, ExpressionBase value = null)
-        {
-            Identifier = identifier;
-            Referenced = false;
-            InnerType = type;
-            InnerValue = value;
-        }
-
-        public void DeclareSelf()
-        {
-            if (!Referenced)
-            {
-                if (QLIdentifiers.IsDefined(Identifier))
-                {
-                    QLTypeError error = new QLTypeError();
-
-                    error.Message = string.Format("Identifier '{0}' already defined!", Identifier);
-                    error.TokenInfo = TokenInfo;
-
-                    QLTypeChecker.SaveQLError(error);
-                }
-                else
-                {
-                    QLIdentifiers.AddIdentifier(Identifier, this);
-                }
-            }
+            _memory = memoryManager;
+            _name = name;
         }
 
         public override QBaseType GetResultType()
         {
-            if (InnerType != null)
-                return InnerType;
-
-            if (Referenced)
-            {
-                if (!QLIdentifiers.IsDefined(Identifier))
-                    return null;
-
-                QIdentifier refId = QLIdentifiers.GetIdentifier(Identifier);
-                return InnerType = refId.GetResultType();
-            }
-
-            return null;
+            return _memory.GetDeclaredType(_name);
         }
 
         public override ExpressionBase GetResult()
         {
-            if (InnerValue != null)
-                return InnerValue;//.GetResult();
-
-            if (Referenced)
-            {
-                if (!QLIdentifiers.IsDefined(Identifier))
-                    return null;
-
-                QIdentifier refId = QLIdentifiers.GetIdentifier(Identifier);
-                return InnerValue = refId.GetResult();
-            }
-
-            return null;
+            return _memory.GetDeclaredValue(_name);
         }
 
         #region TypeChecker Implementation
 
-        public override bool CheckType(ref QLTypeError error)
+        public override bool CheckType(QLTypeErrors typeErrors)
         {
-            if (Referenced && !QLIdentifiers.IsDefined(Identifier))
+            if (!_memory.IsDeclared(_name))
             {
-                error.Message = string.Format("Referenced identifier '{0}' is not defined!", Identifier);
-                error.TokenInfo = TokenInfo;
+                typeErrors.ReportError(new QLTypeError
+                {
+                    Message = string.Format("Referenced identifier '{0}' is not defined!", _name),
+                    TokenInfo = TokenInfo
+                });
                 return false;
-            }
-
-            if (Referenced)
-            {
-                if (GetResult() == null)
-                {
-                    error.Message = string.Format("Referenced identifier '{0}' has no value!", Identifier);
-                    error.TokenInfo = TokenInfo;
-                    return false;
-                }
-            }
-            
-
-            if (InnerValue != null)
-            {
-                QBaseType valueType = InnerValue.GetResultType();
-                if (valueType != null)
-                {
-                    if (!(GetResultType().GetType().IsCompatibleWith(InnerValue.GetResultType())))
-                    {
-                        error.Message = string.Format("Identifier '{0}' expected a value of type '{1}', got '{2}'",
-                            Identifier, InnerType.GetType(), InnerValue.GetResultType());
-                        error.TokenInfo = TokenInfo;
-                        return false;
-                    }
-                }
-
-                return InnerValue.CheckType(ref error);
             }
 
             return true;

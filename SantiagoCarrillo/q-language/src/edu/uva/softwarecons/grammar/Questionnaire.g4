@@ -4,11 +4,11 @@ import CommonLexerRules;
 questionnaire:   'form' ID '{' question+ '}';
 
 question: ID ':' STRING type                                 # simpleQuestion
-    |     ID ':' STRING type (expr)                          # computedQuestion
+    |     ID ':' STRING type '(' expr ')'                    # computedQuestion
 	|	  'if' '(' expr ')' '{' question+ '}'   elsestat?    # if
     ;
 
-elsestat: 'else' '{' question+ '}'    # ifElse;
+elsestat: 'else' '{' question+ '}'    # else;
    
 type: BOOL_TYPE        # boolean
 	| STRING_TYPE      # string
@@ -25,8 +25,8 @@ expr:   expr (MUL|DIV) expr                         # mulDiv
     |   NOT expr                                    # not
     |   expr (AND) expr                             # and
     |   expr (OR) expr                              # or
+    |   INT                                         # int
     |   ID                                          # id
-    |   type                                        # typeExp
     |   '(' expr ')'                                # parenthesis
     ;
 

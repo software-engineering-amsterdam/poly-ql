@@ -4,7 +4,7 @@ import typecheck.Symboles;
 import ast.Visitor;
 import ast.expr.Expr;
 import ast.expr.types.BoolType;
-import ast.expr.types.Types;
+import ast.expr.types.Type;
 
 public class GEq extends BinExpr{
 
@@ -18,13 +18,8 @@ public class GEq extends BinExpr{
 	}
 
 	@Override
-	public Types typeof(Symboles symb) {
+	public Type typeof(Symboles symb) {
 		return new BoolType();
-	}
-
-	@Override
-	public String show() {
-		return "(" + show_lhs() + " >= " + show_rhs() + ")";
 	}
 
 }
