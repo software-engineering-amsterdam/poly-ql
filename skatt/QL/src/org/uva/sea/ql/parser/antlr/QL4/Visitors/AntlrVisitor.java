@@ -81,7 +81,6 @@ public class AntlrVisitor extends QL4BaseVisitor<QLTree> {
 	 List<Expression > elseifExprs = new ArrayList<Expression >();
 	 List<Structures> elseifStrucs = new ArrayList<Structures>();
 
-	 System.out.println(ctx.expression().size());
 	 // start i = 1, as first expression is always if
 	 for (int i=1; i < ctx.expression().size(); i++) {
 		 elseifExprs.add( (Expression) ctx.expression(i).accept(this));
@@ -197,7 +196,7 @@ public class AntlrVisitor extends QL4BaseVisitor<QLTree> {
 	  return new GeqExpr(lhs, rhs);	  
   }
   
-  //////////////////////// visiting QL4 primitives (bool, string etc)
+  //////////////////////// visiting QL4 primitives (bool, int, dec and id)
   
   public Bool visitBool(QL4Parser.BoolContext ctx) {
 	  return new Bool(ctx.getText());
@@ -209,5 +208,9 @@ public class AntlrVisitor extends QL4BaseVisitor<QLTree> {
   
   public Decimal visitDec(QL4Parser.DecContext ctx) {
 	  return new Decimal(ctx.getText());
+  }
+  
+  public Identifier visitIdent(QL4Parser.IdentContext ctx) {
+	  return new Identifier(ctx.getText());
   }
 }

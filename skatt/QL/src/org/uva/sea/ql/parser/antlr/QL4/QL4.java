@@ -1,6 +1,7 @@
 package org.uva.sea.ql.parser.antlr.QL4;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFileChooser;
@@ -12,6 +13,7 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Form;
 import org.uva.sea.ql.parser.antlr.QL4.TypeChecker.QLErrorMsg;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.AntlrVisitor;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.QLErrorVisitor;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.UndefinedCheck;
 
 import QL4.QL4Lexer;
 import QL4.QL4Parser;
@@ -53,11 +55,8 @@ public class QL4 {
 		AntlrVisitor ASTParser = new AntlrVisitor();
 		Form ast = (Form) tree.accept(ASTParser);
 		
-		System.out.println(ast);
-		
-		// typecheck abstract tree
-		QLErrorVisitor ASTChecker = new QLErrorVisitor();
-		List<QLErrorMsg> checks = ast.accept(ASTChecker);
+		// perform checks on extracted AST
+		List<QLErrorMsg> checks = checkErrors(ast);
 		
 		System.out.println(checks);
 	}
@@ -84,5 +83,22 @@ public class QL4 {
 		System.err.println("Error at choosing file");
 		System.exit(0);
 		return null;
+	}
+	
+	/**
+	 * Checks a form for errors and warnings by visiting
+	 * the form with several visitors 
+	 * @param ast
+	 * @return
+	 */
+	private static List<QLErrorMsg> checkErrors(Form ast) {
+		// holds all errors and warning msgs generated
+		List<QLErrorMsg> msgs = new ArrayList<QLErrorMsg>();
+		QLErrorVisitor ASTChecker;
+		
+		ASTChecker = new UndefinedCheck();
+		msgs.addAll(ASTChecker.visit(ast));
+		
+		return msgs;
 	}
 }

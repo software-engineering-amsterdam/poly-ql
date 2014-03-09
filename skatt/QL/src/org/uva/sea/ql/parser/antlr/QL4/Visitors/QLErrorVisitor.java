@@ -45,7 +45,7 @@ public class QLErrorVisitor implements IQLVisitor {
 
 		// loop over all structure children of a structures
 		for (QLTree structure : structures) {
-			msgs.addAll(structure.accept(this));
+			msgs.addAll(this.visitChild(structure));
 		}
 		
 		return msgs;
@@ -62,7 +62,7 @@ public class QLErrorVisitor implements IQLVisitor {
 		List<Structures> elseIfStructs = condition.getElseIfStructs();
 		
 		// loop over all elseif expressions and structures
-		for (int i = 1; i < elseIfExprs.size(); i++) {
+		for (int i = 0; i < elseIfExprs.size(); i++) {
 			msgs.addAll(this.visitChild(elseIfExprs.get(i)));
 			msgs.addAll(this.visitChild(elseIfStructs.get(i)));
 		}
