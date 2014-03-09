@@ -1,0 +1,12 @@
+question : "This is the label of question 1" : boolean;
+if (question) {
+    question2 : "This is the label of question 2" : boolean;
+}
+question4 : "This is the label of question 4" : boolean;
+if (question3) {
+    question3 : "This is the label of question 3" : boolean;
+}
+
+if (question5) {
+    question5: "This is the label of question 5" : boolean;
+}
