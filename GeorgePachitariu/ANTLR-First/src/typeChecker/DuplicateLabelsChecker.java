@@ -3,31 +3,29 @@ package typeChecker;
 import java.util.LinkedList;
 import java.util.List;
 
-import expr.Expr;
+import expr.ASTNode;
 import expr.Ident;
-import expr.syntacticExpr.Question;
+import expr.syntactic.Question;
 
 public class DuplicateLabelsChecker extends ASTVisitor {
-	private List<Ident> listIdent;
+	protected List<Ident> listIdent;
+	protected List<Ident> duplicates;	
 
-	public DuplicateLabelsChecker() {
-		this.listIdent=new LinkedList<>();
+	public DuplicateLabelsChecker() {		
 	}
 
-	public List<Ident> check(Expr root) {
+	public List<Ident> check(ASTNode root) {
+		this.listIdent=new LinkedList<>();
+		this.duplicates=new LinkedList<>();
 		root.accept(this);
-
-		List<Ident> list=new LinkedList<>();
-		while(this.listIdent.size()>0) {
-			Ident q=this.listIdent.remove(0);
-			if (this.listIdent.contains(q))
-				list.add(q);
-		}
-		return list;
+		return duplicates;
 	}
 
 	@Override
 	public void visit(Question question) {
-		listIdent.add(question.getIdent());
+		Ident ident=question.getIdent();
+		if(this.listIdent.contains(ident))
+			this.duplicates.add(ident);
+		listIdent.add(ident);
 	}
 }

@@ -2,7 +2,7 @@ package expr;
 
 import typeChecker.ASTVisitor;
 
-public interface Expr {
-	
+public interface ASTNode {
+
 	public abstract void accept(ASTVisitor visitor);
 }

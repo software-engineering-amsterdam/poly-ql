@@ -1,38 +1,34 @@
 package typeChecker;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
-import expr.Expr;
+import types.Type;
+
+import expr.ASTNode;
 import expr.Ident;
-import expr.syntacticExpr.Question;
+import expr.syntactic.Question;
 
 public class IdentifiersTypeMatcher extends ASTVisitor {
-	
-	List<Ident> identList;
-	
+
+	protected Map<Ident,Type> dictionary;
+
 	public IdentifiersTypeMatcher() {
-		this.identList = new LinkedList<>();
+		this.dictionary=new HashMap<>();
 	}
 
-	public void match(Expr root) {
-		// first time the list gets created 
-		root.accept(this);
-		// second time all the identifiers are matched
-		root.accept(this);
+	public void match(ASTNode root) {
+		root.accept(this); 
 	}
-	
-	public void visit(Ident ident) {
-		for(Ident i : identList)
-			if(i.toString().equals(ident.toString()))
-				ident.setType(i.getType());
-	}
-	
+
 	@Override
 	public void visit(Question question) {
 		Ident ident=question.getIdent();
-		ident.setType(question.getType());
-		this.identList.add(ident);
+		Type type=question.getType();
+		this.dictionary.put(ident, type);
 	}
-
+	
+	public Type getIdentType(Ident ident) {
+		return this.dictionary.get(ident);
+	}
 }

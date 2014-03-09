@@ -39,6 +39,7 @@ form returns [Form result]
   '}' 
   { 
     Form f=new Form (new Ident($IDENT.text), list); 
+    ///////////
     new IdentifiersTypeMatcher().match(f);
     $result = f;
   };
@@ -49,7 +50,7 @@ statement returns [Statement result]
   ;
 
 question returns [Question result]
-  : IDENT COLONS STRING questiontype {
+  : IDENT ':' STRING questiontype {
     $result = new Question (new Ident($IDENT.text),
      new QuestionBody($STRING.text), $questiontype.result); 
     } 
@@ -188,4 +189,3 @@ BOOLEAN: 'true' | 'false';
 ELSE: 'else';
 INT: ('0'..'9')+;
 IDENT:   ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*;
-COLONS : ':';

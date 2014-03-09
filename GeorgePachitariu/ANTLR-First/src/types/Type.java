@@ -1,11 +1,11 @@
 package types;
 
-import expr.Expr;
+import expr.ASTNode;
 
-public interface Type extends Expr {
-	
+public interface Type extends ASTNode {
+
 	public abstract boolean isCompatibleWithBoolean();
-	public abstract boolean isCompatibleWithIntType();
+	public abstract boolean isCompatibleWithInt();
 	public abstract boolean isCompatibleWithMoney();
 	public abstract boolean isCompatibleWith(Type t);
 	

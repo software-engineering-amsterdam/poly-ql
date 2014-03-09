@@ -1,6 +1,7 @@
-package expr.signExpr;
+package expr.sign;
 
 import typeChecker.ASTVisitor;
+import typeChecker.IdentifiersTypeMatcher;
 import types.Type;
 import expr.Expression;
 import expr.UnaryExpr;
@@ -14,22 +15,22 @@ public class Not extends UnaryExpr {
 	@Override
 	public void accept(ASTVisitor visitor) {
 		visitor.visit(this); 
-		this.first.accept(visitor);
+		this.operand.accept(visitor);
 	}
-	
+
 	@Override
 	public String toString() {
-		return "!" + this.first.toString(); 
+		return "!" + this.operand.toString(); 
 	}
-	
+
 	@Override
-	public Type getType() {
-		return this.first.getType();
+	public Type getType(IdentifiersTypeMatcher typeMatcher) {
+		return this.operand.getType(typeMatcher);
 	}
-	
+
 	@Override
-	public boolean areOperandsTypeValid() {
-		Type t1=this.first.getType();
+	public boolean areOperandsTypeValid(IdentifiersTypeMatcher typeMatcher) {
+		Type t1=this.operand.getType(typeMatcher);
 		return t1.isBoolean();
 	}
 }

@@ -1,4 +1,4 @@
-package expr.syntacticExpr;
+package expr.syntactic;
 
 import typeChecker.ASTVisitor;
 import types.Type;
@@ -6,11 +6,11 @@ import expr.Expression;
 import expr.Ident;
 
 public class Question extends Statement {
-	private Ident ident; 
-	private QuestionBody questionBody;
-	private Expression expr;
-	private Type type;
-	
+	protected Ident ident; 
+	protected QuestionBody questionBody;
+	protected Expression expr;
+	protected Type type;
+
 
 	public Question(Ident ident, QuestionBody questionBody, Type type,
 			Expression expr) {
@@ -41,13 +41,13 @@ public class Question extends Statement {
 				return false;
 		if(this.expr == null && question.expr != null)
 			return false;
-		
-			
+
+
 		return this.ident.equals(question.ident) &&
 				this.questionBody.equals(question.questionBody) &&
-				 this.type.equals(question.type);
+				this.type.equals(question.type);
 	}
-	
+
 	@Override
 	public void accept(ASTVisitor visitor) {
 		visitor.visit(this);
@@ -69,7 +69,7 @@ public class Question extends Statement {
 	public Expression getExpression() {
 		return this.expr; 
 	}
-	
+
 	@Override
 	public String toString() {
 		String str = this.ident.toString()+": " + this.questionBody.toString() +

@@ -12,12 +12,12 @@ import parser.QLParser;
 import types.BoolType;
 import types.MoneyType;
 import expr.Ident;
-import expr.arithmeticExpr.Sub;
-import expr.syntacticExpr.Form;
-import expr.syntacticExpr.IfBlock;
-import expr.syntacticExpr.Question;
-import expr.syntacticExpr.QuestionBody;
-import expr.syntacticExpr.Statement;
+import expr.arithmetic.Sub;
+import expr.syntactic.Form;
+import expr.syntactic.IfBlock;
+import expr.syntactic.Question;
+import expr.syntactic.QuestionBody;
+import expr.syntactic.Statement;
 
 public class TestsFunctSyntacticExpr {
 
@@ -154,7 +154,7 @@ public class TestsFunctSyntacticExpr {
 		// tree1.build(string);
 		// tree2.build( tree1.toString() );
 		// assert(tree1==tree2);
-		
+
 		String str=
 				"form Box1HouseOwning { " +
 						"hasSoldHouse: \"Did you sell a house in 2010?\" boolean " +
@@ -171,7 +171,7 @@ public class TestsFunctSyntacticExpr {
 
 		parser=TestsExpr.getParser( tree1.toString() );
 		Form tree2=parser.form().result;
-		
+
 		Assert.assertTrue(tree1.equals(tree2));
 	}
 }

@@ -1,21 +1,21 @@
-package expr.syntacticExpr;
+package expr.syntactic;
 
 import java.util.List;
 
 import typeChecker.ASTVisitor;
 
-import expr.Expr;
+import expr.ASTNode;
 import expr.Ident;
 
-public class Form implements Expr {
-	private Ident identifier;
-	private List<Statement> list;
-	
+public class Form implements ASTNode {
+	protected Ident identifier;
+	protected List<Statement> list;
+
 	public Form(Ident identifier, List<Statement> list) {
 		this.identifier=identifier;
 		this.list=list;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (!(obj instanceof Form))
@@ -24,7 +24,7 @@ public class Form implements Expr {
 		return this.identifier.equals(form.identifier) &&
 				this.list.equals(form.list);
 	}
-	
+
 	@Override
 	public void accept(ASTVisitor visitor) {
 		visitor.visit(this);
@@ -36,7 +36,7 @@ public class Form implements Expr {
 	public Ident getIdent() {
 		return this.identifier;
 	}
-	
+
 	@Override
 	public String toString() {
 		String str=" form " +this.identifier.toString() + "{ \n";
