@@ -1,5 +1,10 @@
 package org.uva.sea.ql.parser.antlr.QL4.AST.Value;
 
+import java.util.List;
+
+import org.uva.sea.ql.parser.antlr.QL4.TypeChecker.QLErrorMsg;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.IQLVisitor;
+
 /**
  * Represents a label in QL AST
  * @author Sammie Katt
@@ -37,6 +42,11 @@ public class QuestionType extends Value {
 		return true;
 	}
 
+	@Override
+	public List<QLErrorMsg> accept(IQLVisitor visitor) {
+		return visitor.visit(this);
+	}
+	
 	public String toString() {
 		return value;
 	}

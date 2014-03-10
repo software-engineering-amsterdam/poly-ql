@@ -1,5 +1,10 @@
 package org.uva.sea.ql.parser.antlr.QL4.AST.Value;
 
+import java.util.List;
+
+import org.uva.sea.ql.parser.antlr.QL4.TypeChecker.QLErrorMsg;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.IQLVisitor;
+
 /**
  * Represents a decimal in the QL AST
  * @author Sammie Katt
@@ -40,6 +45,11 @@ public class Decimal extends Value {
 
 	public String toString() {
 		return String.valueOf(value);
+	}
+
+	@Override
+	public List<QLErrorMsg> accept(IQLVisitor visitor) {
+		return visitor.visit(this);
 	}
 
 }

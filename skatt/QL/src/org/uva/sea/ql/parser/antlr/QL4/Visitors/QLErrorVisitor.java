@@ -11,8 +11,12 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Structures;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.BinaryExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Expression;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.UnaryExpr;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Bool;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Decimal;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Identifier;
-import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Value;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Label;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Value.QuestionType;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Number;
 import org.uva.sea.ql.parser.antlr.QL4.TypeChecker.QLErrorMsg;
 
 /**
@@ -89,15 +93,36 @@ public class QLErrorVisitor implements IQLVisitor {
 	}
 
 	/**
-	 * No children to visit in following visit methods 
+	 * No children to visit when visiting value subclasses
 	 */
+	
 	@Override
-	public List<QLErrorMsg> visit(Value expr) {
+	public List<QLErrorMsg> visit(Identifier id) {
+		return null;
+	}
+
+	@Override
+	public List<QLErrorMsg> visit(Bool bool) {
 		return null;
 	}
 	
 	@Override
-	public List<QLErrorMsg> visit(Identifier id) {
+	public List<QLErrorMsg> visit(Decimal dec) {
+		return null;
+	}
+
+	@Override
+	public List<QLErrorMsg> visit(Label label) {
+		return null;
+	}
+
+	@Override
+	public List<QLErrorMsg> visit(Number number) {
+		return null;
+	}
+
+	@Override
+	public List<QLErrorMsg> visit(QuestionType type) {
 		return null;
 	}
 	
@@ -123,6 +148,4 @@ public class QLErrorVisitor implements IQLVisitor {
 		
 		return msgs;
 	}
-
-	
 }

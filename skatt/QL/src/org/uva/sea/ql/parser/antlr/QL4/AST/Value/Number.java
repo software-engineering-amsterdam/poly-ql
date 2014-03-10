@@ -1,5 +1,10 @@
 package org.uva.sea.ql.parser.antlr.QL4.AST.Value;
 
+import java.util.List;
+
+import org.uva.sea.ql.parser.antlr.QL4.TypeChecker.QLErrorMsg;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.IQLVisitor;
+
 /**
  * Represents INTEGER in QL AST. 
  * @author Sammie Katt
@@ -13,10 +18,6 @@ public class Number extends Value {
 		this.value = Integer.valueOf(value);
 	}
 	
-	public String toString() {
-		return String.valueOf(value);
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -38,5 +39,13 @@ public class Number extends Value {
 			return false;
 		return true;
 	}
-
+	
+	@Override
+	public List<QLErrorMsg> accept(IQLVisitor visitor) {
+		return visitor.visit(this);
+	}
+	
+	public String toString() {
+		return String.valueOf(value);
+	}
 }

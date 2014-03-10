@@ -12,6 +12,7 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Form;
 import org.uva.sea.ql.parser.antlr.QL4.TypeChecker.QLErrorMsg;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.AntlrVisitor;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.DuplicateLabel;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.QLErrorVisitor;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.UndefinedCheck;
 
@@ -58,7 +59,7 @@ public class QL4 {
 		// perform checks on extracted AST
 		List<QLErrorMsg> checks = checkErrors(ast);
 		
-		System.out.println(checks);
+		System.err.println(checks);
 	}
 
 	/**
@@ -97,6 +98,9 @@ public class QL4 {
 		QLErrorVisitor ASTChecker;
 		
 		ASTChecker = new UndefinedCheck();
+		msgs.addAll(ASTChecker.visit(ast));
+		
+		ASTChecker = new DuplicateLabel();
 		msgs.addAll(ASTChecker.visit(ast));
 		
 		return msgs;
