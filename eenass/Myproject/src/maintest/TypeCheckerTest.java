@@ -7,7 +7,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.junit.*;
 
 import typecheck.ErrorList;
-import typecheck.Symboles;
+import typecheck.SymboleTable;
 import typecheck.TypeChecker;
 import antlr.QLangLexer;
 import antlr.QLangParser;
@@ -22,7 +22,7 @@ public class TypeCheckerTest {
 		QLangParser parser = new QLangParser(tokens);
 		ASTNode tree = parser.form().result;
 				
-		Symboles symb = new Symboles();
+		SymboleTable symb = new SymboleTable();
 		ErrorList errors= new ErrorList();
 		TypeChecker checker = new TypeChecker(symb, errors);
 		boolean result = checker.check_symb(tree, symb, errors);

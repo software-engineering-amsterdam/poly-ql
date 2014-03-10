@@ -4,31 +4,31 @@ import java.util.HashMap;
 
 import ast.expr.types.Type;
 
-public class Symboles {
-	private final HashMap<String, Type> symboles;
+public class SymboleTable {
+	private final HashMap<String, Type> symboleTable;
 	
-	public Symboles(){
-		symboles = new HashMap<>();
+	public SymboleTable(){
+		symboleTable = new HashMap<>();
 	}
 	
 	public void put(String symb, Type type){
-		symboles.put(symb, type);
+		symboleTable.put(symb, type);
 	}
 	
 	public Type getType(String symb){
-		return symboles.get(symb);
+		return symboleTable.get(symb);
 	}
 	
 	public void removeSymb(String symb){
-		symboles.remove(symb);
+		symboleTable.remove(symb);
 	}
 	
 	public boolean containsSymb(String symb){
-		return symboles.containsKey(symb);
+		return symboleTable.containsKey(symb);
 	}
 	
 	public void clearSymboles(){
-		symboles.clear();
+		symboleTable.clear();
 	}
 	
 }
