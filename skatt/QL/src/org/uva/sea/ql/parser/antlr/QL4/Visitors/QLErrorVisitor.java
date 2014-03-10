@@ -11,6 +11,7 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Structures;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.BinaryExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Expression;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.UnaryExpr;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Identifier;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Value;
 import org.uva.sea.ql.parser.antlr.QL4.TypeChecker.QLErrorMsg;
 
@@ -88,13 +89,18 @@ public class QLErrorVisitor implements IQLVisitor {
 	}
 
 	/**
-	 * No children to visit in value
+	 * No children to visit in following visit methods 
 	 */
 	@Override
 	public List<QLErrorMsg> visit(Value expr) {
 		return null;
 	}
-
+	
+	@Override
+	public List<QLErrorMsg> visit(Identifier id) {
+		return null;
+	}
+	
 	/**
 	 * Whenever children are visited, one should check
 	 * whether the children themselves are not null,
@@ -117,4 +123,6 @@ public class QLErrorVisitor implements IQLVisitor {
 		
 		return msgs;
 	}
+
+	
 }

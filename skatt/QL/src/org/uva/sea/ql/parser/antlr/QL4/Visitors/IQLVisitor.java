@@ -8,6 +8,7 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Question;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Structures;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.BinaryExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.UnaryExpr;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Identifier;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Value;
 import org.uva.sea.ql.parser.antlr.QL4.TypeChecker.QLErrorMsg;
 
@@ -26,4 +27,5 @@ public interface IQLVisitor {
 	public List<QLErrorMsg> visit(UnaryExpr expr);
 	public List<QLErrorMsg> visit(BinaryExpr expr);
 	public List<QLErrorMsg> visit(Value expr);
+	public List<QLErrorMsg> visit(Identifier id);
 }

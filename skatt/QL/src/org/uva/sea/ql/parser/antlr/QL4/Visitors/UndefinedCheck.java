@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.uva.sea.ql.parser.antlr.QL4.AST.Question;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Identifier;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Value;
 import org.uva.sea.ql.parser.antlr.QL4.TypeChecker.QLErrorMsg;
 
 
@@ -25,9 +26,7 @@ public class UndefinedCheck extends QLErrorVisitor {
 	 * Adds id of the visited question to definedQuestions
 	 */
 	public List<QLErrorMsg> visit(Question question) {
-		System.out.println("Adding id " + question.getIdentifier());
 		definedQuestions.add(question.getIdentifier());
-
 		return null;
 	}
 	
@@ -38,7 +37,6 @@ public class UndefinedCheck extends QLErrorVisitor {
 	public List<QLErrorMsg> visit(Identifier id) {
 		List<QLErrorMsg> msgs = new ArrayList<QLErrorMsg>();
 		
-		System.out.println("Testing id " + id);
 		if (!definedQuestions.contains(id)) {
 			msgs.add(new QLErrorMsg("Identifier " + id + " has not been defined before being used"));
 		}
@@ -46,4 +44,7 @@ public class UndefinedCheck extends QLErrorVisitor {
 		return msgs;
 	}
 	
+	public List<QLErrorMsg> visit(Value value) {
+		return null;
+	}
 }

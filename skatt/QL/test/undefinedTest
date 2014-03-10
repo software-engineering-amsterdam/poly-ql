@@ -10,3 +10,7 @@ if (question3) {
 if (question5) {
     question5: "This is the label of question 5" : boolean;
 }
+
+if (question2) {
+    question6: "This is the label of question 5" : boolean;
+}
