@@ -1,6 +1,8 @@
 package main.nl.uva.parser.elements.expressions.atoms;
 
 import main.nl.uva.parser.elements.expressions.Expression;
+import main.nl.uva.parser.elements.type.Bool;
+import main.nl.uva.parser.elements.type.Type;
 
 public class BoolAtom extends Expression {
 
@@ -10,12 +12,13 @@ public class BoolAtom extends Expression {
     private final boolean _value;
 
     public BoolAtom() {
-        _value = false;
+        this("false");
     }
 
     public BoolAtom(final String value) {
-
         assert isBoolean(value);
+
+        _type = new Bool();
         _value = parseBoolean(value);
     }
 
@@ -34,6 +37,12 @@ public class BoolAtom extends Expression {
 
     @Override
     public boolean validate() {
+
         return true;
+    }
+
+    @Override
+    public Type getType() {
+        return _type;
     }
 }

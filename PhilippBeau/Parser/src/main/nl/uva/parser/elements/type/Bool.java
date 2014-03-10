@@ -1,28 +1,37 @@
 package main.nl.uva.parser.elements.type;
 
+import main.nl.uva.parser.elements.expressions.AdvancedExpression;
+import main.nl.uva.parser.elements.expressions.Expression;
+import main.nl.uva.parser.elements.expressions.atoms.BoolAtom;
+
 public class Bool extends Type {
-
-    private final static String TRUE = "true";
-    private final static String FALSE = "false";
-
-    private boolean _value = false;
 
     public Bool() {
         super(Type.Of.BOOLEAN);
     }
 
-    public Bool(final String value) {
-        super(Type.Of.BOOLEAN);
-
-        assert isBoolean(value);
-        _value = parseBoolean(value);
+    @Override
+    public Expression getAtom() {
+        return new BoolAtom();
     }
 
-    private static boolean isBoolean(final String value) {
-        return value.toLowerCase().equals(TRUE) || value.toLowerCase().equals(FALSE);
+    @Override
+    public Type visit(final Expression right, final AdvancedExpression expression) {
+        return right.getType().accept(this, expression);
     }
 
-    private static boolean parseBoolean(final String value) {
-        return value.toLowerCase().equals(TRUE);
+    @Override
+    public Type accept(final Bool left, final AdvancedExpression expression) {
+        return expression.calculateType(left, this);
+    }
+
+    @Override
+    public Type accept(final Money left, final AdvancedExpression expression) {
+        return expression.calculateType(left, this);
+    }
+
+    @Override
+    public Type accept(final Text left, final AdvancedExpression expression) {
+        return expression.calculateType(left, this);
     }
 }

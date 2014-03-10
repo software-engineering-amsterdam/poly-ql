@@ -1,16 +1,19 @@
 package main.nl.uva.parser.elements.expressions.atoms;
 
 import main.nl.uva.parser.elements.expressions.Expression;
+import main.nl.uva.parser.elements.type.Money;
+import main.nl.uva.parser.elements.type.Type;
 
 public class MoneyAtom extends Expression {
 
     private final double _value;
 
     public MoneyAtom() {
-        _value = 0.0d;
+        this("0.0");
     }
 
     public MoneyAtom(final String value) {
+        _type = new Money();
         _value = Double.parseDouble(value);
     }
 
@@ -23,4 +26,10 @@ public class MoneyAtom extends Expression {
     public boolean validate() {
         return true;
     }
+
+    @Override
+    public Type getType() {
+        return _type;
+    }
+
 }

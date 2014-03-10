@@ -5,14 +5,11 @@ import main.nl.uva.parser.elements.type.Type;
 
 public abstract class Expression extends Statement {
 
-    protected Type.Of _type = null;
+    protected Type _type = null;
 
     public Expression() {}
 
-    public Type.Of getType() {
-
-        return _type;
-    }
+    public abstract Type getType();
 
     @Override
     public Variable getVariable(final String variableName) {

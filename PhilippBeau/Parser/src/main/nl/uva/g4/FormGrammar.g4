@@ -64,10 +64,10 @@ atom returns [Expression cEx]
 	| '(' bE=boolExp ')' {$cEx = $bE.cEx;}
 	;
 
-simpleType returns [Type.Of type]
-	: BOOLEAN {$type = Type.Of.BOOLEAN;}
-    | MONEY {$type = Type.Of.MONEY;}
-    | TEXT {$type = Type.Of.TEXT;}
+simpleType returns [Type type]
+	: BOOLEAN {$type = new Bool();}
+    | MONEY {$type = new Money();}
+    | TEXT {$type = new Text();}
     ;
 
 boolLiteral

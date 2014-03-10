@@ -8,7 +8,7 @@ public class Variable extends Expression {
 
     private final Expression _value;
 
-    public Variable(final Type.Of type, final String name, final Expression value) {
+    public Variable(final Type type, final String name, final Expression value) {
         _type = type;
         _name = name;
         _value = value;
@@ -16,8 +16,8 @@ public class Variable extends Expression {
         _value.setParent(this);
     }
 
-    public Variable(final Type.Of type, final String name) {
-        this(type, name, Type.Of.getAtomFor(type));
+    public Variable(final Type type, final String name) {
+        this(type, name, type.getAtom());
     }
 
     @Override
@@ -36,5 +36,10 @@ public class Variable extends Expression {
 
     public String getName() {
         return _name;
+    }
+
+    @Override
+    public Type getType() {
+        return _value.getType();
     }
 }
