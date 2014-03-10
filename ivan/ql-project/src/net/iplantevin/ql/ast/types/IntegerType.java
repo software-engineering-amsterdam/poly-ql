@@ -1,10 +1,9 @@
 package net.iplantevin.ql.ast.types;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Ivan
- * Date: 19-02-14
  * Integer is only compatible to itself.
+ *
+ * @author Ivan
  */
 public class IntegerType extends Type {
     @Override
@@ -20,6 +19,11 @@ public class IntegerType extends Type {
     @Override
     public boolean equals(Object object) {
         return object instanceof IntegerType;
+    }
+
+    @Override
+    public <T> T accept(ITypeVisitor<T> visitor) {
+        return visitor.visit(this);
     }
 
     @Override

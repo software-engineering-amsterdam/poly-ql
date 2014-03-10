@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 
 namespace QL_Csharp
@@ -16,9 +17,9 @@ namespace QL_Csharp
 
             // Fill demo presets
             _demoPresets.Add("Empty Form", "form formName { }");
-            _demoPresets.Add("Questions", "form formName { \r\n\tboolQ1: \"Does it work?\" boolean\r\n\tboolQ2: \"And with two questions?\" boolean\r\n}");
-            _demoPresets.Add("Conditional", "form formName {\r\n\tboolQ1: \"Display next question?\" boolean\r\n\tif (boolQ1) {\r\n\t\tboolQ2: \"Did you like it?\" boolean\r\n\t}\r\n}");
-            _demoPresets.Add("Assignment", "form formName {\r\n\tintQ1: \"Income?\" integer\r\n\t\"Tax amount\" intTax = intQ1 / 100 * 52\r\n}");
+            _demoPresets.Add("Questions", "form formName { \r\n\t\"Does it work?\" boolQ1: boolean\r\n\t\"And with two questions?\" boolQ2: boolean\r\n}");
+            _demoPresets.Add("Conditional", "form formName {\r\n\t\"Display next question?\" boolQ1: boolean\r\n\tif (boolQ1) {\r\n\t\t\"Did you like it?\" boolQ2: boolean\r\n\t}\r\n}");
+            _demoPresets.Add("Assignment", "form formName {\r\n\t\"Income?\" intQ1: integer\r\n\t\"Tax amount\" intTax = intQ1 / 100 * 52\r\n}");
             comboBoxDemos.Items.AddRange(_demoPresets.Keys.ToArray());
         }
 
@@ -27,15 +28,30 @@ namespace QL_Csharp
             try
             {
                 var output = QL_Main.parse_str(textBoxSource.Text, checkBoxTypeCheck.Enabled);
-                var outputString = output.ToString();
-                outputString = outputString.Replace("\n", Environment.NewLine).Replace(";", "");
-                textBoxOutput.Text = outputString;
+                var checkInfo = output.Item2;
+
+                if (checkInfo.HasErrors)
+                {
+                    var errorString = new StringBuilder();
+                    foreach (string error in checkInfo.ErrorList)
+                    {
+                        errorString.Append(error + Environment.NewLine);
+                    }
+                    textBoxOutput.Text = errorString.ToString();
+                }
+                else
+                {
+                    var ast = output.Item1;
+                    var outputString = ast.ToString();
+                    outputString = outputString.Replace("\n", Environment.NewLine).Replace(";", "");
+                        textBoxOutput.Text = outputString;
+                }
             }
             catch (QL_Grammar.ParseErrorException exception)
             {
                 QL_Grammar.ParseErrorExceptionMessage data = exception.Data0;
-                QL_Grammar.Position startPosition = data.StartPos as QL_Grammar.Position;
-                QL_Grammar.Position endPosition = data.EndPos as QL_Grammar.Position;
+                QL_Grammar.Position startPosition = data.StartPos;
+                QL_Grammar.Position endPosition = data.EndPos;
                 textBoxOutput.Text = string.Format("{0} between line {1}, column {2} and line {3} column {4}",
                     data.Message, startPosition.Line, startPosition.Column, endPosition.Line, endPosition.Column);
             }

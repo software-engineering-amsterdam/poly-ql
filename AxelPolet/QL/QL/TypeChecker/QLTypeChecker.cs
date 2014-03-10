@@ -1,42 +1,35 @@
-﻿using System;
-using QL.Interfaces;
+﻿using System.Collections.Generic;
 using QL.QLClasses;
-using QL.QLClasses.Statements;
 
 namespace QL.TypeChecker
 {
     public class QLTypeChecker
     {
-        public delegate void ErrorHandler(string message);
-        public ErrorHandler OnError { get; set; }
+        public QLTypeErrors TypeErrors { get; private set; }
 
-        private QLException _qlException;
-        
         public QLTypeChecker()
         {
-            _qlException = new QLException();
+            TypeErrors = new QLTypeErrors();
         }
 
-        public void Check(Questionnaire AST)
+        public void Run(Questionnaire AST)
         {
-            foreach (StatementBase statement in AST.Body)
-            {
-                CheckType(statement);
-            }
+            AST.CheckType(TypeErrors);
         }
+    }
 
-        private void CheckType(ITypeChecker typeChecker)
+    public class QLTypeErrors : List<QLTypeError>
+    {
+        public void ReportError(QLTypeError typeError)
         {
-            if (!typeChecker.CheckType(ref _qlException))
-                HandleError(_qlException);
+            Add(typeError);
         }
+    }
 
-        private void HandleError(QLException error)
-        {
-            OnError(string.Format("QLTypeChecker: {0} {1}"  +
-                            "<At token '{2}' on line {3}, column {4}>{5}", 
-                            error.Message, Environment.NewLine, 
-                            error.TokenText, error.TokenLine, error.TokenColumn, Environment.NewLine));
-        }
+    public class QLTypeError
+    {
+        public QLTokenInfo TokenInfo { get; set; }
+        public string Message { get; set; }
+        public bool IsWarning { get; set; }
     }
 }

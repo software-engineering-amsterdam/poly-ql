@@ -21,6 +21,7 @@ public abstract class StringOperator extends Operator<StringValue> {
 
     @Override
     public boolean isValid(final Type leftType, final Type rightType) {
+        // Valid for types that have either one or two STRING operands and NUMBER as alternative
         return leftType == Type.STRING && rightType == Type.STRING || leftType == Type.NUMBER
                 && rightType == Type.STRING || leftType == Type.STRING && rightType == Type.NUMBER;
     }

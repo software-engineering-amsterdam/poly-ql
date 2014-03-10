@@ -19,5 +19,8 @@ public class ModifierHelper {
         return sSyntaxMap.get(syntax);
     }
 
+    /**
+     * This class is static-only.
+     */
     private ModifierHelper() {}
 }

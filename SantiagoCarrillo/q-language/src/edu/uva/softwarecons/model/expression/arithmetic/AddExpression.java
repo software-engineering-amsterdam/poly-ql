@@ -2,9 +2,9 @@ package edu.uva.softwarecons.model.expression.arithmetic;
 
 import edu.uva.softwarecons.model.expression.BinaryExpression;
 import edu.uva.softwarecons.model.expression.Expression;
-import edu.uva.softwarecons.model.operation.Operator;
 import edu.uva.softwarecons.model.type.Type;
-import edu.uva.softwarecons.visitor.IFormElementVisitor;
+import edu.uva.softwarecons.visitor.expression.IExpressionElementVisitor;
+import edu.uva.softwarecons.visitor.form.IFormElementVisitor;
 
 /**
  * Falconlabs
@@ -16,7 +16,6 @@ public class AddExpression extends BinaryExpression {
 
     public AddExpression(Expression leftOperand, Expression rightOperand) {
         super(leftOperand, rightOperand);
-        operator = Operator.ADD;
     }
 
 
@@ -26,7 +25,7 @@ public class AddExpression extends BinaryExpression {
     }
 
     @Override
-    public void accept(IFormElementVisitor visitor) {
-        visitor.visit(this);
+    public void accept(IExpressionElementVisitor visitor) {
+        visitor.visitAddExpression(this);
     }
 }

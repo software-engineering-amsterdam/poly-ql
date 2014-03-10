@@ -3,10 +3,10 @@ package nl.uva.polyql.model.expressions.operations;
 import java.util.Set;
 
 import nl.uva.polyql.Log;
+import nl.uva.polyql.exceptions.UnsupportedOperandTypeException;
 import nl.uva.polyql.model.Question;
 import nl.uva.polyql.model.expressions.Expression;
 import nl.uva.polyql.model.expressions.operators.Operator;
-import nl.uva.polyql.model.expressions.operators.UnsupportedOperandTypeException;
 import nl.uva.polyql.model.types.Type;
 import nl.uva.polyql.model.values.Value;
 

@@ -17,7 +17,7 @@ let keywords =
 
 let symbols =
     [
-        "==",    EQ;
+        "==",   EQ;
         "!=",   NE;
         "<",    LT;
         "<=",   LE;
@@ -149,7 +149,7 @@ and _fslex_tokenize  _fslex_state lexbuf =
           )
   | 3 -> ( 
 # 57 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fsl"
-                                 DECIMAL(Double.Parse(LexBuffer<_>.LexemeString lexbuf)) 
+                                 DECIMAL(Double.Parse(LexBuffer<_>.LexemeString lexbuf, Globalization.NumberFormatInfo.InvariantInfo)) 
 # 153 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fs"
           )
   | 4 -> ( 

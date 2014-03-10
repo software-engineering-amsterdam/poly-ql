@@ -12,18 +12,18 @@ import org.antlr.v4.runtime.tree.ParseTreeVisitor;
  */
 public interface QuestionnaireVisitor<T> extends ParseTreeVisitor<T> {
 	/**
+	 * Visit a parse tree produced by {@link QuestionnaireParser#else}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitElse(@NotNull QuestionnaireParser.ElseContext ctx);
+
+	/**
 	 * Visit a parse tree produced by {@link QuestionnaireParser#simpleQuestion}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitSimpleQuestion(@NotNull QuestionnaireParser.SimpleQuestionContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link QuestionnaireParser#ifElse}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitIfElse(@NotNull QuestionnaireParser.IfElseContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link QuestionnaireParser#computedQuestion}.
@@ -47,11 +47,11 @@ public interface QuestionnaireVisitor<T> extends ParseTreeVisitor<T> {
 	T visitOr(@NotNull QuestionnaireParser.OrContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link QuestionnaireParser#typeExp}.
+	 * Visit a parse tree produced by {@link QuestionnaireParser#int}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitTypeExp(@NotNull QuestionnaireParser.TypeExpContext ctx);
+	T visitInt(@NotNull QuestionnaireParser.IntContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link QuestionnaireParser#compare}.

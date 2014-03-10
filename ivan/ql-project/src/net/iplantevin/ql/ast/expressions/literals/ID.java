@@ -4,23 +4,15 @@ import net.iplantevin.ql.ast.LineInfo;
 import net.iplantevin.ql.ast.expressions.Expression;
 import net.iplantevin.ql.ast.types.Type;
 import net.iplantevin.ql.ast.types.TypeEnvironment;
-import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
-import org.antlr.v4.runtime.ParserRuleContext;
+import net.iplantevin.ql.ast.visitors.IASTVisitor;
 
 /**
- * Created with IntelliJ IDEA.
- *
- * @user: Ivan
- * @date: 19-02-14
  * Identifier.
+ *
+ * @author Ivan
  */
 public class ID extends Expression {
     private final String name;
-
-    public ID(String name, ParserRuleContext ctx) {
-        super(ctx);
-        this.name = name;
-    }
 
     public ID(String name, LineInfo lineInfo) {
         super(lineInfo);
@@ -28,8 +20,8 @@ public class ID extends Expression {
     }
 
     @Override
-    public Type getType(TypeEnvironment idTypeEnv) {
-        return idTypeEnv.getDeclaredType(this);
+    public Type getType(TypeEnvironment idTypeStore) {
+        return idTypeStore.getDeclaredType(this);
     }
 
     public String getName() {
@@ -42,7 +34,7 @@ public class ID extends Expression {
     }
 
     @Override
-    public void accept(IQLASTVisitor visitor) {
-        visitor.visit(this);
+    public <T> T accept(IASTVisitor<T> visitor) {
+        return visitor.visit(this);
     }
 }

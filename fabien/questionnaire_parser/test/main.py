@@ -19,6 +19,14 @@ class ParserTestCase(unittest.TestCase):
         self.assertMatch(variable, 'hello')
         self.assertMatch(keyword, 'required')
         
+        self.assertMatch(float, '1.0')
+        self.assertMatch(float, '1.001')
+        self.assertMatch(float, '12.001')
+        
+        self.assertMatch(money, '1.00')
+        self.assertMatch(money, '12.00')
+        self.assertMatch(money, '123.00')
+        
         self.assertNoMatch(word, 'hello world')
         self.assertNoMatch(variable, 'hello world')
         self.assertNoMatch(keyword, 'world')
@@ -45,37 +53,39 @@ class ParserTestCase(unittest.TestCase):
         self.assertMatch(string, '"hello"')
         self.assertMatch(string, '"hello `world`!"')
         
-        self.assertNoMatch(string, '\'hello\'')
         self.assertNoMatch(string, '"hello')
         self.assertNoMatch(string, 'hello')
 
     # TODO : Test associativity
     def test_put(self):
-        self.assertMatch(put, "put \"Your answer was\" () ")
         self.assertMatch(put, "put \"Your answer was\" (foo * 3)")
+        self.assertMatch(put, "put \"Your answer was\" (foo * 3 * 3)")
         self.assertMatch(put, "put \"Your answer was\" (foo * (3 + bar))")
         self.assertMatch(put, "put (foo * 3)")
    
+        self.assertNoMatch(put, "put \"Your answer was\" ")
+        self.assertNoMatch(put, "put \"Your answer was\" () ")
         
-    def test_expression(self):
-        self.assertMatch(condition, "()")
+        
+    def test_condition(self):
         self.assertMatch(condition, "(hello)")
    
+        # Don't allow empty conditions
+        self.assertNoMatch(condition, "()")
         self.assertNoMatch(condition, "(hello)(world)")
    
     def test_negation(self):
         self.assertMatch(condition, "(!hello)")
         
     def test_nested_expression(self):
-        self.assertMatch(condition, "(())")
-        self.assertMatch(condition, "( (hello) )")
+        #self.assertMatch(condition, "(())")
+        self.assertMatch(condition, "( hello )")
         self.assertMatch(condition, "( hello and world )")
         self.assertMatch(condition, "( hello and !world )")
-        self.assertMatch(condition, "( hello and not world )")
         self.assertMatch(condition, "( hello and (hello or world) )")
         self.assertMatch(condition, "( !(hello or world) and hello )")
    
-        self.assertNoMatch(condition, "( (hello or world) hello )")
+        self.assertNoMatch(condition, "((hello or world) hello)")
 
     def test_operators_in_expression(self):
         self.assertMatch(condition, "( hello > world )")
@@ -95,10 +105,13 @@ class ParserTestCase(unittest.TestCase):
         self.assertNoMatch(_else, 'else (hello) { }')
         self.assertNoMatch(_else, 'else if (hello) { }')
     
-    def test_condition(self):
+    def test_expression(self):
         self.assertMatch(expression, 'if (hello) { }')
         self.assertMatch(expression, 'if (hello) { }\n else if (foo) { } ')
         self.assertMatch(expression, 'if (hello) { }\n else if (foo) { }\n else {} ')
+        self.assertMatch(expression, 'if (hello) { }\n else if (foo && bar) { }\n else {} ')
+        
+        self.assertNoMatch(expression, 'if () { }')
         
     def test_question(self):
         self.assertMatch(question, 'How old are you?')
@@ -107,5 +120,5 @@ class ParserTestCase(unittest.TestCase):
         self.assertNoMatch(question, 'How old are you')
     
     def test_form(self):
-        self.assertMatch(form, 'form test { }')
-        self.assertMatch(form, 'form test { hello? boolean world }')
+        self.assertMatch(form, 'form Test { }')
+        self.assertMatch(form, 'form Test { hello? boolean world }')

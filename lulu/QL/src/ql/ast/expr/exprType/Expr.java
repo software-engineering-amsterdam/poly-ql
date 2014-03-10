@@ -1,5 +1,8 @@
 package ql.ast.expr.exprType;
 
-public class Expr {
+import ql.ast.value.Value;
 
+
+public abstract class Expr {
+	public abstract Value eval();
 }

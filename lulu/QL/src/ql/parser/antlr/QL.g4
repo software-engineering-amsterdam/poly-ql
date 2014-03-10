@@ -48,10 +48,10 @@ question returns [Question result]
 { $result = new Question(new Ident($Ident.text), $Str.text, $t.result, $x.result); }
 ;
 
-type returns [Type result]
-: 'boolean' { $result = new Bool();}
-| 'int' { $result = new Int();}	
-| 'string' { $result = new Str();}
+type returns [TypeQue result]
+: 'boolean' { $result = new BoolQue();}
+| 'int' { $result = new IntQue();}	
+| 'string' { $result = new StrQue();}
 ;
 
 //stat returns [Statement result]
@@ -81,7 +81,7 @@ mulExpr returns [Expr result]
       if ($op.text.equals("*")) {
         $result = new Mul($result, $rhs.result);
       }
-      if ($op.text.equals("<=")) {
+      if ($op.text.equals("/")) {
         $result = new Div($result, $rhs.result);      
       }
     })*
@@ -144,7 +144,6 @@ WS  :	(' ' | '\t' | '\n' | '\r') -> channel(HIDDEN)
 COMMENT : ('/*' .*? '*/' | '//' .*?) -> channel(HIDDEN)
     ;
 
-Ident: ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*;
-
 Int: ('0'..'9')+;
 Bool: 'true' | 'false';
+Ident: ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*;

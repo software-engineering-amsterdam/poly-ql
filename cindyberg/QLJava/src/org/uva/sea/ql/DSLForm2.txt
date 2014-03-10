@@ -1,0 +1,11 @@
+form FORM1 {
+	variable : "Wil je meer vragen?" boolean
+	var : "heb je een huis?" boolean
+	if(variable){
+		vraag3 : "getalletjes?" integer (1+1) 
+	}
+	else{
+		geenExtra : "jammer, klik om af te sluiten" boolean
+	}
+}
+

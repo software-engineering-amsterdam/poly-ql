@@ -3,7 +3,7 @@ package org.uva.sea.ql.ast.stmt;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.uva.sea.ql.checker.StmtVisitor;
+import org.uva.sea.ql.checker.visitor.IStmtVisitor;
 
 public class Block extends Stmt {
 	
@@ -22,7 +22,7 @@ public class Block extends Stmt {
 	}
 	
 	@Override
-	public void accept(StmtVisitor sv) {
+	public void accept(IStmtVisitor sv) {
 		sv.visit(this);
 	}
 	

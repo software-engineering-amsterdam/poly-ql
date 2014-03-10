@@ -14,12 +14,14 @@ options {
   package parser;
 
   import expr.*;
+  import expr.literals.*;
   import expr.arithmeticExpr.*;
   import expr.conditionalExpr.*;
   import expr.relationalExpr.*;
   import expr.signExpr.*;
   import expr.syntacticExpr.*;
-  import expr.types.*;
+  import types.*;
+  import typeChecker.*;
   import java.util.LinkedList;
 }
 
@@ -36,15 +38,19 @@ form returns [Form result]
     )*
   '}' 
   { 
-    $result=new Form (new Ident($IDENT.text), list); 
+    Form f=new Form (new Ident($IDENT.text), list); 
+    ///////////
+    new IdentifiersTypeMatcher().match(f);
+    $result = f;
   };
+  
 statement returns [Statement result]
   : x=question {$result=$x.result;}
-  | x=if_block {$result=$x.result;}
+  | y=if_block {$result=$y.result;}
   ;
 
 question returns [Question result]
-  : IDENT COLONS STRING questiontype {
+  : IDENT ':' STRING questiontype {
     $result = new Question (new Ident($IDENT.text),
      new QuestionBody($STRING.text), $questiontype.result); 
     } 
@@ -53,7 +59,7 @@ question returns [Question result]
      $questiontype.result, $expression.result); 
     }
   )? 
-  ';';  
+  ;  
 
 if_block returns [IfBlock result]
   : 'if' (x=expression) '{' 
@@ -67,7 +73,7 @@ if_block returns [IfBlock result]
     }
   )* '}'
   { 
-    $result = new IfBlock(new BooleanExpr($x.result), list);
+    $result = new IfBlock($x.result, list);
   }
   (
     ELSE '{'
@@ -75,13 +81,13 @@ if_block returns [IfBlock result]
       List<Statement> list2 = new LinkedList<Statement>();  
     }
     (
-      y=statement
+      y2=statement
       {
-        list2.add($y.result);
+        list2.add($y2.result);
       }
     )* 
     { 
-      $result = new IfBlock(new BooleanExpr($x.result), list, list2);
+      $result = new IfBlock($x.result, list, list2);
     }
     '}'
   )?
@@ -99,10 +105,10 @@ primary returns [Expression result]
   ;
     
 unExpr returns [Expression result]
-    :  '+' x=primary { $result = new Pos($x.result); }  
-    |  '-' x=primary { $result = new Neg($x.result); }  
-    |  '!' x=primary { $result = new Not($x.result); } 
-    |  x=primary    { $result = $x.result; }
+    :  '+' x1=primary { $result = new Pos($x1.result); }  
+    |  '-' x2=primary { $result = new Neg($x2.result); }  
+    |  '!' x3=primary { $result = new Not($x3.result); } 
+    |  x4=primary    { $result = $x4.result; }
     ;    
     
 mulExpr returns [Expression result]
@@ -164,9 +170,9 @@ orExpr returns [Expression result]
     ;
 
 questiontype  returns [Type result]
-  : 'boolean' { $result = new Bool(); }
-  | 'money'   { $result = new Money(); }
-  | 'integer' { $result = new Int(); }
+  : 'boolean' { $result = new BoolType(); }
+  | 'money'   { $result = new MoneyType(); }
+  | 'integer' { $result = new IntType(); }
   ;
   
   // Tokens
@@ -183,4 +189,3 @@ BOOLEAN: 'true' | 'false';
 ELSE: 'else';
 INT: ('0'..'9')+;
 IDENT:   ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*;
-COLONS : ':';

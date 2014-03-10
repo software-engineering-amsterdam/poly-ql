@@ -8,7 +8,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 import ql.ast.ASTVisitor;
-import ql.ast.Questionnares;
+import ql.ast.Questionnaire;
 import antlr4.TestLexer;
 import antlr4.TestParser;
 
@@ -38,6 +38,8 @@ public class Test {
 	    
 	    // Create parsetree visitor, generate AST
 	    ASTVisitor eval  = new ASTVisitor();
-	    Questionnares qs = (Questionnares)eval.visit(tree);
+	    Questionnaire q   = (Questionnaire) eval.visit(tree);
+	    
+	    System.out.println("At the root level, amount of statements found was " + q.getForm(0).countStatements());
 	}
 }

@@ -2,22 +2,22 @@ package org.uva.sea.ql.ast.expr;
 
 import org.uva.sea.ql.ast.type.Number;
 import org.uva.sea.ql.ast.type.Type;
-import org.uva.sea.ql.checker.ExprVisitor;
+import org.uva.sea.ql.checker.visitor.IExprVisitor;
 
 public class Sub extends Binary {
-
+	
 	public Sub(Expr lhs, Expr rhs) {
 		super(lhs, rhs);
 	}
 
 	@Override
-	public Type hasType() {
-		return new Number();
+	public <T> T accept(IExprVisitor<T> ev) {
+		return ev.visit(this);
 	}
 
 	@Override
-	public <T> T accept(ExprVisitor<T> ev){
-		return ev.visit(this);
+	public Type hasType() {
+		return new Number();
 	}
 
 	@Override

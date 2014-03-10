@@ -2,11 +2,12 @@
 package antlr;
 
 import ast.expr.Expr;
-import ast.expr.IdentLiteral;
+import ast.expr.Identifier;
 import ast.expr.binExpr.*;
 import ast.expr.unExpression.*;
 import ast.expr.literal.*;
 import ast.expr.types.*;
+import ast.statement.*;
 
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -38,26 +39,26 @@ public class QLangBaseListener implements QLangListener {
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
-	@Override public void enterPrimary(@NotNull QLangParser.PrimaryContext ctx) { }
+	@Override public void enterForm(@NotNull QLangParser.FormContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
-	@Override public void exitPrimary(@NotNull QLangParser.PrimaryContext ctx) { }
+	@Override public void exitForm(@NotNull QLangParser.FormContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
-	@Override public void enterAddExpr(@NotNull QLangParser.AddExprContext ctx) { }
+	@Override public void enterInit(@NotNull QLangParser.InitContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
-	@Override public void exitAddExpr(@NotNull QLangParser.AddExprContext ctx) { }
+	@Override public void exitInit(@NotNull QLangParser.InitContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
@@ -103,19 +104,6 @@ public class QLangBaseListener implements QLangListener {
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
-	@Override public void enterUnExpr(@NotNull QLangParser.UnExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void exitUnExpr(@NotNull QLangParser.UnExprContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
 	@Override public void enterOrExpr(@NotNull QLangParser.OrExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -123,6 +111,110 @@ public class QLangBaseListener implements QLangListener {
 	 * The default implementation does nothing.
 	 */
 	@Override public void exitOrExpr(@NotNull QLangParser.OrExprContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void enterStatement(@NotNull QLangParser.StatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitStatement(@NotNull QLangParser.StatementContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void enterIfelsestatement(@NotNull QLangParser.IfelsestatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitIfelsestatement(@NotNull QLangParser.IfelsestatementContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void enterPrimary(@NotNull QLangParser.PrimaryContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitPrimary(@NotNull QLangParser.PrimaryContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void enterStatements(@NotNull QLangParser.StatementsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitStatements(@NotNull QLangParser.StatementsContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void enterIfstatement(@NotNull QLangParser.IfstatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitIfstatement(@NotNull QLangParser.IfstatementContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void enterAddExpr(@NotNull QLangParser.AddExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitAddExpr(@NotNull QLangParser.AddExprContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void enterQuestion(@NotNull QLangParser.QuestionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitQuestion(@NotNull QLangParser.QuestionContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void enterUnExpr(@NotNull QLangParser.UnExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitUnExpr(@NotNull QLangParser.UnExprContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

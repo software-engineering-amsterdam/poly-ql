@@ -3,7 +3,6 @@ grammar QL;
 @parser::members
 {
 	protected const int EOF = Eof;
-	public Questionnaire theQuestionnaire;
 }
 
 @lexer::members
@@ -17,14 +16,17 @@ grammar QL;
 	using System.Collections.Generic;
 	using System.Linq;
 	using QL.QLClasses;
+	using QL.QLClasses.Types;
 	using QL.QLClasses.Statements;
 	using QL.QLClasses.Expressions;
+	using QL.QLClasses.Expressions.Literals;
+	using QL.QLClasses.Expressions.Identifier;
 	using QL.QLClasses.Expressions.Unary;
-	using QL.QLClasses.Expressions.Math;
-	using QL.QLClasses.Expressions.Conditions;
-	using QL.QLClasses.Expressions.Conditions.BinaryExpressions;
-	using QL.QLClasses.Expressions.Conditions.BinaryExpressions.Operators;
-	using QL.QLClasses.Expressions.Types;
+	using QL.QLClasses.Expressions.Binary;
+	using QL.QLClasses.Expressions.Binary.Compare;
+	using QL.QLClasses.Expressions.Binary.Compare.Operators;
+	using QL.QLClasses.Expressions.Binary.Conditional;
+	using QL.QLClasses.Expressions.Binary.Math;
 }
 
 /*
@@ -32,128 +34,95 @@ grammar QL;
  */
  
 questionnaire
-	@init	
-	{	
-		List<StatementBase> statements = new List<StatementBase>(); 
-	}
-	: 'form' ASSIGN title=STRING 
-		LBRACKET 
-			(sts=statement{statements.Add($sts.result);})* 
-		RBRACKET														{theQuestionnaire = new Questionnaire{Title = $title.text, Body = statements};}
+	: FORM ASSIGN title=LIT_STRING body=codeblock						{_ASTRoot = new Questionnaire($title.text, $body.result);}
 	;
 
 statement returns [StatementBase result]
-	: qs_st=question_stmt SEMICOLON										{$result = $qs_st.result;}
-	| if_st=if_stmt														{$result = $if_st.result;}
+	: qsSt=questionStmt SEMICOLON										{$result = $qsSt.result;}
+	| ifSt=ifStmt														{$result = $ifSt.result;}
 	;
 
-question_stmt returns [Question result]
-@init
-{
-	QBaseType qValue;
-}
-	: id=ID ASSIGN lbl=STRING tp=type{qValue = $tp.result;}	
-			(LPARENS val=unary_expr{qValue.SetValue($val.result.GetValue());} RPARENS)?	//option to assign value on declaration
-	{$result = new Question($id.text, $lbl.text, qValue){ Token = $id };}
+codeblock returns [List<StatementBase> result]
+	@init {	List<StatementBase> statements = new List<StatementBase>(); }
+	: LBRACKET (sts=statement{statements.Add($sts.result);})* RBRACKET	{$result = statements;}
 	;
 
+questionStmt returns [Question result]
+	@init { ExpressionBase qExpression = null; }
+	: ID ASSIGN lbl=LIT_STRING t=type 
+	  (LPARENS ( expr=expression {qExpression = $expr.result;} ) RPARENS)?	
+	{
+		if(qExpression == null)
+			$result = new Question(_qlMemoryManager, $ID.text, $lbl.text, $t.result){ AntlrToken = $ID };
+		else
+			$result = new ComputedQuestion(_qlMemoryManager, $ID.text, $lbl.text, $t.result, qExpression){ AntlrToken = $ID };
+	}
+	;
 
-if_stmt returns [StatementIf result]
-@init	
-{ 
-	List<StatementBase> statements = new List<StatementBase>();
-	StatementIf elseIfStatement = null;
-}
-	: IF LPARENS cond=boolean_expr RPARENS 
-	  LBRACKET 
-		(sts=statement{statements.Add($sts.result);})* 
-	  RBRACKET														
-	  (elif_st=else_stmt {elseIfStatement = $elif_st.result;})?			{$result = new StatementIf(){Condition = $cond.result, Body = statements, ElseIfStatement = elseIfStatement };}																		
+ifStmt returns [StatementIf result]
+	@init { StatementIf elseIfStatement = null; }
+	: IF LPARENS cond=expression RPARENS body=codeblock													
+	  (elifSt=elseStmt {elseIfStatement = $elifSt.result;})?			{$result = new StatementIf($cond.result, $body.result, elseIfStatement){ AntlrToken = $IF };}																		
 	;													
 
-
-else_stmt returns [StatementIf result]
-@init	
-{	
-	List<StatementBase> statements = new List<StatementBase>(); 
-}
-	: ELSE if_st=if_stmt												{$result = $if_st.result;}							//else if
-	| ELSE												
-		LBRACKET 
-			(sts=statement{statements.Add($sts.result);})* 									
-		RBRACKET														{$result = new StatementIf(){Body = statements};}	//else
+elseStmt returns [StatementIf result]
+	: ELSE ifSt=ifStmt													{$result = $ifSt.result;}											//else if
+	| ELSE body=codeblock												{$result = new StatementIf(null, $body.result){ AntlrToken = $ELSE };}//else
 	;													
 
-
-boolean_expr returns [ExpressionBase result]
-	: lhs=boolean_expr AND rhs=boolean_expr								{$result = new And(){LeftValue = $lhs.result, RightValue = $rhs.result, Token = $AND};}
-	| lhs=boolean_expr OR rhs=boolean_expr								{$result = new Or(){LeftValue = $lhs.result, RightValue = $rhs.result, Token = $OR};}
-	| cm=compare_expr 													{$result = ($cm.result as ExpressionBase);}
-	| un=unary_expr 													{$result = ($un.result as ExpressionBase);}
-	;			
-
-compare_expr returns [CompareExpression result]
-	: lv=unary_expr op=compare_operator rv=unary_expr					{$result = new CompareExpression(){LeftValue = $lv.result, RightValue = $rv.result, CompareOperator = $op.result};}
+expression returns [ExpressionBase result]
+	: PLUS x=expression													{ $result = new Pos($x.result){ AntlrToken = $PLUS}; }
+    | MIN x=expression													{ $result = new Neg($x.result){ AntlrToken = $MIN}; }
+    | NOT x=expression													{ $result = new Not($x.result){ AntlrToken = $NOT}; }
+	| l=expression MUL r=expression										{ $result = new Mul($l.result, $r.result){ AntlrToken = $MUL}; }
+	| l=expression DIV r=expression										{ $result = new Div($l.result, $r.result){ AntlrToken = $DIV}; }
+	| l=expression PLUS r=expression									{ $result = new Add($l.result, $r.result){ AntlrToken = $PLUS}; }
+	| l=expression MIN r=expression										{ $result = new Sub($l.result, $r.result){ AntlrToken = $MIN}; }
+	| l=expression EQ r=expression										{ $result = new CompareExpression($l.result, $r.result, new Equals()){ AntlrToken = $EQ}; }
+	| l=expression GT r=expression										{ $result = new CompareExpression($l.result, $r.result, new GrTh()){ AntlrToken = $GT}; }
+	| l=expression GTE r=expression										{ $result = new CompareExpression($l.result, $r.result, new GrThEq()){ AntlrToken = $GTE}; }
+	| l=expression ST r=expression										{ $result = new CompareExpression($l.result, $r.result, new SmTh()){ AntlrToken = $ST}; }
+	| l=expression STE r=expression										{ $result = new CompareExpression($l.result, $r.result, new SmThEq()){ AntlrToken = $STE}; }
+	| l=expression AND r=expression										{ $result = new And($l.result, $r.result){ AntlrToken = $AND}; }
+	| l=expression OR r=expression										{ $result = new Or($l.result, $r.result){ AntlrToken = $OR}; }
+	| lit = literal														{ $result = $lit.result; }
 	;
 
-//TODO: couple math_expression and unary_expression in AST (add GetValue() method to ExpressionBase?)
-value_expr  returns [ExpressionBase result]
-	: x=unary_expr														{ $result = $x.result;}
-	| m=math_expr														{ $result = $m.result;}
+literal returns [ExpressionBase result]
+	: LIT_BOOL															{$result = new BoolLiteral(bool.Parse($LIT_BOOL.text)){ AntlrToken=$LIT_BOOL };}
+	| LIT_INT 															{$result = new IntLiteral(int.Parse($LIT_INT.text)){ AntlrToken=$LIT_INT };}
+	| LIT_STRING														{$result = new StringLiteral($LIT_STRING.text){ AntlrToken=$LIT_STRING };}
+	| id = identifier													{$result = $id.result;}
 	;
 
-unary_expr returns [UnaryExpression result]
-    : PLUS x=unary_expr													{ $result = new Pos{InnerValue = $x.result.InnerValue}; }
-    | MIN x=unary_expr													{ $result = new Neg{InnerValue = $x.result.InnerValue}; }
-    | NOT x=unary_expr													{ $result = new Not{InnerValue = $x.result.InnerValue}; }
-	| id=ID																{ $result = new UnaryExpression(){InnerValue = new QIdentifier($id.text, true){ Token = $id}};}																								
-	| val=value															{ $result = new UnaryExpression(){InnerValue = $val.result};}													
+identifier returns [QIdentifier result]
+	: ID																{$result = new QIdentifier(_qlMemoryManager, $ID.text){ AntlrToken=$ID };} //also pass _qlMemoryManager (from partial class)
 	;
-
-math_expr returns [MathExpression result]
-	: l=unary_expr MUL r=unary_expr										{ $result = new Mul(){LeftValue = $l.result, RightValue = $r.result};}
-	| l=unary_expr DIV r=unary_expr										{ $result = new Div(){LeftValue = $l.result, RightValue = $r.result};}
-	| l=unary_expr PLUS r=unary_expr									{ $result = new Add(){LeftValue = $l.result, RightValue = $r.result};}
-	| l=unary_expr MIN r=unary_expr										{ $result = new Sub(){LeftValue = $l.result, RightValue = $r.result};}
-	;
-
-compare_operator returns [OperatorBase result]
-	: EQ																{$result = new Equals(){ Token = $EQ };}
-	| GT																{$result = new GrTh(){ Token = $GT };}
-	| GTE																{$result = new GrThEq(){ Token = $GTE };}
-	| ST																{$result = new SmTh(){ Token = $ST };}
-	| STE																{$result = new SmThEq(){ Token = $STE };}
-	;
-
 
 type returns [QBaseType result]
-	: TYPE_BOOL															{$result = new QBool(""){Token=$TYPE_BOOL};}											
-	| TYPE_INT															{$result = new QInt(""){Token=$TYPE_INT};}
-	| TYPE_STRING														{$result = new QString(""){Token=$TYPE_STRING};}
+	: QBOOL																{$result = new QBool{ AntlrToken=$QBOOL };}											
+	| QINT																{$result = new QInt { AntlrToken=$QINT };}
+	| QSTRING															{$result = new QString{ AntlrToken=$QSTRING };}
 	;
-
-
-value returns [QBaseType result]
-	: BOOL																{$result = new QBool($BOOL.text){Token=$BOOL};}
-	| INT 																{$result = new QInt($INT.text){Token=$INT};}
-	| STRING															{$result = new QString($STRING.text){Token=$STRING};}
-	| id=ID																{$result = new QIdentifier($id.text, true){Token=$id};}
-	;
-
 
 /*
  * Lexer Rules
  */
 
-ID : ([a-z][A-Z0-9]*);	
+FORM : 'qform';
 
-TYPE_BOOL: 'bool';
-TYPE_INT: 'int';
-TYPE_STRING: 'string';
+QBOOL: 'bool';
+QINT: 'int';
+QSTRING: 'string';
 
-BOOL: 'true' | 'false';
-INT : [0-9]+;
-STRING: '"'.*?'"';
+LIT_BOOL: 'true' | 'false';
+LIT_INT : [0-9]+;
+LIT_STRING: '"'.*?'"';
+
+IF: 'if';
+ELSE : 'else';
+
+ID : ([a-z][A-Za-z0-9]+);	//id has lowest precedence
 
 LPARENS: '(';
 RPARENS: ')';
@@ -162,9 +131,6 @@ RBRACKET: '}';
 
 ASSIGN: '=';
 SEMICOLON: ';';
-
-IF: 'if';
-ELSE : 'else';
 
 AND: '&&';
 OR: '||';
@@ -181,5 +147,5 @@ DIV: '/';
 PLUS: '+';
 MIN: '-';
 
-WS  : (' ' | '\r' | '\n' | '\t' | )-> channel(HIDDEN);
 SL_COMMENT : '//' ~[\r\n]* -> channel(HIDDEN);
+WS  : (' ' | '\r' | '\n' | '\t' )-> channel(HIDDEN);
