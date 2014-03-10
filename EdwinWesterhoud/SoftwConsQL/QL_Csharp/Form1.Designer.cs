@@ -80,7 +80,6 @@
             this.checkBoxRealTime.TabIndex = 5;
             this.checkBoxRealTime.Text = "Realtime";
             this.checkBoxRealTime.UseVisualStyleBackColor = true;
-            this.checkBoxRealTime.CheckedChanged += new System.EventHandler(this.checkBoxRealTime_CheckedChanged);
             // 
             // labelDemo
             // 
@@ -150,7 +149,6 @@
             this.buttonGenerate.TabIndex = 1;
             this.buttonGenerate.Text = "Generate (F5)";
             this.buttonGenerate.UseVisualStyleBackColor = true;
-            this.buttonGenerate.Click += new System.EventHandler(this.buttonGenerate_Click);
             // 
             // groupBox2
             // 

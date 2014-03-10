@@ -27,7 +27,7 @@ type TypeCheckInfo(formName) =
 
     member this.HasErrors = errors.Count > 0
 
-    member this.ErrorList = errors 
+    member this.ErrorList = errors.ToArray()
 
 ////
 
@@ -116,5 +116,5 @@ let rec checkStmts stmts (checkInfo : TypeCheckInfo) =
 
 let typeCheck ast = let checkInfo = new TypeCheckInfo(ast.ID)
                     checkStmts ast.Statements checkInfo
-                    ast, checkInfo
+                    checkInfo
 

@@ -3,7 +3,7 @@ package net.iplantevin.ql.ast.statements;
 import net.iplantevin.ql.ast.LineInfo;
 import net.iplantevin.ql.ast.visitors.IASTVisitor;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Block: a list of statements.
@@ -11,14 +11,14 @@ import java.util.ArrayList;
  * @author Ivan
  */
 public class Block extends Statement {
-    private final ArrayList<Statement> statements;
+    private final List<Statement> statements;
 
-    public Block(ArrayList<Statement> statements, LineInfo lineInfo) {
+    public Block(List<Statement> statements, LineInfo lineInfo) {
         super(lineInfo);
         this.statements = statements;
     }
 
-    public ArrayList<Statement> getStatements() {
+    public List<Statement> getStatements() {
         return statements;
     }
 

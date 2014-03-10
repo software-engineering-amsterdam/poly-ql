@@ -10,6 +10,7 @@ import edu.uva.softwarecons.model.question.ComputedQuestion;
 import edu.uva.softwarecons.model.question.IfQuestion;
 import edu.uva.softwarecons.model.question.Question;
 import edu.uva.softwarecons.model.type.BooleanType;
+import edu.uva.softwarecons.model.type.IntegerType;
 import edu.uva.softwarecons.model.type.NumericType;
 import edu.uva.softwarecons.model.type.Type;
 import edu.uva.softwarecons.visitor.form.FormBaseVisitor;
@@ -24,10 +25,6 @@ import java.util.*;
 public class TypeChecker extends FormBaseVisitor {
 
     private Map<String, Type> questionTypes = new HashMap<String, Type>();
-
-    private List<ComputedQuestion> computedQuestions = new ArrayList<ComputedQuestion>();
-
-    private List<IfQuestion> ifQuestions = new ArrayList<IfQuestion>();
 
     private Set<String> referencedQuestions = new HashSet<String>();
 
@@ -61,7 +58,6 @@ public class TypeChecker extends FormBaseVisitor {
         questionTypes.put(question.getId(), question.getType());
         question.getExpression().accept(this);
         verifyDuplicatedQuestionText(question);
-        computedQuestions.add(question);
     }
 
     @Override
@@ -69,17 +65,16 @@ public class TypeChecker extends FormBaseVisitor {
         question.getExpression().accept(this);
         for(Question q: question.getQuestions()){
             q.accept(this);
-            if(q instanceof BasicQuestion)
+            if(new BasicQuestion(null, null, null).equals(q))
                 validateDuplicatedQuestion((BasicQuestion) q);
         }
         if(null != question.getElseQuestion()){
             for(Question q: question.getElseQuestion().getQuestions()){
                 q.accept(this);
-                if(q instanceof BasicQuestion)
+                if(new BasicQuestion(null, null, null).equals(q))
                     validateDuplicatedQuestion((BasicQuestion) q);
             }
         }
-        ifQuestions.add(question);
     }
 
 
@@ -92,7 +87,7 @@ public class TypeChecker extends FormBaseVisitor {
     }
 
     private void validateDuplicatedQuestion(BasicQuestion question) {
-        if(questionTypes.containsKey(question.getId()) && !questionTypes.get(question.getId()).getClass().equals(question.getType().getClass())){
+        if(questionTypes.containsKey(question.getId()) && !questionTypes.get(question.getId()).equals(question.getType())){
             errors.add(new DuplicateQuestionError(question.getId()));
         }
     }
@@ -106,26 +101,49 @@ public class TypeChecker extends FormBaseVisitor {
 
     public void checkForm(Form form){
         form.accept(this);
+        findUndefinedVariables();
+        ExpressionTypeChecker expressionTypeChecker = new ExpressionTypeChecker(questionTypes);
+        checkComputedQuestionExpressionsType(form, expressionTypeChecker);
+        checkIfStatementExpressionTypes(form, expressionTypeChecker);
+        errors.addAll(expressionTypeChecker.getErrors());
+    }
+
+
+    private void checkIfStatementExpressionTypes(Form form, ExpressionTypeChecker expressionTypeChecker) {
+        IfQuestion ifQuestion = new IfQuestion(null, null, null);
+        for(Question q: form.getQuestions()){
+            if(ifQuestion.equals(q)){
+                expressionTypeChecker.validateType("if ", ((IfQuestion) q).getExpression(), new BooleanType(false));
+            }
+        }
+    }
+
+    private void checkComputedQuestionExpressionsType(Form form, ExpressionTypeChecker expressionTypeChecker) {
+        ComputedQuestion computedQuestion = new ComputedQuestion(null, null, null, null);
+        for(Question q: form.getQuestions()){
+            if(computedQuestion.equals(q)){
+                ComputedQuestion question = (ComputedQuestion) q;
+                if(question.getType() instanceof NumericType)
+                    expressionTypeChecker.validateType(question.getId(), question.getExpression(), new IntegerType(0));
+                else
+                    errors.add(new InvalidTypeError(question.getId(), NumericType.class.getSimpleName(), question.getType().toString()));
+            }
+        }
+    }
+
+    private void findUndefinedVariables() {
         for(String questionKey: referencedQuestions){
             if(!questionTypes.containsKey(questionKey)){
                 errors.add(new UndefinedReferenceError(questionKey));
             }
         }
-
-        //TODO validate question types on the visit method
-        ExpressionTypeChecker expressionTypeChecker = new ExpressionTypeChecker(questionTypes);
-        for(ComputedQuestion question: computedQuestions){
-            if(question.getType() instanceof NumericType)
-                expressionTypeChecker.validateType(question.getId(), question.getExpression(), NumericType.class);
-            else
-                errors.add(new InvalidTypeError(question.getId(), NumericType.class, question.getType().getClass()));
-        }
-        for(IfQuestion ifQuestion: ifQuestions){
-            expressionTypeChecker.validateType("if ", ifQuestion.getExpression(), BooleanType.class);
-        }
-        errors.addAll(expressionTypeChecker.getErrors());
-
-
     }
 
+    public List<QuestionnaireError> getErrors() {
+        return errors;
+    }
+
+    public List<QuestionnaireWarning> getWarnings() {
+        return warnings;
+    }
 }

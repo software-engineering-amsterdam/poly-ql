@@ -40,4 +40,9 @@ public class IfQuestion implements Question {
     public void accept(IFormElementVisitor visitor) {
         visitor.visitIfQuestion(this);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof IfQuestion;
+    }
 }

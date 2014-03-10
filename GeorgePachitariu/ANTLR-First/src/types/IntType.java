@@ -4,12 +4,12 @@ import typeChecker.ASTVisitor;
 
 
 public class IntType implements Type {
-	
+
 	@Override
 	public void accept(ASTVisitor visitor) {
 		visitor.visit(this);
 	}
-	
+
 	@Override
 	public String toString() {
 		return "int";
@@ -21,7 +21,7 @@ public class IntType implements Type {
 	}
 
 	@Override
-	public boolean isCompatibleWithIntType() {
+	public boolean isCompatibleWithInt() {
 		return true;
 	}
 
@@ -32,9 +32,9 @@ public class IntType implements Type {
 
 	@Override
 	public boolean isCompatibleWith(Type t) {
-		return t.isCompatibleWithIntType();
+		return t.isCompatibleWithInt();
 	}
-	
+
 	@Override
 	public boolean isBoolean() {
 		return false;
@@ -49,7 +49,7 @@ public class IntType implements Type {
 	public boolean isRelational() {
 		return true;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (!(obj instanceof IntType))

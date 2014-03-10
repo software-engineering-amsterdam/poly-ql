@@ -11,7 +11,7 @@ namespace QL.QLClasses.Expressions.Binary.Math
 
         public override ExpressionBase GetResult()
         {
-            return new IntLiteral(Convert.ToInt32(LeftExpression.GetResult()) * Convert.ToInt32((RightExpression.GetResult())));
+            return new IntLiteral(Convert.ToInt32(LeftExpression.GetResult().ToString()) * Convert.ToInt32((RightExpression.GetResult().ToString())));
         }
     }
 }

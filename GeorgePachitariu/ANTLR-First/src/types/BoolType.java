@@ -4,12 +4,12 @@ import typeChecker.ASTVisitor;
 
 
 public class BoolType implements Type {
-	
+
 	@Override
 	public void accept(ASTVisitor visitor) {
 		visitor.visit(this);
 	}
-	
+
 	@Override
 	public String toString() {
 		return "boolean";
@@ -21,7 +21,7 @@ public class BoolType implements Type {
 	}
 
 	@Override
-	public boolean isCompatibleWithIntType() {
+	public boolean isCompatibleWithInt() {
 		return false;
 	}
 
@@ -49,12 +49,11 @@ public class BoolType implements Type {
 	public boolean isRelational() {
 		return false;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (!(obj instanceof BoolType))
 			return false;
 		return true;
 	}
-	
 }

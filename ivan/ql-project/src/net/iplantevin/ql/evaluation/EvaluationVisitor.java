@@ -45,7 +45,13 @@ public class EvaluationVisitor implements IASTVisitor<Value> {
     }
 
     public Value evaluate(Expression expression) {
-        return expression.accept(this);
+        try {
+            return expression.accept(this);
+        } catch (ArithmeticException e) {
+            return new UndefinedVal();
+        } catch (Exception e) {
+            return new UndefinedVal();
+        }
     }
 
     private Value leftValue(Binary expression) {

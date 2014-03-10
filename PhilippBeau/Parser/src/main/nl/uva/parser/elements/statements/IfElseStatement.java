@@ -1,25 +1,56 @@
 package main.nl.uva.parser.elements.statements;
 
-public class IfElseStatement extends Statement {
+import java.util.List;
 
-    public IfElseStatement(final String id, final Statement parent) {
-        super(id, parent);
+import main.nl.uva.parser.elements.expressions.Expression;
+import main.nl.uva.parser.elements.expressions.Variable;
+
+public class IfElseStatement extends BlockStatement {
+
+    private final List<Statement> _ifChildren;
+    private final List<Statement> _elseChildren;
+    private final Expression _expression;
+
+    public IfElseStatement(final Expression expression, final List<Statement> ifChildren,
+            final List<Statement> elseChildren) {
+
+        _ifChildren = ifChildren;
+        _elseChildren = elseChildren;
+
+        setParentForChildren(_ifChildren);
+        setParentForChildren(_elseChildren);
+
+        _expression = expression;
     }
 
     @Override
     public String toString() {
-        return "IfElseStatement ";
+        String erg = "if ( " + _expression + " ) { \n";
+        for (Statement child : _ifChildren) {
+            erg += child + "\n";
+        }
+
+        erg += "} else {\n";
+        for (Statement child : _elseChildren) {
+            erg += child + "\n";
+        }
+
+        return erg + "} \n";
     }
 
     @Override
-    protected boolean validateImpl() {
+    public Variable findVariable(final String variableName, final Statement scopeEnd) {
+        Variable result = findVariableInChildren(_ifChildren, variableName, scopeEnd);
 
-        boolean valid = _parent.validates(this);
-
-        if (!valid) {
-            System.err.println(this + "Is very very wrong");
+        if (result == null) {
+            result = findVariableInChildren(_elseChildren, variableName, scopeEnd);
         }
 
-        return valid;
+        return result;
+    }
+
+    @Override
+    public boolean validate() {
+        return validateStatements(_ifChildren) && validateStatements(_elseChildren);
     }
 }

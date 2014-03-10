@@ -1,24 +1,50 @@
 package main.nl.uva.parser.elements.statements;
 
-public class IFStatement extends Statement {
+import java.util.List;
 
-    public IFStatement(final String id, final Statement parent) {
-        super(id, parent);
+import main.nl.uva.parser.elements.expressions.Expression;
+import main.nl.uva.parser.elements.expressions.Variable;
+
+public class IFStatement extends BlockStatement {
+
+    protected final List<Statement> _children;
+
+    private final Expression _expression;
+
+    public IFStatement(final Expression expression, final List<Statement> children) {
+
+        _expression = expression;
+        _children = children;
+
+        _expression.setParent(this);
+        setParentForChildren(_children);
     }
 
     @Override
-    protected boolean validateImpl() {
-        boolean valid = _parent.validates(this);
-
-        if (!valid) {
-            System.err.println(this + "Is very very wrong");
+    public Variable findVariable(final String variableName, final Statement scopeEnd) {
+        if (scopeEnd != _expression) {
+            Variable result = findVariableInChildren(_children, variableName, scopeEnd);
+            if (result != null) {
+                return result;
+            }
         }
 
-        return valid;
+        return _parent.findVariable(variableName, this);
+    }
+
+    @Override
+    public boolean validate() {
+        boolean expression = _expression.validate();
+        return validateStatements(_children) && expression;
     }
 
     @Override
     public String toString() {
-        return "IFStatement " + _id + "\n";
+        String erg = "if ( " + _expression + " ) \n{ \n";
+        for (Statement child : _children) {
+            erg += child + "\n";
+        }
+
+        return erg + "} \n";
     }
 }

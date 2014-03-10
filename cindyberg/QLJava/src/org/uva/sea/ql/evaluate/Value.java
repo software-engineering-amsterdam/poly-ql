@@ -1,5 +1,7 @@
 package org.uva.sea.ql.evaluate;
 
+import org.uva.sea.ql.ast.type.Type;
+
 public abstract class Value {
 	
 	public abstract Object getValue();
@@ -110,4 +112,18 @@ public abstract class Value {
 	public Value not(){
 		return null;
 	}
+	
+	@Override
+	public boolean equals(Object other) {
+	    if (other instanceof Type) {
+	        return getValue().equals(((Value) other).getValue());
+	    } 
+	    return false;
+	}
+	
+	@Override
+	public int hashCode(){
+		return getValue().hashCode();
+	}
+
 }

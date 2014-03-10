@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
+using QL.Interpreter;
+using QL.Interpreter.Controls;
 using QL.QLClasses;
 using QL.TypeChecker;
 
@@ -59,6 +61,12 @@ namespace QL
             }
 
             return AST;
+        }
+
+        public void GenerateGUI()
+        {
+            QLBuilder qlBuilder = new QLBuilder(AST);
+            qlBuilder.Run();
         }
 
         public string GetParseTreeString()

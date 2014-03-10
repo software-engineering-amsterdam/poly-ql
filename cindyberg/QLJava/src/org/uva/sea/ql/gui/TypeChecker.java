@@ -15,7 +15,6 @@ public class TypeChecker {
 
 	private Problems problems;
 	private Parser parser;
-//	private String INPUTFILE = "C:\\Users\\Cindy\\Documents\\Github\\poly-ql\\cindyberg\\QLJava\\src\\org\\uva\\sea\\ql\\DSLForm.txt";
 	
 	public TypeChecker(){
 		parser = new Parser();
@@ -33,7 +32,6 @@ public class TypeChecker {
 
 		}
 		input.close();
-		System.out.println(DSLFORM);
 		checkDSL(DSLFORM);
 		return problems;
 	}
@@ -43,12 +41,5 @@ public class TypeChecker {
 		Form tree = (Form) parser.parser(inputDSL);
 		StatementChecker statementchecker = new StatementChecker(new TypeEnvironment(), problems);
 		tree.accept(statementchecker);
-		//printProblems();
-
-	}
-
-	private void printProblems(){
-		problems.printErrors();
-		problems.printWarnings();
 	}
 }

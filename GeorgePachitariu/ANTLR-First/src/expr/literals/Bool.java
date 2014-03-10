@@ -2,12 +2,13 @@ package expr.literals;
 
 import expr.Expression;
 import typeChecker.ASTVisitor;
+import typeChecker.IdentifiersTypeMatcher;
 import types.BoolType;
 import types.Type;
 
 
 public class Bool extends Expression {
-	private boolean value;
+	protected boolean value;
 
 	public Bool(boolean value) {
 		super();
@@ -21,27 +22,27 @@ public class Bool extends Expression {
 		Bool expr=(Bool) obj;
 		return expr.value == this.value;
 	}
-	
+
 	@Override
 	public void accept(ASTVisitor visitor) {
 		visitor.visit(this);
 	}
-	
+
 	@Override
 	public String toString() {
 		return "boolean";
 	}
-	
+
 	@Override
-	public Type getType() {
+	public Type getType(IdentifiersTypeMatcher typeMatcher) {
 		return new BoolType();
 	}
-	
+
 	@Override
-	public boolean areOperandsTypeValid() {
+	public boolean areOperandsTypeValid(IdentifiersTypeMatcher typeMatcher) {
 		return true;
 	}
-	
+
 	@Override
 	public boolean containsTreeNode(Expression e) {
 		if(e.equals(this))

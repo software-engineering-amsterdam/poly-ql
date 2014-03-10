@@ -1,24 +1,20 @@
 package expr;
 
 import typeChecker.ASTVisitor;
+import typeChecker.IdentifiersTypeMatcher;
 import types.Type;
 
 
 public class Ident extends Expression {
-	private String identifier;
-	private Type type;
+	protected String identifier;
 
 	public Ident(String identifier) {
 		super();
 		this.identifier=identifier;
 	}
 
-	public void setType(Type type) {
-		this.type = type;
-	}
-	
-	public Type getType() {
-		return this.type;
+	public Type getType(IdentifiersTypeMatcher typeMatcher) {
+		return typeMatcher.getIdentType(this);
 	}
 
 	@Override
@@ -28,20 +24,15 @@ public class Ident extends Expression {
 		Ident ident=(Ident) obj;
 		return this.identifier.equals(ident.identifier);
 	}
-	
+
 	@Override
 	public void accept(ASTVisitor visitor) {
 		visitor.visit(this);
 	}
-	
+
 	@Override
 	public String toString() {
 		return this.identifier;
-	}
-
-	@Override
-	public boolean areOperandsTypeValid() {
-		return true;
 	}
 
 	@Override
@@ -49,5 +40,15 @@ public class Ident extends Expression {
 		if(e.equals(this))
 			return true;
 		return false;
+	}
+
+	@Override
+	public boolean areOperandsTypeValid(IdentifiersTypeMatcher typeMatcher) {
+		return true;
+	}
+	
+	@Override
+	public int hashCode() {
+		return this.identifier.hashCode();
 	}
 }

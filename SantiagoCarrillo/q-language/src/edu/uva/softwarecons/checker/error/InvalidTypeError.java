@@ -7,15 +7,15 @@ package edu.uva.softwarecons.checker.error;
  */
 public class InvalidTypeError extends QuestionnaireError{
 
-    public InvalidTypeError(String id, Class expectedType, Class definedType) {
-        super("Expected type: "+expectedType.getSimpleName()+" but got "+
-                definedType.getSimpleName()+
-                " for argument: "+id);
+    public InvalidTypeError(String id, String expectedType, String definedType) {
+        super("Expected type: "+expectedType+" but got "+
+                definedType+
+                " for argument: '"+id+"'");
     }
 
-    public InvalidTypeError(String questionId, String expressionId, Class expectedType, Class definedType) {
-        super("Expected type: "+expectedType.getSimpleName()+" but got "+
-                definedType.getSimpleName()+
-                " for question: "+questionId+" and argument: "+expressionId);
+    public InvalidTypeError(String questionId, String expressionId, String expectedType, String definedType) {
+        super("Expected type: "+expectedType+" but got "+
+                definedType+
+                " for question: "+questionId+" and argument: '"+expressionId+"'");
     }
 }
