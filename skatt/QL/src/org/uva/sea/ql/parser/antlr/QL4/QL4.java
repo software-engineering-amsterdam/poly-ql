@@ -13,6 +13,7 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Form;
 import org.uva.sea.ql.parser.antlr.QL4.TypeChecker.QLErrorMsg;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.AntlrVisitor;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.DuplicateLabel;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.DuplicateQuestion;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.QLErrorVisitor;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.UndefinedCheck;
 
@@ -101,6 +102,9 @@ public class QL4 {
 		msgs.addAll(ASTChecker.visit(ast));
 		
 		ASTChecker = new DuplicateLabel();
+		msgs.addAll(ASTChecker.visit(ast));
+		
+		ASTChecker = new DuplicateQuestion();
 		msgs.addAll(ASTChecker.visit(ast));
 		
 		return msgs;
