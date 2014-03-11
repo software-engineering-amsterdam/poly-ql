@@ -14,9 +14,19 @@ import org.uva.sea.ql.parser.antlr.QL4.TypeChecker.QLErrorMsg;
  */
 public class DuplicateLabel extends QLErrorVisitor {
 
+	/**
+	 * The list of labels found when visiting
+	 */
 	List<Label> labels = new ArrayList<Label>();
 	
-	public List<QLErrorMsg> visitQuestion(Question question) {
+	@Override
+	/**
+	 * When visiting a question, its label is compared to 
+	 * previous visited questions labels. If it is a duplicate,
+	 * a warning is returned, otherwise it is added to the list 
+	 * of known labels
+	 */
+	public List<QLErrorMsg> visit(Question question) {
 		List<QLErrorMsg> msgs = new ArrayList<QLErrorMsg>();
 		Label qLabel = question.getLabel();
 		
