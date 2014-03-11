@@ -1,6 +1,5 @@
 package org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary;
 
-import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.BinaryExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Expression;
 
 /**
@@ -8,7 +7,7 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Expression;
  * @author Sammie Katt
  *
  */
-public class MultExpr extends BinaryExpr {
+public class MultExpr extends BiMathExpr {
 
 	public MultExpr(Expression lhs, Expression rhs) {
 		super(lhs, rhs);

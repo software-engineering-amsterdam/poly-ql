@@ -5,7 +5,7 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Expression;
 
 /**
  * Represents Equality expression in QL4 AST
- * @author Sammie
+ * @author Sammie Katt
  *
  */
 public class EqExpr extends BinaryExpr {
