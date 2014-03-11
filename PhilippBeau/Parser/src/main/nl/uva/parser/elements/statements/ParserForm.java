@@ -5,6 +5,7 @@ import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
+import main.nl.uva.parser.elements.ParserElement;
 import main.nl.uva.parser.elements.errors.ValidationError;
 import main.nl.uva.parser.elements.expressions.Variable;
 
@@ -34,7 +35,7 @@ public class ParserForm extends BlockStatement {
     }
 
     @Override
-    public Variable findVariable(final String variableName, final Statement scopeEnd) {
+    public Variable findVariable(final String variableName, final ParserElement scopeEnd) {
         return findVariableInChildren(_children, variableName, scopeEnd);
     }
 

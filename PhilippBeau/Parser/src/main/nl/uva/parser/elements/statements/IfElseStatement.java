@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
+import main.nl.uva.parser.elements.ParserElement;
 import main.nl.uva.parser.elements.errors.ValidationError;
 import main.nl.uva.parser.elements.expressions.Variable;
 
@@ -27,7 +28,7 @@ public class IfElseStatement extends BlockStatement {
     }
 
     @Override
-    public Variable findVariable(final String variableName, final Statement scopeEnd) {
+    public Variable findVariable(final String variableName, final ParserElement scopeEnd) {
         return _parent.findVariable(variableName, this);
     }
 
