@@ -1,7 +1,11 @@
 package org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary;
 
+import java.util.List;
+
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.BinaryExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Expression;
+import org.uva.sea.ql.parser.antlr.QL4.TypeChecker.QLErrorMsg;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.IQLVisitor;
 
 /**
  * Abstract class for all logical, binary expressions in QL AST.
@@ -13,6 +17,10 @@ public abstract class BiLogicExpr extends BinaryExpr {
 
 	public BiLogicExpr(Expression lhs, Expression rhs) {
 		super(lhs, rhs);
+	}
+	
+	public List<QLErrorMsg> accept(IQLVisitor visitor) {
+		return visitor.visit(this);
 	}
 
 }

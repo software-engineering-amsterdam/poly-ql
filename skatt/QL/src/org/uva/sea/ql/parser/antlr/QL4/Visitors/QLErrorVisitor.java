@@ -8,15 +8,17 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Form;
 import org.uva.sea.ql.parser.antlr.QL4.AST.QLTree;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Question;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Structures;
-import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.BinaryExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Expression;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.UnaryExpr;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.BiLogicExpr;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.BiMathExpr;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.EqualityExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Bool;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Decimal;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Identifier;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Label;
-import org.uva.sea.ql.parser.antlr.QL4.AST.Value.QuestionType;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Number;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Value.QuestionType;
 import org.uva.sea.ql.parser.antlr.QL4.TypeChecker.QLErrorMsg;
 
 /**
@@ -77,13 +79,35 @@ public class QLErrorVisitor implements IQLVisitor {
 		return msgs;
 	}
 
+	//////////// expressions 
+	
 	@Override
 	public List<QLErrorMsg> visit(UnaryExpr expr) {
 		return this.visitChild(expr.getExpr());
 	}
 
 	@Override
-	public List<QLErrorMsg> visit(BinaryExpr expr) {
+	public List<QLErrorMsg> visit(BiMathExpr expr) {
+		List<QLErrorMsg> msgs = new ArrayList<QLErrorMsg>();
+		
+		msgs.addAll(this.visitChild(expr.getLHS()));
+		msgs.addAll(this.visitChild(expr.getRHS()));
+		
+		return msgs;
+	}
+	
+	@Override
+	public List<QLErrorMsg> visit(EqualityExpr expr) {
+		List<QLErrorMsg> msgs = new ArrayList<QLErrorMsg>();
+		
+		msgs.addAll(this.visitChild(expr.getLHS()));
+		msgs.addAll(this.visitChild(expr.getRHS()));
+		
+		return msgs;
+	}
+	
+	@Override
+	public List<QLErrorMsg> visit(BiLogicExpr expr) {
 		List<QLErrorMsg> msgs = new ArrayList<QLErrorMsg>();
 		
 		msgs.addAll(this.visitChild(expr.getLHS()));

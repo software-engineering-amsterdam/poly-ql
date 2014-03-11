@@ -6,14 +6,16 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Conditional;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Form;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Question;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Structures;
-import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.BinaryExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.UnaryExpr;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.BiLogicExpr;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.BiMathExpr;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.EqualityExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Bool;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Decimal;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Identifier;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Label;
-import org.uva.sea.ql.parser.antlr.QL4.AST.Value.QuestionType;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Number;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Value.QuestionType;
 import org.uva.sea.ql.parser.antlr.QL4.TypeChecker.QLErrorMsg;
 
 /**
@@ -33,7 +35,9 @@ public interface IQLVisitor {
 	
 	// expression nodes
 	public List<QLErrorMsg> visit(UnaryExpr expr);
-	public List<QLErrorMsg> visit(BinaryExpr expr);
+	public List<QLErrorMsg> visit(BiLogicExpr expr);
+	public List<QLErrorMsg> visit(BiMathExpr expr);
+	public List<QLErrorMsg> visit(EqualityExpr expr);
 	
 	// value nodes
 	public List<QLErrorMsg> visit(Identifier id);
