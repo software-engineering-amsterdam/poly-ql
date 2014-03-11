@@ -2,8 +2,11 @@ package main.nl.uva.parser.elements.statements;
 
 import java.util.List;
 
+import main.nl.uva.parser.elements.errors.InvalidTypeError;
+import main.nl.uva.parser.elements.errors.ValidationError;
 import main.nl.uva.parser.elements.expressions.Expression;
 import main.nl.uva.parser.elements.expressions.Variable;
+import main.nl.uva.parser.elements.type.Bool;
 
 public class IFStatement extends BlockStatement {
 
@@ -33,9 +36,19 @@ public class IFStatement extends BlockStatement {
     }
 
     @Override
-    public boolean validate() {
-        boolean expression = _expression.validate();
-        return validateStatements(_children) && expression;
+    public List<ValidationError> validate() {
+        List<ValidationError> expression = _expression.validate();
+
+        if (!expression.isEmpty()) {
+            return expression;
+        }
+
+        if (!(_expression.getType() instanceof Bool)) {
+            expression.add(new InvalidTypeError(this.toString()));
+            return expression;
+        }
+
+        return validateStatements(_children);
     }
 
     @Override

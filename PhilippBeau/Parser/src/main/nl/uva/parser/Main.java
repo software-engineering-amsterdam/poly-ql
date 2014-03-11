@@ -6,6 +6,7 @@ import java.util.List;
 
 import main.nl.uva.g4.FormGrammarLexer;
 import main.nl.uva.g4.FormGrammarParser;
+import main.nl.uva.parser.elements.errors.ValidationError;
 import main.nl.uva.parser.elements.statements.ParserForm;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
@@ -38,10 +39,14 @@ public class Main {
         for (ParserForm f : pf) {
             System.out.println(f);
 
-            if (f.validate()) {
+            List<ValidationError> validation = f.validate();
+            if (validation.isEmpty()) {
                 System.out.println("All OK");
             } else {
-                System.out.println("All WRONG");
+                for (ValidationError error : validation) {
+                    System.out.println(error);
+                }
+
             }
         }
     }

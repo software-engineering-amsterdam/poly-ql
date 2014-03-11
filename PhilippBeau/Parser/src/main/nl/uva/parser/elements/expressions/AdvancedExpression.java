@@ -1,5 +1,9 @@
 package main.nl.uva.parser.elements.expressions;
 
+import java.util.List;
+
+import main.nl.uva.parser.elements.errors.InvalidTypeError;
+import main.nl.uva.parser.elements.errors.ValidationError;
 import main.nl.uva.parser.elements.type.Bool;
 import main.nl.uva.parser.elements.type.Invalid;
 import main.nl.uva.parser.elements.type.Money;
@@ -21,12 +25,21 @@ public abstract class AdvancedExpression extends Expression {
     }
 
     @Override
-    public final boolean validate() {
-        boolean left = _left.validate();
-        boolean right = _right.validate();
-        _type = getType();
+    public final List<ValidationError> validate() {
+        List<ValidationError> left = _left.validate();
+        List<ValidationError> right = _right.validate();
 
-        return left && right && !(_type instanceof Invalid);
+        if (!left.isEmpty() || !right.isEmpty()) {
+            left.addAll(right);
+            return left;
+        }
+
+        _type = getType();
+        if (_type instanceof Invalid) {
+            left.add(new InvalidTypeError(this.toString()));
+        }
+
+        return left;
     }
 
     @Override
@@ -36,9 +49,6 @@ public abstract class AdvancedExpression extends Expression {
         }
 
         _type = _left.getType().visit(_right, this);
-
-        if (_type instanceof Invalid) System.out.println(this + " is invalid");
-
         return _type;
     }
 

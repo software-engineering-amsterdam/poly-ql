@@ -1,5 +1,8 @@
 package main.nl.uva.parser.elements.expressions;
 
+import java.util.List;
+
+import main.nl.uva.parser.elements.errors.ValidationError;
 import main.nl.uva.parser.elements.statements.Statement;
 import main.nl.uva.parser.elements.type.Type;
 
@@ -17,7 +20,7 @@ public abstract class Expression extends Statement {
     }
 
     @Override
-    public abstract boolean validate();
+    public abstract List<ValidationError> validate();
 
     @Override
     public Variable findVariable(final String variableName, final Statement scopeEnd) {

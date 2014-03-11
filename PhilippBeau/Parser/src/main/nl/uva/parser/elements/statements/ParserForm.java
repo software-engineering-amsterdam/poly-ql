@@ -2,6 +2,7 @@ package main.nl.uva.parser.elements.statements;
 
 import java.util.List;
 
+import main.nl.uva.parser.elements.errors.ValidationError;
 import main.nl.uva.parser.elements.expressions.Variable;
 
 public class ParserForm extends BlockStatement {
@@ -35,7 +36,7 @@ public class ParserForm extends BlockStatement {
     }
 
     @Override
-    public boolean validate() {
+    public List<ValidationError> validate() {
         return validateStatements(_children);
     }
 }

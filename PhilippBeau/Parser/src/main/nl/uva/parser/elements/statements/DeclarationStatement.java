@@ -1,5 +1,8 @@
 package main.nl.uva.parser.elements.statements;
 
+import java.util.List;
+
+import main.nl.uva.parser.elements.errors.ValidationError;
 import main.nl.uva.parser.elements.expressions.Variable;
 
 public class DeclarationStatement extends Statement {
@@ -30,7 +33,7 @@ public class DeclarationStatement extends Statement {
     }
 
     @Override
-    public boolean validate() {
+    public List<ValidationError> validate() {
         return _variable.validate();
     }
 

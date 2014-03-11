@@ -1,5 +1,8 @@
 package main.nl.uva.parser.elements.expressions;
 
+import java.util.List;
+
+import main.nl.uva.parser.elements.errors.ValidationError;
 import main.nl.uva.parser.elements.type.Type;
 
 public class Variable extends Expression {
@@ -26,7 +29,7 @@ public class Variable extends Expression {
     }
 
     @Override
-    public boolean validate() {
+    public List<ValidationError> validate() {
         return _value.validate();
     }
 
