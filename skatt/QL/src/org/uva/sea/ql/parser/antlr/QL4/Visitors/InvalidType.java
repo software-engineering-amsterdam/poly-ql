@@ -29,13 +29,12 @@ import org.uva.sea.ql.parser.antlr.QL4.TypeChecker.QLErrorMsg;
 public class InvalidType extends QLErrorVisitor {
 
 	/**
-	 * TODO
+	 * TODO: visit unary expr
 	 */
-	@Override
-	public List<QLErrorMsg> visit(UnaryExpr expr) {
-		System.err.println("Unary Expression not yet implemented");
-		return null;
-	}
+
+	/**
+	 * TODO: Visit question identifier or question
+	 */
 	
 	/**
 	 * If visiting a mathematical expression, check whether

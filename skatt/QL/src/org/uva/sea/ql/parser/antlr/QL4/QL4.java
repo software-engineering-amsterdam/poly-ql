@@ -14,6 +14,7 @@ import org.uva.sea.ql.parser.antlr.QL4.TypeChecker.QLErrorMsg;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.AntlrVisitor;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.DuplicateLabel;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.DuplicateQuestion;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.InvalidType;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.QLErrorVisitor;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.UndefinedCheck;
 
@@ -96,6 +97,7 @@ public class QL4 {
 	private static List<QLErrorMsg> checkErrors(Form ast) {
 		// holds all errors and warning msgs generated
 		List<QLErrorMsg> msgs = new ArrayList<QLErrorMsg>();
+		// the checker that will perform several checks on our ast input 
 		QLErrorVisitor ASTChecker;
 		
 		ASTChecker = new UndefinedCheck();
@@ -105,6 +107,9 @@ public class QL4 {
 		msgs.addAll(ASTChecker.visit(ast));
 		
 		ASTChecker = new DuplicateQuestion();
+		msgs.addAll(ASTChecker.visit(ast));
+		
+		ASTChecker = new InvalidType();
 		msgs.addAll(ASTChecker.visit(ast));
 		
 		return msgs;
