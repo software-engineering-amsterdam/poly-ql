@@ -2,6 +2,8 @@ package main.nl.uva.parser.elements.expressions;
 
 import java.util.List;
 
+import javax.swing.JPanel;
+
 import main.nl.uva.parser.elements.errors.ValidationError;
 import main.nl.uva.parser.elements.statements.Statement;
 import main.nl.uva.parser.elements.type.Type;
@@ -20,6 +22,11 @@ public abstract class Expression extends Statement {
     }
 
     @Override
+    public JPanel getLayout() {
+        return null;
+    }
+
+    @Override
     public abstract List<ValidationError> validate();
 
     @Override
@@ -30,4 +37,6 @@ public abstract class Expression extends Statement {
 
         return null;
     }
+
+    public abstract Object getResult();
 }

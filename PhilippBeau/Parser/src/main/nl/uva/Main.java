@@ -1,4 +1,4 @@
-package main.nl.uva.parser;
+package main.nl.uva;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,6 +8,7 @@ import main.nl.uva.g4.FormGrammarLexer;
 import main.nl.uva.g4.FormGrammarParser;
 import main.nl.uva.parser.elements.errors.ValidationError;
 import main.nl.uva.parser.elements.statements.ParserForm;
+import main.nl.uva.ui.UI;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -37,7 +38,7 @@ public class Main {
         List<ParserForm> pf = parser.forms().data;
 
         for (ParserForm f : pf) {
-            System.out.println(f);
+            // System.out.println(f);
 
             List<ValidationError> validation = f.validate();
             if (validation.isEmpty()) {
@@ -46,8 +47,10 @@ public class Main {
                 for (ValidationError error : validation) {
                     System.out.println(error);
                 }
-
             }
         }
+
+        UI ui = new UI(pf.get(0));
+        ui.setVisible(true);
     }
 }

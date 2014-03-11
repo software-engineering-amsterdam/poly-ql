@@ -1,5 +1,7 @@
 package main.nl.uva.parser.elements.type;
 
+import java.awt.Component;
+
 import main.nl.uva.parser.elements.expressions.AdvancedExpression;
 import main.nl.uva.parser.elements.expressions.Expression;
 import main.nl.uva.parser.elements.expressions.atoms.BoolAtom;
@@ -70,5 +72,7 @@ public abstract class Type {
     public abstract Type accept(Money left, AdvancedExpression expression);
 
     public abstract Type accept(Text left, AdvancedExpression expression);
+
+    public abstract Component getLayout();
 
 }

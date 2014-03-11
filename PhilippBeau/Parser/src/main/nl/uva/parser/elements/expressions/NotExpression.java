@@ -25,4 +25,9 @@ public class NotExpression extends Expression {
         return _expression.validate();
     }
 
+    @Override
+    public Object getResult() {
+        return !(Boolean) _expression.getResult();
+    }
+
 }

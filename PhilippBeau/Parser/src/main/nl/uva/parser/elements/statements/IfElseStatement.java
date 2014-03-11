@@ -2,6 +2,8 @@ package main.nl.uva.parser.elements.statements;
 
 import java.util.List;
 
+import javax.swing.JPanel;
+
 import main.nl.uva.parser.elements.errors.ValidationError;
 import main.nl.uva.parser.elements.expressions.Variable;
 
@@ -37,5 +39,10 @@ public class IfElseStatement extends BlockStatement {
         ifStatement.addAll(elseStatement);
 
         return ifStatement;
+    }
+
+    @Override
+    public JPanel getLayout() {
+        return new JPanel();
     }
 }

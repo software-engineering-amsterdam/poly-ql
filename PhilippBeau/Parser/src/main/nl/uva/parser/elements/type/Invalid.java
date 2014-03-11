@@ -1,5 +1,7 @@
 package main.nl.uva.parser.elements.type;
 
+import java.awt.Component;
+
 import main.nl.uva.parser.elements.expressions.AdvancedExpression;
 import main.nl.uva.parser.elements.expressions.Expression;
 
@@ -32,6 +34,11 @@ public class Invalid extends Type {
     @Override
     public Type accept(final Text left, final AdvancedExpression expression) {
         return new Invalid();
+    }
+
+    @Override
+    public Component getLayout() {
+        return null;
     }
 
 }

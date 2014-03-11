@@ -39,7 +39,12 @@ statement returns [Statement current]
     ;
 
 expression returns [Expression cEx]
+	: left=equalsExp {$cEx = $left.cEx;} 
+	;
+
+equalsExp returns [Expression cEx]
 	: left=boolExp {$cEx = $left.cEx;} 
+  (EQUAL right=boolExp {$cEx = new ComparrisonExpression($left.cEx, $right.cEx);})*
 	;
 
 boolExp returns [Expression cEx]

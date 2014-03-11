@@ -1,5 +1,9 @@
 package main.nl.uva.parser.elements.type;
 
+import java.awt.Component;
+
+import javax.swing.JTextField;
+
 import main.nl.uva.parser.elements.expressions.AdvancedExpression;
 import main.nl.uva.parser.elements.expressions.Expression;
 import main.nl.uva.parser.elements.expressions.atoms.MoneyAtom;
@@ -33,5 +37,10 @@ public class Money extends Type {
     @Override
     public Type accept(final Text left, final AdvancedExpression expression) {
         return expression.calculateType(left, this);
+    }
+
+    @Override
+    public Component getLayout() {
+        return new JTextField();
     }
 }

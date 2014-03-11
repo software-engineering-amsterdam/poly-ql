@@ -3,6 +3,8 @@ package main.nl.uva.parser.elements.statements;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JPanel;
+
 import main.nl.uva.parser.elements.errors.ValidationError;
 import main.nl.uva.parser.elements.expressions.Variable;
 
@@ -19,6 +21,8 @@ public abstract class Statement {
     public abstract Variable findVariable(final String variableName, final Statement scopeEnd);
 
     public abstract Variable getVariable(final String variableName);
+
+    public abstract JPanel getLayout();
 
     protected static Variable findVariableInChildren(final List<Statement> children, final String variableName, final Statement scopeEnd) {
         Variable result = null;

@@ -10,4 +10,10 @@ public class DivisionExpression extends AdvancedExpression {
     public String toString() {
         return _left + " / " + _right;
     }
+
+    @Override
+    public Object getResult() {
+        return (Double) _left.getResult() / (Double) _right.getResult();
+    }
+
 }

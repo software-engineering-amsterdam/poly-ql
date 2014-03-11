@@ -2,6 +2,9 @@ package main.nl.uva.parser.elements.statements;
 
 import java.util.List;
 
+import javax.swing.BoxLayout;
+import javax.swing.JPanel;
+
 import main.nl.uva.parser.elements.errors.ValidationError;
 import main.nl.uva.parser.elements.expressions.Variable;
 
@@ -38,5 +41,16 @@ public class ParserForm extends BlockStatement {
     @Override
     public List<ValidationError> validate() {
         return validateStatements(_children);
+    }
+
+    @Override
+    public JPanel getLayout() {
+        JPanel layout = new JPanel();
+        layout.setLayout(new BoxLayout(layout, BoxLayout.Y_AXIS));
+        for (Statement child : _children) {
+            layout.add(child.getLayout());
+        }
+
+        return layout;
     }
 }

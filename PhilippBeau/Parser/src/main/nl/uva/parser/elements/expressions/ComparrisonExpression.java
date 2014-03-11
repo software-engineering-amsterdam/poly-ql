@@ -10,4 +10,9 @@ public class ComparrisonExpression extends AdvancedExpression {
     public String toString() {
         return _left + " == " + _right;
     }
+
+    @Override
+    public Object getResult() {
+        return _left.getResult() == _right.getResult();
+    }
 }

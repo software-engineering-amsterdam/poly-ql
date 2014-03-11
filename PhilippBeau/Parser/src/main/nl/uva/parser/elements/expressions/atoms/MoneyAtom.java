@@ -36,4 +36,8 @@ public class MoneyAtom extends Expression {
         return _type;
     }
 
+    @Override
+    public Object getResult() {
+        return _value;
+    }
 }

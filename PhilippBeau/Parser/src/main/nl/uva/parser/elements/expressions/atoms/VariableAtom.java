@@ -42,6 +42,7 @@ public class VariableAtom extends Expression {
             valid.add(new VariableNotFoundError(_variableName));
         } else {
             _type = _linkedVariable.getType();
+            _linkedVariable.setLinkedVariable(this);
         }
 
         return valid;
@@ -50,5 +51,10 @@ public class VariableAtom extends Expression {
     @Override
     public Type getType() {
         return _type;
+    }
+
+    @Override
+    public Object getResult() {
+        return _linkedVariable.getResult();
     }
 }
