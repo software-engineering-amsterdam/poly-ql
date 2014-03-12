@@ -17,7 +17,7 @@ public class Str extends Expression {
 
     public Str(String text, LineInfo lineInfo) {
         super(lineInfo);
-        this.text = text;
+        this.text = text.substring(1, text.length() - 1);
     }
 
     @Override
@@ -31,7 +31,7 @@ public class Str extends Expression {
 
     @Override
     public String toString() {
-        return text;
+        return String.format("\"%s\"", text);
     }
 
     @Override

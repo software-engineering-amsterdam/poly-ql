@@ -1,5 +1,4 @@
 ﻿using QL.QLClasses;
-using QL.TypeChecker;
 
 namespace QL
 {

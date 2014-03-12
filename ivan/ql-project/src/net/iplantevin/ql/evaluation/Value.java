@@ -17,6 +17,7 @@ public abstract class Value {
     /**
      * Since |equals| cannot be used with UndefinedVal, another way is necessary
      * to know whether you've got an UndefinedVal.
+     *
      * @return whether this Value is an UndefinedVal.
      */
     public boolean isUndefined() {

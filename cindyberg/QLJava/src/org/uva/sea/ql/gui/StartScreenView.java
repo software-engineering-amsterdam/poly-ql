@@ -18,8 +18,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
 
+import org.uva.sea.ql.ast.statement.Form;
 import org.uva.sea.ql.parser.jacc.ParseException;
-import org.uva.sea.ql.typechecker.Problems;
+
+import problems.Error;
+import problems.Problems;
+import problems.Warning;
 
 public class StartScreenView extends JFrame{
 	
@@ -30,18 +34,24 @@ public class StartScreenView extends JFrame{
 	private JPanel textView;
 	private JPanel buttonView;
 	private JTextArea text;
-	private JList<String> problemList;
-	private DefaultListModel<String> problems;
-	private final static String SOURCE = "C:\\Users\\Cindy\\Documents\\Github\\poly-ql\\cindyberg\\QLJava\\src\\org\\uva\\sea\\ql\\DSLForm.txt"; 
+	private JList<String> warningList;
+	private JList<String> errorList;
+	private DefaultListModel<String> warnings;
+	private DefaultListModel<String> errors;
+	private final static String INPUT = "form FORM { \n"+
+			"vraag1: \"label\" integer \n" +
+			"vraag2: \"bla\" boolean } ";
 	
 	public void renderView(){
 		
 		textView = new JPanel(new FlowLayout());
 		listView = new JPanel();
 		buttonView = new JPanel();
-		problemList = new JList<String>();
+		warningList = new JList<String>();
+		errorList = new JList<String>();
 		
-		createList();	
+		createWarningList();
+		createErrorList();
 		createButton();
 		createInputfield();
 
@@ -52,21 +62,33 @@ public class StartScreenView extends JFrame{
 			
 	}
 	
-	private void createList(){
-		problems = new DefaultListModel<String>();
-		problemList = new JList<String>(problems);
-		problemList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-		problemList.setLayoutOrientation(JList.VERTICAL);
-		problemList.setVisibleRowCount(-1);
-		JScrollPane listScroller = new JScrollPane(problemList);
-		listScroller.setPreferredSize(new Dimension(currentFrame.getWidth()-20,currentFrame.getHeight()/2-200)); //get the screen height and width
-		listView.add(listScroller);
+	//TODO extract method
+	private void createWarningList(){
+		warnings = new DefaultListModel<String>();
+		warningList = new JList<String>(warnings);
+		warningList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+		warningList.setLayoutOrientation(JList.VERTICAL);
+		warningList.setVisibleRowCount(-1);
+		JScrollPane listScroller = new JScrollPane(warningList);
+		listScroller.setPreferredSize(new Dimension(currentFrame.getWidth()/2-20,currentFrame.getHeight()/2-100)); 
+		listView.add(listScroller,BorderLayout.EAST);
+	}
+	
+	private void createErrorList(){
+		errors = new DefaultListModel<String>();
+		errorList = new JList<String>(errors);
+		errorList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+		errorList.setLayoutOrientation(JList.VERTICAL);
+		errorList.setVisibleRowCount(-1);
+		JScrollPane listScrollerError = new JScrollPane(errorList);
+		listScrollerError.setPreferredSize(new Dimension(currentFrame.getWidth()/2-20,currentFrame.getHeight()/2-100)); 
+		listView.add(listScrollerError, BorderLayout.WEST);
 	}
 	
 	private void createInputfield(){
 		text = new JTextArea();
-		text.setText(SOURCE);
 		text.setPreferredSize(new Dimension(currentFrame.getWidth()-20,currentFrame.getHeight()/2));
+		text.setText(INPUT);
 		textView.add(text);
 	}
 	private void createButton(){
@@ -77,16 +99,20 @@ public class StartScreenView extends JFrame{
             {
                 StartScreenController controller = new StartScreenController();
                 try {
-                	problems.removeAllElements();
-                	Problems typeProblems = controller.runTypeChecker(text.getText());	
+                	warnings.removeAllElements();
+                	errors.removeAllElements();
+                	Form form = controller.runTypeChecker(readText());
+                	
+                	Problems typeProblems = controller.getProblems(form);	
+                	
                 	if(typeProblems.hasProblems()){
-                		QuestionaireView b = new QuestionaireView();
+                		QuestionaireView b = new QuestionaireView(form);
                 		b.newScreen();
-       
                 	}
                 	else{
                 		problemsToList(typeProblems);
                 	}
+                	
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
 				} catch (ParseException e1) {
@@ -98,10 +124,15 @@ public class StartScreenView extends JFrame{
 	}
 	
 	private void problemsToList(Problems problems) {
-		List<String> list = problems.getProblems();
+		List<Warning> warnings = problems.getWarnings();
+		List<Error> errors = problems.getErrors();
 		
-		for(String s : list){
-		this.problems.addElement(s);
+		for(Warning w : warnings){
+		this.warnings.addElement(w.getString());
+		}
+		
+		for(Error e : errors){
+			this.errors.addElement(e.getString());
 		}
 		
 		
@@ -114,5 +145,10 @@ public class StartScreenView extends JFrame{
 		container = new Container();
 	    container = currentFrame.getContentPane();
 	    currentFrame.setVisible(true); 
+	}
+	
+	private String readText(){
+		String questionaire = text.getText();
+		return questionaire;
 	}
 }

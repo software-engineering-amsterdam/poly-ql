@@ -24,7 +24,6 @@ import net.iplantevin.ql.evaluation.EvaluationVisitor;
 import net.iplantevin.ql.evaluation.IntVal;
 import net.iplantevin.ql.evaluation.StrVal;
 import net.iplantevin.ql.evaluation.Value;
-import net.iplantevin.ql.evaluation.ValueStore;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,14 +34,13 @@ import org.junit.Test;
  */
 public class EvaluationTests {
     private final LineInfo lineInfo = new LineInfo(0, 0);
-    private ValueStore values;
     private EvaluationVisitor evaluator;
 
     // Expressions/Values for reuse
     private final Int int10 = new Int(10, lineInfo);
     private final Int int5 = new Int(5, lineInfo);
     private final Int int4 = new Int(4, lineInfo);
-    private final Str str1 = new Str("placeholder", lineInfo);
+    private final Str str1 = new Str("\"placeholder\"", lineInfo);
     private final ID id1 = new ID("ident1", lineInfo);
     private final ID id2 = new ID("ident2", lineInfo);
     private final Bool trueBool = new Bool(true, lineInfo);
@@ -52,8 +50,7 @@ public class EvaluationTests {
 
     @Before
     public void setUp() {
-        values = new ValueStore();
-        evaluator = new EvaluationVisitor(values);
+        evaluator = new EvaluationVisitor();
     }
 
     @Test
@@ -93,6 +90,13 @@ public class EvaluationTests {
         IntVal expected = new IntVal(2);
         Value actual = evaluator.evaluate(divInts);
         Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testDivideByZero() {
+        Div divInts = new Div(int5, new Int(0, lineInfo), lineInfo);
+        Value actual = evaluator.evaluate(divInts);
+        Assert.assertTrue(actual.isUndefined());
     }
 
     @Test
@@ -313,7 +317,7 @@ public class EvaluationTests {
     /////////////////////////////////////////////
     @Test
     public void testId1() {
-        values.store(id1.getName(), new IntVal(4));
+        evaluator.storeValue(id1.getName(), new IntVal(4));
         Add add = new Add(id1, int5, lineInfo);
         Value actual = evaluator.evaluate(add);
         Assert.assertEquals(new IntVal(9), actual);
@@ -321,7 +325,7 @@ public class EvaluationTests {
 
     @Test
     public void testId2() {
-        values.store(id1.getName(), trueVal);
+        evaluator.storeValue(id1.getName(), trueVal);
         And and = new And(id1, trueBool, lineInfo);
         Value actual = evaluator.evaluate(and);
         Assert.assertEquals(trueVal, actual);
@@ -329,7 +333,7 @@ public class EvaluationTests {
 
     @Test
     public void testId3() {
-        values.store(id1.getName(), new StrVal("placeholder"));
+        evaluator.storeValue(id1.getName(), new StrVal("placeholder"));
         EQ eq = new EQ(id1, str1, lineInfo);
         Value actual = evaluator.evaluate(eq);
         Assert.assertEquals(trueVal, actual);
@@ -341,7 +345,7 @@ public class EvaluationTests {
     //////////////////////////////////////////////////////////////////////
     @Test
     public void testUndefinedId1() {
-        values.store(id1.getName(), new StrVal("placeholder"));
+        evaluator.storeValue(id1.getName(), new StrVal("placeholder"));
         EQ eq = new EQ(id1, id2, lineInfo);
         Value actual = evaluator.evaluate(eq);
         Assert.assertEquals(falseVal, actual);
@@ -349,7 +353,7 @@ public class EvaluationTests {
 
     @Test
     public void testUndefinedId2() {
-        values.store(id1.getName(), new IntVal(5));
+        evaluator.storeValue(id1.getName(), new IntVal(5));
         Add add = new Add(id1, id2, lineInfo);
         Value actual = evaluator.evaluate(add);
         Assert.assertTrue(actual.isUndefined());
@@ -357,7 +361,7 @@ public class EvaluationTests {
 
     @Test
     public void testUndefinedId3() {
-        values.store(id1.getName(), new IntVal(5));
+        evaluator.storeValue(id1.getName(), new IntVal(5));
         LT lt = new LT(id1, id2, lineInfo);
         Value actual = evaluator.evaluate(lt);
         Assert.assertTrue(actual.isUndefined());

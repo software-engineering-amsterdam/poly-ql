@@ -9,6 +9,9 @@ namespace QL
 {
     public partial class MainForm : Form
     {
+        private QLController _qlController;
+        private int _errorYPos;
+
         public MainForm()
         {
             InitializeComponent();
@@ -18,20 +21,24 @@ namespace QL
         {
             txtMessages.Clear();
             pnlErrors.Controls.Clear();
+            _errorYPos = 0;
             
-            QLController controller = new QLController();
-            Questionnaire AST = controller.Run(txtInput.Text);
+            _qlController = new QLController();
+            Questionnaire AST = _qlController.Run(txtInput.Text);
 
-            foreach (string lexerError in controller.LexerErrors)
-                WriteError(lexerError);
+            foreach (string lexerError in _qlController.LexerErrors)
+                WriteMessage(lexerError);
 
-            foreach (string parserError in controller.ParserErrors)
-                WriteError(parserError);
+            if(_qlController.LexerErrors.Any())
+                WriteErrorLabel("Lexer errors occurred, see messages");
 
-            QLTypeChecker typeChecker = controller.TypeChecker;
+            foreach (string parserError in _qlController.ParserErrors)
+                WriteMessage(parserError);
 
-            int yPos = 0;
+            if(_qlController.ParserErrors.Any())
+                WriteErrorLabel("Parser errors occurred, see messages");
 
+            QLTypeChecker typeChecker = _qlController.TypeChecker;
             foreach (QLTypeError typeError in typeChecker.TypeErrors.OrderBy((te) => te.IsWarning))
             {
                 string error = string.Format("{5} QLTypeChecker: {0} {1}" +
@@ -42,20 +49,34 @@ namespace QL
                     typeError.TokenInfo.TokenColumn,
                     typeError.IsWarning ? "(Warning)" : "(Error)");
 
-                pnlErrors.Controls.Add(new Label{Location = new Point(0, yPos), Text = error, ForeColor = Color.White, BackColor = typeError.IsWarning ? Color.Orange : Color.Red, Width = pnlErrors.Width, Height = 30});
-                yPos += 35;
+                WriteErrorLabel(error, typeError.IsWarning);
             }
-
-
-            txtMessages.Text += string.Format(@"{0}{0} Generated parse tree: 
+            
+            WriteMessage(string.Format(@"Generated parse tree: 
                                               {0} {1}"
                     , Environment.NewLine
-                    , controller.GetParseTreeString());
+                    , _qlController.GetParseTreeString()));
+
+            if (_qlController.LexerErrors.Any() || _qlController.ParserErrors.Any() || typeChecker.TypeErrors.Any((te) => !te.IsWarning))
+                lblSuccess.Visible = btnGenerate.Enabled = false;
+            else
+                lblSuccess.Visible = btnGenerate.Enabled = true;
         }
             
-        public void WriteError(string error)
+        public void WriteErrorLabel(string error, bool isWarning = false)
         {
-            txtMessages.Text += Environment.NewLine + error;
+            pnlErrors.Controls.Add(new Label { Location = new Point(0, _errorYPos), Text = error, ForeColor = Color.White, BackColor = isWarning ? Color.Orange : Color.Red, Width = pnlErrors.Width, Height = 30 });
+            _errorYPos += 35;
+        }
+
+        public void WriteMessage(string message)
+        {
+            txtMessages.Text += Environment.NewLine + message;
+        }
+
+        private void btnGenerate_Click(object sender, EventArgs e)
+        {
+            _qlController.GenerateGUI();
         }
     }
 }

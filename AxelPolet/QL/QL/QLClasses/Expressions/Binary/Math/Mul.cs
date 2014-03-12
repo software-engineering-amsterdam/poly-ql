@@ -1,17 +1,18 @@
 ﻿using System;
-using QL.QLClasses.Expressions.Literals;
+using QL.QLClasses.Values;
 
 namespace QL.QLClasses.Expressions.Binary.Math
 {
     public class Mul : MathExpression
     {
-        public Mul(ExpressionBase leftExpression, ExpressionBase rightExpression) : base(leftExpression, rightExpression)
+        public Mul(ExpressionBase leftExpression, ExpressionBase rightExpression) 
+            : base(leftExpression, rightExpression)
         {
         }
 
-        public override ExpressionBase GetResult()
+        public override QValue Evaluate()
         {
-            return new IntLiteral(Convert.ToInt32(LeftExpression.GetResult()) * Convert.ToInt32((RightExpression.GetResult())));
+            return ((IntValue)LeftExpression.Evaluate()).Mul((IntValue)RightExpression.Evaluate());
         }
     }
 }

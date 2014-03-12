@@ -18,4 +18,9 @@ public class UndefinedType extends Type {
     public boolean equals(Object object) {
         return object instanceof UndefinedType;
     }
+
+    @Override
+    public <T> T accept(ITypeVisitor<T> visitor) {
+        return visitor.visit(this);
+    }
 }

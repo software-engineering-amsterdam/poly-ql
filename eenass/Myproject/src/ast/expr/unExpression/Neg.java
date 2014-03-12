@@ -1,6 +1,6 @@
 package ast.expr.unExpression;
 
-import typecheck.Symboles;
+import typecheck.SymboleTable;
 import ast.Visitor;
 import ast.expr.Expr;
 import ast.expr.types.IntType;
@@ -17,7 +17,7 @@ public class Neg extends UnExpr{
 	}
 
 	@Override
-	public Type typeof(Symboles symb) {
+	public Type typeof(SymboleTable symb) {
 		return new IntType();
 	}
 }

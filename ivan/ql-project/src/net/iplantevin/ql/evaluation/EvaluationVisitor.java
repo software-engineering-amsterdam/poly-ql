@@ -32,20 +32,41 @@ import net.iplantevin.ql.ast.statements.IfElse;
 import net.iplantevin.ql.ast.statements.Question;
 import net.iplantevin.ql.ast.visitors.IASTVisitor;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Visitor that takes an expression and returns the appropriate value.
  *
  * @author Ivan
  */
 public class EvaluationVisitor implements IASTVisitor<Value> {
-    private final ValueStore values;
+    private final Map<String, Value> values;
 
-    public EvaluationVisitor(ValueStore values) {
-        this.values = values;
+    public EvaluationVisitor() {
+        values = new HashMap<String, Value>();
+    }
+
+    public void storeValue(String identifier, Value value) {
+        values.put(identifier, value);
+    }
+
+    public Value getValue(String identifier) {
+        if (values.containsKey(identifier)) {
+            return values.get(identifier);
+        } else {
+            return new UndefinedVal();
+        }
     }
 
     public Value evaluate(Expression expression) {
-        return expression.accept(this);
+        try {
+            return expression.accept(this);
+        } catch (ArithmeticException e) {
+            return new UndefinedVal();
+        } catch (Exception e) {
+            return new UndefinedVal();
+        }
     }
 
     private Value leftValue(Binary expression) {
@@ -188,7 +209,7 @@ public class EvaluationVisitor implements IASTVisitor<Value> {
 
     @Override
     public Value visit(ID id) {
-        return values.get(id.getName());
+        return getValue(id.getName());
     }
 
     @Override

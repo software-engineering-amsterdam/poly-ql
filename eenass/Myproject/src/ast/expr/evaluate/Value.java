@@ -114,5 +114,13 @@ public abstract class Value {
 	public Value neg() {
 		throw new UnsupportedOperationException();
 	}
+
+	protected Value eqInt(Int arg) {
+		throw new UnsupportedOperationException();
+	}
+
+	protected Value neqInt(Int arg) {
+		throw new UnsupportedOperationException();
+	}
 	
 }

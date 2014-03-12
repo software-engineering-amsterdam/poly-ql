@@ -6,7 +6,7 @@ namespace QL.QLClasses.Expressions.Binary.Compare.Operators
     {
         public override bool Compare(ExpressionBase leftValue, ExpressionBase rightValue)
         {
-            return Convert.ToInt32(leftValue.GetResult()) > Convert.ToInt32(rightValue.GetResult());
+            return Convert.ToInt32(leftValue.Evaluate().ToString()) > Convert.ToInt32(rightValue.Evaluate().ToString());
         }
 
         public override string ToString()

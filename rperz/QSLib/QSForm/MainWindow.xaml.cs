@@ -26,7 +26,7 @@ namespace QSForm
         public MainWindow()
         {
             InitializeComponent();
-            tbInput.Text = "form { \"Dit is een vraag \" bAntwoord : Boolean if(bAntwoord) { \"Deze vraag moet ook gesteld\" bTest : Boolean } }";
+            tbInput.Text = "form \r\n{ \r\n\"Dit is een vraag \" bAntwoord : Boolean \r\nif(bAntwoord) \r\n{ \r\n\"Deze vraag moet ook gesteld\" bTest : Boolean \r\n} \r\n}";
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -39,10 +39,9 @@ namespace QSForm
             MyListener listener = new MyListener(parser);
             ParseTreeWalker walker = new ParseTreeWalker();
             walker.Walk(listener, tree);
-            if (!TypeChecker.CheckTypes(listener.Root))
-                tbOutput.Text = TypeChecker.GetCheckerOutput();
-            else
-                tbOutput.Text = "Typecheck completed without errors";
+            TypeChecker check = TypeChecker.CheckTypes(listener.Root);
+            tbOutput.Text = check.GetCheckerOutput();
+            
         }
 
     }

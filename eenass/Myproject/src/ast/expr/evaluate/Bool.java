@@ -12,7 +12,7 @@ public class Bool extends Value{
 		return value;
 	}
 	
-	private boolean getValue() {
+	public boolean getValue() {
 		return value;
 	}
 
@@ -30,7 +30,7 @@ public class Bool extends Value{
 	
 	@Override
 	public Value or(Value val){
-		return val.andBool(this);
+		return val.orBool(this);
 	}
 	
 	@Override

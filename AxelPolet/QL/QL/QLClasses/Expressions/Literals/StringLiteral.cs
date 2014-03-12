@@ -1,30 +1,36 @@
 ﻿using QL.QLClasses.Types;
+using QL.QLClasses.Values;
 using QL.TypeChecker;
 
 namespace QL.QLClasses.Expressions.Literals
 {
     public class StringLiteral : ExpressionBase
     {
-        private string _value;
+        private readonly string _value;
 
         public StringLiteral(string value)
         {
             _value = value;
         }
 
-        public override QBaseType GetResultType()
+        public override QType GetResultType()
         {
             return new QString();
         }
 
-        public override ExpressionBase GetResult()
+        public override QValue Evaluate()
         {
-            return null;
+            return new StringValue(_value);
         }
 
         public override bool CheckType(QLTypeErrors typeErrors)
         {
             return true;
+        }
+
+        public override string ToString()
+        {
+            return _value;
         }
     }
 }
