@@ -1,14 +1,9 @@
 package org.uva.sea.ql.ast.type;
 
-import org.uva.sea.ql.ast.IVisitor;
+import org.uva.sea.ql.ast.TypeVisitor;
 
 public class BooleanType extends Type{
 
-	public void accept(IVisitor visitor) {
-		visitor.visit(this);
-		
-	}
-	
 	public String toString(){
 		return "boolean";
 	}
@@ -20,5 +15,11 @@ public class BooleanType extends Type{
 	
 	public boolean isCompatibleWith(Type t){
 		return t.isCompatibleWithBoolean();
+	}
+
+
+	@Override
+	public <T> T accept(TypeVisitor<T> visitor) {
+		return visitor.visit(this);
 	}
 }

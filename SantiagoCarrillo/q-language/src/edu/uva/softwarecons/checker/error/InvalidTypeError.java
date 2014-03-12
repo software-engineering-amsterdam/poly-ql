@@ -1,5 +1,7 @@
 package edu.uva.softwarecons.checker.error;
 
+import edu.uva.softwarecons.model.type.Type;
+
 /**
  * Falconlabs
  * User: sancarbar
@@ -17,5 +19,9 @@ public class InvalidTypeError extends QuestionnaireError{
         super("Expected type: "+expectedType+" but got "+
                 definedType+
                 " for question: "+questionId+" and argument: '"+expressionId+"'");
+    }
+
+    public InvalidTypeError(String operand, Type type) {
+        super("InvalidType: "+type+" for operand: "+operand);
     }
 }

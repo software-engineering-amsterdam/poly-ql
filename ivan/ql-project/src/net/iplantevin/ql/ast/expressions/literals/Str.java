@@ -5,7 +5,7 @@ import net.iplantevin.ql.ast.expressions.Expression;
 import net.iplantevin.ql.ast.types.StringType;
 import net.iplantevin.ql.ast.types.Type;
 import net.iplantevin.ql.ast.types.TypeEnvironment;
-import net.iplantevin.ql.ast.visitors.IASTVisitor;
+import net.iplantevin.ql.ast.visitors.IExpressionVisitor;
 
 /**
  * String.
@@ -17,7 +17,7 @@ public class Str extends Expression {
 
     public Str(String text, LineInfo lineInfo) {
         super(lineInfo);
-        this.text = text;
+        this.text = text.substring(1, text.length() - 1);
     }
 
     @Override
@@ -31,11 +31,11 @@ public class Str extends Expression {
 
     @Override
     public String toString() {
-        return text;
+        return String.format("\"%s\"", text);
     }
 
     @Override
-    public <T> T accept(IASTVisitor<T> visitor) {
+    public <T> T accept(IExpressionVisitor<T> visitor) {
         return visitor.visit(this);
     }
 }

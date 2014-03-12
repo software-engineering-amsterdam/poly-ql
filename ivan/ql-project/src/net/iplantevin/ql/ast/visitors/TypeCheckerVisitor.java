@@ -1,6 +1,5 @@
 package net.iplantevin.ql.ast.visitors;
 
-import net.iplantevin.ql.ast.ASTNode;
 import net.iplantevin.ql.ast.expressions.Expression;
 import net.iplantevin.ql.ast.expressions.Par;
 import net.iplantevin.ql.ast.expressions.literals.Bool;
@@ -65,10 +64,41 @@ public class TypeCheckerVisitor implements IASTVisitor<Void> {
         labels = new HashMap<String, Questionable>();
     }
 
-    public static TypeCheckerVisitor checkNode(ASTNode node) {
+    public static TypeCheckerVisitor checkFormCollection(FormCollection forms) {
         TypeCheckerVisitor typeChecker = new TypeCheckerVisitor();
-        node.accept(typeChecker);
+        forms.accept(typeChecker);
         return typeChecker;
+    }
+
+    public static TypeCheckerVisitor checkForm(Form form) {
+        TypeCheckerVisitor typeChecker = new TypeCheckerVisitor();
+        form.accept(typeChecker);
+        return typeChecker;
+    }
+
+    public static TypeCheckerVisitor checkStatement(Statement statement) {
+        TypeCheckerVisitor typeChecker = new TypeCheckerVisitor();
+        statement.accept(typeChecker);
+        return typeChecker;
+    }
+
+    public static TypeCheckerVisitor checkExpression(Expression expression) {
+        TypeCheckerVisitor typeChecker = new TypeCheckerVisitor();
+        expression.accept(typeChecker);
+        return typeChecker;
+    }
+
+    /**
+     * Only true if there are only errors of type DuplicateLabelError, or no
+     * errors at all.
+     */
+    public boolean isTypeSafe() {
+        for (ASTError error : errors) {
+            if (!(error instanceof DuplicateLabelError)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /////////////////////////////////////////////

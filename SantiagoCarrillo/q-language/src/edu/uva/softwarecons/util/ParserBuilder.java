@@ -34,6 +34,7 @@ public class ParserBuilder {
     }
 
     public ParseTree buildParseTree(InputStream inputStream){
+        //TODO Extract method to avoid duplicate code
         ParseTree tree = null;
         try {
             input = new ANTLRInputStream(inputStream);

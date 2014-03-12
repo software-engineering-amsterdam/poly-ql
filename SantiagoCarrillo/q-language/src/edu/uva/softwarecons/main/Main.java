@@ -16,7 +16,7 @@ import org.antlr.v4.runtime.tree.ParseTree;
 public class Main {
     public static void main(String[] args) throws Exception {
         ParserBuilder parserBuilder = new ParserBuilder();
-        ParseTree tree = parserBuilder.buildParseTree(FileReader.getFileContent("input.txt"));
+        ParseTree tree = parserBuilder.buildParseTree(FileReader.getFileContent("input.txt", "res"));
         QuestionnaireBuilderVisitor questionnaireBuilderVisitor = new QuestionnaireBuilderVisitor();
         Form form = (Form) questionnaireBuilderVisitor.visit(tree);
         TypeChecker typeChecker = new TypeChecker();

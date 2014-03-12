@@ -1,5 +1,6 @@
 package edu.uva.softwarecons.visitor.expression;
 
+import edu.uva.softwarecons.model.type.Type;
 import edu.uva.softwarecons.visitor.IQuestionnaireElement;
 
 /**
@@ -9,5 +10,5 @@ import edu.uva.softwarecons.visitor.IQuestionnaireElement;
  */
 public interface IExpressionElement extends IQuestionnaireElement {
 
-    void accept(IExpressionElementVisitor visitor);
+    Type accept(IExpressionElementVisitor visitor);
 }

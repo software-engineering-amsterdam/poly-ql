@@ -24,6 +24,11 @@ import org.uva.sea.ql.ast.operators.logical.Or;
 import org.uva.sea.ql.ast.type.MissingType;
 import org.uva.sea.ql.ast.type.Type;
 
+import problems.CompatibleError;
+import problems.NotDeclaredError;
+import problems.Problems;
+import problems.TypeError;
+
 public class ExpressionChecker implements ExpressionVisitor<Boolean> {
 
 	private TypeEnvironment environment;
@@ -48,20 +53,27 @@ public class ExpressionChecker implements ExpressionVisitor<Boolean> {
 	}
 
 	private void checkType(Type type, Expression expression) {
-		if(expression.typeOf(environment).equals(UNDEFINED)){}
-		else if (!expression.typeOf(environment).equals(type)){
-			problems.addError(expression.toString() +" is not of type " + type.toString());
+		if (!isUndefined(expression) && !typeOf(expression).equals(type)){
+			problems.addError(new TypeError(expression, type));
 		}
 	}
 	
-	private Boolean checkUnaryExpression(Type type, Expression side){
+	private boolean isUndefined(Expression expression){
+		return typeOf(expression).equals(UNDEFINED);
+	}
+	
+	private Type typeOf(Expression expression){
+		return expression.typeOf(environment);
+	}
+	
+	private boolean checkUnaryExpression(Type type, Expression side){
 		checkType(type,side);
 		return side.accept(this);
 	}
 	
-	private Boolean checkComparison(Type type, Expression left, Expression right){
-		if(!left.typeOf(environment).isCompatibleWith(right.typeOf(environment))){
-			problems.addError(left.toString() + " cannot be compared with " + right.toString());
+	private boolean checkComparison(Type type, Expression left, Expression right){
+		if(!typeOf(left).isCompatibleWith(typeOf(right))){
+			problems.addError(new CompatibleError(left,right));
 			return false;
 		}
 
@@ -69,7 +81,7 @@ public class ExpressionChecker implements ExpressionVisitor<Boolean> {
 		
 	}
 
-	public Boolean visit(Expression expression) {
+	public boolean visit(Expression expression) {
 		return expression.accept(this);		
 	}
 
@@ -153,7 +165,7 @@ public class ExpressionChecker implements ExpressionVisitor<Boolean> {
 		if(environment.isDeclared(identifier)){
 			return true;
 		}
-		problems.addError(identifier.getName() + " is not declared ");
+		problems.addError(new NotDeclaredError(identifier));
 		return false;
 	}
 

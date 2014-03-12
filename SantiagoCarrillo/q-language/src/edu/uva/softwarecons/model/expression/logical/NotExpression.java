@@ -19,13 +19,12 @@ public class NotExpression extends UnaryExpression {
     }
 
     @Override
-    public Type eval() {
+    public Expression eval() {
         return null;
     }
 
     @Override
-    public void accept(IExpressionElementVisitor visitor) {
-        visitor.visitNotExpression(this);
-
+    public Type accept(IExpressionElementVisitor visitor) {
+        return visitor.visitNotExpression(this);
     }
 }

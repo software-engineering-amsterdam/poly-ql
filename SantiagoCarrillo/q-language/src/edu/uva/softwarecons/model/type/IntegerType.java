@@ -10,17 +10,6 @@ import edu.uva.softwarecons.visitor.type.ITypeElementVisitor;
  */
 public class IntegerType extends NumericType{
 
-    private final int value;
-
-    public IntegerType(int value) {
-        this.value = value;
-    }
-
-    @Override
-    public Integer getValue() {
-        return value;
-    }
-
 
     @Override
     public String toString() {

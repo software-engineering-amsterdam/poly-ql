@@ -10,16 +10,6 @@ import edu.uva.softwarecons.visitor.type.ITypeElementVisitor;
  */
 public class DecimalType extends NumericType{
 
-    private final float value;
-
-    public DecimalType(float value) {
-        this.value = value;
-    }
-
-    @Override
-    public Object getValue() {
-        return value;
-    }
 
     @Override
     public String toString() {

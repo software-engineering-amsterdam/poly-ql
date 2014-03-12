@@ -11,6 +11,6 @@ import edu.uva.softwarecons.visitor.form.IFormElement;
  */
 public interface Expression extends IExpressionElement {
 
-    public abstract Type eval();
+    public abstract Expression eval();
 
 }

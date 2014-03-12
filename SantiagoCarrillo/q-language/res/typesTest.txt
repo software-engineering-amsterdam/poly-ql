@@ -1,0 +1,8 @@
+form TypesTestForm {
+   simpleBooleanQuestion: "Simple boolean label" boolean
+   simpleDateQuestion: "Simple date label" date
+   simpleDecimalQuestion: "Simple decimal label" decimal
+   simpleIntegerQuestion: "Simple integer label" integer
+   simpleMoneyQuestion: "Simple money label" money
+   simpleStringQuestion: "Simple string label" string
+ }
