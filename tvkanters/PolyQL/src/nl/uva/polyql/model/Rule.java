@@ -2,20 +2,12 @@ package nl.uva.polyql.model;
 
 import java.util.List;
 
-public abstract class Rule implements VisibilityListener {
+public interface Rule extends VisibilityListener {
 
-    private final RuleContainer mParent;
+    RuleContainer getParent();
 
-    protected Rule(final RuleContainer parent) {
-        mParent = parent;
-    }
+    abstract List<Question> getQuestions();
 
-    public RuleContainer getParent() {
-        return mParent;
-    }
-
-    public abstract List<Question> getQuestions();
-
-    public abstract boolean isVisible();
+    abstract boolean isVisible();
 
 }

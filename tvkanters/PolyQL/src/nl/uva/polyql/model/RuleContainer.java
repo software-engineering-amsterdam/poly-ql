@@ -8,14 +8,10 @@ import java.util.Map;
 
 import nl.uva.polyql.model.expressions.Expression;
 
-public abstract class RuleContainer extends Rule {
+public abstract class RuleContainer {
 
     private final List<Rule> mChildRules = new ArrayList<>();
     private final Map<String, Question> mQuestions = new HashMap<>();
-
-    protected RuleContainer(final RuleContainer parent) {
-        super(parent);
-    }
 
     public Question addQuestion(final String id, final String content, final String type) {
         final Question question = new Question(this, id, content, type);
@@ -57,7 +53,6 @@ public abstract class RuleContainer extends Rule {
         return mChildRules;
     }
 
-    @Override
     public List<Question> getQuestions() {
         final List<Question> questions = new LinkedList<>();
         for (final Rule rule : mChildRules) {
@@ -87,7 +82,13 @@ public abstract class RuleContainer extends Rule {
 
         return null;
     }
+    
+    public RuleContainer getParent() {
+        return null;
+    }
 
     public abstract boolean addLabel(String label);
+
+    public abstract boolean isVisible();
 
 }

@@ -5,13 +5,15 @@ import nl.uva.polyql.model.expressions.Expression;
 import nl.uva.polyql.model.types.Type;
 import nl.uva.polyql.model.values.BooleanValue;
 
-public class IfStatement extends RuleContainer implements Question.ValueListener {
+public class IfStatement extends RuleContainer implements Rule, Question.ValueListener {
+
+    private final RuleContainer mParent;
 
     protected final Expression mExpression;
     private boolean mSatisfied;
 
     protected IfStatement(final RuleContainer parent, final Expression expression) {
-        super(parent);
+        mParent = parent;
 
         if (expression.getReturnType() != Type.BOOLEAN) {
             throw new InvalidIfStatementTypeException(expression.getReturnType());
@@ -28,6 +30,11 @@ public class IfStatement extends RuleContainer implements Question.ValueListener
     @Override
     public boolean isVisible() {
         return mSatisfied && getParent().isVisible();
+    }
+
+    @Override
+    public RuleContainer getParent() {
+        return mParent;
     }
 
     public boolean isSatisfied() {

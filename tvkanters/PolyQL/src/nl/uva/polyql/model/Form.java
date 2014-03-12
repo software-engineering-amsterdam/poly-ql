@@ -14,8 +14,6 @@ public class Form extends RuleContainer {
     private final List<String> mWarnings = new LinkedList<>();
 
     public Form(final String label) {
-        super(null);
-
         mLabel = label;
     }
 
@@ -34,9 +32,6 @@ public class Form extends RuleContainer {
     public boolean isVisible() {
         return true;
     }
-
-    @Override
-    public void onParentVisibilityUpdate(final boolean visible) {}
 
     private void addWarning(final String warning) {
         mWarnings.add(warning);

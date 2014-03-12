@@ -12,7 +12,9 @@ import nl.uva.polyql.model.types.Type;
 import nl.uva.polyql.model.values.Value;
 import nl.uva.polyql.view.ValueView;
 
-public class Question extends Rule {
+public class Question implements Rule {
+
+    private final RuleContainer mParent;
 
     private final String mId;
     private final String mLabel;
@@ -28,7 +30,7 @@ public class Question extends Rule {
     }
 
     protected Question(final RuleContainer parent, final String id, final String label, final Type type) {
-        super(parent);
+        mParent = parent;
 
         if (parent.getQuestion(id) != null) {
             throw new DuplicateQuestionIdException(id);
@@ -51,6 +53,11 @@ public class Question extends Rule {
 
     public Type getType() {
         return mType;
+    }
+
+    @Override
+    public RuleContainer getParent() {
+        return mParent;
     }
 
     /**
