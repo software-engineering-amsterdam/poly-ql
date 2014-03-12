@@ -9,6 +9,7 @@ let keywords =
     [
         "form", FORM;
         "if", IF;
+        "else", ELSE;
         "boolean", QLBOOL;
         "string", QLSTRING;
         "integer", QLINT;
@@ -38,7 +39,7 @@ let symbols =
         "=",    ASSIGN;
     ] |> Map.ofList
 
-# 41 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fs"
+# 42 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fs"
 let trans : uint16[] array = 
     [| 
     (* State 0 *)
@@ -133,88 +134,88 @@ and string pos res (lexbuf : Microsoft.FSharp.Text.Lexing.LexBuffer<_>) = _fslex
 and _fslex_tokenize  _fslex_state lexbuf =
   match _fslex_tables.Interpret(_fslex_state,lexbuf) with
   | 0 -> ( 
-# 54 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fsl"
+# 55 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fsl"
                                  tokenize lexbuf 
-# 138 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fs"
+# 139 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fs"
           )
   | 1 -> ( 
-# 55 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fsl"
+# 56 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fsl"
                                  lexbuf.EndPos <- lexbuf.EndPos.NextLine; tokenize lexbuf; 
-# 143 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fs"
+# 144 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fs"
           )
   | 2 -> ( 
-# 56 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fsl"
+# 57 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fsl"
                                  INT(Int32.Parse(LexBuffer<_>.LexemeString lexbuf)) 
-# 148 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fs"
+# 149 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fs"
           )
   | 3 -> ( 
-# 57 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fsl"
+# 58 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fsl"
                                  DECIMAL(Double.Parse(LexBuffer<_>.LexemeString lexbuf, Globalization.NumberFormatInfo.InvariantInfo)) 
-# 153 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fs"
+# 154 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fs"
           )
   | 4 -> ( 
-# 58 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fsl"
+# 59 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fsl"
                           LABEL(string lexbuf.StartPos "" lexbuf) 
-# 158 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fs"
+# 159 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fs"
           )
   | 5 -> ( 
-# 59 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fsl"
+# 60 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fsl"
                            BOOL(true) 
-# 163 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fs"
+# 164 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fs"
           )
   | 6 -> ( 
-# 60 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fsl"
+# 61 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fsl"
                             BOOL(false) 
-# 168 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fs"
+# 169 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fs"
           )
   | 7 -> ( 
-# 61 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fsl"
+# 62 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fsl"
                            symbols.[LexBuffer<_>.LexemeString lexbuf] 
-# 173 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fs"
+# 174 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fs"
           )
   | 8 -> ( 
-# 62 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fsl"
+# 63 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fsl"
                                  match keywords.TryFind(LexBuffer<_>.LexemeString lexbuf) with
                                  | Some(token) -> token
                                  | None -> IDENTIFIER(LexBuffer<_>.LexemeString lexbuf) 
-# 180 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fs"
+# 181 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fs"
           )
   | 9 -> ( 
-# 65 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fsl"
+# 66 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fsl"
                                  END 
-# 185 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fs"
+# 186 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fs"
           )
   | _ -> failwith "tokenize"
 (* Rule string *)
 and _fslex_string pos res _fslex_state lexbuf =
   match _fslex_tables.Interpret(_fslex_state,lexbuf) with
   | 0 -> ( 
-# 67 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fsl"
+# 68 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fsl"
                            string pos (res + "\\\"") lexbuf 
-# 194 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fs"
+# 195 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fs"
           )
   | 1 -> ( 
-# 68 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fsl"
+# 69 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fsl"
                           res 
-# 199 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fs"
+# 200 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fs"
           )
   | 2 -> ( 
-# 69 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fsl"
+# 70 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fsl"
                                  lexbuf.EndPos <- lexbuf.EndPos.NextLine; string pos (res + "\n") lexbuf; 
-# 204 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fs"
+# 205 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fs"
           )
   | 3 -> ( 
-# 70 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fsl"
+# 71 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fsl"
                          failwith "Unterminated string" 
-# 209 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fs"
+# 210 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fs"
           )
   | 4 -> ( 
-# 71 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fsl"
+# 72 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fsl"
                         string pos (res + (LexBuffer<_>.LexemeString lexbuf)) lexbuf 
-# 214 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fs"
+# 215 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fs"
           )
   | _ -> failwith "string"
 
-# 74 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fsl"
+# 75 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fsl"
 
 # 3000000 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Lexer.fs"

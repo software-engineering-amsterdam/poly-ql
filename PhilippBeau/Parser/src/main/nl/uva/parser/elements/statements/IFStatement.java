@@ -1,24 +1,80 @@
 package main.nl.uva.parser.elements.statements;
 
-public class IFStatement extends Statement {
+import java.util.List;
 
-    public IFStatement(final String id, final Statement parent) {
-        super(id, parent);
+import javax.swing.BoxLayout;
+import javax.swing.JPanel;
+
+import main.nl.uva.parser.elements.ParserElement;
+import main.nl.uva.parser.elements.errors.InvalidTypeError;
+import main.nl.uva.parser.elements.errors.ValidationError;
+import main.nl.uva.parser.elements.expressions.Expression;
+import main.nl.uva.parser.elements.expressions.Variable;
+import main.nl.uva.parser.elements.type.Value;
+
+public class IFStatement extends BlockStatement {
+
+    protected final List<Statement> _children;
+
+    private final Expression _expression;
+
+    public IFStatement(final Expression expression, final List<Statement> children) {
+
+        _expression = expression;
+        _children = children;
+
+        _expression.setParent(this);
+        setParentForChildren(_children);
     }
 
     @Override
-    protected boolean validateImpl() {
-        boolean valid = _parent.validates(this);
-
-        if (!valid) {
-            System.err.println(this + "Is very very wrong");
+    public Variable findVariable(final String variableName, final ParserElement scopeEnd) {
+        if (scopeEnd != _expression) {
+            Variable result = findVariableInChildren(_children, variableName, scopeEnd);
+            if (result != null) {
+                return result;
+            }
         }
 
-        return valid;
+        return _parent.findVariable(variableName, this);
+    }
+
+    @Override
+    public List<ValidationError> validate() {
+        List<ValidationError> expression = _expression.validate();
+
+        if (!expression.isEmpty()) {
+            return expression;
+        }
+
+        if (!(_expression.getType().isTypeOf(Value.Type.BOOLEAN))) {
+            expression.add(new InvalidTypeError(this.toString()));
+            return expression;
+        }
+
+        return validateStatements(_children);
     }
 
     @Override
     public String toString() {
-        return "IFStatement " + _id + "\n";
+        String erg = "if ( " + _expression + " ) \n{ \n";
+        for (Statement child : _children) {
+            erg += child + "\n";
+        }
+
+        return erg + "} \n";
+    }
+
+    @Override
+    public JPanel getLayout() {
+        JPanel layout = new JPanel();
+        layout.setLayout(new BoxLayout(layout, BoxLayout.Y_AXIS));
+        for (Statement child : _children) {
+            layout.add(child.getLayout());
+        }
+
+        // layout.setVisible((Boolean) _expression.getResult());
+
+        return layout;
     }
 }

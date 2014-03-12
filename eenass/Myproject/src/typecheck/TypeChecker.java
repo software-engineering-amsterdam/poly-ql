@@ -19,10 +19,10 @@ import ast.statement.StatementList;
 
 public class TypeChecker implements Visitor<Boolean>{
 	
-	private final Symboles symb_map;
+	private final SymboleTable symb_map;
 	private ErrorList errors;
 
-	public TypeChecker(Symboles symb_map, ErrorList errors) {
+	public TypeChecker(SymboleTable symb_map, ErrorList errors) {
 		this.symb_map = symb_map;
 		this.errors = errors;
 	}
@@ -30,7 +30,7 @@ public class TypeChecker implements Visitor<Boolean>{
 		return errors.toString();
 	}
 	
-	public boolean check_symb(ASTNode node, Symboles symboles, ErrorList errors){
+	public boolean check_symb(ASTNode node, SymboleTable symboles, ErrorList errors){
 		TypeChecker visitor = new TypeChecker(symboles, errors);
 		return node.accept(visitor);		
 	}

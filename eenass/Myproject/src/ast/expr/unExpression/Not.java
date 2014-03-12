@@ -1,6 +1,6 @@
 package ast.expr.unExpression;
 
-import typecheck.Symboles;
+import typecheck.SymboleTable;
 import ast.Visitor;
 import ast.expr.Expr;
 import ast.expr.types.BoolType;
@@ -17,7 +17,7 @@ public class Not extends UnExpr{
 	}
 
 	@Override
-	public Type typeof(Symboles symboles) {
+	public Type typeof(SymboleTable symboles) {
 		return new BoolType();
 	}
 }

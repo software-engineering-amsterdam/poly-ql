@@ -82,12 +82,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\QL_Fsharp\QL_Fsharp.fsproj">
-      <Project>{e944629a-9346-4bd8-95cc-36dfe896b233}</Project>
-      <Name>QL_Fsharp</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

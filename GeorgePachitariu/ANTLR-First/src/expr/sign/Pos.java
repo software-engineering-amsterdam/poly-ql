@@ -1,10 +1,15 @@
 package expr.sign;
 
-import typeChecker.ASTVisitor;
-import typeChecker.IdentifiersTypeMatcher;
+import java.util.Map;
+
 import types.Type;
+import visitor.ASTVisitor;
+import visitor.IdentifiersTypeMatcher;
 import expr.Expression;
+import expr.Ident;
 import expr.UnaryExpr;
+import expr.literals.Int;
+import expr.literals.Literal;
 
 public class Pos extends UnaryExpr {
 
@@ -14,8 +19,7 @@ public class Pos extends UnaryExpr {
 
 	@Override
 	public void accept(ASTVisitor visitor) {
-		visitor.visit(this); 
-		this.operand.accept(visitor);
+		visitor.visit(this, this.operand);
 	}
 
 	@Override
@@ -25,6 +29,7 @@ public class Pos extends UnaryExpr {
 
 	@Override
 	public Type getType(IdentifiersTypeMatcher typeMatcher) {
+		//the type of Pos is the type of its operands
 		return this.operand.getType(typeMatcher);
 	}
 
@@ -32,5 +37,10 @@ public class Pos extends UnaryExpr {
 	public boolean areOperandsTypeValid(IdentifiersTypeMatcher typeMatcher) {
 		Type t1=this.operand.getType(typeMatcher);
 		return t1.isArithmetic();
+	}
+	
+	@Override
+	public Literal compute(Map<Ident, Expression> identifiers) {
+		return this.operand.compute(identifiers).pos();
 	}
 }

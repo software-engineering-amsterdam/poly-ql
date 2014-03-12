@@ -2,7 +2,7 @@ package expr.syntactic;
 
 import java.util.List;
 
-import typeChecker.ASTVisitor;
+import visitor.ASTVisitor;
 
 import expr.ASTNode;
 import expr.Ident;
@@ -27,10 +27,7 @@ public class Form implements ASTNode {
 
 	@Override
 	public void accept(ASTVisitor visitor) {
-		visitor.visit(this);
-		this.identifier.accept(visitor);
-		for(Statement s : this.list)
-			s.accept(visitor);
+		visitor.visit(this, list);
 	}
 
 	public Ident getIdent() {

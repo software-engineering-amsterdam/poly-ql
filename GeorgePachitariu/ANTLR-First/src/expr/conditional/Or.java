@@ -1,23 +1,26 @@
 package expr.conditional;
 
-import typeChecker.ASTVisitor;
-import typeChecker.IdentifiersTypeMatcher;
+import java.util.Map;
+
 import types.BoolType;
 import types.Type;
+import visitor.ASTVisitor;
+import visitor.IdentifiersTypeMatcher;
 import expr.BinaryExpr;
 import expr.Expression;
+import expr.Ident;
+import expr.literals.Bool;
+import expr.literals.Literal;
 
 public class Or extends BinaryExpr {
 
-	public Or(Expression first, Expression second) {
-		super(first,second);
+	public Or(Expression leftHandOperand, Expression rightHandOperand) {
+		super(leftHandOperand,rightHandOperand);
 	}
 
 	@Override
 	public void accept(ASTVisitor visitor) {
-		visitor.visit(this);
-		this.leftHandOperand.accept(visitor);
-		this.rightHandOperand.accept(visitor);
+		visitor.visit(this, this.leftHandOperand, this.rightHandOperand);
 	}
 
 	@Override
@@ -36,5 +39,12 @@ public class Or extends BinaryExpr {
 		Type t2=this.rightHandOperand.getType(typeMatcher);
 		return (t1.isCompatibleWith(t2) &&
 				t1.isBoolean());
+	}
+	
+	@Override
+	public Literal compute(Map<Ident, Expression> identifiers) {
+		return this.leftHandOperand.compute(identifiers).or(
+					this.rightHandOperand.compute(identifiers)
+				);
 	}
 }

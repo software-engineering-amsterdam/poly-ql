@@ -3,58 +3,45 @@ package main.nl.uva.parser.elements.statements;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Statement {
+import javax.swing.JPanel;
 
-    protected final String _id;
+import main.nl.uva.parser.elements.ParserElement;
+import main.nl.uva.parser.elements.errors.ValidationError;
+import main.nl.uva.parser.elements.expressions.Variable;
 
-    protected final List<Statement> _childrens = new ArrayList<>();
+public abstract class Statement extends ParserElement {
 
-    protected final Statement _parent;
+    public abstract List<ValidationError> validate();
 
-    public Statement(final String id, final Statement parent) {
-        _id = id;
-        _parent = parent;
-    }
+    public abstract Variable findVariable(final String variableName, final ParserElement scopeEnd);
 
-    public void addChild(final Statement statement) {
-        _childrens.add(statement);
-    }
+    public abstract Variable getVariable(final String variableName);
 
-    protected boolean isSameID(final Statement statement) {
-        return _id.equals(statement._id);
-    }
+    public abstract JPanel getLayout();
 
-    public final boolean validate() {
-        Boolean valid = true;
-        for (Statement child : _childrens) {
-            valid = valid && child.validate();
+    protected static Variable findVariableInChildren(final List<Statement> children, final String variableName, final ParserElement scopeEnd) {
+        Variable result = null;
+        for (Statement statement : children) {
+            if (statement == scopeEnd) {
+                return null;
+            }
+
+            result = statement.getVariable(variableName);
+
+            if (result != null) {
+                return result;
+            }
         }
 
-        return valid && validateImpl();
+        return null;
     }
 
-    protected abstract boolean validateImpl();
-
-    public final boolean validates(final Statement statement) {
-        boolean valid = this.isSameID(statement);
-
-        if (!valid) {
-            for (Statement child : _childrens) {
-                if (child.equals(statement)) {
-                    continue;
-                }
-
-                if (child.isSameID(statement)) {
-                    return true;
-                }
-            }
-
-            if (_parent != null) {
-                valid = _parent.validates(statement);
-            }
+    protected static List<ValidationError> validateStatements(final List<Statement> statements) {
+        List<ValidationError> valid = new ArrayList<>();
+        for (Statement child : statements) {
+            valid.addAll(child.validate());
         }
 
         return valid;
     }
-
 }

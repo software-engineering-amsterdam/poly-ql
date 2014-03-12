@@ -1,48 +1,38 @@
 ﻿module QL_Main
 open System
+open System.Windows.Forms;
 open QL_Grammar
 open QL_Checker
+open QL_Csharp
 
-let parse lexbuf = QL_Parser.start QL_Lexer.tokenize lexbuf
+Application.EnableVisualStyles()
+Application.SetCompatibleTextRenderingDefault(false)
+let mainForm = new Form1()
 
-let parse_str str checkTypes = let lexbuf = Lexing.LexBuffer<_>.FromString str
-                               try 
-                                   let ast = parse lexbuf
-                                   if checkTypes then
-                                        typeCheck ast
-                                   else
-                                        ast, new TypeCheckInfo(ast.ID)
-                               with err ->
+let parse_string inputString = let lexbuf = Lexing.LexBuffer<_>.FromString inputString
+                               QL_Parser.start QL_Lexer.tokenize lexbuf
+
+let buttonGenerate_Click _ _ = let lexbuf = Lexing.LexBuffer<_>.FromString mainForm.InputText
+                               try
+                                   let ast = QL_Parser.start QL_Lexer.tokenize lexbuf
+                                   let checkInfo = typeCheck ast
+                                   if mainForm.CheckTypes && checkInfo.HasErrors then
+                                        // Type error(s):
+                                        mainForm.SetOutputText(String.concat Environment.NewLine checkInfo.ErrorList)
+                                   else // No parse/type errors:
+                                        mainForm.SetOutputText(sprintf "%+A" ast)
+                               with err -> // Parse error:
                                        let message = err.Message
                                        let s_pos = lexbuf.StartPos
                                        let e_pos = lexbuf.EndPos
-                                       let startPos = Position(s_pos.Line+1, s_pos.Column+1, s_pos.AbsoluteOffset)
-                                       let endPos = Position(e_pos.Line+1, e_pos.Column+1, e_pos.AbsoluteOffset)
-                                       let lastToken = new System.String(lexbuf.Lexeme)
-                                       raise << ParseErrorException <| ParseErrorExceptionMessage(message, lastToken, startPos, endPos)
+                                       mainForm.SetOutputText(sprintf "%s between line %i, column %i and line %i column %i" 
+                                        message
+                                        (s_pos.Line+1) s_pos.Column
+                                        (e_pos.Line+1) e_pos.Column)
 
-// Used for direct input in console
-let x = Console.ReadLine()
+mainForm.AddClickEventHandler(new System.EventHandler(buttonGenerate_Click))
 
-let y = let lexbuf = Lexing.LexBuffer<_>.FromString x
-        try 
-            parse lexbuf
-        with err ->
-                let pos = lexbuf.EndPos
-                let line = pos.Line
-                let column = pos.Column
-                let message = err.Message
-                printf "%s at line %d, column %d:\n" message line column
-                printf "\n"
-                Console.WriteLine("(press any key)")
-                Console.ReadKey(true) |> ignore
-                exit 1;
 
-printfn "%A" y
-
-Console.WriteLine();
-let check = typeCheck y
-printfn "%A" check
-
-Console.WriteLine("(press any key)")
-Console.ReadKey(true) |> ignore
+[<STAThread>]
+do Application.Run(mainForm)
+exit 0
