@@ -2,7 +2,7 @@ package org.uva.sea.ql.parser.antlr.QL4.AST;
 
 import java.util.List;
 
-import org.uva.sea.ql.parser.antlr.QL4.TypeChecker.QLErrorMsg;
+import org.uva.sea.ql.parser.antlr.QL4.Messages.QLErrorMsg;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.IQLVisitor;
 
 /**
@@ -26,6 +26,7 @@ public class Structures implements QLTree {
 		this.structures = structures;
 	}
 	
+	@Override
 	/**
 	 * Returns the content of structures in the form of a string
 	 */

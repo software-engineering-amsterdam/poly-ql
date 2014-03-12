@@ -2,7 +2,9 @@ package org.uva.sea.ql.parser.antlr.QL4.AST.Value;
 
 import java.util.List;
 
-import org.uva.sea.ql.parser.antlr.QL4.TypeChecker.QLErrorMsg;
+import org.uva.sea.ql.parser.antlr.QL4.Messages.QLErrorMsg;
+import org.uva.sea.ql.parser.antlr.QL4.Types.NumberType;
+import org.uva.sea.ql.parser.antlr.QL4.Types.Type;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.IQLVisitor;
 
 /**
@@ -38,6 +40,11 @@ public class Number extends Value {
 		if (value != other.value)
 			return false;
 		return true;
+	}
+	
+	@Override
+	public Type getType() {
+		return new NumberType();
 	}
 	
 	@Override

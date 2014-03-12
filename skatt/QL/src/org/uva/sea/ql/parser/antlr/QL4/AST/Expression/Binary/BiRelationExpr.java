@@ -6,18 +6,16 @@ import org.uva.sea.ql.parser.antlr.QL4.Types.BoolType;
 import org.uva.sea.ql.parser.antlr.QL4.Types.Type;
 
 /**
- * Abstract class for eqExpr and neqExpr (a parent class for
- * all expressions that handle either is equal to or 
- * is not equal to). Contains required constructor
+ * Represents the relational expression ( > < => etc) in QL AST
  * @author Sammie Katt
  *
  */
-public abstract class EqualityExpr extends BinaryExpr {
+public abstract class BiRelationExpr extends BinaryExpr {
 
-	public EqualityExpr(Expression lhs, Expression rhs) {
+	public BiRelationExpr(Expression lhs, Expression rhs) {
 		super(lhs, rhs);
 	}
-	
+
 	@Override
 	public Type getType() {
 		return new BoolType();

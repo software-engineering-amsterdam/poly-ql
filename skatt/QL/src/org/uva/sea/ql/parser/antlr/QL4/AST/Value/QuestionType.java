@@ -2,7 +2,7 @@ package org.uva.sea.ql.parser.antlr.QL4.AST.Value;
 
 import java.util.List;
 
-import org.uva.sea.ql.parser.antlr.QL4.TypeChecker.QLErrorMsg;
+import org.uva.sea.ql.parser.antlr.QL4.Messages.QLErrorMsg;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.IQLVisitor;
 
 /**

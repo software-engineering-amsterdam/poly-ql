@@ -8,10 +8,20 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Form;
 import org.uva.sea.ql.parser.antlr.QL4.AST.QLTree;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Question;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Structures;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.BinaryExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Expression;
-import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.BiLogicExpr;
-import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.BiMathExpr;
-import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.EqualityExpr;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.Equality.EqExpr;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.Equality.NeqExpr;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.Logical.AndExpr;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.Logical.OrExpr;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.Mathematical.DivExpr;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.Mathematical.MinExpr;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.Mathematical.MultExpr;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.Mathematical.PlusExpr;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.Relational.GeqExpr;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.Relational.GreExpr;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.Relational.LeqExpr;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.Relational.LesExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Unary.BraceExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Unary.NegExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Bool;
@@ -20,7 +30,7 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Identifier;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Label;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Number;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.QuestionType;
-import org.uva.sea.ql.parser.antlr.QL4.TypeChecker.QLErrorMsg;
+import org.uva.sea.ql.parser.antlr.QL4.Messages.QLErrorMsg;
 
 /**
  * Parent of all Error visitor classes. Implements the default
@@ -80,7 +90,7 @@ public class QLErrorVisitor implements IQLVisitor {
 		return msgs;
 	}
 
-	//////////// expressions 
+	//////////// unary expressions 
 	
 	@Override
 	public List<QLErrorMsg> visit(BraceExpr expr) {
@@ -91,37 +101,67 @@ public class QLErrorVisitor implements IQLVisitor {
 	public List<QLErrorMsg> visit(NegExpr expr) {
 		return this.visitChild(expr.getExpr());
 	}
-	
+
+	/////////// binary expressions
 	@Override
-	public List<QLErrorMsg> visit(BiMathExpr expr) {
-		List<QLErrorMsg> msgs = new ArrayList<QLErrorMsg>();
-		
-		msgs.addAll(this.visitChild(expr.getLHS()));
-		msgs.addAll(this.visitChild(expr.getRHS()));
-		
-		return msgs;
-	}
-	
-	@Override
-	public List<QLErrorMsg> visit(EqualityExpr expr) {
-		List<QLErrorMsg> msgs = new ArrayList<QLErrorMsg>();
-		
-		msgs.addAll(this.visitChild(expr.getLHS()));
-		msgs.addAll(this.visitChild(expr.getRHS()));
-		
-		return msgs;
-	}
-	
-	@Override
-	public List<QLErrorMsg> visit(BiLogicExpr expr) {
-		List<QLErrorMsg> msgs = new ArrayList<QLErrorMsg>();
-		
-		msgs.addAll(this.visitChild(expr.getLHS()));
-		msgs.addAll(this.visitChild(expr.getRHS()));
-		
-		return msgs;
+	public List<QLErrorMsg> visit(GeqExpr expr) {
+		return this.visitBinaryExpression(expr);
 	}
 
+	@Override
+	public List<QLErrorMsg> visit(GreExpr expr) {
+		return this.visitBinaryExpression(expr);
+	}
+
+	@Override
+	public List<QLErrorMsg> visit(LeqExpr expr) {
+		return this.visitBinaryExpression(expr);
+	}
+
+	@Override
+	public List<QLErrorMsg> visit(LesExpr expr) {
+		return this.visitBinaryExpression(expr);
+	}
+
+	@Override
+	public List<QLErrorMsg> visit(PlusExpr expr) {
+		return this.visitBinaryExpression(expr);
+	}
+
+	@Override
+	public List<QLErrorMsg> visit(MinExpr expr) {
+		return this.visitBinaryExpression(expr);
+	}
+
+	@Override
+	public List<QLErrorMsg> visit(DivExpr expr) {
+		return this.visitBinaryExpression(expr);
+	}
+
+	@Override
+	public List<QLErrorMsg> visit(MultExpr expr) {
+		return this.visitBinaryExpression(expr);
+	}
+
+	@Override
+	public List<QLErrorMsg> visit(AndExpr expr) {
+		return this.visitBinaryExpression(expr);
+	}
+
+	@Override
+	public List<QLErrorMsg> visit(OrExpr expr) {
+		return this.visitBinaryExpression(expr);
+	}
+
+	@Override
+	public List<QLErrorMsg> visit(EqExpr expr) {
+		return this.visitBinaryExpression(expr);
+	}
+
+	@Override
+	public List<QLErrorMsg> visit(NeqExpr expr) {
+		return this.visitBinaryExpression(expr);
+	}
 	/**
 	 * No children to visit when visiting value subclasses
 	 */
@@ -175,6 +215,20 @@ public class QLErrorVisitor implements IQLVisitor {
 		if (msgs == null) {
 			msgs = new ArrayList<QLErrorMsg>();
 		}
+		
+		return msgs;
+	}
+	
+	/**
+	 * Whenever a binary expression is visited, return the error messages
+	 * in both sides of the expression
+	 * 
+	 */
+	public List<QLErrorMsg> visitBinaryExpression(BinaryExpr expr) {
+		List<QLErrorMsg> msgs = new ArrayList<QLErrorMsg>();
+		
+		msgs.addAll(this.visitChild(expr.getLHS()));
+		msgs.addAll(this.visitChild(expr.getRHS()));
 		
 		return msgs;
 	}

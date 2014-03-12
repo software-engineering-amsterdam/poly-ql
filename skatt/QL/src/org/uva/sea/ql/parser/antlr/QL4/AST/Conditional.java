@@ -3,7 +3,7 @@ package org.uva.sea.ql.parser.antlr.QL4.AST;
 import java.util.List;
 
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Expression;
-import org.uva.sea.ql.parser.antlr.QL4.TypeChecker.QLErrorMsg;
+import org.uva.sea.ql.parser.antlr.QL4.Messages.QLErrorMsg;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.IQLVisitor;
 
 /**
@@ -67,6 +67,8 @@ public class Conditional implements QLTree {
 		return visitor.visit(this);
 	}
 
+	///////// getters and setters 
+	
 	public Expression getIfExpression() {
 		return ifCondition;
 	}

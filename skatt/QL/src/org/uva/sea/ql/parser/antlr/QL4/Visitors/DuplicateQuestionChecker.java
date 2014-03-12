@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.uva.sea.ql.parser.antlr.QL4.AST.Question;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Identifier;
-import org.uva.sea.ql.parser.antlr.QL4.TypeChecker.QLErrorMsg;
+import org.uva.sea.ql.parser.antlr.QL4.Messages.QLErrorMsg;
 
 /**
  * Visitor that checks a QLTree on duplicate question identifiers
