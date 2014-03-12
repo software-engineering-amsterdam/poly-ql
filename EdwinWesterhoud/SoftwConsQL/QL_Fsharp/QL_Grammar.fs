@@ -1,6 +1,16 @@
 ﻿module QL_Grammar
 open System
 
+type public Position(state : Parsing.IParseState) =
+    let startPos, endPos = state.ResultRange
+    member public this.StartLine      : int = startPos.Line+1
+    member public this.StartColumn    : int = startPos.Column
+    member public this.StartCharacter : int = startPos.AbsoluteOffset
+    member public this.EndLine        : int = endPos.Line+1
+    member public this.EndColumn      : int = endPos.Column
+    member public this.EndCharacter   : int = endPos.AbsoluteOffset
+    override this.ToString() = "Position"
+
 // Question types
 type qlType = QLBool | QLString | QLInt | QLDecimal
 
@@ -15,11 +25,11 @@ type literal =
 type booleanOp = And | Or | Lt | Gt | Le | Ge | Eq | Ne
 type arithmeticOp = Plus | Minus | Mult | Div
 type expression =
-    | ID            of string
-    | Literal       of literal
-    | Neg           of expression
-    | BooleanOp     of expression * booleanOp * expression
-    | ArithmeticOp  of expression * arithmeticOp * expression
+    | ID            of string * Position
+    | Literal       of literal * Position
+    | Neg           of expression * Position
+    | BooleanOp     of expression * booleanOp * expression * Position
+    | ArithmeticOp  of expression * arithmeticOp * expression * Position
 
 type statement =
     | Assignment        of string * string * expression
@@ -31,10 +41,3 @@ type questionaire =
     {   ID          : string;
         Statements  : statement list }
     override this.ToString() = sprintf "%+A" this
-
-
-type public Position(line, column, character) =
-    member public this.Line      : int = line
-    member public this.Column    : int = column
-    member public this.Character : int = character
-    override this.ToString() = ""

@@ -68,33 +68,33 @@ let rec checkExpression expression (checkInfo : TypeCheckInfo) =
                                                 TError
 
     match expression with
-    | ID(name)      ->  let exprType = checkInfo.GetIdentifierType(name)
-                        if (exprType.Equals(TError)) then
+    | ID(name, _)      ->  let exprType = checkInfo.GetIdentifierType(name)
+                           if (exprType.Equals(TError)) then
                             checkInfo.RegisterError("Unknown identifier: " + name)
-                        exprType
+                           exprType
 
-    | Literal(expr) -> (fst <| literalType expr)
+    | Literal(expr,_) -> (fst <| literalType expr)
 
-    | Neg(expr)     ->  let exprType = checkExpression expr checkInfo
-                        if (not <| exprType.Equals(TBool) && not <| exprType.Equals(TError)) then
-                            checkInfo.RegisterError("Type error: expected boolean expression")
-                        exprType
+    | Neg(expr,_)     ->  let exprType = checkExpression expr checkInfo
+                          if (not <| exprType.Equals(TBool) && not <| exprType.Equals(TError)) then
+                              checkInfo.RegisterError("Type error: expected boolean expression")
+                          exprType
 
-    | BooleanOp(left, (booleanOp.Eq as op), right)
-    | BooleanOp(left, (booleanOp.Ne as op), right) -> checkBooleanOp left op right (fun typeLeft typeRight -> typeLeft.Equals(typeRight)  || 
-                                                                                                              typeLeft.Equals(TError) || 
-                                                                                                              typeRight.Equals(TError))
-    | BooleanOp(left, (booleanOp.And as op), right)
-    | BooleanOp(left, (booleanOp.Or as op), right) -> checkBooleanOp left op right (fun typeLeft typeRight -> (typeLeft.Equals(typeRight) && typeLeft.Equals(TBool)) || 
-                                                                                                               typeLeft.Equals(TError) || typeRight.Equals(TError))
-    | BooleanOp(left, (booleanOp.Lt as op), right)
-    | BooleanOp(left, (booleanOp.Le as op), right)
-    | BooleanOp(left, (booleanOp.Gt as op), right)
-    | BooleanOp(left, (booleanOp.Ge as op), right) -> checkBooleanOp left op right (fun typeLeft typeRight -> (typeLeft.Equals(typeRight) && isNumeric typeRight)  ||
-                                                                                                              (typeLeft.Equals(TError) && isNumeric typeRight) ||
-                                                                                                              (isNumeric typeLeft && typeRight.Equals(TError)) ||
-                                                                                                              (typeLeft.Equals(TError) && typeRight.Equals(TError)))
-    | ArithmeticOp(left, op, right) -> checkArithmeticOp left op right
+    | BooleanOp(left, (booleanOp.Eq as op), right,_)
+    | BooleanOp(left, (booleanOp.Ne as op), right,_) -> checkBooleanOp left op right (fun typeLeft typeRight -> typeLeft.Equals(typeRight)  || 
+                                                                                                                typeLeft.Equals(TError) || 
+                                                                                                                typeRight.Equals(TError))
+    | BooleanOp(left, (booleanOp.And as op), right,_)
+    | BooleanOp(left, (booleanOp.Or as op), right,_) -> checkBooleanOp left op right (fun typeLeft typeRight -> (typeLeft.Equals(typeRight) && typeLeft.Equals(TBool)) || 
+                                                                                                                 typeLeft.Equals(TError) || typeRight.Equals(TError))
+    | BooleanOp(left, (booleanOp.Lt as op), right,_)
+    | BooleanOp(left, (booleanOp.Le as op), right,_)
+    | BooleanOp(left, (booleanOp.Gt as op), right,_)
+    | BooleanOp(left, (booleanOp.Ge as op), right,_) -> checkBooleanOp left op right (fun typeLeft typeRight -> (typeLeft.Equals(typeRight) && isNumeric typeRight)  ||
+                                                                                                                (typeLeft.Equals(TError) && isNumeric typeRight) ||
+                                                                                                                (isNumeric typeLeft && typeRight.Equals(TError)) ||
+                                                                                                                (typeLeft.Equals(TError) && typeRight.Equals(TError)))
+    | ArithmeticOp(left, op, right,_) -> checkArithmeticOp left op right
 
 let rec checkStmts stmts (checkInfo : TypeCheckInfo) = 
     let checkStmt stmt = 

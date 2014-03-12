@@ -568,7 +568,7 @@ let _fsyacc_reductions ()  =    [|
                 (
                    (
 # 90 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
-                                                           ID(_1) 
+                                                           ID(_1, Position(parseState)) 
                    )
 # 90 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
                  : 'expression));
@@ -579,7 +579,7 @@ let _fsyacc_reductions ()  =    [|
                 (
                    (
 # 91 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
-                                                           Literal(_1) 
+                                                           Literal(_1, Position(parseState)) 
                    )
 # 91 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
                  : 'expression));
@@ -590,7 +590,7 @@ let _fsyacc_reductions ()  =    [|
                 (
                    (
 # 92 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
-                                                           Neg(_2) 
+                                                           Neg(_2, Position(parseState)) 
                    )
 # 92 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
                  : 'expression));
@@ -602,7 +602,7 @@ let _fsyacc_reductions ()  =    [|
                 (
                    (
 # 93 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
-                                                           BooleanOp(_1, And, _3) 
+                                                           BooleanOp(_1, And, _3, Position(parseState)) 
                    )
 # 93 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
                  : 'expression));
@@ -614,7 +614,7 @@ let _fsyacc_reductions ()  =    [|
                 (
                    (
 # 94 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
-                                                           BooleanOp(_1, Or, _3) 
+                                                           BooleanOp(_1, Or, _3, Position(parseState)) 
                    )
 # 94 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
                  : 'expression));
@@ -626,7 +626,7 @@ let _fsyacc_reductions ()  =    [|
                 (
                    (
 # 95 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
-                                                           BooleanOp(_1, Lt, _3) 
+                                                           BooleanOp(_1, Lt, _3, Position(parseState)) 
                    )
 # 95 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
                  : 'expression));
@@ -638,7 +638,7 @@ let _fsyacc_reductions ()  =    [|
                 (
                    (
 # 96 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
-                                                           BooleanOp(_1, Gt, _3) 
+                                                           BooleanOp(_1, Gt, _3, Position(parseState)) 
                    )
 # 96 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
                  : 'expression));
@@ -650,7 +650,7 @@ let _fsyacc_reductions ()  =    [|
                 (
                    (
 # 97 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
-                                                           BooleanOp(_1, Le, _3) 
+                                                           BooleanOp(_1, Le, _3, Position(parseState)) 
                    )
 # 97 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
                  : 'expression));
@@ -662,7 +662,7 @@ let _fsyacc_reductions ()  =    [|
                 (
                    (
 # 98 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
-                                                           BooleanOp(_1, Ge, _3) 
+                                                           BooleanOp(_1, Ge, _3, Position(parseState)) 
                    )
 # 98 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
                  : 'expression));
@@ -674,7 +674,7 @@ let _fsyacc_reductions ()  =    [|
                 (
                    (
 # 99 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
-                                                           BooleanOp(_1, Eq, _3) 
+                                                           BooleanOp(_1, Eq, _3, Position(parseState)) 
                    )
 # 99 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
                  : 'expression));
@@ -686,7 +686,7 @@ let _fsyacc_reductions ()  =    [|
                 (
                    (
 # 100 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
-                                                           BooleanOp(_1, Ne, _3) 
+                                                           BooleanOp(_1, Ne, _3, Position(parseState)) 
                    )
 # 100 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
                  : 'expression));
@@ -698,7 +698,7 @@ let _fsyacc_reductions ()  =    [|
                 (
                    (
 # 101 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
-                                                           ArithmeticOp(_1, Plus, _3) 
+                                                           ArithmeticOp(_1, Plus, _3, Position(parseState)) 
                    )
 # 101 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
                  : 'expression));
@@ -710,7 +710,7 @@ let _fsyacc_reductions ()  =    [|
                 (
                    (
 # 102 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
-                                                           ArithmeticOp(_1, Minus, _3) 
+                                                           ArithmeticOp(_1, Minus, _3, Position(parseState)) 
                    )
 # 102 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
                  : 'expression));
@@ -722,7 +722,7 @@ let _fsyacc_reductions ()  =    [|
                 (
                    (
 # 103 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
-                                                           ArithmeticOp(_1, Mult, _3) 
+                                                           ArithmeticOp(_1, Mult, _3, Position(parseState)) 
                    )
 # 103 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
                  : 'expression));
@@ -734,7 +734,7 @@ let _fsyacc_reductions ()  =    [|
                 (
                    (
 # 104 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
-                                                           ArithmeticOp(_1, Div, _3) 
+                                                           ArithmeticOp(_1, Div, _3, Position(parseState)) 
                    )
 # 104 "C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsp"
                  : 'expression));
