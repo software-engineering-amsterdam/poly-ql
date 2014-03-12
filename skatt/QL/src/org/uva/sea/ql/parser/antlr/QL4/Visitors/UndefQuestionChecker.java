@@ -16,7 +16,7 @@ import org.uva.sea.ql.parser.antlr.QL4.TypeChecker.QLErrorMsg;
  * @author Sammie Katt
  *
  */
-public class UndefinedCheck extends QLErrorVisitor {
+public class UndefQuestionChecker extends QLErrorVisitor {
 	/**
 	 * Holds all the questions defined
 	 */

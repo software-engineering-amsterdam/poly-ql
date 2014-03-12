@@ -17,3 +17,7 @@ if (1 + (1 == 2) || true) {
 if (!(1 + 2)) {
     negquestion : "Neg question label" : boolean;
 }
+
+if (! (false || true)) {
+    goodquestion : "normal question label" : boolean;
+}

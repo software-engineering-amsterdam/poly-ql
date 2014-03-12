@@ -12,11 +12,11 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Form;
 import org.uva.sea.ql.parser.antlr.QL4.TypeChecker.QLErrorMsg;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.AntlrVisitor;
-import org.uva.sea.ql.parser.antlr.QL4.Visitors.DuplicateLabel;
-import org.uva.sea.ql.parser.antlr.QL4.Visitors.DuplicateQuestion;
-import org.uva.sea.ql.parser.antlr.QL4.Visitors.InvalidType;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.DuplicateLabelChecker;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.DuplicateQuestionChecker;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.InvalidTypeChecker;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.QLErrorVisitor;
-import org.uva.sea.ql.parser.antlr.QL4.Visitors.UndefinedCheck;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.UndefQuestionChecker;
 
 import QL4.QL4Lexer;
 import QL4.QL4Parser;
@@ -100,16 +100,16 @@ public class QL4 {
 		// the checker that will perform several checks on our ast input 
 		QLErrorVisitor ASTChecker;
 		
-		ASTChecker = new UndefinedCheck();
+		ASTChecker = new UndefQuestionChecker();
 		msgs.addAll(ASTChecker.visit(ast));
 		
-		ASTChecker = new DuplicateLabel();
+		ASTChecker = new DuplicateLabelChecker();
 		msgs.addAll(ASTChecker.visit(ast));
 		
-		ASTChecker = new DuplicateQuestion();
+		ASTChecker = new DuplicateQuestionChecker();
 		msgs.addAll(ASTChecker.visit(ast));
 		
-		ASTChecker = new InvalidType();
+		ASTChecker = new InvalidTypeChecker();
 		msgs.addAll(ASTChecker.visit(ast));
 		
 		return msgs;

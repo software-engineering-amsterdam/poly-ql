@@ -12,7 +12,7 @@ import org.uva.sea.ql.parser.antlr.QL4.TypeChecker.QLErrorMsg;
  * @author Sammie Katt
  *
  */
-public class DuplicateQuestion extends QLErrorVisitor {
+public class DuplicateQuestionChecker extends QLErrorVisitor {
 
 	/**
 	 * The list of identifiers found when visiting
