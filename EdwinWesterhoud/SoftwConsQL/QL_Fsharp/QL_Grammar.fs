@@ -1,14 +1,18 @@
 ﻿module QL_Grammar
 open System
 
-type public Position(state : Parsing.IParseState) =
-    let startPos, endPos = state.ResultRange
+type public Position(startPos : Lexing.Position, endPos : Lexing.Position) =
     member public this.StartLine      : int = startPos.Line+1
     member public this.StartColumn    : int = startPos.Column
     member public this.StartCharacter : int = startPos.AbsoluteOffset
     member public this.EndLine        : int = endPos.Line+1
     member public this.EndColumn      : int = endPos.Column
     member public this.EndCharacter   : int = endPos.AbsoluteOffset
+
+    new(state : Parsing.IParseState) = let startPos, endPos = state.ResultRange
+                                       Position(startPos, endPos)
+    new() = Position(Lexing.Position.Empty, Lexing.Position.Empty)
+
     override this.ToString() = "Position"
 
 // Question types

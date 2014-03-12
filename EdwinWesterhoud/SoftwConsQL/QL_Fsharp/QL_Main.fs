@@ -18,7 +18,8 @@ let buttonGenerate_Click _ _ = let lexbuf = Lexing.LexBuffer<_>.FromString mainF
                                    let checkInfo = typeCheck ast
                                    if mainForm.CheckTypes && checkInfo.HasErrors then
                                         // Type error(s):
-                                        mainForm.SetOutputText(String.concat Environment.NewLine checkInfo.ErrorList)
+                                        mainForm.SetOutputText(String.concat Environment.NewLine <| List.map fst checkInfo.ErrorList)
+                                        List.iter (fun (_, position:Position) -> mainForm.UnderlineParseError(position.StartCharacter, position.EndCharacter - position.StartCharacter)) checkInfo.ErrorList
                                    else // No parse/type errors:
                                         mainForm.SetOutputText(sprintf "%+A" ast)
                                with err -> // Parse error:

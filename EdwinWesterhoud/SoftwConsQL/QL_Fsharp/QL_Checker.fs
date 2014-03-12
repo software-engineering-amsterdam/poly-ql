@@ -16,7 +16,7 @@ type expressionType = TBool | TString | TInt | TDecimal | TError | TForm
                                     | TError -> "Error"
 
 type TypeCheckInfo(formName) = 
-    let errors = new List<string>()
+    let errors = new List<string * Position>()
     let identifiers = new Dictionary<string, expressionType>()
     do identifiers.Add(formName, TForm)
 
@@ -31,11 +31,11 @@ type TypeCheckInfo(formName) =
         then identifiers.[id]
         else TError
 
-    member this.RegisterError(message) = errors.Add(message)
+    member this.RegisterError(message, position) = errors.Add(message, position)
 
     member this.HasErrors = errors.Count > 0
 
-    member this.ErrorList = errors.ToArray()
+    member this.ErrorList = List.ofSeq errors
 
 
 let mapQLType qlType = match qlType with
@@ -51,6 +51,13 @@ let literalType exprType =
     | Int(_)     -> TInt, exprType
     | Decimal(_) -> TDecimal, exprType
 
+let getExpressionPosition expression = match expression with
+                                       | ID(_, pos)               -> pos
+                                       | Literal(_, pos)          -> pos
+                                       | Neg(_, pos)              -> pos
+                                       | BooleanOp(_,_,_, pos)    -> pos
+                                       | ArithmeticOp(_,_,_, pos) -> pos
+
 let rec checkExpression expression (checkInfo : TypeCheckInfo) =
     let isNumeric exprType = exprType.Equals(TInt) || exprType.Equals(TDecimal)
 
@@ -59,7 +66,7 @@ let rec checkExpression expression (checkInfo : TypeCheckInfo) =
                                                             if cond typeLeft typeRight then 
                                                                 TBool
                                                             else
-                                                                checkInfo.RegisterError(sprintf "Type error on line %i: cannot apply %s on %s and %s" pos.StartLine (op.ToString()) (typeLeft.ToString()) (typeRight.ToString()))
+                                                                checkInfo.RegisterError(sprintf "Type error on line %i: cannot apply %s on %s and %s" pos.StartLine (op.ToString()) (typeLeft.ToString()) (typeRight.ToString()), pos)
                                                                 TError
 
     let checkArithmeticOp left op right (pos:Position) =    let typeLeft = checkExpression left checkInfo
@@ -71,20 +78,20 @@ let rec checkExpression expression (checkInfo : TypeCheckInfo) =
                                                             else if typeLeft.Equals(TError) && isNumeric typeRight then
                                                                 typeRight
                                                             else 
-                                                                checkInfo.RegisterError(sprintf "Type error on line %i: cannot apply %s on %s and %s" pos.StartLine (op.ToString()) (typeLeft.ToString()) (typeRight.ToString()))
+                                                                checkInfo.RegisterError(sprintf "Type error on line %i: cannot apply %s on %s and %s" pos.StartLine (op.ToString()) (typeLeft.ToString()) (typeRight.ToString()), pos)
                                                                 TError
 
     match expression with
     | ID(name, pos)      -> let exprType = checkInfo.GetIdentifierType(name)
                             if (exprType.Equals(TError)) then
-                                checkInfo.RegisterError(sprintf "Unknown identifier on line %i (%s)" pos.StartLine name)
+                                checkInfo.RegisterError(sprintf "Unknown identifier on line %i (%s)" pos.StartLine name, pos)
                             exprType
 
     | Literal(expr, pos) -> (fst <| literalType expr)
 
     | Neg(expr, pos)     -> let exprType = checkExpression expr checkInfo
                             if (not <| exprType.Equals(TBool) && not <| exprType.Equals(TError)) then
-                                checkInfo.RegisterError(sprintf "Type error on line %i: expected Boolean expression" pos.StartLine)
+                                checkInfo.RegisterError(sprintf "Type error on line %i: expected Boolean expression" pos.StartLine, pos)
                             exprType
 
     | BooleanOp(left, (booleanOp.Eq as op), right, pos)
@@ -112,17 +119,17 @@ let rec checkStmts stmts (checkInfo : TypeCheckInfo) =
         match stmt with
         | Assignment(id, label, expression, pos) -> let exprType = checkExpression expression checkInfo
                                                     if not <| checkInfo.RegisterIdentifier(id, exprType) then
-                                                        checkInfo.RegisterError(sprintf "Duplicate identifier on line %i (\"%s\")" pos.StartLine id)
+                                                        checkInfo.RegisterError(sprintf "Duplicate identifier on line %i (\"%s\")" pos.StartLine id, pos)
         | Question(id, label, qlType, pos) ->       if not <| checkInfo.RegisterIdentifier(id, mapQLType qlType) then
-                                                        checkInfo.RegisterError(sprintf "Duplicate identifier on line %i (\"%s\")" pos.StartLine id)
+                                                        checkInfo.RegisterError(sprintf "Duplicate identifier on line %i (\"%s\")" pos.StartLine id, pos)
         | IfElseConditional(cond, ifStmts, elseStmts, pos) ->   let exprType = checkExpression cond checkInfo
                                                                 if not <| exprType.Equals(TBool) && not <| exprType.Equals(TError) then
-                                                                    checkInfo.RegisterError(sprintf "Type error on line %i: expected Boolean expression" pos.StartLine)
+                                                                    checkInfo.RegisterError(sprintf "Type error on line %i: expected Boolean expression" pos.StartLine, getExpressionPosition cond)
                                                                 checkStmts ifStmts checkInfo
                                                                 checkStmts elseStmts checkInfo
         | IfConditional(cond, stmts, pos) ->    let exprType = checkExpression cond checkInfo
                                                 if not <| exprType.Equals(TBool) && not <| exprType.Equals(TError) then
-                                                    checkInfo.RegisterError(sprintf "Type error on line %i: expected Boolean expression" pos.StartLine)
+                                                    checkInfo.RegisterError(sprintf "Type error on line %i: expected Boolean expression" pos.StartLine, getExpressionPosition cond)
                                                 checkStmts stmts checkInfo
         
     List.iter checkStmt stmts
