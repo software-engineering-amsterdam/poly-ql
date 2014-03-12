@@ -9,10 +9,11 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.QLTree;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Question;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Structures;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Expression;
-import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.UnaryExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.BiLogicExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.BiMathExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.EqualityExpr;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Unary.BraceExpr;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Unary.NegExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Bool;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Decimal;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Identifier;
@@ -82,10 +83,15 @@ public class QLErrorVisitor implements IQLVisitor {
 	//////////// expressions 
 	
 	@Override
-	public List<QLErrorMsg> visit(UnaryExpr expr) {
+	public List<QLErrorMsg> visit(BraceExpr expr) {
 		return this.visitChild(expr.getExpr());
 	}
 
+	@Override
+	public List<QLErrorMsg> visit(NegExpr expr) {
+		return this.visitChild(expr.getExpr());
+	}
+	
 	@Override
 	public List<QLErrorMsg> visit(BiMathExpr expr) {
 		List<QLErrorMsg> msgs = new ArrayList<QLErrorMsg>();
