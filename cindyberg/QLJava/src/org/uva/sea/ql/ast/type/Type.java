@@ -1,13 +1,13 @@
 package org.uva.sea.ql.ast.type;
 
 import org.uva.sea.ql.ast.ASTNode;
-import org.uva.sea.ql.ast.IVisitor;
+import org.uva.sea.ql.ast.TypeVisitor;
 
 
 public abstract class Type extends ASTNode {
 	
-	public abstract void accept(IVisitor visitor);
-	//is the visitor necessary ??
+	public abstract <T> T accept(TypeVisitor<T> visitor);
+	
 	public abstract String toString();
 	
 
@@ -41,5 +41,5 @@ public abstract class Type extends ASTNode {
 	public int hashCode(){
 		return toString().hashCode();
 	}
-
+	
 }

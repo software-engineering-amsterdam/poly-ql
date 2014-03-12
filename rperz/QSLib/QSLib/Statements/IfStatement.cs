@@ -41,7 +41,7 @@ namespace QSLib.Statements
             }
 
             retVal &= this._code.CheckType(checker);
-            retVal &= (this._elseBlock == null || this._elseBlock.CheckType(checker));
+            retVal &= this._elseBlock.CheckType(checker);
 
             return retVal;
         }
@@ -55,12 +55,17 @@ namespace QSLib.Statements
             // check if all elements are equal
             return this._condition.Equals(comp._condition) &&
                     this._code.Equals(comp._code) &&
-                    ((this._elseBlock == null && comp._elseBlock == null) || this._elseBlock.Equals(comp._elseBlock));
+                    this._elseBlock.Equals(comp._elseBlock);
         }
 
         public override int GetHashCode()
         {
             return base.GetHashCode();
+        }
+
+        public void CreateGUI(GUIBuilder guiBuilder)
+        {
+            guiBuilder.CreateIfStatement(this._condition, this._code, this._elseBlock);
         }
     }
 }

@@ -20,12 +20,12 @@ public class AddExpression extends BinaryExpression {
 
 
     @Override
-    public Type eval() {
+    public Expression eval() {
         return null;
     }
 
     @Override
-    public void accept(IExpressionElementVisitor visitor) {
-        visitor.visitAddExpression(this);
+    public Type accept(IExpressionElementVisitor visitor) {
+        return visitor.visitAddExpression(this);
     }
 }

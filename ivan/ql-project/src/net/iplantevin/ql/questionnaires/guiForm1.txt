@@ -1,0 +1,55 @@
+form Box1HouseOwning {
+ hasSoldHouse: "Did you sell a house in 2010?" boolean
+ //hasSoldHouse: "Did you sell a house in 2010? #2" boolean
+ hasBoughtHouse: "Did you buy a house in 2010?" boolean
+ hasMaintLoan: "Did you enter a loan for maintenance/reconstruction?" boolean
+ hasSoldHouseComp: "You sold a house in 2010:" boolean(hasSoldHouse)
+ soldAndBought: "You sold AND bought a house in 2010:" boolean(hasSoldHouse && hasBoughtHouse)
+
+ lastName: "What is your last name?" string
+ lastNameComp: "Your last name is:" string(lastName)
+ 
+ if (hasSoldHouse) {
+   sellingPrice: "Price the house was sold for:" integer
+   privateDebt: "Private debts for the sold house:" integer
+   valueResidue: "Value residue:" integer(sellingPrice - privateDebt)
+   if (valueResidue < 0) {
+     notice: "You are one unlucky person with a negative residue..." string("Poor you...")
+   }
+ }
+ else {
+   if (lastName == "Bakker") {
+     firstName: "What is your first name?" string
+     if (firstName == "Piet") {
+       notice2: "Your name is apparently Piet Bakker..." string("So dull..")
+     }
+   }
+ }
+
+ // Undefined at runtime if house was not sold.
+ validIntExpr: "sellingPrice / privateDebt - (privateDebt * sellingPrice)"
+   integer(sellingPrice / privateDebt - (privateDebt * sellingPrice))
+ validBoolExpr: "sellingPrice < 100000 && privateDebt > 50000 ||
+                            privateDebt >= sellingPrice - 20000"
+   boolean(sellingPrice < 100000 && privateDebt > 50000 ||
+           privateDebt >= sellingPrice - 20000)
+
+ if (hasBoughtHouse) {
+   buyingPrice: "What did your house cost?" integer
+   years: "In how many years will you pay off this amount?" integer
+   average: "Without interest, you would pay this per year:" integer (buyingPrice / years)
+ }
+
+ if (soldAndBought) {
+   notice3: "You sold and bought a house in 2010!" string("You moved!")
+ }
+
+ // Cyclic dependencies stuff.
+ /*
+ if (hasSoldHouse) { hasBoughtHouse: "hasBoughtHouse input" boolean}
+ if (hasBoughtHouse) {hasSoldHouse: "hasSoldHouse input" boolean}
+
+ hasBoughtHouse: "invert hasSoldHouse" boolean(!hasSoldHouse)
+ hasSoldHouse: "invert hasBoughtHouse" boolean(!hasBoughtHouse)
+ hasBoughtHouse: "invert hasBoughtHouse" boolean(!hasBoughtHouse)*/
+}

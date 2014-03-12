@@ -1,4 +1,6 @@
-﻿namespace QL_Csharp
+﻿using ICSharpCode.TextEditor;
+
+namespace QL_Csharp
 {
     partial class Form1
     {
@@ -29,12 +31,11 @@
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.checkBoxRealTime = new System.Windows.Forms.CheckBox();
             this.labelDemo = new System.Windows.Forms.Label();
             this.comboBoxDemos = new System.Windows.Forms.ComboBox();
             this.checkBoxTypeCheck = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.textBoxSource = new System.Windows.Forms.RichTextBox();
+            this.textBoxSource = new ICSharpCode.TextEditor.TextEditorControl();
             this.buttonGenerate = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.textBoxOutput = new System.Windows.Forms.TextBox();
@@ -55,7 +56,6 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.checkBoxRealTime);
             this.splitContainer1.Panel1.Controls.Add(this.labelDemo);
             this.splitContainer1.Panel1.Controls.Add(this.comboBoxDemos);
             this.splitContainer1.Panel1.Controls.Add(this.checkBoxTypeCheck);
@@ -68,18 +68,6 @@
             this.splitContainer1.Size = new System.Drawing.Size(800, 627);
             this.splitContainer1.SplitterDistance = 362;
             this.splitContainer1.TabIndex = 1;
-            // 
-            // checkBoxRealTime
-            // 
-            this.checkBoxRealTime.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkBoxRealTime.AutoSize = true;
-            this.checkBoxRealTime.Location = new System.Drawing.Point(109, 340);
-            this.checkBoxRealTime.Name = "checkBoxRealTime";
-            this.checkBoxRealTime.Size = new System.Drawing.Size(67, 17);
-            this.checkBoxRealTime.TabIndex = 5;
-            this.checkBoxRealTime.Text = "Realtime";
-            this.checkBoxRealTime.UseVisualStyleBackColor = true;
             // 
             // labelDemo
             // 
@@ -99,7 +87,7 @@
             this.comboBoxDemos.Name = "comboBoxDemos";
             this.comboBoxDemos.Size = new System.Drawing.Size(144, 21);
             this.comboBoxDemos.TabIndex = 3;
-            this.comboBoxDemos.SelectedValueChanged += new System.EventHandler(this.comboBoxDemos_SelectedValueChanged);
+            this.comboBoxDemos.SelectedIndexChanged += new System.EventHandler(this.comboBoxDemos_SelectedValueChanged);
             // 
             // checkBoxTypeCheck
             // 
@@ -107,7 +95,7 @@
             this.checkBoxTypeCheck.AutoSize = true;
             this.checkBoxTypeCheck.Checked = true;
             this.checkBoxTypeCheck.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxTypeCheck.Location = new System.Drawing.Point(182, 340);
+            this.checkBoxTypeCheck.Location = new System.Drawing.Point(106, 340);
             this.checkBoxTypeCheck.Name = "checkBoxTypeCheck";
             this.checkBoxTypeCheck.Size = new System.Drawing.Size(129, 17);
             this.checkBoxTypeCheck.TabIndex = 2;
@@ -129,15 +117,13 @@
             // 
             // textBoxSource
             // 
-            this.textBoxSource.AcceptsTab = true;
-            this.textBoxSource.DetectUrls = false;
             this.textBoxSource.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBoxSource.Font = new System.Drawing.Font("Lucida Console", 9.75F);
+            this.textBoxSource.IsReadOnly = false;
             this.textBoxSource.Location = new System.Drawing.Point(3, 16);
             this.textBoxSource.Name = "textBoxSource";
             this.textBoxSource.Size = new System.Drawing.Size(770, 299);
             this.textBoxSource.TabIndex = 1;
-            this.textBoxSource.Text = "";
+            this.textBoxSource.VRulerRow = 0;
             this.textBoxSource.TextChanged += new System.EventHandler(this.textBoxSource_TextChanged);
             // 
             // buttonGenerate
@@ -203,8 +189,7 @@
         private System.Windows.Forms.CheckBox checkBoxTypeCheck;
         private System.Windows.Forms.ComboBox comboBoxDemos;
         private System.Windows.Forms.Label labelDemo;
-        private System.Windows.Forms.RichTextBox textBoxSource;
-        private System.Windows.Forms.CheckBox checkBoxRealTime;
+        private ICSharpCode.TextEditor.TextEditorControl textBoxSource;
     }
 }
 

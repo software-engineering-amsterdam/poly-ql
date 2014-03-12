@@ -71,6 +71,7 @@
     </Compile>
     <Compile Include="Statements\IfStatement.cs" />
     <Compile Include="TypeChecker\ListEqualityComparer.cs" />
+    <Compile Include="TypeChecker\NotConverter.cs" />
     <Compile Include="Types\BoolType.cs" />
     <Compile Include="Expressions\Unary\Identifier.cs" />
     <Compile Include="Types\NumberType.cs" />

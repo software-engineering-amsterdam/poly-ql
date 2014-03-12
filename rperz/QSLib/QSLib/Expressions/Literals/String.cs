@@ -13,7 +13,7 @@ namespace QSLib.Expressions.Literals
             this._linenr = linenr;
         }
 
-        public string GetValue()
+        public object GetValue()
         {
             return this._value;
         }

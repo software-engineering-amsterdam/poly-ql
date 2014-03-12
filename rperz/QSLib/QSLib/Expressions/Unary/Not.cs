@@ -10,6 +10,11 @@ namespace QSLib.Expressions.Unary
             base._operator = "!";
         }
 
+        public object GetValue()
+        {
+            return !(bool)this._expr.GetValue();
+        }
+
         public override bool CheckType(TypeChecker checker)
         {
             bool retVal = base.CheckType(checker);

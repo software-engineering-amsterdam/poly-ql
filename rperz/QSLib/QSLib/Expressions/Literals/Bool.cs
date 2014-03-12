@@ -12,7 +12,7 @@ namespace QSLib.Expressions.Literals
             this._linenr = linenr;
         }
 
-        public bool GetValue()
+        public object GetValue()
         {
             return this._value;
         }

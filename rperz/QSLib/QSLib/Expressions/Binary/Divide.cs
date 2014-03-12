@@ -9,6 +9,11 @@ namespace QSLib.Expressions.Binary
             base._operator = "/";
         }
 
+        public object GetValue()
+        {
+            return (int)this._left.GetValue() / (int)this._right.GetValue();
+        }
+
         public override QSType Type
         {
             get { return new NumberType(); }

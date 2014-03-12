@@ -23,6 +23,16 @@ namespace QSLib
             return checker;
         }
 
+        public Identifier TryGetValue(Identifier identifier)
+        {
+            if (this._identifiers.Contains(identifier))
+            {
+                return this._identifiers.Find(id => id.Name.Equals(identifier.Name));
+            }
+
+            return null;
+        }
+
         public bool TryDeclare(Expressions.Unary.Identifier identifier, int lineNr)
         {
             if (this._identifiers.Contains(identifier))

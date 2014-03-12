@@ -2,7 +2,7 @@ package org.uva.sea.ql.evaluate;
 
 public class IntegerValue extends Value{
 
-	private final Integer value;
+	private final int value;
 	
 	public IntegerValue(Integer value){
 		this.value = value;

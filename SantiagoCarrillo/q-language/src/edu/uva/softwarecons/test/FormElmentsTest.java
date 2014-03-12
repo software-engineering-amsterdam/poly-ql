@@ -31,7 +31,7 @@ public class FormElmentsTest {
     @Test
     public void isFormQuestionSetProperlyTest(){
         List<Question> questionList = new ArrayList<Question>();
-        Question question = new BasicQuestion("", "", new IntegerType(0));
+        Question question = new BasicQuestion("", "", new IntegerType());
         questionList.add(question);
         Form form = new Form(null, questionList);
         assertTrue(form.getQuestions().size() == questionList.size());
@@ -61,9 +61,9 @@ public class FormElmentsTest {
 
     @Test
     public void numericTypeEqualsTest(){
-        DecimalType decimalType = new DecimalType(0);
-        IntegerType integerType = new IntegerType(0);
-        MoneyType moneyType = new MoneyType(new BigDecimal(0));
+        DecimalType decimalType = new DecimalType();
+        IntegerType integerType = new IntegerType();
+        MoneyType moneyType = new MoneyType();
         assertTrue(decimalType.equals(integerType));
         assertTrue(decimalType.equals(moneyType));
         assertTrue(integerType.equals(moneyType));
@@ -71,22 +71,22 @@ public class FormElmentsTest {
 
     @Test
     public void stringTypeEqualsTest(){
-        StringType stringType = new StringType(null);
-        StringType stringType2 = new StringType(null);
+        StringType stringType = new StringType();
+        StringType stringType2 = new StringType();
         assertTrue(stringType.equals(stringType2));
     }
 
     @Test
     public void booleanTypeEqualsTest(){
-        BooleanType booleanType = new BooleanType(false);
-        BooleanType booleanType2 = new BooleanType(false);
+        BooleanType booleanType = new BooleanType();
+        BooleanType booleanType2 = new BooleanType();
         assertTrue(booleanType.equals(booleanType2));
     }
 
     @Test
     public void DateTypeEqualsTest(){
-        DateType dateType = new DateType(null);
-        DateType dateType2 = new DateType(null);
+        DateType dateType = new DateType();
+        DateType dateType2 = new DateType();
         assertTrue(dateType.equals(dateType2));
     }
 }

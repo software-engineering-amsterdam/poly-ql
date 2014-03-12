@@ -4,7 +4,6 @@ import edu.uva.softwarecons.model.expression.BinaryExpression;
 import edu.uva.softwarecons.model.expression.Expression;
 import edu.uva.softwarecons.model.type.Type;
 import edu.uva.softwarecons.visitor.expression.IExpressionElementVisitor;
-import edu.uva.softwarecons.visitor.form.IFormElementVisitor;
 
 /**
  * Falconlabs
@@ -18,12 +17,12 @@ public class EqualExpression extends BinaryExpression{
     }
 
     @Override
-    public Type eval() {
+    public Expression eval() {
         return null;
     }
 
     @Override
-    public void accept(IExpressionElementVisitor visitor) {
-        visitor.visitEqualExpression(this);
+    public Type accept(IExpressionElementVisitor visitor) {
+        return visitor.visitEqualExpression(this);
     }
 }

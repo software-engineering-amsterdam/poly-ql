@@ -1,6 +1,5 @@
 package edu.uva.softwarecons.model.type;
 
-import edu.uva.softwarecons.visitor.form.IFormElement;
 import edu.uva.softwarecons.visitor.type.ITypeElement;
 
 /**
@@ -8,9 +7,6 @@ import edu.uva.softwarecons.visitor.type.ITypeElement;
  * User: sancarbar
  * Date: 2/19/14
  */
-public abstract class Type implements ITypeElement {
-
-
-    public abstract Object getValue();
+public interface Type extends ITypeElement {
 
 }

@@ -14,8 +14,16 @@ import org.uva.sea.ql.ast.statement.IfStatement;
 import org.uva.sea.ql.ast.statement.Question;
 import org.uva.sea.ql.ast.statement.Questions;
 import org.uva.sea.ql.ast.statement.Statement;
+import org.uva.sea.ql.ast.type.BooleanType;
 import org.uva.sea.ql.ast.type.MissingType;
 import org.uva.sea.ql.ast.type.Type;
+
+import problems.CompatibleError;
+import problems.DuplicateLabelWarning;
+import problems.NotDeclaredError;
+import problems.Problems;
+import problems.RedeclaredWarning;
+import problems.TypeError;
 
 public class StatementChecker implements StatementVisitor {
 
@@ -30,6 +38,7 @@ public class StatementChecker implements StatementVisitor {
 		labels = new ArrayList<StringLiteral>();
 	}
 	
+	//TODO I do not get the purpose of this function
 	private static Boolean expressionCheck(TypeEnvironment environment,
 			Problems problems, Expression expression) {
 		
@@ -37,23 +46,19 @@ public class StatementChecker implements StatementVisitor {
 		
 	}
 	
-	private void checkIdentifier(Identifier id, Type type) {
-		if(environment.isDeclared(id)){
-			if(environment.ofType(id).equals(type)){
-				problems.addWarning("Redeclaration of Identifier " +  id.toString());
-			}
-			else{
-				problems.addWarning("Identifier " + id.toString() + " is already declared with type " + environment.ofType(id).toString());
-			}
+	//TODO I think it should go with expressions
+	private void checkIdentifier(Identifier identifier, Type type) {
+		if(environment.isDeclared(identifier)){
+			problems.addWarning(new RedeclaredWarning(identifier, type));
 		}
 		else{
-			environment.declareIdentifier(id, type);
+			environment.declareIdentifier(identifier, type);
 		}
 	}
 	
 	private void checkLabel(StringLiteral label){
 		if(labels.contains(label)){
-			problems.addWarning("question [" + label.toString() + "] already exists");
+			problems.addWarning(new DuplicateLabelWarning(label));
 		}
 		else{
 			labels.add(label);
@@ -73,8 +78,9 @@ public class StatementChecker implements StatementVisitor {
 		checkIdentifier(id,type);
 				
 		if(!expression.typeOf(environment).isCompatibleWith(id.typeOf(environment))){
-			problems.addError("Identifier " + id.toString() + " is not compatible with the expression type " 
-					+ expression.typeOf(environment).toString());
+			problems.addError(new CompatibleError(id,expression));
+					//"Identifier " + id.toString() + " is not compatible with the expression type " 
+					//+ expression.typeOf(environment).toString());
 		}
 	}
 
@@ -100,17 +106,17 @@ public class StatementChecker implements StatementVisitor {
 
 	private void checkConditional(Expression condition) {
 		if(condition.typeOf(environment).equals(UNDEFINED)){
-			problems.addError(condition.toString() + " is not declared");
+			problems.addError(new NotDeclaredError(condition));
 		}
 		else if(!condition.typeOf(environment).isCompatibleWithBoolean()){
-			problems.addError("The condition " + condition.toString() + " is not of type boolean");
+			problems.addError(new TypeError(condition, new BooleanType()));
 		}
 	}
 
 	public void visit(IfElseStatement ifElseConditional) {
 		Expression condition = ifElseConditional.getConditional();
-		Questions ifSet = ifElseConditional.getIfQuestionSet();
-		Questions elseSet = ifElseConditional.getElseQuestionSet();
+		Questions ifSet = ifElseConditional.getIfBody();
+		Questions elseSet = ifElseConditional.getElseBody();
 
 		new ExpressionChecker(environment, problems);
 		
@@ -127,7 +133,7 @@ public class StatementChecker implements StatementVisitor {
 	}
 
 	public void visit(Questions body) {
-		for(Statement s : body.getQuestions()){
+		for(Statement s : body){
 			s.accept(this);
 		}
 		

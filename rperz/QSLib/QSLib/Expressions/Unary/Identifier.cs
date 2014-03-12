@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using QSLib.Types;
+using QSLib.Expressions.Literals;
 
 namespace QSLib.Expressions.Unary
 {
-    public class Identifier : Unary_Expression, IEquatable<Identifier>
+    public abstract class Identifier : Unary_Expression, IEquatable<Identifier>
 
     {
         private String _name;
+        private bool _isInput = true;
 
         public Identifier(String name, int linenr)
             : base(null, linenr)
@@ -20,6 +22,7 @@ namespace QSLib.Expressions.Unary
             : base(expr, linenr)
         {
             this._name = name;
+            this._isInput = false;
             this._expr = expr;
             this._linenr = linenr;
         }
@@ -36,6 +39,7 @@ namespace QSLib.Expressions.Unary
             : base(expr, linenr)
         {
             this._name = name;
+            this._isInput = false;
             this._expr = expr;
             this._linenr = linenr;
             this._type = type;
@@ -64,11 +68,16 @@ namespace QSLib.Expressions.Unary
         {
             bool retVal = true;
             if (this._type == null)
+            {
                 this._type = checker.TryGetType(this, this._linenr);
+                this._expr = checker.TryGetValue(this);
+            }
             else
                 retVal &= checker.TryDeclare(this, this._linenr);
+
             if(this._type == null)
                 retVal &= false;
+
             retVal &= base.CheckType(checker);
             return retVal;
         }
@@ -96,5 +105,46 @@ namespace QSLib.Expressions.Unary
         {
             return this._name.Equals(other._name);
         }
+
+        public object GetValue()
+        {
+            return this._expr.GetValue();
+        }
+
+
+        /* tradeoff: I see two options, add these setters or maintain value outside this class,
+         * which would destroy all benefits from databinding
+         */
+
+        public string SetStringValue
+        {
+            set
+            {
+                this._expr = new QSString(value, 1);
+            }
+        }
+
+        public int SetNumberValue
+        {
+            set
+            {
+                this._expr = new QSNumber(value, 1);
+            }
+        }
+
+        public bool SetBooleanValue
+        {
+            set
+            {
+                this._expr = new QSBoolean(value, 1);
+            }
+        }
+
+
+        public void CreateGUI(GUIBuilder guiBuilder)
+        {
+            guiBuilder.CreateIO(this._type, this._isInput);
+        }
+
     }
 }

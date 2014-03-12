@@ -2,28 +2,9 @@ package net.iplantevin.ql.gui.main;
 
 import net.iplantevin.ql.ast.LineInfo;
 import net.iplantevin.ql.ast.expressions.Expression;
-import net.iplantevin.ql.ast.expressions.Par;
-import net.iplantevin.ql.ast.expressions.literals.Bool;
 import net.iplantevin.ql.ast.expressions.literals.ID;
-import net.iplantevin.ql.ast.expressions.literals.Int;
 import net.iplantevin.ql.ast.expressions.literals.Str;
-import net.iplantevin.ql.ast.expressions.operators.Add;
-import net.iplantevin.ql.ast.expressions.operators.And;
-import net.iplantevin.ql.ast.expressions.operators.Div;
-import net.iplantevin.ql.ast.expressions.operators.EQ;
-import net.iplantevin.ql.ast.expressions.operators.GEQ;
-import net.iplantevin.ql.ast.expressions.operators.GT;
-import net.iplantevin.ql.ast.expressions.operators.LEQ;
-import net.iplantevin.ql.ast.expressions.operators.LT;
-import net.iplantevin.ql.ast.expressions.operators.Mul;
-import net.iplantevin.ql.ast.expressions.operators.NEQ;
-import net.iplantevin.ql.ast.expressions.operators.Neg;
-import net.iplantevin.ql.ast.expressions.operators.Not;
-import net.iplantevin.ql.ast.expressions.operators.Or;
-import net.iplantevin.ql.ast.expressions.operators.Pos;
-import net.iplantevin.ql.ast.expressions.operators.Sub;
 import net.iplantevin.ql.ast.form.Form;
-import net.iplantevin.ql.ast.form.FormCollection;
 import net.iplantevin.ql.ast.statements.Block;
 import net.iplantevin.ql.ast.statements.Computation;
 import net.iplantevin.ql.ast.statements.If;
@@ -33,13 +14,17 @@ import net.iplantevin.ql.ast.statements.Statement;
 import net.iplantevin.ql.ast.types.BooleanType;
 import net.iplantevin.ql.ast.types.IntegerType;
 import net.iplantevin.ql.ast.types.StringType;
-import net.iplantevin.ql.ast.visitors.IASTVisitor;
+import net.iplantevin.ql.ast.visitors.IStatementVisitor;
 import net.iplantevin.ql.evaluation.EvaluationVisitor;
 import net.iplantevin.ql.evaluation.Value;
-import net.iplantevin.ql.evaluation.ValueStore;
 import net.iplantevin.ql.gui.widgets.AbstractFormComponent;
-import net.iplantevin.ql.gui.widgets.AbstractFormComponentDelegate;
-import net.iplantevin.ql.gui.widgets.WidgetContainer;
+import net.iplantevin.ql.gui.widgets.AbstractWidgetContainer;
+import net.iplantevin.ql.gui.widgets.ComputationContainer;
+import net.iplantevin.ql.gui.widgets.ContainerComponent;
+import net.iplantevin.ql.gui.widgets.IfComponent;
+import net.iplantevin.ql.gui.widgets.IfElseComponent;
+import net.iplantevin.ql.gui.widgets.QuestionContainer;
+import org.antlr.v4.runtime.misc.OrderedHashSet;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -48,224 +33,175 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * A window for a single form. Builds itself by visiting a given Form.
  *
  * @author Ivan
  */
-public class FormFrame extends JFrame implements IASTVisitor<AbstractFormComponent>,
-        AbstractFormComponentDelegate {
-    private final ValueStore values;
+public class FormFrame extends JFrame implements IStatementVisitor<AbstractFormComponent> {
     private final EvaluationVisitor evaluator;
-    private final JPanel formPanel;
+    private final JPanel topPanel;
+    private final FormEventManager eventManager;
+    private final Set<AbstractFormComponent> formComponents;
+    private final int preferredLabelWidth = 500;
+    private final Dimension preferredWidgetSize = new Dimension(150, 25);
 
     /**
-     * Constructs a JFrame for a given Form.
+     * Constructs a form window for the given Form.
+     *
+     * @param form the form to build the interface for.
      */
     public FormFrame(Form form) {
-        values = new ValueStore();
-        evaluator = new EvaluationVisitor(values);
-        formPanel = new JPanel();
+        evaluator = new EvaluationVisitor();
+        topPanel = new ContainerComponent(this);
+        eventManager = new FormEventManager(evaluator);
+        formComponents = new OrderedHashSet();
 
         initUI(form);
     }
 
     /**
      * Creates necessary panels and sets various settings on them and on the
-     * FormFrame itself. Also disables horizontal scrolling.
+     * FormFrame itself. Also disables horizontal scrolling and initializes
+     * the values of the active (visible) form components.
+     *
+     * @param form the Form to visit.
      */
     private void initUI(Form form) {
         // JFrame settings.
         setTitle(form.getName());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        setLocationRelativeTo(null);
 
         // This disables horizontal scrolling (and sets a width of 850px).
         addComponentListener(new ComponentAdapter() {
-
             @Override
             public void componentResized(ComponentEvent e) {
                 setSize(new Dimension(850, getHeight()));
                 super.componentResized(e);
             }
-
         });
 
-        // Settings for panel that will hold all form questions.
-        formPanel.setAlignmentY(Component.TOP_ALIGNMENT);
-        formPanel.setLayout(new BoxLayout(formPanel, BoxLayout.Y_AXIS));
-
-        // Scrolling pane settings
+        // Scrolling pane settings.
         JScrollPane formScrollPane = new JScrollPane();
         formScrollPane.setBorder(new EmptyBorder(new Insets(5, 5, 5, 5)));
-        formScrollPane.getViewport().add(formPanel);
+        formScrollPane.getViewport().add(topPanel);
         add(formScrollPane);
 
-        // Starts the creation of questions
-        form.accept(this);
+        // Adds all form elements to the top level JPanel by visiting the Form.
+        topPanel.add(visit(form));
+
+        // Initializes values of all active (visible) components.
+        initValues();
+
         pack();
     }
 
+    /**
+     * Initializes values of all active (visible) components.
+     */
+    public void initValues() {
+        for (AbstractFormComponent component : formComponents) {
+            if (component.isActive()) {
+                component.initValue();
+            }
+        }
+    }
+
+    /**
+     * Shorthand to EvaluationVisitor method.
+     */
     public Value evaluate(Expression expression) {
         return evaluator.evaluate(expression);
     }
 
-    @Override
-    public void subscribe(String identifier, AbstractFormComponent formComponent) {
-        // Todo: implement.
+    /**
+     * Shorthand to EvaluationVisitor method.
+     */
+    public void storeValue(String identifier, Value value) {
+        evaluator.storeValue(identifier, value);
     }
 
-    @Override
-    public void registerValueChange(String identifier, Value value) {
-        // Todo: implement.
+    /**
+     * Shorthand to FormEventManager method.
+     */
+    public void subscribe(AbstractFormComponent formComponent, Set<String> ids) {
+        eventManager.subscribe(formComponent, ids);
+    }
+
+    /**
+     * Shorthand to FormEventManager method.
+     */
+    public void registerValueChange(AbstractWidgetContainer source, Value value) {
+        eventManager.scheduleEvaluation(source, value);
+    }
+
+    public int getPreferredLabelWidth() {
+        return preferredLabelWidth;
+    }
+
+    public Dimension getPreferredWidgetSize() {
+        return preferredWidgetSize;
     }
 
     ////////////////////////////////////////////////////////////////////////////
-    // Visitor methods.
+    // Visitor methods
     ////////////////////////////////////////////////////////////////////////////
-    @Override
-    public AbstractFormComponent visit(FormCollection formCollection) {
-        // Should not be needed.
-        return null;
-    }
-
-    @Override
     public AbstractFormComponent visit(Form form) {
-        form.getBody().accept(this);
-        return null;
+        return form.getBody().accept(this);
     }
 
+    /**
+     * The components gathered by visiting a Block node are put in a
+     * ContainerComponent.
+     *
+     * @param block an AST Block node.
+     */
     @Override
     public AbstractFormComponent visit(Block block) {
+        ContainerComponent components = new ContainerComponent(this);
+
         for (Statement statement : block.getStatements()) {
-            statement.accept(this);
+            AbstractFormComponent component = statement.accept(this);
+            formComponents.add(component);
+            components.addOne(component);
         }
-        return null;
+        return components;
     }
 
     @Override
     public AbstractFormComponent visit(Computation computation) {
-        return null;
+        AbstractFormComponent component = new ComputationContainer(computation, this);
+        formComponents.add(component);
+        return component;
     }
 
     @Override
     public AbstractFormComponent visit(If ifStat) {
-        return null;
+        AbstractFormComponent ifBody = ifStat.getBody().accept(this);
+        Expression condition = ifStat.getCondition();
+        return new IfComponent(ifBody, condition, this);
     }
 
     @Override
     public AbstractFormComponent visit(IfElse ifElse) {
-        return null;
+        AbstractFormComponent ifBody = ifElse.getBody().accept(this);
+        AbstractFormComponent elseBody = ifElse.getElseBody().accept(this);
+        Expression condition = ifElse.getCondition();
+        return new IfElseComponent(ifBody, elseBody, condition, this);
     }
 
     @Override
     public AbstractFormComponent visit(Question question) {
-        WidgetContainer widget = new WidgetContainer(question, this);
-        formPanel.add(widget);
-        return null;
+        AbstractFormComponent component = new QuestionContainer(question, this);
+        formComponents.add(component);
+        return component;
     }
 
-    @Override
-    public AbstractFormComponent visit(Par par) {
-        return null;
-    }
-
-    @Override
-    public AbstractFormComponent visit(Add add) {
-        return null;
-    }
-
-    @Override
-    public AbstractFormComponent visit(And and) {
-        return null;
-    }
-
-    @Override
-    public AbstractFormComponent visit(Div div) {
-        return null;
-    }
-
-    @Override
-    public AbstractFormComponent visit(EQ eq) {
-        return null;
-    }
-
-    @Override
-    public AbstractFormComponent visit(GEQ geq) {
-        return null;
-    }
-
-    @Override
-    public AbstractFormComponent visit(GT gt) {
-        return null;
-    }
-
-    @Override
-    public AbstractFormComponent visit(LEQ leq) {
-        return null;
-    }
-
-    @Override
-    public AbstractFormComponent visit(LT lt) {
-        return null;
-    }
-
-    @Override
-    public AbstractFormComponent visit(Mul mul) {
-        return null;
-    }
-
-    @Override
-    public AbstractFormComponent visit(Neg neg) {
-        return null;
-    }
-
-    @Override
-    public AbstractFormComponent visit(NEQ neq) {
-        return null;
-    }
-
-    @Override
-    public AbstractFormComponent visit(Not not) {
-        return null;
-    }
-
-    @Override
-    public AbstractFormComponent visit(Or or) {
-        return null;
-    }
-
-    @Override
-    public AbstractFormComponent visit(Pos pos) {
-        return null;
-    }
-
-    @Override
-    public AbstractFormComponent visit(Sub sub) {
-        return null;
-    }
-
-    @Override
-    public AbstractFormComponent visit(Bool bool) {
-        return null;
-    }
-
-    @Override
-    public AbstractFormComponent visit(ID id) {
-        return null;
-    }
-
-    @Override
-    public AbstractFormComponent visit(Int integer) {
-        return null;
-    }
-
-    @Override
-    public AbstractFormComponent visit(Str str) {
-        return null;
-    }
-
+    /**
+     * A small demo form.
+     */
     public static void main(String[] args) {
 
         SwingUtilities.invokeLater(new Runnable() {
@@ -276,23 +212,39 @@ public class FormFrame extends JFrame implements IASTVisitor<AbstractFormCompone
                 List<Statement> statements = new ArrayList<Statement>();
 
                 ID id1 = new ID("currentAge", lineInfo);
-                Str label1 = new Str("What is your age?", lineInfo);
+                Str label1 = new Str("\"What is your age?\"", lineInfo);
                 Question question1 = new Question(id1, label1, new IntegerType(), lineInfo);
                 statements.add(question1);
 
                 ID id2 = new ID("lastName", lineInfo);
-                Str label2 = new Str("What is your last name?", lineInfo);
+                Str label2 = new Str("\"What is your last name?\"", lineInfo);
                 Question question2 = new Question(id2, label2, new StringType(), lineInfo);
                 statements.add(question2);
 
                 ID id3 = new ID("married", lineInfo);
-                Str label3 = new Str("Are you married?", lineInfo);
+                Str label3 = new Str("\"Are you married?\"", lineInfo);
                 Question question3 = new Question(id3, label3, new BooleanType(), lineInfo);
                 statements.add(question3);
 
+                ID id4 = new ID("ownsHouse", lineInfo);
+                Str label4 = new Str("\"Do you own a house?\"", lineInfo);
+                Question question4 = new Question(id4, label4, new BooleanType(), lineInfo);
+
                 Block body = new Block(statements, lineInfo);
 
-                FormFrame frame = new FormFrame(new Form("Test form", body, lineInfo));
+                ID compId1 = new ID("ownsHouseComp", lineInfo);
+                Str compLabel1 = new Str("\"Whether you own a house:\"", lineInfo);
+                Computation computation1 = new Computation(compId1,
+                        compLabel1, new BooleanType(), id4, lineInfo);
+
+                List<Statement> statements2 = new ArrayList<Statement>();
+                statements2.add(question4);
+                statements2.add(body);
+                statements2.add(computation1);
+
+                Block body2 = new Block(statements2, lineInfo);
+
+                FormFrame frame = new FormFrame(new Form("Test form", body2, lineInfo));
                 frame.setVisible(true);
             }
         });
