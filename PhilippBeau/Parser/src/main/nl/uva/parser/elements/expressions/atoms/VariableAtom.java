@@ -7,7 +7,7 @@ import main.nl.uva.parser.elements.errors.ValidationError;
 import main.nl.uva.parser.elements.errors.VariableNotFoundError;
 import main.nl.uva.parser.elements.expressions.Expression;
 import main.nl.uva.parser.elements.expressions.Variable;
-import main.nl.uva.parser.elements.type.Type;
+import main.nl.uva.parser.elements.type.Value;
 
 public class VariableAtom extends Expression {
 
@@ -41,7 +41,7 @@ public class VariableAtom extends Expression {
         if (_linkedVariable == null) {
             valid.add(new VariableNotFoundError(_variableName));
         } else {
-            _type = _linkedVariable.getType();
+            _value = _linkedVariable.getType();
             _linkedVariable.setLinkedVariable(this);
         }
 
@@ -49,12 +49,7 @@ public class VariableAtom extends Expression {
     }
 
     @Override
-    public Type getType() {
-        return _type;
-    }
-
-    @Override
-    public Object getResult() {
-        return _linkedVariable.getResult();
+    public Value getType() {
+        return _linkedVariable.getType();
     }
 }

@@ -10,7 +10,7 @@ import main.nl.uva.parser.elements.errors.InvalidTypeError;
 import main.nl.uva.parser.elements.errors.ValidationError;
 import main.nl.uva.parser.elements.expressions.Expression;
 import main.nl.uva.parser.elements.expressions.Variable;
-import main.nl.uva.parser.elements.type.Bool;
+import main.nl.uva.parser.elements.type.Value;
 
 public class IFStatement extends BlockStatement {
 
@@ -47,7 +47,7 @@ public class IFStatement extends BlockStatement {
             return expression;
         }
 
-        if (!(_expression.getType() instanceof Bool)) {
+        if (!(_expression.getType().isTypeOf(Value.Type.BOOLEAN))) {
             expression.add(new InvalidTypeError(this.toString()));
             return expression;
         }
@@ -73,7 +73,7 @@ public class IFStatement extends BlockStatement {
             layout.add(child.getLayout());
         }
 
-        layout.setVisible((Boolean) _expression.getResult());
+        // layout.setVisible((Boolean) _expression.getResult());
 
         return layout;
     }

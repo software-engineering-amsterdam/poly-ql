@@ -6,19 +6,16 @@ import java.util.List;
 import main.nl.uva.parser.elements.errors.ValidationError;
 import main.nl.uva.parser.elements.expressions.Expression;
 import main.nl.uva.parser.elements.type.Money;
-import main.nl.uva.parser.elements.type.Type;
+import main.nl.uva.parser.elements.type.Value;
 
 public class MoneyAtom extends Expression {
-
-    private final double _value;
 
     public MoneyAtom() {
         this("0.0");
     }
 
     public MoneyAtom(final String value) {
-        _type = new Money();
-        _value = Double.parseDouble(value);
+        _value = new Money(Double.parseDouble(value));
     }
 
     @Override
@@ -32,12 +29,7 @@ public class MoneyAtom extends Expression {
     }
 
     @Override
-    public Type getType() {
-        return _type;
-    }
-
-    @Override
-    public Object getResult() {
+    public Value getType() {
         return _value;
     }
 }

@@ -5,10 +5,10 @@ import java.awt.Component;
 import main.nl.uva.parser.elements.expressions.AdvancedExpression;
 import main.nl.uva.parser.elements.expressions.Expression;
 
-public class Invalid extends Type {
+public class Invalid extends Value {
 
     public Invalid() {
-        super(Type.Of.INVALID);
+        super(Value.Type.INVALID);
     }
 
     @Override
@@ -17,28 +17,38 @@ public class Invalid extends Type {
     }
 
     @Override
-    public Type visit(final Expression right, final AdvancedExpression expression) {
+    public boolean isInvalid() {
+        return true;
+    }
+
+    @Override
+    public Value visit(final Expression right, final AdvancedExpression expression) {
         return new Invalid();
     }
 
     @Override
-    public Type accept(final Bool left, final AdvancedExpression expression) {
+    public Value accept(final Bool left, final AdvancedExpression expression) {
         return new Invalid();
     }
 
     @Override
-    public Type accept(final Money left, final AdvancedExpression expression) {
+    public Value accept(final Money left, final AdvancedExpression expression) {
         return new Invalid();
     }
 
     @Override
-    public Type accept(final Text left, final AdvancedExpression expression) {
+    public Value accept(final Text left, final AdvancedExpression expression) {
         return new Invalid();
     }
 
     @Override
     public Component getLayout() {
         return null;
+    }
+
+    @Override
+    public boolean visitType(final Value type) {
+        return false;
     }
 
 }

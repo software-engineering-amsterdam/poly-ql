@@ -4,15 +4,15 @@ import java.util.List;
 
 import main.nl.uva.parser.elements.ParserElement;
 import main.nl.uva.parser.elements.errors.ValidationError;
-import main.nl.uva.parser.elements.type.Type;
+import main.nl.uva.parser.elements.type.Value;
 
 public abstract class Expression extends ParserElement {
 
-    protected Type _type = null;
+    protected Value _value = null;
 
     public Expression() {}
 
-    public abstract Type getType();
+    public abstract Value getType();
 
     @Override
     public abstract List<ValidationError> validate();
@@ -25,6 +25,4 @@ public abstract class Expression extends ParserElement {
 
         return null;
     }
-
-    public abstract Object getResult();
 }

@@ -3,7 +3,7 @@ package main.nl.uva.parser.elements.expressions;
 import java.util.List;
 
 import main.nl.uva.parser.elements.errors.ValidationError;
-import main.nl.uva.parser.elements.type.Type;
+import main.nl.uva.parser.elements.type.Value;
 
 public class NotExpression extends Expression {
 
@@ -16,7 +16,7 @@ public class NotExpression extends Expression {
     }
 
     @Override
-    public Type getType() {
+    public Value getType() {
         return _expression.getType();
     }
 
@@ -24,10 +24,4 @@ public class NotExpression extends Expression {
     public List<ValidationError> validate() {
         return _expression.validate();
     }
-
-    @Override
-    public Object getResult() {
-        return !(Boolean) _expression.getResult();
-    }
-
 }

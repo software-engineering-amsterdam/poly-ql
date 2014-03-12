@@ -1,5 +1,8 @@
 package main.nl.uva.parser.elements.expressions;
 
+import main.nl.uva.parser.elements.type.Bool;
+import main.nl.uva.parser.elements.type.Value;
+
 public class AndExpression extends AdvancedExpression {
 
     public AndExpression(final Expression left, final Expression right) {
@@ -7,12 +10,12 @@ public class AndExpression extends AdvancedExpression {
     }
 
     @Override
-    public String toString() {
-        return _left + " && " + _right;
+    public Value calculateType(final Bool left, final Bool right) {
+        return new Bool(left.getValue() && right.getValue());
     }
 
     @Override
-    public Object getResult() {
-        return (Boolean) _left.getResult() && (Boolean) _right.getResult();
+    public String toString() {
+        return _left + " && " + _right;
     }
 }

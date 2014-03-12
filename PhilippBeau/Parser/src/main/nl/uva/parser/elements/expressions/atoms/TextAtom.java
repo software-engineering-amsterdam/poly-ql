@@ -6,19 +6,16 @@ import java.util.List;
 import main.nl.uva.parser.elements.errors.ValidationError;
 import main.nl.uva.parser.elements.expressions.Expression;
 import main.nl.uva.parser.elements.type.Text;
-import main.nl.uva.parser.elements.type.Type;
+import main.nl.uva.parser.elements.type.Value;
 
 public class TextAtom extends Expression {
-
-    private final String _value;
 
     public TextAtom() {
         this("");
     }
 
     public TextAtom(final String value) {
-        _type = new Text();
-        _value = value;
+        _value = new Text(value);
     }
 
     @Override
@@ -32,12 +29,7 @@ public class TextAtom extends Expression {
     }
 
     @Override
-    public Type getType() {
-        return _type;
-    }
-
-    @Override
-    public Object getResult() {
+    public Value getType() {
         return _value;
     }
 }

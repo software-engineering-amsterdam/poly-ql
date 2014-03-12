@@ -9,15 +9,15 @@ import main.nl.uva.parser.elements.expressions.atoms.MoneyAtom;
 import main.nl.uva.parser.elements.expressions.atoms.TextAtom;
 import main.nl.uva.parser.elements.statements.Statement;
 
-public abstract class Type {
+public abstract class Value {
 
-    public enum Of {
+    public enum Type {
         MONEY,
         BOOLEAN,
         TEXT,
         INVALID;
 
-        public static Expression getAtomFor(final Type.Of type) {
+        public static Expression getAtomFor(final Value.Type type) {
             switch (type) {
             case MONEY:
                 return new MoneyAtom();
@@ -33,7 +33,7 @@ public abstract class Type {
             }
         }
 
-        public Type getTypeObject() {
+        public Value getTypeObject() {
             switch (this) {
             case MONEY:
                 return new Money();
@@ -52,9 +52,9 @@ public abstract class Type {
 
     protected Statement _expression = null;
 
-    private final Type.Of _typeOf;
+    private final Value.Type _typeOf;
 
-    public Type(final Type.Of typeOf) {
+    public Value(final Value.Type typeOf) {
         _typeOf = typeOf;
     }
 
@@ -63,16 +63,38 @@ public abstract class Type {
         return _typeOf.toString();
     }
 
+    public boolean isTypeOf(final Type type) {
+        return _typeOf.equals(type);
+    }
+
     public abstract Expression getAtom();
 
-    public abstract Type visit(Expression right, AdvancedExpression expression);
+    public abstract Value visit(Expression right, AdvancedExpression expression);
 
-    public abstract Type accept(Bool left, AdvancedExpression expression);
+    public abstract Value accept(Bool left, AdvancedExpression expression);
 
-    public abstract Type accept(Money left, AdvancedExpression expression);
+    public abstract Value accept(Money left, AdvancedExpression expression);
 
-    public abstract Type accept(Text left, AdvancedExpression expression);
+    public abstract Value accept(Text left, AdvancedExpression expression);
 
     public abstract Component getLayout();
+
+    public boolean isInvalid() {
+        return false;
+    }
+
+    public abstract boolean visitType(Value type);
+
+    public boolean acceptType(final Bool type) {
+        return false;
+    }
+
+    public boolean acceptType(final Money type) {
+        return false;
+    }
+
+    public boolean acceptType(final Text type) {
+        return false;
+    }
 
 }

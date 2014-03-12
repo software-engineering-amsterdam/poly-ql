@@ -6,14 +6,12 @@ import java.util.List;
 import main.nl.uva.parser.elements.errors.ValidationError;
 import main.nl.uva.parser.elements.expressions.Expression;
 import main.nl.uva.parser.elements.type.Bool;
-import main.nl.uva.parser.elements.type.Type;
+import main.nl.uva.parser.elements.type.Value;
 
 public class BoolAtom extends Expression {
 
     private final static String TRUE = "true";
     private final static String FALSE = "false";
-
-    private final boolean _value;
 
     public BoolAtom() {
         this("false");
@@ -21,9 +19,7 @@ public class BoolAtom extends Expression {
 
     public BoolAtom(final String value) {
         assert isBoolean(value);
-
-        _type = new Bool();
-        _value = parseBoolean(value);
+        _value = new Bool(parseBoolean(value));
     }
 
     private static boolean isBoolean(final String value) {
@@ -45,12 +41,7 @@ public class BoolAtom extends Expression {
     }
 
     @Override
-    public Type getType() {
-        return _type;
-    }
-
-    @Override
-    public Object getResult() {
+    public Value getType() {
         return _value;
     }
 }
