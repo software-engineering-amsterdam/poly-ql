@@ -3,9 +3,9 @@ using QL.TypeChecker;
 
 namespace QL.QLClasses.Types
 {
-    public class QInt : QBaseType
+    public class QInt : QType
     {
-        public override QBaseType GetType()
+        public override QType GetType()
         {
             return this;
         }
@@ -26,7 +26,7 @@ namespace QL.QLClasses.Types
 
         #region Double Dispatch Implementation
 
-        public override bool IsCompatibleWith(QBaseType type)
+        public override bool IsCompatibleWith(QType type)
         {
             return type.IsCompatibleWithQInt(this);
         }

@@ -1,15 +1,15 @@
 package types;
 
-import typeChecker.ASTVisitor;
+import visitor.ASTVisitor;
 
 
 public class MoneyType implements Type {
-	
+
 	@Override
 	public void accept(ASTVisitor visitor) {
 		visitor.visit(this);
 	}
-	
+
 	@Override
 	public String toString() {
 		return "money";
@@ -21,7 +21,7 @@ public class MoneyType implements Type {
 	}
 
 	@Override
-	public boolean isCompatibleWithIntType() {
+	public boolean isCompatibleWithInt() {
 		return false;
 	}
 
@@ -34,7 +34,7 @@ public class MoneyType implements Type {
 	public boolean isCompatibleWith(Type t) {
 		return t.isCompatibleWithMoney();
 	}
-	
+
 	@Override
 	public boolean isBoolean() {
 		return false;
@@ -49,7 +49,7 @@ public class MoneyType implements Type {
 	public boolean isRelational() {
 		return true;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (!(obj instanceof MoneyType))

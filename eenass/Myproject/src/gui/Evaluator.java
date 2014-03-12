@@ -45,7 +45,7 @@ public class Evaluator implements Visitor<Value> {
 	private final Map<Identifier, Value> environment;
  
 	public Evaluator(Map<Identifier, Value> environment) {
-		this.environment = Collections.unmodifiableMap(environment);
+		this.environment = environment ;
 	}
 	
 	public static Value Evaluate(Expr expr, Map<Identifier, Value> env){
@@ -55,17 +55,17 @@ public class Evaluator implements Visitor<Value> {
 
 	@Override
 	public Value visit(Pos node) {
-		return node.accept(this).neg();
+		return node.getOperand().accept(this).pos();
 	}
 
 	@Override
 	public Value visit(Neg node) {
-		return node.accept(this).neg();
+		return node.getOperand().accept(this).neg();
 	}
 
 	@Override
 	public Value visit(Not node) {
-		return node.accept(this).not();
+		return node.getOperand().accept(this).not();
 	}
 
 	@Override
@@ -177,61 +177,51 @@ public class Evaluator implements Visitor<Value> {
 
 	@Override
 	public Value visit(BoolType node) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Value visit(IntType node) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Value visit(StrType node) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Value visit(StatementList node) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Value visit(Question node) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Value visit(ComputedQuestion node) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Value visit(Block node) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Value visit(IfStatement node) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Value visit(IfelseStatement node) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Value visit(Form node) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

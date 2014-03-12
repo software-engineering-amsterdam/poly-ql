@@ -12,12 +12,13 @@ import parser.QLParser;
 import types.BoolType;
 import types.MoneyType;
 import expr.Ident;
-import expr.arithmeticExpr.Sub;
-import expr.syntacticExpr.Form;
-import expr.syntacticExpr.IfBlock;
-import expr.syntacticExpr.Question;
-import expr.syntacticExpr.QuestionBody;
-import expr.syntacticExpr.Statement;
+import expr.arithmetic.Sub;
+import expr.syntactic.Form;
+import expr.syntactic.IfBlock;
+import expr.syntactic.IfElseBlock;
+import expr.syntactic.Question;
+import expr.syntactic.QuestionBody;
+import expr.syntactic.Statement;
 
 public class TestsFunctSyntacticExpr {
 
@@ -84,12 +85,9 @@ public class TestsFunctSyntacticExpr {
 	public void testIfBlockWithElse() throws RecognitionException  {
 		String str="if (hasSoldHouse) { " +
 				" sellingPrice: \"Price the house was sold for:\" money " +
-				" privateDebt: \"Private debts for the sold house:\" money }" +
 				" else { " +
-				" privateDebt: \"Private debts for the sold house:\" money " +
-				" sellingPrice: \"Price the house was sold for:\" money }";
+				" privateDebt: \"Private debts for the sold house:\" money } }";
 		QLParser parser=TestsExpr.getParser(str);
-
 		IfBlock actual=parser.if_block().result;
 
 
@@ -102,48 +100,24 @@ public class TestsFunctSyntacticExpr {
 
 		List<Statement> list=new LinkedList<>();
 		list.add(q1);
-		list.add(q2);
 		List<Statement> list2=new LinkedList<>();
 		list2.add(q2);
-		list2.add(q1);
 
-		IfBlock expected=new IfBlock(new Ident("hasSoldHouse"),list,list2);
+		IfElseBlock expected=new IfElseBlock(new Ident("hasSoldHouse"),list,list2);
 
 		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
 	public void testForm() throws RecognitionException  {
-		String str=
-				"	form Box1HouseOwning { " +
-						"hasSoldHouse: \"Did you sell a house in 2010?\" boolean " +
-						"if (hasSoldHouse) { " +
-						"sellingPrice: \"Price the house was sold for:\" money " +
-						"privateDebt: \"Private debts for the sold house:\" money " +
-						" } } "; 
-
+		String str="	form Box1HouseOwning { " +
+						"hasSoldHouse: \"Did you sell a house in 2010?\" boolean }";
 
 		QLParser parser=TestsExpr.getParser(str);
-
 		Form actual=parser.form().result;
-
-
-		Question q3=new Question(new Ident("sellingPrice"),
-				new QuestionBody("\"Price the house was sold for:\""),
-				new MoneyType());
-		Question q4=new Question(new Ident("privateDebt"),
-				new QuestionBody("\"Private debts for the sold house:\""),
-				new MoneyType());
-
-		List<Statement> list2=new LinkedList<>();
-		list2.add(q3);
-		list2.add(q4);		
-		Statement ifBlock=new IfBlock(new Ident("hasSoldHouse"),list2);
 
 		List<Statement> list=new LinkedList<>();
 		list.add(getQuestionObject1());
-		list.add(ifBlock);
-
 		Form expected=new Form(new Ident("Box1HouseOwning"),list);
 
 		Assert.assertEquals(expected, actual);
@@ -154,7 +128,7 @@ public class TestsFunctSyntacticExpr {
 		// tree1.build(string);
 		// tree2.build( tree1.toString() );
 		// assert(tree1==tree2);
-		
+
 		String str=
 				"form Box1HouseOwning { " +
 						"hasSoldHouse: \"Did you sell a house in 2010?\" boolean " +
@@ -171,7 +145,7 @@ public class TestsFunctSyntacticExpr {
 
 		parser=TestsExpr.getParser( tree1.toString() );
 		Form tree2=parser.form().result;
-		
+
 		Assert.assertTrue(tree1.equals(tree2));
 	}
 }

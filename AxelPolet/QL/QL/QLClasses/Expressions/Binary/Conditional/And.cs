@@ -1,37 +1,17 @@
-﻿using System;
-using QL.QLClasses.Expressions.Literals;
-using QL.TypeChecker;
+﻿using QL.QLClasses.Values;
 
 namespace QL.QLClasses.Expressions.Binary.Conditional
 {
-    public class And : BinaryExpression
+    public class And : ConditionalExpression
     {
-        public And(ExpressionBase leftExpression, ExpressionBase rightExpression) : base(leftExpression, rightExpression)
+        public And(ExpressionBase leftExpression, ExpressionBase rightExpression) 
+            : base(leftExpression, rightExpression)
         {
         }
 
-        public override ExpressionBase GetResult()
+        public override QValue Evaluate()
         {
-            return new BoolLiteral(Convert.ToBoolean(LeftExpression.GetResult()) && Convert.ToBoolean(RightExpression.GetResult()));
-        }
-
-        public override bool CheckType(QLTypeErrors typeErrors)
-        {
-            if (!base.CheckType(typeErrors))
-                return false;
-
-            if (!(LeftExpression.GetResultType().IsCompatibleWithQBool(null)) || !(RightExpression.GetResultType().IsCompatibleWithQBool(null)))
-            {
-                typeErrors.ReportError(new QLTypeError
-                {
-                    Message = string.Format("Left -or Right Expression is not a boolean. Left: '{0}', Right: '{1}'", LeftExpression.GetResultType(), RightExpression.GetResultType()),
-                    TokenInfo = TokenInfo
-                });
-
-                return false;
-            }
-
-            return true;
+            return ((BoolValue)LeftExpression.Evaluate()).And((BoolValue)RightExpression.Evaluate());
         }
     }
 }

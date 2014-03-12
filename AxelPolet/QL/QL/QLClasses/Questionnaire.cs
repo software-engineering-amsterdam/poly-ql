@@ -1,13 +1,15 @@
 ﻿using System.Collections.Generic;
+using QL.Interpreter;
+using QL.Interpreter.Controls;
 using QL.QLClasses.Statements;
 using QL.TypeChecker;
 
 namespace QL.QLClasses
 {
-    public class Questionnaire
+    public class Questionnaire : IBuilder
     {
-        private string _title;
-        private List<StatementBase> _body;
+        private readonly string _title;
+        private readonly List<StatementBase> _body;
 
         public Questionnaire(string title, List<StatementBase> body)
         {
@@ -20,6 +22,14 @@ namespace QL.QLClasses
             foreach (StatementBase statement in _body)
             {
                 statement.CheckType(typeErrors);
+            }
+        }
+
+        public void Build(GUIQuestionnaire gui)
+        {
+            foreach (StatementBase statement in _body)
+            {
+                statement.Build(gui);
             }
         }
     }

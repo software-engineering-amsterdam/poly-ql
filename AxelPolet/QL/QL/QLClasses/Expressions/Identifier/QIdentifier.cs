@@ -1,4 +1,5 @@
 ﻿using QL.QLClasses.Types;
+using QL.QLClasses.Values;
 using QL.TypeChecker;
 
 namespace QL.QLClasses.Expressions.Identifier
@@ -14,14 +15,14 @@ namespace QL.QLClasses.Expressions.Identifier
             _name = name;
         }
 
-        public override QBaseType GetResultType()
+        public override QType GetResultType()
         {
             return _memory.GetDeclaredType(_name);
         }
 
-        public override ExpressionBase GetResult()
+        public override QValue Evaluate()
         {
-            return _memory.GetDeclaredValue(_name);
+            return _memory.GetDeclaredValue(_name).Evaluate();
         }
 
         #region TypeChecker Implementation

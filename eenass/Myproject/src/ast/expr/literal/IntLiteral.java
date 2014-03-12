@@ -1,6 +1,6 @@
 package ast.expr.literal;
 
-import typecheck.Symboles;
+import typecheck.SymboleTable;
 import ast.Visitor;
 import ast.expr.types.IntType;
 import ast.expr.types.Type;
@@ -19,7 +19,7 @@ public class IntLiteral extends Literals{
 	}
 
 	@Override
-	public Type typeof(Symboles symb) {
+	public Type typeof(SymboleTable symb) {
 		return new IntType();
 	}
 

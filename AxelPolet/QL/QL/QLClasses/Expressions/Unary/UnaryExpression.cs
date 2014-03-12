@@ -1,11 +1,12 @@
 ﻿using QL.QLClasses.Types;
+using QL.QLClasses.Values;
 using QL.TypeChecker;
 
 namespace QL.QLClasses.Expressions.Unary
 {
     public class UnaryExpression : ExpressionBase
     {
-        protected ExpressionBase InnerExpression;// { get; private set; }
+        protected ExpressionBase InnerExpression;
 
         public UnaryExpression(ExpressionBase innerExpression)
         {
@@ -17,14 +18,14 @@ namespace QL.QLClasses.Expressions.Unary
             return InnerExpression.CheckType(typeErrors);
         }
 
-        public override QBaseType GetResultType()
+        public override QType GetResultType()
         {
             return InnerExpression.GetResultType();
         }
 
-        public override ExpressionBase GetResult()
+        public override QValue Evaluate()
         {
-            return InnerExpression.GetResult();
+            return InnerExpression.Evaluate();
         }
     }
 }

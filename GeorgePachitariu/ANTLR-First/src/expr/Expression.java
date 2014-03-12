@@ -1,14 +1,16 @@
 package expr;
 
+import java.util.Map;
+
+import expr.literals.Literal;
 import types.Type;
+import visitor.IdentifiersTypeMatcher;
 
-public abstract class Expression implements Expr{
-	@Override
-	public boolean equals(Object obj) {
-		return false;
-	}
+public abstract class Expression implements ASTNode{
 
-	public abstract Type getType();
-	public abstract boolean areOperandsTypeValid();
+	public abstract Type getType(IdentifiersTypeMatcher typeMatcher);
+	public abstract boolean areOperandsTypeValid(IdentifiersTypeMatcher typeMatcher);
 	public abstract boolean containsTreeNode(Expression e);
+	
+	public abstract Literal compute(Map <Ident, Expression> identifiers);
 }

@@ -1,4 +1,5 @@
-﻿using QL.QLClasses.Expressions;
+﻿using QL.Interpreter.Controls;
+using QL.QLClasses.Expressions;
 using QL.QLClasses.Types;
 using QL.TypeChecker;
 
@@ -8,11 +9,13 @@ namespace QL.QLClasses.Statements
     {
         private readonly ExpressionBase _value;
 
-        public ComputedQuestion(QLMemoryManager memory, string name, string label, QBaseType type, ExpressionBase expression) :
-            base(memory, name, label, type)
+        public ComputedQuestion(QLMemoryManager memory, string name, string label, QType type, ExpressionBase expression) 
+            : base(memory, name, label, type)
         {
             _value = expression;
         }
+
+        #region TypeChecker Implementation
 
         public override bool CheckType(QLTypeErrors typeErrors)
         {
@@ -30,10 +33,27 @@ namespace QL.QLClasses.Statements
                 return false;
             }
 
-            Memory.DeclareValue(Name, _value);
-
-            //check other question properties after the expression, to prevent circulair references
+            //check other question properties after the expression check, to prevent circulair references
             return base.CheckType(typeErrors);
         }
+
+        protected override void DeclareValue()
+        {
+            Memory.DeclareValue(Name, _value);
+        }
+
+        #endregion
+
+        #region Builder Implementation
+
+        public override void Build(GUIQuestionnaire gui)
+        {
+            if (Type.IsCompatibleWith(new QBool()))
+                gui.AppendQuestion(new GUICheckBox(Memory, Name, Label, Type, _value));
+            else
+                gui.AppendQuestion(new GUITextBox(Memory, Name, Label, Type, _value));
+        }
+
+        #endregion
     }
 }
