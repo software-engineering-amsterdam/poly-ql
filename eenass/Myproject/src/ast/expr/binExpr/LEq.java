@@ -1,6 +1,6 @@
 package ast.expr.binExpr;
 
-import typecheck.Symboles;
+import typecheck.SymboleTable;
 import ast.Visitor;
 import ast.expr.Expr;
 import ast.expr.types.BoolType;
@@ -18,7 +18,7 @@ public class LEq extends BinExpr{
 	}
 
 	@Override
-	public Type typeof(Symboles symb) {
+	public Type typeof(SymboleTable symb) {
 		return new BoolType();
 	}
 

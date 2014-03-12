@@ -101,6 +101,26 @@ public class Int extends Value{
 	public Value neg(){
 		return new Int(- getValue());
 	}
+	
+	@Override
+	public Value eq(Value val){
+		return val.eqInt(this);
+	}
+	
+	@Override
+	protected Value eqInt(Int val){
+		return new Bool(val.getValue() == getValue());
+	}
+	
+	@Override
+	public Value neq(Value val){
+		return val.neqInt(this);
+	}
+	
+	@Override
+	protected Value neqInt(Int val){
+		return new Bool(val.getValue() != getValue());
+	}
 
 
 }

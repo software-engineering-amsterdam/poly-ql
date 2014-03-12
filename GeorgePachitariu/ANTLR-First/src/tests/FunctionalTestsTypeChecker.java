@@ -9,12 +9,12 @@ import org.antlr.runtime.RecognitionException;
 import org.junit.Test;
 
 import parser.QLParser;
-import typeChecker.BooleanConditionsChecker;
-import typeChecker.CyclicDependenciesChecker;
-import typeChecker.DuplicateLabelsChecker;
-import typeChecker.DuplicatedIdentifierChecker;
-import typeChecker.InvalidTypeOperandsChecker;
-import typeChecker.UndefinedIdentifierChecker;
+import typeChecker.BooleanConditions;
+import typeChecker.CyclicDependencies;
+import typeChecker.DuplicateLabels;
+import typeChecker.DuplicatedIdentifier;
+import typeChecker.InvalidTypeOperands;
+import typeChecker.UndefinedIdentifier;
 import types.BoolType;
 import types.MoneyType;
 import expr.Expression;
@@ -26,7 +26,7 @@ import expr.syntactic.Form;
 import expr.syntactic.Question;
 import expr.syntactic.QuestionBody;
 
-public class TestsTypeChecker {
+public class FunctionalTestsTypeChecker {
 
 	@Test
 	public void undefinedIdentifierChecker_0Undefined() throws RecognitionException {
@@ -42,7 +42,7 @@ public class TestsTypeChecker {
 
 		QLParser parser=TestsExpr.getParser(str);
 		Form ast=parser.form().result;			
-		List<Ident> actual = new UndefinedIdentifierChecker().check(ast);
+		List<Ident> actual = new UndefinedIdentifier().check(ast);
 		List<Ident> expected=new LinkedList<>();
 
 		Assert.assertEquals(expected, actual);
@@ -62,7 +62,7 @@ public class TestsTypeChecker {
 
 		QLParser parser=TestsExpr.getParser(str);
 		Form ast=parser.form().result;			
-		List<Ident> actual = new UndefinedIdentifierChecker().check(ast);
+		List<Ident> actual = new UndefinedIdentifier().check(ast);
 
 		List<Ident> expected=new LinkedList<>();
 		expected.add(new Ident("undef"));
@@ -86,7 +86,7 @@ public class TestsTypeChecker {
 
 		QLParser parser=TestsExpr.getParser(str);
 		Form ast=parser.form().result;			
-		List<Question> actual = new DuplicatedIdentifierChecker().check(ast);
+		List<Question> actual = new DuplicatedIdentifier().check(ast);
 		List<Question> expected=new LinkedList<>();
 
 		Assert.assertEquals(expected, actual);
@@ -107,7 +107,7 @@ public class TestsTypeChecker {
 
 		QLParser parser=TestsExpr.getParser(str);
 		Form ast=parser.form().result;			
-		List<Question> actual = new DuplicatedIdentifierChecker().check(ast);
+		List<Question> actual = new DuplicatedIdentifier().check(ast);
 
 		List<Question> expected=new LinkedList<>();
 		expected.add (new Question(new Ident("hasSoldHouse"),
@@ -130,7 +130,7 @@ public class TestsTypeChecker {
 
 		QLParser parser=TestsExpr.getParser(str);
 		Form ast=parser.form().result;			
-		List<String> actual = new BooleanConditionsChecker().check(ast);
+		List<String> actual = new BooleanConditions().check(ast);
 
 		List<Expression> expected=new LinkedList<>();
 
@@ -149,7 +149,7 @@ public class TestsTypeChecker {
 
 		QLParser parser=TestsExpr.getParser(str);
 		Form ast=parser.form().result;			
-		List<String> actual = new BooleanConditionsChecker().check(ast);
+		List<String> actual = new BooleanConditions().check(ast);
 
 		List<String> expected=new LinkedList<>();
 		expected.add("hasSoldHouse");
@@ -171,7 +171,7 @@ public class TestsTypeChecker {
 
 		QLParser parser=TestsExpr.getParser(str);
 		Form ast=parser.form().result;			
-		List<Expression> actual = new InvalidTypeOperandsChecker().check(ast);
+		List<Expression> actual = new InvalidTypeOperands().check(ast);
 
 		List<Expression> expected=new LinkedList<>();
 
@@ -192,7 +192,7 @@ public class TestsTypeChecker {
 
 		QLParser parser=TestsExpr.getParser(str);
 		Form ast=parser.form().result;			
-		List<Expression> actual = new InvalidTypeOperandsChecker().check(ast);
+		List<Expression> actual = new InvalidTypeOperands().check(ast);
 
 		List<Expression> expected=new LinkedList<>();
 		expected.add(new Eq(new Ident("hasSoldHouse"), new Bool(true)));
@@ -215,7 +215,7 @@ public class TestsTypeChecker {
 
 		QLParser parser=TestsExpr.getParser(str);
 		Form ast=parser.form().result;			
-		List<Ident> actual = new DuplicateLabelsChecker().check(ast);
+		List<Ident> actual = new DuplicateLabels().check(ast);
 
 		List<Ident> expected=new LinkedList<>();
 		expected.add(new Ident("hasSoldHouse"));
@@ -237,7 +237,7 @@ public class TestsTypeChecker {
 
 		QLParser parser=TestsExpr.getParser(str);
 		Form ast=parser.form().result;			
-		List<Question> actual = new CyclicDependenciesChecker().check(ast);
+		List<Question> actual = new CyclicDependencies().check(ast);
 
 		List<Question> expected=new LinkedList<>();
 
@@ -256,7 +256,7 @@ public class TestsTypeChecker {
 
 		QLParser parser=TestsExpr.getParser(str);
 		Form ast=parser.form().result;			
-		List<Question> actual = new CyclicDependenciesChecker().check(ast);
+		List<Question> actual = new CyclicDependencies().check(ast);
 
 		List<Question> expected=new LinkedList<>();
 

@@ -1,6 +1,6 @@
 package expr.syntactic;
 
-import typeChecker.ASTVisitor;
+import visitor.ASTVisitor;
 import expr.ASTNode;
 
 public class QuestionBody implements ASTNode {

@@ -3,13 +3,19 @@ package typeChecker;
 import java.util.LinkedList;
 import java.util.List;
 
-import expr.ASTNode;
-import expr.syntactic.Question;
+import types.Type;
+import visitor.ASTVisitor;
 
-public class DuplicatedIdentifierChecker extends ASTVisitor {
+import expr.ASTNode;
+import expr.Expression;
+import expr.Ident;
+import expr.syntactic.Question;
+import expr.syntactic.QuestionBody;
+
+public class DuplicatedIdentifier extends ASTVisitor {
 	protected List<Question> exprIdent;
 
-	public DuplicatedIdentifierChecker() {
+	public DuplicatedIdentifier() {
 		this.exprIdent=new LinkedList<>();
 	}
 
@@ -33,7 +39,8 @@ public class DuplicatedIdentifierChecker extends ASTVisitor {
 	}
 
 	@Override
-	public void visit(Question question) {
+	public void visit(Question question, Ident ident, 
+			QuestionBody questionBody, Type type, Expression expr) {
 		exprIdent.add(question);
 	}
 }

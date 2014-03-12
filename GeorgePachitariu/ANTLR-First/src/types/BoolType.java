@@ -1,6 +1,6 @@
 package types;
 
-import typeChecker.ASTVisitor;
+import visitor.ASTVisitor;
 
 
 public class BoolType implements Type {
