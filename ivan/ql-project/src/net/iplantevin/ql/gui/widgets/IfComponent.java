@@ -3,8 +3,6 @@ package net.iplantevin.ql.gui.widgets;
 import net.iplantevin.ql.ast.expressions.Expression;
 import net.iplantevin.ql.gui.main.FormFrame;
 
-import javax.swing.*;
-
 /**
  * @author Ivan
  */

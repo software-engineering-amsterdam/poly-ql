@@ -14,6 +14,7 @@ import net.iplantevin.ql.ast.statements.Statement;
 import net.iplantevin.ql.ast.types.BooleanType;
 import net.iplantevin.ql.ast.types.IntegerType;
 import net.iplantevin.ql.ast.types.StringType;
+import net.iplantevin.ql.ast.visitors.IStatementVisitor;
 import net.iplantevin.ql.evaluation.EvaluationVisitor;
 import net.iplantevin.ql.evaluation.Value;
 import net.iplantevin.ql.gui.widgets.AbstractFormComponent;
@@ -39,7 +40,7 @@ import java.util.Set;
  *
  * @author Ivan
  */
-public class FormFrame extends FormFrameAdapter {
+public class FormFrame extends JFrame implements IStatementVisitor<AbstractFormComponent> {
     private final EvaluationVisitor evaluator;
     private final JPanel topPanel;
     private final FormEventManager eventManager;
@@ -145,9 +146,8 @@ public class FormFrame extends FormFrameAdapter {
     }
 
     ////////////////////////////////////////////////////////////////////////////
-    // Visitor methods overridden from FormFrameAdapter
+    // Visitor methods
     ////////////////////////////////////////////////////////////////////////////
-    @Override
     public AbstractFormComponent visit(Form form) {
         return form.getBody().accept(this);
     }

@@ -5,7 +5,7 @@ import net.iplantevin.ql.ast.expressions.Expression;
 import net.iplantevin.ql.ast.types.StringType;
 import net.iplantevin.ql.ast.types.Type;
 import net.iplantevin.ql.ast.types.TypeEnvironment;
-import net.iplantevin.ql.ast.visitors.IASTVisitor;
+import net.iplantevin.ql.ast.visitors.IExpressionVisitor;
 
 /**
  * String.
@@ -35,7 +35,7 @@ public class Str extends Expression {
     }
 
     @Override
-    public <T> T accept(IASTVisitor<T> visitor) {
+    public <T> T accept(IExpressionVisitor<T> visitor) {
         return visitor.visit(this);
     }
 }
