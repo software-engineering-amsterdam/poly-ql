@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace QL_Csharp
 {
     public partial class Form1 : Form
     {
-        Dictionary<string, string> _demoPresets = new Dictionary<string, string>();
+        readonly Dictionary<string, string> _demoPresets = new Dictionary<string, string>();
         
         public Form1()
         {
@@ -23,38 +21,25 @@ namespace QL_Csharp
             comboBoxDemos.Items.AddRange(_demoPresets.Keys.ToArray());
         }
 
-        private void buttonGenerate_Click(object sender, EventArgs e)
+        public void AddClickEventHandler(EventHandler handler)
         {
-            try
-            {
-                var output = QL_Main.parse_str(textBoxSource.Text, checkBoxTypeCheck.Enabled);
-                var checkInfo = output.Item2;
+            buttonGenerate.Click += handler;
+        }
 
-                if (checkInfo.HasErrors)
-                {
-                    var errorString = new StringBuilder();
-                    foreach (string error in checkInfo.ErrorList)
-                    {
-                        errorString.Append(error + Environment.NewLine);
-                    }
-                    textBoxOutput.Text = errorString.ToString();
-                }
-                else
-                {
-                    var ast = output.Item1;
-                    var outputString = ast.ToString();
-                    outputString = outputString.Replace("\n", Environment.NewLine).Replace(";", "");
-                        textBoxOutput.Text = outputString;
-                }
-            }
-            catch (QL_Grammar.ParseErrorException exception)
-            {
-                QL_Grammar.ParseErrorExceptionMessage data = exception.Data0;
-                QL_Grammar.Position startPosition = data.StartPos;
-                QL_Grammar.Position endPosition = data.EndPos;
-                textBoxOutput.Text = string.Format("{0} between line {1}, column {2} and line {3} column {4}",
-                    data.Message, startPosition.Line, startPosition.Column, endPosition.Line, endPosition.Column);
-            }
+        public bool CheckTypes
+        {
+            get { return checkBoxTypeCheck.Checked; }
+        }
+
+        public string InputText
+        {
+            get { return textBoxSource.Text; }
+        }
+
+        public void SetOutputText(string newText)
+        {
+            string cleanText = newText.Replace("\n", Environment.NewLine).Replace(";", "");
+            textBoxOutput.Text = cleanText;
         }
 
         private void comboBoxDemos_SelectedValueChanged(object sender, EventArgs e)
@@ -66,7 +51,7 @@ namespace QL_Csharp
         {
             if (keyData == Keys.F5)
             {
-                buttonGenerate_Click(this, EventArgs.Empty);
+                buttonGenerate.PerformClick();
                 return true;
             }
             return base.ProcessCmdKey(ref msg, keyData);
@@ -75,12 +60,7 @@ namespace QL_Csharp
         private void textBoxSource_TextChanged(object sender, EventArgs e)
         {
             if (checkBoxRealTime.Checked)
-                buttonGenerate_Click(this, EventArgs.Empty);
-        }
-
-        private void checkBoxRealTime_CheckedChanged(object sender, EventArgs e)
-        {
-            buttonGenerate.Enabled = !checkBoxRealTime.Checked;
+                buttonGenerate.PerformClick();
         }
     }
 }
