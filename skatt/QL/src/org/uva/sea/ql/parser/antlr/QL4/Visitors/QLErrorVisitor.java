@@ -3,7 +3,7 @@ package org.uva.sea.ql.parser.antlr.QL4.Visitors;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.uva.sea.ql.parser.antlr.QL4.AST.Conditional;
+import org.uva.sea.ql.parser.antlr.QL4.AST.ConditionalStructure;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Form;
 import org.uva.sea.ql.parser.antlr.QL4.AST.QLTree;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Question;
@@ -70,7 +70,7 @@ public class QLErrorVisitor implements IQLVisitor {
 	}
 
 	@Override
-	public List<QLErrorMsg> visit(Conditional condition) {
+	public List<QLErrorMsg> visit(ConditionalStructure condition) {
 		List<QLErrorMsg> msgs = new ArrayList<QLErrorMsg>();
 		
 		msgs.addAll(this.visitChild(condition.getIfExpression()));

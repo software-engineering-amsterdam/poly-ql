@@ -12,6 +12,7 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Form;
 import org.uva.sea.ql.parser.antlr.QL4.Messages.QLErrorMsg;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.AntlrVisitor;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.BoolConditionChecker;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.DuplicateLabelChecker;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.DuplicateQuestionChecker;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.InvalidTypeChecker;
@@ -110,6 +111,9 @@ public class QL4 {
 		msgs.addAll(ASTChecker.visit(ast));
 		
 		ASTChecker = new InvalidTypeChecker();
+		msgs.addAll(ASTChecker.visit(ast));
+		
+		ASTChecker = new BoolConditionChecker();
 		msgs.addAll(ASTChecker.visit(ast));
 		
 		return msgs;

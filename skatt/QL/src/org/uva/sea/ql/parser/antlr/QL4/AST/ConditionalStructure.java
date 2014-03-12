@@ -14,7 +14,7 @@ import org.uva.sea.ql.parser.antlr.QL4.Visitors.IQLVisitor;
  * @author Sammie Katt
  *
  */
-public class Conditional implements QLTree {
+public class ConditionalStructure implements QLTree {
 	
 	// holds the expressions in if and else conditions 
 	final private Expression ifCondition;
@@ -37,7 +37,7 @@ public class Conditional implements QLTree {
 	 * @param elseStruc 
 	 * @param elseifConditions
 	 */
-	public Conditional(Expression ifCondition, List<Expression> elseifConditions, Structures ifStructure, List<Structures> elseifStructures, Structures elseStructure) {
+	public ConditionalStructure(Expression ifCondition, List<Expression> elseifConditions, Structures ifStructure, List<Structures> elseifStructures, Structures elseStructure) {
 		this.ifCondition = ifCondition;
 		this.elseifConditions = elseifConditions;
 

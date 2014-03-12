@@ -2,7 +2,7 @@ package org.uva.sea.ql.parser.antlr.QL4.Visitors;
 
 import java.util.List;
 
-import org.uva.sea.ql.parser.antlr.QL4.AST.Conditional;
+import org.uva.sea.ql.parser.antlr.QL4.AST.ConditionalStructure;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Form;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Question;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Structures;
@@ -41,7 +41,7 @@ public interface IQLVisitor {
 	public List<QLErrorMsg> visit(Form form);
 	public List<QLErrorMsg> visit(Question question);
 	public List<QLErrorMsg> visit(Structures struc);
-	public List<QLErrorMsg> visit(Conditional condition);
+	public List<QLErrorMsg> visit(ConditionalStructure condition);
 	
 	// unary expression nodes
 	public List<QLErrorMsg> visit(BraceExpr expr);

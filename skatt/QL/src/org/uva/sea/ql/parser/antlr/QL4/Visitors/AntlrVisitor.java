@@ -3,7 +3,7 @@ package org.uva.sea.ql.parser.antlr.QL4.Visitors;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.uva.sea.ql.parser.antlr.QL4.AST.Conditional;
+import org.uva.sea.ql.parser.antlr.QL4.AST.ConditionalStructure;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Form;
 import org.uva.sea.ql.parser.antlr.QL4.AST.QLTree;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Question;
@@ -69,7 +69,7 @@ public class AntlrVisitor extends QL4BaseVisitor<QLTree> {
    * Returns a conditional object containing the expressions
    * and structures of the if/elseif/else in the context
    */
-  public Conditional visitConditional(QL4Parser.ConditionalContext ctx) {
+  public ConditionalStructure visitConditional(QL4Parser.ConditionalContext ctx) {
 
 	 // define if/else (if available) conditions and structures
 	 Expression ifExpr = (Expression) ctx.ifexpr.accept(this);
@@ -90,7 +90,7 @@ public class AntlrVisitor extends QL4BaseVisitor<QLTree> {
 		 elseifStrucs.add( (Structures) ctx.structures(i).accept(this));
 	 }
 	 
-	 return new Conditional(ifExpr, elseifExprs, 
+	 return new ConditionalStructure(ifExpr, elseifExprs, 
 			 ifStruc, elseifStrucs, elseStruc);
   }
   
