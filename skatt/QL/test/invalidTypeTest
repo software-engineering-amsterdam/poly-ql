@@ -1,23 +1,26 @@
-if (1 + 1 == 2) {
-    goodquestion : "Good label" : boolean;
+if (true || false) {
+    goodquestion1 : "Good label" : boolean;
 }
 
-if (1 + false) {
-    badquestion : "Bad label" : boolean;
+if (1 + 1) {
+    goodquestion2 : "Good label 2" : boolean;
 }
 
-if (1 + (1 == 2)) {
-    wosrtquestion : "Worst label" : boolean;
+if (1 || false) {
+    badquestion1 : "bad label" : boolean;
 }
 
-if (1 + (1 == 2) || true) {
-    worstquestion : "Worstests label" : boolean;
+if (1 - (false == true)) {
+    if ( ( 1 > 2) + 1) {
+        if ( ( 1 < true ) || 1) {
+            if ( ( 1 <= 2 ) || true) {
+                if ( true > false) {
+                    if ( true < 1 ) {
+                        badquestion2 : "bad label 2" : boolean;
+                    }
+                }
+            } 
+        }
+    }
 }
 
-if (!(1 + 2)) {
-    negquestion : "Neg question label" : boolean;
-}
-
-if (! (false || true)) {
-    goodquestion : "normal question label" : boolean;
-}

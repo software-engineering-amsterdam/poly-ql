@@ -18,6 +18,9 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.Mathematical.MinExp
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.Mathematical.MultExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.Mathematical.PlusExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.Relational.GeqExpr;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.Relational.GreExpr;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.Relational.LeqExpr;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.Relational.LesExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Unary.BraceExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Unary.NegExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Bool;
@@ -175,6 +178,7 @@ public class AntlrVisitor extends QL4BaseVisitor<QLTree> {
 	  return new OrExpr(lhs, rhs);	  
   }
   
+  ///////////////////////// visit binary equality expressions
   public EqExpr visitEqExpr(QL4Parser.EqExprContext ctx) {
 	  Expression lhs = (Expression) ctx.lhs.accept(this);
 	  Expression rhs = (Expression) ctx.rhs.accept(this);
@@ -189,11 +193,33 @@ public class AntlrVisitor extends QL4BaseVisitor<QLTree> {
 	  return new NeqExpr(lhs, rhs);	  
   }
   
+  ////////////////// visit binary relational expressions
   public GeqExpr visitGeqExpr(QL4Parser.GeqExprContext ctx) {
 	  Expression lhs = (Expression) ctx.lhs.accept(this);
 	  Expression rhs = (Expression) ctx.rhs.accept(this);
 	  
 	  return new GeqExpr(lhs, rhs);	  
+  }
+  
+  public GreExpr visitGreExpr(QL4Parser.GreExprContext ctx) {
+	  Expression lhs = (Expression) ctx.lhs.accept(this);
+	  Expression rhs = (Expression) ctx.rhs.accept(this);
+	  
+	  return new GreExpr(lhs, rhs);	  
+  }
+  
+  public LeqExpr visitLeqExpr(QL4Parser.LeqExprContext ctx) {
+	  Expression lhs = (Expression) ctx.lhs.accept(this);
+	  Expression rhs = (Expression) ctx.rhs.accept(this);
+	  
+	  return new LeqExpr(lhs, rhs);	  
+  }
+  
+  public LesExpr visitLesExpr(QL4Parser.LesExprContext ctx) {
+	  Expression lhs = (Expression) ctx.lhs.accept(this);
+	  Expression rhs = (Expression) ctx.rhs.accept(this);
+	  
+	  return new LesExpr(lhs, rhs);	  
   }
   
   //////////////////////// visiting QL4 primitives (bool, int, dec and id)

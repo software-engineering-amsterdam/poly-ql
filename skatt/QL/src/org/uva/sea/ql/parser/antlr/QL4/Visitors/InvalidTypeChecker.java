@@ -45,6 +45,8 @@ public class InvalidTypeChecker extends QLErrorVisitor {
 			msgs.add(new QLErrorMsg("Expression contains invalid types: " + expr));
 		}
 		
+		msgs.addAll(this.visitChild(expr.getExpr()));
+		
 		return msgs;
 	}
 	
@@ -110,8 +112,8 @@ public class InvalidTypeChecker extends QLErrorVisitor {
 		List<QLErrorMsg> msgs = new ArrayList<QLErrorMsg>();
 		
 		boolean correctType = (
-				expr.getLHS().getType() == new BoolType()
-				&& expr.getRHS().getType() == new BoolType()
+				expr.getLHS().getType().equals(new BoolType())
+				&& expr.getRHS().getType().equals(new BoolType())
 				);
 		
 		if (!correctType) {
@@ -130,8 +132,8 @@ public class InvalidTypeChecker extends QLErrorVisitor {
 		List<QLErrorMsg> msgs = new ArrayList<QLErrorMsg>();
 		
 		boolean correctType = (
-				expr.getLHS().getType() == new NumberType()
-				&& expr.getRHS().getType() == new NumberType()
+				expr.getLHS().getType().equals(new NumberType())
+				&& expr.getRHS().getType().equals(new NumberType())
 				);
 		
 		if (!correctType) {
