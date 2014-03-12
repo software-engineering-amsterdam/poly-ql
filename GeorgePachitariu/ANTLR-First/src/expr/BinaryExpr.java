@@ -1,29 +1,29 @@
 package expr;
 
 public abstract class BinaryExpr extends Expression {
-	protected Expression first;
-	protected Expression second;
-	
-	
-	public BinaryExpr(Expression first, Expression second) {
-		this.first=first;
-		this.second=second;
+	protected Expression leftHandOperand;
+	protected Expression rightHandOperand;
+
+
+	public BinaryExpr(Expression leftHandOperand, Expression rightHandOperand) {
+		this.leftHandOperand=leftHandOperand;
+		this.rightHandOperand=rightHandOperand;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (!(obj instanceof BinaryExpr))
 			return false;
 		BinaryExpr binaryExpr=(BinaryExpr) obj;
-		return this.first.equals(binaryExpr.first) &&
-				this.second.equals(binaryExpr.second);
+		return this.leftHandOperand.equals(binaryExpr.leftHandOperand) &&
+				this.rightHandOperand.equals(binaryExpr.rightHandOperand);
 	}	
-	
+
 	@Override
 	public boolean containsTreeNode(Expression e) {
 		if(e.equals(this) || 
-				this.first.containsTreeNode(e) ||
-				this.second.containsTreeNode(e) )
+				this.leftHandOperand.containsTreeNode(e) ||
+				this.rightHandOperand.containsTreeNode(e) )
 			return true;
 		return false;
 	}

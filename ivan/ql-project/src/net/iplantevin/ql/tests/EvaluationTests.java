@@ -96,6 +96,13 @@ public class EvaluationTests {
     }
 
     @Test
+    public void testDivideByZero() {
+        Div divInts = new Div(int5, new Int(0, lineInfo), lineInfo);
+        Value actual = evaluator.evaluate(divInts);
+        Assert.assertTrue(actual.isUndefined());
+    }
+
+    @Test
     public void testIntDivision() {
         Div divInts = new Div(int10, int4, lineInfo);
         IntVal expected = new IntVal(2);

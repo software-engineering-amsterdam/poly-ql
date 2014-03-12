@@ -1,25 +1,49 @@
 package main.nl.uva.parser.elements.statements;
 
-public class IfElseStatement extends Statement {
+import java.util.List;
 
-    public IfElseStatement(final String id, final Statement parent) {
-        super(id, parent);
+import javax.swing.JPanel;
+
+import main.nl.uva.parser.elements.ParserElement;
+import main.nl.uva.parser.elements.errors.ValidationError;
+import main.nl.uva.parser.elements.expressions.Variable;
+
+public class IfElseStatement extends BlockStatement {
+
+    private final IFStatement _ifStatement;
+    private final IFStatement _elseStatement;
+
+    public IfElseStatement(final IFStatement ifStatement, final IFStatement elseStatement) {
+
+        _ifStatement = ifStatement;
+        _elseStatement = elseStatement;
+
+        _ifStatement.setParent(this);
+        _elseStatement.setParent(this);
     }
 
     @Override
     public String toString() {
-        return "IfElseStatement ";
+        return _ifStatement.toString() + _elseStatement.toString();
     }
 
     @Override
-    protected boolean validateImpl() {
+    public Variable findVariable(final String variableName, final ParserElement scopeEnd) {
+        return _parent.findVariable(variableName, this);
+    }
 
-        boolean valid = _parent.validates(this);
+    @Override
+    public List<ValidationError> validate() {
+        List<ValidationError> ifStatement = _ifStatement.validate();
+        List<ValidationError> elseStatement = _elseStatement.validate();
 
-        if (!valid) {
-            System.err.println(this + "Is very very wrong");
-        }
+        ifStatement.addAll(elseStatement);
 
-        return valid;
+        return ifStatement;
+    }
+
+    @Override
+    public JPanel getLayout() {
+        return new JPanel();
     }
 }

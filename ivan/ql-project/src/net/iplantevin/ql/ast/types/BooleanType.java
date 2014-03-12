@@ -23,6 +23,11 @@ public class BooleanType extends Type {
     }
 
     @Override
+    public <T> T accept(ITypeVisitor<T> visitor) {
+        return visitor.visit(this);
+    }
+
+    @Override
     public String toString() {
         return "boolean";
     }
