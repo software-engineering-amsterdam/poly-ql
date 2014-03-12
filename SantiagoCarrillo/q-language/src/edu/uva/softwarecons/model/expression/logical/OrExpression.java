@@ -19,13 +19,13 @@ public class OrExpression extends BinaryExpression{
 
 
     @Override
-    public Type eval() {
+    public Expression eval() {
         return null;
     }
 
 
     @Override
-    public void accept(IExpressionElementVisitor visitor) {
-        visitor.visitOrExpression(this);
+    public Type accept(IExpressionElementVisitor visitor) {
+        return visitor.visitOrExpression(this);
     }
 }

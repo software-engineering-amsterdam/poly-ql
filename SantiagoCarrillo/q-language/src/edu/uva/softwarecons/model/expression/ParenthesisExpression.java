@@ -9,6 +9,7 @@ import edu.uva.softwarecons.visitor.form.IFormElementVisitor;
  * User: sancarbar
  * Date: 2/26/14
  */
+//TODO SHOULD BE REMOVEDs
 public class ParenthesisExpression implements Expression {
 
     private final Expression argument;
@@ -18,8 +19,8 @@ public class ParenthesisExpression implements Expression {
     }
 
     @Override
-    public Type eval() {
-        return null;
+    public Expression eval() {
+        return argument.eval();
     }
 
     public Expression getArgument() {
@@ -27,7 +28,7 @@ public class ParenthesisExpression implements Expression {
     }
 
     @Override
-    public void accept(IExpressionElementVisitor visitor) {
-        visitor.visitParenthesisExpression(this);
+    public Type accept(IExpressionElementVisitor visitor) {
+        return visitor.visitParenthesisExpression(this);
     }
 }

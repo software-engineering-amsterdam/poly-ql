@@ -8,7 +8,7 @@ import edu.uva.softwarecons.visitor.type.ITypeElementVisitor;
  * User: sancarbar
  * Date: 2/27/14
  */
-public abstract class NumericType extends Type{
+public abstract class NumericType implements Type{
 
     /**
      * All classes that extend NumericType will be equal

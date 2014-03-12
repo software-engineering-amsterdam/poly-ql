@@ -10,18 +10,7 @@ import java.util.Date;
  * User: sancarbar
  * Date: 2/20/14
  */
-public class DateType extends Type {
-
-    private final Date date;
-
-    public DateType(Date date) {
-        this.date = date;
-    }
-
-    @Override
-    public Date getValue() {
-        return date;
-    }
+public class DateType implements Type {
 
     @Override
     public String toString() {

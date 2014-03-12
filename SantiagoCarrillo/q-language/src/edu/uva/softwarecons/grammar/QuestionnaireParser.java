@@ -18,12 +18,14 @@ public class QuestionnaireParser extends Parser {
 		T__5=1, T__4=2, T__3=3, T__2=4, T__1=5, T__0=6, BOOL_TYPE=7, STRING_TYPE=8, 
 		INT_TYPE=9, DATE_TYPE=10, DECIMAL_TYPE=11, MONEY_TYPE=12, MUL=13, DIV=14, 
 		ADD=15, SUB=16, NOT=17, AND=18, OR=19, LT=20, LEq=21, GT=22, GEq=23, Eq=24, 
-		NEq=25, IF=26, ELSE=27, ID=28, INT=29, STRING=30, WS=31;
+		NEq=25, BOOLEAN=26, IF=27, ELSE=28, ID=29, INT=30, STRING=31, COMMENT=32, 
+		MULTYLINE_COMMENT=33, WS=34;
 	public static final String[] tokenNames = {
 		"<INVALID>", "'form'", "'{'", "')'", "':'", "'('", "'}'", "'boolean'", 
 		"'string'", "'integer'", "'date'", "'decimal'", "'money'", "'*'", "'/'", 
 		"'+'", "'-'", "'!'", "'&&'", "'||'", "'<'", "'<='", "'>'", "'>='", "'=='", 
-		"'!='", "'if'", "'else'", "ID", "INT", "STRING", "WS"
+		"'!='", "BOOLEAN", "'if'", "'else'", "ID", "INT", "STRING", "COMMENT", 
+		"MULTYLINE_COMMENT", "WS"
 	};
 	public static final int
 		RULE_questionnaire = 0, RULE_question = 1, RULE_elsestat = 2, RULE_type = 3, 
@@ -63,14 +65,6 @@ public class QuestionnaireParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_questionnaire; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).enterQuestionnaire(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).exitQuestionnaire(this);
-		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitQuestionnaire(this);
@@ -134,14 +128,6 @@ public class QuestionnaireParser extends Parser {
 		public TerminalNode STRING() { return getToken(QuestionnaireParser.STRING, 0); }
 		public SimpleQuestionContext(QuestionContext ctx) { copyFrom(ctx); }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).enterSimpleQuestion(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).exitSimpleQuestion(this);
-		}
-		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitSimpleQuestion(this);
 			else return visitor.visitChildren(this);
@@ -157,14 +143,6 @@ public class QuestionnaireParser extends Parser {
 		}
 		public TerminalNode STRING() { return getToken(QuestionnaireParser.STRING, 0); }
 		public ComputedQuestionContext(QuestionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).enterComputedQuestion(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).exitComputedQuestion(this);
-		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitComputedQuestion(this);
@@ -185,14 +163,6 @@ public class QuestionnaireParser extends Parser {
 			return getRuleContexts(QuestionContext.class);
 		}
 		public IfContext(QuestionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).enterIf(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).exitIf(this);
-		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitIf(this);
@@ -298,14 +268,6 @@ public class QuestionnaireParser extends Parser {
 		}
 		public ElseContext(ElsestatContext ctx) { copyFrom(ctx); }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).enterElse(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).exitElse(this);
-		}
-		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitElse(this);
 			else return visitor.visitChildren(this);
@@ -360,105 +322,57 @@ public class QuestionnaireParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
-	public static class IntegerContext extends TypeContext {
-		public TerminalNode INT_TYPE() { return getToken(QuestionnaireParser.INT_TYPE, 0); }
-		public IntegerContext(TypeContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).enterInteger(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).exitInteger(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitInteger(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	public static class StringContext extends TypeContext {
+	public static class StringTypeContext extends TypeContext {
 		public TerminalNode STRING_TYPE() { return getToken(QuestionnaireParser.STRING_TYPE, 0); }
-		public StringContext(TypeContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).enterString(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).exitString(this);
-		}
+		public StringTypeContext(TypeContext ctx) { copyFrom(ctx); }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitString(this);
+			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitStringType(this);
 			else return visitor.visitChildren(this);
 		}
 	}
-	public static class MoneyContext extends TypeContext {
-		public TerminalNode MONEY_TYPE() { return getToken(QuestionnaireParser.MONEY_TYPE, 0); }
-		public MoneyContext(TypeContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).enterMoney(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).exitMoney(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitMoney(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	public static class BooleanContext extends TypeContext {
-		public TerminalNode BOOL_TYPE() { return getToken(QuestionnaireParser.BOOL_TYPE, 0); }
-		public BooleanContext(TypeContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).enterBoolean(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).exitBoolean(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitBoolean(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	public static class DateContext extends TypeContext {
-		public TerminalNode DATE_TYPE() { return getToken(QuestionnaireParser.DATE_TYPE, 0); }
-		public DateContext(TypeContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).enterDate(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).exitDate(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitDate(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	public static class DecimalContext extends TypeContext {
+	public static class DecimalTypeContext extends TypeContext {
 		public TerminalNode DECIMAL_TYPE() { return getToken(QuestionnaireParser.DECIMAL_TYPE, 0); }
-		public DecimalContext(TypeContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).enterDecimal(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).exitDecimal(this);
-		}
+		public DecimalTypeContext(TypeContext ctx) { copyFrom(ctx); }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitDecimal(this);
+			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitDecimalType(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class BooleanTypeContext extends TypeContext {
+		public TerminalNode BOOL_TYPE() { return getToken(QuestionnaireParser.BOOL_TYPE, 0); }
+		public BooleanTypeContext(TypeContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitBooleanType(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class IntTypeContext extends TypeContext {
+		public TerminalNode INT_TYPE() { return getToken(QuestionnaireParser.INT_TYPE, 0); }
+		public IntTypeContext(TypeContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitIntType(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class DateTypeContext extends TypeContext {
+		public TerminalNode DATE_TYPE() { return getToken(QuestionnaireParser.DATE_TYPE, 0); }
+		public DateTypeContext(TypeContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitDateType(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class MoneyTypeContext extends TypeContext {
+		public TerminalNode MONEY_TYPE() { return getToken(QuestionnaireParser.MONEY_TYPE, 0); }
+		public MoneyTypeContext(TypeContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitMoneyType(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -470,42 +384,42 @@ public class QuestionnaireParser extends Parser {
 			setState(63);
 			switch (_input.LA(1)) {
 			case BOOL_TYPE:
-				_localctx = new BooleanContext(_localctx);
+				_localctx = new BooleanTypeContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(57); match(BOOL_TYPE);
 				}
 				break;
 			case STRING_TYPE:
-				_localctx = new StringContext(_localctx);
+				_localctx = new StringTypeContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(58); match(STRING_TYPE);
 				}
 				break;
 			case INT_TYPE:
-				_localctx = new IntegerContext(_localctx);
+				_localctx = new IntTypeContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(59); match(INT_TYPE);
 				}
 				break;
 			case DATE_TYPE:
-				_localctx = new DateContext(_localctx);
+				_localctx = new DateTypeContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
 				setState(60); match(DATE_TYPE);
 				}
 				break;
 			case DECIMAL_TYPE:
-				_localctx = new DecimalContext(_localctx);
+				_localctx = new DecimalTypeContext(_localctx);
 				enterOuterAlt(_localctx, 5);
 				{
 				setState(61); match(DECIMAL_TYPE);
 				}
 				break;
 			case MONEY_TYPE:
-				_localctx = new MoneyContext(_localctx);
+				_localctx = new MoneyTypeContext(_localctx);
 				enterOuterAlt(_localctx, 6);
 				{
 				setState(62); match(MONEY_TYPE);
@@ -544,14 +458,6 @@ public class QuestionnaireParser extends Parser {
 		public TerminalNode NOT() { return getToken(QuestionnaireParser.NOT, 0); }
 		public NotContext(ExprContext ctx) { copyFrom(ctx); }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).enterNot(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).exitNot(this);
-		}
-		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitNot(this);
 			else return visitor.visitChildren(this);
@@ -561,33 +467,17 @@ public class QuestionnaireParser extends Parser {
 		public TerminalNode ID() { return getToken(QuestionnaireParser.ID, 0); }
 		public IdContext(ExprContext ctx) { copyFrom(ctx); }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).enterId(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).exitId(this);
-		}
-		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitId(this);
 			else return visitor.visitChildren(this);
 		}
 	}
-	public static class IntContext extends ExprContext {
+	public static class IntegerContext extends ExprContext {
 		public TerminalNode INT() { return getToken(QuestionnaireParser.INT, 0); }
-		public IntContext(ExprContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).enterInt(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).exitInt(this);
-		}
+		public IntegerContext(ExprContext ctx) { copyFrom(ctx); }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitInt(this);
+			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitInteger(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -601,16 +491,17 @@ public class QuestionnaireParser extends Parser {
 		}
 		public OrContext(ExprContext ctx) { copyFrom(ctx); }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).enterOr(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).exitOr(this);
-		}
-		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitOr(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class StringContext extends ExprContext {
+		public TerminalNode STRING() { return getToken(QuestionnaireParser.STRING, 0); }
+		public StringContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitString(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -624,14 +515,6 @@ public class QuestionnaireParser extends Parser {
 			return getRuleContext(ExprContext.class,i);
 		}
 		public MulDivContext(ExprContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).enterMulDiv(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).exitMulDiv(this);
-		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitMulDiv(this);
@@ -653,14 +536,6 @@ public class QuestionnaireParser extends Parser {
 		public TerminalNode NEq() { return getToken(QuestionnaireParser.NEq, 0); }
 		public CompareContext(ExprContext ctx) { copyFrom(ctx); }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).enterCompare(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).exitCompare(this);
-		}
-		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitCompare(this);
 			else return visitor.visitChildren(this);
@@ -677,16 +552,17 @@ public class QuestionnaireParser extends Parser {
 		public TerminalNode ADD() { return getToken(QuestionnaireParser.ADD, 0); }
 		public AddSubContext(ExprContext ctx) { copyFrom(ctx); }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).enterAddSub(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).exitAddSub(this);
-		}
-		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitAddSub(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class BooleanContext extends ExprContext {
+		public TerminalNode BOOLEAN() { return getToken(QuestionnaireParser.BOOLEAN, 0); }
+		public BooleanContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitBoolean(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -695,14 +571,6 @@ public class QuestionnaireParser extends Parser {
 			return getRuleContext(ExprContext.class,0);
 		}
 		public ParenthesisContext(ExprContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).enterParenthesis(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).exitParenthesis(this);
-		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitParenthesis(this);
@@ -718,14 +586,6 @@ public class QuestionnaireParser extends Parser {
 			return getRuleContext(ExprContext.class,i);
 		}
 		public AndContext(ExprContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).enterAnd(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof QuestionnaireListener ) ((QuestionnaireListener)listener).exitAnd(this);
-		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof QuestionnaireVisitor ) return ((QuestionnaireVisitor<? extends T>)visitor).visitAnd(this);
@@ -749,7 +609,7 @@ public class QuestionnaireParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(74);
+			setState(76);
 			switch (_input.LA(1)) {
 			case NOT:
 				{
@@ -758,23 +618,7 @@ public class QuestionnaireParser extends Parser {
 				_prevctx = _localctx;
 
 				setState(66); match(NOT);
-				setState(67); expr(6);
-				}
-				break;
-			case INT:
-				{
-				_localctx = new IntContext(_localctx);
-				_ctx = _localctx;
-				_prevctx = _localctx;
-				setState(68); match(INT);
-				}
-				break;
-			case ID:
-				{
-				_localctx = new IdContext(_localctx);
-				_ctx = _localctx;
-				_prevctx = _localctx;
-				setState(69); match(ID);
+				setState(67); expr(8);
 				}
 				break;
 			case 5:
@@ -782,16 +626,48 @@ public class QuestionnaireParser extends Parser {
 				_localctx = new ParenthesisContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(70); match(5);
-				setState(71); expr(0);
-				setState(72); match(3);
+				setState(68); match(5);
+				setState(69); expr(0);
+				setState(70); match(3);
+				}
+				break;
+			case BOOLEAN:
+				{
+				_localctx = new BooleanContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+				setState(72); match(BOOLEAN);
+				}
+				break;
+			case INT:
+				{
+				_localctx = new IntegerContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+				setState(73); match(INT);
+				}
+				break;
+			case STRING:
+				{
+				_localctx = new StringContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+				setState(74); match(STRING);
+				}
+				break;
+			case ID:
+				{
+				_localctx = new IdContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+				setState(75); match(ID);
 				}
 				break;
 			default:
 				throw new NoViableAltException(this);
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(93);
+			setState(95);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,8,_ctx);
 			while ( _alt!=2 && _alt!=-1 ) {
@@ -799,21 +675,21 @@ public class QuestionnaireParser extends Parser {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					setState(91);
+					setState(93);
 					switch ( getInterpreter().adaptivePredict(_input,7,_ctx) ) {
 					case 1:
 						{
 						_localctx = new MulDivContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
-						setState(76);
-						if (!(precpred(_ctx, 9))) throw new FailedPredicateException(this, "precpred(_ctx, 9)");
-						setState(77);
+						setState(78);
+						if (!(precpred(_ctx, 11))) throw new FailedPredicateException(this, "precpred(_ctx, 11)");
+						setState(79);
 						_la = _input.LA(1);
 						if ( !(_la==MUL || _la==DIV) ) {
 						_errHandler.recoverInline(this);
 						}
 						consume();
-						setState(78); expr(10);
+						setState(80); expr(12);
 						}
 						break;
 
@@ -821,15 +697,15 @@ public class QuestionnaireParser extends Parser {
 						{
 						_localctx = new AddSubContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
-						setState(79);
-						if (!(precpred(_ctx, 8))) throw new FailedPredicateException(this, "precpred(_ctx, 8)");
-						setState(80);
+						setState(81);
+						if (!(precpred(_ctx, 10))) throw new FailedPredicateException(this, "precpred(_ctx, 10)");
+						setState(82);
 						_la = _input.LA(1);
 						if ( !(_la==ADD || _la==SUB) ) {
 						_errHandler.recoverInline(this);
 						}
 						consume();
-						setState(81); expr(9);
+						setState(83); expr(11);
 						}
 						break;
 
@@ -837,15 +713,15 @@ public class QuestionnaireParser extends Parser {
 						{
 						_localctx = new CompareContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
-						setState(82);
-						if (!(precpred(_ctx, 7))) throw new FailedPredicateException(this, "precpred(_ctx, 7)");
-						setState(83);
+						setState(84);
+						if (!(precpred(_ctx, 9))) throw new FailedPredicateException(this, "precpred(_ctx, 9)");
+						setState(85);
 						_la = _input.LA(1);
 						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << LT) | (1L << LEq) | (1L << GT) | (1L << GEq) | (1L << Eq) | (1L << NEq))) != 0)) ) {
 						_errHandler.recoverInline(this);
 						}
 						consume();
-						setState(84); expr(8);
+						setState(86); expr(10);
 						}
 						break;
 
@@ -853,12 +729,12 @@ public class QuestionnaireParser extends Parser {
 						{
 						_localctx = new AndContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
-						setState(85);
-						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
+						setState(87);
+						if (!(precpred(_ctx, 7))) throw new FailedPredicateException(this, "precpred(_ctx, 7)");
 						{
-						setState(86); match(AND);
+						setState(88); match(AND);
 						}
-						setState(87); expr(6);
+						setState(89); expr(8);
 						}
 						break;
 
@@ -866,18 +742,18 @@ public class QuestionnaireParser extends Parser {
 						{
 						_localctx = new OrContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
-						setState(88);
-						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
+						setState(90);
+						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
 						{
-						setState(89); match(OR);
+						setState(91); match(OR);
 						}
-						setState(90); expr(5);
+						setState(92); expr(7);
 						}
 						break;
 					}
 					} 
 				}
-				setState(95);
+				setState(97);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,8,_ctx);
 			}
@@ -902,46 +778,47 @@ public class QuestionnaireParser extends Parser {
 	}
 	private boolean expr_sempred(ExprContext _localctx, int predIndex) {
 		switch (predIndex) {
-		case 0: return precpred(_ctx, 9);
+		case 0: return precpred(_ctx, 11);
 
-		case 1: return precpred(_ctx, 8);
+		case 1: return precpred(_ctx, 10);
 
-		case 2: return precpred(_ctx, 7);
+		case 2: return precpred(_ctx, 9);
 
-		case 3: return precpred(_ctx, 5);
+		case 3: return precpred(_ctx, 7);
 
-		case 4: return precpred(_ctx, 4);
+		case 4: return precpred(_ctx, 6);
 		}
 		return true;
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3!c\4\2\t\2\4\3\t\3"+
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3$e\4\2\t\2\4\3\t\3"+
 		"\4\4\t\4\4\5\t\5\4\6\t\6\3\2\3\2\3\2\3\2\6\2\21\n\2\r\2\16\2\22\3\2\3"+
 		"\2\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3"+
 		"\3\3\6\3)\n\3\r\3\16\3*\3\3\3\3\5\3/\n\3\5\3\61\n\3\3\4\3\4\3\4\6\4\66"+
 		"\n\4\r\4\16\4\67\3\4\3\4\3\5\3\5\3\5\3\5\3\5\3\5\5\5B\n\5\3\6\3\6\3\6"+
-		"\3\6\3\6\3\6\3\6\3\6\3\6\5\6M\n\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6"+
-		"\3\6\3\6\3\6\3\6\3\6\3\6\7\6^\n\6\f\6\16\6a\13\6\3\6\2\3\n\7\2\4\6\b\n"+
-		"\2\5\3\2\17\20\3\2\21\22\3\2\26\33p\2\f\3\2\2\2\4\60\3\2\2\2\6\62\3\2"+
-		"\2\2\bA\3\2\2\2\nL\3\2\2\2\f\r\7\3\2\2\r\16\7\36\2\2\16\20\7\4\2\2\17"+
-		"\21\5\4\3\2\20\17\3\2\2\2\21\22\3\2\2\2\22\20\3\2\2\2\22\23\3\2\2\2\23"+
-		"\24\3\2\2\2\24\25\7\b\2\2\25\3\3\2\2\2\26\27\7\36\2\2\27\30\7\6\2\2\30"+
-		"\31\7 \2\2\31\61\5\b\5\2\32\33\7\36\2\2\33\34\7\6\2\2\34\35\7 \2\2\35"+
-		"\36\5\b\5\2\36\37\7\7\2\2\37 \5\n\6\2 !\7\5\2\2!\61\3\2\2\2\"#\7\34\2"+
-		"\2#$\7\7\2\2$%\5\n\6\2%&\7\5\2\2&(\7\4\2\2\')\5\4\3\2(\'\3\2\2\2)*\3\2"+
-		"\2\2*(\3\2\2\2*+\3\2\2\2+,\3\2\2\2,.\7\b\2\2-/\5\6\4\2.-\3\2\2\2./\3\2"+
-		"\2\2/\61\3\2\2\2\60\26\3\2\2\2\60\32\3\2\2\2\60\"\3\2\2\2\61\5\3\2\2\2"+
-		"\62\63\7\35\2\2\63\65\7\4\2\2\64\66\5\4\3\2\65\64\3\2\2\2\66\67\3\2\2"+
-		"\2\67\65\3\2\2\2\678\3\2\2\289\3\2\2\29:\7\b\2\2:\7\3\2\2\2;B\7\t\2\2"+
-		"<B\7\n\2\2=B\7\13\2\2>B\7\f\2\2?B\7\r\2\2@B\7\16\2\2A;\3\2\2\2A<\3\2\2"+
-		"\2A=\3\2\2\2A>\3\2\2\2A?\3\2\2\2A@\3\2\2\2B\t\3\2\2\2CD\b\6\1\2DE\7\23"+
-		"\2\2EM\5\n\6\bFM\7\37\2\2GM\7\36\2\2HI\7\7\2\2IJ\5\n\6\2JK\7\5\2\2KM\3"+
-		"\2\2\2LC\3\2\2\2LF\3\2\2\2LG\3\2\2\2LH\3\2\2\2M_\3\2\2\2NO\f\13\2\2OP"+
-		"\t\2\2\2P^\5\n\6\fQR\f\n\2\2RS\t\3\2\2S^\5\n\6\13TU\f\t\2\2UV\t\4\2\2"+
-		"V^\5\n\6\nWX\f\7\2\2XY\7\24\2\2Y^\5\n\6\bZ[\f\6\2\2[\\\7\25\2\2\\^\5\n"+
-		"\6\7]N\3\2\2\2]Q\3\2\2\2]T\3\2\2\2]W\3\2\2\2]Z\3\2\2\2^a\3\2\2\2_]\3\2"+
-		"\2\2_`\3\2\2\2`\13\3\2\2\2a_\3\2\2\2\13\22*.\60\67AL]_";
+		"\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\5\6O\n\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6"+
+		"\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\7\6`\n\6\f\6\16\6c\13\6\3\6\2\3\n\7\2"+
+		"\4\6\b\n\2\5\3\2\17\20\3\2\21\22\3\2\26\33t\2\f\3\2\2\2\4\60\3\2\2\2\6"+
+		"\62\3\2\2\2\bA\3\2\2\2\nN\3\2\2\2\f\r\7\3\2\2\r\16\7\37\2\2\16\20\7\4"+
+		"\2\2\17\21\5\4\3\2\20\17\3\2\2\2\21\22\3\2\2\2\22\20\3\2\2\2\22\23\3\2"+
+		"\2\2\23\24\3\2\2\2\24\25\7\b\2\2\25\3\3\2\2\2\26\27\7\37\2\2\27\30\7\6"+
+		"\2\2\30\31\7!\2\2\31\61\5\b\5\2\32\33\7\37\2\2\33\34\7\6\2\2\34\35\7!"+
+		"\2\2\35\36\5\b\5\2\36\37\7\7\2\2\37 \5\n\6\2 !\7\5\2\2!\61\3\2\2\2\"#"+
+		"\7\35\2\2#$\7\7\2\2$%\5\n\6\2%&\7\5\2\2&(\7\4\2\2\')\5\4\3\2(\'\3\2\2"+
+		"\2)*\3\2\2\2*(\3\2\2\2*+\3\2\2\2+,\3\2\2\2,.\7\b\2\2-/\5\6\4\2.-\3\2\2"+
+		"\2./\3\2\2\2/\61\3\2\2\2\60\26\3\2\2\2\60\32\3\2\2\2\60\"\3\2\2\2\61\5"+
+		"\3\2\2\2\62\63\7\36\2\2\63\65\7\4\2\2\64\66\5\4\3\2\65\64\3\2\2\2\66\67"+
+		"\3\2\2\2\67\65\3\2\2\2\678\3\2\2\289\3\2\2\29:\7\b\2\2:\7\3\2\2\2;B\7"+
+		"\t\2\2<B\7\n\2\2=B\7\13\2\2>B\7\f\2\2?B\7\r\2\2@B\7\16\2\2A;\3\2\2\2A"+
+		"<\3\2\2\2A=\3\2\2\2A>\3\2\2\2A?\3\2\2\2A@\3\2\2\2B\t\3\2\2\2CD\b\6\1\2"+
+		"DE\7\23\2\2EO\5\n\6\nFG\7\7\2\2GH\5\n\6\2HI\7\5\2\2IO\3\2\2\2JO\7\34\2"+
+		"\2KO\7 \2\2LO\7!\2\2MO\7\37\2\2NC\3\2\2\2NF\3\2\2\2NJ\3\2\2\2NK\3\2\2"+
+		"\2NL\3\2\2\2NM\3\2\2\2Oa\3\2\2\2PQ\f\r\2\2QR\t\2\2\2R`\5\n\6\16ST\f\f"+
+		"\2\2TU\t\3\2\2U`\5\n\6\rVW\f\13\2\2WX\t\4\2\2X`\5\n\6\fYZ\f\t\2\2Z[\7"+
+		"\24\2\2[`\5\n\6\n\\]\f\b\2\2]^\7\25\2\2^`\5\n\6\t_P\3\2\2\2_S\3\2\2\2"+
+		"_V\3\2\2\2_Y\3\2\2\2_\\\3\2\2\2`c\3\2\2\2a_\3\2\2\2ab\3\2\2\2b\13\3\2"+
+		"\2\2ca\3\2\2\2\13\22*.\60\67AN_a";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

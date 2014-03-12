@@ -1,5 +1,6 @@
-package edu.uva.softwarecons.model.expression;
+package edu.uva.softwarecons.model.expression.literal;
 
+import edu.uva.softwarecons.model.expression.Expression;
 import edu.uva.softwarecons.model.type.Type;
 import edu.uva.softwarecons.visitor.expression.IExpressionElementVisitor;
 
@@ -21,17 +22,19 @@ public class IdExpression implements Expression {
     }
 
     @Override
-    public void accept(IExpressionElementVisitor visitor) {
-        visitor.visitIdExpression(this);
+    public Type accept(IExpressionElementVisitor visitor) {
+        return visitor.visitIdExpression(this);
     }
 
     @Override
-    public Type eval() {
-        return null;
+    public Expression eval() {
+        return new IdExpression(id);
     }
 
     @Override
     public boolean equals(Object o) {
         return o instanceof IdExpression;
     }
+
+
 }

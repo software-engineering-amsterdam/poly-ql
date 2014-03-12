@@ -34,6 +34,30 @@ public class QuestionnaireBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitStringType(@NotNull QuestionnaireParser.StringTypeContext ctx) { return visitChildren(ctx); }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitDecimalType(@NotNull QuestionnaireParser.DecimalTypeContext ctx) { return visitChildren(ctx); }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitBooleanType(@NotNull QuestionnaireParser.BooleanTypeContext ctx) { return visitChildren(ctx); }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitComputedQuestion(@NotNull QuestionnaireParser.ComputedQuestionContext ctx) { return visitChildren(ctx); }
 
 	/**
@@ -58,14 +82,6 @@ public class QuestionnaireBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitInt(@NotNull QuestionnaireParser.IntContext ctx) { return visitChildren(ctx); }
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
 	@Override public T visitCompare(@NotNull QuestionnaireParser.CompareContext ctx) { return visitChildren(ctx); }
 
 	/**
@@ -82,7 +98,7 @@ public class QuestionnaireBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitDate(@NotNull QuestionnaireParser.DateContext ctx) { return visitChildren(ctx); }
+	@Override public T visitIntType(@NotNull QuestionnaireParser.IntTypeContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}
@@ -90,7 +106,7 @@ public class QuestionnaireBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitDecimal(@NotNull QuestionnaireParser.DecimalContext ctx) { return visitChildren(ctx); }
+	@Override public T visitDateType(@NotNull QuestionnaireParser.DateTypeContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}
@@ -154,14 +170,6 @@ public class QuestionnaireBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitMoney(@NotNull QuestionnaireParser.MoneyContext ctx) { return visitChildren(ctx); }
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
 	@Override public T visitBoolean(@NotNull QuestionnaireParser.BooleanContext ctx) { return visitChildren(ctx); }
 
 	/**
@@ -171,4 +179,12 @@ public class QuestionnaireBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitParenthesis(@NotNull QuestionnaireParser.ParenthesisContext ctx) { return visitChildren(ctx); }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitMoneyType(@NotNull QuestionnaireParser.MoneyTypeContext ctx) { return visitChildren(ctx); }
 }

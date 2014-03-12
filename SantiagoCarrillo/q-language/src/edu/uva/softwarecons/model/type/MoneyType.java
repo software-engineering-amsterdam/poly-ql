@@ -12,17 +12,6 @@ import java.math.BigDecimal;
  */
 public class MoneyType extends NumericType{
 
-    private final BigDecimal value;
-
-    public MoneyType(BigDecimal value) {
-        this.value = value;
-    }
-
-    @Override
-    public BigDecimal getValue() {
-        return value;
-    }
-
 
     @Override
     public String toString() {

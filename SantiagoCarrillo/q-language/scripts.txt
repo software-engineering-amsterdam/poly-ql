@@ -1,5 +1,5 @@
 #generate grammar using package name
-antlr4 -visitor Questionnaire.g4  -package edu.uva.softwarecons.grammar
+antlr4 -visitor -no-listener Questionnaire.g4  -package edu.uva.softwarecons.grammar
 
 grun Questionnaire init -gui
 
