@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Expression;
-import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.UnaryExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.BiLogicExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.BiMathExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.EqualityExpr;
@@ -29,6 +28,7 @@ import org.uva.sea.ql.parser.antlr.QL4.TypeChecker.QLErrorMsg;
  */
 public class InvalidType extends QLErrorVisitor {
 
+	@Override
 	/**
 	 * When visiting neg expression, check if logical
 	 */
@@ -94,17 +94,23 @@ public class InvalidType extends QLErrorVisitor {
 	 * a decimal OR
 	 * a number OR
 	 * a subclass of BiMathExpr OR
-	 * a subclass of equalityExpr OR
-	 * a BraceExpr
+	 * a BraceExpr of which the expr is mathematical
 	 */
 	private boolean isMathematical(Expression expr) {
-		return (
-				expr instanceof Decimal
-				|| expr instanceof Number
-				|| BiMathExpr.class.isAssignableFrom(expr.getClass())
-				|| EqualityExpr.class.isAssignableFrom(expr.getClass())
-				|| expr instanceof BraceExpr
-				);
+		boolean isMathematical = false;
+		
+		// if expr is braceExpr, look further into it
+		if (expr instanceof BraceExpr) {
+			isMathematical = isMathematical(((BraceExpr) expr).getExpr());
+		} else {
+			isMathematical = ( 
+					expr instanceof Decimal
+					|| expr instanceof Number
+					|| BiMathExpr.class.isAssignableFrom(expr.getClass())
+					);
+		}
+		
+		return isMathematical;
 	}
 	
 	/**
@@ -112,14 +118,25 @@ public class InvalidType extends QLErrorVisitor {
 	 * a Boolean
 	 * a subclass of BiLogicExpr OR
 	 * a subclass of equalityExpr OR
-	 * a subclass of unaryExpr
+	 * a BraceExpr of which the inner expr is logical
+	 * a NegExpr
 	 */
 	private boolean isLogical(Expression expr) {
-		return (
-				expr instanceof Bool
-				|| BiLogicExpr.class.isAssignableFrom(expr.getClass())
-				|| EqualityExpr.class.isAssignableFrom(expr.getClass())
-				|| UnaryExpr.class.isAssignableFrom(expr.getClass())
-				);
+		boolean isLogical = false;
+		
+		// if expr is braceExpr, look further into it
+		if (expr instanceof BraceExpr) {
+			isLogical = isLogical(((BraceExpr) expr).getExpr());
+		} else {
+			isLogical = ( 
+					expr instanceof Bool
+					|| BiLogicExpr.class.isAssignableFrom(expr.getClass())
+					|| EqualityExpr.class.isAssignableFrom(expr.getClass())
+					|| NegExpr.class.isAssignableFrom(expr.getClass())
+					);
+		}
+		
+		return isLogical;
+		
 	}
 }
