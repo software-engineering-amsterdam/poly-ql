@@ -47,7 +47,10 @@ namespace QSLib
             return base.GetHashCode();
         }
 
-
-
+        public void CreateGUI(GUIBuilder guiBuilder)
+        {
+            this._statements.ForEach(x => x.CreateGUI(guiBuilder));
+            guiBuilder.EndBlock();
+        }
     }
 }

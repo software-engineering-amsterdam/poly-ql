@@ -10,6 +10,10 @@ namespace QSLib.Expressions.Binary
             base._operator = "||";
         }
 
+        public bool GetBoolValue()
+        {
+            return this._left.GetBoolValue() && this._right.GetBoolValue(this._right);
+        }
 
         public override QSType Type
         {
