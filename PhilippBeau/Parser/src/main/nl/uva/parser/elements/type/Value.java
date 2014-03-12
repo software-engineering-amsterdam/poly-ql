@@ -1,13 +1,13 @@
 package main.nl.uva.parser.elements.type;
 
-import java.awt.Component;
-
 import main.nl.uva.parser.elements.expressions.AdvancedExpression;
 import main.nl.uva.parser.elements.expressions.Expression;
 import main.nl.uva.parser.elements.expressions.atoms.BoolAtom;
 import main.nl.uva.parser.elements.expressions.atoms.MoneyAtom;
 import main.nl.uva.parser.elements.expressions.atoms.TextAtom;
 import main.nl.uva.parser.elements.statements.Statement;
+import main.nl.uva.parser.elements.ui.DeclarationUIElement;
+import main.nl.uva.parser.elements.ui.types.ValueUI;
 
 public abstract class Value {
 
@@ -67,6 +67,10 @@ public abstract class Value {
         return _typeOf.equals(type);
     }
 
+    public boolean isOfSameType(final Value other) {
+        return _typeOf.equals(other._typeOf);
+    }
+
     public abstract Expression getAtom();
 
     public abstract Value visit(Expression right, AdvancedExpression expression);
@@ -77,7 +81,7 @@ public abstract class Value {
 
     public abstract Value accept(Text left, AdvancedExpression expression);
 
-    public abstract Component getLayout();
+    public abstract ValueUI getLayout(DeclarationUIElement parent);
 
     public boolean isInvalid() {
         return false;
@@ -96,5 +100,4 @@ public abstract class Value {
     public boolean acceptType(final Text type) {
         return false;
     }
-
 }

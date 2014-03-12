@@ -18,6 +18,10 @@ public class MoneyAtom extends Expression {
         _value = new Money(Double.parseDouble(value));
     }
 
+    public MoneyAtom(final Money value) {
+        _value = value;
+    }
+
     @Override
     public String toString() {
         return "Money: " + _value;
@@ -31,5 +35,10 @@ public class MoneyAtom extends Expression {
     @Override
     public Value getType() {
         return _value;
+    }
+
+    @Override
+    public void recalculateValueImpl() {
+        throw new UnsupportedOperationException();
     }
 }

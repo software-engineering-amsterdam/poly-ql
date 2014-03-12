@@ -2,12 +2,11 @@ package main.nl.uva.parser.elements.statements;
 
 import java.util.List;
 
-import javax.swing.BoxLayout;
-import javax.swing.JPanel;
-
 import main.nl.uva.parser.elements.ParserElement;
 import main.nl.uva.parser.elements.errors.ValidationError;
 import main.nl.uva.parser.elements.expressions.Variable;
+import main.nl.uva.parser.elements.ui.FormUIElement;
+import main.nl.uva.parser.elements.ui.UIElement;
 
 public class ParserForm extends BlockStatement {
 
@@ -45,13 +44,7 @@ public class ParserForm extends BlockStatement {
     }
 
     @Override
-    public JPanel getLayout() {
-        JPanel layout = new JPanel();
-        layout.setLayout(new BoxLayout(layout, BoxLayout.Y_AXIS));
-        for (Statement child : _children) {
-            layout.add(child.getLayout());
-        }
-
-        return layout;
+    public UIElement getLayout() {
+        return new FormUIElement(_children);
     }
 }

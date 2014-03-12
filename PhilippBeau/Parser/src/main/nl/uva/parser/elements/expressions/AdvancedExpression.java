@@ -44,6 +44,13 @@ public abstract class AdvancedExpression extends Expression {
     }
 
     @Override
+    protected void recalculateValueImpl() {
+        _value = _left.getType().visit(_right, this);
+
+        _parent.recalculateValue();
+    }
+
+    @Override
     public Value getType() {
         return _value;
     }

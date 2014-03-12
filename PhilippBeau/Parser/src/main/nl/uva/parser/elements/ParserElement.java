@@ -15,5 +15,7 @@ public abstract class ParserElement {
 
     public abstract List<ValidationError> validate();
 
+    public abstract void recalculateValue();
+
     public abstract Variable findVariable(final String variableName, final ParserElement scopeEnd);
 }

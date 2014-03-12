@@ -2,11 +2,10 @@ package main.nl.uva.parser.elements.statements;
 
 import java.util.List;
 
-import javax.swing.JPanel;
-
 import main.nl.uva.parser.elements.ParserElement;
 import main.nl.uva.parser.elements.errors.ValidationError;
 import main.nl.uva.parser.elements.expressions.Variable;
+import main.nl.uva.parser.elements.ui.UIElement;
 
 public class IfElseStatement extends BlockStatement {
 
@@ -43,7 +42,7 @@ public class IfElseStatement extends BlockStatement {
     }
 
     @Override
-    public JPanel getLayout() {
-        return new JPanel();
+    public UIElement getLayout() {
+        return null;
     }
 }

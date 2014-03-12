@@ -1,12 +1,11 @@
 package main.nl.uva.parser.elements.type;
 
-import java.awt.Component;
-
-import javax.swing.JCheckBox;
-
 import main.nl.uva.parser.elements.expressions.AdvancedExpression;
 import main.nl.uva.parser.elements.expressions.Expression;
 import main.nl.uva.parser.elements.expressions.atoms.BoolAtom;
+import main.nl.uva.parser.elements.ui.DeclarationUIElement;
+import main.nl.uva.parser.elements.ui.types.BooleanUI;
+import main.nl.uva.parser.elements.ui.types.ValueUI;
 
 public class Bool extends Value {
 
@@ -55,8 +54,8 @@ public class Bool extends Value {
     }
 
     @Override
-    public Component getLayout() {
-        return new JCheckBox();
+    public ValueUI getLayout(final DeclarationUIElement parent) {
+        return new BooleanUI(parent);
     }
 
     @Override

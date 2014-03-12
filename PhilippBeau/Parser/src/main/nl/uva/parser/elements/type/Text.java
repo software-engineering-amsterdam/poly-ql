@@ -1,12 +1,11 @@
 package main.nl.uva.parser.elements.type;
 
-import java.awt.Component;
-
-import javax.swing.JTextField;
-
 import main.nl.uva.parser.elements.expressions.AdvancedExpression;
 import main.nl.uva.parser.elements.expressions.Expression;
 import main.nl.uva.parser.elements.expressions.atoms.TextAtom;
+import main.nl.uva.parser.elements.ui.DeclarationUIElement;
+import main.nl.uva.parser.elements.ui.types.TextUI;
+import main.nl.uva.parser.elements.ui.types.ValueUI;
 
 public class Text extends Value {
 
@@ -55,8 +54,8 @@ public class Text extends Value {
     }
 
     @Override
-    public Component getLayout() {
-        return new JTextField();
+    public ValueUI getLayout(final DeclarationUIElement parent) {
+        return new TextUI(parent);
     }
 
     @Override

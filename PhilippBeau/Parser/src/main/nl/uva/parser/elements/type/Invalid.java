@@ -1,9 +1,9 @@
 package main.nl.uva.parser.elements.type;
 
-import java.awt.Component;
-
 import main.nl.uva.parser.elements.expressions.AdvancedExpression;
 import main.nl.uva.parser.elements.expressions.Expression;
+import main.nl.uva.parser.elements.ui.DeclarationUIElement;
+import main.nl.uva.parser.elements.ui.types.ValueUI;
 
 public class Invalid extends Value {
 
@@ -13,7 +13,7 @@ public class Invalid extends Value {
 
     @Override
     public Expression getAtom() {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -42,13 +42,13 @@ public class Invalid extends Value {
     }
 
     @Override
-    public Component getLayout() {
-        return null;
+    public ValueUI getLayout(final DeclarationUIElement parent) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public boolean visitType(final Value type) {
-        return false;
+        throw new UnsupportedOperationException();
     }
 
 }

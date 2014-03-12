@@ -3,21 +3,27 @@ package main.nl.uva.parser.elements.statements;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JPanel;
-
 import main.nl.uva.parser.elements.ParserElement;
 import main.nl.uva.parser.elements.errors.ValidationError;
 import main.nl.uva.parser.elements.expressions.Variable;
+import main.nl.uva.parser.elements.ui.UIElement;
 
 public abstract class Statement extends ParserElement {
 
+    @Override
     public abstract List<ValidationError> validate();
 
+    @Override
     public abstract Variable findVariable(final String variableName, final ParserElement scopeEnd);
 
     public abstract Variable getVariable(final String variableName);
 
-    public abstract JPanel getLayout();
+    public abstract UIElement getLayout();
+
+    @Override
+    public void recalculateValue() {
+
+    }
 
     protected static Variable findVariableInChildren(final List<Statement> children, final String variableName, final ParserElement scopeEnd) {
         Variable result = null;

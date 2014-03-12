@@ -24,4 +24,9 @@ public class NotExpression extends Expression {
     public List<ValidationError> validate() {
         return _expression.validate();
     }
+
+    @Override
+    protected void recalculateValueImpl() {
+        _parent.recalculateValue();
+    }
 }

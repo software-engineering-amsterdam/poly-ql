@@ -52,4 +52,9 @@ public class VariableAtom extends Expression {
     public Value getType() {
         return _linkedVariable.getType();
     }
+
+    @Override
+    public void recalculateValueImpl() {
+        _parent.recalculateValue();
+    }
 }

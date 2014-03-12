@@ -32,7 +32,7 @@ public class UI extends JFrame {
     private void generateUI() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        this.add(_form.getLayout());
+        this.add(_form.getLayout().generateUIElement());
 
         // Display the window.
         this.pack();

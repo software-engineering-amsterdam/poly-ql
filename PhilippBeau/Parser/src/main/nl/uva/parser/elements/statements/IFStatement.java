@@ -2,15 +2,14 @@ package main.nl.uva.parser.elements.statements;
 
 import java.util.List;
 
-import javax.swing.BoxLayout;
-import javax.swing.JPanel;
-
 import main.nl.uva.parser.elements.ParserElement;
 import main.nl.uva.parser.elements.errors.InvalidTypeError;
 import main.nl.uva.parser.elements.errors.ValidationError;
 import main.nl.uva.parser.elements.expressions.Expression;
 import main.nl.uva.parser.elements.expressions.Variable;
 import main.nl.uva.parser.elements.type.Value;
+import main.nl.uva.parser.elements.ui.IfUIElement;
+import main.nl.uva.parser.elements.ui.UIElement;
 
 public class IFStatement extends BlockStatement {
 
@@ -66,15 +65,7 @@ public class IFStatement extends BlockStatement {
     }
 
     @Override
-    public JPanel getLayout() {
-        JPanel layout = new JPanel();
-        layout.setLayout(new BoxLayout(layout, BoxLayout.Y_AXIS));
-        for (Statement child : _children) {
-            layout.add(child.getLayout());
-        }
-
-        // layout.setVisible((Boolean) _expression.getResult());
-
-        return layout;
+    public UIElement getLayout() {
+        return new IfUIElement(_expression, _children);
     }
 }

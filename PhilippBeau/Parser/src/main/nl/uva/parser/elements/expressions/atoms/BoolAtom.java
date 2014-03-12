@@ -22,6 +22,10 @@ public class BoolAtom extends Expression {
         _value = new Bool(parseBoolean(value));
     }
 
+    public BoolAtom(final Bool value) {
+        _value = value;
+    }
+
     private static boolean isBoolean(final String value) {
         return value.toLowerCase().equals(TRUE) || value.toLowerCase().equals(FALSE);
     }
@@ -43,5 +47,10 @@ public class BoolAtom extends Expression {
     @Override
     public Value getType() {
         return _value;
+    }
+
+    @Override
+    public void recalculateValueImpl() {
+        throw new UnsupportedOperationException();
     }
 }

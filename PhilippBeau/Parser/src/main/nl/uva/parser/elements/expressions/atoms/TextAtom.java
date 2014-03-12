@@ -15,7 +15,11 @@ public class TextAtom extends Expression {
     }
 
     public TextAtom(final String value) {
-        _value = new Text(value);
+        this(new Text(value));
+    }
+
+    public TextAtom(final Text value) {
+        _value = value;
     }
 
     @Override
@@ -31,5 +35,10 @@ public class TextAtom extends Expression {
     @Override
     public Value getType() {
         return _value;
+    }
+
+    @Override
+    public void recalculateValueImpl() {
+        throw new UnsupportedOperationException();
     }
 }
