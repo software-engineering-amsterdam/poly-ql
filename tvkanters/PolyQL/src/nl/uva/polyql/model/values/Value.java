@@ -4,9 +4,7 @@ import java.util.Objects;
 
 import nl.uva.polyql.model.Question;
 import nl.uva.polyql.model.expressions.modifiers.Modifier;
-import nl.uva.polyql.model.expressions.operators.bool.BooleanOperator;
-import nl.uva.polyql.model.expressions.operators.number.NumberOperator;
-import nl.uva.polyql.model.expressions.operators.string.StringOperator;
+import nl.uva.polyql.model.expressions.operators.Operator;
 import nl.uva.polyql.model.types.Type;
 import nl.uva.polyql.view.ValueView;
 
@@ -35,23 +33,21 @@ public abstract class Value<T> {
 
     public abstract Type getType();
 
-    public abstract BooleanValue performOperationOnLeft(BooleanOperator operator, Value<?> rightValue);
+    public Value<?> performOperationOnLeft(final Operator operator, final Value<?> rightValue) {
+        throw new UnsupportedOperationException();
+    }
 
-    public abstract NumberValue performOperationOnLeft(NumberOperator operator, Value<?> rightValue);
+    public Value<?> performOperationOnRight(final BooleanValue leftValue, final Operator operator) {
+        throw new UnsupportedOperationException();
+    }
 
-    public abstract StringValue performOperationOnLeft(StringOperator operator, Value<?> rightValue);
+    public Value<?> performOperationOnRight(final StringValue leftValue, final Operator operator) {
+        throw new UnsupportedOperationException();
+    }
 
-    public abstract BooleanValue performOperationOnRight(BooleanValue leftValue, BooleanOperator operator);
-
-    public abstract BooleanValue performOperationOnRight(NumberValue leftValue, BooleanOperator operator);
-
-    public abstract BooleanValue performOperationOnRight(StringValue leftValue, BooleanOperator operator);
-
-    public abstract NumberValue performOperationOnRight(NumberValue leftValue, NumberOperator operator);
-
-    public abstract StringValue performOperationOnRight(StringValue leftValue, StringOperator operator);
-
-    public abstract StringValue performOperationOnRight(NumberValue leftValue, StringOperator operator);
+    public Value<?> performOperationOnRight(final NumberValue leftValue, final Operator operator) {
+        throw new UnsupportedOperationException();
+    }
 
     public abstract Value<T> applyModifier(Modifier<?> modifier);
 

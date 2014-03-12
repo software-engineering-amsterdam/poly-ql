@@ -4,8 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import nl.uva.polyql.model.Question;
-import nl.uva.polyql.model.types.Type;
 import nl.uva.polyql.model.types.NumberType;
+import nl.uva.polyql.model.types.Type;
 import nl.uva.polyql.model.values.NumberValue;
 
 public class NumberAtom extends Expression {

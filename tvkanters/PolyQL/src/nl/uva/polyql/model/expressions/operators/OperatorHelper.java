@@ -13,58 +13,31 @@ import nl.uva.polyql.model.expressions.operators.number.AddOperator;
 import nl.uva.polyql.model.expressions.operators.number.DivideOperator;
 import nl.uva.polyql.model.expressions.operators.number.MultiplyOperator;
 import nl.uva.polyql.model.expressions.operators.number.SubtractOperator;
-import nl.uva.polyql.model.values.BooleanValue;
-import nl.uva.polyql.model.values.NumberValue;
-import nl.uva.polyql.model.values.StringValue;
 import nl.uva.polyql.utils.SyntaxMap;
 
 public class OperatorHelper {
 
-    private final static SyntaxMap<Operator<BooleanValue>> sBooleanSyntaxMap = new SyntaxMap<>();
-    private final static SyntaxMap<Operator<NumberValue>> sNumberSyntaxMap = new SyntaxMap<>();
-    private final static SyntaxMap<Operator<StringValue>> sStringSyntaxMap = new SyntaxMap<>();
+    private final static SyntaxMap<Operator> sSyntaxMap = new SyntaxMap<>();
 
     static {
-        sBooleanSyntaxMap.put(new EqualsOperator());
-        sBooleanSyntaxMap.put(new NotEqualsOperator());
-        sBooleanSyntaxMap.put(new AndOperator());
-        sBooleanSyntaxMap.put(new OrOperator());
-        sBooleanSyntaxMap.put(new XorOperator());
-        sBooleanSyntaxMap.put(new GreaterThanOperator());
-        sBooleanSyntaxMap.put(new LesserThanOperator());
-        sBooleanSyntaxMap.put(new GreaterThanOrEqualsOperator());
-        sBooleanSyntaxMap.put(new LesserThanOrEqualsOperator());
+        sSyntaxMap.put(new EqualsOperator());
+        sSyntaxMap.put(new NotEqualsOperator());
+        sSyntaxMap.put(new AndOperator());
+        sSyntaxMap.put(new OrOperator());
+        sSyntaxMap.put(new XorOperator());
+        sSyntaxMap.put(new GreaterThanOperator());
+        sSyntaxMap.put(new LesserThanOperator());
+        sSyntaxMap.put(new GreaterThanOrEqualsOperator());
+        sSyntaxMap.put(new LesserThanOrEqualsOperator());
 
-        sNumberSyntaxMap.put(new AddOperator());
-        sNumberSyntaxMap.put(new SubtractOperator());
-        sNumberSyntaxMap.put(new MultiplyOperator());
-        sNumberSyntaxMap.put(new DivideOperator());
-
-        sStringSyntaxMap.put(new nl.uva.polyql.model.expressions.operators.string.AddOperator());
+        sSyntaxMap.put(new AddOperator());
+        sSyntaxMap.put(new SubtractOperator());
+        sSyntaxMap.put(new MultiplyOperator());
+        sSyntaxMap.put(new DivideOperator());
     }
 
-    public static Operator<BooleanValue> getBooleanOperator(final String operator) {
-        return sBooleanSyntaxMap.get(operator);
-    }
-
-    public static Operator<NumberValue> getNumberOperator(final String operator) {
-        return sNumberSyntaxMap.get(operator);
-    }
-
-    public static Operator<StringValue> getStringOperator(final String operator) {
-        return sStringSyntaxMap.get(operator);
-    }
-
-    public static boolean hasBooleanOperator(final String operator) {
-        return sBooleanSyntaxMap.contains(operator);
-    }
-
-    public static boolean hasNumberOperator(final String operator) {
-        return sNumberSyntaxMap.contains(operator);
-    }
-
-    public static boolean hasStringOperator(final String operator) {
-        return sStringSyntaxMap.contains(operator);
+    public static Operator getOperator(final String operator) {
+        return sSyntaxMap.get(operator);
     }
 
     /**

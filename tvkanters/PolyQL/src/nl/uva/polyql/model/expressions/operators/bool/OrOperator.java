@@ -1,9 +1,10 @@
 package nl.uva.polyql.model.expressions.operators.bool;
 
-import nl.uva.polyql.model.types.Type;
+import nl.uva.polyql.model.expressions.operators.Operator;
 import nl.uva.polyql.model.values.BooleanValue;
+import nl.uva.polyql.model.values.Value;
 
-public class OrOperator extends BooleanOperator {
+public class OrOperator extends Operator {
 
     public static final String SYNTAX = "||";
 
@@ -13,13 +14,8 @@ public class OrOperator extends BooleanOperator {
     }
 
     @Override
-    public BooleanValue performOperation(final BooleanValue left, final BooleanValue right) {
+    public Value<?> performOperation(final BooleanValue left, final BooleanValue right) {
         return new BooleanValue(left.getValue() || right.getValue());
-    }
-
-    @Override
-    public boolean isValidForImplementedType(final Type type) {
-        return type == Type.BOOLEAN;
     }
 
 }

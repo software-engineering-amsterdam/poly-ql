@@ -1,10 +1,11 @@
 package nl.uva.polyql.model.expressions.operators.bool;
 
-import nl.uva.polyql.model.types.Type;
+import nl.uva.polyql.model.expressions.operators.Operator;
 import nl.uva.polyql.model.values.BooleanValue;
 import nl.uva.polyql.model.values.NumberValue;
+import nl.uva.polyql.model.values.Value;
 
-public class LesserThanOrEqualsOperator extends BooleanOperator {
+public class LesserThanOrEqualsOperator extends Operator {
 
     public static final String SYNTAX = "<=";
 
@@ -14,13 +15,8 @@ public class LesserThanOrEqualsOperator extends BooleanOperator {
     }
 
     @Override
-    public BooleanValue performOperation(final NumberValue left, final NumberValue right) {
+    public Value<?> performOperation(final NumberValue left, final NumberValue right) {
         return new BooleanValue(left.getValue() <= right.getValue());
-    }
-
-    @Override
-    public boolean isValidForImplementedType(final Type type) {
-        return type == Type.NUMBER;
     }
 
 }
