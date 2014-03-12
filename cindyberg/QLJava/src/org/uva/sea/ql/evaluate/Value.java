@@ -7,110 +7,110 @@ public abstract class Value {
 	public abstract Object getValue();
 
 	public Value add(Value value){
-		return null; 
+		throw new UnsupportedOperationException() ;
 	}
 
 	public Value addInteger(IntegerValue integerValue) {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	public Value sub(Value value) {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	public Value subInteger(IntegerValue integerValue) {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	public Value div(Value value) {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	public Value divInteger(IntegerValue integerValue) {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	public Value mul(Value value) {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 	public Value mulInteger(IntegerValue integerValue) {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	public Value neg() {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	public Value pos() {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	public Value eq(Value value) {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 	
 	public Value eqInteger(IntegerValue integerValue) {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 	
 	public Value leq(Value value){
-		return null;
+		throw new UnsupportedOperationException();
 	}
 	
 	public Value leqInteger(IntegerValue integerValue) {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 	
 	public Value gt(Value value){
-		return null;
+		throw new UnsupportedOperationException();
 	}
 	
 	public Value gtInteger(IntegerValue integerValue) {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 	
 	public Value geq(Value value){
-		return null;
+		throw new UnsupportedOperationException();
 	}
 	
 	public Value geqInteger(IntegerValue integerValue) {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 	
 	public Value lt(Value value){
-		return null;
+		throw new UnsupportedOperationException();
 	}
 	
 	public Value ltInteger(IntegerValue integerValue) {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 	
 	public Value neq(Value value){
-		return null;
+		throw new UnsupportedOperationException();
 	}
 	
 	public Value neqInteger(IntegerValue integerValue) {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 	
 	public Value and(Value value){
-		return null;
+		throw new UnsupportedOperationException();
 	}
 	
 	public Value andBoolean(BooleanValue booleanValue) {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 	
 	public Value or(Value value){
-		return null;
+		throw new UnsupportedOperationException();
 	}
 	
 	public Value orBoolean(BooleanValue booleanValue) {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 	
 	public Value not(){
-		return null;
+		throw new UnsupportedOperationException();
 	}
 	
 	@Override
@@ -124,6 +124,10 @@ public abstract class Value {
 	@Override
 	public int hashCode(){
 		return getValue().hashCode();
+	}
+	
+	public boolean isDefined(){
+		return (this != UndefinedValue.UNDEF);
 	}
 
 }

@@ -115,8 +115,8 @@ public class StatementChecker implements StatementVisitor {
 
 	public void visit(IfElseStatement ifElseConditional) {
 		Expression condition = ifElseConditional.getConditional();
-		Questions ifSet = ifElseConditional.getIfQuestionSet();
-		Questions elseSet = ifElseConditional.getElseQuestionSet();
+		Questions ifSet = ifElseConditional.getIfBody();
+		Questions elseSet = ifElseConditional.getElseBody();
 
 		new ExpressionChecker(environment, problems);
 		

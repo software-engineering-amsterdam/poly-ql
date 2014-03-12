@@ -22,9 +22,13 @@ public class StartScreenController {
 		
 	}
 
-	public Problems runTypeChecker(String INPUT) throws FileNotFoundException, ParseException {
-		checkDSL(parseDSL(INPUT));
-		return problems;	
+	public Problems getProblems(Form form) throws ParseException{
+		checkDSL(form);
+		return problems;
+	}
+	
+	public Form runTypeChecker(String INPUT) throws FileNotFoundException, ParseException {
+		return parseDSL(INPUT);
 	}
 	
 	private void checkDSL(Form form) throws ParseException{

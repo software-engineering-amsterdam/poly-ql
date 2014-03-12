@@ -19,11 +19,11 @@ public class IfElseStatement extends Statement {
 		return this.conditional;
 	}
 
-	public Questions getIfQuestionSet(){
+	public Questions getIfBody(){
 		return this.ifBody;
 	}
 	
-	public Questions getElseQuestionSet(){
+	public Questions getElseBody(){
 		return this.elseBody;
 	}
 	

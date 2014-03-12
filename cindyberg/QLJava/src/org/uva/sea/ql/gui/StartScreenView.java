@@ -18,11 +18,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
 
+import org.uva.sea.ql.ast.statement.Form;
 import org.uva.sea.ql.parser.jacc.ParseException;
 
+import problems.Error;
 import problems.Problems;
 import problems.Warning;
-import problems.Error;
 
 public class StartScreenView extends JFrame{
 	
@@ -37,7 +38,9 @@ public class StartScreenView extends JFrame{
 	private JList<String> errorList;
 	private DefaultListModel<String> warnings;
 	private DefaultListModel<String> errors;
-	private final static String SOURCE = "C:\\Users\\Cindy\\Documents\\Github\\poly-ql\\cindyberg\\QLJava\\src\\org\\uva\\sea\\ql\\DSLForm.txt"; 
+	private final static String INPUT = "form FORM { \n"+
+			"vraag1: \"label\" integer \n" +
+			"vraag2: \"bla\" boolean } ";
 	
 	public void renderView(){
 		
@@ -59,6 +62,7 @@ public class StartScreenView extends JFrame{
 			
 	}
 	
+	//TODO extract method
 	private void createWarningList(){
 		warnings = new DefaultListModel<String>();
 		warningList = new JList<String>(warnings);
@@ -83,8 +87,8 @@ public class StartScreenView extends JFrame{
 	
 	private void createInputfield(){
 		text = new JTextArea();
-		text.setText(SOURCE);
 		text.setPreferredSize(new Dimension(currentFrame.getWidth()-20,currentFrame.getHeight()/2));
+		text.setText(INPUT);
 		textView.add(text);
 	}
 	private void createButton(){
@@ -97,14 +101,18 @@ public class StartScreenView extends JFrame{
                 try {
                 	warnings.removeAllElements();
                 	errors.removeAllElements();
-                	Problems typeProblems = controller.runTypeChecker(readText());	
+                	Form form = controller.runTypeChecker(readText());
+                	
+                	Problems typeProblems = controller.getProblems(form);	
+                	
                 	if(typeProblems.hasProblems()){
-                		QuestionaireView b = new QuestionaireView();
+                		QuestionaireView b = new QuestionaireView(form);
                 		b.newScreen();
                 	}
                 	else{
                 		problemsToList(typeProblems);
                 	}
+                	
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
 				} catch (ParseException e1) {
