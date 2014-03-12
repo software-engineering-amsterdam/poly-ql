@@ -11,6 +11,8 @@ namespace Algebra.QL.Extensions.Factory
         E Modulo(E l, E r);
         E Power(E l, E r);
 
+        S Forms(S l, S r);
+
         S Goto(string var);
 		S Loop(E e, S s);
     }

@@ -145,11 +145,6 @@ namespace Algebra.QL.Core.Factory
 				Factory2.IfElse(toEval.Item2, ifTrue.Item2, ifFalse.Item2));
 		}
 
-        public Tuple<S1, S2> Forms(Tuple<S1, S2> l, Tuple<S1, S2> r)
-        {
-            return new Tuple<S1, S2>(Factory1.Forms(l.Item1, r.Item1), Factory2.Forms(l.Item2, r.Item2));
-        }
-
         public Tuple<S1, S2> Statements(Tuple<S1, S2> l, Tuple<S1, S2> r)
         {
             return new Tuple<S1, S2>(Factory1.Statements(l.Item1, r.Item1), Factory2.Statements(l.Item2, r.Item2));

@@ -28,9 +28,10 @@ namespace Algebra.QL.Form.Type
             {
                 dp.SelectedDate = Convert.ToDateTime(value.ExpressionValue);
             };
-            value.ValueChanged -= onValueChanged;
-            value.ValueChanged += onValueChanged;
             onValueChanged();
+
+            dp.Loaded += (s, e) => value.ValueChanged += onValueChanged;
+            dp.Unloaded += (s, e) => value.ValueChanged -= onValueChanged;
 
             return dp;
         }

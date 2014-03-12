@@ -28,9 +28,10 @@ namespace Algebra.QL.Form.Type
             {
                 tb.Text = Convert.ToString(value.ExpressionValue);
             };
-            value.ValueChanged -= onValueChanged;
-            value.ValueChanged += onValueChanged;
             onValueChanged();
+
+            tb.Loaded += (s, e) => value.ValueChanged += onValueChanged;
+            tb.Unloaded += (s, e) => value.ValueChanged -= onValueChanged;
 
             return tb;
         }

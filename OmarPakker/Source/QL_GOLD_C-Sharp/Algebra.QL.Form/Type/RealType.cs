@@ -28,9 +28,10 @@ namespace Algebra.QL.Form.Type
             {
                 dud.Value = Convert.ToDouble(value.ExpressionValue);
             };
-            value.ValueChanged -= onValueChanged;
-            value.ValueChanged += onValueChanged;
             onValueChanged();
+
+            dud.Loaded += (s, e) => value.ValueChanged += onValueChanged;
+            dud.Unloaded += (s, e) => value.ValueChanged -= onValueChanged;
 
             return dud;
         }

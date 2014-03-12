@@ -23,11 +23,10 @@ namespace Algebra.QL.Form.Stmnt
             {
                 sp.Visibility = (bool)CheckExpression.ExpressionValue ? Visibility.Visible : Visibility.Collapsed;
             };
-
-            CheckExpression.BuildForm();
-            CheckExpression.ValueChanged -= onValueChanged;
-            CheckExpression.ValueChanged += onValueChanged;
             onValueChanged();
+
+            sp.Loaded += (s, e) => CheckExpression.ValueChanged += onValueChanged;
+            sp.Unloaded += (s, e) => CheckExpression.ValueChanged -= onValueChanged;
 
             return sp;
         }

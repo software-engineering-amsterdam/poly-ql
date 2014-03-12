@@ -28,11 +28,10 @@ namespace Algebra.QL.Form.Stmnt
                 trueElem.Visibility = value ? Visibility.Visible : Visibility.Collapsed;
                 falseElem.Visibility = !value ? Visibility.Visible : Visibility.Collapsed;
             };
-
-            CheckExpression.BuildForm();
-            CheckExpression.ValueChanged -= onValueChanged;
-            CheckExpression.ValueChanged += onValueChanged;
             onValueChanged();
+
+            sp.Loaded += (s, e) => CheckExpression.ValueChanged += onValueChanged;
+            sp.Unloaded += (s, e) => CheckExpression.ValueChanged -= onValueChanged;
 
             return sp;
         }

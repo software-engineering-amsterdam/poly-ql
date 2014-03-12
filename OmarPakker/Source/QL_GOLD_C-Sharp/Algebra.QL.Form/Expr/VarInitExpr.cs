@@ -22,15 +22,11 @@ namespace Algebra.QL.Form.Expr
         public VarInitExpr(string name, IFormType type, IFormExpr value)
             : base(name, type, value)
 		{
-            
+            TypeEnvironment.Instance.DeclareVariable(this);
 		}
 
         public IFormType BuildForm()
         {
-            TypeEnvironment.Instance.DeclareVariable(this);
-
-            Value.BuildForm();
-
             return Type;
         }
     }

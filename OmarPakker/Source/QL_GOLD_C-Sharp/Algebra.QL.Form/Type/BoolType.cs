@@ -32,9 +32,10 @@ namespace Algebra.QL.Form.Type
             {
                 cb.IsChecked = Convert.ToBoolean(value.ExpressionValue);
             };
-            value.ValueChanged -= onValueChanged;
-            value.ValueChanged += onValueChanged;
             onValueChanged();
+
+            cb.Loaded += (s, e) => value.ValueChanged += onValueChanged;
+            cb.Unloaded += (s, e) => value.ValueChanged -= onValueChanged;
 
             return cb;
         }

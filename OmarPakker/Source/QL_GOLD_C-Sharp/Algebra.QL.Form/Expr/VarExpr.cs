@@ -24,12 +24,11 @@ namespace Algebra.QL.Form.Expr
 		public VarExpr(string name)
 			: base(name)
 		{
-            
+            actualVar = TypeEnvironment.Instance.GetVariable(Name);
 		}
 
         public IFormType BuildForm()
         {
-            actualVar = TypeEnvironment.Instance.GetVariable(Name);
             return actualVar.BuildForm();
         }
     }

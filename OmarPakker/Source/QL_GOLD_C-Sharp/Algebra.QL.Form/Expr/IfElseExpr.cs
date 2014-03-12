@@ -26,7 +26,6 @@ namespace Algebra.QL.Form.Expr
 
         public IFormType BuildForm()
         {
-            Expr1.BuildForm();
             IFormType a = Expr2.BuildForm();
             IFormType b = Expr3.BuildForm();
 

@@ -77,50 +77,6 @@ namespace WPFParser
             return parser;
         }
 
-        private void LoadBtn_Click(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog dialog = new OpenFileDialog()
-            {
-                DefaultExt = "txt",
-                InitialDirectory = System.IO.Path.GetFullPath(@"..\..\..\..\..\Grammar\"),
-                Multiselect = false
-            };
-
-            dialog.FileOk += (s, dialogE) =>
-            {
-                if (!dialogE.Cancel)
-                {
-                    Reset();
-
-                    string fileContents = new StreamReader(dialog.OpenFile()).ReadToEnd();
-                    customCodeBlock.Document.Blocks.Clear();
-                    customCodeBlock.AppendText(fileContents);
-
-                    RunParser(fileContents);
-                }
-            };
-
-            dialog.ShowDialog();
-        }
-
-        private void DefaultBtn_Click(object sender, RoutedEventArgs e)
-        {
-            Reset();
-
-            string defaultFileContents = File.OpenText(@"..\..\..\..\..\Grammar\QL_Test.txt").ReadToEnd();
-            customCodeBlock.Document.Blocks.Clear();
-            customCodeBlock.AppendText(defaultFileContents);
-
-            RunParser(defaultFileContents);
-        }
-
-        private void CustomCodeBtn_Click(object sender, RoutedEventArgs e)
-        {
-            Reset();
-
-            RunParser(new TextRange(customCodeBlock.Document.ContentStart, customCodeBlock.Document.ContentEnd).Text);
-        }
-
         private void Reset()
         {
             printOutputBlock.Document.Blocks.Clear();
@@ -264,6 +220,50 @@ namespace WPFParser
         {
             PrintError(String.Format("ERROR: Unexpected token '{0}' on line {1} column {2}. Expected: {3}",
                 token, pos.Item1, pos.Item2, expected), true);
+        }
+
+        private void LoadBtn_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog()
+            {
+                DefaultExt = "txt",
+                InitialDirectory = System.IO.Path.GetFullPath(@"..\..\..\..\..\Grammar\"),
+                Multiselect = false
+            };
+
+            dialog.FileOk += (s, dialogE) =>
+            {
+                if (!dialogE.Cancel)
+                {
+                    Reset();
+
+                    string fileContents = new StreamReader(dialog.OpenFile()).ReadToEnd();
+                    customCodeBlock.Document.Blocks.Clear();
+                    customCodeBlock.AppendText(fileContents);
+
+                    RunParser(fileContents);
+                }
+            };
+
+            dialog.ShowDialog();
+        }
+
+        private void DefaultBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Reset();
+
+            string defaultFileContents = File.OpenText(@"..\..\..\..\..\Grammar\QL_Test.txt").ReadToEnd();
+            customCodeBlock.Document.Blocks.Clear();
+            customCodeBlock.AppendText(defaultFileContents);
+
+            RunParser(defaultFileContents);
+        }
+
+        private void CustomCodeBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Reset();
+
+            RunParser(new TextRange(customCodeBlock.Document.ContentStart, customCodeBlock.Document.ContentEnd).Text);
         }
 
         private void CustomCodeBlock_SelectionChanged(object sender, RoutedEventArgs e)

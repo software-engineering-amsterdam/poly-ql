@@ -20,7 +20,7 @@ namespace GOLD.Engine
             TableIndex = tableIndex;
         }
 
-        internal bool ContainsOneNonTerminal()
+        internal bool ConsistsOfOneNonTerminal()
         {
             if (Handle.Count == 1 && Handle[0].Type == SymbolType.Nonterminal)
             {

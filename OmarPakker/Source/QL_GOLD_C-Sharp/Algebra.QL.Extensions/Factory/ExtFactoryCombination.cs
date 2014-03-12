@@ -34,6 +34,11 @@ namespace Algebra.QL.Extensions.Factory
             return new Tuple<E1, E2>(Factory1.Power(l.Item1, r.Item1), Factory2.Power(l.Item2, r.Item2));
 		}
 
+        public Tuple<S1, S2> Forms(Tuple<S1, S2> l, Tuple<S1, S2> r)
+        {
+            return new Tuple<S1, S2>(Factory1.Forms(l.Item1, r.Item1), Factory2.Forms(l.Item2, r.Item2));
+        }
+
         public Tuple<S1, S2> Goto(string var)
         {
             return new Tuple<S1, S2>(Factory1.Goto(var), Factory2.Goto(var));

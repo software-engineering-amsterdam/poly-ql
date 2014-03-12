@@ -23,14 +23,15 @@ namespace Algebra.QL.Form.Type
             {
                 value.ExpressionValue = iud.Value;
             };
-
+            
             Action onValueChanged = () =>
             {
                 iud.Value = Convert.ToInt32(value.ExpressionValue);
             };
-            value.ValueChanged -= onValueChanged;
-            value.ValueChanged += onValueChanged;
             onValueChanged();
+
+            iud.Loaded += (s, e) => value.ValueChanged += onValueChanged;
+            iud.Unloaded += (s, e) => value.ValueChanged -= onValueChanged;
 
             return iud;
         }

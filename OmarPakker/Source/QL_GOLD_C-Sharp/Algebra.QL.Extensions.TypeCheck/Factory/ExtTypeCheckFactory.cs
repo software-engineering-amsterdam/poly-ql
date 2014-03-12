@@ -38,6 +38,11 @@ namespace Algebra.QL.Extensions.TypeCheck.Factory
             return new PowerExpr(l, r);
         }
 
+        public ITypeCheckStmnt Forms(ITypeCheckStmnt l, ITypeCheckStmnt r)
+        {
+            return new FormsStmnt(l, r);
+        }
+
         public ITypeCheckStmnt Goto(string var)
         {
             return new GotoStmnt(var);

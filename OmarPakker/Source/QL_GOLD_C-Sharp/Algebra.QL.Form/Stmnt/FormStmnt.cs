@@ -10,7 +10,7 @@ namespace Algebra.QL.Form.Stmnt
         public FormStmnt(string name, IFormStmnt body)
             : base(name, body)
         {
-
+            TypeEnvironment.Instance.ResetVariables();
         }
 
         public FrameworkElement BuildForm()
@@ -19,8 +19,6 @@ namespace Algebra.QL.Form.Stmnt
             sPanel.CanVerticallyScroll = true;
             sPanel.CanHorizontallyScroll = false;
             sPanel.Children.Add(Body.BuildForm());
-
-            TypeEnvironment.Instance.ResetVariables();
 
             return new ScrollViewer() { Content = sPanel };
         }

@@ -14,7 +14,7 @@ namespace Algebra.QL.Form.Expr.Literals
 
         }
 
-        public object ExpressionValue
+        public virtual object ExpressionValue
         {
             get { return Value; }
             set

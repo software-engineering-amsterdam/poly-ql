@@ -18,11 +18,13 @@ namespace Algebra.QL.Extensions.TypeCheck.Stmnt
         public void TypeCheck(TypeEnvironment env, ErrorReporter errRep)
         {
             //TODO: Implement Form/Goto jumping
-            //if (env.IsGotoDeclared(GotoName))
-            //{
-            //    errRep.ReportWarning(this, String.Format("You already defined a goto for Form {0}. Are you sure you want to go to the same form?",
-            //        GotoName));
-            //}
+            if (env.IsGotoDeclared(GotoName))
+            {
+                errRep.ReportError(this, String.Format("You already defined a goto for form '{0}'.",
+                    GotoName));
+
+                return;
+            }
 
             //if (!env.IsFormDeclared(GotoName))
             //{
@@ -30,7 +32,7 @@ namespace Algebra.QL.Extensions.TypeCheck.Stmnt
             //        GotoName));
             //}
 
-            //env.DeclareGoto(GotoName);
+            env.DeclareGoto(GotoName, this);
         }
     }
 }

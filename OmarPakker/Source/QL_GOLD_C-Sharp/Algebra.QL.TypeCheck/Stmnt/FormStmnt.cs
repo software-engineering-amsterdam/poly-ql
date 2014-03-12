@@ -17,6 +17,8 @@ namespace Algebra.QL.TypeCheck.Stmnt
 
         public void TypeCheck(TypeEnvironment env, ErrorReporter errRep)
         {
+            env.DeclareForm(Name);
+
             Body.TypeCheck(env, errRep);
 
             env.ResetVariables();

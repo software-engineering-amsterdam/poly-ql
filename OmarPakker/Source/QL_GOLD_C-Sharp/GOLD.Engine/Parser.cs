@@ -364,7 +364,7 @@ namespace GOLD.Engine
                                     bool reductionSkipped = false;
 
                                     //Skip reduction?
-                                    if (TrimReductions && prod.ContainsOneNonTerminal())
+                                    if (TrimReductions && prod.ConsistsOfOneNonTerminal())
                                     {
                                         head = tokenStack.Pop();
                                         head.Symbol = prod.Head;
