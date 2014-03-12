@@ -15,7 +15,7 @@ public abstract class Expression extends ParserElement {
 
     public Expression() {}
 
-    public abstract Value getType();
+    public abstract Value getValue();
 
     public boolean register(final ExpressionChangeListener listener) {
         return _listener.add(listener);

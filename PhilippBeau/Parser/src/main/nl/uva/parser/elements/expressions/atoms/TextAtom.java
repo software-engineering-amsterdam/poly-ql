@@ -33,7 +33,7 @@ public class TextAtom extends Expression {
     }
 
     @Override
-    public Value getType() {
+    public Value getValue() {
         return _value;
     }
 

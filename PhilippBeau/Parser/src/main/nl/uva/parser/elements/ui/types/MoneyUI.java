@@ -1,30 +1,47 @@
 package main.nl.uva.parser.elements.ui.types;
 
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-import javax.swing.JCheckBox;
 import javax.swing.JComponent;
+import javax.swing.JTextField;
 
-import main.nl.uva.parser.elements.ui.UIElement;
+import main.nl.uva.parser.elements.ui.DeclarationUIElement;
 
-public class MoneyUI extends ValueUI implements ItemListener {
+public class MoneyUI extends ValueUI implements KeyListener {
 
-    private final JCheckBox _checkBox;
+    private final JTextField _textField;
 
-    public MoneyUI(final UIElement parent) {
-        _checkBox = new JCheckBox();
-        _checkBox.addItemListener(this);
-    }
+    private final DeclarationUIElement _parent;
 
-    @Override
-    public void itemStateChanged(final ItemEvent e) {
+    public MoneyUI(final DeclarationUIElement parent) {
+        _textField = new JTextField();
+        _textField.addKeyListener(this);
 
+        _parent = parent;
     }
 
     @Override
     public JComponent getComponent() {
-        return _checkBox;
+        return _textField;
     }
 
+    @Override
+    public void keyTyped(final KeyEvent e) {}
+
+    @Override
+    public void keyPressed(final KeyEvent e) {}
+
+    @Override
+    public void keyReleased(final KeyEvent e) {
+        double value = 0;
+
+        try {
+            value = Double.parseDouble(_textField.getText());
+        } catch (NumberFormatException numberExceptino) {
+            return;
+        }
+
+        _parent.onChange(value);
+    }
 }

@@ -35,7 +35,7 @@ public class Bool extends Value {
 
     @Override
     public Value visit(final Expression right, final AdvancedExpression expression) {
-        return right.getType().accept(this, expression);
+        return right.getValue().accept(this, expression);
     }
 
     @Override
@@ -59,7 +59,7 @@ public class Bool extends Value {
     }
 
     @Override
-    public boolean visitType(final Value type) {
+    public boolean applyValueTo(final Value type) {
         return type.acceptType(this);
     }
 

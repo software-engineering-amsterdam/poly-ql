@@ -30,7 +30,7 @@ public class ExpressionTest {
         AdditionExpression expression = new AdditionExpression(new MoneyAtom("3"), new MoneyAtom("5"));
         Assert.assertTrue(expression.validate().isEmpty());
 
-        Money value = (Money) expression.getType();
+        Money value = (Money) expression.getValue();
         Assert.assertEquals(8, value.getValue(), 0.0001);
     }
 
@@ -39,7 +39,7 @@ public class ExpressionTest {
         SubstractionExpression expression = new SubstractionExpression(new MoneyAtom("3"), new MoneyAtom("5"));
         Assert.assertTrue(expression.validate().isEmpty());
 
-        Money value = (Money) expression.getType();
+        Money value = (Money) expression.getValue();
         Assert.assertEquals(-2, value.getValue(), 0.0001);
     }
 
@@ -48,7 +48,7 @@ public class ExpressionTest {
         MultiplicationExpression expression = new MultiplicationExpression(new MoneyAtom("3"), new MoneyAtom("5"));
         Assert.assertTrue(expression.validate().isEmpty());
 
-        Money value = (Money) expression.getType();
+        Money value = (Money) expression.getValue();
         Assert.assertEquals(15, value.getValue(), 0.0001);
     }
 
@@ -57,7 +57,7 @@ public class ExpressionTest {
         DivisionExpression expression = new DivisionExpression(new MoneyAtom("3"), new MoneyAtom("5"));
         Assert.assertTrue(expression.validate().isEmpty());
 
-        Money value = (Money) expression.getType();
+        Money value = (Money) expression.getValue();
         Assert.assertEquals(3.0 / 5.0, value.getValue(), 0.0001);
     }
 
@@ -66,7 +66,7 @@ public class ExpressionTest {
         AndExpression expression = new AndExpression(new BoolAtom("true"), new BoolAtom("false"));
         Assert.assertTrue(expression.validate().isEmpty());
 
-        Bool value = (Bool) expression.getType();
+        Bool value = (Bool) expression.getValue();
         Assert.assertFalse(value.getValue());
     }
 
@@ -75,7 +75,7 @@ public class ExpressionTest {
         OrExpression expression = new OrExpression(new BoolAtom("true"), new BoolAtom("false"));
         Assert.assertTrue(expression.validate().isEmpty());
 
-        Bool value = (Bool) expression.getType();
+        Bool value = (Bool) expression.getValue();
         Assert.assertTrue(value.getValue());
     }
 
@@ -84,19 +84,19 @@ public class ExpressionTest {
         ComparrisonExpression expression = new ComparrisonExpression(new BoolAtom("true"), new BoolAtom("false"));
         Assert.assertTrue(expression.validate().isEmpty());
 
-        Bool value = (Bool) expression.getType();
+        Bool value = (Bool) expression.getValue();
         Assert.assertFalse(value.getValue());
 
         expression = new ComparrisonExpression(new MoneyAtom("3"), new MoneyAtom("3"));
         Assert.assertTrue(expression.validate().isEmpty());
 
-        value = (Bool) expression.getType();
+        value = (Bool) expression.getValue();
         Assert.assertTrue(value.getValue());
 
         expression = new ComparrisonExpression(new MoneyAtom("3"), new MoneyAtom("4"));
         Assert.assertTrue(expression.validate().isEmpty());
 
-        value = (Bool) expression.getType();
+        value = (Bool) expression.getValue();
         Assert.assertFalse(value.getValue());
     }
 }

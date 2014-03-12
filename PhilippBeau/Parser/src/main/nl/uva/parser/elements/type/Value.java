@@ -87,7 +87,7 @@ public abstract class Value {
         return false;
     }
 
-    public abstract boolean visitType(Value type);
+    public abstract boolean applyValueTo(Value type);
 
     public boolean acceptType(final Bool type) {
         return false;

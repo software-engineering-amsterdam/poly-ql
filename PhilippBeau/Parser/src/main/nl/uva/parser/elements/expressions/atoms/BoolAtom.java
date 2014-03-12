@@ -45,7 +45,7 @@ public class BoolAtom extends Expression {
     }
 
     @Override
-    public Value getType() {
+    public Value getValue() {
         return _value;
     }
 

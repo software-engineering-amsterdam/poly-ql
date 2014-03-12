@@ -46,7 +46,7 @@ public class IFStatement extends BlockStatement {
             return expression;
         }
 
-        if (!(_expression.getType().isTypeOf(Value.Type.BOOLEAN))) {
+        if (!(_expression.getValue().isTypeOf(Value.Type.BOOLEAN))) {
             expression.add(new InvalidTypeError(this.toString()));
             return expression;
         }

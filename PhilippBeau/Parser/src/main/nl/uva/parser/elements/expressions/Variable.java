@@ -29,13 +29,13 @@ public class Variable extends Expression {
     }
 
     public boolean setExpression(final Expression newExpression) {
-        if (!newExpression.getType().isOfSameType(_value)) {
+        if (!newExpression.getValue().isOfSameType(_value)) {
             // Type is not acceptable
             return false;
         }
 
         _expression = newExpression;
-        _expression.getType().visitType(_value);
+        _expression.getValue().applyValueTo(_value);
         _expression.setParent(this);
 
         for (VariableAtom linkedVariable : _linkedVariables) {
@@ -54,7 +54,7 @@ public class Variable extends Expression {
     public List<ValidationError> validate() {
         List<ValidationError> valError = _expression.validate();
 
-        if (valError.isEmpty() && !_value.visitType(_expression.getType())) {
+        if (valError.isEmpty() && !_value.applyValueTo(_expression.getValue())) {
             valError.add(new InvalidTypeError(this.toString()));
         }
 
@@ -66,7 +66,7 @@ public class Variable extends Expression {
     }
 
     @Override
-    public Value getType() {
+    public Value getValue() {
         return _value;
     }
 
@@ -75,8 +75,5 @@ public class Variable extends Expression {
     }
 
     @Override
-    protected void recalculateValueImpl() {
-        // TODO Auto-generated method stub
-
-    }
+    protected void recalculateValueImpl() {}
 }

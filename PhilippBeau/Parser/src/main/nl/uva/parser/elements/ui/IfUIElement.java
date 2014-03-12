@@ -30,7 +30,7 @@ public class IfUIElement extends UIElement implements ExpressionChangeListener {
             _panel.add(child.getLayout().generateUIElement());
         }
 
-        _panel.setVisible(((Bool) _expression.getType()).getValue());
+        _panel.setVisible(((Bool) _expression.getValue()).getValue());
     }
 
     @Override
@@ -40,7 +40,7 @@ public class IfUIElement extends UIElement implements ExpressionChangeListener {
 
     @Override
     public void onChange() {
-        _panel.setVisible(((Bool) _expression.getType()).getValue());
+        _panel.setVisible(((Bool) _expression.getValue()).getValue());
     }
 
 }

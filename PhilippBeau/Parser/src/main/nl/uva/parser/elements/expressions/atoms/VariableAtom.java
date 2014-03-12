@@ -41,7 +41,7 @@ public class VariableAtom extends Expression {
         if (_linkedVariable == null) {
             valid.add(new VariableNotFoundError(_variableName));
         } else {
-            _value = _linkedVariable.getType();
+            _value = _linkedVariable.getValue();
             _linkedVariable.setLinkedVariable(this);
         }
 
@@ -49,8 +49,8 @@ public class VariableAtom extends Expression {
     }
 
     @Override
-    public Value getType() {
-        return _linkedVariable.getType();
+    public Value getValue() {
+        return _linkedVariable.getValue();
     }
 
     @Override

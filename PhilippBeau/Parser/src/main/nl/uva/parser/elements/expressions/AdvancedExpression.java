@@ -34,7 +34,7 @@ public abstract class AdvancedExpression extends Expression {
             return left;
         }
 
-        _value = _left.getType().visit(_right, this);
+        _value = _left.getValue().visit(_right, this);
 
         if (_value.isInvalid()) {
             left.add(new InvalidTypeError(this.toString()));
@@ -45,13 +45,13 @@ public abstract class AdvancedExpression extends Expression {
 
     @Override
     protected void recalculateValueImpl() {
-        _value = _left.getType().visit(_right, this);
+        _value = _left.getValue().visit(_right, this);
 
         _parent.recalculateValue();
     }
 
     @Override
-    public Value getType() {
+    public Value getValue() {
         return _value;
     }
 

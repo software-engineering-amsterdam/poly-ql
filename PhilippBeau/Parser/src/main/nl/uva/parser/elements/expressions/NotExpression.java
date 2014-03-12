@@ -16,8 +16,8 @@ public class NotExpression extends Expression {
     }
 
     @Override
-    public Value getType() {
-        return _expression.getType();
+    public Value getValue() {
+        return _expression.getValue();
     }
 
     @Override

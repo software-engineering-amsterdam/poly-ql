@@ -47,7 +47,7 @@ public class Invalid extends Value {
     }
 
     @Override
-    public boolean visitType(final Value type) {
+    public boolean applyValueTo(final Value type) {
         throw new UnsupportedOperationException();
     }
 

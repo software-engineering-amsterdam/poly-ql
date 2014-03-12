@@ -31,7 +31,7 @@ public class DeclarationUIElement extends UIElement implements UIValueChangeList
         JLabel label = new JLabel(_function);
         layout.add(label);
 
-        ValueUI valueUI = _variable.getType().getLayout(this);
+        ValueUI valueUI = _variable.getValue().getLayout(this);
         layout.add(valueUI.getComponent());
 
         return layout;
