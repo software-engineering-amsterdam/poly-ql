@@ -26,4 +26,8 @@ public class State {
 		observables.put(id, obs);
 	}
 
+	public Map<Identifier, Value> getEnvValues() {
+		return env;
+	}
+
 }

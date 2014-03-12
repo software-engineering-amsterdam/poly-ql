@@ -3,6 +3,9 @@ package gui.render;
 import gui.component.Control;
 import gui.component.TypeToWidget;
 
+import java.applet.Applet;
+
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -39,21 +42,35 @@ import ast.statement.Question;
 import ast.statement.Statement;
 import ast.statement.StatementList;
 
-public class Renderer implements Visitor{
+public class Renderer implements Visitor<JComponent>{
 	
 	private final JPanel panel;
-	private final State state; 
+//	private final State state; 
 
-	public Renderer(State state) {
-		this.state = state;
+	
+	public Renderer() {
 		this.panel = new JPanel();
 	}
-
-	public static JPanel render(Statement s, State state){
-		Renderer r = new Renderer(state);
-		s.accept(r);
+	
+//	public Renderer(State state) {
+//		this.state = state;
+//		this.panel = new JPanel();
+//	}
+//
+//	public static JPanel render(Statement s, State state){
+//		Renderer r = new Renderer(state);
+//		s.accept(r);
+//		return r.getPanel();
+//		
+//	}
+	
+	
+	public static JPanel render(StatementList list){
+		Renderer r = new Renderer();
+		for(Statement s: list.getList()){
+			s.accept(r);
+		}
 		return r.getPanel();
-		
 	}
 	
 	private JPanel getPanel() {
@@ -68,155 +85,185 @@ public class Renderer implements Visitor{
 		TypeToWidget vis = new TypeToWidget();
 		return t.accept(vis);
 	}
+	
+	private void addComponent(Control comp){
+		this.panel.add(comp.getComponent());
+	}
+	
+	private void addPanel(JPanel p){
+		this.panel.add(p, "wrap");
+	}
+	
+
 	@Override
-	public Object visit(StatementList node) {
-		
+	public JComponent visit(Form node) {
+//		return render(node.getStatements());
+		return panel;
+	}
+
+	@Override
+	public JComponent visit(StatementList node) {
+		for(Statement s: node.getList()){
+			panel.add(s.accept(this), "wrap");
+		}
+		return panel;
+	}
+
+	@Override
+	public JComponent visit(Question node) {
+		addLabel(node.getId().getIdentName());
+		Control comp = typeToWidget(node.getType(), true);
+		addComponent(comp);
+		return panel;
+	}
+
+	@Override
+	public JComponent visit(ComputedQuestion node) {
+		addLabel(node.getId().getIdentName());
+		Control comp = typeToWidget(node.getType(), false);
+		addComponent(comp);
+		return panel;
+	}
+
+	@Override
+	public JComponent visit(Block node) {
+		return visit(node.getStatements());
+	}
+
+	@Override
+	public JComponent visit(IfStatement node) {
+		JPanel ifComp = render(node.getStatements());
+		ifComp.setVisible(false);
+		addPanel(ifComp);
+		return panel;
+	}
+
+	@Override
+	public JComponent visit(IfelseStatement node) {
+		JPanel ifComp = render(node.getStatements());
+		JPanel elseComp = render(node.getElseStatements());
+		ifComp.setVisible(false);
+		elseComp.setVisible(false);
+		addPanel(ifComp);
+		addPanel(elseComp);		
+		return panel;
+	}
+	
+	public JComponent render(final Form form){
+		final Renderer renderer = new Renderer();
+		JComponent comp = renderer.visit(form); 
+		comp.setName(form.getId().getIdentName());
+		comp.setSize(200, 300);
+		return comp;
+	}
+
+	@Override
+	public JComponent visit(Pos node) {
 		return null;
 	}
 
 	@Override
-	public Object visit(Question node) {
-		
+	public JComponent visit(Neg node) {
 		return null;
 	}
 
 	@Override
-	public Object visit(ComputedQuestion node) {
-		
+	public JComponent visit(Not node) {
 		return null;
 	}
 
 	@Override
-	public Object visit(Block node) {
-		
+	public JComponent visit(Add node) {
 		return null;
 	}
 
 	@Override
-	public Object visit(IfStatement node) {
-		
+	public JComponent visit(And node) {
 		return null;
 	}
 
 	@Override
-	public Object visit(IfelseStatement node) {
-		
+	public JComponent visit(Div node) {
 		return null;
 	}
 
 	@Override
-	public Object visit(Form node) {
-		
+	public JComponent visit(Eq node) {
 		return null;
 	}
 
 	@Override
-	public Object visit(Pos node) {
+	public JComponent visit(GEq node) {
 		return null;
 	}
 
 	@Override
-	public Object visit(Neg node) {
+	public JComponent visit(GT node) {
 		return null;
 	}
 
 	@Override
-	public Object visit(Not node) {
+	public JComponent visit(LEq node) {
 		return null;
 	}
 
 	@Override
-	public Object visit(Add node) {
+	public JComponent visit(LT node) {
 		return null;
 	}
 
 	@Override
-	public Object visit(And node) {
+	public JComponent visit(Mul node) {
 		return null;
 	}
 
 	@Override
-	public Object visit(Div node) {
+	public JComponent visit(NEq node) {
 		return null;
 	}
 
 	@Override
-	public Object visit(Eq node) {
+	public JComponent visit(Or node) {
 		return null;
 	}
 
 	@Override
-	public Object visit(GEq node) {
+	public JComponent visit(Sub node) {
 		return null;
 	}
 
 	@Override
-	public Object visit(GT node) {
+	public JComponent visit(BoolLiteral node) {
 		return null;
 	}
 
 	@Override
-	public Object visit(LEq node) {
+	public JComponent visit(Identifier node) {
 		return null;
 	}
 
 	@Override
-	public Object visit(LT node) {
+	public JComponent visit(IntLiteral node) {
 		return null;
 	}
 
 	@Override
-	public Object visit(Mul node) {
+	public JComponent visit(StrLiteral node) {
 		return null;
 	}
 
 	@Override
-	public Object visit(NEq node) {
+	public JComponent visit(BoolType node) {
 		return null;
 	}
 
 	@Override
-	public Object visit(Or node) {
+	public JComponent visit(IntType node) {
 		return null;
 	}
 
 	@Override
-	public Object visit(Sub node) {
-		return null;
-	}
-
-	@Override
-	public Object visit(BoolLiteral node) {
-		return null;
-	}
-
-	@Override
-	public Object visit(Identifier node) {
-		return null;
-	}
-
-	@Override
-	public Object visit(IntLiteral node) {
-		return null;
-	}
-
-	@Override
-	public Object visit(StrLiteral node) {
-		return null;
-	}
-
-	@Override
-	public Object visit(BoolType node) {
-		return null;
-	}
-
-	@Override
-	public Object visit(IntType node) {
-		return null;
-	}
-
-	@Override
-	public Object visit(StrType node) {
+	public JComponent visit(StrType node) {
 		return null;
 	}
 
