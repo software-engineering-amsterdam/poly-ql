@@ -26,7 +26,7 @@ public class BoolConditionChecker extends QLErrorVisitor {
 		List<QLErrorMsg> msgs = new ArrayList<QLErrorMsg>();
 
 		// check whether if statement is of type boolean
-		msgs.add(checkExpression(condition.getIfExpression()));
+		msgs.addAll(checkExpression(condition.getIfExpression()));
 		
 		// regular (overridden) function for visiting
 		msgs.addAll(this.visitChild(condition.getIfExpression()));
@@ -37,7 +37,7 @@ public class BoolConditionChecker extends QLErrorVisitor {
 		
 		// loop over all elseif expressions and structures
 		for (int i = 0; i < elseIfExprs.size(); i++) {
-			msgs.add(checkExpression(elseIfExprs.get(i))); // check expression for boolean type
+			msgs.addAll(checkExpression(elseIfExprs.get(i))); // check expression for boolean type
 			msgs.addAll(this.visitChild(elseIfExprs.get(i)));
 			msgs.addAll(this.visitChild(elseIfStructs.get(i)));
 		}
@@ -52,12 +52,14 @@ public class BoolConditionChecker extends QLErrorVisitor {
 	 * Returns a QLError if expression is not of type BoolType, otherwise
 	 * returns null.
 	 */
-	private QLErrorMsg checkExpression(Expression expr) {
-		if (expr.getType().equals(new BoolType())) {
-			return new QLErrorMsg("Expression " + expr + " does not return a boolean");
-		} else {
-			return null;
-		}
+	private List<QLErrorMsg> checkExpression(Expression expr) {
+		List<QLErrorMsg> msgs = new ArrayList<QLErrorMsg>();
+		
+		if (! expr.getType().equals(new BoolType())) {
+			msgs.add(new QLErrorMsg("Expression " + expr + " does not return a boolean"));
+		} 
+		
+		return msgs;
 	}
 }
 

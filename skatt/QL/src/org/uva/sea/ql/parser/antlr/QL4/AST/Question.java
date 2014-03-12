@@ -46,9 +46,6 @@ public class Question implements QLTree {
 		this.value = value;
 	}
 	
-	/**
-	 * Returns the description of the question
-	 */
 	public String toString() {
 		return "Question " + id + " of type " + type + " and label " + label;
 	}
@@ -57,7 +54,7 @@ public class Question implements QLTree {
 		return visitor.visit(this);
 	}
 
-	////////////// getters for visitors
+	////////////// getters
 	
 	public Identifier getIdentifier() {
 		return id;
