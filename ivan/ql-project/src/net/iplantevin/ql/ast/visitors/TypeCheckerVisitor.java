@@ -71,6 +71,19 @@ public class TypeCheckerVisitor implements IASTVisitor<Void> {
         return typeChecker;
     }
 
+    /**
+     * Only true if there are only errors of type DuplicateLabelError, or no
+     * errors at all.
+     */
+    public boolean isTypeSafe() {
+        for (ASTError error : errors) {
+            if (!(error instanceof DuplicateLabelError)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     /////////////////////////////////////////////
     // Error addition and printing
     /////////////////////////////////////////////

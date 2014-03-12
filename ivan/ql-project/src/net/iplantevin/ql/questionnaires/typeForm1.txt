@@ -50,6 +50,11 @@ form Box1HouseOwning {
  // Equality of different types.
  wrongEquality: "Incorrect equality computation" boolean(hasSoldHouse == sellingPrice)
 
- cycleA: "First value" integer(5 * cycleB)
- cycleB: "Second value" integer(10 * cycleA)
+ // Cyclic dependencies stuff.
+ if (hasSoldHouse) { hasBoughtHouse: "hasBoughtHouse input" boolean}
+ if (hasBoughtHouse) {hasSoldHouse: "hasSoldHouse input" boolean}
+
+ hasBoughtHouse: "invert hasSoldHouse" boolean(!hasSoldHouse)
+ hasSoldHouse: "invert hasBoughtHouse" boolean(!hasBoughtHouse)
+ hasBoughtHouse: "invert itself" boolean(!hasBoughtHouse)
 }
