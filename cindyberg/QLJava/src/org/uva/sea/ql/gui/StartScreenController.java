@@ -5,9 +5,10 @@ import java.io.FileNotFoundException;
 import org.uva.sea.ql.ast.statement.Form;
 import org.uva.sea.ql.parser.jacc.ParseException;
 import org.uva.sea.ql.parser.jacc.Parser;
-import org.uva.sea.ql.typechecker.Problems;
 import org.uva.sea.ql.typechecker.StatementChecker;
 import org.uva.sea.ql.typechecker.TypeEnvironment;
+
+import problems.Problems;
 
 public class StartScreenController {
 	

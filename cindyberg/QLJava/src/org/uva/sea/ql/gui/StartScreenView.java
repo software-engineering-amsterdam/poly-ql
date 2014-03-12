@@ -19,7 +19,10 @@ import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
 
 import org.uva.sea.ql.parser.jacc.ParseException;
-import org.uva.sea.ql.typechecker.Problems;
+
+import problems.Problems;
+import problems.Warning;
+import problems.Error;
 
 public class StartScreenView extends JFrame{
 	
@@ -93,7 +96,7 @@ public class StartScreenView extends JFrame{
                 StartScreenController controller = new StartScreenController();
                 try {
                 	warnings.removeAllElements();
-
+                	errors.removeAllElements();
                 	Problems typeProblems = controller.runTypeChecker(readText());	
                 	if(typeProblems.hasProblems()){
                 		QuestionaireView b = new QuestionaireView();
@@ -113,15 +116,15 @@ public class StartScreenView extends JFrame{
 	}
 	
 	private void problemsToList(Problems problems) {
-		List<String> warnings = problems.getWarnings();
-		List<String> errors = problems.getErrors();
+		List<Warning> warnings = problems.getWarnings();
+		List<Error> errors = problems.getErrors();
 		
-		for(String s : warnings){
-		this.warnings.addElement(s);
+		for(Warning w : warnings){
+		this.warnings.addElement(w.getString());
 		}
 		
-		for(String s : errors){
-			this.errors.addElement(s);
+		for(Error e : errors){
+			this.errors.addElement(e.getString());
 		}
 		
 		

@@ -16,7 +16,7 @@ public class MoneyType extends Type{
 	
 	
 	public boolean isCompatibleWith(Type t){
-		return t.isCompatibleWithInteger();
+		return t.isCompatibleWithInteger(); //TODO what id t is also money? I think is going to return false
 	}
 
 }
