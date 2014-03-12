@@ -1,22 +1,25 @@
 package expr.arithmetic;
 
-import typeChecker.ASTVisitor;
-import typeChecker.IdentifiersTypeMatcher;
+import java.util.Map;
+
 import types.Type;
+import visitor.ASTVisitor;
+import visitor.IdentifiersTypeMatcher;
 import expr.BinaryExpr;
 import expr.Expression;
+import expr.Ident;
+import expr.literals.Int;
+import expr.literals.Literal;
 
 public class Sub extends BinaryExpr {
 
-	public Sub(Expression first, Expression second) {
-		super(first,second);
+	public Sub(Expression leftHandOperand, Expression rightHandOperand) {
+		super(leftHandOperand,rightHandOperand);
 	}
 
 	@Override
 	public void accept(ASTVisitor visitor) {
-		visitor.visit(this);
-		this.leftHandOperand.accept(visitor);
-		this.rightHandOperand.accept(visitor);
+		visitor.visit(this, this.leftHandOperand, this.rightHandOperand);
 	}
 
 	@Override
@@ -26,6 +29,7 @@ public class Sub extends BinaryExpr {
 
 	@Override
 	public Type getType(IdentifiersTypeMatcher typeMatcher) {
+		//the type of sub is the type of its operands
 		return this.leftHandOperand.getType(typeMatcher);
 	}
 
@@ -35,5 +39,12 @@ public class Sub extends BinaryExpr {
 		Type t2=this.rightHandOperand.getType(typeMatcher);
 		return (t1.isCompatibleWith(t2) &&
 				t1.isArithmetic());
+	}
+	
+	@Override
+	public Literal compute(Map<Ident, Expression> identifiers) {
+		return this.leftHandOperand.compute(identifiers).sub(
+					this.rightHandOperand.compute(identifiers)
+				);
 	}
 }

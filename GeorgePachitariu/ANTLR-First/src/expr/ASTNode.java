@@ -1,6 +1,6 @@
 package expr;
 
-import typeChecker.ASTVisitor;
+import visitor.ASTVisitor;
 
 public interface ASTNode {
 

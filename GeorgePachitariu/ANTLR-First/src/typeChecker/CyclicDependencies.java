@@ -3,16 +3,21 @@ package typeChecker;
 import java.util.LinkedList;
 import java.util.List;
 
+import types.Type;
+import visitor.ASTVisitor;
+
 import expr.ASTNode;
+import expr.Expression;
 import expr.Ident;
 import expr.syntactic.Question;
+import expr.syntactic.QuestionBody;
 
-public class CyclicDependenciesChecker extends ASTVisitor {
+public class CyclicDependencies extends ASTVisitor {
 
 	protected List<Question> questions;	
 	protected List<Question> dependencies;	
 
-	public CyclicDependenciesChecker() {
+	public CyclicDependencies() {
 		this.questions=new LinkedList<>();
 		this.dependencies=null;
 	}
@@ -30,9 +35,10 @@ public class CyclicDependenciesChecker extends ASTVisitor {
 		}
 		return new LinkedList<>();
 	}
-
+	
 	@Override
-	public void visit(Question q) {
+	public void visit(Question q, Ident ident, 
+			QuestionBody questionBody, Type type, Expression expr) {
 		if(this.dependencies == null)
 			this.questions.add(q);
 		else {

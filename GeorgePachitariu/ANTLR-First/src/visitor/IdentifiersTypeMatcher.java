@@ -1,4 +1,4 @@
-package typeChecker;
+package visitor;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,8 +6,10 @@ import java.util.Map;
 import types.Type;
 
 import expr.ASTNode;
+import expr.Expression;
 import expr.Ident;
 import expr.syntactic.Question;
+import expr.syntactic.QuestionBody;
 
 public class IdentifiersTypeMatcher extends ASTVisitor {
 
@@ -17,14 +19,13 @@ public class IdentifiersTypeMatcher extends ASTVisitor {
 		this.dictionary=new HashMap<>();
 	}
 
-	public void match(ASTNode root) {
+	public void search(ASTNode root) {
 		root.accept(this); 
 	}
-
+	
 	@Override
-	public void visit(Question question) {
-		Ident ident=question.getIdent();
-		Type type=question.getType();
+	public void visit(Question question, Ident ident, 
+			QuestionBody questionBody, Type type, Expression expr) {
 		this.dictionary.put(ident, type);
 	}
 	
