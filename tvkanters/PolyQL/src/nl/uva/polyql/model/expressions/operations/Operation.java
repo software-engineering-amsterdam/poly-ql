@@ -5,8 +5,6 @@ import java.util.Set;
 import nl.uva.polyql.Log;
 import nl.uva.polyql.model.Question;
 import nl.uva.polyql.model.expressions.Expression;
-import nl.uva.polyql.model.expressions.operators.Operator;
-import nl.uva.polyql.model.expressions.operators.OperatorHelper;
 import nl.uva.polyql.model.types.Type;
 import nl.uva.polyql.model.values.Value;
 

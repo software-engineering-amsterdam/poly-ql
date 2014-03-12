@@ -1,10 +1,10 @@
-package nl.uva.polyql.model.expressions.operators.number;
+package nl.uva.polyql.model.expressions.operators;
 
-import nl.uva.polyql.model.expressions.operators.Operator;
+import nl.uva.polyql.model.expressions.operations.Operator;
 import nl.uva.polyql.model.values.NumberValue;
 import nl.uva.polyql.model.values.Value;
 
-public class DivideOperator extends Operator {
+public class Divide extends Operator {
 
     public static final String SYNTAX = "/";
 

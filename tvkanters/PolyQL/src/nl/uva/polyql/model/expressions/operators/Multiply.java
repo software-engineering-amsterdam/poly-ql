@@ -1,12 +1,12 @@
-package nl.uva.polyql.model.expressions.operators.number;
+package nl.uva.polyql.model.expressions.operators;
 
-import nl.uva.polyql.model.expressions.operators.Operator;
+import nl.uva.polyql.model.expressions.operations.Operator;
 import nl.uva.polyql.model.values.NumberValue;
 import nl.uva.polyql.model.values.Value;
 
-public class SubtractOperator extends Operator {
+public class Multiply extends Operator {
 
-    public static final String SYNTAX = "-";
+    public static final String SYNTAX = "*";
 
     @Override
     public String getSyntax() {
@@ -15,7 +15,7 @@ public class SubtractOperator extends Operator {
 
     @Override
     public Value<?> performOperation(final NumberValue left, final NumberValue right) {
-        return new NumberValue(left.getValue() - right.getValue());
+        return new NumberValue(left.getValue() * right.getValue());
     }
 
 }

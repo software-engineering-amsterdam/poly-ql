@@ -2,7 +2,7 @@ package nl.uva.polyql.model.values;
 
 import nl.uva.polyql.model.Question;
 import nl.uva.polyql.model.expressions.modifiers.Modifier;
-import nl.uva.polyql.model.expressions.operators.Operator;
+import nl.uva.polyql.model.expressions.operations.Operator;
 import nl.uva.polyql.model.types.Type;
 import nl.uva.polyql.view.NumberValueView;
 import nl.uva.polyql.view.ValueView;

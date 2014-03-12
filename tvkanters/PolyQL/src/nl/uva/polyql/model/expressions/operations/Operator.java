@@ -1,6 +1,5 @@
-package nl.uva.polyql.model.expressions.operators;
+package nl.uva.polyql.model.expressions.operations;
 
-import nl.uva.polyql.model.expressions.operations.Operation;
 import nl.uva.polyql.model.values.BooleanValue;
 import nl.uva.polyql.model.values.NumberValue;
 import nl.uva.polyql.model.values.StringValue;
@@ -11,11 +10,6 @@ public abstract class Operator implements SyntaxKey {
 
     public Value<?> performOperation(final Operation operation) {
         return operation.getLeft().getValue().performOperationOnLeft(this, operation.getRight().getValue());
-    }
-
-    @Override
-    public String toString() {
-        return getSyntax();
     }
 
     public Value<?> performOperation(final BooleanValue leftValue, final BooleanValue booleanValue) {
@@ -36,5 +30,10 @@ public abstract class Operator implements SyntaxKey {
 
     public Value<?> performOperation(final StringValue leftValue, final StringValue stringValue) {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public String toString() {
+        return getSyntax();
     }
 }

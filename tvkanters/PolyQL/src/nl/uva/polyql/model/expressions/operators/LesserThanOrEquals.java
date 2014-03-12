@@ -1,13 +1,13 @@
-package nl.uva.polyql.model.expressions.operators.bool;
+package nl.uva.polyql.model.expressions.operators;
 
-import nl.uva.polyql.model.expressions.operators.Operator;
+import nl.uva.polyql.model.expressions.operations.Operator;
 import nl.uva.polyql.model.values.BooleanValue;
 import nl.uva.polyql.model.values.NumberValue;
 import nl.uva.polyql.model.values.Value;
 
-public class GreaterThanOrEqualsOperator extends Operator {
+public class LesserThanOrEquals extends Operator {
 
-    public static final String SYNTAX = ">=";
+    public static final String SYNTAX = "<=";
 
     @Override
     public String getSyntax() {
@@ -16,7 +16,7 @@ public class GreaterThanOrEqualsOperator extends Operator {
 
     @Override
     public Value<?> performOperation(final NumberValue left, final NumberValue right) {
-        return new BooleanValue(left.getValue() >= right.getValue());
+        return new BooleanValue(left.getValue() <= right.getValue());
     }
 
 }

@@ -1,12 +1,12 @@
-package nl.uva.polyql.model.expressions.operators.bool;
+package nl.uva.polyql.model.expressions.operators;
 
-import nl.uva.polyql.model.expressions.operators.Operator;
+import nl.uva.polyql.model.expressions.operations.Operator;
 import nl.uva.polyql.model.values.BooleanValue;
 import nl.uva.polyql.model.values.NumberValue;
 import nl.uva.polyql.model.values.StringValue;
 import nl.uva.polyql.model.values.Value;
 
-public class EqualsOperator extends Operator {
+public class Equals extends Operator {
 
     public static final String SYNTAX = "==";
 
