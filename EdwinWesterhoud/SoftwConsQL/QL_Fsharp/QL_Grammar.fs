@@ -23,7 +23,23 @@ type literal =
 
 // Expression
 type booleanOp = And | Or | Lt | Gt | Le | Ge | Eq | Ne
+    with override this.ToString() = match this with
+                                    | And -> "&&"
+                                    | Or  -> "||"
+                                    | Lt  -> "<"
+                                    | Gt  -> ">"
+                                    | Le  -> "<="
+                                    | Ge  -> ">="
+                                    | Eq  -> "=="
+                                    | Ne  -> "!="
+
 type arithmeticOp = Plus | Minus | Mult | Div
+    with override this.ToString() = match this with
+                                    | Plus  -> "+"
+                                    | Minus -> "-"
+                                    | Mult  -> "*"
+                                    | Div   -> "/"
+        
 type expression =
     | ID            of string * Position
     | Literal       of literal * Position
@@ -32,10 +48,10 @@ type expression =
     | ArithmeticOp  of expression * arithmeticOp * expression * Position
 
 type statement =
-    | Assignment        of string * string * expression
-    | Question          of string * string * qlType
-    | IfElseConditional of expression * statement list * statement list
-    | IfConditional     of expression * statement list
+    | Assignment        of string * string * expression * Position
+    | Question          of string * string * qlType * Position
+    | IfElseConditional of expression * statement list * statement list * Position
+    | IfConditional     of expression * statement list * Position
 
 type questionaire = 
     {   ID          : string;

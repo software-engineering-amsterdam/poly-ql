@@ -7,6 +7,14 @@ open QL_Grammar
 
 //// Type check info
 type expressionType = TBool | TString | TInt | TDecimal | TError | TForm
+    with override this.ToString() = match this with
+                                    | TBool -> "Boolean"
+                                    | TString -> "String"
+                                    | TInt -> "Integer"
+                                    | TDecimal -> "Decimal"
+                                    | TForm -> "Form"
+                                    | TError -> "Error"
+
 type TypeCheckInfo(formName) = 
     let errors = new List<string>()
     let identifiers = new Dictionary<string, expressionType>()
@@ -29,7 +37,6 @@ type TypeCheckInfo(formName) =
 
     member this.ErrorList = errors.ToArray()
 
-////
 
 let mapQLType qlType = match qlType with
                        | QLBool -> TBool
@@ -47,69 +54,75 @@ let literalType exprType =
 let rec checkExpression expression (checkInfo : TypeCheckInfo) =
     let isNumeric exprType = exprType.Equals(TInt) || exprType.Equals(TDecimal)
 
-    let checkBooleanOp left op right cond = let typeLeft = checkExpression left checkInfo
-                                            let typeRight = checkExpression right checkInfo
-                                            if cond typeLeft typeRight then 
-                                                TBool
-                                            else
-                                                checkInfo.RegisterError(sprintf "Type error: cannot apply %+A on %+A and %+A" op typeLeft typeRight)
-                                                TError
+    let checkBooleanOp left op right (pos:Position) cond =  let typeLeft = checkExpression left checkInfo
+                                                            let typeRight = checkExpression right checkInfo
+                                                            if cond typeLeft typeRight then 
+                                                                TBool
+                                                            else
+                                                                checkInfo.RegisterError(sprintf "Type error on line %i: cannot apply %s on %s and %s" pos.StartLine (op.ToString()) (typeLeft.ToString()) (typeRight.ToString()))
+                                                                TError
 
-    let checkArithmeticOp left op right =   let typeLeft = checkExpression left checkInfo
-                                            let typeRight = checkExpression right checkInfo
-                                            if typeLeft.Equals(typeRight) && isNumeric typeLeft then
-                                                typeLeft
-                                            else if isNumeric typeLeft && typeRight.Equals(TError) then
-                                                typeLeft
-                                            else if typeLeft.Equals(TError) && isNumeric typeRight then
-                                                typeRight
-                                            else 
-                                                checkInfo.RegisterError(sprintf "Type error: cannot apply %+A on %+A and %+A" op typeLeft typeRight)
-                                                TError
+    let checkArithmeticOp left op right (pos:Position) =    let typeLeft = checkExpression left checkInfo
+                                                            let typeRight = checkExpression right checkInfo
+                                                            if typeLeft.Equals(typeRight) && isNumeric typeLeft then
+                                                                typeLeft
+                                                            else if isNumeric typeLeft && typeRight.Equals(TError) then
+                                                                typeLeft
+                                                            else if typeLeft.Equals(TError) && isNumeric typeRight then
+                                                                typeRight
+                                                            else 
+                                                                checkInfo.RegisterError(sprintf "Type error on line %i: cannot apply %s on %s and %s" pos.StartLine (op.ToString()) (typeLeft.ToString()) (typeRight.ToString()))
+                                                                TError
 
     match expression with
-    | ID(name, _)      ->  let exprType = checkInfo.GetIdentifierType(name)
-                           if (exprType.Equals(TError)) then
-                            checkInfo.RegisterError("Unknown identifier: " + name)
-                           exprType
+    | ID(name, pos)      -> let exprType = checkInfo.GetIdentifierType(name)
+                            if (exprType.Equals(TError)) then
+                                checkInfo.RegisterError(sprintf "Unknown identifier on line %i (%s)" pos.StartLine name)
+                            exprType
 
-    | Literal(expr,_) -> (fst <| literalType expr)
+    | Literal(expr, pos) -> (fst <| literalType expr)
 
-    | Neg(expr,_)     ->  let exprType = checkExpression expr checkInfo
-                          if (not <| exprType.Equals(TBool) && not <| exprType.Equals(TError)) then
-                              checkInfo.RegisterError("Type error: expected boolean expression")
-                          exprType
+    | Neg(expr, pos)     -> let exprType = checkExpression expr checkInfo
+                            if (not <| exprType.Equals(TBool) && not <| exprType.Equals(TError)) then
+                                checkInfo.RegisterError(sprintf "Type error on line %i: expected Boolean expression" pos.StartLine)
+                            exprType
 
-    | BooleanOp(left, (booleanOp.Eq as op), right,_)
-    | BooleanOp(left, (booleanOp.Ne as op), right,_) -> checkBooleanOp left op right (fun typeLeft typeRight -> typeLeft.Equals(typeRight)  || 
-                                                                                                                typeLeft.Equals(TError) || 
-                                                                                                                typeRight.Equals(TError))
-    | BooleanOp(left, (booleanOp.And as op), right,_)
-    | BooleanOp(left, (booleanOp.Or as op), right,_) -> checkBooleanOp left op right (fun typeLeft typeRight -> (typeLeft.Equals(typeRight) && typeLeft.Equals(TBool)) || 
-                                                                                                                 typeLeft.Equals(TError) || typeRight.Equals(TError))
-    | BooleanOp(left, (booleanOp.Lt as op), right,_)
-    | BooleanOp(left, (booleanOp.Le as op), right,_)
-    | BooleanOp(left, (booleanOp.Gt as op), right,_)
-    | BooleanOp(left, (booleanOp.Ge as op), right,_) -> checkBooleanOp left op right (fun typeLeft typeRight -> (typeLeft.Equals(typeRight) && isNumeric typeRight)  ||
-                                                                                                                (typeLeft.Equals(TError) && isNumeric typeRight) ||
-                                                                                                                (isNumeric typeLeft && typeRight.Equals(TError)) ||
-                                                                                                                (typeLeft.Equals(TError) && typeRight.Equals(TError)))
-    | ArithmeticOp(left, op, right,_) -> checkArithmeticOp left op right
+    | BooleanOp(left, (booleanOp.Eq as op), right, pos)
+    | BooleanOp(left, (booleanOp.Ne as op), right, pos) -> checkBooleanOp left op right pos 
+                                                            (fun typeLeft typeRight -> typeLeft.Equals(typeRight)  || 
+                                                                                       typeLeft.Equals(TError) || 
+                                                                                       typeRight.Equals(TError))
+    | BooleanOp(left, (booleanOp.And as op), right, pos)
+    | BooleanOp(left, (booleanOp.Or as op), right, pos) -> checkBooleanOp left op right pos 
+                                                            (fun typeLeft typeRight -> (typeLeft.Equals(typeRight) && typeLeft.Equals(TBool)) || 
+                                                                                        typeLeft.Equals(TError) || 
+                                                                                        typeRight.Equals(TError))
+    | BooleanOp(left, (booleanOp.Lt as op), right, pos)
+    | BooleanOp(left, (booleanOp.Le as op), right, pos)
+    | BooleanOp(left, (booleanOp.Gt as op), right, pos)
+    | BooleanOp(left, (booleanOp.Ge as op), right, pos) -> checkBooleanOp left op right pos 
+                                                            (fun typeLeft typeRight -> (typeLeft.Equals(typeRight) && isNumeric typeRight)  ||
+                                                                                       (typeLeft.Equals(TError) && isNumeric typeRight) ||
+                                                                                       (isNumeric typeLeft && typeRight.Equals(TError)) ||
+                                                                                       (typeLeft.Equals(TError) && typeRight.Equals(TError)))
+    | ArithmeticOp(left, op, right, pos) -> checkArithmeticOp left op right pos
 
 let rec checkStmts stmts (checkInfo : TypeCheckInfo) = 
     let checkStmt stmt = 
         match stmt with
-        | Assignment(id, label, expression) ->  let exprType = checkExpression expression checkInfo
-                                                checkInfo.RegisterIdentifier(id, exprType) |> ignore // todo: duplicate id check
-        | Question(id, label, qlType) ->        checkInfo.RegisterIdentifier(id, mapQLType qlType) |> ignore // todo duplicate id check
-        | IfElseConditional(cond, ifStmts, elseStmts) ->    let exprType = checkExpression cond checkInfo
-                                                            if not <| exprType.Equals(TBool) && not <| exprType.Equals(TError) then
-                                                                checkInfo.RegisterError("Type error: expected boolean expression")
-                                                            checkStmts ifStmts checkInfo
-                                                            checkStmts elseStmts checkInfo
-        | IfConditional(cond, stmts) ->         let exprType = checkExpression cond checkInfo
+        | Assignment(id, label, expression, pos) -> let exprType = checkExpression expression checkInfo
+                                                    if not <| checkInfo.RegisterIdentifier(id, exprType) then
+                                                        checkInfo.RegisterError(sprintf "Duplicate identifier on line %i (\"%s\")" pos.StartLine id)
+        | Question(id, label, qlType, pos) ->       if not <| checkInfo.RegisterIdentifier(id, mapQLType qlType) then
+                                                        checkInfo.RegisterError(sprintf "Duplicate identifier on line %i (\"%s\")" pos.StartLine id)
+        | IfElseConditional(cond, ifStmts, elseStmts, pos) ->   let exprType = checkExpression cond checkInfo
+                                                                if not <| exprType.Equals(TBool) && not <| exprType.Equals(TError) then
+                                                                    checkInfo.RegisterError(sprintf "Type error on line %i: expected Boolean expression" pos.StartLine)
+                                                                checkStmts ifStmts checkInfo
+                                                                checkStmts elseStmts checkInfo
+        | IfConditional(cond, stmts, pos) ->    let exprType = checkExpression cond checkInfo
                                                 if not <| exprType.Equals(TBool) && not <| exprType.Equals(TError) then
-                                                    checkInfo.RegisterError("Type error: expected boolean expression")
+                                                    checkInfo.RegisterError(sprintf "Type error on line %i: expected Boolean expression" pos.StartLine)
                                                 checkStmts stmts checkInfo
         
     List.iter checkStmt stmts
