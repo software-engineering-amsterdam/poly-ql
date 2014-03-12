@@ -13,3 +13,7 @@ if (1 + (1 == 2)) {
 if (1 + (1 == 2) || true) {
     worstquestion : "Worstests label" : boolean;
 }
+
+if (!(1 + 2)) {
+    negquestion : "Neg question label" : boolean;
+}

@@ -1,9 +1,5 @@
 package org.uva.sea.ql.parser.antlr.QL4.AST.Expression;
 
-import java.util.List;
-
-import org.uva.sea.ql.parser.antlr.QL4.TypeChecker.QLErrorMsg;
-import org.uva.sea.ql.parser.antlr.QL4.Visitors.IQLVisitor;
 
 
 /**
@@ -23,10 +19,6 @@ public abstract class UnaryExpr extends Expression {
 	
 	public String toString() {
 		return expr.toString();
-	}
-	
-	public List<QLErrorMsg> accept(IQLVisitor visitor) {
-		return visitor.visit(this);
 	}
 
 	public Expression getExpr() {

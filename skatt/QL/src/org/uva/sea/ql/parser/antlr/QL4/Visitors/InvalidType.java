@@ -9,6 +9,7 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.BiLogicExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.BiMathExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.EqualityExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Unary.BraceExpr;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Unary.NegExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Bool;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Decimal;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Number;
@@ -29,12 +30,24 @@ import org.uva.sea.ql.parser.antlr.QL4.TypeChecker.QLErrorMsg;
 public class InvalidType extends QLErrorVisitor {
 
 	/**
-	 * TODO: visit unary expr
+	 * When visiting neg expression, check if logical
 	 */
-
+	public List<QLErrorMsg> visit(NegExpr expr) {
+		List<QLErrorMsg> msgs = new ArrayList<QLErrorMsg>();
+		
+		if ( !isLogical(expr.getExpr()) ){
+			msgs.add(new QLErrorMsg("Cannot perform " + expr));
+		}
+		
+		msgs.addAll(this.visitChild(expr.getExpr()));
+		
+		return msgs;
+	}
+	
 	/**
 	 * TODO: Visit question identifier or question
 	 */
+	
 	
 	/**
 	 * If visiting a mathematical expression, check whether
