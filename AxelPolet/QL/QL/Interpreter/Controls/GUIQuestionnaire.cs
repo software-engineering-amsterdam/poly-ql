@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Controls;
 using QL.QLClasses.Expressions;
 
@@ -8,13 +7,13 @@ namespace QL.Interpreter.Controls
     public class GUIQuestionnaire : StackPanel
     {
         private readonly List<GUIQuestion> _questions;
-        private readonly List<ExpressionBase> _preConditions;
-        private ExpressionBase _currentCondition;
+        
+        private ExpressionBase _currentShowCondition;
+        private ExpressionBase _currentHideCondition;
 
         public GUIQuestionnaire()
         {
             _questions = new List<GUIQuestion>();
-            _preConditions = new List<ExpressionBase>();
             
             Width = 500;
         }
@@ -22,46 +21,51 @@ namespace QL.Interpreter.Controls
         public void AppendQuestion(GUIQuestion guiQuestion)
         {
             guiQuestion.OnChanged = Refresh;
-            
-            if (_currentCondition != null)
-                guiQuestion.ShowCondition = _currentCondition;
 
-            if (_currentCondition == null && _preConditions.Any())
-                guiQuestion.DoNotShowConditions = _preConditions;
+            if (_currentShowCondition != null)
+                guiQuestion.ShowCondition = _currentShowCondition;
+
+            if (_currentHideCondition != null)
+                guiQuestion.HideCondition = _currentHideCondition;
 
             _questions.Add(guiQuestion);
         }
 
-        public void SetCondition(ExpressionBase condition)
+        public void SetShowCondition(ExpressionBase condition)
         {
-            _currentCondition = condition;
+            _currentShowCondition = condition;
         }
 
-        public void RemoveCondition(bool isFinal)
+        public void RemoveShowCondition()
         {
-            if(!isFinal)
-                _preConditions.Add(_currentCondition);
-            else
-                _preConditions.Clear();
+            _currentShowCondition = null;
+        }
 
-            _currentCondition = null;
+        public void SetHideCondition(ExpressionBase condition)
+        {
+            _currentHideCondition = condition;
+        }
+
+        public void RemoveHideCondition()
+        {
+            _currentHideCondition = null;
         }
 
         public void Render()
         {
-            foreach (GUIQuestion gq in _questions)
+            foreach (GUIQuestion guiQuestion in _questions)
             {
-                gq.Render();
-                Children.Add(gq);
+                guiQuestion.Render();
+                Children.Add(guiQuestion);
             }
         }
 
         public void Refresh()
         {
-            foreach (GUIQuestion gq in _questions)
+            foreach (GUIQuestion guiQuestion in _questions)
             {
-                gq.Refresh();
-                gq.Render();
+                guiQuestion.Refresh();
+                guiQuestion.Render();
             }
         }
     }

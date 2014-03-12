@@ -60,6 +60,11 @@
     <Compile Include="Interpreter\QLBuilder.cs" />
     <Compile Include="Interpreter\IBuilder.cs" />
     <Compile Include="QLClasses\ASTBase.cs" />
+    <Compile Include="QLClasses\Expressions\Binary\Compare\Equals.cs" />
+    <Compile Include="QLClasses\Expressions\Binary\Compare\GrTh.cs" />
+    <Compile Include="QLClasses\Expressions\Binary\Compare\GrThEq.cs" />
+    <Compile Include="QLClasses\Expressions\Binary\Compare\SmTh.cs" />
+    <Compile Include="QLClasses\Expressions\Binary\Compare\SmThEq.cs" />
     <Compile Include="QLClasses\Expressions\Binary\Conditional\And.cs" />
     <Compile Include="QLClasses\Expressions\Binary\Compare\CompareExpression.cs" />
     <Compile Include="QLClasses\Expressions\Binary\Compare\Operators\Equals.cs" />
@@ -68,6 +73,7 @@
     <Compile Include="QLClasses\Expressions\Binary\Compare\Operators\OperatorBase.cs" />
     <Compile Include="QLClasses\Expressions\Binary\Compare\Operators\SmTh.cs" />
     <Compile Include="QLClasses\Expressions\Binary\Compare\Operators\SmThEq.cs" />
+    <Compile Include="QLClasses\Expressions\Binary\Conditional\ConditionalExpression.cs" />
     <Compile Include="QLClasses\Expressions\Binary\Conditional\Or.cs" />
     <Compile Include="QLClasses\Expressions\Binary\Math\Add.cs" />
     <Compile Include="QLClasses\Expressions\Binary\Math\Div.cs" />
@@ -80,6 +86,10 @@
     <Compile Include="QLClasses\Expressions\Literals\IntLiteral.cs" />
     <Compile Include="QLClasses\Expressions\Undefined.cs" />
     <Compile Include="QLClasses\Statements\ComputedQuestion.cs" />
+    <Compile Include="QLClasses\Values\IntValue.cs" />
+    <Compile Include="QLClasses\Values\StringValue.cs" />
+    <Compile Include="QLClasses\Values\BoolValue.cs" />
+    <Compile Include="QLClasses\Values\QValue.cs" />
     <Compile Include="QLController.cs" />
     <Compile Include="QLMemoryManager.cs" />
     <Compile Include="QLClasses\Expressions\ExpressionBase.cs" />
@@ -95,7 +105,7 @@
     <Compile Include="QLClasses\Types\QBool.cs" />
     <Compile Include="QLClasses\Types\QInt.cs" />
     <Compile Include="QLClasses\Types\QString.cs" />
-    <Compile Include="QLClasses\Types\QBaseType.cs" />
+    <Compile Include="QLClasses\Types\QType.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

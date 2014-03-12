@@ -1,6 +1,7 @@
 ﻿using QL.Interpreter.Controls;
 using QL.QLClasses.Expressions;
 using QL.QLClasses.Types;
+using QL.QLClasses.Values;
 using QL.TypeChecker;
 
 namespace QL.QLClasses.Statements
@@ -9,10 +10,10 @@ namespace QL.QLClasses.Statements
     {
         protected string Name;
         protected string Label;
-        protected QBaseType Type;
+        protected QType Type;
         protected QLMemoryManager Memory;
 
-        public Question(QLMemoryManager memory, string name, string label, QBaseType type)
+        public Question(QLMemoryManager memory, string name, string label, QType type)
         {
             Memory = memory;
             Name = name;
@@ -28,7 +29,7 @@ namespace QL.QLClasses.Statements
             {
                 typeErrors.ReportError(new QLTypeError
                 {
-                    Message = string.Format("Identifier '{0}' is already defined!", Name),
+                    Message = string.Format("(Question) Identifier '{0}' is already defined!", Name),
                     TokenInfo = TokenInfo
                 });
                 return false;

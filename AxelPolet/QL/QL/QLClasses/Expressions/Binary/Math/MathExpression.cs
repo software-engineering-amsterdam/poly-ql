@@ -5,7 +5,8 @@ namespace QL.QLClasses.Expressions.Binary.Math
 {
     public abstract class MathExpression : BinaryExpression
     {
-        protected MathExpression(ExpressionBase leftExpression, ExpressionBase rightExpression) : base(leftExpression, rightExpression)
+        protected MathExpression(ExpressionBase leftExpression, ExpressionBase rightExpression) 
+            : base(leftExpression, rightExpression)
         {
         }
 
@@ -14,13 +15,13 @@ namespace QL.QLClasses.Expressions.Binary.Math
             if (!base.CheckType(typeErrors))
                 return false;
 
-            if (!LeftExpression.GetResultType().IsCompatibleWithQInt(null) || !RightExpression.GetResultType().IsCompatibleWithQInt(null))
+            if (!LeftExpression.GetResultType().IsCompatibleWith(new QInt()) || 
+                !RightExpression.GetResultType().IsCompatibleWith(new QInt()))
             {
                 typeErrors.ReportError(new QLTypeError()
                 {
                     Message = string.Format("(MathExpression) Expected 2 integers! LeftValue: '{0}', RightValue '{1}'",
-                            LeftExpression.GetResultType(), RightExpression.GetResultType()),
-                    TokenInfo = LeftExpression.TokenInfo
+                            LeftExpression.GetResultType(), RightExpression.GetResultType()), TokenInfo = LeftExpression.TokenInfo
                 });
                 return false;
             }
@@ -28,7 +29,7 @@ namespace QL.QLClasses.Expressions.Binary.Math
             return true;
         }
 
-        public override QBaseType GetResultType()
+        public override QType GetResultType()
         {
             return LeftExpression.GetResultType();
         }

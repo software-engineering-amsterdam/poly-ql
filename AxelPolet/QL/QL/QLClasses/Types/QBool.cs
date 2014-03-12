@@ -1,11 +1,10 @@
-﻿using Antlr4.Runtime;
-using QL.TypeChecker;
+﻿using QL.TypeChecker;
 
 namespace QL.QLClasses.Types
 {
-    public class QBool : QBaseType
+    public class QBool : QType
     {
-        public override QBaseType GetType()
+        public override QType GetType()
         {
             return this;
         }
@@ -26,7 +25,7 @@ namespace QL.QLClasses.Types
 
         #region Double Dispatch Implementation
 
-        public override bool IsCompatibleWith(QBaseType type)
+        public override bool IsCompatibleWith(QType type)
         {
             return type.IsCompatibleWithQBool(this);
         }

@@ -104,7 +104,8 @@ public class IntVal extends Value {
 
     @Override
     protected Value intLt(IntVal argument) {
-        return new BoolVal(argument.getValue() < value);
+        Value val = new BoolVal(argument.getValue() < value);
+        return val;
     }
 
 

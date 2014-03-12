@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using QL.QLClasses.Expressions;
 using QL.QLClasses.Types;
+using QL.QLClasses.Values;
 
 namespace QL.Interpreter.Controls
 {
@@ -11,17 +10,17 @@ namespace QL.Interpreter.Controls
     {
         protected string ID;
         protected Label Label;
-        protected QBaseType Type;
+        protected QType Type;
         protected QLMemoryManager Memory;
         protected ExpressionBase Computation;
 
         public ExpressionBase ShowCondition { get; set; }
-        public List<ExpressionBase> DoNotShowConditions { get; set; }
+        public ExpressionBase HideCondition { get; set; }
 
         public delegate void ChangedEventHandler();
         public ChangedEventHandler OnChanged { get; set; }
         
-        public GUIQuestion(QLMemoryManager memory, string id, string label, QBaseType type, ExpressionBase computation = null)
+        public GUIQuestion(QLMemoryManager memory, string id, string label, QType type, ExpressionBase computation = null)
         {
             Memory = memory;
 
@@ -32,7 +31,7 @@ namespace QL.Interpreter.Controls
 
             Orientation = Orientation.Horizontal;
             Width = 600;
-            Margin = new Thickness(0, 5, 0 ,5);
+            Margin = new Thickness(0, 5, 0 ,5);   //magic numbers? --> symbolic constant
         }
 
         public virtual void Render()
@@ -50,7 +49,11 @@ namespace QL.Interpreter.Controls
         {
             if (ShowCondition != null)
             {
-                Visibility = Convert.ToBoolean(ShowCondition.GetResult().ToString()) ? Visibility.Visible : Visibility.Hidden;
+                Visibility = ((BoolValue)ShowCondition.Evaluate()).GetValue() ? Visibility.Visible : Visibility.Hidden;
+            }
+            else if(HideCondition != null)
+            {
+                Visibility = ((BoolValue)HideCondition.Evaluate()).GetValue() ? Visibility.Hidden : Visibility.Visible;
             }
         }
     }

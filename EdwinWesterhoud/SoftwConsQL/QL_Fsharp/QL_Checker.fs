@@ -31,8 +31,6 @@ type TypeCheckInfo(formName) =
 
 ////
 
-let contains x = Seq.exists ((=) x)
-
 let mapQLType qlType = match qlType with
                        | QLBool -> TBool
                        | QLString -> TString
@@ -47,59 +45,56 @@ let literalType exprType =
     | Decimal(_) -> TDecimal, exprType
 
 let rec checkExpression expression (checkInfo : TypeCheckInfo) =
+    let isNumeric exprType = exprType.Equals(TInt) || exprType.Equals(TDecimal)
+
+    let checkBooleanOp left op right cond = let typeLeft = checkExpression left checkInfo
+                                            let typeRight = checkExpression right checkInfo
+                                            if cond typeLeft typeRight then 
+                                                TBool
+                                            else
+                                                checkInfo.RegisterError(sprintf "Type error: cannot apply %+A on %+A and %+A" op typeLeft typeRight)
+                                                TError
+
+    let checkArithmeticOp left op right =   let typeLeft = checkExpression left checkInfo
+                                            let typeRight = checkExpression right checkInfo
+                                            if typeLeft.Equals(typeRight) && isNumeric typeLeft then
+                                                typeLeft
+                                            else if isNumeric typeLeft && typeRight.Equals(TError) then
+                                                typeLeft
+                                            else if typeLeft.Equals(TError) && isNumeric typeRight then
+                                                typeRight
+                                            else 
+                                                checkInfo.RegisterError(sprintf "Type error: cannot apply %+A on %+A and %+A" op typeLeft typeRight)
+                                                TError
+
     match expression with
-    | ID(name)      ->  let exprType = checkInfo.GetIdentifierType(name)
-                        if (exprType.Equals(TError)) then
+    | ID(name, _)      ->  let exprType = checkInfo.GetIdentifierType(name)
+                           if (exprType.Equals(TError)) then
                             checkInfo.RegisterError("Unknown identifier: " + name)
-                        exprType
+                           exprType
 
-    | Literal(expr) -> (fst <| literalType expr)
+    | Literal(expr,_) -> (fst <| literalType expr)
 
-    | Neg(expr)     ->  let exprType = checkExpression expr checkInfo
-                        if (not <| exprType.Equals(TBool) && not <| exprType.Equals(TError)) then
-                            checkInfo.RegisterError("Type error: expected boolean expression")
-                        exprType
+    | Neg(expr,_)     ->  let exprType = checkExpression expr checkInfo
+                          if (not <| exprType.Equals(TBool) && not <| exprType.Equals(TError)) then
+                              checkInfo.RegisterError("Type error: expected boolean expression")
+                          exprType
 
-    | BooleanOp(expr1, (booleanOp.Eq as op), expr2)
-    | BooleanOp(expr1, (booleanOp.Ne as op), expr2) ->  let type1 = checkExpression expr1 checkInfo
-                                                        let type2 = checkExpression expr2 checkInfo
-                                                        if type1.Equals(type2) || type1.Equals(TError) || type2.Equals(TError) then
-                                                            TBool
-                                                        else
-                                                            checkInfo.RegisterError(sprintf "Type error: cannot apply %+A on %+A and %+A" op type1 type2)
-                                                            TError
-    | BooleanOp(expr1, (booleanOp.And as op), expr2)
-    | BooleanOp(expr1, (booleanOp.Or as op), expr2) ->  let type1 = checkExpression expr1 checkInfo
-                                                        let type2 = checkExpression expr2 checkInfo
-                                                        if (type1.Equals(type2) && type1.Equals(TBool)) || type1.Equals(TError) || type2.Equals(TError) then
-                                                            TBool
-                                                        else
-                                                            checkInfo.RegisterError(sprintf "Type error: cannot apply %+A on %+A and %+A" op type1 type2)
-                                                            TError
-    | BooleanOp(expr1, (booleanOp.Lt as op), expr2)
-    | BooleanOp(expr1, (booleanOp.Le as op), expr2)
-    | BooleanOp(expr1, (booleanOp.Gt as op), expr2)
-    | BooleanOp(expr1, (booleanOp.Ge as op), expr2) ->  let type1 = checkExpression expr1 checkInfo
-                                                        let type2 = checkExpression expr2 checkInfo
-                                                        let valid = seq [TInt ; TDecimal ]
-                                                        match type1 with
-                                                           | TInt | TDecimal when type1.Equals(type2) || type2.Equals(TError) -> TBool
-                                                           | TError when contains type2 valid || type2.Equals(TError) -> TBool
-                                                           | _ -> checkInfo.RegisterError(sprintf "Type error: cannot apply %+A on %+A and %+A" op type1 type2)
-                                                                  TError
-
-    | ArithmeticOp(a1, op, a2) ->   let type1 = checkExpression a1 checkInfo
-                                    let type2 = checkExpression a2 checkInfo
-                                    let accepted = seq [TInt ; TDecimal ; TError]
-                                    if type1.Equals(type2) && contains type1 accepted then
-                                        type1
-                                    else if contains type1 accepted && contains type2 accepted then
-                                        match type1 with
-                                        | TError -> type2
-                                        | _ -> type1
-                                    else checkInfo.RegisterError(sprintf "Type error: cannot apply %+A on %+A and %+A" op type1 type2)
-                                         TError
-    | _ -> failwith "Unhandled type case (should not occur)"
+    | BooleanOp(left, (booleanOp.Eq as op), right,_)
+    | BooleanOp(left, (booleanOp.Ne as op), right,_) -> checkBooleanOp left op right (fun typeLeft typeRight -> typeLeft.Equals(typeRight)  || 
+                                                                                                                typeLeft.Equals(TError) || 
+                                                                                                                typeRight.Equals(TError))
+    | BooleanOp(left, (booleanOp.And as op), right,_)
+    | BooleanOp(left, (booleanOp.Or as op), right,_) -> checkBooleanOp left op right (fun typeLeft typeRight -> (typeLeft.Equals(typeRight) && typeLeft.Equals(TBool)) || 
+                                                                                                                 typeLeft.Equals(TError) || typeRight.Equals(TError))
+    | BooleanOp(left, (booleanOp.Lt as op), right,_)
+    | BooleanOp(left, (booleanOp.Le as op), right,_)
+    | BooleanOp(left, (booleanOp.Gt as op), right,_)
+    | BooleanOp(left, (booleanOp.Ge as op), right,_) -> checkBooleanOp left op right (fun typeLeft typeRight -> (typeLeft.Equals(typeRight) && isNumeric typeRight)  ||
+                                                                                                                (typeLeft.Equals(TError) && isNumeric typeRight) ||
+                                                                                                                (isNumeric typeLeft && typeRight.Equals(TError)) ||
+                                                                                                                (typeLeft.Equals(TError) && typeRight.Equals(TError)))
+    | ArithmeticOp(left, op, right,_) -> checkArithmeticOp left op right
 
 let rec checkStmts stmts (checkInfo : TypeCheckInfo) = 
     let checkStmt stmt = 
@@ -107,7 +102,12 @@ let rec checkStmts stmts (checkInfo : TypeCheckInfo) =
         | Assignment(id, label, expression) ->  let exprType = checkExpression expression checkInfo
                                                 checkInfo.RegisterIdentifier(id, exprType) |> ignore // todo: duplicate id check
         | Question(id, label, qlType) ->        checkInfo.RegisterIdentifier(id, mapQLType qlType) |> ignore // todo duplicate id check
-        | Conditional(cond, stmts) ->           let exprType = checkExpression cond checkInfo
+        | IfElseConditional(cond, ifStmts, elseStmts) ->    let exprType = checkExpression cond checkInfo
+                                                            if not <| exprType.Equals(TBool) && not <| exprType.Equals(TError) then
+                                                                checkInfo.RegisterError("Type error: expected boolean expression")
+                                                            checkStmts ifStmts checkInfo
+                                                            checkStmts elseStmts checkInfo
+        | IfConditional(cond, stmts) ->         let exprType = checkExpression cond checkInfo
                                                 if not <| exprType.Equals(TBool) && not <| exprType.Equals(TError) then
                                                     checkInfo.RegisterError("Type error: expected boolean expression")
                                                 checkStmts stmts checkInfo

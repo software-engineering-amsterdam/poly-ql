@@ -6,20 +6,20 @@ namespace QL
 {
     public class QLMemoryManager
     {
-        private readonly Dictionary<string, QBaseType> _idsTypes;
+        private readonly Dictionary<string, QType> _idsTypes;
         private readonly Dictionary<string, ExpressionBase> _idsValues;
         private readonly List<string> _labels;
         
         public QLMemoryManager()
         {
-            _idsTypes = new Dictionary<string, QBaseType>();
+            _idsTypes = new Dictionary<string, QType>();
             _idsValues = new Dictionary<string, ExpressionBase>();
             _labels = new List<string>();
         }
 
         #region IdsTypes
 
-        public void Declare(string name, QBaseType type)
+        public void Declare(string name, QType type)
         {
             _idsTypes[name] = type;
         }
@@ -29,7 +29,7 @@ namespace QL
             return _idsTypes.ContainsKey(name);
         }
 
-        public QBaseType GetDeclaredType(string name)
+        public QType GetDeclaredType(string name)
         {
             return _idsTypes[name];
         }

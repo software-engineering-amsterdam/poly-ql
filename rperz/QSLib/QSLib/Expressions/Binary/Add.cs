@@ -7,6 +7,12 @@ namespace QSLib.Expressions.Binary
             : base(a, b, linenr)
         {
             base._operator = "+";
+            
+        }
+
+        public object GetValue()
+        {
+            return (int)this._left.GetValue() + (int)this._right.GetValue();
         }
 
         public override QSType Type

@@ -2,6 +2,7 @@
 using QL.QLClasses.Expressions;
 using QL.QLClasses.Expressions.Literals;
 using QL.QLClasses.Types;
+using QL.QLClasses.Values;
 using QL.TypeChecker;
 
 namespace QL.Interpreter.Controls
@@ -10,7 +11,7 @@ namespace QL.Interpreter.Controls
     {
         private TextBox _textBox;
 
-        public GUITextBox(QLMemoryManager memory, string id, string label, QBaseType type, ExpressionBase computation = null)
+        public GUITextBox(QLMemoryManager memory, string id, string label, QType type, ExpressionBase computation = null)
             : base(memory, id, label, type, computation)
         {
             _textBox = new TextBox{Width = 200, IsReadOnly = false};
@@ -32,7 +33,7 @@ namespace QL.Interpreter.Controls
 
             if (Computation != null)
             {
-                _textBox.Text = Computation.GetResult().ToString();
+                _textBox.Text = ((IntValue) Computation.Evaluate()).GetValue().ToString();
             }
         }
     }

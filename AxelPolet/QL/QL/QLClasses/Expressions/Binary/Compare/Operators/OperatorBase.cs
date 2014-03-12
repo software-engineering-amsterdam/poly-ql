@@ -5,6 +5,7 @@ namespace QL.QLClasses.Expressions.Binary.Compare.Operators
 {
     public abstract class OperatorBase
     {
+        //make operatorBase --> expressionBase
         public QLTokenInfo TokenInfo { get; private set; }
         public IToken Token { set { TokenInfo = new QLTokenInfo(value); } }
 

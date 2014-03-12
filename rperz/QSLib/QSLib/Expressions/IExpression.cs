@@ -6,6 +6,6 @@ namespace QSLib.Expressions
     {
         bool CheckType(TypeChecker checker);
         QSType Type { get; }
-        
+        object GetValue();
     }
 }

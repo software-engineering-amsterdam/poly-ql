@@ -9,8 +9,8 @@ namespace QL.QLClasses.Statements
     {
         private readonly ExpressionBase _value;
 
-        public ComputedQuestion(QLMemoryManager memory, string name, string label, QBaseType type, ExpressionBase expression) :
-            base(memory, name, label, type)
+        public ComputedQuestion(QLMemoryManager memory, string name, string label, QType type, ExpressionBase expression) 
+            : base(memory, name, label, type)
         {
             _value = expression;
         }
