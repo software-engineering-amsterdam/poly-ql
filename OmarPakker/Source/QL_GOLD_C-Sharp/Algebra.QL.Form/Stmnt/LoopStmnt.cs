@@ -49,7 +49,6 @@ namespace Algebra.QL.Form.Stmnt
             {
                 for (int i = sp.Children.Count; i < count; i++)
                 {
-                    //TODO: fix value of looped variables
                     IFormStmnt bodyClone = Body.Clone();
                     bodyClones.Add(bodyClone);
                     sp.Children.Add(bodyClone.BuildForm());
