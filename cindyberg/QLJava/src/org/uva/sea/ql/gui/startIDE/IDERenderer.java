@@ -3,16 +3,10 @@ package org.uva.sea.ql.gui.startIDE;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -52,13 +46,15 @@ public class IDERenderer {
 	public IDERenderer(JFrame frame)
 	{
 		this.frame = frame;
-		
+		IDEButtons buttons = new IDEButtons(frame,input);
 		this.mainpanel = new JPanel();
 		mainpanel.setLayout(new MigLayout());
 		
+		mainpanel.add(buttons.saveButton());
+		mainpanel.add(buttons.loadButton(), "wrap");
 		inputField();
-		generateQuestionaireButton();
-		loadButton();
+		typeCheckButton();
+		questionaireButton();
 		setupLists();
 		createList(warningList);
 		createList(errorList);
@@ -83,14 +79,24 @@ public class IDERenderer {
 		mainpanel.add(input, "grow, span, wrap, height 50%");
 	}
 	
-	private void generateQuestionaireButton(){
+	private void typeCheckButton(){
+		JButton typeCheckButton = new JButton("Typecheck");
+		typeCheckButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				typeCheck();
+			}
+		});
+		mainpanel.add(typeCheckButton, "grow");
+	}
+	
+	private void questionaireButton(){
 		JButton continueButton = new JButton("Generate questionaire");
 		continueButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				generateQuestionairePressed();
 			}
 		});
-		mainpanel.add(continueButton, "grow");
+		mainpanel.add(continueButton, "grow, wrap");
 	}
 
 	private void generateQuestionairePressed() {
@@ -103,45 +109,7 @@ public class IDERenderer {
 			JOptionPane.showMessageDialog(frame, "There are errors / warnings in the code", "Error", JOptionPane.ERROR_MESSAGE);
 		}	
 	}
-	
-	
-	private void loadButton(){
-		JButton loadButton = new JButton("Load file");
-		loadButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				final JFileChooser fc = new JFileChooser();
-				int returnVal = fc.showOpenDialog(frame);
 
-				if (returnVal == JFileChooser.APPROVE_OPTION) {
-				File file = fc.getSelectedFile();
-					try {
-						printFileToField(file);
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
-				} 
-				else {
-					
-				}
-			}
-		});
-		
-		mainpanel.add(loadButton, "wrap");
-	}
-
-	private void printFileToField(File file) throws IOException {
-		   BufferedReader br = new BufferedReader(new FileReader(file));
-		    try {
-		        String line = br.readLine();
-		        while (line != null) {
-		            input.append(line + '\n');
-		            line = br.readLine();
-		        }
-		    } finally {
-		        br.close();
-		    }
-		
-	}
 
 	private void startQuesionaire() {
 		QuestionaireView b = new QuestionaireView(form);
@@ -165,10 +133,9 @@ public class IDERenderer {
         	problemsToList(typeProblems);
         
        
-		} catch (FileNotFoundException e1) {
-			e1.printStackTrace();
 		} catch (ParseException e1) {
-			e1.printStackTrace();
+			JOptionPane.showMessageDialog(frame, "Parse Error", "Error", JOptionPane.ERROR_MESSAGE);
+			
 		}
 		
 	}

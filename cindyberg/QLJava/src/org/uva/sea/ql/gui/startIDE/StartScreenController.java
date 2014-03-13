@@ -1,7 +1,5 @@
 package org.uva.sea.ql.gui.startIDE;
 
-import java.io.FileNotFoundException;
-
 import org.uva.sea.ql.ast.statement.Form;
 import org.uva.sea.ql.parser.jacc.ParseException;
 import org.uva.sea.ql.parser.jacc.Parser;
@@ -25,7 +23,7 @@ public class StartScreenController {
 		return problems;
 	}
 	
-	public Form runTypeChecker(String INPUT) throws FileNotFoundException, ParseException {
+	public Form runTypeChecker(String INPUT) throws ParseException {
 		return parseDSL(INPUT);
 	}
 	

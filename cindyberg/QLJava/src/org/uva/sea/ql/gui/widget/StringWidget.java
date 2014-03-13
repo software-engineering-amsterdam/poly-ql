@@ -18,6 +18,7 @@ public class StringWidget extends Control{
 	public StringWidget(Identifier identifier, State state) {
 		super(identifier, state);
 		textfield = new JTextField();
+		//TODO implement caretlistener
 		textfield.addActionListener(new ActionListener(){
 			
 			public void actionPerformed(ActionEvent e){
