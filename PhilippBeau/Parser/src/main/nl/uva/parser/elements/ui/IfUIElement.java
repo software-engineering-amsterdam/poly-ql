@@ -18,7 +18,7 @@ public class IfUIElement extends UIElement implements ExpressionChangeListener {
 
     public IfUIElement(final Expression expression, final List<Statement> children) {
         _expression = expression;
-        _expression.register(this);
+        // _expression.register(this);
 
         generateElement(children);
     }

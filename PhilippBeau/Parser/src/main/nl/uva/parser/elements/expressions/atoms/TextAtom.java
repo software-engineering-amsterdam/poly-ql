@@ -1,14 +1,11 @@
 package main.nl.uva.parser.elements.expressions.atoms;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import main.nl.uva.parser.elements.errors.ValidationError;
-import main.nl.uva.parser.elements.expressions.Expression;
 import main.nl.uva.parser.elements.type.Text;
 import main.nl.uva.parser.elements.type.Value;
+import main.nl.uva.parser.elements.validation.ASTValidation;
+import main.nl.uva.parser.elements.validation.Scope;
 
-public class TextAtom extends Expression {
+public class TextAtom extends AtomExpression {
 
     public TextAtom() {
         this("");
@@ -23,13 +20,8 @@ public class TextAtom extends Expression {
     }
 
     @Override
-    public String toString() {
-        return "Text: " + _value;
-    }
-
-    @Override
-    public List<ValidationError> validate() {
-        return new ArrayList<>();
+    public ASTValidation validate(final Scope scope) {
+        return new ASTValidation();
     }
 
     @Override
@@ -38,7 +30,7 @@ public class TextAtom extends Expression {
     }
 
     @Override
-    public void recalculateValueImpl() {
-        throw new UnsupportedOperationException();
+    public String toString() {
+        return "Text: " + _value;
     }
 }

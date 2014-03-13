@@ -8,8 +8,9 @@ import java.util.List;
 import junit.framework.Assert;
 import main.nl.uva.g4.FormGrammarLexer;
 import main.nl.uva.g4.FormGrammarParser;
-import main.nl.uva.parser.elements.errors.ValidationError;
 import main.nl.uva.parser.elements.statements.ParserForm;
+import main.nl.uva.parser.elements.validation.ASTValidation;
+import main.nl.uva.parser.elements.validation.Scope;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -47,8 +48,8 @@ public class ParserTest {
 
         for (ParserForm f : pf) {
 
-            List<ValidationError> validation = f.validate();
-            Assert.assertTrue(validation.isEmpty());
+            ASTValidation validation = f.validate(new Scope());
+            Assert.assertFalse(validation.hasErrors());
         }
     }
 }

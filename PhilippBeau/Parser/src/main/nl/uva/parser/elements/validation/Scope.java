@@ -8,8 +8,8 @@ public class Scope {
 
     private final HashMap<String, Variable> _currentScope = new HashMap<>();
 
-    public boolean containsVariable(final Variable variable) {
-        return _currentScope.containsKey(variable.getName());
+    public boolean containsVariable(final String variableName) {
+        return _currentScope.containsKey(variableName);
     }
 
     public Variable getVariableFromScope(final String variableName) {

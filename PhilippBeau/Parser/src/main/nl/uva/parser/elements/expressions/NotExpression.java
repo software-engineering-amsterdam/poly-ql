@@ -1,17 +1,14 @@
 package main.nl.uva.parser.elements.expressions;
 
-import java.util.List;
-
-import main.nl.uva.parser.elements.errors.ValidationError;
 import main.nl.uva.parser.elements.type.Value;
+import main.nl.uva.parser.elements.validation.ASTValidation;
+import main.nl.uva.parser.elements.validation.Scope;
 
 public class NotExpression extends Expression {
 
     private final Expression _expression;
 
     public NotExpression(final Expression expression) {
-        expression.setParent(this);
-
         _expression = expression;
     }
 
@@ -21,12 +18,7 @@ public class NotExpression extends Expression {
     }
 
     @Override
-    public List<ValidationError> validate() {
-        return _expression.validate();
-    }
-
-    @Override
-    protected void recalculateValueImpl() {
-        _parent.recalculateValue();
+    public ASTValidation validate(final Scope scope) {
+        return _expression.validate(scope);
     }
 }

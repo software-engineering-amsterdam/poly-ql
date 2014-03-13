@@ -2,14 +2,13 @@ package main.nl.uva.parser.elements.statements;
 
 import java.util.List;
 
-import main.nl.uva.parser.elements.ASTNode;
 import main.nl.uva.parser.elements.errors.InvalidTypeError;
-import main.nl.uva.parser.elements.errors.ValidationError;
 import main.nl.uva.parser.elements.expressions.Expression;
-import main.nl.uva.parser.elements.expressions.Variable;
 import main.nl.uva.parser.elements.type.Value;
 import main.nl.uva.parser.elements.ui.IfUIElement;
 import main.nl.uva.parser.elements.ui.UIElement;
+import main.nl.uva.parser.elements.validation.ASTValidation;
+import main.nl.uva.parser.elements.validation.Scope;
 
 public class IFStatement extends BlockStatement {
 
@@ -18,40 +17,22 @@ public class IFStatement extends BlockStatement {
     private final Expression _expression;
 
     public IFStatement(final Expression expression, final List<Statement> children) {
-
         _expression = expression;
         _children = children;
-
-        _expression.setParent(this);
-        setParentForChildren(_children);
     }
 
     @Override
-    public Variable findVariable(final String variableName, final ASTNode scopeEnd) {
-        if (scopeEnd != _expression) {
-            Variable result = findVariableInChildren(_children, variableName, scopeEnd);
-            if (result != null) {
-                return result;
-            }
-        }
-
-        return _parent.findVariable(variableName, this);
-    }
-
-    @Override
-    public List<ValidationError> validate() {
-        List<ValidationError> expression = _expression.validate();
-
-        if (!expression.isEmpty()) {
-            return expression;
-        }
+    public ASTValidation validate(final Scope scope) {
+        ASTValidation valid = _expression.validate(scope);
 
         if (!(_expression.getValue().isTypeOf(Value.Type.BOOLEAN))) {
-            expression.add(new InvalidTypeError(this.toString()));
-            return expression;
+            valid.addError(new InvalidTypeError(this.toString()));
         }
 
-        return validateStatements(_children);
+        valid = validateChildren(valid, _children, scope);
+        removeChildrenFromScope(_children, scope);
+
+        return valid;
     }
 
     @Override

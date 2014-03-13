@@ -2,20 +2,19 @@ package main.nl.uva.parser.elements;
 
 import java.util.List;
 
-import main.nl.uva.parser.elements.errors.ValidationError;
-import main.nl.uva.parser.elements.expressions.Variable;
+import main.nl.uva.parser.elements.statements.Statement;
+import main.nl.uva.parser.elements.validation.ASTValidation;
+import main.nl.uva.parser.elements.validation.Scope;
 
 public abstract class ASTNode {
 
-    protected ASTNode _parent;
+    public abstract ASTValidation validate(final Scope scope);
 
-    public void setParent(final ASTNode parent) {
-        _parent = parent;
+    protected static ASTValidation validateChildren(final ASTValidation valid, final List<Statement> statements, final Scope scope) {
+        for (Statement child : statements) {
+            valid.combine(child.validate(scope));
+        }
+
+        return valid;
     }
-
-    public abstract List<ValidationError> validate();
-
-    public abstract void recalculateValue();
-
-    public abstract Variable findVariable(final String variableName, final ASTNode scopeEnd);
 }

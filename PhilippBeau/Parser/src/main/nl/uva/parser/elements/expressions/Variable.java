@@ -1,27 +1,22 @@
 package main.nl.uva.parser.elements.expressions;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import main.nl.uva.parser.elements.errors.InvalidTypeError;
-import main.nl.uva.parser.elements.errors.ValidationError;
-import main.nl.uva.parser.elements.expressions.atoms.VariableAtom;
 import main.nl.uva.parser.elements.type.Value;
+import main.nl.uva.parser.elements.validation.ASTValidation;
+import main.nl.uva.parser.elements.validation.Scope;
 
 public class Variable extends Expression {
+
+    private final Value _value;
 
     private final String _name;
 
     private Expression _expression;
 
-    private final List<VariableAtom> _linkedVariables = new ArrayList<>();
-
     public Variable(final Value type, final String name, final Expression expression) {
         _value = type;
         _name = name;
         _expression = expression;
-
-        _expression.setParent(this);
     }
 
     public Variable(final Value type, final String name) {
@@ -36,29 +31,19 @@ public class Variable extends Expression {
 
         _expression = newExpression;
         _expression.getValue().applyValueTo(_value);
-        _expression.setParent(this);
-
-        for (VariableAtom linkedVariable : _linkedVariables) {
-            linkedVariable.recalculateValue();
-        }
 
         return true;
     }
 
     @Override
-    public String toString() {
-        return "( " + _value.toString() + " " + _name + " " + _value + " )";
-    }
+    public ASTValidation validate(final Scope scope) {
+        ASTValidation valid = _expression.validate(scope);
 
-    @Override
-    public List<ValidationError> validate() {
-        List<ValidationError> valError = _expression.validate();
-
-        if (valError.isEmpty() && !_value.applyValueTo(_expression.getValue())) {
-            valError.add(new InvalidTypeError(this.toString()));
+        if (valid.hasErrors() && !_value.applyValueTo(_expression.getValue())) {
+            valid.addError(new InvalidTypeError(this.toString()));
         }
 
-        return valError;
+        return valid;
     }
 
     public String getName() {
@@ -70,10 +55,8 @@ public class Variable extends Expression {
         return _value;
     }
 
-    public boolean setLinkedVariable(final VariableAtom linkedVariable) {
-        return _linkedVariables.add(linkedVariable);
-    }
-
     @Override
-    protected void recalculateValueImpl() {}
+    public String toString() {
+        return "( " + _value.toString() + " " + _name + " " + _value + " )";
+    }
 }

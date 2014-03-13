@@ -3,7 +3,7 @@ form Box1HouseOwning {
     hasBoughtHouse: "Did you by a house in 2010?" boolean
     moneyBling: "How much money?" money
     hasMaintLoan: "Did you enter a loan for maintenance/reconstruction?" boolean
-    if (hasMaintLoan) {
+    if (hasMaintLoan == 3) {
         sellingPrice: "Price the house was sold for:" money
         privateDebt: "Private debts for the sold house:" money
         test: "Test" boolean
