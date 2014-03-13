@@ -1,8 +1,5 @@
 package org.uva.sea.ql.parser.antlr.QL4.AST;
 
-import java.util.List;
-
-import org.uva.sea.ql.parser.antlr.QL4.Messages.QLErrorMsg;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.IQLVisitor;
 
 /**
@@ -33,10 +30,8 @@ public class Form implements QLTree {
 		return "This form contains " + structures.toString();
 	}
 	
-	/**
-	 * When visited, return self 
-	 */
-	public List<QLErrorMsg> accept(IQLVisitor visitor) {
+	@Override
+	public Object accept(IQLVisitor<?> visitor) {
 		return visitor.visit(this);
 	}
 

@@ -1,8 +1,9 @@
 package org.uva.sea.ql.parser.antlr.QL4.AST.Value;
 
-import java.util.List;
+import java.util.Map;
 
-import org.uva.sea.ql.parser.antlr.QL4.Messages.QLErrorMsg;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Question;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Types.Type;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.IQLVisitor;
 
 /**
@@ -50,7 +51,12 @@ public class Identifier extends Value {
 	}
 
 	@Override
-	public List<QLErrorMsg> accept(IQLVisitor visitor) {
+	public Type getType(Map<Identifier, Question> questions) {
+		return questions.get(this).getType();
+	}
+	
+	@Override
+	public Object accept(IQLVisitor<?> visitor) {
 		return visitor.visit(this);
 	}
 	

@@ -2,12 +2,15 @@ package org.uva.sea.ql.parser.antlr.QL4.Visitors;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.uva.sea.ql.parser.antlr.QL4.AST.ConditionalStructure;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Question;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Structures;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Expression;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Types.BoolType;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Identifier;
 import org.uva.sea.ql.parser.antlr.QL4.Messages.QLErrorMsg;
-import org.uva.sea.ql.parser.antlr.QL4.Types.BoolType;
 
 /**
  * Visitor for checking whether all conditions are of type
@@ -16,6 +19,12 @@ import org.uva.sea.ql.parser.antlr.QL4.Types.BoolType;
  *
  */
 public class BoolConditionChecker extends QLErrorVisitor {
+	
+	Map<Identifier, Question> questions;
+	
+	public BoolConditionChecker(Map<Identifier, Question> questions) {
+		this.questions = questions;
+	}
 	
 	/**
 	 * When visiting a conditional structure, check whether its
@@ -55,7 +64,7 @@ public class BoolConditionChecker extends QLErrorVisitor {
 	private List<QLErrorMsg> checkExpression(Expression expr) {
 		List<QLErrorMsg> msgs = new ArrayList<QLErrorMsg>();
 		
-		if (! expr.getType().equals(new BoolType())) {
+		if (! expr.getType(questions).equals(new BoolType())) {
 			msgs.add(new QLErrorMsg("Expression " + expr + " does not return a boolean"));
 		} 
 		

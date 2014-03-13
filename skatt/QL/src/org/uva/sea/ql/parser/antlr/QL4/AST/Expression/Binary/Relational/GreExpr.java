@@ -1,10 +1,7 @@
 package org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.Relational;
 
-import java.util.List;
-
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Expression;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.BiRelationExpr;
-import org.uva.sea.ql.parser.antlr.QL4.Messages.QLErrorMsg;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.IQLVisitor;
 
 /**
@@ -19,7 +16,7 @@ public class GreExpr extends BiRelationExpr {
 	}
 
 	@Override
-	public List<QLErrorMsg> accept(IQLVisitor visitor) {
+	public Object accept(IQLVisitor<?> visitor) {
 		return visitor.visit(this);
 	}
 	

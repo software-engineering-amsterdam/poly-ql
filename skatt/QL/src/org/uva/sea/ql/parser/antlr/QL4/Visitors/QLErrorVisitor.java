@@ -24,12 +24,15 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.Relational.LeqExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.Relational.LesExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Unary.BraceExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Unary.NegExpr;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Types.BoolType;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Types.CurrencyType;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Types.DateType;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Types.NumberType;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Bool;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Decimal;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Identifier;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Label;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Number;
-import org.uva.sea.ql.parser.antlr.QL4.AST.Value.QuestionType;
 import org.uva.sea.ql.parser.antlr.QL4.Messages.QLErrorMsg;
 
 /**
@@ -38,7 +41,7 @@ import org.uva.sea.ql.parser.antlr.QL4.Messages.QLErrorMsg;
  * @author Sammie Katt
  *
  */
-public class QLErrorVisitor implements IQLVisitor {
+public class QLErrorVisitor implements IQLVisitor<List<QLErrorMsg>> {
 
 	@Override
 	public List<QLErrorMsg> visit(Form form) {
@@ -192,7 +195,22 @@ public class QLErrorVisitor implements IQLVisitor {
 	}
 
 	@Override
-	public List<QLErrorMsg> visit(QuestionType type) {
+	public List<QLErrorMsg> visit(BoolType boolType) {
+		return null;
+	}
+
+	@Override
+	public List<QLErrorMsg> visit(NumberType boolType) {
+		return null;
+	}
+
+	@Override
+	public List<QLErrorMsg> visit(DateType dateType) {
+		return null;
+	}
+
+	@Override
+	public List<QLErrorMsg> visit(CurrencyType currencyType) {
 		return null;
 	}
 	
@@ -208,7 +226,7 @@ public class QLErrorVisitor implements IQLVisitor {
 		
 		// if child is not null, visit
 		if(child != null) {
-			msgs = child.accept(this);
+			msgs = (List<QLErrorMsg>) child.accept(this);
 		}
 		
 		// if resulting msgs are null, instantiate msgs as empty list

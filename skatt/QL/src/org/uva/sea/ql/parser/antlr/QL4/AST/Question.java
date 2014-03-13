@@ -1,12 +1,9 @@
 package org.uva.sea.ql.parser.antlr.QL4.AST;
 
-import java.util.List;
-
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Expression;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Types.Type;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Identifier;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Label;
-import org.uva.sea.ql.parser.antlr.QL4.AST.Value.QuestionType;
-import org.uva.sea.ql.parser.antlr.QL4.Messages.QLErrorMsg;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.IQLVisitor;
 
 /**
@@ -21,7 +18,7 @@ public class Question implements QLTree {
 	final private boolean computed;
 	final private Identifier id; 
 	final private Label label;
-	final private QuestionType type;
+	final private Type type;
 	private Expression value;
 	
 	/**
@@ -31,14 +28,14 @@ public class Question implements QLTree {
 	 * @param label
 	 * @param type
 	 */
-	public Question(Identifier id, Label label, QuestionType type) {
+	public Question(Identifier id, Label label, Type type) {
 		this.computed = false;
 		this.id = id;
 		this.label = label;
 		this.type = type;
 	}
 	
-	public Question(Identifier id, Label label, QuestionType type, Expression value) {
+	public Question(Identifier id, Label label, Type type, Expression value) {
 		this.computed = true;
 		this.id = id;
 		this.label = label;
@@ -50,7 +47,8 @@ public class Question implements QLTree {
 		return "Question " + id + " of type " + type + " and label " + label;
 	}
 	
-	public List<QLErrorMsg> accept(IQLVisitor visitor) {
+	@Override
+	public Object accept(IQLVisitor<?> visitor) {
 		return visitor.visit(this);
 	}
 
@@ -64,7 +62,7 @@ public class Question implements QLTree {
 		return label;
 	}
 
-	public QuestionType getType() {
+	public Type getType() {
 		return type;
 	}
 

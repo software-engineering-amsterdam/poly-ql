@@ -1,4 +1,6 @@
-package org.uva.sea.ql.parser.antlr.QL4.Types;
+package org.uva.sea.ql.parser.antlr.QL4.AST.Types;
+
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.IQLVisitor;
 
 
 /**
@@ -24,5 +26,15 @@ public class NumberType extends Type {
 		else 
 			return false;
 		
+	}
+
+	@Override
+	public Object accept(IQLVisitor<?> visitor) {
+		return visitor.visit(this);
+	}
+	
+	@Override
+	public String toString() {
+		return "NumberType";
 	}
 }

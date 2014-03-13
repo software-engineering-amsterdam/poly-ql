@@ -1,12 +1,13 @@
 package org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Unary;
 
-import java.util.List;
+import java.util.Map;
 
+import org.uva.sea.ql.parser.antlr.QL4.AST.Question;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Expression;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.UnaryExpr;
-import org.uva.sea.ql.parser.antlr.QL4.Messages.QLErrorMsg;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Types.Type;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Identifier;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.IQLVisitor;
-import org.uva.sea.ql.parser.antlr.QL4.Types.Type;
 
 /**
  * Represents a braced expression in QL4 AST
@@ -21,13 +22,13 @@ public class BraceExpr extends UnaryExpr {
 	
 
 	@Override
-	public List<QLErrorMsg> accept(IQLVisitor visitor) {
+	public Object accept(IQLVisitor<?> visitor) {
 		return visitor.visit(this);
 	}
 	
 	@Override
-	public Type getType() {
-		return this.getExpr().getType();
+	public Type getType(Map<Identifier, Question> questions) {
+		return this.getExpr().getType(questions);
 	}
 	
 	@Override

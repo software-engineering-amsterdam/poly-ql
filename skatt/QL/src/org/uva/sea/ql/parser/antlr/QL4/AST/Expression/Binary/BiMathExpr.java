@@ -1,9 +1,13 @@
 package org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary;
 
+import java.util.Map;
+
+import org.uva.sea.ql.parser.antlr.QL4.AST.Question;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.BinaryExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Expression;
-import org.uva.sea.ql.parser.antlr.QL4.Types.NumberType;
-import org.uva.sea.ql.parser.antlr.QL4.Types.Type;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Types.NumberType;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Types.Type;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Identifier;
 
 /**
  * Abstract class for all mathematical, binary expressions in QL AST.
@@ -18,7 +22,7 @@ public abstract class BiMathExpr extends BinaryExpr {
 	}
 	
 	@Override
-	public Type getType() {
+	public Type getType(Map<Identifier, Question> questions) {
 		return new NumberType();
 	}
 }

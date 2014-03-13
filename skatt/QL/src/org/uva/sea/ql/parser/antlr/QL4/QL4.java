@@ -3,6 +3,7 @@ package org.uva.sea.ql.parser.antlr.QL4;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JFileChooser;
 
@@ -10,6 +11,8 @@ import org.antlr.v4.runtime.ANTLRFileStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Form;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Question;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Identifier;
 import org.uva.sea.ql.parser.antlr.QL4.Messages.QLErrorMsg;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.AntlrVisitor;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.BoolConditionChecker;
@@ -17,6 +20,7 @@ import org.uva.sea.ql.parser.antlr.QL4.Visitors.DuplicateLabelChecker;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.DuplicateQuestionChecker;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.InvalidTypeChecker;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.QLErrorVisitor;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.QuestionExtractor;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.UndefQuestionChecker;
 
 import QL4.QL4Lexer;
@@ -59,6 +63,8 @@ public class QL4 {
 		AntlrVisitor ASTParser = new AntlrVisitor();
 		Form ast = (Form) tree.accept(ASTParser);
 		
+		System.out.println(ast);
+		
 		// perform checks on extracted AST
 		List<QLErrorMsg> checks = checkErrors(ast);
 		
@@ -100,6 +106,14 @@ public class QL4 {
 		List<QLErrorMsg> msgs = new ArrayList<QLErrorMsg>();
 		// the checker that will perform several checks on our ast input 
 		QLErrorVisitor ASTChecker;
+		QuestionExtractor extract = new QuestionExtractor();
+		
+		/**
+		 * Questions is a map of identifier -> question
+		 * This is necessary for checkers that need to know something
+		 * about the question an identifier is refering to
+		 */
+		Map<Identifier, Question> questions = extract.visit(ast);
 		
 		ASTChecker = new UndefQuestionChecker();
 		msgs.addAll(ASTChecker.visit(ast));
@@ -110,10 +124,10 @@ public class QL4 {
 		ASTChecker = new DuplicateQuestionChecker();
 		msgs.addAll(ASTChecker.visit(ast));
 		
-		ASTChecker = new InvalidTypeChecker();
+		ASTChecker = new InvalidTypeChecker(questions);
 		msgs.addAll(ASTChecker.visit(ast));
 		
-		ASTChecker = new BoolConditionChecker();
+		ASTChecker = new BoolConditionChecker(questions);
 		msgs.addAll(ASTChecker.visit(ast));
 		
 		return msgs;

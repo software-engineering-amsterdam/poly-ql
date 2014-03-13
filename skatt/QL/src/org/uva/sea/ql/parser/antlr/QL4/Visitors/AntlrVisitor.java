@@ -23,12 +23,16 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.Relational.LeqExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.Relational.LesExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Unary.BraceExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Unary.NegExpr;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Types.BoolType;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Types.CurrencyType;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Types.DateType;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Types.NumberType;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Types.Type;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Bool;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Decimal;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Identifier;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Label;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Number;
-import org.uva.sea.ql.parser.antlr.QL4.AST.Value.QuestionType;
 
 import QL4.QL4BaseVisitor;
 import QL4.QL4Parser;
@@ -101,7 +105,7 @@ public class AntlrVisitor extends QL4BaseVisitor<QLTree> {
   public Question visitRegQuestion(QL4Parser.RegQuestionContext ctx) {
 	  Identifier id = new Identifier(ctx.IDENTIFIER().getText());
 	  Label label = new Label(ctx.LABEL().getText());
-	  QuestionType type = new QuestionType(ctx.TYPE().getText());
+	  Type type = typeFromString(ctx.TYPE().getText());
 	  
 	  return new Question(id, label, type); 
   }
@@ -114,14 +118,14 @@ public class AntlrVisitor extends QL4BaseVisitor<QLTree> {
   public Question visitCompQuestion(QL4Parser.CompQuestionContext ctx) {
 	  Identifier id = new Identifier(ctx.IDENTIFIER().getText());
 	  Label label = new Label(ctx.LABEL().getText());
-	  QuestionType type = new QuestionType(ctx.TYPE().getText());
+	  Type type = typeFromString(ctx.TYPE().getText());
 	  Expression value = (Expression) ctx.expression().accept(this);
 	  
 	  return new Question(id, label, type, value); 
   }
 
 
-  //////////////////////// unary expressions
+//////////////////////// unary expressions
   public BraceExpr visitBraceExpr(QL4Parser.BraceExprContext ctx) {
 	  Expression expr = (Expression) ctx.expression().accept(this);
 	  return new BraceExpr(expr);
@@ -238,5 +242,21 @@ public class AntlrVisitor extends QL4BaseVisitor<QLTree> {
   
   public Identifier visitIdent(QL4Parser.IdentContext ctx) {
 	  return new Identifier(ctx.getText());
+  }
+ 
+  /**
+   * Creates a type depending on the string
+   */
+  private Type typeFromString(String text) {
+	if (text.equals("boolean"))
+		return new BoolType();
+	else if (text.equals("integer") || text.equals("decimal"))
+		return new NumberType();
+	else if (text.equals("date")) 
+		return new DateType();
+	else if (text.equals("currency"))
+		return new CurrencyType();
+	else 
+		return null;
   }
 }

@@ -1,10 +1,10 @@
 package org.uva.sea.ql.parser.antlr.QL4.AST.Value;
 
-import java.util.List;
+import java.util.Map;
 
-import org.uva.sea.ql.parser.antlr.QL4.Messages.QLErrorMsg;
-import org.uva.sea.ql.parser.antlr.QL4.Types.BoolType;
-import org.uva.sea.ql.parser.antlr.QL4.Types.Type;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Question;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Types.BoolType;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Types.Type;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.IQLVisitor;
 
 /**
@@ -48,7 +48,7 @@ public class Bool extends Value {
 	}
 
 	@Override
-	public Type getType() {
+	public Type getType(Map<Identifier, Question> questions) {
 		return new BoolType();
 	}
 	
@@ -57,7 +57,6 @@ public class Bool extends Value {
 	}
 
 	@Override
-	public List<QLErrorMsg> accept(IQLVisitor visitor) {
+	public Object accept(IQLVisitor<?> visitor) {
 		return visitor.visit(this);
-	}
-}
+	}}
