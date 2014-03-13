@@ -3,12 +3,12 @@ package gui.render;
 import gui.component.Control;
 import gui.component.TypeToWidget;
 
-import java.applet.Applet;
-
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import net.miginfocom.swing.MigLayout;
 import ast.Visitor;
 import ast.expr.Identifier;
 import ast.expr.binExpr.Add;
@@ -49,7 +49,9 @@ public class Renderer implements Visitor<JComponent>{
 
 	
 	public Renderer() {
-		this.panel = new JPanel();
+		MigLayout layout = new MigLayout();
+		this.panel = new JPanel(layout);
+//		this.panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 	}
 	
 //	public Renderer(State state) {
@@ -70,7 +72,9 @@ public class Renderer implements Visitor<JComponent>{
 		for(Statement s: list.getList()){
 			s.accept(r);
 		}
-		return r.getPanel();
+		
+		JPanel panel2 = r.getPanel();
+		return panel2;
 	}
 	
 	private JPanel getPanel() {
@@ -78,16 +82,18 @@ public class Renderer implements Visitor<JComponent>{
 	}
 	
 	private void addLabel(String str){
-		this.panel.add(new JLabel(str));
+		this.panel.add(new JLabel(str.replace("\"", "")));
 	}
 	
-	private Control typeToWidget(Type t, boolean visible){		
+	private Control typeToWidget(Type t, boolean visible){	
+		System.out.println("type to widiget");
 		TypeToWidget vis = new TypeToWidget();
 		return t.accept(vis);
 	}
 	
 	private void addComponent(Control comp){
-		this.panel.add(comp.getComponent());
+		System.out.println("add component");
+		this.panel.add(comp.getComponent(), "wrap");
 	}
 	
 	private void addPanel(JPanel p){
@@ -97,12 +103,13 @@ public class Renderer implements Visitor<JComponent>{
 
 	@Override
 	public JComponent visit(Form node) {
-//		return render(node.getStatements());
-		return panel;
+		System.out.println("visit form");
+		return render(node.getStatements());
 	}
 
 	@Override
 	public JComponent visit(StatementList node) {
+		System.out.println("visit Statementlist");
 		for(Statement s: node.getList()){
 			panel.add(s.accept(this), "wrap");
 		}
@@ -111,7 +118,8 @@ public class Renderer implements Visitor<JComponent>{
 
 	@Override
 	public JComponent visit(Question node) {
-		addLabel(node.getId().getIdentName());
+		System.out.println("visit question");
+		addLabel(node.getLabel().getVal());
 		Control comp = typeToWidget(node.getType(), true);
 		addComponent(comp);
 		return panel;
@@ -119,7 +127,8 @@ public class Renderer implements Visitor<JComponent>{
 
 	@Override
 	public JComponent visit(ComputedQuestion node) {
-		addLabel(node.getId().getIdentName());
+		System.out.println("visit computed question");
+		addLabel(node.getLabel().getVal());
 		Control comp = typeToWidget(node.getType(), false);
 		addComponent(comp);
 		return panel;
@@ -127,11 +136,13 @@ public class Renderer implements Visitor<JComponent>{
 
 	@Override
 	public JComponent visit(Block node) {
+		System.out.println("visit block");
 		return visit(node.getStatements());
 	}
 
 	@Override
 	public JComponent visit(IfStatement node) {
+		System.out.println("visit if");
 		JPanel ifComp = render(node.getStatements());
 		ifComp.setVisible(false);
 		addPanel(ifComp);
@@ -140,6 +151,7 @@ public class Renderer implements Visitor<JComponent>{
 
 	@Override
 	public JComponent visit(IfelseStatement node) {
+		System.out.println("visit ifelse");
 		JPanel ifComp = render(node.getStatements());
 		JPanel elseComp = render(node.getElseStatements());
 		ifComp.setVisible(false);
@@ -150,10 +162,10 @@ public class Renderer implements Visitor<JComponent>{
 	}
 	
 	public JComponent render(final Form form){
+		System.out.println("start rendering");
 		final Renderer renderer = new Renderer();
-		JComponent comp = renderer.visit(form); 
-		comp.setName(form.getId().getIdentName());
-		comp.setSize(200, 300);
+		JComponent comp = renderer.visit(form);
+		comp.add(new JButton("Submit"));
 		return comp;
 	}
 

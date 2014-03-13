@@ -2,6 +2,8 @@ package ast.visitors;
 
 import gui.render.Renderer;
 
+import javax.swing.JComponent;
+import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
@@ -15,31 +17,42 @@ import antlr.QLangParser;
 import ast.ASTNode;
 import ast.statement.Form;
 
-public class RendererTest {
+public class RendererTest extends JFrame {
+	public RendererTest(){
+		Renderer r = new Renderer();
+		Form form = get_inputForm();
+		JComponent jc = r.render(form);
+		add(jc);
+		pack();
+		setTitle(form.getId().getIdentName());
+		setSize(400, 500);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);  
+	}
 	 public static void main(String[] args) {
 		 SwingUtilities.invokeLater(new Runnable() {
 			 @Override
 			 public void run() {
-				 Renderer r = new Renderer();
-				 r.render(get_inputForm()).setVisible(true);
+				 RendererTest r = new RendererTest();
+				 r.setVisible(true);
 			 }
 		 });
 	 }
 	 
 	 public static Form get_inputForm(){
 		 String form = "form Box1HouseOwning {" +
-			 "\nhasSoldHouse: \"Did you sell a house in 2010?\" boolean}";
-//			 "\nhasBoughtHouse: \"Did you by a house in 2010?\" boolean"+
-//			 "\nhasMaintLoan: \"Did you enter a loan for maintenance/reconstruction?\" boolean"+
-//			 "\nif (hasSoldHouse == false) {"+
-//			 "\nsellingPrice: \"Price the house was sold for:\" integer "+
-//			 "\nprivateDebt: \"Private debts for the sold house:\" integer"+
-//			"\nvalueResidue: \"Value residue:\" integer(sellingPrice - privateDebt)"+
-//			"\n}"+
-//			"\nelse {"+
-//			"\nvalueResidue1: \"Value residue:\" integer(sellingPrice - privateDebt)"+
-//			"\n}" +
-//			"\n}";
+			 "\nhasSoldHouse: \"Did you sell a house in 2010?\" boolean" +
+			 "\nhasBoughtHouse: \"Did you by a house in 2010?\" boolean"+
+			 "\nhasMaintLoan: \"Did you enter a loan for maintenance/reconstruction?\" boolean" +
+			 "\nif (hasSoldHouse == false) {"+
+			 "\nsellingPrice: \"Price the house was sold for:\" integer "+
+			 "\nprivateDebt: \"Private debts for the sold house:\" integer"+
+			"\nvalueResidue: \"Value residue:\" integer(sellingPrice - privateDebt)"+
+			"\n}"+
+			"\nelse {"+
+			"\nvalueResidue1: \"Value residue:\" integer(sellingPrice - privateDebt)"+
+			"\n}" +
+			"\n}";
 		 ANTLRInputStream input = new ANTLRInputStream(form);
 			QLangLexer lexer = new QLangLexer(input);
 			CommonTokenStream tokens = new CommonTokenStream(lexer);
