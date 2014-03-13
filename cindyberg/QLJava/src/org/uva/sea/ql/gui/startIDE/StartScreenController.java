@@ -1,4 +1,4 @@
-package org.uva.sea.ql.gui;
+package org.uva.sea.ql.gui.startIDE;
 
 import java.io.FileNotFoundException;
 
@@ -16,10 +16,8 @@ public class StartScreenController {
 	private Problems problems;
 	
 	public StartScreenController(){
-		
 		this.parser = new Parser();
-		this.problems = new Problems();
-		
+		this.problems = new Problems();	
 	}
 
 	public Problems getProblems(Form form) throws ParseException{
@@ -40,5 +38,4 @@ public class StartScreenController {
 		return (Form) parser.parser(inputDSL);
 	}
 	
-
 }

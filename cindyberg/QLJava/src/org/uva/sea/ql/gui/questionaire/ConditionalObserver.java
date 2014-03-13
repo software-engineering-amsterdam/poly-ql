@@ -1,4 +1,4 @@
-package org.uva.sea.ql.gui;
+package org.uva.sea.ql.gui.questionaire;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -26,13 +26,10 @@ public class ConditionalObserver implements Observer{
 
 	public void update(Observable o, Object arg) {
 	 	 Value value = condition.accept(new EvaluateExpression(state.getEnvironment()));
-	 	 
-	 	 //TODO system.print.outline
-	 	 System.out.println(value.getValue().toString());
 	 	 boolean visible = value.isDefined() && ((BooleanValue)value).getValue();
 	 	 trueIf.setVisible(visible);
 	 	 if (falseIf != null) {
-			 trueIf.setVisible(!visible);
+			 falseIf.setVisible(!visible);
 	 	 }
 	 }
 

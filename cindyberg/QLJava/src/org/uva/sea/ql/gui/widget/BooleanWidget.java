@@ -9,7 +9,7 @@ import javax.swing.JComponent;
 import org.uva.sea.ql.ast.Identifier;
 import org.uva.sea.ql.evaluate.BooleanValue;
 import org.uva.sea.ql.evaluate.Value;
-import org.uva.sea.ql.gui.State;
+import org.uva.sea.ql.gui.questionaire.State;
 
 public class BooleanWidget extends Control{
 
@@ -24,6 +24,7 @@ public class BooleanWidget extends Control{
               stateChanged(e);
             }
         });
+		checkbox.setSelected(false);
 	}
 	
 
@@ -47,7 +48,6 @@ public class BooleanWidget extends Control{
 	}
 
 	public void stateChanged(ItemEvent e) {
-		System.out.println("click");
 		setValue( new BooleanValue(checkbox.isSelected()) );
 	}
 

@@ -1,12 +1,16 @@
 package org.uva.sea.ql.gui.widget;
 
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JComponent;
 import javax.swing.JTextField;
 
 import org.uva.sea.ql.ast.Identifier;
 import org.uva.sea.ql.evaluate.IntegerValue;
 import org.uva.sea.ql.evaluate.Value;
-import org.uva.sea.ql.gui.State;
+import org.uva.sea.ql.gui.questionaire.State;
 
 public class IntegerWidget extends Control{
 
@@ -15,6 +19,27 @@ public class IntegerWidget extends Control{
 	public IntegerWidget(Identifier identifier, State state) {
 		super(identifier, state);
 		textfield = new JTextField();
+		textfield.setText("0");
+		textfield.addActionListener(new ActionListener(){
+			
+			public void actionPerformed(ActionEvent e){
+				if(isInteger()){
+					setValue(textToIntValue());
+				}
+			}
+		});	
+	}
+	
+	private boolean isInteger() {
+		try{
+			Integer.parseInt(textfield.getText());	
+		}
+		catch(NumberFormatException e){
+			textfield.setBackground(Color.red);
+			return false;
+		}
+		textfield.setBackground(Color.white);
+		return true;
 	}
 
 	@Override
@@ -27,10 +52,15 @@ public class IntegerWidget extends Control{
 		textfield.setEnabled(isEnabled);
 	}
 
+	public Value textToIntValue(){
+		return new IntegerValue(Integer.parseInt(textfield.getText()));
+	}
 	@Override
 	public void setValue(Value value) {
-		Integer intvalue = ((IntegerValue)value).getValue();
-		textfield.setText(intvalue.toString());
+		textfield.setText(((IntegerValue) value).getValue().toString());		
+		setChanged();
+		getState().putVariable(getIdentifier(), value);
+		getState().notify(getIdentifier());
 		
 	}
 	

@@ -117,7 +117,7 @@ public class EvaluateExpression implements ExpressionVisitor<Value>{
 		if(environment.isDeclared(identifier)){
 			return environment.getValue(identifier);
 		}
-		else return new UndefinedValue();
+	    return new UndefinedValue();
 	}
 
 }

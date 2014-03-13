@@ -2,15 +2,39 @@
 
 package org.uva.sea.ql.parser.jacc;
 
-import org.uva.sea.ql.ast.*;
-import org.uva.sea.ql.ast.literal.*;
-import org.uva.sea.ql.ast.operators.arithmetic.*;
-import org.uva.sea.ql.ast.operators.logical.*;
-import org.uva.sea.ql.ast.operators.comparison.*;
-import org.uva.sea.ql.ast.statement.*;
-import org.uva.sea.ql.ast.type.*;
-
-import org.uva.sea.ql.ast.*;
+import org.uva.sea.ql.ast.ASTNode;
+import org.uva.sea.ql.ast.Expression;
+import org.uva.sea.ql.ast.Identifier;
+import org.uva.sea.ql.ast.literal.BooleanLiteral;
+import org.uva.sea.ql.ast.literal.IntegerLiteral;
+import org.uva.sea.ql.ast.literal.StringLiteral;
+import org.uva.sea.ql.ast.operators.arithmetic.Add;
+import org.uva.sea.ql.ast.operators.arithmetic.Div;
+import org.uva.sea.ql.ast.operators.arithmetic.Mul;
+import org.uva.sea.ql.ast.operators.arithmetic.Neg;
+import org.uva.sea.ql.ast.operators.arithmetic.Pos;
+import org.uva.sea.ql.ast.operators.arithmetic.Sub;
+import org.uva.sea.ql.ast.operators.comparison.Eq;
+import org.uva.sea.ql.ast.operators.comparison.GEq;
+import org.uva.sea.ql.ast.operators.comparison.GT;
+import org.uva.sea.ql.ast.operators.comparison.LEq;
+import org.uva.sea.ql.ast.operators.comparison.LT;
+import org.uva.sea.ql.ast.operators.comparison.NEq;
+import org.uva.sea.ql.ast.operators.logical.And;
+import org.uva.sea.ql.ast.operators.logical.Not;
+import org.uva.sea.ql.ast.operators.logical.Or;
+import org.uva.sea.ql.ast.statement.ExpressionQuestion;
+import org.uva.sea.ql.ast.statement.Form;
+import org.uva.sea.ql.ast.statement.IfElseStatement;
+import org.uva.sea.ql.ast.statement.IfStatement;
+import org.uva.sea.ql.ast.statement.Question;
+import org.uva.sea.ql.ast.statement.Questions;
+import org.uva.sea.ql.ast.statement.Statement;
+import org.uva.sea.ql.ast.type.BooleanType;
+import org.uva.sea.ql.ast.type.IntegerType;
+import org.uva.sea.ql.ast.type.MoneyType;
+import org.uva.sea.ql.ast.type.StringType;
+import org.uva.sea.ql.ast.type.Type;
 
 class QLParser implements QLTokens {
     private int yyss = 100;

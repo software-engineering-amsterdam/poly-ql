@@ -1,4 +1,4 @@
-package org.uva.sea.ql.gui;
+package org.uva.sea.ql.gui.questionaire;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -15,8 +15,6 @@ import org.uva.sea.ql.ast.statement.IfStatement;
 import org.uva.sea.ql.ast.statement.Question;
 import org.uva.sea.ql.ast.statement.Questions;
 import org.uva.sea.ql.ast.statement.Statement;
-import org.uva.sea.ql.evaluate.EvaluateExpression;
-import org.uva.sea.ql.evaluate.Value;
 import org.uva.sea.ql.gui.widget.Control;
 
 public class Renderer implements StatementVisitor {
@@ -45,11 +43,12 @@ public class Renderer implements StatementVisitor {
 
 	private void addLabel(StringLiteral label){
 		JLabel questionLabel = new JLabel(label.toString());
-		mainpanel.add(questionLabel, "grow");
+		mainpanel.add(questionLabel, " grow");
 	}
 	
 	private void add(Control control){
-		mainpanel.add(control.UIElement());
+		
+		mainpanel.add(control.UIElement(), "width 50%, grow");
 	}
 	
 	private Control typeToWidget(Question question, boolean isEnabled){
@@ -77,35 +76,19 @@ public class Renderer implements StatementVisitor {
 		state.putObservable(exprquestion.getIdentifier(), control);
 	}
 	
-
-	//private void registerPropagate(ExpressionQuestion exprquestion) {
-		// TODO Auto-generated method stub
-//	}
-	
 	public void visit(ExpressionQuestion exprquestion) {
 		addLabel(exprquestion.getLabel());
 		Control control = typeToWidget2(exprquestion, false);
 		registerExprQuestion(exprquestion, control);
-		//registerPropagate(exprquestion); //propagate recomputation????
-		initValue(exprquestion,control);
 		add(control);
-		
-	}
-
-	private void initValue(ExpressionQuestion exprquestion, Control control) {
-		Value value = exprquestion.getExpression().accept(new EvaluateExpression((state.getEnvironment())));
-		control.setValue(value);
 		
 	}
 
 	public void visit(Question question) {
 		addLabel(question.getLabel());
-		
 		Control control = typeToWidget(question, true);
 		registerHandler(question,control);
 		add(control);
-		//if the value is changed in the component change value in environment.
-		
 	}
 
 	public void visit(IfStatement ifconditional) {
@@ -116,8 +99,6 @@ public class Renderer implements StatementVisitor {
 	}
 
 	public void visit(IfElseStatement ifelseconditional) {
-		//TODO ifstatement check
-		
 		JPanel trueIf = render(ifelseconditional.getIfBody(), state);
 		JPanel falseIf = render(ifelseconditional.getElseBody(),state);
 		registerConditionDeps(ifelseconditional.getConditional(), trueIf, falseIf);

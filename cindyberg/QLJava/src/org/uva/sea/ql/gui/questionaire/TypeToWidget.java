@@ -1,4 +1,4 @@
-package org.uva.sea.ql.gui;
+package org.uva.sea.ql.gui.questionaire;
 
 import org.uva.sea.ql.ast.Identifier;
 import org.uva.sea.ql.ast.TypeVisitor;

@@ -6,13 +6,12 @@ import javax.swing.JComponent;
 
 import org.uva.sea.ql.ast.Identifier;
 import org.uva.sea.ql.evaluate.Value;
-import org.uva.sea.ql.gui.State;
+import org.uva.sea.ql.gui.questionaire.State;
 
 public abstract class Control extends Observable {
 
 	private Identifier identifier;
 	private State state;
-	private Value value;
 	
 	public Control(Identifier identifier, State state) {
 		this.identifier = identifier;
@@ -25,8 +24,8 @@ public abstract class Control extends Observable {
 
 	public abstract void setValue(Value value);
 	
-	public Value getValue(){
-		return value;
+	public Value getValue(Identifier id){
+		return state.getEnvironment().getValue(id);
 	}
 	
 	public State getState(){
