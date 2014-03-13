@@ -29,6 +29,7 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Types.CurrencyType;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Types.DateType;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Types.NullType;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Types.NumberType;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Types.StringType;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Bool;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Decimal;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Identifier;
@@ -212,6 +213,11 @@ public class QLErrorVisitor implements IQLVisitor<List<QLErrorMsg>> {
 
 	@Override
 	public List<QLErrorMsg> visit(CurrencyType currencyType) {
+		return null;
+	}
+	
+	@Override
+	public List<QLErrorMsg> visit(StringType stringType) {
 		return null;
 	}
 	

@@ -27,6 +27,7 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Types.BoolType;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Types.CurrencyType;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Types.DateType;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Types.NumberType;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Types.StringType;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Types.Type;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Bool;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Decimal;
@@ -256,6 +257,8 @@ public class AntlrVisitor extends QL4BaseVisitor<QLTree> {
 		return new DateType();
 	else if (text.equals("currency"))
 		return new CurrencyType();
+	else if (text.equals("string"))
+		return new StringType();
 	else 
 		return null;
   }

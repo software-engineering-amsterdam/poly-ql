@@ -28,6 +28,7 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Types.CurrencyType;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Types.DateType;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Types.NullType;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Types.NumberType;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Types.StringType;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Bool;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Decimal;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Identifier;
@@ -208,6 +209,11 @@ public class QuestionExtractor implements IQLVisitor<Map<Identifier, Question>> 
 		return null;
 	}
 
+	@Override
+	public Map<Identifier, Question> visit(StringType stringType) {
+		return null;
+	}
+	
 	@Override
 	public Map<Identifier, Question> visit(NullType nullType) {
 		return null;

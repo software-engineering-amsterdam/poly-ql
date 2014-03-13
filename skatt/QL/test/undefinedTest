@@ -1,6 +1,6 @@
 question : "This is the label of question 1" : boolean;
 if (question) {
-    question2 : "This is the label of question 2" : boolean;
+    question2 : "This is the label of question 2" : string;
 }
 question4 : "This is the label of question 4" : boolean;
 if (question3) {
