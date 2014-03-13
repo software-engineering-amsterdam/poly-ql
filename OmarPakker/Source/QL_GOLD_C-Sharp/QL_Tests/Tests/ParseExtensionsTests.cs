@@ -11,11 +11,11 @@ using Xunit;
 
 namespace QL_Tests.Tests
 {
-    public class ExtensionsTest
+    public class ParseExtensionsTests
     {
         private ExtParser<ITestExpr, ITestStmnt, ITestType, TestFactory> parser;
 
-        public ExtensionsTest()
+        public ParseExtensionsTests()
         {
             parser = new ExtParser<ITestExpr, ITestStmnt, ITestType, TestFactory>(new TestFactory());
             Assembly a = parser.GetType().Assembly;

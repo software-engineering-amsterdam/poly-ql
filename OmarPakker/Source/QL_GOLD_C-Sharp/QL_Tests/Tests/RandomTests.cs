@@ -33,5 +33,23 @@ namespace QL_Tests.Tests
 
             Assert.Equal(resultString, TestString);
         }
+
+        public interface ITest
+        {
+            Action<string> SomeAction { get; set; }
+            Func<string> SomeFunc { get; set; }
+        }
+
+        [Fact(Skip="Tried but casting is not possible")]
+        public void AnonymousObjectCanBeMappedToInterface()
+        {
+            string resultString = String.Empty;
+            var t = new
+            {
+                SomeAction = new Action<string>((s) => resultString = s),
+                SomeFunc = new Func<string>(() => TestString)
+            };
+            //ITest test = (ITest)t; //<-- Not possible
+        }
     }
 }
