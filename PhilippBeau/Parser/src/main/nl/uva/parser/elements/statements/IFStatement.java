@@ -2,7 +2,7 @@ package main.nl.uva.parser.elements.statements;
 
 import java.util.List;
 
-import main.nl.uva.parser.elements.ParserElement;
+import main.nl.uva.parser.elements.ASTNode;
 import main.nl.uva.parser.elements.errors.InvalidTypeError;
 import main.nl.uva.parser.elements.errors.ValidationError;
 import main.nl.uva.parser.elements.expressions.Expression;
@@ -27,7 +27,7 @@ public class IFStatement extends BlockStatement {
     }
 
     @Override
-    public Variable findVariable(final String variableName, final ParserElement scopeEnd) {
+    public Variable findVariable(final String variableName, final ASTNode scopeEnd) {
         if (scopeEnd != _expression) {
             Variable result = findVariableInChildren(_children, variableName, scopeEnd);
             if (result != null) {

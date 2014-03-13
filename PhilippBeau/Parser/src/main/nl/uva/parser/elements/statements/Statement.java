@@ -3,18 +3,18 @@ package main.nl.uva.parser.elements.statements;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.nl.uva.parser.elements.ParserElement;
+import main.nl.uva.parser.elements.ASTNode;
 import main.nl.uva.parser.elements.errors.ValidationError;
 import main.nl.uva.parser.elements.expressions.Variable;
 import main.nl.uva.parser.elements.ui.UIElement;
 
-public abstract class Statement extends ParserElement {
+public abstract class Statement extends ASTNode {
 
     @Override
     public abstract List<ValidationError> validate();
 
     @Override
-    public abstract Variable findVariable(final String variableName, final ParserElement scopeEnd);
+    public abstract Variable findVariable(final String variableName, final ASTNode scopeEnd);
 
     public abstract Variable getVariable(final String variableName);
 
@@ -25,7 +25,7 @@ public abstract class Statement extends ParserElement {
 
     }
 
-    protected static Variable findVariableInChildren(final List<Statement> children, final String variableName, final ParserElement scopeEnd) {
+    protected static Variable findVariableInChildren(final List<Statement> children, final String variableName, final ASTNode scopeEnd) {
         Variable result = null;
         for (Statement statement : children) {
             if (statement == scopeEnd) {

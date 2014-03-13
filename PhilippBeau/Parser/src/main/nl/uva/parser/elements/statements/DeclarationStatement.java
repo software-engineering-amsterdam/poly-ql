@@ -2,7 +2,7 @@ package main.nl.uva.parser.elements.statements;
 
 import java.util.List;
 
-import main.nl.uva.parser.elements.ParserElement;
+import main.nl.uva.parser.elements.ASTNode;
 import main.nl.uva.parser.elements.errors.ValidationError;
 import main.nl.uva.parser.elements.expressions.Variable;
 import main.nl.uva.parser.elements.ui.DeclarationUIElement;
@@ -27,7 +27,7 @@ public class DeclarationStatement extends Statement {
     }
 
     @Override
-    public Variable findVariable(final String variableName, final ParserElement scopeEnd) {
+    public Variable findVariable(final String variableName, final ASTNode scopeEnd) {
         if (_parent == null) {
             return null;
         }

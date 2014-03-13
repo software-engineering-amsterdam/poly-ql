@@ -5,11 +5,11 @@ import java.util.List;
 import main.nl.uva.parser.elements.errors.ValidationError;
 import main.nl.uva.parser.elements.expressions.Variable;
 
-public abstract class ParserElement {
+public abstract class ASTNode {
 
-    protected ParserElement _parent;
+    protected ASTNode _parent;
 
-    public void setParent(final ParserElement parent) {
+    public void setParent(final ASTNode parent) {
         _parent = parent;
     }
 
@@ -17,5 +17,5 @@ public abstract class ParserElement {
 
     public abstract void recalculateValue();
 
-    public abstract Variable findVariable(final String variableName, final ParserElement scopeEnd);
+    public abstract Variable findVariable(final String variableName, final ASTNode scopeEnd);
 }
