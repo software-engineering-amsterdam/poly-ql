@@ -18,7 +18,6 @@ public class StringWidget extends Control{
 	public StringWidget(Identifier identifier, State state) {
 		super(identifier, state);
 		textfield = new JTextField();
-		textfield.setText("empty");
 		textfield.addActionListener(new ActionListener(){
 			
 			public void actionPerformed(ActionEvent e){
@@ -26,6 +25,7 @@ public class StringWidget extends Control{
 			}
 		
 		});
+		setValue(new StringValue("empty"));
 		
 	}
 
@@ -47,9 +47,7 @@ public class StringWidget extends Control{
 		textfield.setText(((StringValue) value).getValue());		
 		setChanged();
 		getState().putVariable(getIdentifier(), value);
-		getState().notify(getIdentifier());
-		
+		getState().notify(getIdentifier());	
 	}
-	
 
 }
