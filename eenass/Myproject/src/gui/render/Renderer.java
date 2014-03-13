@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import net.miginfocom.swing.MigLayout;
 import ast.Visitor;
@@ -86,13 +87,11 @@ public class Renderer implements Visitor<JComponent>{
 	}
 	
 	private Control typeToWidget(Type t, boolean visible){	
-		System.out.println("type to widiget");
 		TypeToWidget vis = new TypeToWidget();
 		return t.accept(vis);
 	}
 	
 	private void addComponent(Control comp){
-		System.out.println("add component");
 		this.panel.add(comp.getComponent(), "wrap");
 	}
 	
@@ -103,13 +102,11 @@ public class Renderer implements Visitor<JComponent>{
 
 	@Override
 	public JComponent visit(Form node) {
-		System.out.println("visit form");
 		return render(node.getStatements());
 	}
 
 	@Override
 	public JComponent visit(StatementList node) {
-		System.out.println("visit Statementlist");
 		for(Statement s: node.getList()){
 			panel.add(s.accept(this), "wrap");
 		}
@@ -118,7 +115,6 @@ public class Renderer implements Visitor<JComponent>{
 
 	@Override
 	public JComponent visit(Question node) {
-		System.out.println("visit question");
 		addLabel(node.getLabel().getVal());
 		Control comp = typeToWidget(node.getType(), true);
 		addComponent(comp);
@@ -127,7 +123,6 @@ public class Renderer implements Visitor<JComponent>{
 
 	@Override
 	public JComponent visit(ComputedQuestion node) {
-		System.out.println("visit computed question");
 		addLabel(node.getLabel().getVal());
 		Control comp = typeToWidget(node.getType(), false);
 		addComponent(comp);
@@ -136,13 +131,11 @@ public class Renderer implements Visitor<JComponent>{
 
 	@Override
 	public JComponent visit(Block node) {
-		System.out.println("visit block");
 		return visit(node.getStatements());
 	}
 
 	@Override
 	public JComponent visit(IfStatement node) {
-		System.out.println("visit if");
 		JPanel ifComp = render(node.getStatements());
 		ifComp.setVisible(false);
 		addPanel(ifComp);
@@ -151,7 +144,6 @@ public class Renderer implements Visitor<JComponent>{
 
 	@Override
 	public JComponent visit(IfelseStatement node) {
-		System.out.println("visit ifelse");
 		JPanel ifComp = render(node.getStatements());
 		JPanel elseComp = render(node.getElseStatements());
 		ifComp.setVisible(false);
@@ -166,7 +158,7 @@ public class Renderer implements Visitor<JComponent>{
 		final Renderer renderer = new Renderer();
 		JComponent comp = renderer.visit(form);
 		comp.add(new JButton("Submit"));
-		return comp;
+		return new JScrollPane(comp);
 	}
 
 	@Override

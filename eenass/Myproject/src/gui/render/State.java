@@ -22,6 +22,10 @@ public class State {
 		observables.get(id).addObserver(obs);
 	}
 	
+	public void putValue(Identifier id, Value val){
+		env.put(id, val);
+	}
+	
 	public void putObserver(Identifier id, Observable obs){
 		observables.put(id, obs);
 	}
@@ -29,5 +33,15 @@ public class State {
 	public Map<Identifier, Value> getEnvValues() {
 		return env;
 	}
+	
+	public void notify(Identifier ident){
+		Observable obs = observables.get(ident);
+		if (obs != null){
+			obs.notifyObservers();
+		}
+	}
 
+	public void notifyall(){
+		observables.notifyAll();
+	}
 }
