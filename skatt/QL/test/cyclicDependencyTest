@@ -1,0 +1,12 @@
+q1: "l1" : boolean;
+
+if(q1) {
+    q2: "l2" : boolean;
+    if (q2) {
+        q3 : "l3" : boolean;
+    }
+}
+
+if (q3) {
+    q4 : "l4" : boolean;
+}

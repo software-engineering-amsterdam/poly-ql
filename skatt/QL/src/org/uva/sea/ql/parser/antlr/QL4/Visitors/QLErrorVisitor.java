@@ -225,6 +225,7 @@ public class QLErrorVisitor implements IQLVisitor<List<QLErrorMsg>> {
 	public List<QLErrorMsg> visit(NullType nullType) {
 		return null;
 	}
+
 	/**
 	 * Whenever children are visited, one should check
 	 * whether the children themselves are not null,

@@ -16,6 +16,7 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Identifier;
 import org.uva.sea.ql.parser.antlr.QL4.Messages.QLErrorMsg;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.AntlrVisitor;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.BoolConditionChecker;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.CyclicDependencyChecker;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.DuplicateLabelChecker;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.DuplicateQuestionChecker;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.InvalidTypeChecker;
@@ -130,6 +131,10 @@ public class QL4 {
 		ASTChecker = new BoolConditionChecker(questions);
 		msgs.addAll(ASTChecker.visit(ast));
 		
+		ASTChecker = new CyclicDependencyChecker();
+		msgs.addAll(ASTChecker.visit(ast));
+		
+		System.out.println(ASTChecker);
 		return msgs;
 	}
 }

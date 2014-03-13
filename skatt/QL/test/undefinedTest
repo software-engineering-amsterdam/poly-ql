@@ -3,7 +3,7 @@ if (question) {
     question2 : "This is the label of question 2" : string;
 }
 question4 : "This is the label of question 4" : boolean;
-if (question3) {
+if (question3 + 1 == 2) {
     question3 : "This is the label of question 3" : boolean;
 }
 
