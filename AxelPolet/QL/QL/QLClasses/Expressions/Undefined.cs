@@ -1,13 +1,14 @@
 ﻿using QL.QLClasses.Types;
+using QL.QLClasses.Values;
 using QL.TypeChecker;
 
 namespace QL.QLClasses.Expressions
 {
     public class Undefined : ExpressionBase
     {
-        private QBaseType _type;
+        private readonly QType _type;
 
-        public Undefined(QBaseType type)
+        public Undefined(QType type)
         {
             _type = type;
         }
@@ -17,25 +18,20 @@ namespace QL.QLClasses.Expressions
             return true;
         }
 
-        public override QBaseType GetResultType()
+        public override QType GetResultType()
         {
             return _type;
         }
 
-        public override ExpressionBase GetResult()
-        {
-            return this;
-        }
-
-        public override string ToString()
+        public override QValue Evaluate()
         {
             if (_type.IsCompatibleWith(new QBool()))
-                return "false";
+                return new BoolValue(false);
 
             if (_type.IsCompatibleWith(new QInt()))
-                return "0";
-            
-            return "";
+                return new IntValue(0);
+
+            return new StringValue("");
         }
     }
 }

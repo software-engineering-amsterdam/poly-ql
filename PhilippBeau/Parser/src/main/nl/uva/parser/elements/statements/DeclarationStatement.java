@@ -1,5 +1,13 @@
 package main.nl.uva.parser.elements.statements;
 
+import java.util.List;
+
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import main.nl.uva.parser.elements.ParserElement;
+import main.nl.uva.parser.elements.errors.ValidationError;
 import main.nl.uva.parser.elements.expressions.Variable;
 
 public class DeclarationStatement extends Statement {
@@ -21,7 +29,7 @@ public class DeclarationStatement extends Statement {
     }
 
     @Override
-    public Variable findVariable(final String variableName, final Statement scopeEnd) {
+    public Variable findVariable(final String variableName, final ParserElement scopeEnd) {
         if (_parent == null) {
             return null;
         }
@@ -30,7 +38,7 @@ public class DeclarationStatement extends Statement {
     }
 
     @Override
-    public boolean validate() {
+    public List<ValidationError> validate() {
         return _variable.validate();
     }
 
@@ -41,5 +49,17 @@ public class DeclarationStatement extends Statement {
         }
 
         return null;
+    }
+
+    @Override
+    public JPanel getLayout() {
+        JPanel layout = new JPanel();
+        layout.setLayout(new BoxLayout(layout, BoxLayout.X_AXIS));
+        JLabel label = new JLabel(_function);
+        layout.add(label);
+
+        _variable.addStuff(layout);
+
+        return layout;
     }
 }

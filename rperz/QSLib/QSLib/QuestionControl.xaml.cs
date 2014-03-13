@@ -13,15 +13,14 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using QSLib.Expressions.Literals;
 using QSLib.Expressions;
+using QSLib.Expressions.Unary;
 namespace QSLib
 {
     /// <summary>
     /// Interaction logic for QuestionControl.xaml
     /// </summary>
     public partial class QuestionControl : UserControl
-    {
-
-        
+    {      
         public QuestionControl()
         {
             InitializeComponent();
@@ -37,15 +36,21 @@ namespace QSLib
             return this.ioControl.GetValue(ContentProperty);
         }
 
-        public void AddOutputBinding(IExpression expr)
+        public void AddOutputBinding(Identifier id, DependencyProperty prop)
         {
-            this.ioControl.DataContext = expr;
-            this.ioControl.SetBinding(ContentProperty, "GetValue()");
+            this.ioControl.DataContext = id;
+            this.ioControl.SetBinding(prop, "GetValue");
         }
 
-        public void AddQuestionLabelBinding(QSString qtext)
+        public void AddInputBinding(Identifier id, DependencyProperty prop, string path)
         {
-            this.qTextLbl.DataContext = qtext;
+            this.ioControl.DataContext = id;
+            this.ioControl.SetBinding(prop, path);
+        }
+
+        public void AddQuestionLabel(string qtext)
+        {
+            this.qTextLbl.Content = qtext;
         }
 
     }

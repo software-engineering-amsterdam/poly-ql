@@ -1,8 +1,6 @@
-﻿using System;
-using System.Windows.Controls;
-using QL.QLClasses.Expressions;
+﻿using System.Windows.Controls;
 using QL.QLClasses.Expressions.Literals;
-using QL.QLClasses.Types;
+using QL.QLClasses.Values;
 
 namespace QL.Interpreter.Controls
 {
@@ -10,17 +8,17 @@ namespace QL.Interpreter.Controls
     {
         private readonly CheckBox _checkBox;
 
-        public GUICheckBox(QLMemoryManager memory, string id, string label, QBaseType type, ExpressionBase computation = null)
-            : base(memory, id, label, type, computation)
+        public GUICheckBox(QLMemory memory, string identifier, string label, bool isComputed = true)
+            : base(memory, identifier, label, isComputed)
         {
-            _checkBox = new CheckBox();
+            _checkBox = new CheckBox {IsEnabled = IsComputed};
             _checkBox.Checked += _checkBox_Checked;
             _checkBox.Unchecked += _checkBox_Checked;
         }
 
         public void _checkBox_Checked(object sender, System.Windows.RoutedEventArgs e)
         {
-            Memory.DeclareValue(ID, new BoolLiteral(_checkBox.IsChecked ?? false));
+            Memory.DeclareValue(Identifier, new BoolLiteral(_checkBox.IsChecked ?? false));
 
             if (OnChanged != null)
                 OnChanged();
@@ -30,11 +28,8 @@ namespace QL.Interpreter.Controls
         {
             base.Render();
             Children.Add(_checkBox);
-            
-            if (Computation != null)
-            {
-                _checkBox.IsChecked = Convert.ToBoolean(Computation.GetResult().ToString());
-            }
+
+            _checkBox.IsChecked = ((BoolValue)Memory.GetDeclaredValue(Identifier).Evaluate()).GetValue(); 
         }
     }
 }

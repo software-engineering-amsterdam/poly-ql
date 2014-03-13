@@ -26,6 +26,27 @@ public interface QuestionnaireVisitor<T> extends ParseTreeVisitor<T> {
 	T visitSimpleQuestion(@NotNull QuestionnaireParser.SimpleQuestionContext ctx);
 
 	/**
+	 * Visit a parse tree produced by {@link QuestionnaireParser#stringType}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStringType(@NotNull QuestionnaireParser.StringTypeContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link QuestionnaireParser#decimalType}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDecimalType(@NotNull QuestionnaireParser.DecimalTypeContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link QuestionnaireParser#booleanType}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBooleanType(@NotNull QuestionnaireParser.BooleanTypeContext ctx);
+
+	/**
 	 * Visit a parse tree produced by {@link QuestionnaireParser#computedQuestion}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -47,13 +68,6 @@ public interface QuestionnaireVisitor<T> extends ParseTreeVisitor<T> {
 	T visitOr(@NotNull QuestionnaireParser.OrContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link QuestionnaireParser#int}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitInt(@NotNull QuestionnaireParser.IntContext ctx);
-
-	/**
 	 * Visit a parse tree produced by {@link QuestionnaireParser#compare}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -68,18 +82,18 @@ public interface QuestionnaireVisitor<T> extends ParseTreeVisitor<T> {
 	T visitMulDiv(@NotNull QuestionnaireParser.MulDivContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link QuestionnaireParser#date}.
+	 * Visit a parse tree produced by {@link QuestionnaireParser#intType}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitDate(@NotNull QuestionnaireParser.DateContext ctx);
+	T visitIntType(@NotNull QuestionnaireParser.IntTypeContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link QuestionnaireParser#decimal}.
+	 * Visit a parse tree produced by {@link QuestionnaireParser#dateType}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitDecimal(@NotNull QuestionnaireParser.DecimalContext ctx);
+	T visitDateType(@NotNull QuestionnaireParser.DateTypeContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link QuestionnaireParser#and}.
@@ -131,13 +145,6 @@ public interface QuestionnaireVisitor<T> extends ParseTreeVisitor<T> {
 	T visitAddSub(@NotNull QuestionnaireParser.AddSubContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link QuestionnaireParser#money}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitMoney(@NotNull QuestionnaireParser.MoneyContext ctx);
-
-	/**
 	 * Visit a parse tree produced by {@link QuestionnaireParser#boolean}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -150,4 +157,11 @@ public interface QuestionnaireVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitParenthesis(@NotNull QuestionnaireParser.ParenthesisContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link QuestionnaireParser#moneyType}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMoneyType(@NotNull QuestionnaireParser.MoneyTypeContext ctx);
 }

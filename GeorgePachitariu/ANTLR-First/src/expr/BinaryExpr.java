@@ -5,9 +5,9 @@ public abstract class BinaryExpr extends Expression {
 	protected Expression rightHandOperand;
 
 
-	public BinaryExpr(Expression first, Expression second) {
-		this.leftHandOperand=first;
-		this.rightHandOperand=second;
+	public BinaryExpr(Expression leftHandOperand, Expression rightHandOperand) {
+		this.leftHandOperand=leftHandOperand;
+		this.rightHandOperand=rightHandOperand;
 	}
 
 	@Override

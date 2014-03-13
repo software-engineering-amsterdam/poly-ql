@@ -1,26 +1,24 @@
 package main.nl.uva.parser.elements.expressions;
 
-import main.nl.uva.parser.elements.statements.Statement;
-import main.nl.uva.parser.elements.type.Type;
+import java.util.List;
 
-public abstract class Expression extends Statement {
+import main.nl.uva.parser.elements.ParserElement;
+import main.nl.uva.parser.elements.errors.ValidationError;
+import main.nl.uva.parser.elements.type.Value;
 
-    protected Type _type = null;
+public abstract class Expression extends ParserElement {
+
+    protected Value _value = null;
 
     public Expression() {}
 
-    public abstract Type getType();
+    public abstract Value getType();
 
     @Override
-    public Variable getVariable(final String variableName) {
-        return null;
-    }
+    public abstract List<ValidationError> validate();
 
     @Override
-    public abstract boolean validate();
-
-    @Override
-    public Variable findVariable(final String variableName, final Statement scopeEnd) {
+    public Variable findVariable(final String variableName, final ParserElement scopeEnd) {
         if (_parent != null) {
             return _parent.findVariable(variableName, this);
         }

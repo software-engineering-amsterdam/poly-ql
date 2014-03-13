@@ -1,10 +1,17 @@
 package main.nl.uva.parser.elements.expressions;
 
+import main.nl.uva.parser.elements.type.Money;
+import main.nl.uva.parser.elements.type.Value;
 
 public class AdditionExpression extends AdvancedExpression {
 
     public AdditionExpression(final Expression left, final Expression right) {
         super(left, right);
+    }
+
+    @Override
+    public Value calculateType(final Money left, final Money right) {
+        return new Money(left.getValue() + right.getValue());
     }
 
     @Override

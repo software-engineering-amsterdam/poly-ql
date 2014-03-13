@@ -32,6 +32,7 @@ type token =
   | CB_OPEN
   | CB_CLOSE
   | IF
+  | ELSE
   | FORM
 type tokenId = 
     | TOKEN_END
@@ -65,6 +66,7 @@ type tokenId =
     | TOKEN_CB_OPEN
     | TOKEN_CB_CLOSE
     | TOKEN_IF
+    | TOKEN_ELSE
     | TOKEN_FORM
     | TOKEN_end_of_input
     | TOKEN_error
@@ -75,7 +77,8 @@ type nonTerminalId =
     | NONTERM_stmt
     | NONTERM_assignment
     | NONTERM_question
-    | NONTERM_conditional
+    | NONTERM_ifElseConditional
+    | NONTERM_ifConditional
     | NONTERM_qlType
     | NONTERM_literal
     | NONTERM_expression

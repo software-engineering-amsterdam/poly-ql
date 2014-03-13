@@ -1,7 +1,7 @@
 package expr.syntactic;
 
-import typeChecker.ASTVisitor;
 import types.Type;
+import visitor.ASTVisitor;
 import expr.Expression;
 import expr.Ident;
 
@@ -50,12 +50,7 @@ public class Question extends Statement {
 
 	@Override
 	public void accept(ASTVisitor visitor) {
-		visitor.visit(this);
-		this.ident.accept(visitor);
-		this.questionBody.accept(visitor);
-		this.type.accept(visitor);
-		if(this.expr!=null)
-			this.expr.accept(visitor);
+		visitor.visit(this, this.ident, this.questionBody, this.type, this.expr);
 	}
 
 	public Ident getIdent() {

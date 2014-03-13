@@ -1,14 +1,13 @@
 package edu.uva.softwarecons.visitor.form;
 
 import edu.uva.softwarecons.model.Form;
-import edu.uva.softwarecons.model.expression.IdExpression;
-import edu.uva.softwarecons.model.expression.IntExpression;
 import edu.uva.softwarecons.model.expression.ParenthesisExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.AddExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.DivExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.MulExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.SubExpression;
 import edu.uva.softwarecons.model.expression.comparison.*;
+import edu.uva.softwarecons.model.expression.literal.IdExpression;
 import edu.uva.softwarecons.model.expression.logical.AndExpression;
 import edu.uva.softwarecons.model.expression.logical.NotExpression;
 import edu.uva.softwarecons.model.expression.logical.OrExpression;
@@ -106,111 +105,122 @@ public class FormPrettyPrintVisitor implements IFormElementVisitor, IExpressionE
         System.out.print(type);
     }
 
-    @Override
-    public void visitIntExpression(IntExpression expression) {
-        System.out.print(expression);
-    }
 
     @Override
-    public void visitAddExpression(AddExpression expression) {
+    public Type visitAddExpression(AddExpression expression) {
         expression.getLeftExpression().accept(this);
         System.out.print(" + ");
         expression.getRightExpression().accept(this);
+        return null;
     }
 
     @Override
-    public void visitDivExpression(DivExpression expression) {
+    public Type visitDivExpression(DivExpression expression) {
         expression.getLeftExpression().accept(this);
         System.out.print(" / ");
         expression.getRightExpression().accept(this);
+        return null;
     }
 
     @Override
-    public void visitMulExpression(MulExpression expression) {
+    public Type visitMulExpression(MulExpression expression) {
         expression.getLeftExpression().accept(this);
         System.out.print(" * ");
         expression.getRightExpression().accept(this);
+        return null;
     }
 
     @Override
-    public void visitSubExpression(SubExpression expression) {
+    public Type visitSubExpression(SubExpression expression) {
         expression.getLeftExpression().accept(this);
         System.out.print(" - ");
         expression.getRightExpression().accept(this);
+        return null;
     }
 
     @Override
-    public void visitAndExpression(AndExpression expression) {
+    public Type visitAndExpression(AndExpression expression) {
         expression.getLeftExpression().accept(this);
         System.out.print(" && ");
         expression.getRightExpression().accept(this);
+        return null;
     }
 
     @Override
-    public void visitOrExpression(OrExpression expression) {
+    public Type visitOrExpression(OrExpression expression) {
         expression.getLeftExpression().accept(this);
         System.out.print(" || ");
         expression.getRightExpression().accept(this);
+        return null;
     }
 
     @Override
-    public void visitEqualExpression(EqualExpression expression) {
+    public Type visitEqualExpression(EqualExpression expression) {
         expression.getLeftExpression().accept(this);
         System.out.print(" == ");
         expression.getRightExpression().accept(this);
+        return null;
     }
 
     @Override
-    public void visitGreaterEqualExpression(GreaterEqualExpression expression) {
+    public Type visitGreaterEqualExpression(GreaterEqualExpression expression) {
         expression.getLeftExpression().accept(this);
         System.out.print(" >= ");
         expression.getRightExpression().accept(this);
+        return null;
     }
 
     @Override
-    public void visitGreaterExpression(GreaterExpression expression) {
+    public Type visitGreaterExpression(GreaterExpression expression) {
         expression.getLeftExpression().accept(this);
         System.out.print(" > ");
         expression.getRightExpression().accept(this);
+        return null;
     }
 
     @Override
-    public void visitLessEqualExpression(LessEqualExpression expression) {
+    public Type visitLessEqualExpression(LessEqualExpression expression) {
         expression.getLeftExpression().accept(this);
         System.out.print(" <= ");
         expression.getRightExpression().accept(this);
+        return null;
     }
 
     @Override
-    public void visitLessExpression(LessExpression expression) {
+    public Type visitLessExpression(LessExpression expression) {
         expression.getLeftExpression().accept(this);
         System.out.print(" < ");
         expression.getRightExpression().accept(this);
+        return null;
     }
 
     @Override
-    public void visitNotEqualExpression(NotEqualExpression expression) {
+    public Type visitNotEqualExpression(NotEqualExpression expression) {
         expression.getLeftExpression().accept(this);
         System.out.print(" != ");
         expression.getRightExpression().accept(this);
+        return null;
     }
 
     @Override
-    public void visitNotExpression(NotExpression expression) {
+    public Type visitNotExpression(NotExpression expression) {
         System.out.print("!");
         expression.getArgument().accept(this);
+        return null;
     }
 
     @Override
-    public void visitParenthesisExpression(ParenthesisExpression expression) {
+    public Type visitParenthesisExpression(ParenthesisExpression expression) {
         System.out.print("(");
         expression.getArgument().accept(this);
         System.out.print(")");
+        return null;
     }
 
     @Override
-    public void visitIdExpression(IdExpression expression) {
+    public Type visitIdExpression(IdExpression expression) {
         System.out.print(expression.getId());
+        return null;
     }
 
 

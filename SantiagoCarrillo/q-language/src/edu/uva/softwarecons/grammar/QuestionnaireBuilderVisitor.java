@@ -2,21 +2,22 @@ package edu.uva.softwarecons.grammar;
 
 import edu.uva.softwarecons.model.Form;
 import edu.uva.softwarecons.model.expression.Expression;
-import edu.uva.softwarecons.model.expression.IdExpression;
-import edu.uva.softwarecons.model.expression.IntExpression;
 import edu.uva.softwarecons.model.expression.ParenthesisExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.AddExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.DivExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.MulExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.SubExpression;
 import edu.uva.softwarecons.model.expression.comparison.*;
+import edu.uva.softwarecons.model.expression.literal.BoolExpression;
+import edu.uva.softwarecons.model.expression.literal.IdExpression;
+import edu.uva.softwarecons.model.expression.literal.IntExpression;
+import edu.uva.softwarecons.model.expression.literal.StringExpression;
 import edu.uva.softwarecons.model.expression.logical.AndExpression;
 import edu.uva.softwarecons.model.expression.logical.NotExpression;
 import edu.uva.softwarecons.model.expression.logical.OrExpression;
 import edu.uva.softwarecons.model.question.*;
 import edu.uva.softwarecons.model.type.*;
 import edu.uva.softwarecons.visitor.IQuestionnaireElement;
-import edu.uva.softwarecons.visitor.expression.IExpressionElement;
 import edu.uva.softwarecons.visitor.form.IFormElement;
 import org.antlr.v4.runtime.misc.NotNull;
 
@@ -50,37 +51,6 @@ public class QuestionnaireBuilderVisitor extends QuestionnaireBaseVisitor<IQuest
     }
 
     @Override
-    public BooleanType visitBoolean(@NotNull QuestionnaireParser.BooleanContext ctx) {
-        return new BooleanType(false);
-    }
-
-    @Override
-    public StringType visitString(@NotNull QuestionnaireParser.StringContext ctx) {
-        return new StringType(null);
-    }
-
-    @Override
-    public IntegerType visitInteger(@NotNull QuestionnaireParser.IntegerContext ctx) {
-        return new IntegerType(0);
-    }
-
-    @Override
-    public DateType visitDate(@NotNull QuestionnaireParser.DateContext ctx) {
-        return new DateType(null);
-    }
-
-    @Override
-    public DecimalType visitDecimal(@NotNull QuestionnaireParser.DecimalContext ctx) {
-        return new DecimalType(0);
-    }
-
-    @Override
-    public MoneyType visitMoney(@NotNull QuestionnaireParser.MoneyContext ctx) {
-        return new MoneyType(null);
-    }
-
-
-    @Override
     public IfQuestion visitIf(@NotNull QuestionnaireParser.IfContext ctx) {
         List<Question> questions = new ArrayList<Question>();
         for (QuestionnaireParser.QuestionContext q : ctx.question()) {
@@ -102,13 +72,59 @@ public class QuestionnaireBuilderVisitor extends QuestionnaireBaseVisitor<IQuest
 
     }
 
-
     @Override
-    public OrExpression visitOr(@NotNull QuestionnaireParser.OrContext ctx) {
-        return new OrExpression((Expression) ctx.expr().get(0).accept(this),
-                (Expression) ctx.expr().get(1).accept(this));
+    public BooleanType visitBooleanType(@NotNull QuestionnaireParser.BooleanTypeContext ctx) {
+        return new BooleanType();
     }
 
+    @Override
+    public DateType visitDateType(@NotNull QuestionnaireParser.DateTypeContext ctx) {
+        return new DateType();
+    }
+
+    @Override
+    public DecimalType visitDecimalType(@NotNull QuestionnaireParser.DecimalTypeContext ctx) {
+        return new DecimalType();
+    }
+
+    @Override
+    public IntegerType visitIntType(@NotNull QuestionnaireParser.IntTypeContext ctx) {
+        return new IntegerType();
+    }
+
+    @Override
+    public MoneyType visitMoneyType(@NotNull QuestionnaireParser.MoneyTypeContext ctx) {
+        return new MoneyType();
+    }
+
+    @Override
+    public StringType visitStringType(@NotNull QuestionnaireParser.StringTypeContext ctx) {
+        return new StringType();
+    }
+
+    @Override
+    public Expression visitMulDiv(@NotNull QuestionnaireParser.MulDivContext ctx) {
+        if (null != ctx.MUL())
+            return new MulExpression((Expression) ctx.expr().get(0).accept(this),
+                    (Expression) ctx.expr().get(1).accept(this));
+        if (null != ctx.DIV())
+            return new DivExpression((Expression) ctx.expr().get(0).accept(this),
+                    (Expression) ctx.expr().get(1).accept(this));
+        assert false : "BUG: unknown MulDiv argument";
+        return null;
+    }
+
+    @Override
+    public Expression visitAddSub(@NotNull QuestionnaireParser.AddSubContext ctx) {
+        if (null != ctx.SUB())
+            return new SubExpression((Expression) ctx.expr().get(0).accept(this),
+                    (Expression) ctx.expr().get(1).accept(this));
+        if (null != ctx.SUB())
+            return new AddExpression((Expression) ctx.expr().get(0).accept(this),
+                    (Expression) ctx.expr().get(1).accept(this));
+        assert false : "BUG: unknown AddSub argument";
+        return null;
+    }
 
     //TODO fix bad smell !!
     @Override
@@ -135,17 +151,6 @@ public class QuestionnaireBuilderVisitor extends QuestionnaireBaseVisitor<IQuest
         return null;
     }
 
-    @Override
-    public Expression visitMulDiv(@NotNull QuestionnaireParser.MulDivContext ctx) {
-        if (null != ctx.MUL())
-            return new MulExpression((Expression) ctx.expr().get(0).accept(this),
-                    (Expression) ctx.expr().get(1).accept(this));
-        if (null != ctx.DIV())
-            return new DivExpression((Expression) ctx.expr().get(0).accept(this),
-                    (Expression) ctx.expr().get(1).accept(this));
-        assert false : "BUG: unknown MulDiv argument";
-        return null;
-    }
 
     @Override
     public AndExpression visitAnd(@NotNull QuestionnaireParser.AndContext ctx) {
@@ -154,34 +159,38 @@ public class QuestionnaireBuilderVisitor extends QuestionnaireBaseVisitor<IQuest
     }
 
     @Override
-    public IdExpression visitId(@NotNull QuestionnaireParser.IdContext ctx) {
-
-        return new IdExpression(ctx.ID().getText());
-    }
-
-    @Override
-    public IExpressionElement visitInt(@NotNull QuestionnaireParser.IntContext ctx) {
-        return new IntExpression(Integer.parseInt(ctx.getText()));
-    }
-
-    @Override
     public NotExpression visitNot(@NotNull QuestionnaireParser.NotContext ctx) {
         return new NotExpression((Expression) ctx.expr().accept(this));
     }
 
     @Override
-    public Expression visitAddSub(@NotNull QuestionnaireParser.AddSubContext ctx) {
-        if (null != ctx.SUB())
-            return new SubExpression((Expression) ctx.expr().get(0).accept(this),
-                    (Expression) ctx.expr().get(1).accept(this));
-        if (null != ctx.SUB())
-            return new AddExpression((Expression) ctx.expr().get(0).accept(this),
-                    (Expression) ctx.expr().get(1).accept(this));
-        assert false : "BUG: unknown AddSub argument";
-        return null;
+    public OrExpression visitOr(@NotNull QuestionnaireParser.OrContext ctx) {
+        return new OrExpression((Expression) ctx.expr().get(0).accept(this),
+                (Expression) ctx.expr().get(1).accept(this));
     }
 
     @Override
+    public BoolExpression visitBoolean(@NotNull QuestionnaireParser.BooleanContext ctx) {
+        return new BoolExpression(Boolean.valueOf(ctx.getText()));
+    }
+
+    @Override
+    public IdExpression visitId(@NotNull QuestionnaireParser.IdContext ctx) {
+        return new IdExpression(ctx.ID().getText());
+    }
+
+    @Override
+    public IntExpression visitInteger(@NotNull QuestionnaireParser.IntegerContext ctx) {
+        return new IntExpression(Integer.parseInt(ctx.getText()));
+    }
+
+    @Override
+    public StringExpression visitString(@NotNull QuestionnaireParser.StringContext ctx) {
+        return new StringExpression(ctx.getText());
+    }
+
+    @Override
+    //TODO no need for parenthesis kill them precedence is already covered just visit the expression insides
     public ParenthesisExpression visitParenthesis(@NotNull QuestionnaireParser.ParenthesisContext ctx) {
         return new ParenthesisExpression((Expression) ctx.expr().accept(this));
     }

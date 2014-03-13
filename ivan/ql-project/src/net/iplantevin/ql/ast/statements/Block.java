@@ -1,7 +1,7 @@
 package net.iplantevin.ql.ast.statements;
 
 import net.iplantevin.ql.ast.LineInfo;
-import net.iplantevin.ql.ast.visitors.IASTVisitor;
+import net.iplantevin.ql.ast.visitors.IStatementVisitor;
 
 import java.util.List;
 
@@ -33,7 +33,7 @@ public class Block extends Statement {
     }
 
     @Override
-    public <T> T accept(IASTVisitor<T> visitor) {
+    public <T> T accept(IStatementVisitor<T> visitor) {
         return visitor.visit(this);
     }
 }

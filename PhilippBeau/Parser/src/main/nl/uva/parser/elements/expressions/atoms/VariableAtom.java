@@ -1,8 +1,13 @@
 package main.nl.uva.parser.elements.expressions.atoms;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import main.nl.uva.parser.elements.errors.ValidationError;
+import main.nl.uva.parser.elements.errors.VariableNotFoundError;
 import main.nl.uva.parser.elements.expressions.Expression;
 import main.nl.uva.parser.elements.expressions.Variable;
-import main.nl.uva.parser.elements.type.Type;
+import main.nl.uva.parser.elements.type.Value;
 
 public class VariableAtom extends Expression {
 
@@ -24,23 +29,27 @@ public class VariableAtom extends Expression {
     }
 
     @Override
-    public boolean validate() {
+    public List<ValidationError> validate() {
+        List<ValidationError> valid = new ArrayList<>();
+
         if (_parent == null) {
-            return false;
+            valid.add(new VariableNotFoundError(_variableName));
+            return valid;
         }
 
         _linkedVariable = _parent.findVariable(_variableName, this);
         if (_linkedVariable == null) {
-            System.err.println("Error: " + _variableName + " not found");
+            valid.add(new VariableNotFoundError(_variableName));
         } else {
-            _type = _linkedVariable.getType();
+            _value = _linkedVariable.getType();
+            _linkedVariable.setLinkedVariable(this);
         }
 
-        return _linkedVariable != null;
+        return valid;
     }
 
     @Override
-    public Type getType() {
-        return _type;
+    public Value getType() {
+        return _linkedVariable.getType();
     }
 }

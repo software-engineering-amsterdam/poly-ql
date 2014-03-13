@@ -2,8 +2,15 @@ package main.nl.uva.parser.elements.statements;
 
 import java.util.List;
 
+import javax.swing.BoxLayout;
+import javax.swing.JPanel;
+
+import main.nl.uva.parser.elements.ParserElement;
+import main.nl.uva.parser.elements.errors.InvalidTypeError;
+import main.nl.uva.parser.elements.errors.ValidationError;
 import main.nl.uva.parser.elements.expressions.Expression;
 import main.nl.uva.parser.elements.expressions.Variable;
+import main.nl.uva.parser.elements.type.Value;
 
 public class IFStatement extends BlockStatement {
 
@@ -21,7 +28,7 @@ public class IFStatement extends BlockStatement {
     }
 
     @Override
-    public Variable findVariable(final String variableName, final Statement scopeEnd) {
+    public Variable findVariable(final String variableName, final ParserElement scopeEnd) {
         if (scopeEnd != _expression) {
             Variable result = findVariableInChildren(_children, variableName, scopeEnd);
             if (result != null) {
@@ -33,9 +40,19 @@ public class IFStatement extends BlockStatement {
     }
 
     @Override
-    public boolean validate() {
-        boolean expression = _expression.validate();
-        return validateStatements(_children) && expression;
+    public List<ValidationError> validate() {
+        List<ValidationError> expression = _expression.validate();
+
+        if (!expression.isEmpty()) {
+            return expression;
+        }
+
+        if (!(_expression.getType().isTypeOf(Value.Type.BOOLEAN))) {
+            expression.add(new InvalidTypeError(this.toString()));
+            return expression;
+        }
+
+        return validateStatements(_children);
     }
 
     @Override
@@ -46,5 +63,18 @@ public class IFStatement extends BlockStatement {
         }
 
         return erg + "} \n";
+    }
+
+    @Override
+    public JPanel getLayout() {
+        JPanel layout = new JPanel();
+        layout.setLayout(new BoxLayout(layout, BoxLayout.Y_AXIS));
+        for (Statement child : _children) {
+            layout.add(child.getLayout());
+        }
+
+        // layout.setVisible((Boolean) _expression.getResult());
+
+        return layout;
     }
 }

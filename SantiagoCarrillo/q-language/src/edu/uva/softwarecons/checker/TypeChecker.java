@@ -4,7 +4,7 @@ import edu.uva.softwarecons.checker.error.*;
 import edu.uva.softwarecons.checker.warning.DuplicatedQuestionLabelWarning;
 import edu.uva.softwarecons.checker.warning.QuestionnaireWarning;
 import edu.uva.softwarecons.model.Form;
-import edu.uva.softwarecons.model.expression.IdExpression;
+import edu.uva.softwarecons.model.expression.literal.IdExpression;
 import edu.uva.softwarecons.model.question.BasicQuestion;
 import edu.uva.softwarecons.model.question.ComputedQuestion;
 import edu.uva.softwarecons.model.question.IfQuestion;
@@ -80,11 +80,13 @@ public class TypeChecker extends FormBaseVisitor {
 
 
     @Override
-    public void visitIdExpression(IdExpression expression) {
+    public Type visitIdExpression(IdExpression expression) {
         if(!questionTypes.containsKey(expression.getId()))
             errors.add(new CyclicDependencyError(expression.getId()));
         referencedQuestions.add(expression.getId());
+        return null;
     }
+
 
     private void validateDuplicatedQuestion(BasicQuestion question) {
         if(questionTypes.containsKey(question.getId()) && !questionTypes.get(question.getId()).equals(question.getType())){
@@ -113,7 +115,7 @@ public class TypeChecker extends FormBaseVisitor {
         IfQuestion ifQuestion = new IfQuestion(null, null, null);
         for(Question q: form.getQuestions()){
             if(ifQuestion.equals(q)){
-                expressionTypeChecker.validateType("if ", ((IfQuestion) q).getExpression(), new BooleanType(false));
+                expressionTypeChecker.validateType("if ", ((IfQuestion) q).getExpression(), new BooleanType());
             }
         }
     }
@@ -124,7 +126,7 @@ public class TypeChecker extends FormBaseVisitor {
             if(computedQuestion.equals(q)){
                 ComputedQuestion question = (ComputedQuestion) q;
                 if(question.getType() instanceof NumericType)
-                    expressionTypeChecker.validateType(question.getId(), question.getExpression(), new IntegerType(0));
+                    expressionTypeChecker.validateType(question.getId(), question.getExpression(), new IntegerType());
                 else
                     errors.add(new InvalidTypeError(question.getId(), NumericType.class.getSimpleName(), question.getType().toString()));
             }

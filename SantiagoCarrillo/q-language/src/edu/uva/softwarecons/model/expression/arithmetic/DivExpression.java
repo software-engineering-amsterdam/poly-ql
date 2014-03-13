@@ -19,12 +19,12 @@ public class DivExpression extends BinaryExpression {
 
 
     @Override
-    public Type eval() {
+    public Expression eval() {
         return null;
     }
 
     @Override
-    public void accept(IExpressionElementVisitor visitor) {
-        visitor.visitDivExpression(this);
+    public Type accept(IExpressionElementVisitor visitor) {
+        return visitor.visitDivExpression(this);
     }
 }

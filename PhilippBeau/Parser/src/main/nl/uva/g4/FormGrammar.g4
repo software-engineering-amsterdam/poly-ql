@@ -35,11 +35,16 @@ statement returns [Statement current]
     {$current = new IFStatement($ex.cEx, $ifBlock.data);} 				
     
     | 'if' '(' ex=expression ')' ifBlock=block 'else' elseBlock=block
-    { $current = new IfElseStatement($ex.cEx, $ifBlock.data, $elseBlock.data);} 
+    { $current = new IfElseStatement(new IFStatement($ex.cEx, $ifBlock.data), new IFStatement(new NotExpression($ex.cEx), $elseBlock.data));} 
     ;
 
 expression returns [Expression cEx]
+	: left=equalsExp {$cEx = $left.cEx;} 
+	;
+
+equalsExp returns [Expression cEx]
 	: left=boolExp {$cEx = $left.cEx;} 
+  (EQUAL right=boolExp {$cEx = new ComparrisonExpression($left.cEx, $right.cEx);})*
 	;
 
 boolExp returns [Expression cEx]
@@ -62,6 +67,7 @@ atom returns [Expression cEx]
 	| nL=numLiteral {$cEx = new MoneyAtom($nL.text);}
 	| bL=boolLiteral {$cEx = new BoolAtom($bL.text);}
 	| '(' bE=boolExp ')' {$cEx = $bE.cEx;}
+	| '!' bE=boolExp {$cEx = new NotExpression($bE.cEx);}
 	;
 
 simpleType returns [Type type]

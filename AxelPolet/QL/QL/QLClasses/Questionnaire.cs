@@ -25,11 +25,11 @@ namespace QL.QLClasses
             }
         }
 
-        public void Build(GUIQuestionnaire gui)
+        public void Build(QLGuiBuilder guiBuilder)
         {
             foreach (StatementBase statement in _body)
             {
-                statement.Build(gui);
+                statement.Build(guiBuilder);
             }
         }
     }

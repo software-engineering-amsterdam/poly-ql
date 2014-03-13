@@ -1,8 +1,13 @@
 package expr;
 
-import typeChecker.ASTVisitor;
-import typeChecker.IdentifiersTypeMatcher;
+import java.util.Map;
+
+import expr.literals.Int;
+import expr.literals.Literal;
+import expr.literals.LiteralWithoutValue;
 import types.Type;
+import visitor.ASTVisitor;
+import visitor.IdentifiersTypeMatcher;
 
 
 public class Ident extends Expression {
@@ -50,5 +55,13 @@ public class Ident extends Expression {
 	@Override
 	public int hashCode() {
 		return this.identifier.hashCode();
+	}
+	
+	@Override
+	public Literal compute(Map<Ident, Expression> identifiers) {
+		Expression e = identifiers.get(this);
+		if(e == null)
+			return new LiteralWithoutValue();
+		return e.compute(identifiers);
 	}
 }

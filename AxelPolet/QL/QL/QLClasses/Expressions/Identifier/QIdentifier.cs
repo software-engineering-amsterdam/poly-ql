@@ -1,27 +1,28 @@
 ﻿using QL.QLClasses.Types;
+using QL.QLClasses.Values;
 using QL.TypeChecker;
 
 namespace QL.QLClasses.Expressions.Identifier
 {
     public class QIdentifier : ExpressionBase
     {
-        private readonly QLMemoryManager _memory;
+        private readonly QLMemory _memory;
         private readonly string _name;
 
-        public QIdentifier(QLMemoryManager memoryManager, string name)
+        public QIdentifier(QLMemory memory, string name)
         {
-            _memory = memoryManager;
+            _memory = memory;
             _name = name;
         }
 
-        public override QBaseType GetResultType()
+        public override QType GetResultType()
         {
             return _memory.GetDeclaredType(_name);
         }
 
-        public override ExpressionBase GetResult()
+        public override QValue Evaluate()
         {
-            return _memory.GetDeclaredValue(_name).GetResult();
+            return _memory.GetDeclaredValue(_name).Evaluate();
         }
 
         #region TypeChecker Implementation

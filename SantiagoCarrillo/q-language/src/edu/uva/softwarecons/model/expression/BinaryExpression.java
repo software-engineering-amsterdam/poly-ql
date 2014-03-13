@@ -7,9 +7,9 @@ package edu.uva.softwarecons.model.expression;
  */
 public abstract class BinaryExpression implements Expression {
 
-    private final Expression leftExpression;
+    protected final Expression leftExpression;
 
-    private final Expression rightExpression;
+    protected final Expression rightExpression;
 
 
     protected BinaryExpression(Expression leftExpression, Expression rightExpression) {

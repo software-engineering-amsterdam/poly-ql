@@ -18,13 +18,13 @@ public class AndExpression extends BinaryExpression {
     }
 
     @Override
-    public Type eval() {
+    public Expression eval() {
         return null;
     }
 
     @Override
-    public void accept(IExpressionElementVisitor visitor) {
-        visitor.visitAndExpression(this);
+    public Type accept(IExpressionElementVisitor visitor) {
+        return visitor.visitAndExpression(this);
 
     }
 }

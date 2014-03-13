@@ -9,13 +9,17 @@ Application.EnableVisualStyles()
 Application.SetCompatibleTextRenderingDefault(false)
 let mainForm = new Form1()
 
+let parse_string inputString = let lexbuf = Lexing.LexBuffer<_>.FromString inputString
+                               QL_Parser.start QL_Lexer.tokenize lexbuf
+
 let buttonGenerate_Click _ _ = let lexbuf = Lexing.LexBuffer<_>.FromString mainForm.InputText
-                               try 
+                               try
                                    let ast = QL_Parser.start QL_Lexer.tokenize lexbuf
                                    let checkInfo = typeCheck ast
                                    if mainForm.CheckTypes && checkInfo.HasErrors then
                                         // Type error(s):
-                                        mainForm.SetOutputText(String.concat Environment.NewLine checkInfo.ErrorList)
+                                        mainForm.SetOutputText(String.concat Environment.NewLine <| List.map fst checkInfo.ErrorList)
+                                        List.iter (fun (_, position:Position) -> mainForm.UnderlineParseError(position.StartCharacter, position.EndCharacter - position.StartCharacter)) checkInfo.ErrorList
                                    else // No parse/type errors:
                                         mainForm.SetOutputText(sprintf "%+A" ast)
                                with err -> // Parse error:

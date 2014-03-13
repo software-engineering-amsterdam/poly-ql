@@ -12,6 +12,8 @@ namespace QSLib.Expressions.Literals
             return true;
         }
 
+        public abstract object GetValue();
+
         public QSType Type
         {
             get 

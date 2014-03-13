@@ -24,7 +24,6 @@ grammar QL;
 	using QL.QLClasses.Expressions.Unary;
 	using QL.QLClasses.Expressions.Binary;
 	using QL.QLClasses.Expressions.Binary.Compare;
-	using QL.QLClasses.Expressions.Binary.Compare.Operators;
 	using QL.QLClasses.Expressions.Binary.Conditional;
 	using QL.QLClasses.Expressions.Binary.Math;
 }
@@ -53,36 +52,37 @@ questionStmt returns [Question result]
 	  (LPARENS ( expr=expression {qExpression = $expr.result;} ) RPARENS)?	
 	{
 		if(qExpression == null)
-			$result = new Question(_qlMemoryManager, $ID.text, $lbl.text, $t.result){ AntlrToken = $ID };
+			$result = new Question(_qlMemory, $ID.text, $lbl.text, $t.result){ AntlrToken = $ID };
 		else
-			$result = new ComputedQuestion(_qlMemoryManager, $ID.text, $lbl.text, $t.result, qExpression){ AntlrToken = $ID };
+			$result = new ComputedQuestion(_qlMemory, $ID.text, $lbl.text, $t.result, qExpression){ AntlrToken = $ID };
 	}
 	;
 
 ifStmt returns [StatementIf result]
-	@init { StatementIf elseIfStatement = null; }
-	: IF LPARENS cond=expression RPARENS body=codeblock													
-	  (elifSt=elseStmt {elseIfStatement = $elifSt.result;})?			{$result = new StatementIf($cond.result, $body.result, elseIfStatement){ AntlrToken = $IF };}																		
+	: IF LPARENS cond=expression RPARENS body=codeblock			  		  {$result = new StatementIf($cond.result, $body.result){ AntlrToken = $IF };}																		
+	| IF LPARENS cond=expression RPARENS body=codeblock	elseBody=elseStmt {$result = new StatementIf($cond.result, $body.result, $elseBody.result){ AntlrToken = $IF };}
 	;													
 
-elseStmt returns [StatementIf result]
-	: ELSE ifSt=ifStmt													{$result = $ifSt.result;}											//else if
-	| ELSE body=codeblock												{$result = new StatementIf(null, $body.result){ AntlrToken = $ELSE };}//else
-	;													
+elseStmt returns [List<StatementBase> result]
+	@init { List<StatementBase> codeBlock = null; }
+	: ELSE ifSt=ifStmt													{$result = codeBlock = new List<StatementBase>(); codeBlock.Add($ifSt.result); $result = codeBlock;}							//else if
+	| ELSE body=codeblock 												{$result = $body.result;}
+	;
 
 expression returns [ExpressionBase result]
-	: PLUS x=expression													{ $result = new Pos($x.result){ AntlrToken = $PLUS}; }
+	: LPARENS x=expression RPARENS										{ $result = $x.result;}
+	| PLUS x=expression													{ $result = new Pos($x.result){ AntlrToken = $PLUS}; }
     | MIN x=expression													{ $result = new Neg($x.result){ AntlrToken = $MIN}; }
     | NOT x=expression													{ $result = new Not($x.result){ AntlrToken = $NOT}; }
 	| l=expression MUL r=expression										{ $result = new Mul($l.result, $r.result){ AntlrToken = $MUL}; }
 	| l=expression DIV r=expression										{ $result = new Div($l.result, $r.result){ AntlrToken = $DIV}; }
 	| l=expression PLUS r=expression									{ $result = new Add($l.result, $r.result){ AntlrToken = $PLUS}; }
 	| l=expression MIN r=expression										{ $result = new Sub($l.result, $r.result){ AntlrToken = $MIN}; }
-	| l=expression EQ r=expression										{ $result = new CompareExpression($l.result, $r.result, new Equals()){ AntlrToken = $EQ}; }
-	| l=expression GT r=expression										{ $result = new CompareExpression($l.result, $r.result, new GrTh()){ AntlrToken = $GT}; }
-	| l=expression GTE r=expression										{ $result = new CompareExpression($l.result, $r.result, new GrThEq()){ AntlrToken = $GTE}; }
-	| l=expression ST r=expression										{ $result = new CompareExpression($l.result, $r.result, new SmTh()){ AntlrToken = $ST}; }
-	| l=expression STE r=expression										{ $result = new CompareExpression($l.result, $r.result, new SmThEq()){ AntlrToken = $STE}; }
+	| l=expression EQ r=expression										{ $result = new Equals($l.result, $r.result){ AntlrToken = $EQ}; }
+	| l=expression GT r=expression										{ $result = new GrTh($l.result, $r.result){ AntlrToken = $GT}; }
+	| l=expression GTE r=expression										{ $result = new GrThEq($l.result, $r.result){ AntlrToken = $GTE}; }
+	| l=expression ST r=expression										{ $result = new SmTh($l.result, $r.result){ AntlrToken = $ST}; }
+	| l=expression STE r=expression										{ $result = new SmThEq($l.result, $r.result){ AntlrToken = $STE}; }
 	| l=expression AND r=expression										{ $result = new And($l.result, $r.result){ AntlrToken = $AND}; }
 	| l=expression OR r=expression										{ $result = new Or($l.result, $r.result){ AntlrToken = $OR}; }
 	| lit = literal														{ $result = $lit.result; }
@@ -96,10 +96,10 @@ literal returns [ExpressionBase result]
 	;
 
 identifier returns [QIdentifier result]
-	: ID																{$result = new QIdentifier(_qlMemoryManager, $ID.text){ AntlrToken=$ID };} //also pass _qlMemoryManager (from partial class)
+	: ID																{$result = new QIdentifier(_qlMemory, $ID.text){ AntlrToken=$ID };} //also pass _qlMemory (from partial class)
 	;
 
-type returns [QBaseType result]
+type returns [QType result]
 	: QBOOL																{$result = new QBool{ AntlrToken=$QBOOL };}											
 	| QINT																{$result = new QInt { AntlrToken=$QINT };}
 	| QSTRING															{$result = new QString{ AntlrToken=$QSTRING };}

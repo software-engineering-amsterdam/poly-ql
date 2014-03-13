@@ -19,12 +19,12 @@ public class LessEqualExpression extends BinaryExpression{
     }
 
     @Override
-    public Type eval() {
+    public Expression eval() {
         return null;
     }
 
     @Override
-    public void accept(IExpressionElementVisitor visitor) {
-        visitor.visitLessEqualExpression(this);
+    public Type accept(IExpressionElementVisitor visitor) {
+        return visitor.visitLessEqualExpression(this);
     }
 }

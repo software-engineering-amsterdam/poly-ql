@@ -35,4 +35,8 @@ public class Form implements IFormElement {
         visitor.visitForm(this);
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof Form;
+    }
 }

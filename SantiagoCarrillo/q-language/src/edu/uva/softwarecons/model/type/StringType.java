@@ -8,19 +8,11 @@ import edu.uva.softwarecons.visitor.type.ITypeElementVisitor;
  * User: sancarbar
  * Date: 2/19/14
  */
-public class StringType extends Type{
+public class StringType implements Type{
 
-    private final String value;
 
-    public StringType(String value) {
-        this.value = value;
+    public StringType() {
     }
-
-    @Override
-    public String getValue() {
-        return value;
-    }
-
 
     @Override
     public String toString() {
