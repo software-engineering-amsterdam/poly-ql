@@ -51,7 +51,9 @@ public class QuestionAtom extends Expression {
     @Override
     public Set<Question> getReferencedQuestions() {
         final Set<Question> questions = new HashSet<>();
-        questions.add(mQuestion);
+        if (mQuestion != null) {
+            questions.add(mQuestion);
+        }
         return questions;
     }
 

@@ -33,7 +33,7 @@ public class Initialiser {
 
             printRuleContainer(tree.f, 0);
 
-            final Validator validator = new Validator(tree.f);
+            final Validator validator = Validator.validate(tree.f);
             validator.print();
             if (!validator.isFatal()) {
                 new FormFrame(tree.f);

@@ -1,8 +1,8 @@
 form Precedence {
-    qSumMult: "sum mult" (1 + 2 * 3)
-    qSubDiv: "sub div" (5 - 4 / 2)
-    qAndOrAnd: "and or" (true && true || true && false)
-    qSumGt: "sum gt" (4 + 8 > 10)
-    qBracket: "sub sub" (1 - (1 - 1)) 
-    qSubMod: "sub mod" (-2 - -3)
+    qSumMult: "sum mult" number(1 + 2 * 3)
+    qSubDiv: "sub div" number(5 - 4 / 2)
+    qAndOrAnd: "and or" boolean(true && true || true && false)
+    qSumGt: "sum gt" boolean(4 + 8 > 10)
+    qBracket: "sub sub" number(1 - (1 - 1)) 
+    qSubMod: "sub mod" number(-2 - -3)
 }

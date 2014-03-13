@@ -14,7 +14,6 @@ public class Field extends Question implements Question.ValueListener {
         super(parent, id, label, type);
 
         mExpression = expression;
-        setValue(expression.getValue());
 
         for (final Question question : mExpression.getReferencedQuestions()) {
             question.addUpdateListener(this);
@@ -49,6 +48,8 @@ public class Field extends Question implements Question.ValueListener {
         if (!errors.isFatal()) {
             if (mExpression.getReturnType() != getType()) {
                 errors.add(new InvalidTypeError(this));
+            } else {
+                setValue(mExpression.getValue());
             }
         }
         return errors;

@@ -1,6 +1,7 @@
 package nl.uva.polyql.validation;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import nl.uva.polyql.Log;
@@ -13,11 +14,15 @@ public class Validator {
     private final Form mForm;
     private final ValidationErrors mErrors = new ValidationErrors();
 
-    public Validator(final Form form) {
-        mForm = form;
+    public static Validator validate(final Form form) {
+        final Validator validator = new Validator(form);
+        validator.validateDuplicates();
+        validator.validateTypes();
+        return validator;
+    }
 
-        validateDuplicates();
-        validateTypes();
+    private Validator(final Form form) {
+        mForm = form;
     }
 
     private void validateDuplicates() {
@@ -45,6 +50,10 @@ public class Validator {
         for (final Rule rule : mForm.getChildRules()) {
             mErrors.merge(rule.validate());
         }
+    }
+
+    public List<ValidationError> getErrors() {
+        return mErrors.getErrors();
     }
 
     public boolean isFatal() {
