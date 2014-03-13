@@ -35,6 +35,7 @@
   <ItemGroup>
     <Compile Include="Expr\AddExpr.cs" />
     <Compile Include="Expr\AndExpr.cs" />
+    <Compile Include="Expr\BinaryExpr.cs" />
     <Compile Include="Expr\DivideExpr.cs" />
     <Compile Include="Expr\EqualsExpr.cs" />
     <Compile Include="Expr\GreaterOrEqualToExpr.cs" />
