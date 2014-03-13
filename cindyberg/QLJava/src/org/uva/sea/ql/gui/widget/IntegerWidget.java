@@ -19,7 +19,6 @@ public class IntegerWidget extends Control{
 	public IntegerWidget(Identifier identifier, State state) {
 		super(identifier, state);
 		textfield = new JTextField();
-		textfield.setText("0");
 		textfield.addActionListener(new ActionListener(){
 			
 			public void actionPerformed(ActionEvent e){
@@ -28,6 +27,8 @@ public class IntegerWidget extends Control{
 				}
 			}
 		});	
+		
+		setValue(new IntegerValue(0));
 	}
 	
 	private boolean isInteger() {

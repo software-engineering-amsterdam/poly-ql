@@ -178,11 +178,11 @@ public class IDERenderer {
 		List<Error> errors = typeProblems.getErrors();
 		
 		for(Warning w : warnings){
-		this.warnings.addElement(w.getString());
+		this.warnings.addElement(w.toString());
 		}
 		
 		for(Error e : errors){
-			this.errors.addElement(e.getString());
+			this.errors.addElement(e.toString());
 		}
 	}
 	

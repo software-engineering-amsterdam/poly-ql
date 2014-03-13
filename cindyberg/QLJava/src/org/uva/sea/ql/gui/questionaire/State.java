@@ -36,7 +36,7 @@ public class State {
 
 	public void notify(Identifier identifier) {
 		Observable observable = observables.get(identifier);
-		if (observables != null) {
+		if (observable != null) {
 			observable.notifyObservers();
 		}
 	}

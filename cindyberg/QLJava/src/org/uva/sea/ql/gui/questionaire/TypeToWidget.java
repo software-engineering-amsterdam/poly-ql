@@ -5,7 +5,6 @@ import org.uva.sea.ql.ast.TypeVisitor;
 import org.uva.sea.ql.ast.type.BooleanType;
 import org.uva.sea.ql.ast.type.IntegerType;
 import org.uva.sea.ql.ast.type.MissingType;
-import org.uva.sea.ql.ast.type.MoneyType;
 import org.uva.sea.ql.ast.type.StringType;
 import org.uva.sea.ql.gui.widget.BooleanWidget;
 import org.uva.sea.ql.gui.widget.Control;
@@ -22,10 +21,6 @@ public class TypeToWidget implements TypeVisitor<Control> {
 		this.state = state;
 	}
 	
-	public Control visit(MoneyType moneyType) {
-		return new IntegerWidget(identifier, state);
-	}
-
 	public Control visit(IntegerType type) {
 		return new IntegerWidget(identifier, state);
 	}

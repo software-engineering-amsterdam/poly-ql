@@ -24,7 +24,7 @@ public class BooleanWidget extends Control{
               stateChanged(e);
             }
         });
-		checkbox.setSelected(false);
+		setValue(new BooleanValue(false));
 	}
 	
 

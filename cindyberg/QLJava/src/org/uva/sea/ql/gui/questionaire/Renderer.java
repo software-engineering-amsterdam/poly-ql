@@ -57,12 +57,12 @@ public class Renderer implements StatementVisitor {
 		return control;
 	}
 	
-	//TODO make Expr question subset of question
+	/*//TODO make Expr question subset of question
 	private Control typeToWidget2(ExpressionQuestion question, boolean isEnabled){
 		Control control = question.getType().accept( new TypeToWidget(question.getIdentifier(), state) );
 		control.setEnabled(isEnabled);
 		return control;
-	}
+	}*/
 	
 	private void registerHandler(Question question, Control control){
 		state.putObservable(question.getIdentifier(), control);
@@ -78,7 +78,7 @@ public class Renderer implements StatementVisitor {
 	
 	public void visit(ExpressionQuestion exprquestion) {
 		addLabel(exprquestion.getLabel());
-		Control control = typeToWidget2(exprquestion, false);
+		Control control = typeToWidget(exprquestion, false);
 		registerExprQuestion(exprquestion, control);
 		add(control);
 		
