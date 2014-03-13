@@ -3,7 +3,7 @@ package nl.uva.polyql.model.expressions;
 import java.util.HashSet;
 import java.util.Set;
 
-import nl.uva.polyql.model.Question;
+import nl.uva.polyql.ast.Question;
 import nl.uva.polyql.model.types.NumberType;
 import nl.uva.polyql.model.types.Type;
 import nl.uva.polyql.model.values.NumberValue;

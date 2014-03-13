@@ -1,4 +1,4 @@
-package nl.uva.polyql.model;
+package nl.uva.polyql.ast;
 
 import nl.uva.polyql.model.expressions.Expression;
 

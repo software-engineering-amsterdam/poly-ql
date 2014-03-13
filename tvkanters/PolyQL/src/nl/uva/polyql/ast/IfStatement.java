@@ -1,4 +1,4 @@
-package nl.uva.polyql.model;
+package nl.uva.polyql.ast;
 
 import nl.uva.polyql.model.expressions.Expression;
 import nl.uva.polyql.model.types.Type;
@@ -12,6 +12,7 @@ public class IfStatement extends RuleContainer implements Rule, Question.ValueLi
 
     protected final Expression mExpression;
     private boolean mSatisfied;
+    private LineInfo mLineInfo;
 
     protected IfStatement(final RuleContainer parent, final Expression expression) {
         mParent = parent;
@@ -26,6 +27,20 @@ public class IfStatement extends RuleContainer implements Rule, Question.ValueLi
     @Override
     public boolean isVisible() {
         return mSatisfied && getParent().isVisible();
+    }
+
+    public Expression getExpression() {
+        return mExpression;
+    }
+
+    @Override
+    public void setLineInfo(final LineInfo lineInfo) {
+        mLineInfo = lineInfo;
+    }
+
+    @Override
+    public LineInfo getLineInfo() {
+        return mLineInfo;
     }
 
     @Override
@@ -77,7 +92,7 @@ public class IfStatement extends RuleContainer implements Rule, Question.ValueLi
         final ValidationErrors errors = mExpression.validate();
         if (!errors.isFatal()) {
             if (mExpression.getReturnType() != Type.BOOLEAN) {
-                errors.add(new InvalidIfStatementError(mExpression.getReturnType()));
+                errors.add(new InvalidIfStatementError(this));
             } else {
                 mSatisfied = checkSatisfaction();
             }

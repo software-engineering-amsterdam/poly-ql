@@ -1,4 +1,4 @@
-package nl.uva.polyql.model;
+package nl.uva.polyql.ast;
 
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -21,6 +21,7 @@ public class Question implements Rule {
     private final Type mType;
     private Value<?> mValue;
     private boolean mValueValid = true;
+    private LineInfo mLineInfo;
 
     private final Set<ValueListener> mUpdateListeners = new HashSet<>();
     private final Set<VisibilityListener> mVisibilityListeners = new HashSet<>();
@@ -49,6 +50,16 @@ public class Question implements Rule {
 
     public Type getType() {
         return mType;
+    }
+
+    @Override
+    public void setLineInfo(final LineInfo lineInfo) {
+        mLineInfo = lineInfo;
+    }
+
+    @Override
+    public LineInfo getLineInfo() {
+        return mLineInfo;
     }
 
     @Override

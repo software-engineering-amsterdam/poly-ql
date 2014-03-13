@@ -14,13 +14,13 @@ form returns [Form f] :
 formrule[RuleContainer rc] : 
 	COMMENT | (field[$rc] | question[$rc] | ifstatement[$rc]) COMMENT?;
 	
-field[RuleContainer rc] : 
-	id=ID ':' label=STRING type=TYPE '(' e=expr_main[$rc] ')' { $rc.addField($id.text, $label.text, $type.text, $e.e); };
+field[RuleContainer rc] returns [Field f] : 
+	id=ID ':' label=STRING type=TYPE '(' e=expr_main[$rc] ')' { $f = $rc.addField($id.text, $label.text, $type.text, $e.e); };
 
-question[RuleContainer rc] : 
-	id=ID ':' label=STRING type=TYPE { $rc.addQuestion($id.text, $label.text, $type.text); };
+question[RuleContainer rc] returns [Question q] : 
+	id=ID ':' label=STRING type=TYPE { $q = $rc.addQuestion($id.text, $label.text, $type.text); };
 
-ifstatement[RuleContainer rc] returns [RuleContainer is, RuleContainer es] :
+ifstatement[RuleContainer rc] returns [IfStatement is, ElseStatement es] :
 	'if' '(' e=expr_main[$rc] { $is = $rc.addIfStatement($e.e); } ')' '{' formrule[$is]+ '}'
 	('else' { $es = $rc.addElseStatement($e.e); } '{' formrule[$es]+ '}' )?;
 

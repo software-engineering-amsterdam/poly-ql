@@ -6,8 +6,8 @@ import java.io.IOException;
 import nl.uva.polyql.antlr4.QuestionnaireLexer;
 import nl.uva.polyql.antlr4.QuestionnaireParser;
 import nl.uva.polyql.antlr4.QuestionnaireParser.FormContext;
-import nl.uva.polyql.model.Rule;
-import nl.uva.polyql.model.RuleContainer;
+import nl.uva.polyql.ast.Rule;
+import nl.uva.polyql.ast.RuleContainer;
 import nl.uva.polyql.validation.Validator;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
@@ -22,6 +22,7 @@ public class Initialiser {
             final QuestionnaireLexer lexer = new QuestionnaireLexer(input);
             final CommonTokenStream tokens = new CommonTokenStream(lexer);
             final QuestionnaireParser parser = new QuestionnaireParser(tokens);
+            parser.addParseListener(new QuestionnaireListener());
             final FormContext tree = parser.form();
 
             Log.i("==========================");

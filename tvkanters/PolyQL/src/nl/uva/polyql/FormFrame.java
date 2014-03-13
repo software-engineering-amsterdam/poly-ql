@@ -11,8 +11,8 @@ import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import nl.uva.polyql.model.Form;
-import nl.uva.polyql.model.Question;
+import nl.uva.polyql.ast.Form;
+import nl.uva.polyql.ast.Question;
 
 public class FormFrame extends JFrame {
 

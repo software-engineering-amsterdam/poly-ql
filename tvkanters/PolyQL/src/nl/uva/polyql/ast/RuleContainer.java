@@ -1,4 +1,4 @@
-package nl.uva.polyql.model;
+package nl.uva.polyql.ast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,8 +36,8 @@ public abstract class RuleContainer {
         return child;
     }
 
-    public IfStatement addElseStatement(final Expression expression) {
-        final IfStatement child = new ElseStatement(this, expression);
+    public ElseStatement addElseStatement(final Expression expression) {
+        final ElseStatement child = new ElseStatement(this, expression);
         mChildRules.add(child);
         return child;
     }

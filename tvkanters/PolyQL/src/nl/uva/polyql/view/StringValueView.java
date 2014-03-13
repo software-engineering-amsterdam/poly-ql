@@ -7,7 +7,7 @@ import java.security.InvalidParameterException;
 
 import javax.swing.JTextArea;
 
-import nl.uva.polyql.model.Question;
+import nl.uva.polyql.ast.Question;
 import nl.uva.polyql.model.values.BooleanValue;
 import nl.uva.polyql.model.values.NumberValue;
 import nl.uva.polyql.model.values.StringValue;

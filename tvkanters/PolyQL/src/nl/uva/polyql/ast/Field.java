@@ -1,4 +1,4 @@
-package nl.uva.polyql.model;
+package nl.uva.polyql.ast;
 
 import nl.uva.polyql.model.expressions.Expression;
 import nl.uva.polyql.validation.InvalidTypeError;
@@ -19,6 +19,10 @@ public class Field extends Question implements Question.ValueListener {
         for (final Question question : mExpression.getReferencedQuestions()) {
             question.addUpdateListener(this);
         }
+    }
+
+    public Expression getExpression() {
+        return mExpression;
     }
 
     @Override
@@ -44,7 +48,7 @@ public class Field extends Question implements Question.ValueListener {
         final ValidationErrors errors = mExpression.validate();
         if (!errors.isFatal()) {
             if (mExpression.getReturnType() != getType()) {
-                errors.add(new InvalidTypeError(getType(), mExpression.getReturnType()));
+                errors.add(new InvalidTypeError(this));
             }
         }
         return errors;

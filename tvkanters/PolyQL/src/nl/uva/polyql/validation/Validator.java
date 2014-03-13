@@ -4,9 +4,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import nl.uva.polyql.Log;
-import nl.uva.polyql.model.Form;
-import nl.uva.polyql.model.Question;
-import nl.uva.polyql.model.Rule;
+import nl.uva.polyql.ast.Form;
+import nl.uva.polyql.ast.Question;
+import nl.uva.polyql.ast.Rule;
 
 public class Validator {
 
@@ -27,14 +27,14 @@ public class Validator {
         for (final Question question : mForm.getQuestions()) {
             final String id = question.getId();
             if (ids.contains(id)) {
-                mErrors.add(new DuplicateIdError(id));
+                mErrors.add(new DuplicateIdError(question, id));
             } else {
                 ids.add(id);
             }
 
             final String label = question.getLabel();
             if (labels.contains(label)) {
-                mErrors.add(new DuplicateLabelWarning(label));
+                mErrors.add(new DuplicateLabelWarning(question, label));
             } else {
                 labels.add(label);
             }

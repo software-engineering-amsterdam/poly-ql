@@ -3,8 +3,8 @@ package nl.uva.polyql.view;
 import java.awt.Component;
 import java.util.Objects;
 
-import nl.uva.polyql.model.Question;
-import nl.uva.polyql.model.VisibilityListener;
+import nl.uva.polyql.ast.Question;
+import nl.uva.polyql.ast.VisibilityListener;
 import nl.uva.polyql.model.values.BooleanValue;
 import nl.uva.polyql.model.values.NumberValue;
 import nl.uva.polyql.model.values.StringValue;

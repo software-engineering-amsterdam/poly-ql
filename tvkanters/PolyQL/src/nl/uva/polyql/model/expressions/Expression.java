@@ -2,12 +2,16 @@ package nl.uva.polyql.model.expressions;
 
 import java.util.Set;
 
-import nl.uva.polyql.model.Question;
+import nl.uva.polyql.ast.AstComponent;
+import nl.uva.polyql.ast.LineInfo;
+import nl.uva.polyql.ast.Question;
 import nl.uva.polyql.model.types.Type;
 import nl.uva.polyql.model.values.Value;
 import nl.uva.polyql.validation.ValidationErrors;
 
-public abstract class Expression {
+public abstract class Expression implements AstComponent {
+
+    private LineInfo mLineInfo;
 
     public abstract Type getReturnType();
 
@@ -26,4 +30,15 @@ public abstract class Expression {
     public boolean isValid() {
         return true;
     }
+
+    @Override
+    public void setLineInfo(final LineInfo lineInfo) {
+        mLineInfo = lineInfo;
+    }
+
+    @Override
+    public LineInfo getLineInfo() {
+        return mLineInfo;
+    }
+
 }

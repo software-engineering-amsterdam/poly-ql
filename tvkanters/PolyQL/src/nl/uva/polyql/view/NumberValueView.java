@@ -9,7 +9,7 @@ import java.security.InvalidParameterException;
 import javax.swing.BorderFactory;
 import javax.swing.JTextArea;
 
-import nl.uva.polyql.model.Question;
+import nl.uva.polyql.ast.Question;
 import nl.uva.polyql.model.types.NumberType;
 import nl.uva.polyql.model.values.BooleanValue;
 import nl.uva.polyql.model.values.NumberValue;

@@ -3,8 +3,8 @@ package nl.uva.polyql.model.expressions;
 import java.util.HashSet;
 import java.util.Set;
 
-import nl.uva.polyql.model.Question;
-import nl.uva.polyql.model.RuleContainer;
+import nl.uva.polyql.ast.Question;
+import nl.uva.polyql.ast.RuleContainer;
 import nl.uva.polyql.model.expressions.modifiers.Modifier;
 import nl.uva.polyql.model.expressions.modifiers.ModifierHelper;
 import nl.uva.polyql.model.types.Type;
@@ -27,6 +27,10 @@ public class QuestionAtom extends Expression {
                 // TODO: Invalid modifier
             }
         }
+    }
+
+    public String getId() {
+        return mQuestionId;
     }
 
     @Override
@@ -55,7 +59,7 @@ public class QuestionAtom extends Expression {
     public ValidationErrors validate() {
         final ValidationErrors errors = new ValidationErrors();
         if (mQuestion == null) {
-            errors.add(new UnknownIdError(mQuestionId));
+            errors.add(new UnknownIdError(this));
         }
         return errors;
     }

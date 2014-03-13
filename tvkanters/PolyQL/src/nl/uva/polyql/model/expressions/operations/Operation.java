@@ -3,7 +3,7 @@ package nl.uva.polyql.model.expressions.operations;
 import java.util.Set;
 
 import nl.uva.polyql.Log;
-import nl.uva.polyql.model.Question;
+import nl.uva.polyql.ast.Question;
 import nl.uva.polyql.model.expressions.Expression;
 import nl.uva.polyql.model.types.Type;
 import nl.uva.polyql.model.values.Value;
@@ -47,6 +47,10 @@ public class Operation extends Expression {
         return mLeft;
     }
 
+    public Operator getOperator() {
+        return mOperator;
+    }
+
     public Expression getRight() {
         return mRight;
     }
@@ -75,7 +79,7 @@ public class Operation extends Expression {
         if (!errors.isFatal()) {
             recalculate();
             if (!isValid()) {
-                errors.add(new InvalidOperandError(mLeft, mOperator, mRight));
+                errors.add(new InvalidOperandError(this));
             }
         }
 

@@ -5,7 +5,7 @@ import java.io.IOException;
 
 import nl.uva.polyql.antlr4.QuestionnaireLexer;
 import nl.uva.polyql.antlr4.QuestionnaireParser;
-import nl.uva.polyql.model.Form;
+import nl.uva.polyql.ast.Form;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
