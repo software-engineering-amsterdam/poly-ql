@@ -27,6 +27,7 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Unary.NegExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Types.BoolType;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Types.CurrencyType;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Types.DateType;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Types.NullType;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Types.NumberType;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Bool;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Decimal;
@@ -214,6 +215,10 @@ public class QLErrorVisitor implements IQLVisitor<List<QLErrorMsg>> {
 		return null;
 	}
 	
+	@Override
+	public List<QLErrorMsg> visit(NullType nullType) {
+		return null;
+	}
 	/**
 	 * Whenever children are visited, one should check
 	 * whether the children themselves are not null,

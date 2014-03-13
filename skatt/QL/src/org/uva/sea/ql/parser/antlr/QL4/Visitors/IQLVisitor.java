@@ -21,6 +21,7 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Unary.NegExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Types.BoolType;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Types.CurrencyType;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Types.DateType;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Types.NullType;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Types.NumberType;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Bool;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Decimal;
@@ -79,4 +80,5 @@ public interface IQLVisitor<T> {
 	public T visit(NumberType numberType);
 	public T visit(DateType dateType);
 	public T visit(CurrencyType currencyType);
+	public T visit(NullType nullType);
 }

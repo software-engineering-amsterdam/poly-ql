@@ -3,6 +3,7 @@ package org.uva.sea.ql.parser.antlr.QL4.AST.Value;
 import java.util.Map;
 
 import org.uva.sea.ql.parser.antlr.QL4.AST.Question;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Types.NullType;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Types.Type;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.IQLVisitor;
 
@@ -52,7 +53,10 @@ public class Identifier extends Value {
 
 	@Override
 	public Type getType(Map<Identifier, Question> questions) {
-		return questions.get(this).getType();
+		if (questions.containsKey(this))
+			return questions.get(this).getType();
+		else 
+			return new NullType();
 	}
 	
 	@Override
