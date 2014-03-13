@@ -40,6 +40,16 @@ public class QuestionnaireParserTest {
 
 
     @Test
+    public void conditionalIfElseFormTest(){
+        String input = "form Box1HouseOwning {if(a==b){hasSoldHouse: \"text\" boolean} else { hasSoldHouse: \"text\" money }}";
+        ParseTree tree = parserBuilder.buildParseTree(input);
+        assertEquals(tree.toStringTree(parserBuilder.getParser()),
+                "(questionnaire form Box1HouseOwning { (question if ( (expr (expr a) == (expr b)) ) { (question hasSoldHouse : \"text\" (type boolean)) } (elsestat else { (question hasSoldHouse : \"text\" (type money)) })) })");
+    }
+
+
+
+    @Test
     public void booleansAndFormTest(){
         String input = "form Box1HouseOwning {if(a==b && a<b){hasSoldHouse: \"t\" date}}";
         ParseTree tree = parserBuilder.buildParseTree(input);
@@ -54,14 +64,6 @@ public class QuestionnaireParserTest {
         ParseTree tree = parserBuilder.buildParseTree(input);
         assertEquals(tree.toStringTree(parserBuilder.getParser()),
                 "(questionnaire form Box1HouseOwning { (question if ( (expr (expr (expr a) == (expr b)) || (expr (expr a) < (expr b))) ) { (question hasSoldHouse : \"t\" (type date)) }) })");
-    }
-
-    @Test
-    public void conditionalIfElseFormTest(){
-        String input = "form Box1HouseOwning {if(a==b){hasSoldHouse: \"text\" boolean} else { hasSoldHouse: \"text\" money }}";
-        ParseTree tree = parserBuilder.buildParseTree(input);
-        assertEquals(tree.toStringTree(parserBuilder.getParser()),
-                "(questionnaire form Box1HouseOwning { (question if ( (expr (expr a) == (expr b)) ) { (question hasSoldHouse : \"text\" (type boolean)) } (elsestat else { (question hasSoldHouse : \"text\" (type money)) })) })");
     }
 
 
@@ -162,4 +164,6 @@ public class QuestionnaireParserTest {
         assertEquals(tree.toStringTree(parserBuilder.getParser()),
                 "(questionnaire form Box1HouseOwning { (question if ( (expr (expr 1) <= (expr 2)) ) { (question hasSoldHouse : \"Did you sell a house in 2010?\" (type boolean)) }) })");
     }
+
+
 }

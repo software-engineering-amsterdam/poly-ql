@@ -80,27 +80,27 @@ public class ExpressionTypeChecker implements IExpressionElementVisitor {
 
     @Override
     public Type visitGreaterEqualExpression(GreaterEqualExpression expression) {
-        checkInvalidTypeErrorForOperator(expression, new BooleanType(), GREATER_EQUAL_OPERATOR);
+        checkBinaryExpressionInvalidTypeError(expression, new BooleanType(), GREATER_EQUAL_OPERATOR);
         validateBinaryExpressionTypeChildTypes(expression);
         return new BooleanType();
     }
 
     @Override
     public Type visitGreaterExpression(GreaterExpression expression) {
-        checkInvalidTypeErrorForOperator(expression, new BooleanType(), GREATER_OPERATOR);
+        checkBinaryExpressionInvalidTypeError(expression, new BooleanType(), GREATER_OPERATOR);
         validateBinaryExpressionTypeChildTypes(expression);
         return new BooleanType();
     }
 
     @Override
     public Type visitLessEqualExpression(LessEqualExpression expression) {
-        checkInvalidTypeErrorForOperator(expression, new BooleanType(), LESS_OPERATOR);
+        checkBinaryExpressionInvalidTypeError(expression, new BooleanType(), LESS_OPERATOR);
         return  validateBinaryExpressionTypeChildTypes(expression);
     }
 
     @Override
     public Type visitLessExpression(LessExpression expression) {
-        checkInvalidTypeErrorForOperator(expression, new BooleanType(), LESS_EQUAL_OPERATOR);
+        checkBinaryExpressionInvalidTypeError(expression, new BooleanType(), LESS_EQUAL_OPERATOR);
         return  validateBinaryExpressionTypeChildTypes(expression);
     }
 
@@ -173,9 +173,13 @@ public class ExpressionTypeChecker implements IExpressionElementVisitor {
                 expectedType.equals(questionTypes.get(expression.getId()));
     }
 
-    private void checkInvalidTypeErrorForOperator(BinaryExpression expression, Type invalidType, String operator) {
-        if(expression.getLeftExpression().equals(invalidType) ||
-                expression.getRightExpression().equals(invalidType)){
+    private void checkBinaryExpressionInvalidTypeError(BinaryExpression expression, Type invalidType, String operator) {
+        checkExpressionInvalidTypeError(expression.getLeftExpression(), invalidType, operator);
+        checkExpressionInvalidTypeError(expression.getLeftExpression(), invalidType, operator);
+    }
+
+    private void checkExpressionInvalidTypeError(Expression expression, Type invalidType, String operator) {
+        if(expression.accept(this).equals(invalidType)){
             errors.add(new InvalidTypeError(operator, new BooleanType()));
         }
     }
@@ -200,8 +204,8 @@ public class ExpressionTypeChecker implements IExpressionElementVisitor {
     }
 
     private Type validateNumericExpressionType(BinaryExpression expression, String operator) {
-        checkInvalidTypeErrorForOperator(expression, new BooleanType(), operator);
-        checkInvalidTypeErrorForOperator(expression, new DateType(), operator);
+        checkBinaryExpressionInvalidTypeError(expression, new BooleanType(), operator);
+        checkBinaryExpressionInvalidTypeError(expression, new DateType(), operator);
         return  validateBinaryExpressionTypeChildTypes(expression);
     }
 
