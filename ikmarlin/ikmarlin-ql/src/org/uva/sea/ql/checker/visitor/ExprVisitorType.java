@@ -29,42 +29,39 @@ import org.uva.sea.ql.ast.expr.Sub;
 import org.uva.sea.ql.ast.expr.Unary;
 import org.uva.sea.ql.ast.type.Null;
 import org.uva.sea.ql.ast.type.Type;
+import org.uva.sea.ql.checker.error.Error;
 import org.uva.sea.ql.checker.error.IllegalArithmeticError;
 import org.uva.sea.ql.checker.error.IllegalBooleanError;
 import org.uva.sea.ql.checker.error.IncompatibleTypesError;
 
-public class TypeExprVisitor implements IExprVisitor<Type> {
+public class ExprVisitorType implements IExprVisitor<Type> {
 	
 	private Map<String, Type> symbolTable;
-	private List<String> errors;
+	private List<Error> errors;
 
-	public TypeExprVisitor(Map<String, Type> symbolTable){
+	public ExprVisitorType(Map<String, Type> symbolTable){
 		this.symbolTable = symbolTable;
-		this.errors = new ArrayList<String>();
+		this.errors = new ArrayList<Error>();
 	}
 	
-	private void addError(String msg){
-		errors.add(msg);
+	public Type addError(Error err){
+		errors.add(err);
+		return new Null();
 	}
 	
 	public boolean hasErrors(){
 		return !errors.isEmpty();
 	}
 	
-	public List<String> getErrors(){
+	public List<Error> getErrors(){
 		return errors;
 	}
 	
-	public void resetErrors(){
-		errors.clear();
-	}
-
 	private Type visitEquality(Binary ex) {
 		Type lhs = ex.getLhs().accept(this);
 		Type rhs = ex.getRhs().accept(this);
 		if(!rhs.isCompatibleWith(lhs)){
-			addError(IncompatibleTypesError.getMessage(ex.getLhs(), lhs, ex.getRhs(), rhs));
-			return new Null();
+			return addError(new IncompatibleTypesError(ex.getLhs(), lhs, ex.getRhs(), rhs));
 		}
 		return ex.hasType();
 	}
@@ -73,12 +70,10 @@ public class TypeExprVisitor implements IExprVisitor<Type> {
 		Type lhs = ex.getLhs().accept(this);
 		Type rhs = ex.getRhs().accept(this);
 		if (!lhs.isCompatibleWithNumber()) {
-			addError(IllegalArithmeticError.getMessage(ex.getLhs(), lhs));
-			return new Null(); 
+			return addError(new IllegalArithmeticError(ex.getLhs(), lhs));
 		}
 		if (!rhs.isCompatibleWithNumber()) {
-			addError(IllegalArithmeticError.getMessage(ex.getRhs(), rhs));
-			return new Null();
+			return addError(new IllegalArithmeticError(ex.getRhs(), rhs));
 		}
 		return ex.hasType();
 	}
@@ -87,12 +82,10 @@ public class TypeExprVisitor implements IExprVisitor<Type> {
 		Type lhs = ex.getLhs().accept(this);
 		Type rhs = ex.getRhs().accept(this);
 		if (!lhs.isCompatibleWithBool()) {
-			addError(IllegalBooleanError.getMessage(ex.getLhs(), lhs));
-			return new Null(); 
+			return addError(new IllegalBooleanError(ex.getLhs(), lhs));
 		}
 		if (!rhs.isCompatibleWithBool()) {
-			addError(IllegalBooleanError.getMessage(ex.getRhs(), rhs));
-			return new Null();
+			return addError(new IllegalBooleanError(ex.getRhs(), rhs));
 		}
 		return ex.hasType();
 	}
@@ -100,8 +93,7 @@ public class TypeExprVisitor implements IExprVisitor<Type> {
 	private Type visitUnaryBoolean(Unary ex) {
 		Type arg = ex.getArg().accept(this);
 		if (!arg.isCompatibleWithBool()) {
-			addError(IllegalBooleanError.getMessage(ex.getArg(), arg));
-			return new Null();
+			return addError(new IllegalBooleanError(ex.getArg(), arg));
 		}
 		return ex.hasType();
 	}
@@ -110,12 +102,10 @@ public class TypeExprVisitor implements IExprVisitor<Type> {
 		Type lhs = ex.getLhs().accept(this);
 		Type rhs = ex.getRhs().accept(this);
 		if (!lhs.isCompatibleWithNumber()) {
-			addError(IllegalArithmeticError.getMessage(ex.getLhs(), lhs));
-			return new Null(); 
+			return addError(new IllegalArithmeticError(ex.getLhs(), lhs));
 		}
 		if (!rhs.isCompatibleWithNumber()) {
-			addError(IllegalArithmeticError.getMessage(ex.getRhs(), rhs));
-			return new Null();
+			return addError(new IllegalArithmeticError(ex.getRhs(), rhs));
 		}
 		return ex.hasType();
 	}
@@ -123,8 +113,7 @@ public class TypeExprVisitor implements IExprVisitor<Type> {
 	private Type visitUnaryArithmetic(Unary ex) {
 		Type arg = ex.getArg().accept(this);
 		if (!arg.isCompatibleWithNumber()) {
-			addError(IllegalArithmeticError.getMessage(ex.getArg(), arg));
-			return new Null();
+			return addError(new IllegalArithmeticError(ex.getArg(), arg));
 		}
 		return ex.hasType();
 	}

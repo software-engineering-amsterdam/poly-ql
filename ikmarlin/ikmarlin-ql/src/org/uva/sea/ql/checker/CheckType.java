@@ -1,9 +1,10 @@
-package org.uva.sea.ql.checker.visitor;
+package org.uva.sea.ql.checker;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.uva.sea.ql.ast.form.Form;
 import org.uva.sea.ql.ast.stmt.AnswerableQuestion;
 import org.uva.sea.ql.ast.stmt.Block;
 import org.uva.sea.ql.ast.stmt.ComputedQuestion;
@@ -12,41 +13,37 @@ import org.uva.sea.ql.ast.stmt.IfThenElseStatement;
 import org.uva.sea.ql.ast.stmt.IfThenStatement;
 import org.uva.sea.ql.ast.stmt.Stmt;
 import org.uva.sea.ql.ast.type.Type;
+import org.uva.sea.ql.checker.error.Error;
 import org.uva.sea.ql.checker.error.IllegalBooleanError;
 import org.uva.sea.ql.checker.error.IncompatibleTypesError;
+import org.uva.sea.ql.checker.visitor.IStmtVisitor;
+import org.uva.sea.ql.checker.visitor.ExprVisitorType;
 
-public class TypeStmtVisitor implements IStmtVisitor {
+public class CheckType implements IStmtVisitor {
 	
-	TypeExprVisitor ev;
-	List<String> errors;
+	private List<Error> errors;
+	private Map<String, Type> symbolTable;
 	
-	public TypeStmtVisitor(Map<String, Type> symbolTable){
-		this.ev = new TypeExprVisitor(symbolTable);
-		this.errors = new ArrayList<String>();
-	}
-	
-	private void addExprErrors(TypeExprVisitor ev){
-		errors.addAll(ev.getErrors());
-		ev.resetErrors();
-	}
-	
-	private void addError(String msg){
-		errors.add(msg);
+	public CheckType(Form form, Map<String, Type> symbolTable){
+		this.errors = new ArrayList<Error>();
+		this.symbolTable = symbolTable;
+		form.getBlock().accept(this);
 	}
 	
 	public boolean hasErrors(){
 		return !errors.isEmpty();
 	}
 	
-	public List<String> getErrors(){
+	public List<Error> getErrors(){
 		return errors;
 	}
-
+	
 	private void checkCondition(ConditionalQuestion stmt){
+		ExprVisitorType ev = new ExprVisitorType(symbolTable);
 		Type condition = stmt.getCondition().accept(ev);
-		addExprErrors(ev);
+		errors.addAll(ev.getErrors());
 		if(!condition.isCompatibleWithBool()){
-			addError(IllegalBooleanError.getMessage(stmt.getCondition(), condition));
+			errors.add(new IllegalBooleanError(stmt.getCondition(), condition));
 		}
 	}
 	
@@ -56,10 +53,11 @@ public class TypeStmtVisitor implements IStmtVisitor {
 
 	@Override
 	public void visit(ComputedQuestion stmt) {
+		ExprVisitorType ev = new ExprVisitorType(symbolTable);
 		Type computation = stmt.getComputation().accept(ev);
-		addExprErrors(ev);
+		errors.addAll(ev.getErrors());
 		if(!computation.isCompatibleWith(stmt.getType())){
-			addError(IncompatibleTypesError.getMessage(stmt.getIdent(), stmt.getType(), stmt.getComputation(), computation));
+			errors.add(new IncompatibleTypesError(stmt.getIdent(), stmt.getType(), stmt.getComputation(), computation));
 		}
 	}
 

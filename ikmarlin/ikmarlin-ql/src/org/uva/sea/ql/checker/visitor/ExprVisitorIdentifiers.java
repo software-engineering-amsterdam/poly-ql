@@ -1,5 +1,8 @@
 package org.uva.sea.ql.checker.visitor;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.uva.sea.ql.ast.expr.Add;
 import org.uva.sea.ql.ast.expr.And;
 import org.uva.sea.ql.ast.expr.Binary;
@@ -25,123 +28,133 @@ import org.uva.sea.ql.ast.expr.StrLiteral;
 import org.uva.sea.ql.ast.expr.Sub;
 import org.uva.sea.ql.ast.expr.Unary;
 
-public class UndefinedQuestionExprVisitor implements IExprVisitor<Ident> {
+public class ExprVisitorIdentifiers implements IExprVisitor<Set<Ident>> {
 
-	@Override
-	public Ident visit(Ident ex) {
-		return ex;
+	private Set<Ident> variables;
+
+	public ExprVisitorIdentifiers() {
+		variables = new HashSet<Ident>();
 	}
 
-	private Ident visitBinaryExpr(Binary ex){
+	private Set<Ident> visitBinaryExpr(Binary ex) {
+		ex.getLhs().accept(this);
+		ex.getRhs().accept(this);
+		return variables;
+	}
+
+	private Set<Ident> visitUnaryExpr(Unary ex) {
+		ex.getArg().accept(this);
+		return variables;
+	}
+
+	private Set<Ident> visitLiteral(Literal<?> ex) {
 		return null;
 	}
 
-	private Ident visitUnaryExpr(Unary ex){
-		return null;
-	}
-
-	private Ident visitLiteral(Literal<?> ex){
-		return null;
+	@Override
+	public Set<Ident> visit(Ident ex) {
+		variables.add(ex);
+		return variables;
 	}
 
 	@Override
-	public Ident visit(Add ex) {
+	public Set<Ident> visit(Add ex) {
 		return visitBinaryExpr(ex);
 	}
 
 	@Override
-	public Ident visit(Sub ex) {
+	public Set<Ident> visit(Sub ex) {
 		return visitBinaryExpr(ex);
 	}
 
 	@Override
-	public Ident visit(Mul ex) {
+	public Set<Ident> visit(Mul ex) {
 		return visitBinaryExpr(ex);
 	}
 
 	@Override
-	public Ident visit(Div ex) {
+	public Set<Ident> visit(Div ex) {
 		return visitBinaryExpr(ex);
 	}
 
 	@Override
-	public Ident visit(And ex) {
+	public Set<Ident> visit(And ex) {
 		return visitBinaryExpr(ex);
 	}
 
 	@Override
-	public Ident visit(Or ex) {
+	public Set<Ident> visit(Or ex) {
 		return visitBinaryExpr(ex);
 	}
 
 	@Override
-	public Ident visit(LEq ex) {
+	public Set<Ident> visit(LEq ex) {
 		return visitBinaryExpr(ex);
 	}
 
 	@Override
-	public Ident visit(LT ex) {
+	public Set<Ident> visit(LT ex) {
 		return visitBinaryExpr(ex);
 	}
 
 	@Override
-	public Ident visit(NEq ex) {
+	public Set<Ident> visit(NEq ex) {
 		return visitBinaryExpr(ex);
 	}
 
 	@Override
-	public Ident visit(Eq ex) {
+	public Set<Ident> visit(Eq ex) {
 		return visitBinaryExpr(ex);
 	}
 
 	@Override
-	public Ident visit(GT ex) {
+	public Set<Ident> visit(GT ex) {
 		return visitBinaryExpr(ex);
 	}
 
 	@Override
-	public Ident visit(GEq ex) {
+	public Set<Ident> visit(GEq ex) {
 		return visitBinaryExpr(ex);
 	}
 
 	@Override
-	public Ident visit(Pos ex) {
+	public Set<Ident> visit(Pos ex) {
 		return visitUnaryExpr(ex);
 	}
 
 	@Override
-	public Ident visit(Neg ex) {
+	public Set<Ident> visit(Neg ex) {
 		return visitUnaryExpr(ex);
 	}
 
 	@Override
-	public Ident visit(Not ex) {
+	public Set<Ident> visit(Not ex) {
 		return visitUnaryExpr(ex);
 	}
 
 	@Override
-	public Ident visit(BoolLiteral ex) {
+	public Set<Ident> visit(BoolLiteral ex) {
 		return visitLiteral(ex);
 	}
 
 	@Override
-	public Ident visit(StrLiteral ex) {
+	public Set<Ident> visit(StrLiteral ex) {
 		return visitLiteral(ex);
 	}
 
 	@Override
-	public Ident visit(DecimalLiteral ex) {
+	public Set<Ident> visit(DecimalLiteral ex) {
 		return visitLiteral(ex);
 	}
 
 	@Override
-	public Ident visit(IntLiteral ex) {
+	public Set<Ident> visit(IntLiteral ex) {
 		return visitLiteral(ex);
 	}
 
 	@Override
-	public Ident visit(MoneyLiteral ex) {
+	public Set<Ident> visit(MoneyLiteral ex) {
 		return visitLiteral(ex);
 	}
-	
+
 }

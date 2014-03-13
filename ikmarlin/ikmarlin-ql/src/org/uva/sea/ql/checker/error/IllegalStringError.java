@@ -5,8 +5,12 @@ import org.uva.sea.ql.ast.type.Type;
 
 public abstract class IllegalStringError extends IllegalTypeError {
 	
-	public static String getMessage(Expr ex, Type given){
-		return "string value expected. << "+ex.toString()+" ("+given+") >> given.";
+	public IllegalStringError(Expr expr, Type given) {
+		super(expr, given);
+	}
+
+	public String getMessage(Expr ex, Type given){
+		return "string value expected; << "+expr+" ("+given+") >> given.";
 	}
 
 }

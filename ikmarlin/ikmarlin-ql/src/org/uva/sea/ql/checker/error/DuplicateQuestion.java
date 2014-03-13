@@ -1,8 +1,14 @@
 package org.uva.sea.ql.checker.error;
 
-public abstract class DuplicateQuestion extends Error {
+public class DuplicateQuestion extends Error {
+	
+	private String ident;
+	
+	public DuplicateQuestion(String ident){
+		this.ident = ident;
+	}
 
-	public static String getMessage(String ident) {
+	public String getMessage() {
 		return "the question << "+ident+" >> has been defined with multiple types";
 	}
 
