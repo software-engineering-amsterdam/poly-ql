@@ -43,7 +43,7 @@ namespace Algebra.QL.Extensions.Grammar
             else if (tableIndex == Rules["Forms2"]
                 || tableIndex == Rules["Powerexpr"])
             {
-                return (E)r[0].Tag;
+                return (E)r[0].Tag; //If TrimReductions is true, this is never executed
             }
             //<Forms> ::= <Form> <Forms>
             else if (tableIndex == Rules["Forms"])

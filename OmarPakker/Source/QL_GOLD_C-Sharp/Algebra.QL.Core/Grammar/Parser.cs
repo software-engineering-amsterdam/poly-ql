@@ -71,7 +71,7 @@ namespace Algebra.QL.Core.Grammar
 				|| tableIndex == Rules["Negateexpr"]
 				|| tableIndex == Rules["Value"])
 			{
-				return r[0].Tag;
+				return r[0].Tag; //If TrimReductions is true, this is never executed
 			}
 			//<Form> ::= form Identifier <Block>
 			else if (tableIndex == Rules["Form_Form_Identifier"])
@@ -85,7 +85,7 @@ namespace Algebra.QL.Core.Grammar
 				|| tableIndex == Rules["Optelse_Else"]
 				|| tableIndex == Rules["Value_Lparen_Rparen"])
 			{
-				return r[1].Tag;
+				return r[1].Tag; //TODO: Separate these so you can distinguish brackets?
 			}
 			//<Statement> ::= if '(' <Expression> ')' <Statement> <OptElse>
 			else if (tableIndex == Rules["Statement_If_Lparen_Rparen"])

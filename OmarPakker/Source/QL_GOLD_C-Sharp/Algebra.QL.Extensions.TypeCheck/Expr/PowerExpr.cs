@@ -1,16 +1,13 @@
 ﻿using System;
-using Algebra.Core.Expr;
 using Algebra.QL.TypeCheck.Expr;
 using Algebra.QL.TypeCheck.Helpers;
 using Algebra.QL.TypeCheck.Type;
 
 namespace Algebra.QL.Extensions.TypeCheck.Expr
 {
-    public class PowerExpr : BinaryExpr<ITypeCheckExpr>, ITypeCheckExpr
+    public class PowerExpr : BinaryExpr, ITypeCheckExpr
     {
         private static readonly ITypeCheckType ExpressionUpperBound = new RealType();
-        public Tuple<int, int> SourceStartPosition { get; set; }
-        public Tuple<int, int> SourceEndPosition { get; set; }
 
         public PowerExpr(ITypeCheckExpr l, ITypeCheckExpr r)
             : base(l, r)

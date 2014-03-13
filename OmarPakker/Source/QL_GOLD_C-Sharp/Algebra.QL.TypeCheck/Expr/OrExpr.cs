@@ -1,15 +1,12 @@
 ﻿using System;
-using Algebra.Core.Expr;
 using Algebra.QL.TypeCheck.Helpers;
 using Algebra.QL.TypeCheck.Type;
 
 namespace Algebra.QL.TypeCheck.Expr
 {
-	public class OrExpr : BinaryExpr<ITypeCheckExpr>, ITypeCheckExpr
+	public class OrExpr : BinaryExpr, ITypeCheckExpr
 	{
 		private static readonly ITypeCheckType ExpressionUpperBound = new BoolType();
-        public Tuple<int, int> SourceStartPosition { get; set; }
-        public Tuple<int, int> SourceEndPosition { get; set; }
 
 		public OrExpr(ITypeCheckExpr l, ITypeCheckExpr r)
             : base(l, r)
