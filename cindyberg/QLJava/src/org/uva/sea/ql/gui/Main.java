@@ -1,13 +1,15 @@
 package org.uva.sea.ql.gui;
 
+import org.uva.sea.ql.gui.startIDE.StartScreen;
+
 public class Main {
 
 	public static void main(String[] args){
 		
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-            	StartScreenView startScreen = new StartScreenView();
-                startScreen.renderView();
+            	StartScreen startScreen = new StartScreen();
+                startScreen.newScreen();
             }
         });
 	}

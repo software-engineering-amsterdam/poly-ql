@@ -1,4 +1,4 @@
-package org.uva.sea.ql.gui;
+package org.uva.sea.ql.gui.questionaire;
 
 import java.util.Observable;
 import java.util.Observer;

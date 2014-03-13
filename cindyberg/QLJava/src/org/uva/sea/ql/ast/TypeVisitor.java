@@ -3,12 +3,10 @@ package org.uva.sea.ql.ast;
 import org.uva.sea.ql.ast.type.BooleanType;
 import org.uva.sea.ql.ast.type.IntegerType;
 import org.uva.sea.ql.ast.type.MissingType;
-import org.uva.sea.ql.ast.type.MoneyType;
 import org.uva.sea.ql.ast.type.StringType;
 
 public interface TypeVisitor<T> {
-	
-	T visit (MoneyType moneyType);
+
 	T visit (IntegerType type);
 	T visit (StringType type);
 	T visit (BooleanType booleanType);

@@ -1,4 +1,4 @@
-package org.uva.sea.ql.gui;
+package org.uva.sea.ql.gui.questionaire;
 
 import java.util.HashMap;
 import java.util.Observable;
@@ -36,7 +36,7 @@ public class State {
 
 	public void notify(Identifier identifier) {
 		Observable observable = observables.get(identifier);
-		if (observables != null) {
+		if (observable != null) {
 			observable.notifyObservers();
 		}
 	}

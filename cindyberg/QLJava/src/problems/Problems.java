@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Problems{
-
-	//TODO problems are strings it is going to be difficult to test, it could be indecent exposure
+	
 	private List<Warning> warnings;
 	private List<Error> errors; 
 
