@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
+using GOLD.Engine.EGT;
 using GOLD.Engine.Enums;
 
 namespace GOLD.Engine
@@ -20,89 +20,17 @@ namespace GOLD.Engine
 
 
         public bool TrimReductions { get; set; }
-        public bool TablesLoaded { get; private set; }
-        public GrammarProperties GrammarProperties { get; private set; }
-
-        private GrammarTables grammarTables;
+        private EGTDataManager egtDataManager;
 
         public Parser()
         {
             TrimReductions = false;
-            TablesLoaded = false;
-        }
-
-        private void Reset()
-        {
-            TablesLoaded = false;
-            GrammarProperties = null;
-            grammarTables.Clear();
         }
 
         public bool LoadEGT(BinaryReader reader)
         {
-            if(TablesLoaded)
-            {
-                Reset();
-            }
+            egtDataManager = new EGTDataManager(reader);
 
-            using (EGTReader egtReader = new EGTReader(reader))
-            {
-                while (egtReader.GetNextRecord())
-                {
-                    switch (egtReader.ReadRecordType())
-                    {
-                        case EGTRecord.Property:
-                            GrammarProperties = new GrammarProperties();
-                            GrammarProperties.SetProperty(egtReader.ReadGrammarProperty());
-                            break;
-
-                        case EGTRecord.TableCounts:
-                            grammarTables = egtReader.ReadGrammarTables();
-                            break;
-
-                        case EGTRecord.InitialStates:
-                            //DFA, LALR
-                            ushort dfaState = egtReader.ReadUInt16();
-                            ushort lalrState = egtReader.ReadUInt16();
-
-                            Debug.Assert(dfaState == 0, "The initial DFA State is not 0!");
-                            Debug.Assert(lalrState == 0, "The initial LALR State is not 0!");
-                            break;
-
-                        case EGTRecord.Symbol:
-                            Symbol sym = egtReader.ReadSymbol();
-                            grammarTables.Symbols[sym.TableIndex] = sym;
-                            break;
-
-                        case EGTRecord.Group:
-                            Group group = egtReader.ReadGroup();
-                            grammarTables.Groups[group.TableIndex] = group;
-                            break;
-
-                        case EGTRecord.CharRanges:
-                            CharacterSet charSet = egtReader.ReadCharacterSet();
-                            grammarTables.CharacterSets[charSet.Index] = charSet;
-                            break;
-
-                        case EGTRecord.Production:
-                            Production prod = egtReader.ReadProduction();
-                            grammarTables.Productions[prod.TableIndex] = prod;
-                            break;
-
-                        case EGTRecord.DFAState:
-                            FAState faState = egtReader.ReadFAState();
-                            grammarTables.FAStates[faState.TableIndex] = faState;
-                            break;
-
-                        case EGTRecord.LRState:
-                            LRActionList actionList = egtReader.ReadLRActionList();
-                            grammarTables.LRActionLists[actionList.Index] = actionList;
-                            break;
-                    }
-                }
-            }
-
-            TablesLoaded = true;
             return true;
         }
 
@@ -115,7 +43,7 @@ namespace GOLD.Engine
 
             if (String.IsNullOrEmpty(ch) || ch[0] == Char.MaxValue)
             {
-                return new Token(grammarTables.Symbols.GetFirstOfType(SymbolType.End), String.Empty)
+                return new Token(egtDataManager.GetFirstSymbolOfType(SymbolType.End), String.Empty)
                 {
                     StartPosition = lookAheadBuffer.Position,
                     EndPosition = lookAheadBuffer.Position
@@ -136,16 +64,16 @@ namespace GOLD.Engine
 
                 if (!String.IsNullOrEmpty(ch))
                 {
-                    for (int i = 0; i < grammarTables.FAStates[currentDFA].Edges.Count; i++)
+                    for (int i = 0; i < egtDataManager.GetFAState(currentDFA).Edges.Count; i++)
                     {
-                        FAEdge Edge = grammarTables.FAStates[currentDFA].Edges[i];
+                        FAEdge Edge = egtDataManager.GetFAState(currentDFA).Edges[i];
 
                         //Look for character in the Character Set Table
                         if (Edge.Characters.Contains(ch[0]))
                         {
                             int target = Edge.Target;
 
-                            if (grammarTables.FAStates[target].Accept != null)
+                            if (egtDataManager.GetFAState(target).Accept != null)
                             {
                                 lastAcceptState = target;
                                 lastAcceptPosition = lookAheadPosition;
@@ -168,12 +96,12 @@ namespace GOLD.Engine
                     // Lexer cannot recognize symbol
                     if (lastAcceptState == -1)
                     {
-                        symbol = grammarTables.Symbols.GetFirstOfType(SymbolType.Error);
+                        symbol = egtDataManager.GetFirstSymbolOfType(SymbolType.Error);
                         data = lookAheadBuffer.GetTextFromBuffer(1);
                     }
                     else
                     {
-                        symbol = grammarTables.FAStates[lastAcceptState].Accept;
+                        symbol = egtDataManager.GetFAState(lastAcceptState).Accept;
                         data = lookAheadBuffer.GetTextFromBuffer(lastAcceptPosition);
                     }
 
@@ -263,9 +191,9 @@ namespace GOLD.Engine
 
         public bool Parse(TextReader reader)
         {
-            if(!TablesLoaded)
+            if (egtDataManager == null)
             {
-                if(OnNotLoadedError != null)
+                if (OnNotLoadedError != null)
                 {
                     OnNotLoadedError();
                 }
@@ -284,7 +212,7 @@ namespace GOLD.Engine
                 if (inputTokens.Count == 0)
                 {
                     inputTokens.Push(ProduceToken(groupStack, lookAheadBuffer));
-                    if(OnTokenRead != null)
+                    if (OnTokenRead != null)
                     {
                         OnTokenRead(inputTokens.Peek());
                     }
@@ -292,7 +220,7 @@ namespace GOLD.Engine
                 //Runaway group
                 else if (groupStack.Count != 0)
                 {
-                    if(OnGroupError != null)
+                    if (OnGroupError != null)
                     {
                         OnGroupError();
                     }
@@ -309,119 +237,140 @@ namespace GOLD.Engine
                             break;
 
                         case SymbolType.Error:
-                            if(OnLexicalError != null)
+                            if (OnLexicalError != null)
                             {
                                 OnLexicalError(read.EndPosition, read.Data);
                             }
                             return false; //Error; abort
 
                         default:
-                            LRAction parseAction = grammarTables.LRActionLists[lalrState][read.Symbol];
-                            if (parseAction == null)
+                            if (!DoParse(inputTokens, tokenStack, lookAheadBuffer, ref lalrState, read))
                             {
-                                SymbolList expectedSymbols = new SymbolList();
-                                for (int i = 0; i < grammarTables.LRActionLists[lalrState].Count; i++)
-                                {
-                                    Symbol actionSymbol = grammarTables.LRActionLists[lalrState][i].Symbol;
-                                    switch (actionSymbol.Type)
-                                    {
-                                        case SymbolType.Content:
-                                        case SymbolType.End:
-                                        case SymbolType.GroupStart:
-                                        case SymbolType.GroupEnd:
-                                            expectedSymbols.Add(actionSymbol);
-                                            break;
-                                    }
-                                }
-
-                                if (OnSyntaxError != null)
-                                {
-                                    OnSyntaxError(read.EndPosition, read.Data, expectedSymbols.Text());
-                                }
                                 return false;
-                            }
-
-                            switch(parseAction.Type)
-                            {
-                                case LRActionType.Accept:
-                                    if (OnCompletion != null)
-                                    {
-                                        OnCompletion(tokenStack.Peek().Tag);
-                                    }
-                                    return true;
-
-                                case LRActionType.Shift:
-                                    lalrState = parseAction.Value;
-                                    read.State = lalrState;
-                                    tokenStack.Push(read);
-                                    //It now exists on the Token-Stack and must be eliminated from the queue.
-                                    inputTokens.Dequeue();
-                                    break;
-
-                                case LRActionType.Reduce:
-                                    Token head = null;
-                                    //Produce a reduction - remove as many tokens as members in the rule & push a nonterminal token
-                                    Production prod = grammarTables.Productions[parseAction.Value];
-                                    bool reductionSkipped = false;
-
-                                    //Skip reduction?
-                                    if (TrimReductions && prod.ConsistsOfOneNonTerminal())
-                                    {
-                                        head = tokenStack.Pop();
-                                        head.Symbol = prod.Head;
-                                        reductionSkipped = true;
-                                    }
-                                    //Build a Reduction
-                                    else
-                                    {
-                                        Reduction reduction = new Reduction(prod.Handle.Count, prod);
-
-                                        for (int i = prod.Handle.Count - 1; i >= 0; i--)
-                                        {
-                                            reduction[i] = tokenStack.Pop();
-                                        }
-
-                                        //If a production has no handles, it has no location.
-                                        //Set a would-be location instead.
-                                        if (prod.Handle.Count == 0)
-                                        {
-                                            reduction.StartPosition = reduction.EndPosition = lookAheadBuffer.Position;
-                                        }
-
-                                        head = reduction;
-                                    }
-
-                                    ushort nextActionIndex = tokenStack.Peek().State;
-
-                                    //If n is -1 here, then we have an Internal Table Error!!!
-                                    int n = grammarTables.LRActionLists[nextActionIndex].IndexOf(prod.Head);
-                                    if (n == -1)
-                                    {
-                                        if (OnInternalError != null)
-                                        {
-                                            OnInternalError();
-                                        }
-                                        return false;
-                                    }
-
-                                    lalrState = grammarTables.LRActionLists[nextActionIndex][n].Value;
-
-                                    head.State = lalrState;
-                                    tokenStack.Push(head);
-
-                                    if (!reductionSkipped)
-                                    {
-                                        if (OnReduction != null)
-                                        {
-                                            Reduction r = (Reduction)tokenStack.Peek();
-                                            OnReduction(r.StartPosition, r.EndPosition, r);
-                                        }
-                                    }
-                                    break;
                             }
                             break;
                     }
                 }
+            }
+        }
+
+        private bool DoParse(TokenQueueStack inputTokens, Stack<Token> tokenStack, LookAheadBuffer lookAheadBuffer, ref ushort lalrState, Token read)
+        {
+            LRAction parseAction = egtDataManager.GetLRActionList(lalrState)[read.Symbol];
+            if (parseAction == null)
+            {
+                HandleSyntaxError(egtDataManager.GetLRActionList(lalrState), read);
+                return false;
+            }
+
+            switch (parseAction.Type)
+            {
+                case LRActionType.Accept:
+                    if (OnCompletion != null)
+                    {
+                        OnCompletion(tokenStack.Peek().Tag);
+                    }
+                    return true;
+
+                case LRActionType.Shift:
+                    lalrState = parseAction.Value;
+                    read.State = lalrState;
+                    tokenStack.Push(read);
+                    //It now exists on the Token-Stack and must be eliminated from the queue.
+                    inputTokens.Dequeue();
+                    break;
+
+                case LRActionType.Reduce:
+                    if (!DoReduction(tokenStack, lookAheadBuffer, ref lalrState, parseAction))
+                    {
+                        return false;
+                    }
+                    break;
+            }
+            return true;
+        }
+
+        private bool DoReduction(Stack<Token> tokenStack, LookAheadBuffer lookAheadBuffer, ref ushort lalrState, LRAction parseAction)
+        {
+            Token head = null;
+            //Produce a reduction - remove as many tokens as members in the rule & push a nonterminal token
+            Production prod = egtDataManager.GetProduction(parseAction.Value);
+            bool reductionSkipped = false;
+
+            //Skip reduction?
+            if (TrimReductions && prod.ConsistsOfOneNonTerminal())
+            {
+                head = tokenStack.Pop();
+                head.Symbol = prod.Head;
+                reductionSkipped = true;
+            }
+            //Build a Reduction
+            else
+            {
+                Reduction reduction = new Reduction(prod.Handle.Count, prod);
+
+                for (int i = prod.Handle.Count - 1; i >= 0; i--)
+                {
+                    reduction[i] = tokenStack.Pop();
+                }
+
+                //If a production has no handles, it has no location.
+                //Set a would-be location instead.
+                if (prod.Handle.Count == 0)
+                {
+                    reduction.StartPosition = reduction.EndPosition = lookAheadBuffer.Position;
+                }
+
+                head = reduction;
+            }
+
+            //If n is -1 here, then we have an Internal Table Error!!!
+            LRAction action = egtDataManager.GetLRActionList(tokenStack.Peek().State)[prod.Head];
+            if (action == null)
+            {
+                if (OnInternalError != null)
+                {
+                    OnInternalError();
+                }
+                return false;
+            }
+
+            lalrState = action.Value;
+
+            head.State = lalrState;
+            tokenStack.Push(head);
+
+            if (!reductionSkipped)
+            {
+                if (OnReduction != null)
+                {
+                    Reduction r = (Reduction)tokenStack.Peek();
+                    OnReduction(r.StartPosition, r.EndPosition, r);
+                }
+            }
+            return true;
+        }
+
+        private void HandleSyntaxError(LRActionList actionList, Token read)
+        {
+            List<Symbol> expectedSymbols = new List<Symbol>();
+            for (int i = 0; i < actionList.Count; i++)
+            {
+                Symbol actionSymbol = actionList[i].Symbol;
+                switch (actionSymbol.Type)
+                {
+                    case SymbolType.Content:
+                    case SymbolType.End:
+                    case SymbolType.GroupStart:
+                    case SymbolType.GroupEnd:
+                        expectedSymbols.Add(actionSymbol);
+                        break;
+                }
+            }
+
+            if (OnSyntaxError != null)
+            {
+                OnSyntaxError(read.EndPosition, read.Data, String.Join(",", expectedSymbols));
             }
         }
     }

@@ -94,7 +94,7 @@ namespace WPFParser
             TextPointer docStart = customCodeBlock.Document.ContentStart.GetLineStartPosition(0);
 
             TextPointer start = docStart.GetLineStartPosition(sourceStartPos.Item1);
-            for(int i = 0; i <= sourceStartPos.Item2; i++)
+            for (int i = 0; i <= sourceStartPos.Item2; i++)
             {
                 start = start.GetNextInsertionPosition(LogicalDirection.Forward);
             }
@@ -152,7 +152,7 @@ namespace WPFParser
                 typeCheckObj = ((Tuple<Tuple<ITypeCheckStmnt, IPrintStmnt>, IFormStmnt>)newObj).Item1.Item1;
             }
 
-            if(typeCheckObj != null)
+            if (typeCheckObj != null)
             {
                 typeCheckObj.SourceStartPosition = startPos;
                 typeCheckObj.SourceEndPosition = endPos;
@@ -190,7 +190,7 @@ namespace WPFParser
                 }
             }
 
-            if(!errRep.HasErrors)
+            if (!errRep.HasErrors)
             {
                 tabControl.SelectedIndex = 1;
             }

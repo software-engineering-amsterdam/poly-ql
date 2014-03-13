@@ -39,7 +39,8 @@
   <ItemGroup>
     <Compile Include="CharacterRange.cs" />
     <Compile Include="CharacterSet.cs" />
-    <Compile Include="EGTReader.cs" />
+    <Compile Include="EGT\EGTReader.cs" />
+    <Compile Include="EGT\EGTDataManager.cs" />
     <Compile Include="Enums\EGTEntryType.cs" />
     <Compile Include="Enums\EGTRecord.cs" />
     <Compile Include="Enums\GroupAdvanceMode.cs" />
@@ -57,11 +58,9 @@
     <Compile Include="LRActionList.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="Production.cs" />
-    <Compile Include="ProductionList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reduction.cs" />
     <Compile Include="Symbol.cs" />
-    <Compile Include="SymbolList.cs" />
     <Compile Include="Token.cs" />
     <Compile Include="TokenQueueStack.cs" />
   </ItemGroup>

@@ -30,10 +30,10 @@ namespace GOLD.Engine
 
         internal string LookAhead(int index)
         {
-            if(index > buffer.Length)
+            if (index > buffer.Length)
             {
                 int readCount = index - buffer.Length;
-                for(int i = 0; i < readCount; i++)
+                for (int i = 0; i < readCount; i++)
                 {
                     buffer += (char)reader.Read();
                 }
@@ -49,7 +49,7 @@ namespace GOLD.Engine
                 return;
             }
 
-            for(int i = 0; i < count; i++)
+            for (int i = 0; i < count; i++)
             {
                 switch(buffer[i])
                 {

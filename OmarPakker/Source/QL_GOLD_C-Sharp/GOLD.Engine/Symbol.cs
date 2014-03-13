@@ -33,12 +33,7 @@ namespace GOLD.Engine
             return forceDelimit ? "'" + source + "'" : source;
         }
 
-        public string Text()
-        {
-            return Text(false);
-        }
-
-        public string Text(bool delimitTerminals)
+        public override string ToString()
         {
             switch (Type)
             {
@@ -46,16 +41,11 @@ namespace GOLD.Engine
                     return "<" + Name + ">";
 
                 case SymbolType.Content:
-                    return LiteralFormat(Name, delimitTerminals);
+                    return LiteralFormat(Name, false);
 
                 default:
                     return "(" + Name + ")";
             }
-        }
-
-        public override string ToString()
-        {
-            return Text();
         }
     }
 }

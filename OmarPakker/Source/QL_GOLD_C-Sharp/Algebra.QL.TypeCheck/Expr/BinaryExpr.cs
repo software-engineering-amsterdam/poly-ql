@@ -1,5 +1,7 @@
 ﻿using System;
 using Algebra.Core.Expr;
+using Algebra.QL.TypeCheck.Helpers;
+using Algebra.QL.TypeCheck.Type;
 
 namespace Algebra.QL.TypeCheck.Expr
 {
@@ -13,5 +15,7 @@ namespace Algebra.QL.TypeCheck.Expr
         {
 
         }
+
+        public abstract ITypeCheckType TypeCheck(TypeEnvironment env, ErrorReporter errRep);
     }
 }

@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using GOLD.Engine.Enums;
 
-namespace GOLD.Engine
+namespace GOLD.Engine.EGT
 {
     internal class EGTReader : IDisposable
     {
@@ -53,7 +53,7 @@ namespace GOLD.Engine
 
         private Tuple<EGTEntryType, object> ReadEntry()
         {
-            if(!IsRecordComplete())
+            if (!IsRecordComplete())
             {
                 recordEntriesRead++;
 
@@ -229,7 +229,7 @@ namespace GOLD.Engine
             Group group = new Group(index, name, container, start, end, advance, ending);
 
             ushort nestingsCount = ReadUInt16();
-            for(int i = 0; i < nestingsCount; i++)
+            for (int i = 0; i < nestingsCount; i++)
             {
                 group.Nesting.Add(ReadUInt16());
             }
@@ -254,7 +254,7 @@ namespace GOLD.Engine
             ReadEntry();
 
             CharacterSet charSet = new CharacterSet(index, rangeCount);
-            while(!IsRecordComplete())
+            while (!IsRecordComplete())
             {
                 charSet.Add(ReadCharacterRange());
             }
@@ -296,7 +296,7 @@ namespace GOLD.Engine
 
             FAState faState = accept ? new FAState(index, grammarTables.Symbols[acceptIndex]) : new FAState(index);
 
-            while(!IsRecordComplete())
+            while (!IsRecordComplete())
             {
                 faState.Edges.Add(ReadFAEdge());
             }

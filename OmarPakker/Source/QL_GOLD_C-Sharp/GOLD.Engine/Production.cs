@@ -1,11 +1,13 @@
-﻿using GOLD.Engine.Enums;
+﻿using System;
+using System.Collections.Generic;
+using GOLD.Engine.Enums;
 
 namespace GOLD.Engine
 {
     public class Production
     {
         public Symbol Head { get; private set; }
-        public SymbolList Handle { get; private set; }
+        public IList<Symbol> Handle { get; private set; }
         public ushort TableIndex { get; private set; }
 
         internal Production()
@@ -16,7 +18,7 @@ namespace GOLD.Engine
         internal Production(Symbol head, ushort tableIndex)
         {
             Head = head;
-            Handle = new SymbolList();
+            Handle = new List<Symbol>();
             TableIndex = tableIndex;
         }
 
@@ -30,19 +32,9 @@ namespace GOLD.Engine
             return false;
         }
 
-        public string Text()
-        {
-            return Text(false);
-        }
-
-        public string Text(bool delimitTerminals)
-        {
-            return Head.Text() + " ::= " + Handle.Text(",", delimitTerminals);
-        }
-
         public override string ToString()
         {
-            return Text();
+            return Head + " ::= " + String.Join(",", Handle);
         }
     }
 }

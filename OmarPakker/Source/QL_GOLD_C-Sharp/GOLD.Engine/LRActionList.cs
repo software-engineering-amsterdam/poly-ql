@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace GOLD.Engine
 {
@@ -25,20 +26,6 @@ namespace GOLD.Engine
             actionList.Clear();
         }
 
-        //Returns the index of SymbolIndex in the table, -1 if not found
-        internal int IndexOf(Symbol symbol)
-        {
-            for(int i = 0; i < Count; i++)
-            {
-                if(actionList[i].Symbol.Equals(symbol))
-                {
-                    return i;
-                }
-            }
-
-            return -1;
-        }
-
         internal LRAction this[int index]
         {
             get
@@ -56,16 +43,7 @@ namespace GOLD.Engine
         {
             get
             {
-                int index = IndexOf(symbol);
-                return index != -1 ? actionList[index] : null;
-            }
-            set
-            {
-                int index = IndexOf(symbol);
-                if (index != -1)
-                {
-                    actionList[index] = value;
-                }
+                return actionList.FirstOrDefault(a => a.Symbol.Equals(symbol));
             }
         }
     }
