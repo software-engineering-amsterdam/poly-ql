@@ -2,7 +2,8 @@ form Box1HouseOwning {
    hasSoldHouse: "Did you sell a house in 2010?" boolean
    hasBoughtHouse: "Did you bought a house in 2010?" boolean
    hasMainLoan: "Did you enter a loan for maintenance/reconstruction" boolean
-   if (hasSoldHouse && 8 == true) {
+   housePrice: "How much did you pay for the house" money
+   if (hasSoldHouse && false == true) {
         sellingPrice: "Price the house was sold for:" money
         privateDebt: "Private debts for the sold house:" money
         valueResidue: "Value residue:" money(sellingPrice * privateDebt)
