@@ -38,15 +38,6 @@ public class StatementChecker implements StatementVisitor {
 		labels = new ArrayList<StringLiteral>();
 	}
 	
-	//TODO I do not get the purpose of this function
-	private static Boolean expressionCheck(TypeEnvironment environment,
-			Problems problems, Expression expression) {
-		
-		return ExpressionChecker.checkExpression(environment,problems,expression);
-		
-	}
-	
-	//TODO I think it should go with expressions
 	private void checkIdentifier(Identifier identifier, Type type) {
 		if(environment.isDeclared(identifier)){
 			problems.addWarning(new RedeclaredWarning(identifier, type));
@@ -73,14 +64,12 @@ public class StatementChecker implements StatementVisitor {
 		StringLiteral label = exprquestion.getLabel();
 		
 		checkLabel(label);
-		expressionCheck(environment, problems, expression);
+		ExpressionChecker.checkExpression(environment,problems,expression);
 		
 		checkIdentifier(id,type);
 				
 		if(!expression.typeOf(environment).isCompatibleWith(id.typeOf(environment))){
 			problems.addError(new CompatibleError(id,expression));
-					//"Identifier " + id.toString() + " is not compatible with the expression type " 
-					//+ expression.typeOf(environment).toString());
 		}
 	}
 
@@ -100,8 +89,7 @@ public class StatementChecker implements StatementVisitor {
 		checkConditional(condition);		
 
 		this.visit(body);
-		expressionCheck(environment, problems, condition);
-		
+		ExpressionChecker.checkExpression(environment,problems,ifConditional.getConditional());
 	}
 
 	private void checkConditional(Expression condition) {
@@ -128,8 +116,7 @@ public class StatementChecker implements StatementVisitor {
 
 	public void visit(Form form) {
 		Questions body = form.getBody();
-		this.visit(body);
-		
+		this.visit(body);	
 	}
 
 	public void visit(Questions body) {

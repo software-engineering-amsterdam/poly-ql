@@ -6,24 +6,24 @@ import org.uva.sea.ql.ast.StatementVisitor;
 import org.uva.sea.ql.ast.literal.StringLiteral;
 import org.uva.sea.ql.ast.type.Type;
 
-public class ExpressionQuestion extends Statement{
+public class ExpressionQuestion extends Question{
 	
-	private final Identifier name;
-	private final StringLiteral label;
-	private final Type type;
+	//private final Identifier name;
+	//private final StringLiteral label;
+	//private final Type type;
 	private final Expression expression;
 
 	public ExpressionQuestion(Identifier questionname, StringLiteral label,
 			Type type, Expression expr) {
-		
-		this.name = questionname;
-		this.label = label;
-		this.type = type;
+		super(questionname,label,type);
+		//this.name = questionname;
+		//this.label = label;
+		//this.type = type;
 		this.expression = expr;	
 		
 	}
 	
-	public Identifier getIdentifier(){
+/*	public Identifier getIdentifier(){
 		return this.name;
 	}
 	
@@ -33,7 +33,7 @@ public class ExpressionQuestion extends Statement{
 	
 	public Type getType(){
 		return this.type;
-	}
+	}*/
 	
 	public Expression getExpression(){
 		return this.expression;

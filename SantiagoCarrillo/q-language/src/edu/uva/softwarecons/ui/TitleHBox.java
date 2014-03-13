@@ -1,0 +1,32 @@
+package edu.uva.softwarecons.ui;
+
+import javafx.geometry.Insets;
+import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+
+/**
+ * Falconlabs
+ * User: sancarbar
+ * Date: 3/13/14
+ */
+public class TitleHBox extends HBox{
+
+    final String name;
+
+    public TitleHBox(String name, String backgroundColorHex, Paint textColor) {
+        this.name = name;
+        setPadding(new Insets(15, 12, 20, 12));
+        setSpacing(10);
+        setStyle("-fx-background-color: "+backgroundColorHex+";");
+        Text titleText = new Text(name);
+        titleText.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        titleText.setFill(textColor);
+        getChildren().add(titleText);
+    }
+
+
+}

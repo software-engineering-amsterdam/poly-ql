@@ -1,4 +1,4 @@
-package org.uva.sea.ql.gui;
+package org.uva.sea.ql.gui.questionaire;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -9,21 +9,18 @@ public class QuestionaireView {
 
 	private JFrame frame;
 	private JPanel mainpanel;
-	private Form form;
+	//private Form form;
 	
 	public QuestionaireView(Form form){
-		this.form = form;
 		this.frame =  new JFrame("Questionaire");
-	   // frame.setSize(700, 500); 
+	    frame.setSize(700, 500); 
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
-	public void newScreen(){
+	public void newScreen(Form form){
 		mainpanel = Renderer.render(form, new State());
-		
 		frame.add(mainpanel);
-		frame.pack();
+		//frame.pack();
 		frame.setVisible(true);
-		
 	}
 }

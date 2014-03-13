@@ -3,7 +3,10 @@ package edu.uva.softwarecons.model.expression.literal;
 import edu.uva.softwarecons.model.expression.Expression;
 import edu.uva.softwarecons.model.type.BooleanType;
 import edu.uva.softwarecons.model.type.Type;
+import edu.uva.softwarecons.model.value.BooleanValue;
+import edu.uva.softwarecons.model.value.Value;
 import edu.uva.softwarecons.visitor.expression.IExpressionElementVisitor;
+import edu.uva.softwarecons.visitor.expression.IExpressionEvalVisitor;
 
 /**
  * Falconlabs
@@ -20,13 +23,13 @@ public class BoolExpression implements Expression {
     }
 
     @Override
-    public Expression eval() {
-        return new BoolExpression(value);
+    public Type accept(IExpressionElementVisitor visitor) {
+       return new BooleanType();
     }
 
     @Override
-    public Type accept(IExpressionElementVisitor visitor) {
-       return new BooleanType();
+    public Value accept(IExpressionEvalVisitor visitor) {
+        return new BooleanValue(value);
     }
 
     @Override
@@ -37,4 +40,6 @@ public class BoolExpression implements Expression {
     public boolean getValue() {
         return value;
     }
+
+
 }

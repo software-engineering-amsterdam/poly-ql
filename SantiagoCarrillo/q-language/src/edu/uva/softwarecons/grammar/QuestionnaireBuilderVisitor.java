@@ -2,7 +2,6 @@ package edu.uva.softwarecons.grammar;
 
 import edu.uva.softwarecons.model.Form;
 import edu.uva.softwarecons.model.expression.Expression;
-import edu.uva.softwarecons.model.expression.ParenthesisExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.AddExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.DivExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.MulExpression;
@@ -190,9 +189,9 @@ public class QuestionnaireBuilderVisitor extends QuestionnaireBaseVisitor<IQuest
     }
 
     @Override
-    //TODO no need for parenthesis kill them precedence is already covered just visit the expression insides
-    public ParenthesisExpression visitParenthesis(@NotNull QuestionnaireParser.ParenthesisContext ctx) {
-        return new ParenthesisExpression((Expression) ctx.expr().accept(this));
+    public Expression visitParenthesis(@NotNull QuestionnaireParser.ParenthesisContext ctx) {
+        return (Expression) ctx.expr().accept(this);
+
     }
 
 
