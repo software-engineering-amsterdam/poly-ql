@@ -1,4 +1,6 @@
-﻿namespace QL.QLClasses.Values
+﻿using QL.Interpreter.Controls;
+
+namespace QL.QLClasses.Values
 {
     public class IntValue : QValue
     {

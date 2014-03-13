@@ -43,7 +43,7 @@ public class ASTBuilder {
 
         // Type Checking:
         for (Form form : formCollection.getForms()) {
-            TypeCheckerVisitor typeChecker = TypeCheckerVisitor.checkNode(form);
+            TypeCheckerVisitor typeChecker = TypeCheckerVisitor.checkForm(form);
             typeChecker.printAllErrors();
         }
     }

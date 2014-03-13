@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using ICSharpCode.TextEditor.Document;
 
 namespace QL_Csharp
 {
@@ -42,6 +44,13 @@ namespace QL_Csharp
             textBoxOutput.Text = cleanText;
         }
 
+        public void UnderlineParseError(int startPosition, int length)
+        {
+            var marker = new TextMarker(startPosition, length, TextMarkerType.WaveLine, Color.Red);
+            textBoxSource.Document.MarkerStrategy.AddMarker(marker);
+            textBoxSource.Refresh();
+        }
+
         private void comboBoxDemos_SelectedValueChanged(object sender, EventArgs e)
         {
             textBoxSource.Text = _demoPresets[comboBoxDemos.Text];
@@ -59,8 +68,9 @@ namespace QL_Csharp
 
         private void textBoxSource_TextChanged(object sender, EventArgs e)
         {
-            if (checkBoxRealTime.Checked)
-                buttonGenerate.PerformClick();
+            // Remove markers
+            textBoxSource.Document.MarkerStrategy.RemoveAll(marker => true);
+            textBoxSource.Refresh();
         }
     }
 }

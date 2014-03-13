@@ -13,7 +13,7 @@ type FormTests() =
         let text = "form formName { }"
         let tree = { ID = "formName"; Statements = [] }
         let result = parse_string text
-        Assert.AreEqual(tree, result)
+        Assert.AreEqual(tree.ToString(), result.ToString())
 
 // Questions
 [<TestClass>]
@@ -26,10 +26,10 @@ type QuestionTests() =
         let tree = { ID = "formName"; Statements = [
                                         Question( "boolQ",
                                                   "Does it work?",
-                                                  QLBool)
+                                                  QLBool, new QL_Grammar.Position())
                                         ]; }
         let result = parse_string text
-        Assert.AreEqual(tree, result)
+        Assert.AreEqual(tree.ToString(), result.ToString())
     [<TestMethod>]
     member x.BoolQuestion2 () = 
         let text = "form formName {
@@ -39,13 +39,13 @@ type QuestionTests() =
         let tree = { ID = "formName"; Statements = [
                                         Question( "boolQ1",
                                                   "Does it work?",
-                                                  QLBool);
+                                                  QLBool, new QL_Grammar.Position());
                                         Question( "boolQ2",
                                                   "And with two questions?",
-                                                   QLBool)
+                                                   QLBool, new QL_Grammar.Position())
                                         ]; }
         let result = parse_string text
-        Assert.AreEqual(tree, result)
+        Assert.AreEqual(tree.ToString(), result.ToString())
 
 // Conditionals
 [<TestClass>]
@@ -61,15 +61,15 @@ type ConditionalTests() =
         let tree = { ID = "formName"; Statements = [
                                         Question( "boolQ1",
                                                   "Display next question?",
-                                                  QLBool);
-                                        IfConditional(ID("boolQ1"), [
+                                                  QLBool, new QL_Grammar.Position());
+                                        IfConditional(ID("boolQ1", new QL_Grammar.Position()), [
                                                         Question( "boolQ2",
                                                                     "Did you like it?",
-                                                                    QLBool)
-                                                    ])
+                                                                    QLBool, new QL_Grammar.Position())
+                                                    ], new QL_Grammar.Position())
                                     ]; }
         let result = parse_string text
-        Assert.AreEqual(tree, result)
+        Assert.AreEqual(tree.ToString(), result.ToString())
     [<TestMethod>]
     member x.ConditialBool () = 
         let text = "form formName {
@@ -78,14 +78,14 @@ type ConditionalTests() =
                         }
                     }"
         let tree = { ID = "formName"; Statements = [
-                                        IfConditional(Literal(Bool(true)), [
+                                        IfConditional(Literal(Bool(true), new QL_Grammar.Position()), [
                                                         Question( "boolQ",
                                                                    "Can you see this?",
-                                                                   QLBool)
-                                                    ])
+                                                                   QLBool, new QL_Grammar.Position())
+                                                    ], new QL_Grammar.Position())
                                     ]; }
         let result = parse_string text
-        Assert.AreEqual(tree, result)
+        Assert.AreEqual(tree.ToString(), result.ToString())
     [<TestMethod>]
     member x.ConditialComp () = 
         let text = "form formName {
@@ -97,15 +97,15 @@ type ConditionalTests() =
         let tree = { ID = "formName"; Statements = [
                                         Question( "boolQ1",
                                                   "How much do you earn?",
-                                                  QLInt);
-                                        IfConditional(BooleanOp(ID("boolQ1"), Gt, Literal(Int(5))), [
+                                                  QLInt, new QL_Grammar.Position());
+                                        IfConditional(BooleanOp(ID("boolQ1", new QL_Grammar.Position()), Gt, Literal(Int(5), new QL_Grammar.Position()), new QL_Grammar.Position()), [
                                                         Question( "boolQ2",
                                                                   "Is it enough?",
-                                                                  QLBool)
-                                                    ])
+                                                                  QLBool, new QL_Grammar.Position())
+                                                    ], new QL_Grammar.Position())
                                     ]; }
         let result = parse_string text
-        Assert.AreEqual(tree, result)
+        Assert.AreEqual(tree.ToString(), result.ToString())
 
 // Assignment
 [<TestClass>]
@@ -119,14 +119,14 @@ type AssignmentTests() =
         let tree = { ID = "formName"; Statements = [
                                         Question( "intQ1",
                                                   "Income?",
-                                                  QLInt);
+                                                  QLInt, new QL_Grammar.Position());
                                         Assignment( "intTax",
                                                     "Tax amount",
-                                                    ArithmeticOp(ArithmeticOp(ID("intQ1"), arithmeticOp.Div, Literal(Int(100))), arithmeticOp.Mult, Literal(Int(52)))
-                                                  );
+                                                    ArithmeticOp(ArithmeticOp(ID("intQ1", new QL_Grammar.Position()), arithmeticOp.Div, Literal(Int(100), new QL_Grammar.Position()), new QL_Grammar.Position()), arithmeticOp.Mult, Literal(Int(52), new QL_Grammar.Position()), new QL_Grammar.Position())
+                                                  , new QL_Grammar.Position());
                                     ]; }
         let result = parse_string text
-        Assert.AreEqual(tree, result)
+        Assert.AreEqual(tree.ToString(), result.ToString())
 
 
 // Arithmetic Tests
@@ -140,44 +140,44 @@ type Associativity() =
         let tree = { ID = "formName"; Statements = [
                                         Assignment( "intX",
                                                     "Testing assignment",
-                                                    ArithmeticOp(ArithmeticOp(Literal(Int(1)), arithmeticOp.Plus, Literal(Int(2))), arithmeticOp.Plus, Literal(Int(3)))
-                                                  )
+                                                    ArithmeticOp(ArithmeticOp(Literal(Int(1), new QL_Grammar.Position()), arithmeticOp.Plus, Literal(Int(2), new QL_Grammar.Position()), new QL_Grammar.Position()), arithmeticOp.Plus, Literal(Int(3), new QL_Grammar.Position()), new QL_Grammar.Position())
+                                                  , new QL_Grammar.Position())
                                             ]}
         let result = parse_string text
-        Assert.AreEqual(tree, result)
+        Assert.AreEqual(tree.ToString(), result.ToString())
     [<TestMethod>]
     member x.AssocMin () = 
         let text = "form formName { \"Testing assignment\" intX = 1 - 2 - 3}"
         let tree = { ID = "formName"; Statements = [
                                         Assignment( "intX",
                                                     "Testing assignment",
-                                                    ArithmeticOp(ArithmeticOp(Literal(Int(1)), arithmeticOp.Minus, Literal(Int(2))), arithmeticOp.Minus, Literal(Int(3)))
-                                                  )
+                                                    ArithmeticOp(ArithmeticOp(Literal(Int(1), new QL_Grammar.Position()), arithmeticOp.Minus, Literal(Int(2), new QL_Grammar.Position()), new QL_Grammar.Position()), arithmeticOp.Minus, Literal(Int(3), new QL_Grammar.Position()), new QL_Grammar.Position())
+                                                  , new QL_Grammar.Position())
                                             ]}
         let result = parse_string text
-        Assert.AreEqual(tree, result)
+        Assert.AreEqual(tree.ToString(), result.ToString())
     [<TestMethod>]
     member x.AssocMult () = 
         let text = "form formName { \"Testing assignment\" intX = 1 * 2 * 3}"
         let tree = { ID = "formName"; Statements = [
                                         Assignment( "intX",
                                                     "Testing assignment",
-                                                    ArithmeticOp(ArithmeticOp(Literal(Int(1)), arithmeticOp.Mult, Literal(Int(2))), arithmeticOp.Mult, Literal(Int(3)))
-                                                  )
+                                                    ArithmeticOp(ArithmeticOp(Literal(Int(1), new QL_Grammar.Position()), arithmeticOp.Mult, Literal(Int(2), new QL_Grammar.Position()), new QL_Grammar.Position()), arithmeticOp.Mult, Literal(Int(3), new QL_Grammar.Position()), new QL_Grammar.Position())
+                                                  , new QL_Grammar.Position())
                                             ]}
         let result = parse_string text
-        Assert.AreEqual(tree, result)
+        Assert.AreEqual(tree.ToString(), result.ToString())
     [<TestMethod>]
     member x.AssocDiv () = 
         let text = "form formName { \"Testing assignment\" intX = 1 / 2 / 3}"
         let tree = { ID = "formName"; Statements = [
                                         Assignment( "intX",
                                                     "Testing assignment",
-                                                    ArithmeticOp(ArithmeticOp(Literal(Int(1)), arithmeticOp.Div, Literal(Int(2))), arithmeticOp.Div, Literal(Int(3)))
-                                                  )
+                                                    ArithmeticOp(ArithmeticOp(Literal(Int(1), new QL_Grammar.Position()), arithmeticOp.Div, Literal(Int(2), new QL_Grammar.Position()), new QL_Grammar.Position()), arithmeticOp.Div, Literal(Int(3), new QL_Grammar.Position()), new QL_Grammar.Position())
+                                                  , new QL_Grammar.Position())
                                             ]}
         let result = parse_string text
-        Assert.AreEqual(tree, result)
+        Assert.AreEqual(tree.ToString(), result.ToString())
 
 // Precedence
 [<TestClass>]
@@ -188,22 +188,22 @@ type Precedence() =
         let tree = { ID = "formName"; Statements = [
                                         Assignment( "intX",
                                                     "Testing assignment",
-                                                    ArithmeticOp(Literal(Int(1)), arithmeticOp.Plus, ArithmeticOp(Literal(Int(2)), arithmeticOp.Mult, Literal(Int(3))))
-                                                  )
+                                                    ArithmeticOp(Literal(Int(1), new QL_Grammar.Position()), arithmeticOp.Plus, ArithmeticOp(Literal(Int(2), new QL_Grammar.Position()), arithmeticOp.Mult, Literal(Int(3), new QL_Grammar.Position()), new QL_Grammar.Position()), new QL_Grammar.Position())
+                                                  , new QL_Grammar.Position())
                                             ]}
         let result = parse_string text
-        Assert.AreEqual(tree, result)
+        Assert.AreEqual(tree.ToString(), result.ToString())
     [<TestMethod>]
     member x.PrecMinDiv () = 
         let text = "form formName { \"Testing assignment\" intX = 1 - 2 / 3}"
         let tree = { ID = "formName"; Statements = [
                                         Assignment( "intX",
                                                     "Testing assignment",
-                                                    ArithmeticOp(Literal(Int(1)), arithmeticOp.Minus, ArithmeticOp(Literal(Int(2)), arithmeticOp.Div, Literal(Int(3))))
-                                                  )
+                                                    ArithmeticOp(Literal(Int(1), new QL_Grammar.Position()), arithmeticOp.Minus, ArithmeticOp(Literal(Int(2), new QL_Grammar.Position()), arithmeticOp.Div, Literal(Int(3), new QL_Grammar.Position()), new QL_Grammar.Position()), new QL_Grammar.Position())
+                                                  , new QL_Grammar.Position())
                                             ]}
         let result = parse_string text
-        Assert.AreEqual(tree, result)
+        Assert.AreEqual(tree.ToString(), result.ToString())
 
 //// Type checker
 //[<TestClass>]
@@ -219,4 +219,4 @@ type Precedence() =
 //                                                })
 //                                            ]}
 //        let result = parse_string text
-//        Assert.AreEqual(tree, result)
+//        Assert.AreEqual(tree.ToString(), result.ToString())

@@ -2,7 +2,7 @@ package net.iplantevin.ql.ast.statements;
 
 import net.iplantevin.ql.ast.LineInfo;
 import net.iplantevin.ql.ast.expressions.Expression;
-import net.iplantevin.ql.ast.visitors.IASTVisitor;
+import net.iplantevin.ql.ast.visitors.IStatementVisitor;
 
 /**
  * If statement.
@@ -20,7 +20,7 @@ public class If extends Conditional {
     }
 
     @Override
-    public <T> T accept(IASTVisitor<T> visitor) {
+    public <T> T accept(IStatementVisitor<T> visitor) {
         return visitor.visit(this);
     }
 }

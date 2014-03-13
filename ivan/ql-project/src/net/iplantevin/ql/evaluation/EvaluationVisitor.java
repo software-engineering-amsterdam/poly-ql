@@ -23,14 +23,7 @@ import net.iplantevin.ql.ast.expressions.operators.Or;
 import net.iplantevin.ql.ast.expressions.operators.Pos;
 import net.iplantevin.ql.ast.expressions.operators.Sub;
 import net.iplantevin.ql.ast.expressions.operators.Unary;
-import net.iplantevin.ql.ast.form.Form;
-import net.iplantevin.ql.ast.form.FormCollection;
-import net.iplantevin.ql.ast.statements.Block;
-import net.iplantevin.ql.ast.statements.Computation;
-import net.iplantevin.ql.ast.statements.If;
-import net.iplantevin.ql.ast.statements.IfElse;
-import net.iplantevin.ql.ast.statements.Question;
-import net.iplantevin.ql.ast.visitors.IASTVisitor;
+import net.iplantevin.ql.ast.visitors.IExpressionVisitor;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,7 +33,7 @@ import java.util.Map;
  *
  * @author Ivan
  */
-public class EvaluationVisitor implements IASTVisitor<Value> {
+public class EvaluationVisitor implements IExpressionVisitor<Value> {
     private final Map<String, Value> values;
 
     public EvaluationVisitor() {
@@ -79,44 +72,6 @@ public class EvaluationVisitor implements IASTVisitor<Value> {
 
     private Value unaryValue(Unary expression) {
         return expression.getExpression().accept(this);
-    }
-
-    /////////////////////////////////////////////
-    // Non-Expression visitor methods
-    /////////////////////////////////////////////
-    @Override
-    public Value visit(FormCollection formCollection) {
-        return null;
-    }
-
-    @Override
-    public Value visit(Form form) {
-        return null;
-    }
-
-    @Override
-    public Value visit(Block block) {
-        return null;
-    }
-
-    @Override
-    public Value visit(Computation computation) {
-        return null;
-    }
-
-    @Override
-    public Value visit(If ifStat) {
-        return null;
-    }
-
-    @Override
-    public Value visit(IfElse ifElse) {
-        return null;
-    }
-
-    @Override
-    public Value visit(Question question) {
-        return null;
     }
 
     /////////////////////////////////////////////

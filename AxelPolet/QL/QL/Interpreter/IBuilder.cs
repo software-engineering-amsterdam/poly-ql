@@ -4,6 +4,6 @@ namespace QL.Interpreter
 {
     interface IBuilder
     {
-        void Build(GUIQuestionnaire gui);
+        void Build(QLGuiBuilder guiBuilder);
     }
 }

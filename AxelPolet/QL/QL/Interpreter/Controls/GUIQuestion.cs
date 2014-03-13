@@ -1,18 +1,17 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using QL.QLClasses.Expressions;
-using QL.QLClasses.Types;
 using QL.QLClasses.Values;
 
 namespace QL.Interpreter.Controls
 {
     public class GUIQuestion : StackPanel
     {
-        protected string ID;
-        protected Label Label;
-        protected QType Type;
-        protected QLMemoryManager Memory;
-        protected ExpressionBase Computation;
+        private readonly Label _label;
+
+        protected QLMemory Memory;
+        protected string Identifier;
+        protected bool IsComputed;
 
         public ExpressionBase ShowCondition { get; set; }
         public ExpressionBase HideCondition { get; set; }
@@ -20,24 +19,24 @@ namespace QL.Interpreter.Controls
         public delegate void ChangedEventHandler();
         public ChangedEventHandler OnChanged { get; set; }
         
-        public GUIQuestion(QLMemoryManager memory, string id, string label, QType type, ExpressionBase computation = null)
+        public GUIQuestion(QLMemory memory, string identifier, string label, bool isComputed = true)
         {
+            _label = new Label { Content = label, Width = 300 };
+
             Memory = memory;
-
-            ID = id;
-            Type = type;
-            Computation = computation;
-            Label = new Label { Content = label, Width = 300 };
-
+            Identifier = identifier;            
+            IsComputed = isComputed;
+            
+            //ui properties
             Orientation = Orientation.Horizontal;
             Width = 600;
-            Margin = new Thickness(0, 5, 0 ,5);   //magic numbers? --> symbolic constant
+            Margin = new Thickness(0, 5, 0 ,5); 
         }
 
         public virtual void Render()
         {
             CheckVisibility();
-            Children.Add(Label);
+            Children.Add(_label);
         }
 
         public virtual void Refresh()

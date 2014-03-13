@@ -5,7 +5,6 @@ using System.Text;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
 using QL.Interpreter;
-using QL.Interpreter.Controls;
 using QL.QLClasses;
 using QL.TypeChecker;
 
@@ -21,14 +20,14 @@ namespace QL
         public List<string> LexerErrors { get; private set; }
         public List<string> ParserErrors { get; private set; }
         
-        public QLMemoryManager MemoryManager { get; private set; }  
+        public QLMemory Memory { get; private set; }  
         public QLTypeChecker TypeChecker { get; private set; }
         
         public QLController()
         {
             LexerErrors = new List<string>();
             ParserErrors = new List<string>();
-            MemoryManager = new QLMemoryManager();
+            Memory = new QLMemory();
             TypeChecker = new QLTypeChecker();
         }
 
@@ -48,7 +47,7 @@ namespace QL
             _parser.AddErrorListener(new ParserErrorListener() { OnError = ParserErrors.Add });
 
             //set manager on partial parser class
-            _parser.SetIdManager(MemoryManager);
+            _parser.SetIdManager(Memory);
 
             //build AST
             _parseTree = _parser.questionnaire();
@@ -65,8 +64,12 @@ namespace QL
 
         public void GenerateGUI()
         {
-            QLBuilder qlBuilder = new QLBuilder(AST);
-            qlBuilder.Run();
+            QLGuiBuilder guiBuilder = new QLGuiBuilder();
+            AST.Build(guiBuilder);
+
+            GUIMain main = new GUIMain(guiBuilder.GetGUI());
+            main.Initialize();
+            main.ShowDialog();
         }
 
         public string GetParseTreeString()

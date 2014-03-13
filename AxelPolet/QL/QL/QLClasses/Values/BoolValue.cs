@@ -1,4 +1,7 @@
-﻿namespace QL.QLClasses.Values
+﻿using System.Windows.Controls;
+using QL.Interpreter.Controls;
+
+namespace QL.QLClasses.Values
 {
     public class BoolValue : QValue
     {

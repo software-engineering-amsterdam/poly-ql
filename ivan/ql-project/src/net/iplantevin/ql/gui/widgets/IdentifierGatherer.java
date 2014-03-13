@@ -23,14 +23,7 @@ import net.iplantevin.ql.ast.expressions.operators.Or;
 import net.iplantevin.ql.ast.expressions.operators.Pos;
 import net.iplantevin.ql.ast.expressions.operators.Sub;
 import net.iplantevin.ql.ast.expressions.operators.Unary;
-import net.iplantevin.ql.ast.form.Form;
-import net.iplantevin.ql.ast.form.FormCollection;
-import net.iplantevin.ql.ast.statements.Block;
-import net.iplantevin.ql.ast.statements.Computation;
-import net.iplantevin.ql.ast.statements.If;
-import net.iplantevin.ql.ast.statements.IfElse;
-import net.iplantevin.ql.ast.statements.Question;
-import net.iplantevin.ql.ast.visitors.IASTVisitor;
+import net.iplantevin.ql.ast.visitors.IExpressionVisitor;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -41,7 +34,7 @@ import java.util.Set;
  *
  * @author Ivan
  */
-public class IdentifierGatherer implements IASTVisitor<Void> {
+public class IdentifierGatherer implements IExpressionVisitor<Void> {
     private final Set<String> identifiers;
 
     /**
@@ -74,41 +67,6 @@ public class IdentifierGatherer implements IASTVisitor<Void> {
 
     private void visitUnary(Unary expression) {
         expression.getExpression().accept(this);
-    }
-
-    @Override
-    public Void visit(FormCollection formCollection) {
-        return null;
-    }
-
-    @Override
-    public Void visit(Form form) {
-        return null;
-    }
-
-    @Override
-    public Void visit(Block block) {
-        return null;
-    }
-
-    @Override
-    public Void visit(Computation computation) {
-        return null;
-    }
-
-    @Override
-    public Void visit(If ifStat) {
-        return null;
-    }
-
-    @Override
-    public Void visit(IfElse ifElse) {
-        return null;
-    }
-
-    @Override
-    public Void visit(Question question) {
-        return null;
     }
 
     @Override

@@ -33,7 +33,6 @@ public class Form extends ASTNode {
         return "form " + name + body.toString();
     }
 
-    @Override
     public <T> T accept(IASTVisitor<T> visitor) {
         return visitor.visit(this);
     }

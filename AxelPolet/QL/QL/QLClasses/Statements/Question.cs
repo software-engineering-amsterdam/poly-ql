@@ -1,7 +1,7 @@
-﻿using QL.Interpreter.Controls;
+﻿using QL.Interpreter;
+using QL.Interpreter.Controls;
 using QL.QLClasses.Expressions;
 using QL.QLClasses.Types;
-using QL.QLClasses.Values;
 using QL.TypeChecker;
 
 namespace QL.QLClasses.Statements
@@ -11,9 +11,9 @@ namespace QL.QLClasses.Statements
         protected string Name;
         protected string Label;
         protected QType Type;
-        protected QLMemoryManager Memory;
+        protected QLMemory Memory;
 
-        public Question(QLMemoryManager memory, string name, string label, QType type)
+        public Question(QLMemory memory, string name, string label, QType type)
         {
             Memory = memory;
             Name = name;
@@ -63,12 +63,14 @@ namespace QL.QLClasses.Statements
 
         #region Builder Implementation
 
-        public override void Build(GUIQuestionnaire gui)
+        public override void Build(QLGuiBuilder guiBuilder)
         {
-            if(Type.IsCompatibleWith(new QBool()))
-                gui.AppendQuestion(new GUICheckBox(Memory, Name, Label, Type));
-            else 
-                gui.AppendQuestion(new GUITextBox(Memory, Name, Label, Type));
+            if (Type.IsCompatibleWith(new QBool()))
+                guiBuilder.AppendQuestion(new GUICheckBox(Memory, Name, Label));
+            else if(Type.IsCompatibleWith(new QString()))
+                guiBuilder.AppendQuestion(new GUIStringTextBox(Memory, Name, Label));
+            else
+                guiBuilder.AppendQuestion(new GUIIntTextBox(Memory, Name, Label));
         }
 
         #endregion

@@ -50,14 +50,15 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interpreter\Controls\GUITextBox.cs" />
+    <Compile Include="Interpreter\Controls\GUIStringTextBox.cs" />
+    <Compile Include="Interpreter\Controls\GUIIntTextBox.cs" />
     <Compile Include="Interpreter\Controls\GUICheckBox.cs" />
     <Compile Include="Interpreter\Controls\GUIQuestion.cs" />
     <Compile Include="Interpreter\Controls\GUIQuestionnaire.cs" />
     <Compile Include="Interpreter\GUIMain.xaml.cs">
       <DependentUpon>GUIMain.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Interpreter\QLBuilder.cs" />
+    <Compile Include="Interpreter\QLGuiBuilder.cs" />
     <Compile Include="Interpreter\IBuilder.cs" />
     <Compile Include="QLClasses\ASTBase.cs" />
     <Compile Include="QLClasses\Expressions\Binary\Compare\Equals.cs" />
@@ -91,7 +92,7 @@
     <Compile Include="QLClasses\Values\BoolValue.cs" />
     <Compile Include="QLClasses\Values\QValue.cs" />
     <Compile Include="QLController.cs" />
-    <Compile Include="QLMemoryManager.cs" />
+    <Compile Include="QLMemory.cs" />
     <Compile Include="QLClasses\Expressions\ExpressionBase.cs" />
     <Compile Include="QLClasses\Expressions\Unary\UnaryExpression.cs" />
     <Compile Include="QLClasses\Expressions\Binary\BinaryExpression.cs" />

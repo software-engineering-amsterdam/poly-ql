@@ -2,10 +2,17 @@ package org.uva.sea.ql.checker.error;
 
 import org.uva.sea.ql.checker.helper.Dependency;
 
-public abstract class CyclicDependencyError extends DependencyError {
+public class CyclicDependencyError extends DependencyError {
+	
+	private Dependency pair;
+	
+	public CyclicDependencyError(Dependency pair){
+		this.pair = pair;
+	}
 
-	public static String getMessage(Dependency d) {
-		return "the conditional variable << "+d.getX()+" >> and the question << "+d.getY()+" >> depend on one another.";
+	@Override
+	public String getMessage() {
+		return "<< "+pair.getX()+" >> and << "+pair.getY()+" >> depend on one another.";
 	}
 
 }

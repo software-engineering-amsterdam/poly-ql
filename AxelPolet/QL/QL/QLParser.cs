@@ -5,16 +5,16 @@ namespace QL
     partial class QLParser
     {
         private Questionnaire _ASTRoot;
-        private QLMemoryManager _qlMemoryManager;
+        private QLMemory _qlMemory;
 
         public Questionnaire GetAST()
         {
             return _ASTRoot;
         }
 
-        public void SetIdManager(QLMemoryManager qlMemoryManager)
+        public void SetIdManager(QLMemory qlMemory)
         {
-            _qlMemoryManager = qlMemoryManager;
+            _qlMemory = qlMemory;
         }
     }
 }

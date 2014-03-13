@@ -41,7 +41,7 @@ public class GUIController {
     public boolean typeCheck() {
         boolean typeSafe = true;
         for (Form form : forms.getForms()) {
-            TypeCheckerVisitor typeChecker = TypeCheckerVisitor.checkNode(form);
+            TypeCheckerVisitor typeChecker = TypeCheckerVisitor.checkForm(form);
             typeChecker.printAllErrors();
             if (!typeChecker.isTypeSafe()) {
                 typeSafe = false;
