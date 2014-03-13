@@ -1,15 +1,11 @@
 package edu.uva.softwarecons.visitor.expression;
 
-import edu.uva.softwarecons.model.expression.literal.BoolExpression;
-import edu.uva.softwarecons.model.expression.literal.IdExpression;
-import edu.uva.softwarecons.model.expression.literal.IntExpression;
-import edu.uva.softwarecons.model.expression.ParenthesisExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.AddExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.DivExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.MulExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.SubExpression;
 import edu.uva.softwarecons.model.expression.comparison.*;
-import edu.uva.softwarecons.model.expression.literal.StringExpression;
+import edu.uva.softwarecons.model.expression.literal.IdExpression;
 import edu.uva.softwarecons.model.expression.logical.AndExpression;
 import edu.uva.softwarecons.model.expression.logical.NotExpression;
 import edu.uva.softwarecons.model.expression.logical.OrExpression;
@@ -50,5 +46,4 @@ public interface IExpressionElementVisitor {
 
     Type visitIdExpression(IdExpression expression);
 
-    Type visitParenthesisExpression(ParenthesisExpression expression);
 }

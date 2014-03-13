@@ -1,9 +1,12 @@
 package edu.uva.softwarecons.model.expression.arithmetic;
 
+import edu.uva.softwarecons.exception.CompareException;
 import edu.uva.softwarecons.model.expression.BinaryExpression;
 import edu.uva.softwarecons.model.expression.Expression;
 import edu.uva.softwarecons.model.type.Type;
+import edu.uva.softwarecons.model.value.Value;
 import edu.uva.softwarecons.visitor.expression.IExpressionElementVisitor;
+import edu.uva.softwarecons.visitor.expression.IExpressionEvalVisitor;
 import edu.uva.softwarecons.visitor.form.IFormElementVisitor;
 
 /**
@@ -20,12 +23,12 @@ public class AddExpression extends BinaryExpression {
 
 
     @Override
-    public Expression eval() {
-        return null;
+    public Type accept(IExpressionElementVisitor visitor) {
+        return visitor.visitAddExpression(this);
     }
 
     @Override
-    public Type accept(IExpressionElementVisitor visitor) {
+    public Value accept(IExpressionEvalVisitor visitor) throws CompareException {
         return visitor.visitAddExpression(this);
     }
 }

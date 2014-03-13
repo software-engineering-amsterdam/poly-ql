@@ -3,7 +3,10 @@ package edu.uva.softwarecons.model.expression.literal;
 import edu.uva.softwarecons.model.expression.Expression;
 import edu.uva.softwarecons.model.type.StringType;
 import edu.uva.softwarecons.model.type.Type;
+import edu.uva.softwarecons.model.value.StringValue;
+import edu.uva.softwarecons.model.value.Value;
 import edu.uva.softwarecons.visitor.expression.IExpressionElementVisitor;
+import edu.uva.softwarecons.visitor.expression.IExpressionEvalVisitor;
 
 /**
  * Falconlabs
@@ -23,11 +26,6 @@ public class StringExpression implements Expression{
     }
 
     @Override
-    public Expression eval() {
-        return new StringExpression(value);
-    }
-
-    @Override
     public Type accept(IExpressionElementVisitor visitor) {
         return new StringType();
     }
@@ -37,4 +35,8 @@ public class StringExpression implements Expression{
         return obj instanceof StringExpression;
     }
 
+    @Override
+    public Value accept(IExpressionEvalVisitor visitor) {
+        return new StringValue(value);
+    }
 }

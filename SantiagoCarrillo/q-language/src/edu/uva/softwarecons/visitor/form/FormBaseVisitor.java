@@ -2,8 +2,6 @@ package edu.uva.softwarecons.visitor.form;
 
 import edu.uva.softwarecons.model.Form;
 import edu.uva.softwarecons.model.expression.literal.IdExpression;
-import edu.uva.softwarecons.model.expression.literal.IntExpression;
-import edu.uva.softwarecons.model.expression.ParenthesisExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.AddExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.DivExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.MulExpression;
@@ -166,10 +164,6 @@ public class FormBaseVisitor implements IFormElementVisitor, IExpressionElementV
         return expression.getArgument().accept(this);
     }
 
-    @Override
-    public Type visitParenthesisExpression(ParenthesisExpression expression) {
-        return expression.getArgument().accept(this);
-    }
 
 
 }

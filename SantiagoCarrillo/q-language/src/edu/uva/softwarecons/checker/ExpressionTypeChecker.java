@@ -4,7 +4,6 @@ import edu.uva.softwarecons.checker.error.InvalidTypeError;
 import edu.uva.softwarecons.checker.error.QuestionnaireError;
 import edu.uva.softwarecons.model.expression.BinaryExpression;
 import edu.uva.softwarecons.model.expression.Expression;
-import edu.uva.softwarecons.model.expression.ParenthesisExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.AddExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.DivExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.MulExpression;
@@ -156,10 +155,6 @@ public class ExpressionTypeChecker implements IExpressionElementVisitor {
         return questionTypes.get(idExpression.getId());
     }
 
-    @Override
-    public Type visitParenthesisExpression(ParenthesisExpression expression) {
-        return expression.getArgument().accept(this);
-    }
 
     private void validateIdExpressionType(IdExpression expression, Type expectedType) {
         if(!hasValidType(expression, expectedType)){
