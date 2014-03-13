@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.Set;
 
 import nl.uva.polyql.Log;
-import nl.uva.polyql.exceptions.DuplicateQuestionIdException;
 import nl.uva.polyql.model.types.StringType;
 import nl.uva.polyql.model.types.Type;
 import nl.uva.polyql.model.values.Value;
+import nl.uva.polyql.validation.ValidationErrors;
 import nl.uva.polyql.view.ValueView;
 
 public class Question implements Rule {
@@ -31,10 +31,6 @@ public class Question implements Rule {
 
     protected Question(final RuleContainer parent, final String id, final String label, final Type type) {
         mParent = parent;
-
-        if (parent.getQuestion(id) != null) {
-            throw new DuplicateQuestionIdException(id);
-        }
 
         mId = id;
         mLabel = StringType.parseInputToString(label);
@@ -124,6 +120,11 @@ public class Question implements Rule {
         for (final VisibilityListener listener : mVisibilityListeners) {
             listener.onParentVisibilityUpdate(visible);
         }
+    }
+
+    @Override
+    public ValidationErrors validate() {
+        return new ValidationErrors();
     }
 
     @Override

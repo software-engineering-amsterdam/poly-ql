@@ -7,12 +7,15 @@ import nl.uva.polyql.model.Question;
 import nl.uva.polyql.model.expressions.Expression;
 import nl.uva.polyql.model.types.Type;
 import nl.uva.polyql.model.values.Value;
+import nl.uva.polyql.validation.InvalidOperandError;
+import nl.uva.polyql.validation.ValidationErrors;
 
 public class Operation extends Expression {
 
     private final Expression mLeft;
     private final Operator mOperator;
     private final Expression mRight;
+    private Value<?> mValue;
 
     public Operation(final Expression left, final String operator, final Expression right) {
         mLeft = left;
@@ -28,7 +31,7 @@ public class Operation extends Expression {
 
     @Override
     public Value<?> getValue() {
-        return mOperator.performOperation(this);
+        return mValue;
     }
 
     @Override
@@ -50,7 +53,7 @@ public class Operation extends Expression {
 
     @Override
     public String toString() {
-        return "(" + mLeft + " " + mOperator + " " + mRight + ") = " + getValue();
+        return "(" + mLeft + " " + mOperator + " " + mRight + ")";
     }
 
     @Override
@@ -58,5 +61,29 @@ public class Operation extends Expression {
         final Set<Question> questions = mLeft.getReferencedQuestions();
         questions.addAll(mRight.getReferencedQuestions());
         return questions;
+    }
+
+    private void recalculate() {
+        mValue = mOperator.performOperation(this);
+    }
+
+    @Override
+    public ValidationErrors validate() {
+        final ValidationErrors errors = mLeft.validate();
+        errors.merge(mRight.validate());
+
+        if (!errors.isFatal()) {
+            recalculate();
+            if (!isValid()) {
+                errors.add(new InvalidOperandError(mLeft, mOperator, mRight));
+            }
+        }
+
+        return errors;
+    }
+
+    @Override
+    public boolean isValid() {
+        return mValue.getType() != Type.INVALID;
     }
 }

@@ -15,7 +15,7 @@ formrule[RuleContainer rc] :
 	COMMENT | (field[$rc] | question[$rc] | ifstatement[$rc]) COMMENT?;
 	
 field[RuleContainer rc] : 
-	id=ID ':' label=STRING '(' e=expr_main[$rc] ')' { $rc.addField($id.text, $label.text, $e.e); };
+	id=ID ':' label=STRING type=TYPE '(' e=expr_main[$rc] ')' { $rc.addField($id.text, $label.text, $type.text, $e.e); };
 
 question[RuleContainer rc] : 
 	id=ID ':' label=STRING type=TYPE { $rc.addQuestion($id.text, $label.text, $type.text); };

@@ -8,6 +8,7 @@ import nl.uva.polyql.antlr4.QuestionnaireParser;
 import nl.uva.polyql.antlr4.QuestionnaireParser.FormContext;
 import nl.uva.polyql.model.Rule;
 import nl.uva.polyql.model.RuleContainer;
+import nl.uva.polyql.validation.Validator;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -31,7 +32,11 @@ public class Initialiser {
 
             printRuleContainer(tree.f, 0);
 
-            new FormFrame(tree.f);
+            final Validator validator = new Validator(tree.f);
+            validator.print();
+            if (!validator.isFatal()) {
+                new FormFrame(tree.f);
+            }
 
         } catch (final IOException ex) {
             ex.printStackTrace();

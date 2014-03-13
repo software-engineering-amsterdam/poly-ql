@@ -3,29 +3,29 @@ package nl.uva.polyql.model.expressions;
 import java.util.HashSet;
 import java.util.Set;
 
-import nl.uva.polyql.exceptions.InvalidModifierException;
-import nl.uva.polyql.exceptions.InvalidQuestionIdException;
 import nl.uva.polyql.model.Question;
 import nl.uva.polyql.model.RuleContainer;
 import nl.uva.polyql.model.expressions.modifiers.Modifier;
 import nl.uva.polyql.model.expressions.modifiers.ModifierHelper;
 import nl.uva.polyql.model.types.Type;
 import nl.uva.polyql.model.values.Value;
+import nl.uva.polyql.validation.UnknownIdError;
+import nl.uva.polyql.validation.ValidationErrors;
 
 public class QuestionAtom extends Expression {
 
+    private final String mQuestionId;
     private final Question mQuestion;
     private final Modifier<?> mModifier;
 
     public QuestionAtom(final RuleContainer parentRuleContainer, final String id, final String modifier) {
+        mQuestionId = id;
         mQuestion = parentRuleContainer.getQuestion(id);
-        if (mQuestion == null) {
-            throw new InvalidQuestionIdException(id);
-        }
-
         mModifier = ModifierHelper.getBySyntax(modifier);
-        if (!mModifier.isValid(mQuestion.getType())) {
-            throw new InvalidModifierException(mModifier, mQuestion.getType());
+        if (mQuestion != null) {
+            if (!mModifier.isValid(mQuestion.getType())) {
+                // TODO: Invalid modifier
+            }
         }
     }
 
@@ -49,5 +49,19 @@ public class QuestionAtom extends Expression {
         final Set<Question> questions = new HashSet<>();
         questions.add(mQuestion);
         return questions;
+    }
+
+    @Override
+    public ValidationErrors validate() {
+        final ValidationErrors errors = new ValidationErrors();
+        if (mQuestion == null) {
+            errors.add(new UnknownIdError(mQuestionId));
+        }
+        return errors;
+    }
+
+    @Override
+    public boolean isValid() {
+        return getReturnType() != Type.INVALID;
     }
 }

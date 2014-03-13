@@ -1,16 +1,11 @@
 package nl.uva.polyql.model;
 
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
-
-import nl.uva.polyql.Log;
 
 public class Form extends RuleContainer {
 
     private final String mLabel;
-    private final Set<String> mLabels = new HashSet<>();
     private final List<String> mWarnings = new LinkedList<>();
 
     public Form(final String label) {
@@ -18,24 +13,8 @@ public class Form extends RuleContainer {
     }
 
     @Override
-    public boolean addLabel(final String label) {
-        if (mLabels.contains(label)) {
-            addWarning("Label \"" + label + "\" is already used");
-            return false;
-        }
-
-        mLabels.add(label);
-        return true;
-    }
-
-    @Override
     public boolean isVisible() {
         return true;
-    }
-
-    private void addWarning(final String warning) {
-        mWarnings.add(warning);
-        Log.e("Warning: " + warning);
     }
 
     public List<String> getWarnings() {

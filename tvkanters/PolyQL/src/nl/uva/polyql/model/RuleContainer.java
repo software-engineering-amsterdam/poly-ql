@@ -19,8 +19,8 @@ public abstract class RuleContainer {
         return question;
     }
 
-    public Field addField(final String id, final String content, final Expression expression) {
-        final Field field = new Field(this, id, content, expression);
+    public Field addField(final String id, final String content, final String type, final Expression expression) {
+        final Field field = new Field(this, id, content, type, expression);
         addQuestion(field);
         return field;
     }
@@ -28,8 +28,6 @@ public abstract class RuleContainer {
     private void addQuestion(final Question question) {
         mQuestions.put(question.getId(), question);
         mChildRules.add(question);
-
-        addLabel(question.getLabel());
     }
 
     public IfStatement addIfStatement(final Expression expression) {
@@ -82,12 +80,10 @@ public abstract class RuleContainer {
 
         return null;
     }
-    
+
     public RuleContainer getParent() {
         return null;
     }
-
-    public abstract boolean addLabel(String label);
 
     public abstract boolean isVisible();
 

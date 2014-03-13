@@ -4,9 +4,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 import nl.uva.polyql.model.Question;
-import nl.uva.polyql.model.types.Type;
 import nl.uva.polyql.model.types.StringType;
+import nl.uva.polyql.model.types.Type;
 import nl.uva.polyql.model.values.StringValue;
+import nl.uva.polyql.validation.ValidationErrors;
 
 public class StringAtom extends Expression {
 
@@ -34,6 +35,11 @@ public class StringAtom extends Expression {
     @Override
     public Set<Question> getReferencedQuestions() {
         return new HashSet<>();
+    }
+
+    @Override
+    public ValidationErrors validate() {
+        return new ValidationErrors();
     }
 
 }

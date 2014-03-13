@@ -3,7 +3,8 @@ package nl.uva.polyql.model.types;
 public enum Type {
     BOOLEAN(new BooleanType()),
     NUMBER(new NumberType()),
-    STRING(new StringType());
+    STRING(new StringType()),
+    INVALID(new InvalidType());
 
     private final ValueType<?> mType;
 

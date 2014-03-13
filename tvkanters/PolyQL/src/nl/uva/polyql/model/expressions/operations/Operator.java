@@ -1,6 +1,7 @@
 package nl.uva.polyql.model.expressions.operations;
 
 import nl.uva.polyql.model.values.BooleanValue;
+import nl.uva.polyql.model.values.InvalidValue;
 import nl.uva.polyql.model.values.NumberValue;
 import nl.uva.polyql.model.values.StringValue;
 import nl.uva.polyql.model.values.Value;
@@ -13,23 +14,23 @@ public abstract class Operator implements SyntaxKey {
     }
 
     public Value<?> performOperation(final BooleanValue leftValue, final BooleanValue booleanValue) {
-        throw new UnsupportedOperationException();
+        return new InvalidValue();
     }
 
     public Value<?> performOperation(final NumberValue leftValue, final NumberValue numberValue) {
-        throw new UnsupportedOperationException();
+        return new InvalidValue();
     }
 
     public Value<?> performOperation(final StringValue leftValue, final NumberValue numberValue) {
-        throw new UnsupportedOperationException();
+        return new InvalidValue();
     }
 
     public Value<?> performOperation(final NumberValue leftValue, final StringValue stringValue) {
-        throw new UnsupportedOperationException();
+        return new InvalidValue();
     }
 
     public Value<?> performOperation(final StringValue leftValue, final StringValue stringValue) {
-        throw new UnsupportedOperationException();
+        return new InvalidValue();
     }
 
     @Override

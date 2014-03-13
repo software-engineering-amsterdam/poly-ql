@@ -34,19 +34,19 @@ public abstract class Value<T> {
     public abstract Type getType();
 
     public Value<?> performOperationOnLeft(final Operator operator, final Value<?> rightValue) {
-        throw new UnsupportedOperationException();
+        return new InvalidValue();
     }
 
     public Value<?> performOperationOnRight(final BooleanValue leftValue, final Operator operator) {
-        throw new UnsupportedOperationException();
+        return new InvalidValue();
     }
 
     public Value<?> performOperationOnRight(final StringValue leftValue, final Operator operator) {
-        throw new UnsupportedOperationException();
+        return new InvalidValue();
     }
 
     public Value<?> performOperationOnRight(final NumberValue leftValue, final Operator operator) {
-        throw new UnsupportedOperationException();
+        return new InvalidValue();
     }
 
     public abstract Value<T> applyModifier(Modifier<?> modifier);

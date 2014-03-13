@@ -5,6 +5,7 @@ import java.util.Set;
 import nl.uva.polyql.model.Question;
 import nl.uva.polyql.model.types.Type;
 import nl.uva.polyql.model.values.Value;
+import nl.uva.polyql.validation.ValidationErrors;
 
 public abstract class Expression {
 
@@ -19,4 +20,10 @@ public abstract class Expression {
      * @return The questions that this expression references, may never return null
      */
     public abstract Set<Question> getReferencedQuestions();
+
+    public abstract ValidationErrors validate();
+
+    public boolean isValid() {
+        return true;
+    }
 }

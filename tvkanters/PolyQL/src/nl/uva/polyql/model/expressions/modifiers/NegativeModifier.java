@@ -1,6 +1,5 @@
 package nl.uva.polyql.model.expressions.modifiers;
 
-import nl.uva.polyql.exceptions.InvalidModifierException;
 import nl.uva.polyql.model.types.Type;
 import nl.uva.polyql.model.values.BooleanValue;
 import nl.uva.polyql.model.values.NumberValue;
@@ -26,11 +25,11 @@ public class NegativeModifier extends Modifier<NumberValue> {
 
     @Override
     public BooleanValue apply(final BooleanValue value) {
-        throw new InvalidModifierException(this, value.getType());
+        throw new RuntimeException();
     }
 
     @Override
     public StringValue apply(final StringValue value) {
-        throw new InvalidModifierException(this, value.getType());
+        throw new RuntimeException();
     }
 }

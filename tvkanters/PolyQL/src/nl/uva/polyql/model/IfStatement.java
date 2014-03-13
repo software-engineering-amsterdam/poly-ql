@@ -1,9 +1,10 @@
 package nl.uva.polyql.model;
 
-import nl.uva.polyql.exceptions.InvalidIfStatementTypeException;
 import nl.uva.polyql.model.expressions.Expression;
 import nl.uva.polyql.model.types.Type;
 import nl.uva.polyql.model.values.BooleanValue;
+import nl.uva.polyql.validation.InvalidIfStatementError;
+import nl.uva.polyql.validation.ValidationErrors;
 
 public class IfStatement extends RuleContainer implements Rule, Question.ValueListener {
 
@@ -15,12 +16,7 @@ public class IfStatement extends RuleContainer implements Rule, Question.ValueLi
     protected IfStatement(final RuleContainer parent, final Expression expression) {
         mParent = parent;
 
-        if (expression.getReturnType() != Type.BOOLEAN) {
-            throw new InvalidIfStatementTypeException(expression.getReturnType());
-        }
-
         mExpression = expression;
-        mSatisfied = checkSatisfaction();
 
         for (final Question question : mExpression.getReferencedQuestions()) {
             question.addUpdateListener(this);
@@ -47,6 +43,8 @@ public class IfStatement extends RuleContainer implements Rule, Question.ValueLi
 
     @Override
     public void onQuestionUpdate(final Question question) {
+        mExpression.validate();
+
         final boolean oldVisible = isVisible();
         final boolean satisfied = checkSatisfaction();
 
@@ -74,8 +72,22 @@ public class IfStatement extends RuleContainer implements Rule, Question.ValueLi
     }
 
     @Override
-    public boolean addLabel(final String label) {
-        return getParent().addLabel(label);
-    }
+    public ValidationErrors validate() {
+        // Validate expression
+        final ValidationErrors errors = mExpression.validate();
+        if (!errors.isFatal()) {
+            if (mExpression.getReturnType() != Type.BOOLEAN) {
+                errors.add(new InvalidIfStatementError(mExpression.getReturnType()));
+            } else {
+                mSatisfied = checkSatisfaction();
+            }
+        }
 
+        // Validate children
+        for (final Rule rule : getChildRules()) {
+            errors.merge(rule.validate());
+        }
+
+        return errors;
+    }
 }

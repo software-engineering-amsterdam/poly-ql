@@ -7,6 +7,7 @@ import nl.uva.polyql.model.Question;
 import nl.uva.polyql.model.types.NumberType;
 import nl.uva.polyql.model.types.Type;
 import nl.uva.polyql.model.values.NumberValue;
+import nl.uva.polyql.validation.ValidationErrors;
 
 public class NumberAtom extends Expression {
 
@@ -34,6 +35,11 @@ public class NumberAtom extends Expression {
     @Override
     public Set<Question> getReferencedQuestions() {
         return new HashSet<>();
+    }
+
+    @Override
+    public ValidationErrors validate() {
+        return new ValidationErrors();
     }
 
 }
