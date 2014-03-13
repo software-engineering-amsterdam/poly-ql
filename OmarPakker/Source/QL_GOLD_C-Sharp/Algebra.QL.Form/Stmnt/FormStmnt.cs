@@ -1,7 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using Algebra.QL.Core.Stmnt;
-using Algebra.QL.Form.Helpers;
 
 namespace Algebra.QL.Form.Stmnt
 {
@@ -10,7 +9,7 @@ namespace Algebra.QL.Form.Stmnt
         public FormStmnt(string name, IFormStmnt body)
             : base(name, body)
         {
-            TypeEnvironment.Instance.ResetVariables();
+
         }
 
         public FrameworkElement BuildForm()
@@ -21,6 +20,16 @@ namespace Algebra.QL.Form.Stmnt
             sPanel.Children.Add(Body.BuildForm());
 
             return new ScrollViewer() { Content = sPanel };
+        }
+
+        public IFormStmnt Clone()
+        {
+            return new FormStmnt(Name, Body.Clone());
+        }
+
+        public void Dispose()
+        {
+            Body.Dispose();
         }
     }
 }

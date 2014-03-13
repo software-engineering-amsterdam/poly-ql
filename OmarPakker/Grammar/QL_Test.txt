@@ -29,12 +29,10 @@ form Form1
     * Block comment
     */
 
-    goto Form2;
+    gotoNextForm;
 }
 
 form Form2
 {
     "Bool:" >> answer1:bool;
-
-    goto Form3;                                                //ERROR
 }

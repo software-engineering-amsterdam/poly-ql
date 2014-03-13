@@ -18,8 +18,19 @@ namespace Algebra.QL.Form.Stmnt
             StackPanel sp = new StackPanel();
             sp.Orientation = Orientation.Horizontal;
             sp.Children.Add(new Label() { Width = 200, Content = Text });
-            sp.Children.Add(Expression.BuildForm().BuildElement(Expression, false));
+            sp.Children.Add(Expression.ExpressionType.BuildElement(Expression, false));
+
             return sp;
+        }
+
+        public IFormStmnt Clone()
+        {
+            return new LabelStmnt(Text, Expression.Clone());
+        }
+
+        public void Dispose()
+        {
+            Expression.Dispose();
         }
     }
 }

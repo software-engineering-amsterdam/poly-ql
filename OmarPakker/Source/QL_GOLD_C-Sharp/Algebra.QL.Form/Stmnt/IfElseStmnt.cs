@@ -35,5 +35,17 @@ namespace Algebra.QL.Form.Stmnt
 
             return sp;
         }
+
+        public IFormStmnt Clone()
+        {
+            return new IfElseStmnt(CheckExpression.Clone(), IfTrueBody.Clone(), IfFalseBody.Clone());
+        }
+
+        public void Dispose()
+        {
+            CheckExpression.Dispose();
+            IfTrueBody.Dispose();
+            IfFalseBody.Dispose();
+        }
 	}
 }

@@ -17,5 +17,10 @@ namespace Algebra.QL.Form.Expr.Literals
         {
 
         }
+        
+        public override IFormExpr Clone()
+        {
+            return new DateLiteral(Value);
+        }
     }
 }

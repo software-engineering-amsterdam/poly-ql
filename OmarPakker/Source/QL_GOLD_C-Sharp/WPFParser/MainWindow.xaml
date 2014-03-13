@@ -49,7 +49,7 @@
                                 <Paragraph>"My Value:" &gt;&gt; myValue:int;</Paragraph>
                                 <Paragraph>loop (myValue)</Paragraph>
                                 <Paragraph Margin="25 0 0 0">"In the loop:" &gt;&gt; loopAnswer:int;</Paragraph>
-                                <Paragraph></Paragraph>
+                                <Paragraph>"After loop:" &lt;&lt; loopAnswer;</Paragraph>
                             </Section>
                             <Paragraph>}</Paragraph>
                         </FlowDocument>

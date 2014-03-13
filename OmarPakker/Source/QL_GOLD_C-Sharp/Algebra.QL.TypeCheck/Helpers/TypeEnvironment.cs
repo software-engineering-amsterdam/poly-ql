@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Algebra.QL.TypeCheck.Expr;
 
 namespace Algebra.QL.TypeCheck.Helpers
@@ -7,19 +6,19 @@ namespace Algebra.QL.TypeCheck.Helpers
     public class TypeEnvironment
     {
         private readonly HashSet<string> forms;
-        private readonly Dictionary<string, ITypeCheck> gotos;
         private readonly Dictionary<string, VarInitExpr> variables;
+        private bool gotoDeclared;
 
         public TypeEnvironment()
         {
             forms = new HashSet<string>();
-            gotos = new Dictionary<string, ITypeCheck>();
             variables = new Dictionary<string, VarInitExpr>();
         }
 
         public void ResetVariables()
         {
             variables.Clear();
+            gotoDeclared = false;
         }
 
         public void DeclareForm(string name)
@@ -27,19 +26,14 @@ namespace Algebra.QL.TypeCheck.Helpers
             forms.Add(name);
         }
 
-        public void DeclareGoto(string name, ITypeCheck item)
+        public void DeclareGoto()
         {
-            gotos.Add(name, item);
+            gotoDeclared = true;
         }
 
-        public bool IsGotoDeclared(string name)
+        public bool IsGotoDeclared()
         {
-            return gotos.ContainsKey(name);
-        }
-
-        public IEnumerable<KeyValuePair<string, ITypeCheck>> GetGotosWithoutForm()
-        {
-            return gotos.Where(g => !forms.Contains(g.Key));
+            return gotoDeclared;
         }
 
         public void DeclareVariable(VarInitExpr variable)

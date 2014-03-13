@@ -55,7 +55,7 @@ Comment End   = '*/'
 <Statement>   ::= if '(' <Expression> ')' <Statement> <OptElse>
                |  <Block>
                |  <Question>
-               |  goto Identifier ';'
+               |  gotoNextForm ';'
                |  loop '(' <Expression> ')' <Statement>
 
 ! GOLD parser will choose 'shift' over 'reduce' for this,

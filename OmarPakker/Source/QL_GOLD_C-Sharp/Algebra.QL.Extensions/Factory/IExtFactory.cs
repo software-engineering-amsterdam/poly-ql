@@ -13,7 +13,7 @@ namespace Algebra.QL.Extensions.Factory
 
         S Forms(S l, S r);
 
-        S Goto(string var);
+        S Goto();
 		S Loop(E e, S s);
     }
 }

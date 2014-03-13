@@ -18,15 +18,22 @@ namespace Algebra.QL.Form.Expr
             set { Expr1.ExpressionValue = !(bool)value; }
         }
 
+        public IFormType ExpressionType { get { return Expr1.ExpressionType; } }
+
         public NegateBoolExpr(IFormExpr expr)
             : base(expr)
 		{
             
 		}
 
-        public IFormType BuildForm()
+        public IFormExpr Clone()
         {
-            return Expr1.BuildForm();
+            return new NegateBoolExpr(Expr1.Clone());
+        }
+
+        public void Dispose()
+        {
+            Expr1.Dispose();
         }
     }
 }

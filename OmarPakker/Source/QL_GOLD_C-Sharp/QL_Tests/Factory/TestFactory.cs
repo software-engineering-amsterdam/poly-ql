@@ -178,9 +178,9 @@ namespace QL_Tests.Factory
             return new FormStmnt(var, s);
         }
 
-        public ITestStmnt Goto(string var)
+        public ITestStmnt Goto()
         {
-            return new GotoStmnt(var);
+            return new GotoStmnt();
         }
 
         public ITestStmnt Question(string s, ITestExpr e)

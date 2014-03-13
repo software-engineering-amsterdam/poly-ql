@@ -1,10 +1,9 @@
 ﻿
 namespace QL_Tests.Stmnt
 {
-    public class GotoStmnt : Algebra.QL.Extensions.Stmnt.GotoStmnt, ITestStmnt
+    public class GotoStmnt : ITestStmnt
     {
-		public GotoStmnt(string gotoName)
-            : base(gotoName)
+		public GotoStmnt()
 		{
 
 		}
@@ -16,12 +15,12 @@ namespace QL_Tests.Stmnt
 				return false;
 			}
 
-			return GotoName.Equals(((GotoStmnt)obj).GotoName);
+			return true;
 		}
 
 		public override int GetHashCode()
 		{
-			return GotoName.GetHashCode();
+            return typeof(GotoStmnt).GetHashCode();
 		}
     }
 }

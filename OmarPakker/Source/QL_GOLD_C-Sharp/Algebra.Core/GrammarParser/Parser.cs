@@ -8,6 +8,7 @@ namespace Algebra.Core.GrammarParser
 {
     public abstract class Parser
     {
+        //TODO: Delegate or Action<>?
         public event Action<Tuple<int, int>, Tuple<int, int>, object> OnReduction;
         public event Action<object> OnCompletion
         {

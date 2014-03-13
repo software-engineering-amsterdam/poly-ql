@@ -54,10 +54,5 @@ namespace Algebra.QL.Form.Type
         {
             return GetType().GetHashCode();
         }
-
-		public override string ToString()
-		{
-			return "undefined";
-		}
 	}
 }

@@ -13,6 +13,7 @@ namespace Algebra.QL.Form.Expr
         }
 
         public abstract object ExpressionValue { get; set; }
+        public IFormType ExpressionType { get { return Expr1.ExpressionType.GetLeastUpperBound(Expr2.ExpressionType); } }
 
         public BinaryExpr(IFormExpr l, IFormExpr r)
             : base(l, r)
@@ -20,12 +21,12 @@ namespace Algebra.QL.Form.Expr
             
         }
 
-        public IFormType BuildForm()
-        {
-            IFormType a = Expr1.BuildForm();
-            IFormType b = Expr2.BuildForm();
+        public abstract IFormExpr Clone();
 
-            return a.GetLeastUpperBound(b);
+        public void Dispose()
+        {
+            Expr1.Dispose();
+            Expr2.Dispose();
         }
     }
 }

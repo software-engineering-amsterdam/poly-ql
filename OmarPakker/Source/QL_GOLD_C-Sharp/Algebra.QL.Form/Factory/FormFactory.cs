@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Algebra.QL.Extensions.Factory;
 using Algebra.QL.Form.Expr;
 using Algebra.QL.Form.Expr.Literals;
@@ -9,9 +11,11 @@ namespace Algebra.QL.Form.Factory
 {
     public class FormFactory : IExtFactory<IFormExpr, IFormStmnt, IFormType>
     {
+        private IDictionary<string, ObservableCollection<IFormExpr>> variables;
+
         public FormFactory()
         {
-
+            variables = new Dictionary<string, ObservableCollection<IFormExpr>>();
         }
 
         public IFormType DateType()
@@ -66,7 +70,7 @@ namespace Algebra.QL.Form.Factory
 
         public IFormExpr Variable(string var)
         {
-            return new VarExpr(var);
+            return new VarExpr(var, variables);
         }
 
         public IFormExpr Or(IFormExpr l, IFormExpr r)
@@ -146,7 +150,7 @@ namespace Algebra.QL.Form.Factory
 
         public IFormExpr VarAssign(string var, IFormType t, IFormExpr e)
         {
-            return new VarInitExpr(var, t, e);
+            return new VarInitExpr(var, t, e, variables);
         }
 
         public IFormExpr IfElse(IFormExpr toEval, IFormExpr ifTrue, IFormExpr ifFalse)
@@ -166,12 +170,13 @@ namespace Algebra.QL.Form.Factory
 
         public IFormStmnt Form(string var, IFormStmnt s)
         {
+            variables = new Dictionary<string, ObservableCollection<IFormExpr>>();
             return new FormStmnt(var, s);
         }
 
-        public IFormStmnt Goto(string var)
+        public IFormStmnt Goto()
         {
-            return new GotoStmnt(var);
+            return new GotoStmnt();
         }
 
         public IFormStmnt Question(string s, IFormExpr e)

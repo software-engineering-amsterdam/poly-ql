@@ -39,9 +39,9 @@ namespace Algebra.QL.Extensions.Factory
             return new Tuple<S1, S2>(Factory1.Forms(l.Item1, r.Item1), Factory2.Forms(l.Item2, r.Item2));
         }
 
-        public Tuple<S1, S2> Goto(string var)
+        public Tuple<S1, S2> Goto()
         {
-            return new Tuple<S1, S2>(Factory1.Goto(var), Factory2.Goto(var));
+            return new Tuple<S1, S2>(Factory1.Goto(), Factory2.Goto());
         }
 
         public Tuple<S1, S2> Loop(Tuple<E1, E2> e, Tuple<S1, S2> s)

@@ -8,6 +8,7 @@ namespace GOLD.Engine
 {
     public class Parser
     {
+        //TODO: Delegate or Action<>?
         public event Action<Token> OnTokenRead;
         public event Action<Tuple<int, int>, Tuple<int, int>, Reduction> OnReduction;
         public event Action<object> OnCompletion;

@@ -4,7 +4,8 @@ namespace Algebra.QL.TypeCheck.Helpers
 {
     public class ErrorReporter
     {
-        public delegate void OnTypeCheckErrorEventHandler(Tuple<int, int> sourceStartPos, Tuple<int, int> sourceEndPos, string msg, bool error);
+        //TODO: Delegate or Action<>?
+        public delegate void OnTypeCheckErrorEventHandler(Tuple<int, int> sourceStartPos, Tuple<int, int> sourceEndPos, string msg, bool isError);
         public event OnTypeCheckErrorEventHandler OnTypeCheckError;
         public bool HasErrors { get; private set; }
 

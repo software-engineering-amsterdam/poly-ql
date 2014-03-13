@@ -43,9 +43,9 @@ namespace Algebra.QL.Extensions.TypeCheck.Factory
             return new FormsStmnt(l, r);
         }
 
-        public ITypeCheckStmnt Goto(string var)
+        public ITypeCheckStmnt Goto()
         {
-            return new GotoStmnt(var);
+            return new GotoStmnt();
         }
 
 		public ITypeCheckStmnt Loop(ITypeCheckExpr e, ITypeCheckStmnt s)

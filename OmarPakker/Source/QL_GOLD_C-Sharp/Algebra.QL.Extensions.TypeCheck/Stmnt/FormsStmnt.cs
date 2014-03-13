@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using Algebra.QL.Core.Stmnt;
-using Algebra.QL.TypeCheck;
 using Algebra.QL.TypeCheck.Helpers;
 using Algebra.QL.TypeCheck.Stmnt;
 
@@ -22,12 +20,6 @@ namespace Algebra.QL.Extensions.TypeCheck.Stmnt
         {
             Statement1.TypeCheck(env, errRep);
             Statement2.TypeCheck(env, errRep);
-
-            foreach (KeyValuePair<string, ITypeCheck> gotoStmnt in env.GetGotosWithoutForm())
-            {
-                errRep.ReportError(gotoStmnt.Value, String.Format("'goto' statement not possible. Form '{0}' does not exist!",
-                    gotoStmnt.Key));
-            }
         }
     }
 }

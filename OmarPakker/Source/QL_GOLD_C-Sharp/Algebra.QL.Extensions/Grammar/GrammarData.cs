@@ -46,7 +46,7 @@ namespace Grammar.Generated.v2
                 { "Statement_If_Lparen_Rparen", 11 },                       // <Statement> ::= if '(' <Expression> ')' <Statement> <OptElse>
                 { "Statement", 12 },                                        // <Statement> ::= <Block>
                 { "Statement2", 13 },                                       // <Statement> ::= <Question>
-                { "Statement_Goto_Identifier_Semi", 14 },                   // <Statement> ::= goto Identifier ';'
+                { "Statement_Gotonextform_Semi", 14 },                      // <Statement> ::= gotoNextForm ';'
                 { "Statement_Loop_Lparen_Rparen", 15 },                     // <Statement> ::= loop '(' <Expression> ')' <Statement>
                 { "Optelse_Else", 16 },                                     // <OptElse> ::= else <Statement>
                 { "Optelse", 17 },                                          // <OptElse> ::= 
@@ -170,8 +170,8 @@ namespace Grammar.Generated.v2
 //{
 //    return;
 //}
-////<Statement> ::= goto Identifier ';'
-//if (r.Parent.TableIndex() == Rules["Statement_Goto_Identifier_Semi"])
+////<Statement> ::= gotoNextForm ';'
+//if (r.Parent.TableIndex() == Rules["Statement_Gotonextform_Semi"])
 //{
 //    return;
 //}
@@ -450,8 +450,8 @@ namespace Grammar.Generated.v2
 //        // <Statement> ::= <Question>
 //        break;
 //
-//    case RuleIndices.Statement_Goto_Identifier_Semi:
-//        // <Statement> ::= goto Identifier ';'
+//    case RuleIndices.Statement_Gotonextform_Semi:
+//        // <Statement> ::= gotoNextForm ';'
 //        break;
 //
 //    case RuleIndices.Statement_Loop_Lparen_Rparen:

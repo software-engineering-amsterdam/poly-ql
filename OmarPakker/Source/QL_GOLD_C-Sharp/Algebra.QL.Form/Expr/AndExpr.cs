@@ -14,5 +14,10 @@ namespace Algebra.QL.Form.Expr
         {
 
         }
+
+        public override IFormExpr Clone()
+        {
+            return new AndExpr(Expr1.Clone(), Expr2.Clone());
+        }
 	}
 }

@@ -18,18 +18,24 @@ namespace Algebra.QL.Form.Expr
             set { }
         }
 
+        public IFormType ExpressionType { get { return Expr2.ExpressionType.GetLeastUpperBound(Expr3.ExpressionType); } }
+
         public IfElseExpr(IFormExpr a, IFormExpr b, IFormExpr c)
             : base(a, b, c)
         {
             
         }
 
-        public IFormType BuildForm()
+        public IFormExpr Clone()
         {
-            IFormType a = Expr2.BuildForm();
-            IFormType b = Expr3.BuildForm();
+            return new IfElseExpr(Expr1.Clone(), Expr2.Clone(), Expr3.Clone());
+        }
 
-            return a.GetLeastUpperBound(b);
+        public void Dispose()
+        {
+            Expr1.Dispose();
+            Expr2.Dispose();
+            Expr3.Dispose();
         }
     }
 }

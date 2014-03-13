@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using Algebra.QL.Extensions.Stmnt;
@@ -8,10 +9,12 @@ namespace Algebra.QL.Form.Stmnt
 {
 	public class LoopStmnt : LoopStmnt<IFormExpr, IFormStmnt>, IFormStmnt
 	{
+        private readonly IList<IFormStmnt> bodyClones;
+
         public LoopStmnt(IFormExpr expr, IFormStmnt body)
             : base(expr, body)
 		{
-
+            bodyClones = new List<IFormStmnt>();
 		}
 
         public FrameworkElement BuildForm()
@@ -35,15 +38,34 @@ namespace Algebra.QL.Form.Stmnt
             if (count >= 0 && count < sp.Children.Count)
             {
                 sp.Children.RemoveRange(count, sp.Children.Count - count);
+
+                for (int i = bodyClones.Count - 1; i >= count; i--)
+                {
+                    bodyClones[i].Dispose();
+                    bodyClones.RemoveAt(i);
+                }
             }
             else if (count > sp.Children.Count)
             {
                 for (int i = sp.Children.Count; i < count; i++)
                 {
                     //TODO: fix value of looped variables
-                    sp.Children.Add(Body.BuildForm());
+                    IFormStmnt bodyClone = Body.Clone();
+                    bodyClones.Add(bodyClone);
+                    sp.Children.Add(bodyClone.BuildForm());
                 }
             }
+        }
+
+        public IFormStmnt Clone()
+        {
+            return new LoopStmnt(Expression.Clone(), Body.Clone());
+        }
+
+        public void Dispose()
+        {
+            Expression.Dispose();
+            Body.Dispose();
         }
     }
 }

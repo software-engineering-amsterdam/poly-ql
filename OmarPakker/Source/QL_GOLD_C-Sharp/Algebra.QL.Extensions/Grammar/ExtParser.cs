@@ -51,9 +51,9 @@ namespace Algebra.QL.Extensions.Grammar
                 return factory.Forms((S)r[0].Tag, (S)r[1].Tag);
             }
             //<Statement> ::= goto Identifier ';'
-            else if (tableIndex == Rules["Statement_Goto_Identifier_Semi"])
+            else if (tableIndex == Rules["Statement_Gotonextform_Semi"])
             {
-                return factory.Goto((string)r[1].Tag);
+                return factory.Goto();
             }
 			// <Statement> ::= loop '(' <Expression> ')' <Statement>
 			else if (tableIndex == Rules["Statement_Loop_Lparen_Rparen"])

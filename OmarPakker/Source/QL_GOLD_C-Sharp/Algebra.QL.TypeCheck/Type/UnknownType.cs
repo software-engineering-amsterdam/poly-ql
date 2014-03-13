@@ -3,7 +3,6 @@ using Algebra.QL.TypeCheck.Expr;
 
 namespace Algebra.QL.TypeCheck.Type
 {
-	//TODO: Get rid of UnknownType?
     public class UnknownType : ITypeCheckType
     {
         public Tuple<int, int> SourceStartPosition { get; set; }

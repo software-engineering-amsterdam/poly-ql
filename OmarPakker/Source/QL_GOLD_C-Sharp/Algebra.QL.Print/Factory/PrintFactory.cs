@@ -169,9 +169,9 @@ namespace Algebra.QL.Print.Factory
             return new FormStmnt(var, s);
         }
 
-        public IPrintStmnt Goto(string var)
+        public IPrintStmnt Goto()
         {
-            return new GotoStmnt(var);
+            return new GotoStmnt();
         }
 
         public IPrintStmnt Question(string s, IPrintExpr e)

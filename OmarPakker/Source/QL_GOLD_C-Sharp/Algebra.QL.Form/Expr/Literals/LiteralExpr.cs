@@ -7,13 +7,6 @@ namespace Algebra.QL.Form.Expr.Literals
     public abstract class LiteralExpr<V> : LiteralExpr<IFormType, V>, IFormExpr
     {
         public event Action ValueChanged;
-
-        protected LiteralExpr(V value)
-            : base(value)
-        {
-
-        }
-
         public virtual object ExpressionValue
         {
             get { return Value; }
@@ -26,10 +19,19 @@ namespace Algebra.QL.Form.Expr.Literals
                 }
             }
         }
+        public IFormType ExpressionType { get { return Type; } }
 
-        public IFormType BuildForm()
+        protected LiteralExpr(V value)
+            : base(value)
         {
-            return Type;
+
+        }
+
+        public abstract IFormExpr Clone();
+
+        public void Dispose()
+        {
+            ExpressionValue = default(V);
         }
     }
 }
