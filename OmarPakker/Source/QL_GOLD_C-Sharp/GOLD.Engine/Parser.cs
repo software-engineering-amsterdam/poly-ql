@@ -244,50 +244,42 @@ namespace GOLD.Engine
                             return false; //Error; abort
 
                         default:
-                            if (!DoParse(inputTokens, tokenStack, lookAheadBuffer, ref lalrState, read))
+                            LRActionList actionList = egtDataManager.GetLRActionList(lalrState);
+                            LRAction parseAction = actionList[read.Symbol];
+                            if (parseAction == null)
                             {
+                                HandleSyntaxError(actionList, read);
                                 return false;
+                            }
+
+                            switch (parseAction.Type)
+                            {
+                                case LRActionType.Accept:
+                                    if (OnCompletion != null)
+                                    {
+                                        OnCompletion(tokenStack.Peek().Tag);
+                                    }
+                                    return true;
+
+                                case LRActionType.Shift:
+                                    lalrState = parseAction.Value;
+                                    read.State = lalrState;
+                                    tokenStack.Push(read);
+                                    //It now exists on the Token-Stack and must be eliminated from the queue.
+                                    inputTokens.Dequeue();
+                                    break;
+
+                                case LRActionType.Reduce:
+                                    if (!DoReduction(tokenStack, lookAheadBuffer, ref lalrState, parseAction))
+                                    {
+                                        return false;
+                                    }
+                                    break;
                             }
                             break;
                     }
                 }
             }
-        }
-
-        private bool DoParse(TokenQueueStack inputTokens, Stack<Token> tokenStack, LookAheadBuffer lookAheadBuffer, ref ushort lalrState, Token read)
-        {
-            LRAction parseAction = egtDataManager.GetLRActionList(lalrState)[read.Symbol];
-            if (parseAction == null)
-            {
-                HandleSyntaxError(egtDataManager.GetLRActionList(lalrState), read);
-                return false;
-            }
-
-            switch (parseAction.Type)
-            {
-                case LRActionType.Accept:
-                    if (OnCompletion != null)
-                    {
-                        OnCompletion(tokenStack.Peek().Tag);
-                    }
-                    return true;
-
-                case LRActionType.Shift:
-                    lalrState = parseAction.Value;
-                    read.State = lalrState;
-                    tokenStack.Push(read);
-                    //It now exists on the Token-Stack and must be eliminated from the queue.
-                    inputTokens.Dequeue();
-                    break;
-
-                case LRActionType.Reduce:
-                    if (!DoReduction(tokenStack, lookAheadBuffer, ref lalrState, parseAction))
-                    {
-                        return false;
-                    }
-                    break;
-            }
-            return true;
         }
 
         private bool DoReduction(Stack<Token> tokenStack, LookAheadBuffer lookAheadBuffer, ref ushort lalrState, LRAction parseAction)
