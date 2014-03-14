@@ -132,10 +132,11 @@ public class CyclicDependencyChecker extends QLErrorVisitor {
 	private List<QLErrorMsg> checkDependencies() {
 		List<QLErrorMsg> msgs = new ArrayList<QLErrorMsg>();
 		
+		
 		for (Identifier keyID : dependencies.keySet()) {
 			for (Identifier valueID : dependencies.get(keyID)) {
-				// if a valueID of keyID is dependent on keyID, we have a cyclic dependency
-				if (dependencies.get(valueID).contains(keyID)) {
+				// if a valueID of keyID is dependent on keyID, we have a cyclic dependency (ignore if valueID == keyID)
+				if (dependencies.get(valueID).contains(keyID) && !(valueID.equals(keyID))) {
 					msgs.add(new QLErrorMsg("Question " + keyID + " and question " + valueID + " are cyclic dependent"));
 				}
 			}

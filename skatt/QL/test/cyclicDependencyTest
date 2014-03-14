@@ -1,12 +1,15 @@
-q1: "l1" : boolean;
+q3 : "l3" : boolean;
 
-if(q1) {
-    q2: "l2" : boolean;
-    if (q2) {
-        q3 : "l3" : boolean;
-    }
+if (q1) {
+    q2 : "l2" : boolean;
 }
 
-if (q3) {
-    q4 : "l4" : boolean;
+if (q2) {
+    if (q3) {
+        if (q2) {
+            if (q3) {
+                q1 : "l1" : boolean;
+            }
+        }
+    }
 }
