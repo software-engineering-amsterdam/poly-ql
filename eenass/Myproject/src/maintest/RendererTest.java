@@ -1,6 +1,7 @@
-package ast.visitors;
+package maintest;
 
 import gui.render.Renderer;
+import gui.render.State;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -18,13 +19,11 @@ import ast.ASTNode;
 import ast.statement.Form;
 
 public class RendererTest extends JFrame {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 
 	public RendererTest(){
-		Renderer r = new Renderer();
+		Renderer r = new Renderer(new State());
 		Form form = get_inputForm();
 		JComponent jc = r.render(form);
 		add(jc);
@@ -46,18 +45,18 @@ public class RendererTest extends JFrame {
 	 
 	 public static Form get_inputForm(){
 		 String form = "form Box1HouseOwning {" +
-			 "\nhasSoldHouse: \"Did you sell a house in 2010?\" boolean" +
+			 "\nhasSoldHouse: \"Did you sell a house in 2010?\" boolean"+
 			 "\nhasBoughtHouse: \"Did you by a house in 2010?\" boolean"+
 			 "\nhasMaintLoan: \"Did you enter a loan for maintenance/reconstruction?\" boolean" +
-			 "\nif (hasSoldHouse == false) {"+
-			 "\nsellingPrice: \"Price the house was sold for:\" integer "+
-			 "\nprivateDebt: \"Private debts for the sold house:\" integer"+
-			"\nvalueResidue: \"Value residue:\" integer(sellingPrice - privateDebt)"+
-			"\n}"+
-			"\nelse {"+
-			"\nvalueResidue1: \"Value residue:\" integer(sellingPrice - privateDebt)"+
-			"\n}" +
-			"\n}";
+			 "\nif (hasSoldHouse == true) {"+
+			 "\nsellingPrice: \"Price the house was sold for:\" integer }}";
+//			 "\nprivateDebt: \"Private debts for the sold house:\" integer"+
+//			"\nvalueResidue: \"Value residue:\" integer(sellingPrice - privateDebt)"+
+//			"\n}"+
+//			"\nelse {"+
+//			"\nvalueResidue1: \"Value residue:\" integer(sellingPrice - privateDebt)"+
+//			"\n}" +
+//			"\n}";
 		 ANTLRInputStream input = new ANTLRInputStream(form);
 			QLangLexer lexer = new QLangLexer(input);
 			CommonTokenStream tokens = new CommonTokenStream(lexer);

@@ -5,30 +5,26 @@ import gui.component.Control;
 import gui.render.State;
 
 import java.util.Observable;
-import java.util.Observer;
 
 import ast.expr.evaluate.Value;
 import ast.statement.ComputedQuestion;
 
-public class ComputedObserver implements Observer{
+public class ComputedObserver extends ControlObserver{
 
+	private final ComputedQuestion ques;
 	private final Control control;
 	private final State state;
-	private final ComputedQuestion ques;
 	
-	public ComputedObserver(Control control, State state, ComputedQuestion ques) {
+	public ComputedObserver(ComputedQuestion ques, Control control, State state) {
+		this.ques = ques;
 		this.control = control;
 		this.state = state;
-		this.ques = ques;
 	}
 
 	@Override
-	public void update(Observable arg0, Object arg1) {
+	public void evaluate() {
 		Value value = ques.getExpr().accept(new Evaluator(state.getEnvValues()));
-		state.putValue(ques.getId(), value);
-		state.notify(ques.getId());
-//		control.setValue(value);
-		
+		control.getComponent().setVisible(true);
 	}
 
 }

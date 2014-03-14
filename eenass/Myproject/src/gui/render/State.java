@@ -18,7 +18,12 @@ public class State {
 		this.observables = new HashMap<Identifier, Observable>();
 	}
 	
-	public void addObserver(Identifier id, Observer obs){
+	public State(Map<Identifier, Value> env, Map<Identifier, Observable> observables) {
+		this.env = env;
+		this.observables = observables;
+	}
+	
+	public void addObservers(Identifier id, Observer obs){
 		observables.get(id).addObserver(obs);
 	}
 	
@@ -34,6 +39,10 @@ public class State {
 		return env;
 	}
 	
+	public Map<Identifier, Observable> getobservables() {
+		return observables;
+	}
+	
 	public void notify(Identifier ident){
 		Observable obs = observables.get(ident);
 		if (obs != null){
@@ -43,5 +52,9 @@ public class State {
 
 	public void notifyall(){
 		observables.notifyAll();
+	}
+	
+	public State currentState(){
+		return new State(env, observables);
 	}
 }

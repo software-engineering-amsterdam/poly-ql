@@ -1,13 +1,9 @@
 package gui.observers;
 
 import gui.Evaluator;
-import gui.component.Control;
 import gui.render.State;
 
-import java.util.Observable;
-import java.util.Observer;
-
-import javax.swing.JComponent;
+import javax.swing.JPanel;
 
 import ast.expr.evaluate.Bool;
 import ast.expr.evaluate.Value;
@@ -15,23 +11,22 @@ import ast.statement.IfStatement;
 
 public class IfObserver extends ControlObserver{
 	
-	private final State state;
 	private final IfStatement ifStat;
-	protected Control ifPanel;
-	
-	public IfObserver(State state, IfStatement ifStat, Control ifPanel) {
+	protected JPanel ifPanel;
+	private final State state;
+
+	public IfObserver(IfStatement ifStat, JPanel ifPanel, State state) {
 		super();
-		this.state = state;
 		this.ifStat = ifStat;
 		this.ifPanel = ifPanel;
-		
+		this.state = state;		
 	}
 	
 	@Override
 	public void evaluate() {
 		Value val = ifStat.getExpr().accept(new Evaluator(state.getEnvValues())); 
 		boolean visible = ((Bool)val).getValue();
-		ifPanel.getComponent().setVisible(visible);	
+		ifPanel.setVisible(visible);	
 	}
 
 }
