@@ -1,4 +1,4 @@
-package nl.uva.polyql;
+package nl.uva.polyql.view;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -18,6 +18,9 @@ public class FormFrame extends JFrame {
 
     private static final long serialVersionUID = -4168793431805315522L;
 
+    private static final int WIDTH = 600;
+    private static final int HEIGHT = 500;
+
     public FormFrame(final Form form) {
         super("Poly-QL");
 
@@ -28,11 +31,10 @@ public class FormFrame extends JFrame {
             ex.printStackTrace();
         }
 
-        setSize(600, 400);
+        setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         final JPanel p = new JPanel();
-        p.setSize(600, 800);
 
         final List<Question> questions = form.getQuestions();
         for (final Question question : questions) {

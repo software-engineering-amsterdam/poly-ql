@@ -1,6 +1,7 @@
 package nl.uva.polyql.view;
 
 import java.awt.Component;
+import java.awt.Insets;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.security.InvalidParameterException;
@@ -23,6 +24,7 @@ public class StringValueView extends ValueView {
     @Override
     protected void init() {
         mTextArea = new JTextArea();
+        mTextArea.setMargin(new Insets(2, 5, 2, 5));
         mTextArea.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(final KeyEvent e) {}

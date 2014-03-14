@@ -7,7 +7,7 @@ import java.awt.event.KeyListener;
 import java.security.InvalidParameterException;
 
 import javax.swing.BorderFactory;
-import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 import nl.uva.polyql.ast.Question;
 import nl.uva.polyql.ast.types.NumberType;
@@ -17,7 +17,7 @@ import nl.uva.polyql.ast.values.StringValue;
 
 public class NumberValueView extends ValueView {
 
-    private JTextArea mTextArea;
+    private JTextField mTextField;
 
     public NumberValueView(final Question question) {
         super(question);
@@ -25,14 +25,14 @@ public class NumberValueView extends ValueView {
 
     @Override
     protected void init() {
-        mTextArea = new JTextArea();
-        mTextArea.addKeyListener(new KeyListener() {
+        mTextField = new JTextField();
+        mTextField.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(final KeyEvent e) {}
 
             @Override
             public void keyReleased(final KeyEvent e) {
-                onNewInput(new NumberType().parseInput(mTextArea.getText()));
+                onNewInput(new NumberType().parseInput(mTextField.getText()));
             }
 
             @Override
@@ -42,12 +42,12 @@ public class NumberValueView extends ValueView {
 
     @Override
     public Component getComponent() {
-        return mTextArea;
+        return mTextField;
     }
 
     @Override
     public void setComponentValue(final NumberValue value) {
-        mTextArea.setText(value.toString());
+        mTextField.setText(value.toString());
     }
 
     @Override
@@ -62,11 +62,13 @@ public class NumberValueView extends ValueView {
 
     @Override
     public void setEditable(final boolean enabled) {
-        mTextArea.setEnabled(enabled);
+        mTextField.setEnabled(enabled);
     }
 
     @Override
     protected void setValid(final boolean valid) {
-        mTextArea.setBorder(BorderFactory.createLineBorder(valid ? Color.WHITE : Color.RED));
+        mTextField.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(valid ? Color.WHITE : Color.RED),
+                BorderFactory.createEmptyBorder(2, 5, 2, 0)));
     }
 }
