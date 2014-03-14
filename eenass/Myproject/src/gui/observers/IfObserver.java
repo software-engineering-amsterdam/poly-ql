@@ -13,23 +13,25 @@ import ast.expr.evaluate.Bool;
 import ast.expr.evaluate.Value;
 import ast.statement.IfStatement;
 
-public class IfObserver implements Observer{
+public class IfObserver extends ControlObserver{
 	
 	private final State state;
 	private final IfStatement ifStat;
 	protected Control ifPanel;
 	
-	public IfObserver(Control control, State state, IfStatement ifStat, Control ifPanel) {
+	public IfObserver(State state, IfStatement ifStat, Control ifPanel) {
+		super();
 		this.state = state;
 		this.ifStat = ifStat;
 		this.ifPanel = ifPanel;
 		
 	}
+	
 	@Override
-	public void update(Observable o, Object arg) {
+	public void evaluate() {
 		Value val = ifStat.getExpr().accept(new Evaluator(state.getEnvValues())); 
 		boolean visible = ((Bool)val).getValue();
-		ifPanel.getComponent().setVisible(visible);		
+		ifPanel.getComponent().setVisible(visible);	
 	}
 
 }

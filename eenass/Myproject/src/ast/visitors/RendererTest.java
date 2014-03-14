@@ -18,6 +18,11 @@ import ast.ASTNode;
 import ast.statement.Form;
 
 public class RendererTest extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public RendererTest(){
 		Renderer r = new Renderer();
 		Form form = get_inputForm();
@@ -25,7 +30,7 @@ public class RendererTest extends JFrame {
 		add(jc);
 		pack();
 		setTitle(form.getId().getIdentName());
-		setSize(400, 500);
+		setSize(450, 500);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);  
 	}

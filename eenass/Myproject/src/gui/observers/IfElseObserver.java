@@ -11,7 +11,7 @@ import ast.expr.evaluate.Bool;
 import ast.expr.evaluate.Value;
 import ast.statement.IfelseStatement;
 
-public class IfElseObserver implements Observer {
+public class IfElseObserver extends ControlObserver {
 
 	private final State state;
 	private final IfelseStatement ifelseStat;
@@ -26,12 +26,12 @@ public class IfElseObserver implements Observer {
 	}
 
 	@Override
-	public void update(Observable o, Object arg) {
+	public void evaluate() {
 		Value val = ifelseStat.getExpr().accept(new Evaluator(state.getEnvValues())); 
 		boolean visible = ((Bool)val).getValue();
 		ifPanel.getComponent().setVisible(visible);
 		if(elsePanel.getComponent() != null){
-			elsePanel.getComponent().setVisible(visible);
+			elsePanel.getComponent().setVisible(!visible);
 		}
 		
 	}
