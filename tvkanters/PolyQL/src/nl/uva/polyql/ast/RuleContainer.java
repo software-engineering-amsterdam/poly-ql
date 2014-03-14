@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import nl.uva.polyql.model.expressions.Expression;
+import nl.uva.polyql.ast.expressions.Expression;
 
 public abstract class RuleContainer {
 

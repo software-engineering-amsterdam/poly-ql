@@ -2,9 +2,9 @@ grammar Questionnaire;
 
 @header {
     package nl.uva.polyql.antlr4;
-    import nl.uva.polyql.model.*;
-    import nl.uva.polyql.model.expressions.*;
-    import nl.uva.polyql.model.expressions.operations.*;
+    import nl.uva.polyql.ast.*;
+    import nl.uva.polyql.ast.expressions.*;
+    import nl.uva.polyql.ast.expressions.operations.*;
 }
 
 

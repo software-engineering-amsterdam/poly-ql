@@ -3,6 +3,7 @@ package nl.uva.polyql;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+import nl.uva.polyql.antlr4.LineInfoListener;
 import nl.uva.polyql.antlr4.QuestionnaireLexer;
 import nl.uva.polyql.antlr4.QuestionnaireParser;
 import nl.uva.polyql.antlr4.QuestionnaireParser.FormContext;
@@ -22,7 +23,7 @@ public class Initialiser {
             final QuestionnaireLexer lexer = new QuestionnaireLexer(input);
             final CommonTokenStream tokens = new CommonTokenStream(lexer);
             final QuestionnaireParser parser = new QuestionnaireParser(tokens);
-            parser.addParseListener(new QuestionnaireListener());
+            parser.addParseListener(new LineInfoListener());
             final FormContext tree = parser.form();
 
             Log.i("==========================");

@@ -1,7 +1,7 @@
 package nl.uva.polyql.validation;
 
-import nl.uva.polyql.model.expressions.operations.Operation;
-import nl.uva.polyql.model.types.Type;
+import nl.uva.polyql.ast.expressions.operations.Operation;
+import nl.uva.polyql.ast.types.Type;
 
 public class InvalidOperandError extends ValidationError {
     private final Type mLeft;

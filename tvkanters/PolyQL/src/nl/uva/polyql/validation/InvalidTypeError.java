@@ -1,7 +1,7 @@
 package nl.uva.polyql.validation;
 
 import nl.uva.polyql.ast.Field;
-import nl.uva.polyql.model.types.Type;
+import nl.uva.polyql.ast.types.Type;
 
 public class InvalidTypeError extends ValidationError {
     private final Type mFieldType;

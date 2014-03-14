@@ -5,10 +5,10 @@ import java.util.Objects;
 
 import nl.uva.polyql.ast.Question;
 import nl.uva.polyql.ast.VisibilityListener;
-import nl.uva.polyql.model.values.BooleanValue;
-import nl.uva.polyql.model.values.NumberValue;
-import nl.uva.polyql.model.values.StringValue;
-import nl.uva.polyql.model.values.Value;
+import nl.uva.polyql.ast.values.BooleanValue;
+import nl.uva.polyql.ast.values.NumberValue;
+import nl.uva.polyql.ast.values.StringValue;
+import nl.uva.polyql.ast.values.Value;
 
 public abstract class ValueView implements Question.ValueListener, VisibilityListener {
 

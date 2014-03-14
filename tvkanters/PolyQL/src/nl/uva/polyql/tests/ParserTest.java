@@ -11,7 +11,7 @@ import nl.uva.polyql.ParserHelper;
 import nl.uva.polyql.ast.Form;
 import nl.uva.polyql.ast.IfStatement;
 import nl.uva.polyql.ast.Question;
-import nl.uva.polyql.model.values.NumberValue;
+import nl.uva.polyql.ast.values.NumberValue;
 import nl.uva.polyql.validation.DuplicateIdError;
 import nl.uva.polyql.validation.DuplicateLabelWarning;
 import nl.uva.polyql.validation.InvalidIfStatementError;

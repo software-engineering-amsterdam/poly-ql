@@ -6,16 +6,15 @@ import java.util.List;
 import java.util.Set;
 
 import nl.uva.polyql.Log;
-import nl.uva.polyql.model.types.StringType;
-import nl.uva.polyql.model.types.Type;
-import nl.uva.polyql.model.values.Value;
+import nl.uva.polyql.ast.types.StringType;
+import nl.uva.polyql.ast.types.Type;
+import nl.uva.polyql.ast.values.Value;
 import nl.uva.polyql.validation.ValidationErrors;
 import nl.uva.polyql.view.ValueView;
 
 public class Question implements Rule {
 
     private final RuleContainer mParent;
-
     private final String mId;
     private final String mLabel;
     private final Type mType;
@@ -38,6 +37,82 @@ public class Question implements Rule {
         mType = type;
 
         setValue(mType.getType().getDefaultValue());
+    }
+
+    /**
+     * Sets this question's value and determines if the value is valid.
+     * 
+     * @param value
+     *            The new value
+     * 
+     * @return True iff the value is valid (not null)
+     */
+    public boolean setValue(final Value<?> value) {
+        if (value != null) {
+            mValue = value;
+            mValueValid = true;
+        } else {
+            mValueValid = false;
+        }
+
+        for (final ValueListener listener : mUpdateListeners) {
+            listener.onQuestionUpdate(this);
+        }
+
+        return mValueValid;
+    }
+
+    public ValueView getView() {
+        final ValueView view = mValue.getView(this);
+        mVisibilityListeners.add(view);
+        view.onParentVisibilityUpdate(isVisible());
+        return view;
+    }
+
+    public void addUpdateListener(final ValueListener listener) {
+        Log.i("LISTENER " + listener + " ADDED TO " + this);
+        mUpdateListeners.add(listener);
+    }
+
+    @Override
+    public List<Question> getQuestions() {
+        final List<Question> questions = new LinkedList<>();
+        questions.add(this);
+        return questions;
+    }
+
+    @Override
+    public void onParentVisibilityUpdate(final boolean visible) {
+        for (final VisibilityListener listener : mVisibilityListeners) {
+            listener.onParentVisibilityUpdate(visible);
+        }
+    }
+
+    @Override
+    public boolean isVisible() {
+        return getParent().isVisible();
+    }
+
+    public Value<?> getValue() {
+        return mValue;
+    }
+
+    public boolean isValueValid() {
+        return mValueValid;
+    }
+
+    public boolean isEditable() {
+        return true;
+    }
+
+    @Override
+    public ValidationErrors validate() {
+        return new ValidationErrors();
+    }
+
+    @Override
+    public String toString() {
+        return mId + " = " + mValue;
     }
 
     public String getId() {
@@ -65,82 +140,6 @@ public class Question implements Rule {
     @Override
     public RuleContainer getParent() {
         return mParent;
-    }
-
-    /**
-     * Sets this question's value and determines if the value is valid.
-     * 
-     * @param value
-     *            The new value
-     * 
-     * @return True iff the value is valid (not null)
-     */
-    public boolean setValue(final Value<?> value) {
-        if (value != null) {
-            mValue = value;
-            mValueValid = true;
-        } else {
-            mValueValid = false;
-        }
-
-        for (final ValueListener listener : mUpdateListeners) {
-            listener.onQuestionUpdate(this);
-        }
-
-        return mValueValid;
-    }
-
-    public Value<?> getValue() {
-        return mValue;
-    }
-
-    public boolean isValueValid() {
-        return mValueValid;
-    }
-
-    public boolean isEditable() {
-        return true;
-    }
-
-    public ValueView getView() {
-        final ValueView view = mValue.getView(this);
-        mVisibilityListeners.add(view);
-        view.onParentVisibilityUpdate(isVisible());
-        return view;
-    }
-
-    public void addUpdateListener(final ValueListener listener) {
-        Log.i("LISTENER " + listener + " ADDED TO " + this);
-        mUpdateListeners.add(listener);
-    }
-
-    @Override
-    public List<Question> getQuestions() {
-        final List<Question> questions = new LinkedList<>();
-        questions.add(this);
-        return questions;
-    }
-
-    @Override
-    public boolean isVisible() {
-        return getParent().isVisible();
-    }
-
-    @Override
-    public void onParentVisibilityUpdate(final boolean visible) {
-        for (final VisibilityListener listener : mVisibilityListeners) {
-            listener.onParentVisibilityUpdate(visible);
-        }
-    }
-
-    @Override
-    public ValidationErrors validate() {
-        return new ValidationErrors();
-    }
-
-    @Override
-    public String toString() {
-        return mId + " = " + mValue;
     }
 
     /**

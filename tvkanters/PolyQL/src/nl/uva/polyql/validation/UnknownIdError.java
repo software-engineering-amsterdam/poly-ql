@@ -1,6 +1,6 @@
 package nl.uva.polyql.validation;
 
-import nl.uva.polyql.model.expressions.QuestionAtom;
+import nl.uva.polyql.ast.expressions.QuestionAtom;
 
 public class UnknownIdError extends ValidationError {
 

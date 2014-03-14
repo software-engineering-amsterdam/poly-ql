@@ -1,6 +1,6 @@
 package nl.uva.polyql.ast;
 
-import nl.uva.polyql.model.expressions.Expression;
+import nl.uva.polyql.ast.expressions.Expression;
 
 public class ElseStatement extends IfStatement {
 
@@ -15,7 +15,7 @@ public class ElseStatement extends IfStatement {
 
     @Override
     public String toString() {
-        return "ELSE " + mExpression;
+        return "ELSE " + getExpression();
     }
 
 }

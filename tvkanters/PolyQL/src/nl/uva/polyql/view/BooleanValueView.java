@@ -8,9 +8,9 @@ import java.security.InvalidParameterException;
 import javax.swing.JCheckBox;
 
 import nl.uva.polyql.ast.Question;
-import nl.uva.polyql.model.values.BooleanValue;
-import nl.uva.polyql.model.values.NumberValue;
-import nl.uva.polyql.model.values.StringValue;
+import nl.uva.polyql.ast.values.BooleanValue;
+import nl.uva.polyql.ast.values.NumberValue;
+import nl.uva.polyql.ast.values.StringValue;
 
 public class BooleanValueView extends ValueView {
 

@@ -1,6 +1,6 @@
 package nl.uva.polyql.ast;
 
-import nl.uva.polyql.model.expressions.Expression;
+import nl.uva.polyql.ast.expressions.Expression;
 import nl.uva.polyql.validation.InvalidTypeError;
 import nl.uva.polyql.validation.ValidationErrors;
 import nl.uva.polyql.view.ValueView;
@@ -18,15 +18,6 @@ public class Field extends Question implements Question.ValueListener {
         for (final Question question : mExpression.getReferencedQuestions()) {
             question.addUpdateListener(this);
         }
-    }
-
-    public Expression getExpression() {
-        return mExpression;
-    }
-
-    @Override
-    public boolean isEditable() {
-        return false;
     }
 
     @Override
@@ -53,5 +44,14 @@ public class Field extends Question implements Question.ValueListener {
             }
         }
         return errors;
+    }
+
+    public Expression getExpression() {
+        return mExpression;
+    }
+
+    @Override
+    public boolean isEditable() {
+        return false;
     }
 }
