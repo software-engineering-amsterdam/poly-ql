@@ -1,6 +1,6 @@
 package ast.expr;
 
-import typecheck.SymboleTable;
+import typecheck.SymbolTable;
 import ast.Visitor;
 import ast.expr.types.Type;
 
@@ -23,7 +23,7 @@ public class Identifier extends Expr{
 	}
 
 	@Override
-	public Type typeof(SymboleTable symb) {
+	public Type typeof(SymbolTable symb) {
 		if (symb.containsSymb(this.getIdentName())){
 			return symb.getType(this.getIdentName());
 		}

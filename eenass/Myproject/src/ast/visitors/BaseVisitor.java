@@ -31,7 +31,6 @@ import ast.statement.Form;
 import ast.statement.IfStatement;
 import ast.statement.IfelseStatement;
 import ast.statement.Question;
-import ast.statement.Statement;
 import ast.statement.StatementList;
 
 public class BaseVisitor implements Visitor<String> {

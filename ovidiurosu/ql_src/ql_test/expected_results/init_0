@@ -1,0 +1,1 @@
+(init (form form form1 (block { })) (form form form2 (block { (stat id : "label" (type integer)) })) (form form form3 (block { })))

@@ -1,6 +1,5 @@
 package gui;
 
-import java.util.Collections;
 import java.util.Map;
 
 import ast.Visitor;
