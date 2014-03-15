@@ -1,0 +1,1 @@
+(init (form form test (block { (stat question1 : "How bad?" (type ( (enumType "bad" , (enumType "very bad" , (enumType "awful"))) ))) (stat question2 : "How good:" (type ( (enumType "") )) ( (expr question1) )) })))
