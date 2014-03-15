@@ -1,6 +1,5 @@
 package edu.uva.softwarecons.model.value;
 
-import edu.uva.softwarecons.exception.InvalidOperationException;
 
 /**
  * Falconlabs
@@ -13,7 +12,7 @@ public interface ArithmeticValue extends ComparableValue{
 
     public Value subtract(Value value);
 
-    public Value divide(Value value) throws InvalidOperationException;
+    public Value divide(Value value);
 
     public Value multiply(Value value);
 

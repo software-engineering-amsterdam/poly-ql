@@ -1,7 +1,6 @@
 package edu.uva.softwarecons.model.value;
 
 import edu.uva.softwarecons.exception.CompareException;
-import edu.uva.softwarecons.exception.InvalidOperationException;
 
 /**
  * Falconlabs
@@ -37,9 +36,7 @@ public class DecimalValue implements ArithmeticValue{
     }
 
     @Override
-    public Value divide(Value value) throws InvalidOperationException {
-        if(Float.parseFloat(value.getValue()) == 0)
-            throw new InvalidOperationException("Invalid operation trying to divide by zero");
+    public Value divide(Value value) {
         return new DecimalValue(this.value / Float.parseFloat(value.getValue()));
     }
 

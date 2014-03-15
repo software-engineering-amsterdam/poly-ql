@@ -1,9 +1,7 @@
 package edu.uva.softwarecons.model.value;
 
-import edu.uva.softwarecons.exception.InvalidOperationException;
 
 import java.math.BigDecimal;
-import java.util.Currency;
 
 /**
  * Falconlabs
@@ -40,9 +38,7 @@ public class CurrencyValue implements ArithmeticValue{
     }
 
     @Override
-    public Value divide(Value value) throws InvalidOperationException {
-        if(new BigDecimal(value.getValue()).compareTo(BigDecimal.ZERO) == 0)
-            throw new InvalidOperationException("Invalid operation trying to divide by zero");
+    public Value divide(Value value) {
         return new CurrencyValue(this.value.divide(new BigDecimal(value.getValue())));
     }
 

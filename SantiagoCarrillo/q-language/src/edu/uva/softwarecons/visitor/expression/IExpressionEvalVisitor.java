@@ -1,7 +1,6 @@
 package edu.uva.softwarecons.visitor.expression;
 
 import edu.uva.softwarecons.exception.CompareException;
-import edu.uva.softwarecons.exception.InvalidOperationException;
 import edu.uva.softwarecons.model.expression.arithmetic.AddExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.DivExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.MulExpression;
