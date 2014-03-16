@@ -22,7 +22,7 @@ namespace QL.QLClasses.Expressions.Identifier
 
         public override QValue Evaluate()
         {
-            return _memory.GetDeclaredValue(_name).Evaluate();
+            return _memory.GetDeclaredValue(_name);
         }
 
         #region TypeChecker Implementation

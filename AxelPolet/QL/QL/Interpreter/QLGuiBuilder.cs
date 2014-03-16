@@ -1,4 +1,5 @@
-﻿using QL.Interpreter.Controls;
+﻿using System.Collections.Generic;
+using QL.Interpreter.Controls;
 using QL.QLClasses.Expressions;
 
 namespace QL.Interpreter
@@ -8,23 +9,21 @@ namespace QL.Interpreter
         private readonly GUIQuestionnaire _guiQuestionnaire;
         
         private ExpressionBase _currentShowCondition;
-        private ExpressionBase _currentHideCondition;
+        private List<ExpressionBase> _currentHideConditions;
 
         public QLGuiBuilder()
         {
             _guiQuestionnaire = new GUIQuestionnaire();
+            _currentHideConditions = new List<ExpressionBase>();
         }
 
-        public void AppendQuestion(GUIQuestion guiQuestion)
+        public void BuildQuestion(QLMemory memory, string name, string label, bool isComputed = false)
         {
-            //callback for refreshing entire questionnaire
-            guiQuestion.OnChanged = _guiQuestionnaire.Refresh;
-
-            if (_currentShowCondition != null)
-                guiQuestion.ShowCondition = _currentShowCondition;
-
-            if (_currentHideCondition != null)
-                guiQuestion.HideCondition = _currentHideCondition;
+            //callback for refreshing entire questionnaire on input change
+            GUIQuestion guiQuestion = new GUIQuestion(memory, name, label, isComputed, _currentShowCondition, _guiQuestionnaire.Refresh);
+             
+            //set show/hide conditions            
+            _currentHideConditions.ForEach(guiQuestion.AppendHideCondition);
 
             _guiQuestionnaire.AddQuestion(guiQuestion);
         }
@@ -39,14 +38,14 @@ namespace QL.Interpreter
             _currentShowCondition = null;
         }
 
-        public void SetHideCondition(ExpressionBase condition)
+        public void AppendHideCondition(ExpressionBase condition)
         {
-            _currentHideCondition = condition;
+            _currentHideConditions.Add(condition);
         }
 
-        public void RemoveHideCondition()
+        public void RemoveHideConditions()
         {
-            _currentHideCondition = null;
+            _currentHideConditions.Clear();
         }
 
         public GUIQuestionnaire GetGUI()

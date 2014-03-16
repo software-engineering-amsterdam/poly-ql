@@ -1,5 +1,4 @@
-﻿using System.Windows.Controls;
-using QL.Interpreter.Controls;
+﻿using QL.Interpreter.Controls.Input;
 
 namespace QL.QLClasses.Values
 {
@@ -16,5 +15,14 @@ namespace QL.QLClasses.Values
         {
             return _value;
         }
+
+        #region GUI Method Implementation
+
+        public override InputControl CreateInputControl(string name, QLMemory memory, bool isComputed)
+        {
+            return new StringTextBoxControl(name, memory, isComputed);
+        }
+
+        #endregion
     }
 }

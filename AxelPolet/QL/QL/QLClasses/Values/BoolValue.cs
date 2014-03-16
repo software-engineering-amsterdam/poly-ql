@@ -1,5 +1,4 @@
-﻿using System.Windows.Controls;
-using QL.Interpreter.Controls;
+﻿using QL.Interpreter.Controls.Input;
 
 namespace QL.QLClasses.Values
 {
@@ -27,6 +26,15 @@ namespace QL.QLClasses.Values
         public BoolValue Or(BoolValue secondValue)
         {
             return new BoolValue(_value || secondValue.GetValue());
+        }
+
+        #endregion
+
+        #region GUI Method Implementation
+
+        public override InputControl CreateInputControl(string name, QLMemory memory, bool isComputed)
+        {
+            return new CheckBoxControl(name, memory, isComputed);
         }
 
         #endregion

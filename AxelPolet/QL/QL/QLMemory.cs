@@ -8,7 +8,8 @@ namespace QL
     public class QLMemory
     {
         private readonly Dictionary<string, QType> _idsTypes;
-        private readonly Dictionary<string, ExpressionBase> _idsValues;
+        private readonly Dictionary<string, QValue> _idsValues; 
+        private readonly Dictionary<string, ExpressionBase> _idsComputedValues;
         private readonly List<string> _labels;
 
         public Dictionary<string, QValue> IdsValues { get; set; }
@@ -16,11 +17,12 @@ namespace QL
         public QLMemory()
         {
             _idsTypes = new Dictionary<string, QType>();
-            _idsValues = new Dictionary<string, ExpressionBase>();
+            _idsValues = new Dictionary<string, QValue>();
+            _idsComputedValues = new Dictionary<string, ExpressionBase>();
             _labels = new List<string>();
         }
 
-        #region IdsTypes
+        #region Types
 
         public void Declare(string name, QType type)
         {
@@ -39,24 +41,29 @@ namespace QL
 
         #endregion
 
-        #region IdsValues
+        #region Values
 
-        public void DeclareValue(string name, ExpressionBase value)
+        public void DeclareValue(string name, QValue value)
         {
             _idsValues[name] = value;
         }
 
-        public bool ValueIsDeclared(string name)
+        public void DeclareComputedValue(string name, ExpressionBase value)
         {
-            return _idsValues.ContainsKey(name);
+            _idsComputedValues[name] = value;
         }
 
-        public ExpressionBase GetDeclaredValue(string name)
+        public bool ValueIsDeclared(string name)
         {
-            if(ValueIsDeclared(name))
-                return _idsValues[name];
+            return _idsComputedValues.ContainsKey(name) || _idsValues.ContainsKey(name);
+        }
 
-            return null;
+        public QValue GetDeclaredValue(string name)
+        {
+            if (_idsComputedValues.ContainsKey(name))
+                return _idsComputedValues[name].Evaluate();
+
+            return _idsValues[name];
         }
 
         #endregion

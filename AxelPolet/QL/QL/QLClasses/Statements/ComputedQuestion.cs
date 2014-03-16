@@ -42,7 +42,7 @@ namespace QL.QLClasses.Statements
 
         protected override void DeclareValue()
         {
-            Memory.DeclareValue(Name, _value);
+            Memory.DeclareComputedValue(Name, _value);
         }
 
         #endregion
@@ -51,12 +51,7 @@ namespace QL.QLClasses.Statements
 
         public override void Build(QLGuiBuilder guiBuilder)
         {
-            if (Type.IsCompatibleWith(new QBool()))
-                guiBuilder.AppendQuestion(new GUICheckBox(Memory, Name, Label, false));
-            else if (Type.IsCompatibleWith(new QString()))
-                guiBuilder.AppendQuestion(new GUIStringTextBox(Memory, Name, Label, false));
-            else
-                guiBuilder.AppendQuestion(new GUIIntTextBox(Memory, Name, Label, false));
+            guiBuilder.BuildQuestion(Memory, Name, Label, true);
         }
 
         #endregion
