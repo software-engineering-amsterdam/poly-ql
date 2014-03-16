@@ -5,9 +5,11 @@ import edu.uva.softwarecons.visitor.expression.IExpressionEval;
 
 /**
  * Falconlabs
- * User: sancarbar
+ * @author Santiago Carrillo
  * Date: 2/19/14
  */
-public interface Expression extends IExpressionElement, IExpressionEval {
+public interface Expression
+    extends IExpressionElement, IExpressionEval
+{
 
 }

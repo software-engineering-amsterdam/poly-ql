@@ -2,19 +2,23 @@ package edu.uva.softwarecons.model.value;
 
 /**
  * Falconlabs
- * User: sancarbar
+ * @author Santiago Carrillo
  * Date: 3/13/14
  */
-public class StringValue implements Value{
+public class StringValue
+    implements Value
+{
 
     private final String value;
 
-    public StringValue(String value) {
+    public StringValue( String value )
+    {
         this.value = value;
     }
 
     @Override
-    public String getValue() {
+    public String getValue()
+    {
         return value;
     }
 }

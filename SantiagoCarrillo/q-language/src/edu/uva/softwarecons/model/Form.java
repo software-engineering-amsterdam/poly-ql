@@ -8,35 +8,42 @@ import java.util.List;
 
 /**
  * Falconlabs
- * User: sancarbar
+ * @author Santiago Carrillo
  * Date: 2/25/14
  */
-public class Form implements IFormElement {
+public class Form
+    implements IFormElement
+{
 
     private final String id;
 
     private final List<Question> questions;
 
-    public Form(String id, List<Question> questions) {
+    public Form( String id, List<Question> questions )
+    {
         this.id = id;
         this.questions = questions;
     }
 
-    public String getId() {
+    public String getId()
+    {
         return id;
     }
 
-    public List<Question> getQuestions() {
+    public List<Question> getQuestions()
+    {
         return questions;
     }
 
     @Override
-    public void accept(IFormElementVisitor visitor) {
-        visitor.visitForm(this);
+    public void accept( IFormElementVisitor visitor )
+    {
+        visitor.visitForm( this );
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals( Object obj )
+    {
         return obj instanceof Form;
     }
 }

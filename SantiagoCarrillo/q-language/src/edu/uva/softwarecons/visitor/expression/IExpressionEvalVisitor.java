@@ -1,11 +1,15 @@
 package edu.uva.softwarecons.visitor.expression;
 
-import edu.uva.softwarecons.exception.CompareException;
 import edu.uva.softwarecons.model.expression.arithmetic.AddExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.DivExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.MulExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.SubExpression;
-import edu.uva.softwarecons.model.expression.comparison.*;
+import edu.uva.softwarecons.model.expression.comparison.EqualExpression;
+import edu.uva.softwarecons.model.expression.comparison.GreaterEqualExpression;
+import edu.uva.softwarecons.model.expression.comparison.GreaterExpression;
+import edu.uva.softwarecons.model.expression.comparison.LessEqualExpression;
+import edu.uva.softwarecons.model.expression.comparison.LessExpression;
+import edu.uva.softwarecons.model.expression.comparison.NotEqualExpression;
 import edu.uva.softwarecons.model.expression.literal.BoolExpression;
 import edu.uva.softwarecons.model.expression.literal.IdExpression;
 import edu.uva.softwarecons.model.expression.literal.IntExpression;
@@ -16,41 +20,42 @@ import edu.uva.softwarecons.model.value.Value;
 
 /**
  * Falconlabs
- * User: sancarbar
+ * @author Santiago Carrillo
  * Date: 3/13/14
  */
-public interface IExpressionEvalVisitor {
+public interface IExpressionEvalVisitor
+{
 
-    Value visitAddExpression(AddExpression expression) throws CompareException;
+    Value visitAddExpression( AddExpression expression );
 
-    Value visitDivExpression(DivExpression expression) throws CompareException;
+    Value visitDivExpression( DivExpression expression );
 
-    Value visitMulExpression(MulExpression expression) throws CompareException;
+    Value visitMulExpression( MulExpression expression );
 
-    Value visitSubExpression(SubExpression expression) throws CompareException;
+    Value visitSubExpression( SubExpression expression );
 
-    Value visitAndExpression(AndExpression expression) throws CompareException;
+    Value visitAndExpression( AndExpression expression );
 
-    Value visitNotExpression(NotExpression expression) throws CompareException;
+    Value visitNotExpression( NotExpression expression );
 
-    Value visitOrExpression(OrExpression expression) throws CompareException;
+    Value visitOrExpression( OrExpression expression );
 
-    Value visitEqualExpression(EqualExpression expression) throws CompareException;
+    Value visitEqualExpression( EqualExpression expression );
 
-    Value visitGreaterEqualExpression(GreaterEqualExpression expression) throws CompareException;
+    Value visitGreaterEqualExpression( GreaterEqualExpression expression );
 
-    Value visitGreaterExpression(GreaterExpression expression) throws CompareException;
+    Value visitGreaterExpression( GreaterExpression expression );
 
-    Value visitLessEqualExpression(LessEqualExpression expression) throws CompareException;
+    Value visitLessEqualExpression( LessEqualExpression expression );
 
-    Value visitLessExpression(LessExpression expression) throws CompareException;
+    Value visitLessExpression( LessExpression expression );
 
-    Value visitNotEqualExpression(NotEqualExpression expression) throws CompareException;
+    Value visitNotEqualExpression( NotEqualExpression expression );
 
-    Value visitIdExpression(IdExpression expression);
+    Value visitIdExpression( IdExpression expression );
 
-    Value visitBoolExpression(BoolExpression expression);
+    Value visitBoolExpression( BoolExpression expression );
 
-    Value visitIntExpression(IntExpression expression);
+    Value visitIntExpression( IntExpression expression );
 
 }

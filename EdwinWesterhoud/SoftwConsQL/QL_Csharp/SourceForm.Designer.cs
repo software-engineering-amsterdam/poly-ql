@@ -2,7 +2,7 @@
 
 namespace QL_Csharp
 {
-    partial class Form1
+    partial class SourceForm
     {
         /// <summary>
         /// Required designer variable.
@@ -159,13 +159,13 @@ namespace QL_Csharp
             this.textBoxOutput.Size = new System.Drawing.Size(794, 242);
             this.textBoxOutput.TabIndex = 0;
             // 
-            // Form1
+            // SourceForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 627);
             this.Controls.Add(this.splitContainer1);
-            this.Name = "Form1";
+            this.Name = "SourceForm";
             this.Text = "QL Form";
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
