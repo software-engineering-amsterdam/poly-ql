@@ -5,7 +5,6 @@ import edu.uva.softwarecons.model.value.Value;
 import edu.uva.softwarecons.ui.widget.DatePicker;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Node;
 
 import java.util.Locale;
 

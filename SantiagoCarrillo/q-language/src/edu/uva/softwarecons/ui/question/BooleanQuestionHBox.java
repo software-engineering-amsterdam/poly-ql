@@ -4,7 +4,6 @@ import edu.uva.softwarecons.model.value.BooleanValue;
 import edu.uva.softwarecons.model.value.Value;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 
 /**

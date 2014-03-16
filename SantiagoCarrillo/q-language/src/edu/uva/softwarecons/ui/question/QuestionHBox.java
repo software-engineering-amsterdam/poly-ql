@@ -2,7 +2,6 @@ package edu.uva.softwarecons.ui.question;
 
 import edu.uva.softwarecons.model.value.Value;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 
