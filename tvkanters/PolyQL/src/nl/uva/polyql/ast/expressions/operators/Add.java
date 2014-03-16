@@ -1,11 +1,11 @@
 package nl.uva.polyql.ast.expressions.operators;
 
-import nl.uva.polyql.ast.expressions.operations.Operator;
+import nl.uva.polyql.ast.expressions.operations.BinaryOperator;
 import nl.uva.polyql.ast.values.NumberValue;
 import nl.uva.polyql.ast.values.StringValue;
 import nl.uva.polyql.ast.values.Value;
 
-public class Add extends Operator {
+public class Add extends BinaryOperator {
 
     public static final String SYNTAX = "+";
 

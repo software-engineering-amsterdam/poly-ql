@@ -78,11 +78,6 @@ public class Question implements Rule {
         return questions;
     }
 
-    @Override
-    public boolean isVisible() {
-        return getParent().isVisible();
-    }
-
     public Value<?> getValue() {
         return mValue;
     }

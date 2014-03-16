@@ -1,4 +1,4 @@
-package nl.uva.polyql.tests;
+package test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -14,8 +14,8 @@ import nl.uva.polyql.ast.Question;
 import nl.uva.polyql.ast.values.NumberValue;
 import nl.uva.polyql.validation.DuplicateIdError;
 import nl.uva.polyql.validation.DuplicateLabelWarning;
+import nl.uva.polyql.validation.InvalidBinaryOperationError;
 import nl.uva.polyql.validation.InvalidIfStatementError;
-import nl.uva.polyql.validation.InvalidOperandError;
 import nl.uva.polyql.validation.UnknownIdError;
 import nl.uva.polyql.validation.ValidationError;
 import nl.uva.polyql.validation.Validator;
@@ -38,11 +38,11 @@ public class ParserTest {
         final Question question = form.getQuestion("num");
         final IfStatement ifStatement = (IfStatement) form.getChildRules().get(1);
 
-        assertFalse(ifStatement.isVisible());
+        assertFalse(ifStatement.isSatisfied());
 
         question.setValue(new NumberValue(10.0));
 
-        assertTrue(ifStatement.isVisible());
+        assertTrue(ifStatement.isSatisfied());
     }
 
     @Test
@@ -94,7 +94,7 @@ public class ParserTest {
         assertTrue(errors.get(0) instanceof DuplicateLabelWarning);
         assertTrue(errors.get(1) instanceof DuplicateLabelWarning);
         assertTrue(errors.get(2) instanceof DuplicateLabelWarning);
-        assertTrue(errors.get(3) instanceof InvalidOperandError);
+        assertTrue(errors.get(3) instanceof InvalidBinaryOperationError);
 
         form = ParserHelper.parseResourceForm("ex_string_min_num");
         validator = Validator.validate(form);
@@ -104,7 +104,7 @@ public class ParserTest {
         assertTrue(errors.get(0) instanceof DuplicateLabelWarning);
         assertTrue(errors.get(1) instanceof DuplicateLabelWarning);
         assertTrue(errors.get(2) instanceof DuplicateLabelWarning);
-        assertTrue(errors.get(3) instanceof InvalidOperandError);
+        assertTrue(errors.get(3) instanceof InvalidBinaryOperationError);
     }
 
     @Test

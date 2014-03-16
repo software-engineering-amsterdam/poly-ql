@@ -1,14 +1,14 @@
 package nl.uva.polyql.validation;
 
-import nl.uva.polyql.ast.expressions.operations.Operation;
+import nl.uva.polyql.ast.expressions.operations.BinaryOperation;
 import nl.uva.polyql.ast.types.Type;
 
-public class InvalidOperandError extends ValidationError {
+public class InvalidBinaryOperationError extends ValidationError {
     private final Type mLeft;
     private final Type mRight;
     private final String mOperatorSyntax;
 
-    public InvalidOperandError(final Operation operation) {
+    public InvalidBinaryOperationError(final BinaryOperation operation) {
         super(operation);
         mLeft = operation.getLeft().getReturnType();
         mRight = operation.getRight().getReturnType();
@@ -17,6 +17,6 @@ public class InvalidOperandError extends ValidationError {
 
     @Override
     public String getLabel() {
-        return "Operand types " + mLeft + "-" + mRight + " unsupported for operator " + mOperatorSyntax;
+        return "Operand types " + mLeft + "-" + mRight + " unsupported for operator '" + mOperatorSyntax + "'";
     }
 }

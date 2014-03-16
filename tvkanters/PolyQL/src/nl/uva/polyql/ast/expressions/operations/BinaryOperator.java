@@ -7,9 +7,9 @@ import nl.uva.polyql.ast.values.StringValue;
 import nl.uva.polyql.ast.values.Value;
 import nl.uva.polyql.utils.SyntaxKey;
 
-public abstract class Operator implements SyntaxKey {
+public abstract class BinaryOperator implements SyntaxKey {
 
-    public Value<?> performOperation(final Operation operation) {
+    public Value<?> performOperation(final BinaryOperation operation) {
         return operation.getLeft().getValue().performOperationOnLeft(this, operation.getRight().getValue());
     }
 

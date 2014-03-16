@@ -1,20 +1,20 @@
 package nl.uva.polyql.validation;
 
-import nl.uva.polyql.ast.Field;
+import nl.uva.polyql.ast.CalculatedQuestion;
 import nl.uva.polyql.ast.types.Type;
 
 public class InvalidTypeError extends ValidationError {
-    private final Type mFieldType;
+    private final Type mType;
     private final Type mExpressionType;
 
-    public InvalidTypeError(final Field field) {
-        super(field);
-        mFieldType = field.getType();
-        mExpressionType = field.getExpression().getReturnType();
+    public InvalidTypeError(final CalculatedQuestion calculatedQuestion) {
+        super(calculatedQuestion);
+        mType = calculatedQuestion.getType();
+        mExpressionType = calculatedQuestion.getExpression().getReturnType();
     }
 
     @Override
     public String getLabel() {
-        return "Field type " + mFieldType + " does not match the expression type " + mExpressionType;
+        return "Question type " + mType + " does not match the expression type " + mExpressionType;
     }
 }

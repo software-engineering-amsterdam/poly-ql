@@ -19,10 +19,11 @@ public abstract class RuleContainer {
         return question;
     }
 
-    public Field addField(final String id, final String content, final String type, final Expression expression) {
-        final Field field = new Field(this, id, content, type, expression);
-        addQuestion(field);
-        return field;
+    public CalculatedQuestion addCalculatedQuestion(final String id, final String content, final String type,
+            final Expression expression) {
+        final CalculatedQuestion calculatedQuestion = new CalculatedQuestion(this, id, content, type, expression);
+        addQuestion(calculatedQuestion);
+        return calculatedQuestion;
     }
 
     private void addQuestion(final Question question) {
@@ -84,7 +85,5 @@ public abstract class RuleContainer {
     public RuleContainer getParent() {
         return null;
     }
-
-    public abstract boolean isVisible();
 
 }

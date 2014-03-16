@@ -12,10 +12,10 @@ form returns [Form f] :
 	'form' ID { $f = new Form($ID.text); } '{' (r = formrule[$f])+ '}';
 
 formrule[RuleContainer rc] : 
-	COMMENT | (field[$rc] | question[$rc] | ifstatement[$rc]) COMMENT?;
+	COMMENT | (calcquestion[$rc] | question[$rc] | ifstatement[$rc]) COMMENT?;
 	
-field[RuleContainer rc] returns [Field f] : 
-	id=ID ':' label=STRING type=TYPE '(' e=expr_main[$rc] ')' { $f = $rc.addField($id.text, $label.text, $type.text, $e.e); };
+calcquestion[RuleContainer rc] returns [CalculatedQuestion cq] : 
+	id=ID ':' label=STRING type=TYPE '(' e=expr_main[$rc] ')' { $cq = $rc.addCalculatedQuestion($id.text, $label.text, $type.text, $e.e); };
 
 question[RuleContainer rc] returns [Question q] : 
 	id=ID ':' label=STRING type=TYPE { $q = $rc.addQuestion($id.text, $label.text, $type.text); };
@@ -28,25 +28,28 @@ expr_main[RuleContainer rc] returns [Expression e] :
 	expr=expr_or[$rc]{ $e = $expr.e; };
 
 expr_or[RuleContainer rc] returns [Expression e] :
-	(left=expr_and[$rc]{$e = $left.e;}) (op=op_or right=expr_and[$rc]{$e = new Operation($e, $op.text, $right.e);})*;
+	(left=expr_and[$rc]{$e = $left.e;}) (op=op_or right=expr_and[$rc]{$e = new BinaryOperation($e, $op.text, $right.e);})*;
 
 expr_and[RuleContainer rc] returns [Expression e] :
-	(left=expr_eq[$rc]{$e = $left.e;}) (op=op_and right=expr_eq[$rc]{$e = new Operation($e, $op.text, $right.e);})*;
+	(left=expr_eq[$rc]{$e = $left.e;}) (op=op_and right=expr_eq[$rc]{$e = new BinaryOperation($e, $op.text, $right.e);})*;
 
 expr_eq[RuleContainer rc] returns [Expression e] :
-	(left=expr_num[$rc]{$e = $left.e;}) (op=op_eq right=expr_num[$rc]{$e = new Operation($e, $op.text, $right.e);})*;
+	(left=expr_num[$rc]{$e = $left.e;}) (op=op_eq right=expr_num[$rc]{$e = new BinaryOperation($e, $op.text, $right.e);})*;
 
 expr_num[RuleContainer rc] returns [Expression e] :
-	(left=expr_sum[$rc]{$e = $left.e;}) (op=op_num right=expr_sum[$rc]{$e = new Operation($e, $op.text, $right.e);})*;
+	(left=expr_sum[$rc]{$e = $left.e;}) (op=op_num right=expr_sum[$rc]{$e = new BinaryOperation($e, $op.text, $right.e);})*;
 
 expr_sum[RuleContainer rc] returns [Expression e] :
-	(left=expr_prod[$rc]{$e = $left.e;}) (op=op_sum right=expr_prod[$rc]{$e = new Operation($e, $op.text, $right.e);})*;
+	(left=expr_prod[$rc]{$e = $left.e;}) (op=op_sum right=expr_prod[$rc]{$e = new BinaryOperation($e, $op.text, $right.e);})*;
 
 expr_prod[RuleContainer rc] returns [Expression e] :
-	(left=expr_atom[$rc]{$e = $left.e;}) (op=op_prod right=expr_atom[$rc]{$e = new Operation($e, $op.text, $right.e);})*;
+	(left=expr_unary[$rc]{$e = $left.e;}) (op=op_prod right=expr_unary[$rc]{$e = new BinaryOperation($e, $op.text, $right.e);})*;
+
+expr_unary[RuleContainer rc] returns [Expression e] :
+	(op=op_unary unary=expr_unary[$rc]{$e = new UnaryOperation($op.text, $unary.e);} | expr=expr_atom[$rc]{$e = $expr.e;});
 
 expr_atom[RuleContainer rc] returns [Expression e] :
-	mod=modifier?ID { $e = new QuestionAtom($rc, $ID.text, $mod.text); }
+	ID { $e = new QuestionAtom($rc, $ID.text); }
 	| NUMBER { $e = new NumberAtom($NUMBER.text); }
 	| STRING { $e = new StringAtom($STRING.text); }
 	| BOOLEAN { $e = new BooleanAtom($BOOLEAN.text); }
@@ -59,7 +62,7 @@ op_eq : ('=='|'!=');
 op_num : ('<'|'>'|'>='|'<=');
 op_sum : ('+'|'-');
 op_prod : ('*'|'/');
-modifier : ('!'|'-');
+op_unary : ('!'|'-');
 
 COMMENT : '//' ~('\n'|'\r')*;
 TYPE : ('boolean'|'number'|'string');

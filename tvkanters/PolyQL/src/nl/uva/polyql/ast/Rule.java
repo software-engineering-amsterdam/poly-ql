@@ -11,8 +11,6 @@ public interface Rule extends AstComponent {
 
     List<Question> getQuestions();
 
-    boolean isVisible();
-
     ValidationErrors validate();
 
     Component getView();

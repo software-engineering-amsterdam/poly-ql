@@ -9,8 +9,8 @@ public class ElseStatement extends IfStatement {
     }
 
     @Override
-    public boolean isVisible() {
-        return !isSatisfied() && getParent().isVisible();
+    public boolean isSatisfied() {
+        return !super.isSatisfied();
     }
 
     @Override

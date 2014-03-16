@@ -3,8 +3,8 @@ package nl.uva.polyql.ast.values;
 import java.util.Objects;
 
 import nl.uva.polyql.ast.Question;
-import nl.uva.polyql.ast.expressions.modifiers.Modifier;
-import nl.uva.polyql.ast.expressions.operations.Operator;
+import nl.uva.polyql.ast.expressions.operations.BinaryOperator;
+import nl.uva.polyql.ast.expressions.operations.UnaryOperator;
 import nl.uva.polyql.ast.types.Type;
 import nl.uva.polyql.view.QuestionView;
 
@@ -33,23 +33,25 @@ public abstract class Value<T> {
 
     public abstract Type getType();
 
-    public Value<?> performOperationOnLeft(final Operator operator, final Value<?> rightValue) {
+    public Value<?> performOperationOnLeft(final BinaryOperator operator, final Value<?> rightValue) {
         return new InvalidValue();
     }
 
-    public Value<?> performOperationOnRight(final BooleanValue leftValue, final Operator operator) {
+    public Value<?> performOperationOnRight(final BooleanValue leftValue, final BinaryOperator operator) {
         return new InvalidValue();
     }
 
-    public Value<?> performOperationOnRight(final StringValue leftValue, final Operator operator) {
+    public Value<?> performOperationOnRight(final StringValue leftValue, final BinaryOperator operator) {
         return new InvalidValue();
     }
 
-    public Value<?> performOperationOnRight(final NumberValue leftValue, final Operator operator) {
+    public Value<?> performOperationOnRight(final NumberValue leftValue, final BinaryOperator operator) {
         return new InvalidValue();
     }
 
-    public abstract Value<T> applyModifier(Modifier<?> modifier);
+    public Value<?> performUnaryOperation(final UnaryOperator operator) {
+        return new InvalidValue();
+    }
 
     @Override
     public boolean equals(final Object obj) {

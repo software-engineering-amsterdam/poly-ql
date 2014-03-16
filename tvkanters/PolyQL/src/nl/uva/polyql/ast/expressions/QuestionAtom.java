@@ -5,8 +5,6 @@ import java.util.Set;
 
 import nl.uva.polyql.ast.Question;
 import nl.uva.polyql.ast.RuleContainer;
-import nl.uva.polyql.ast.expressions.modifiers.Modifier;
-import nl.uva.polyql.ast.expressions.modifiers.ModifierHelper;
 import nl.uva.polyql.ast.types.Type;
 import nl.uva.polyql.ast.values.Value;
 import nl.uva.polyql.validation.UnknownIdError;
@@ -16,17 +14,10 @@ public class QuestionAtom extends Expression {
 
     private final String mQuestionId;
     private final Question mQuestion;
-    private final Modifier<?> mModifier;
 
-    public QuestionAtom(final RuleContainer parentRuleContainer, final String id, final String modifier) {
+    public QuestionAtom(final RuleContainer parentRuleContainer, final String id) {
         mQuestionId = id;
         mQuestion = parentRuleContainer.getQuestion(id);
-        mModifier = ModifierHelper.getBySyntax(modifier);
-        if (mQuestion != null) {
-            if (!mModifier.isValid(mQuestion.getType())) {
-                // TODO: Invalid modifier
-            }
-        }
     }
 
     public String getId() {
@@ -40,12 +31,12 @@ public class QuestionAtom extends Expression {
 
     @Override
     public Value<?> getValue() {
-        return mQuestion.getValue().applyModifier(mModifier);
+        return mQuestion.getValue();
     }
 
     @Override
     public String toString() {
-        return mModifier.getSyntax() + mQuestion.getId() + " = " + getValue();
+        return mQuestion.getId();
     }
 
     @Override

@@ -1,7 +1,6 @@
 package nl.uva.polyql.view;
 
 import java.awt.Dimension;
-import java.security.InvalidParameterException;
 import java.util.Objects;
 
 import javax.swing.BoxLayout;
@@ -83,15 +82,15 @@ public abstract class QuestionView implements Question.ValueListener {
     protected void setValid(final boolean valid) {}
 
     public void setComponentValue(final BooleanValue value) {
-        throw new InvalidParameterException("Booleans are invalid values for this view");
+        assert false : "Booleans are invalid values for this view";
     }
 
     public void setComponentValue(final NumberValue value) {
-        throw new InvalidParameterException("Numbers are invalid values for this view");
+        assert false : "Numbers are invalid values for this view";
     }
 
     public void setComponentValue(final StringValue value) {
-        throw new InvalidParameterException("Strings are invalid values for this view");
+        assert false : "Strings are invalid values for this view";
     }
 
     protected abstract JComponent getValueComponent();

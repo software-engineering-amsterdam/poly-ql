@@ -8,9 +8,8 @@ import javax.swing.JPanel;
 
 import nl.uva.polyql.ast.IfStatement;
 import nl.uva.polyql.ast.Rule;
-import nl.uva.polyql.ast.VisibilityListener;
 
-public class IfStatementView implements VisibilityListener {
+public class IfStatementView implements IfStatement.SatisfactionListener {
 
     private final JPanel mPanel;
 
@@ -33,8 +32,8 @@ public class IfStatementView implements VisibilityListener {
     }
 
     @Override
-    public void onParentVisibilityUpdate(final boolean visible) {
-        mPanel.setVisible(visible);
+    public void onSatisfactionUpdate(final IfStatement ifStatement) {
+        mPanel.setVisible(ifStatement.isSatisfied());
     }
 
 }

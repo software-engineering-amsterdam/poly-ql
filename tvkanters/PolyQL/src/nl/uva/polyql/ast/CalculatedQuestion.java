@@ -7,11 +7,11 @@ import nl.uva.polyql.validation.InvalidTypeError;
 import nl.uva.polyql.validation.ValidationErrors;
 import nl.uva.polyql.view.QuestionView;
 
-public class Field extends Question implements Question.ValueListener {
+public class CalculatedQuestion extends Question implements Question.ValueListener {
 
     private final Expression mExpression;
 
-    protected Field(final RuleContainer parent, final String id, final String label, final String type,
+    protected CalculatedQuestion(final RuleContainer parent, final String id, final String label, final String type,
             final Expression expression) {
         super(parent, id, label, type);
 

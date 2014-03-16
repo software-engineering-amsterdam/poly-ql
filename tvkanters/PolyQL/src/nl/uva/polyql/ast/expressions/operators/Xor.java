@@ -1,10 +1,10 @@
 package nl.uva.polyql.ast.expressions.operators;
 
-import nl.uva.polyql.ast.expressions.operations.Operator;
+import nl.uva.polyql.ast.expressions.operations.BinaryOperator;
 import nl.uva.polyql.ast.values.BooleanValue;
 import nl.uva.polyql.ast.values.Value;
 
-public class Xor extends Operator {
+public class Xor extends BinaryOperator {
 
     public static final String SYNTAX = "|";
 

@@ -1,10 +1,10 @@
 package nl.uva.polyql.ast.expressions.operators;
 
-import nl.uva.polyql.ast.expressions.operations.BinaryOperator;
+import nl.uva.polyql.ast.expressions.operations.UnaryOperator;
 import nl.uva.polyql.ast.values.NumberValue;
 import nl.uva.polyql.ast.values.Value;
 
-public class Subtract extends BinaryOperator {
+public class Negative extends UnaryOperator {
 
     public static final String SYNTAX = "-";
 
@@ -14,8 +14,8 @@ public class Subtract extends BinaryOperator {
     }
 
     @Override
-    public Value<?> performOperation(final NumberValue left, final NumberValue right) {
-        return new NumberValue(left.getValue() - right.getValue());
+    public Value<?> performOperation(final NumberValue value) {
+        return new NumberValue(-value.getValue());
     }
 
 }

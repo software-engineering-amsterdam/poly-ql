@@ -11,14 +11,14 @@ import nl.uva.polyql.validation.InvalidIfStatementError;
 import nl.uva.polyql.validation.ValidationErrors;
 import nl.uva.polyql.view.IfStatementView;
 
-public class IfStatement extends RuleContainer implements Rule, VisibilityListener, Question.ValueListener {
+public class IfStatement extends RuleContainer implements Rule, Question.ValueListener {
 
     private final RuleContainer mParent;
     private final Expression mExpression;
     private boolean mSatisfied;
     private LineInfo mLineInfo;
 
-    private final Set<VisibilityListener> mVisibilityListeners = new HashSet<>();
+    private final Set<SatisfactionListener> mSatisfactionListeners = new HashSet<>();
 
     protected IfStatement(final RuleContainer parent, final Expression expression) {
         mParent = parent;
@@ -32,31 +32,21 @@ public class IfStatement extends RuleContainer implements Rule, VisibilityListen
     @Override
     public Component getView() {
         final IfStatementView view = new IfStatementView(this);
-        mVisibilityListeners.add(view);
-        view.onParentVisibilityUpdate(isVisible());
+        mSatisfactionListeners.add(view);
+        view.onSatisfactionUpdate(this);
         return view.getComponent();
-    }
-
-    @Override
-    public void onParentVisibilityUpdate(final boolean visible) {
-        for (final VisibilityListener listener : mVisibilityListeners) {
-            listener.onParentVisibilityUpdate(visible);
-        }
     }
 
     @Override
     public void onQuestionUpdate(final Question question) {
         mExpression.validate();
-
-        final boolean oldVisible = isVisible();
         final boolean satisfied = checkSatisfaction();
 
         if (satisfied != mSatisfied) {
             mSatisfied = satisfied;
 
-            final boolean newVisible = isVisible();
-            if (oldVisible != newVisible) {
-                onParentVisibilityUpdate(newVisible);
+            for (final SatisfactionListener listener : mSatisfactionListeners) {
+                listener.onSatisfactionUpdate(this);
             }
         }
     }
@@ -85,11 +75,6 @@ public class IfStatement extends RuleContainer implements Rule, VisibilityListen
         return ((BooleanValue) mExpression.getValue()).getValue();
     }
 
-    @Override
-    public boolean isVisible() {
-        return mSatisfied && getParent().isVisible();
-    }
-
     public Expression getExpression() {
         return mExpression;
     }
@@ -116,5 +101,16 @@ public class IfStatement extends RuleContainer implements Rule, VisibilityListen
     @Override
     public String toString() {
         return "IF " + mExpression;
+    }
+
+    public interface SatisfactionListener {
+
+        /**
+         * Called when an if-statement's visibility changed.
+         * 
+         * @param ifStatement
+         *            The caller
+         */
+        public void onSatisfactionUpdate(final IfStatement ifStatement);
     }
 }

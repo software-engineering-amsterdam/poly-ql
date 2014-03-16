@@ -1,5 +1,6 @@
 package nl.uva.polyql.antlr4;
 
+import nl.uva.polyql.antlr4.QuestionnaireParser.CalcquestionContext;
 import nl.uva.polyql.antlr4.QuestionnaireParser.Expr_andContext;
 import nl.uva.polyql.antlr4.QuestionnaireParser.Expr_atomContext;
 import nl.uva.polyql.antlr4.QuestionnaireParser.Expr_eqContext;
@@ -7,7 +8,6 @@ import nl.uva.polyql.antlr4.QuestionnaireParser.Expr_numContext;
 import nl.uva.polyql.antlr4.QuestionnaireParser.Expr_orContext;
 import nl.uva.polyql.antlr4.QuestionnaireParser.Expr_prodContext;
 import nl.uva.polyql.antlr4.QuestionnaireParser.Expr_sumContext;
-import nl.uva.polyql.antlr4.QuestionnaireParser.FieldContext;
 import nl.uva.polyql.antlr4.QuestionnaireParser.IfstatementContext;
 import nl.uva.polyql.antlr4.QuestionnaireParser.QuestionContext;
 import nl.uva.polyql.ast.LineInfo;
@@ -15,8 +15,8 @@ import nl.uva.polyql.ast.LineInfo;
 public class LineInfoListener extends QuestionnaireBaseListener {
 
     @Override
-    public void exitField(final FieldContext ctx) {
-        ctx.f.setLineInfo(new LineInfo(ctx));
+    public void exitCalcquestion(final CalcquestionContext ctx) {
+        ctx.cq.setLineInfo(new LineInfo(ctx));
     }
 
     @Override
