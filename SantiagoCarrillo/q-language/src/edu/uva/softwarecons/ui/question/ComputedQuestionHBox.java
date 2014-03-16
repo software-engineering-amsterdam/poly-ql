@@ -1,4 +1,4 @@
-package edu.uva.softwarecons.ui;
+package edu.uva.softwarecons.ui.question;
 
 import edu.uva.softwarecons.model.value.ArithmeticValue;
 import edu.uva.softwarecons.model.value.IntegerValue;
@@ -14,7 +14,7 @@ public class ComputedQuestionHBox extends QuestionHBox{
 
     private final Text result = new Text("0");
 
-    protected ComputedQuestionHBox(String questionId) {
+    public ComputedQuestionHBox(String questionId) {
         super(questionId);
         getChildren().add(result);
     }

@@ -1,4 +1,4 @@
-package edu.uva.softwarecons.ui;
+package edu.uva.softwarecons.ui.question;
 
 import edu.uva.softwarecons.model.value.BooleanValue;
 import javafx.event.ActionEvent;
@@ -15,7 +15,7 @@ public class BooleanQuestionHBox extends QuestionHBox {
 
     private final CheckBox checkBox = new CheckBox("Yes");
 
-    protected BooleanQuestionHBox(String questionId, EventHandler<ActionEvent> eventHandler) {
+    public BooleanQuestionHBox(String questionId, EventHandler<ActionEvent> eventHandler) {
         super(questionId);
         getChildren().add(checkBox);
         checkBox.setOnAction(eventHandler);

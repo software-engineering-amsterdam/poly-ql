@@ -1,4 +1,4 @@
-package edu.uva.softwarecons.ui;
+package edu.uva.softwarecons.ui.widget;
 
 import javafx.scene.control.TextField;
 

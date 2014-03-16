@@ -2,7 +2,7 @@ package edu.uva.softwarecons.evaluator;
 
 import edu.uva.softwarecons.model.Form;
 import edu.uva.softwarecons.model.question.*;
-import edu.uva.softwarecons.ui.QuestionHBox;
+import edu.uva.softwarecons.ui.question.QuestionHBox;
 import edu.uva.softwarecons.visitor.form.IFormElementVisitor;
 
 import java.util.HashMap;

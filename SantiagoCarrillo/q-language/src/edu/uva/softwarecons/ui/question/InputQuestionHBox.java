@@ -1,4 +1,4 @@
-package edu.uva.softwarecons.ui;
+package edu.uva.softwarecons.ui.question;
 
 import edu.uva.softwarecons.model.value.StringValue;
 import edu.uva.softwarecons.model.value.Value;
@@ -16,7 +16,7 @@ public class InputQuestionHBox extends QuestionHBox{
 
     protected final TextField textField;
 
-    protected InputQuestionHBox(String questionId, boolean textFieldDisabled, EventHandler<ActionEvent> eventHandler,  TextField textField) {
+    public InputQuestionHBox(String questionId, boolean textFieldDisabled, EventHandler<ActionEvent> eventHandler,  TextField textField) {
         super(questionId);
         this.textField = textField;
         textField.setDisable(textFieldDisabled);

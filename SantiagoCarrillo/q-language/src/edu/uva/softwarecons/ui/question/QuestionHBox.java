@@ -1,4 +1,4 @@
-package edu.uva.softwarecons.ui;
+package edu.uva.softwarecons.ui.question;
 
 import edu.uva.softwarecons.model.value.Value;
 import javafx.geometry.Insets;

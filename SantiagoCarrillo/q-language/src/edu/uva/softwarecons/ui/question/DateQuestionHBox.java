@@ -1,4 +1,4 @@
-package edu.uva.softwarecons.ui;
+package edu.uva.softwarecons.ui.question;
 
 import edu.uva.softwarecons.model.value.DateValue;
 import eu.schudt.javafx.controls.calendar.DatePicker;
@@ -17,7 +17,7 @@ public class DateQuestionHBox extends QuestionHBox{
 
     private final DatePicker datePicker;
 
-    protected DateQuestionHBox(String questionId, EventHandler<ActionEvent> eventHandler) {
+    public DateQuestionHBox(String questionId, EventHandler<ActionEvent> eventHandler) {
         super(questionId);
         datePicker = new DatePicker(Locale.ENGLISH);
         datePicker.setDateFormat(DateValue.dateFormat);
