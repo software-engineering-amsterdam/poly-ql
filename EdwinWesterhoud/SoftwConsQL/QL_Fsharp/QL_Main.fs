@@ -14,8 +14,10 @@ let parse_string inputString = let lexbuf = Lexing.LexBuffer<_>.FromString input
                                QL_Parser.start QL_Lexer.tokenize lexbuf
 
 let buttonGenerate_Click _ _ = let lexbuf = Lexing.LexBuffer<_>.FromString mainForm.InputText
+                               let mutable isParsing = true
                                try
                                    let ast = QL_Parser.start QL_Lexer.tokenize lexbuf
+                                   isParsing <- false
                                    let checkInfo = typeCheck ast
                                    if mainForm.CheckTypes && checkInfo.HasErrors then
                                         // Type error(s):
@@ -26,14 +28,13 @@ let buttonGenerate_Click _ _ = let lexbuf = Lexing.LexBuffer<_>.FromString mainF
                                         let qForm = new QuestionnaireForm(ast.ID)
                                         qForm.AddControls(List.toArray <| QL_Interpreter.buildGUI ast)
                                         qForm.Show()
-                               with err -> // Parse error:
-                                       let message = err.Message
-                                       let s_pos = lexbuf.StartPos
-                                       let e_pos = lexbuf.EndPos
-                                       mainForm.SetOutputText(sprintf "%s between line %i, column %i and line %i column %i" 
-                                        message
-                                        (s_pos.Line+1) s_pos.Column
-                                        (e_pos.Line+1) e_pos.Column)
+                               with err when isParsing ->   let message = err.Message
+                                                            let s_pos = lexbuf.StartPos
+                                                            let e_pos = lexbuf.EndPos
+                                                            mainForm.SetOutputText(sprintf "%s between line %i, column %i and line %i column %i" 
+                                                                message
+                                                                (s_pos.Line+1) s_pos.Column
+                                                                (e_pos.Line+1) e_pos.Column)
 
 mainForm.AddClickEventHandler(new System.EventHandler(buttonGenerate_Click))
 
