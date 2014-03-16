@@ -78,6 +78,7 @@
     <None Include="packages.config" />
     <Compile Include="QL_Grammar.fs" />
     <Compile Include="QL_Checker.fs" />
+    <Compile Include="QL_Interpreter.fs" />
     <None Include="QL_Lexer.fsl" />
     <None Include="QL_Parser.fsp" />
     <Compile Include="QL_Parser.fs" />
@@ -127,10 +128,8 @@
     </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>if $(ConfigurationName) == Debug (
-"Z:\UvA\Software Construction\SoftwConsQl\packages\FSPowerPack.Community.3.0.0.0\Tools\fslex.exe" "$(ProjectDir)QL_Lexer.fsl" --unicode
-"Z:\UvA\Software Construction\SoftwConsQl\packages\FSPowerPack.Community.3.0.0.0\Tools\fsyacc.exe" "$(ProjectDir)QL_Parser.fsp" --module QL_Parser
-)</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
