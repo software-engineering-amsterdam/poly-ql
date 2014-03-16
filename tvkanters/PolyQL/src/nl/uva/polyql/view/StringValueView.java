@@ -45,7 +45,7 @@ public class StringValueView extends QuestionView {
     }
 
     @Override
-    protected void setEditable(final boolean enabled) {
+    protected void onEditableChanged(final boolean enabled) {
         mTextField.setEnabled(enabled);
     }
 }

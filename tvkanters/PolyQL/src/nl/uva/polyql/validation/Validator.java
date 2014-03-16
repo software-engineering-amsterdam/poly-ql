@@ -4,10 +4,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import nl.uva.polyql.Log;
 import nl.uva.polyql.ast.Form;
 import nl.uva.polyql.ast.Question;
 import nl.uva.polyql.ast.Rule;
+import nl.uva.polyql.utils.Log;
 
 public class Validator {
 
@@ -29,7 +29,7 @@ public class Validator {
         final Set<String> ids = new HashSet<>();
         final Set<String> labels = new HashSet<>();
 
-        for (final Question question : mForm.getQuestions()) {
+        for (final Question question : mForm.getQuestionsRecursively()) {
             final String id = question.getId();
             if (ids.contains(id)) {
                 mErrors.add(new DuplicateIdError(question, id));
@@ -47,7 +47,7 @@ public class Validator {
     }
 
     private void validateTypes() {
-        for (final Rule rule : mForm.getChildRules()) {
+        for (final Rule rule : mForm.getRules()) {
             mErrors.merge(rule.validate());
         }
     }

@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import nl.uva.polyql.ast.Question;
-import nl.uva.polyql.ast.types.StringType;
 import nl.uva.polyql.ast.types.Type;
 import nl.uva.polyql.ast.values.StringValue;
 import nl.uva.polyql.validation.ValidationErrors;
@@ -14,7 +13,7 @@ public class StringAtom extends Expression {
     private final StringValue mValue;
 
     public StringAtom(final String value) {
-        mValue = new StringType().parseInput(value);
+        mValue = StringValue.parse(value);
     }
 
     @Override

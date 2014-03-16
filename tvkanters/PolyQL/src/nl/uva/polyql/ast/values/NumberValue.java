@@ -48,4 +48,20 @@ public class NumberValue extends Value<Double> {
         return operator.performOperation(this);
     }
 
+    /**
+     * Parses the given user input as a number.
+     * 
+     * @param input
+     *            The user input
+     * 
+     * @return The number value or null if it couldn't be parsed
+     */
+    public static NumberValue parse(final String input) {
+        try {
+            return new NumberValue(Double.parseDouble(input));
+        } catch (final NumberFormatException ex) {
+            return null;
+        }
+    }
+
 }

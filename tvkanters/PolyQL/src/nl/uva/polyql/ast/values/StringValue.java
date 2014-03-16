@@ -48,4 +48,16 @@ public class StringValue extends Value<String> {
         return operator.performOperation(this);
     }
 
+    /**
+     * Parses the given user input as a string.
+     * 
+     * @param input
+     *            The user input
+     * 
+     * @return The string value
+     */
+    public static StringValue parse(final String input) {
+        return new StringValue(input.substring(1, input.length() - 1));
+    }
+
 }

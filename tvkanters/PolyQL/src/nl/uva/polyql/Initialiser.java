@@ -9,6 +9,7 @@ import nl.uva.polyql.antlr4.QuestionnaireParser;
 import nl.uva.polyql.antlr4.QuestionnaireParser.FormContext;
 import nl.uva.polyql.ast.Rule;
 import nl.uva.polyql.ast.RuleContainer;
+import nl.uva.polyql.utils.Log;
 import nl.uva.polyql.validation.Validator;
 import nl.uva.polyql.view.FormFrame;
 
@@ -54,7 +55,7 @@ public class Initialiser {
             indent += " ";
         }
 
-        for (final Rule rule : form.getChildRules()) {
+        for (final Rule rule : form.getRules()) {
             Log.i(indent + rule);
 
             if (rule instanceof RuleContainer) {

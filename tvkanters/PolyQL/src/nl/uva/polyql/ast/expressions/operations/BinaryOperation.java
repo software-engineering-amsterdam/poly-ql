@@ -2,9 +2,9 @@ package nl.uva.polyql.ast.expressions.operations;
 
 import java.util.Set;
 
-import nl.uva.polyql.Log;
 import nl.uva.polyql.ast.Question;
 import nl.uva.polyql.ast.expressions.Expression;
+import nl.uva.polyql.utils.Log;
 import nl.uva.polyql.validation.InvalidBinaryOperationError;
 import nl.uva.polyql.validation.ValidationErrors;
 

@@ -1,18 +1,24 @@
 package nl.uva.polyql.ast.types;
 
+import nl.uva.polyql.ast.values.BooleanValue;
+import nl.uva.polyql.ast.values.InvalidValue;
+import nl.uva.polyql.ast.values.NumberValue;
+import nl.uva.polyql.ast.values.StringValue;
+import nl.uva.polyql.ast.values.Value;
+
 public enum Type {
-    BOOLEAN(new BooleanType()),
-    NUMBER(new NumberType()),
-    STRING(new StringType()),
-    INVALID(new InvalidType());
+    BOOLEAN(new BooleanValue(false)),
+    NUMBER(new NumberValue(0.0)),
+    STRING(new StringValue("")),
+    INVALID(new InvalidValue());
 
-    private final ValueType<?> mType;
+    private final Value<?> mDefaultValue;
 
-    private Type(final ValueType<?> type) {
-        mType = type;
+    private Type(final Value<?> defaultValue) {
+        mDefaultValue = defaultValue;
     }
 
-    public ValueType<?> getType() {
-        return mType;
+    public Value<?> getDefaultValue() {
+        return mDefaultValue;
     }
 }

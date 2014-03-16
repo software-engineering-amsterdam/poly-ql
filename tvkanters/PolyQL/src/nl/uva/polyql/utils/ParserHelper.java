@@ -1,4 +1,4 @@
-package nl.uva.polyql;
+package nl.uva.polyql.utils;
 
 import java.io.FileInputStream;
 import java.io.IOException;

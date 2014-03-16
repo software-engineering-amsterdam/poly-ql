@@ -43,7 +43,7 @@ public class FormFrame extends JFrame {
         getContentPane().add(new JScrollPane(formPanel), BorderLayout.CENTER);
 
         // Add content to the form container
-        final List<Rule> rules = form.getChildRules();
+        final List<Rule> rules = form.getRules();
         for (final Rule rule : rules) {
             container.add(rule.getView());
         }

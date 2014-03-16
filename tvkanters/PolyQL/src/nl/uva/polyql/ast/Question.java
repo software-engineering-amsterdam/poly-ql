@@ -2,19 +2,16 @@ package nl.uva.polyql.ast;
 
 import java.awt.Component;
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
 
-import nl.uva.polyql.Log;
-import nl.uva.polyql.ast.types.StringType;
 import nl.uva.polyql.ast.types.Type;
+import nl.uva.polyql.ast.values.StringValue;
 import nl.uva.polyql.ast.values.Value;
+import nl.uva.polyql.utils.Log;
 import nl.uva.polyql.validation.ValidationErrors;
 
 public class Question implements Rule {
 
-    private final RuleContainer mParent;
     private final String mId;
     private final String mLabel;
     private final Type mType;
@@ -24,18 +21,16 @@ public class Question implements Rule {
 
     private final Set<ValueListener> mUpdateListeners = new HashSet<>();
 
-    protected Question(final RuleContainer parent, final String id, final String label, final String type) {
-        this(parent, id, label, Type.valueOf(type.toUpperCase()));
+    protected Question(final String id, final String label, final String type) {
+        this(id, label, Type.valueOf(type.toUpperCase()));
     }
 
-    protected Question(final RuleContainer parent, final String id, final String label, final Type type) {
-        mParent = parent;
-
+    protected Question(final String id, final String label, final Type type) {
         mId = id;
-        mLabel = StringType.parseInputToString(label);
+        mLabel = StringValue.parse(label).getValue();
         mType = type;
 
-        setValue(mType.getType().getDefaultValue());
+        setValue(mType.getDefaultValue());
     }
 
     /**
@@ -71,13 +66,6 @@ public class Question implements Rule {
         mUpdateListeners.add(listener);
     }
 
-    @Override
-    public List<Question> getQuestions() {
-        final List<Question> questions = new LinkedList<>();
-        questions.add(this);
-        return questions;
-    }
-
     public Value<?> getValue() {
         return mValue;
     }
@@ -97,7 +85,7 @@ public class Question implements Rule {
 
     @Override
     public String toString() {
-        return mId + " = " + mValue;
+        return mId;
     }
 
     public String getId() {
@@ -122,13 +110,8 @@ public class Question implements Rule {
         return mLineInfo;
     }
 
-    @Override
-    public RuleContainer getParent() {
-        return mParent;
-    }
-
     /**
-     * The interface for that must be implemented to receive callbacks when the question's value is
+     * The interface for that must be implemented to receive call-backs when the question's value is
      * update, e.g., when the user types in the question's field.
      */
     public interface ValueListener {

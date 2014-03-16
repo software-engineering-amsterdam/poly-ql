@@ -39,7 +39,7 @@ public class BooleanValueView extends QuestionView {
     }
 
     @Override
-    public void setEditable(final boolean enabled) {
+    protected void onEditableChanged(final boolean enabled) {
         mCheckBox.setEnabled(enabled);
     }
 }

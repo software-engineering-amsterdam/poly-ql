@@ -6,12 +6,12 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import nl.uva.polyql.Log;
-import nl.uva.polyql.ParserHelper;
 import nl.uva.polyql.ast.Form;
 import nl.uva.polyql.ast.IfStatement;
 import nl.uva.polyql.ast.Question;
 import nl.uva.polyql.ast.values.NumberValue;
+import nl.uva.polyql.utils.Log;
+import nl.uva.polyql.utils.ParserHelper;
 import nl.uva.polyql.validation.DuplicateIdError;
 import nl.uva.polyql.validation.DuplicateLabelWarning;
 import nl.uva.polyql.validation.InvalidBinaryOperationError;
@@ -36,7 +36,7 @@ public class ParserTest {
         Validator.validate(form);
 
         final Question question = form.getQuestion("num");
-        final IfStatement ifStatement = (IfStatement) form.getChildRules().get(1);
+        final IfStatement ifStatement = (IfStatement) form.getRules().get(1);
 
         assertFalse(ifStatement.isSatisfied());
 

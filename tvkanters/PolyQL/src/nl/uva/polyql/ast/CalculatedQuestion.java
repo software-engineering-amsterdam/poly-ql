@@ -11,9 +11,8 @@ public class CalculatedQuestion extends Question implements Question.ValueListen
 
     private final Expression mExpression;
 
-    protected CalculatedQuestion(final RuleContainer parent, final String id, final String label, final String type,
-            final Expression expression) {
-        super(parent, id, label, type);
+    protected CalculatedQuestion(final String id, final String label, final String type, final Expression expression) {
+        super(id, label, type);
 
         mExpression = expression;
 

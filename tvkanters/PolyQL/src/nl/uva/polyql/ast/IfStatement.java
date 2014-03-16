@@ -64,7 +64,7 @@ public class IfStatement extends RuleContainer implements Rule, Question.ValueLi
         }
 
         // Validate children
-        for (final Rule rule : getChildRules()) {
+        for (final Rule rule : getRules()) {
             errors.merge(rule.validate());
         }
 
@@ -103,6 +103,9 @@ public class IfStatement extends RuleContainer implements Rule, Question.ValueLi
         return "IF " + mExpression;
     }
 
+    /**
+     * The interface for objects wanting to be notified of satisfaction changes of the if-statement.
+     */
     public interface SatisfactionListener {
 
         /**

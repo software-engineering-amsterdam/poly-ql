@@ -1,6 +1,7 @@
 package nl.uva.polyql.view;
 
 import java.awt.Dimension;
+import java.security.InvalidParameterException;
 import java.util.Objects;
 
 import javax.swing.BoxLayout;
@@ -30,7 +31,7 @@ public abstract class QuestionView implements Question.ValueListener {
         init();
 
         setValue(mQuestion.getValue(), true);
-        setEditable(mQuestion.isEditable());
+        onEditableChanged(mQuestion.isEditable());
 
         mPanel = new JPanel();
         mPanel.setLayout(new BoxLayout(mPanel, BoxLayout.X_AXIS));
@@ -56,7 +57,7 @@ public abstract class QuestionView implements Question.ValueListener {
 
     private void setValue(final Value<?> value, final boolean updateSelf) {
         mValue = value;
-        setValid(value != null);
+        onValidityChanged(value != null);
 
         if (updateSelf && value != null) {
             value.setViewValue(this);
@@ -77,20 +78,20 @@ public abstract class QuestionView implements Question.ValueListener {
 
     protected abstract void init();
 
-    protected void setEditable(final boolean enabled) {}
+    protected void onEditableChanged(final boolean enabled) {}
 
-    protected void setValid(final boolean valid) {}
+    protected void onValidityChanged(final boolean valid) {}
 
     public void setComponentValue(final BooleanValue value) {
-        assert false : "Booleans are invalid values for this view";
+        throw new InvalidParameterException("Booleans are invalid values for this view");
     }
 
     public void setComponentValue(final NumberValue value) {
-        assert false : "Numbers are invalid values for this view";
+        throw new InvalidParameterException("Numbers are invalid values for this view");
     }
 
     public void setComponentValue(final StringValue value) {
-        assert false : "Strings are invalid values for this view";
+        throw new InvalidParameterException("Strings are invalid values for this view");
     }
 
     protected abstract JComponent getValueComponent();

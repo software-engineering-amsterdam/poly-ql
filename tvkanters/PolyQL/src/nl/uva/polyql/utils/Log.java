@@ -1,4 +1,4 @@
-package nl.uva.polyql;
+package nl.uva.polyql.utils;
 
 public class Log {
 
