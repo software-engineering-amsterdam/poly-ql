@@ -3,17 +3,19 @@ package edu.uva.softwarecons.model.value;
 
 /**
  * Falconlabs
- * User: sancarbar
+ * @author Santiago Carrillo
  * Date: 3/13/14
  */
-public interface ArithmeticValue extends ComparableValue {
+public interface ArithmeticValue
+    extends ComparableValue
+{
 
-    public Value add(Value value);
+    public Value add( Value value );
 
-    public Value subtract(Value value);
+    public Value subtract( Value value );
 
-    public Value divide(Value value);
+    public Value divide( Value value );
 
-    public Value multiply(Value value);
+    public Value multiply( Value value );
 
 }

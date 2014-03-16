@@ -10,33 +10,40 @@ import edu.uva.softwarecons.visitor.expression.IExpressionEvalVisitor;
 
 /**
  * Falconlabs
- * User: sancarbar
+ * @author Santiago Carrillo
  * Date: 3/12/14
  */
-public class StringExpression implements Expression {
+public class StringExpression
+    implements Expression
+{
 
     private String value;
 
-    public StringExpression(String value) {
+    public StringExpression( String value )
+    {
         this.value = value;
     }
 
-    public String getValue() {
+    public String getValue()
+    {
         return value;
     }
 
     @Override
-    public Type accept(IExpressionElementVisitor visitor) {
+    public Type accept( IExpressionElementVisitor visitor )
+    {
         return new StringType();
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals( Object obj )
+    {
         return obj instanceof StringExpression;
     }
 
     @Override
-    public Value accept(IExpressionEvalVisitor visitor) {
-        return new StringValue(value);
+    public Value accept( IExpressionEvalVisitor visitor )
+    {
+        return new StringValue( value );
     }
 }

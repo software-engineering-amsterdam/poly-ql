@@ -7,10 +7,12 @@ import java.util.List;
 
 /**
  * Falconlabs
- * User: sancarbar
+ * @author Santiago Carrillo
  * Date: 2/26/14
  */
-public class IfQuestion implements Question {
+public class IfQuestion
+    implements Question
+{
 
     private final Expression expression;
 
@@ -20,36 +22,43 @@ public class IfQuestion implements Question {
 
     private final String condition;
 
-    public IfQuestion(Expression expression, List<Question> questions, ElseQuestion elseQuestion, String condition) {
+    public IfQuestion( Expression expression, List<Question> questions, ElseQuestion elseQuestion, String condition )
+    {
         this.expression = expression;
         this.questions = questions;
         this.elseQuestion = elseQuestion;
         this.condition = condition;
     }
 
-    public Expression getExpression() {
+    public Expression getExpression()
+    {
         return expression;
     }
 
-    public List<Question> getQuestions() {
+    public List<Question> getQuestions()
+    {
         return questions;
     }
 
-    public ElseQuestion getElseQuestion() {
+    public ElseQuestion getElseQuestion()
+    {
         return elseQuestion;
     }
 
     @Override
-    public void accept(IFormElementVisitor visitor) {
-        visitor.visitIfQuestion(this);
+    public void accept( IFormElementVisitor visitor )
+    {
+        visitor.visitIfQuestion( this );
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals( Object o )
+    {
         return o instanceof IfQuestion;
     }
 
-    public String getCondition() {
+    public String getCondition()
+    {
         return condition;
     }
 }

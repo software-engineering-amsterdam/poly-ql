@@ -11,10 +11,11 @@ import java.io.IOException;
 
 /**
  * Falconlabs
- * User: sancarbar
+ * @author Santiago Carrillo
  * Date: 3/7/14
  */
-public class QuestionnaireBuilderTest {
+public class QuestionnaireBuilderTest
+{
 
 
     private ParserBuilder parserBuilder;
@@ -22,14 +23,18 @@ public class QuestionnaireBuilderTest {
     private Form form;
 
     @Before
-    public void setUp() {
+    public void setUp()
+    {
         //TODO not rely on input.txt create a seperate file
         parserBuilder = new ParserBuilder();
-        try {
-            ParseTree tree = parserBuilder.buildParseTree(FileReader.getFileContent("input.txt", "res"));
+        try
+        {
+            ParseTree tree = parserBuilder.buildParseTree( FileReader.getFileContent( "input.txt", "res" ) );
             QuestionnaireBuilderVisitor questionnaireBuilderVisitor = new QuestionnaireBuilderVisitor();
-            form = (Form) questionnaireBuilderVisitor.visit(tree);
-        } catch (IOException e) {
+            form = (Form) questionnaireBuilderVisitor.visit( tree );
+        }
+        catch ( IOException e )
+        {
             assert false : "Error reading the input file for the QuestionnaireBuilderTest";
         }
     }

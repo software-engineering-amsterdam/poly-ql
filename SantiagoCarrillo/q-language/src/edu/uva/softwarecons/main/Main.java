@@ -9,19 +9,24 @@ import edu.uva.softwarecons.util.FileReader;
 import edu.uva.softwarecons.util.ParserBuilder;
 import org.antlr.v4.runtime.tree.ParseTree;
 
-public class Main {
-    public static void main(String[] args) throws Exception {
+public class Main
+{
+    public static void main( String[] args )
+        throws Exception
+    {
         ParserBuilder parserBuilder = new ParserBuilder();
-        ParseTree tree = parserBuilder.buildParseTree(FileReader.getFileContent("input.txt", "res"));
+        ParseTree tree = parserBuilder.buildParseTree( FileReader.getFileContent( "input.txt", "res" ) );
         QuestionnaireBuilderVisitor questionnaireBuilderVisitor = new QuestionnaireBuilderVisitor();
-        Form form = (Form) questionnaireBuilderVisitor.visit(tree);
+        Form form = (Form) questionnaireBuilderVisitor.visit( tree );
         TypeChecker typeChecker = new TypeChecker();
-        typeChecker.checkForm(form);
-        for (QuestionnaireWarning questionnaireWarning : typeChecker.getWarnings()) {
-            System.out.println(questionnaireWarning);
+        typeChecker.checkForm( form );
+        for ( QuestionnaireWarning questionnaireWarning : typeChecker.getWarnings() )
+        {
+            System.out.println( questionnaireWarning );
         }
-        for (QuestionnaireError questionnaireError : typeChecker.getErrors()) {
-            System.err.println(questionnaireError);
+        for ( QuestionnaireError questionnaireError : typeChecker.getErrors() )
+        {
+            System.err.println( questionnaireError );
         }
     }
 }

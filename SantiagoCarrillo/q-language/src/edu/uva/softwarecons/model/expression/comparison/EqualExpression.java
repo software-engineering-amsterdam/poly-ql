@@ -9,22 +9,27 @@ import edu.uva.softwarecons.visitor.expression.IExpressionEvalVisitor;
 
 /**
  * Falconlabs
- * User: sancarbar
+ * @author Santiago Carrillo
  * Date: 2/20/14
  */
-public class EqualExpression extends BinaryExpression {
+public class EqualExpression
+    extends BinaryExpression
+{
 
-    public EqualExpression(Expression leftOperand, Expression rightOperand) {
-        super(leftOperand, rightOperand);
+    public EqualExpression( Expression leftOperand, Expression rightOperand )
+    {
+        super( leftOperand, rightOperand );
     }
 
     @Override
-    public Type accept(IExpressionElementVisitor visitor) {
-        return visitor.visitEqualExpression(this);
+    public Type accept( IExpressionElementVisitor visitor )
+    {
+        return visitor.visitEqualExpression( this );
     }
 
     @Override
-    public Value accept(IExpressionEvalVisitor visitor) {
-        return visitor.visitEqualExpression(this);
+    public Value accept( IExpressionEvalVisitor visitor )
+    {
+        return visitor.visitEqualExpression( this );
     }
 }

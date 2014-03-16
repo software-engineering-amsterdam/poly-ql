@@ -9,19 +9,23 @@ import javafx.event.EventHandler;
 
 /**
  * Falconlabs
- * User: sancarbar
+ * @author Santiago Carrillo
  * Date: 3/15/14
  */
-public class NumericQuestionHBox extends InputQuestionHBox {
+public class NumericQuestionHBox
+    extends InputQuestionHBox
+{
 
-    public NumericQuestionHBox(BasicQuestion question, EventHandler<ActionEvent> eventHandler) {
-        super(question, eventHandler, new NumericTextField());
-        textField.setText("0");
+    public NumericQuestionHBox( BasicQuestion question, EventHandler<ActionEvent> eventHandler )
+    {
+        super( question, eventHandler, new NumericTextField() );
+        textField.setText( "0" );
 
     }
 
     @Override
-    public Value getValue() {
-        return new IntegerValue(Integer.parseInt(textField.getText()));
+    public Value getValue()
+    {
+        return new IntegerValue( Integer.parseInt( textField.getText() ) );
     }
 }

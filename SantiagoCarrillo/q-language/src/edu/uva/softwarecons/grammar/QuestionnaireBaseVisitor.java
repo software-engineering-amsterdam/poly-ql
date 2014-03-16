@@ -12,7 +12,10 @@ import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
  * @param <T> The return type of the visit operation. Use {@link Void} for
  *            operations with no return type.
  */
-public class QuestionnaireBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements QuestionnaireVisitor<T> {
+public class QuestionnaireBaseVisitor<T>
+    extends AbstractParseTreeVisitor<T>
+    implements QuestionnaireVisitor<T>
+{
     /**
      * {@inheritDoc}
      * <p/>
@@ -20,8 +23,9 @@ public class QuestionnaireBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
      * {@link #visitChildren} on {@code ctx}.</p>
      */
     @Override
-    public T visitElse(@NotNull QuestionnaireParser.ElseContext ctx) {
-        return visitChildren(ctx);
+    public T visitElse( @NotNull QuestionnaireParser.ElseContext ctx )
+    {
+        return visitChildren( ctx );
     }
 
     /**
@@ -31,8 +35,9 @@ public class QuestionnaireBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
      * {@link #visitChildren} on {@code ctx}.</p>
      */
     @Override
-    public T visitSimpleQuestion(@NotNull QuestionnaireParser.SimpleQuestionContext ctx) {
-        return visitChildren(ctx);
+    public T visitSimpleQuestion( @NotNull QuestionnaireParser.SimpleQuestionContext ctx )
+    {
+        return visitChildren( ctx );
     }
 
     /**
@@ -42,8 +47,9 @@ public class QuestionnaireBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
      * {@link #visitChildren} on {@code ctx}.</p>
      */
     @Override
-    public T visitStringType(@NotNull QuestionnaireParser.StringTypeContext ctx) {
-        return visitChildren(ctx);
+    public T visitStringType( @NotNull QuestionnaireParser.StringTypeContext ctx )
+    {
+        return visitChildren( ctx );
     }
 
     /**
@@ -53,8 +59,9 @@ public class QuestionnaireBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
      * {@link #visitChildren} on {@code ctx}.</p>
      */
     @Override
-    public T visitDecimalType(@NotNull QuestionnaireParser.DecimalTypeContext ctx) {
-        return visitChildren(ctx);
+    public T visitDecimalType( @NotNull QuestionnaireParser.DecimalTypeContext ctx )
+    {
+        return visitChildren( ctx );
     }
 
     /**
@@ -64,8 +71,9 @@ public class QuestionnaireBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
      * {@link #visitChildren} on {@code ctx}.</p>
      */
     @Override
-    public T visitBooleanType(@NotNull QuestionnaireParser.BooleanTypeContext ctx) {
-        return visitChildren(ctx);
+    public T visitBooleanType( @NotNull QuestionnaireParser.BooleanTypeContext ctx )
+    {
+        return visitChildren( ctx );
     }
 
     /**
@@ -75,8 +83,9 @@ public class QuestionnaireBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
      * {@link #visitChildren} on {@code ctx}.</p>
      */
     @Override
-    public T visitComputedQuestion(@NotNull QuestionnaireParser.ComputedQuestionContext ctx) {
-        return visitChildren(ctx);
+    public T visitComputedQuestion( @NotNull QuestionnaireParser.ComputedQuestionContext ctx )
+    {
+        return visitChildren( ctx );
     }
 
     /**
@@ -86,8 +95,9 @@ public class QuestionnaireBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
      * {@link #visitChildren} on {@code ctx}.</p>
      */
     @Override
-    public T visitInteger(@NotNull QuestionnaireParser.IntegerContext ctx) {
-        return visitChildren(ctx);
+    public T visitInteger( @NotNull QuestionnaireParser.IntegerContext ctx )
+    {
+        return visitChildren( ctx );
     }
 
     /**
@@ -97,8 +107,9 @@ public class QuestionnaireBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
      * {@link #visitChildren} on {@code ctx}.</p>
      */
     @Override
-    public T visitOr(@NotNull QuestionnaireParser.OrContext ctx) {
-        return visitChildren(ctx);
+    public T visitOr( @NotNull QuestionnaireParser.OrContext ctx )
+    {
+        return visitChildren( ctx );
     }
 
     /**
@@ -108,8 +119,9 @@ public class QuestionnaireBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
      * {@link #visitChildren} on {@code ctx}.</p>
      */
     @Override
-    public T visitCompare(@NotNull QuestionnaireParser.CompareContext ctx) {
-        return visitChildren(ctx);
+    public T visitCompare( @NotNull QuestionnaireParser.CompareContext ctx )
+    {
+        return visitChildren( ctx );
     }
 
     /**
@@ -119,8 +131,9 @@ public class QuestionnaireBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
      * {@link #visitChildren} on {@code ctx}.</p>
      */
     @Override
-    public T visitMulDiv(@NotNull QuestionnaireParser.MulDivContext ctx) {
-        return visitChildren(ctx);
+    public T visitMulDiv( @NotNull QuestionnaireParser.MulDivContext ctx )
+    {
+        return visitChildren( ctx );
     }
 
     /**
@@ -130,8 +143,9 @@ public class QuestionnaireBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
      * {@link #visitChildren} on {@code ctx}.</p>
      */
     @Override
-    public T visitIntType(@NotNull QuestionnaireParser.IntTypeContext ctx) {
-        return visitChildren(ctx);
+    public T visitIntType( @NotNull QuestionnaireParser.IntTypeContext ctx )
+    {
+        return visitChildren( ctx );
     }
 
     /**
@@ -141,8 +155,9 @@ public class QuestionnaireBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
      * {@link #visitChildren} on {@code ctx}.</p>
      */
     @Override
-    public T visitDateType(@NotNull QuestionnaireParser.DateTypeContext ctx) {
-        return visitChildren(ctx);
+    public T visitDateType( @NotNull QuestionnaireParser.DateTypeContext ctx )
+    {
+        return visitChildren( ctx );
     }
 
     /**
@@ -152,8 +167,9 @@ public class QuestionnaireBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
      * {@link #visitChildren} on {@code ctx}.</p>
      */
     @Override
-    public T visitAnd(@NotNull QuestionnaireParser.AndContext ctx) {
-        return visitChildren(ctx);
+    public T visitAnd( @NotNull QuestionnaireParser.AndContext ctx )
+    {
+        return visitChildren( ctx );
     }
 
     /**
@@ -163,8 +179,9 @@ public class QuestionnaireBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
      * {@link #visitChildren} on {@code ctx}.</p>
      */
     @Override
-    public T visitId(@NotNull QuestionnaireParser.IdContext ctx) {
-        return visitChildren(ctx);
+    public T visitId( @NotNull QuestionnaireParser.IdContext ctx )
+    {
+        return visitChildren( ctx );
     }
 
     /**
@@ -174,8 +191,9 @@ public class QuestionnaireBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
      * {@link #visitChildren} on {@code ctx}.</p>
      */
     @Override
-    public T visitNot(@NotNull QuestionnaireParser.NotContext ctx) {
-        return visitChildren(ctx);
+    public T visitNot( @NotNull QuestionnaireParser.NotContext ctx )
+    {
+        return visitChildren( ctx );
     }
 
     /**
@@ -185,8 +203,9 @@ public class QuestionnaireBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
      * {@link #visitChildren} on {@code ctx}.</p>
      */
     @Override
-    public T visitQuestionnaire(@NotNull QuestionnaireParser.QuestionnaireContext ctx) {
-        return visitChildren(ctx);
+    public T visitQuestionnaire( @NotNull QuestionnaireParser.QuestionnaireContext ctx )
+    {
+        return visitChildren( ctx );
     }
 
     /**
@@ -196,8 +215,9 @@ public class QuestionnaireBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
      * {@link #visitChildren} on {@code ctx}.</p>
      */
     @Override
-    public T visitIf(@NotNull QuestionnaireParser.IfContext ctx) {
-        return visitChildren(ctx);
+    public T visitIf( @NotNull QuestionnaireParser.IfContext ctx )
+    {
+        return visitChildren( ctx );
     }
 
     /**
@@ -207,8 +227,9 @@ public class QuestionnaireBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
      * {@link #visitChildren} on {@code ctx}.</p>
      */
     @Override
-    public T visitString(@NotNull QuestionnaireParser.StringContext ctx) {
-        return visitChildren(ctx);
+    public T visitString( @NotNull QuestionnaireParser.StringContext ctx )
+    {
+        return visitChildren( ctx );
     }
 
     /**
@@ -218,8 +239,9 @@ public class QuestionnaireBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
      * {@link #visitChildren} on {@code ctx}.</p>
      */
     @Override
-    public T visitAddSub(@NotNull QuestionnaireParser.AddSubContext ctx) {
-        return visitChildren(ctx);
+    public T visitAddSub( @NotNull QuestionnaireParser.AddSubContext ctx )
+    {
+        return visitChildren( ctx );
     }
 
     /**
@@ -229,8 +251,9 @@ public class QuestionnaireBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
      * {@link #visitChildren} on {@code ctx}.</p>
      */
     @Override
-    public T visitBoolean(@NotNull QuestionnaireParser.BooleanContext ctx) {
-        return visitChildren(ctx);
+    public T visitBoolean( @NotNull QuestionnaireParser.BooleanContext ctx )
+    {
+        return visitChildren( ctx );
     }
 
     /**
@@ -240,8 +263,9 @@ public class QuestionnaireBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
      * {@link #visitChildren} on {@code ctx}.</p>
      */
     @Override
-    public T visitParenthesis(@NotNull QuestionnaireParser.ParenthesisContext ctx) {
-        return visitChildren(ctx);
+    public T visitParenthesis( @NotNull QuestionnaireParser.ParenthesisContext ctx )
+    {
+        return visitChildren( ctx );
     }
 
     /**
@@ -251,7 +275,8 @@ public class QuestionnaireBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
      * {@link #visitChildren} on {@code ctx}.</p>
      */
     @Override
-    public T visitMoneyType(@NotNull QuestionnaireParser.MoneyTypeContext ctx) {
-        return visitChildren(ctx);
+    public T visitMoneyType( @NotNull QuestionnaireParser.MoneyTypeContext ctx )
+    {
+        return visitChildren( ctx );
     }
 }

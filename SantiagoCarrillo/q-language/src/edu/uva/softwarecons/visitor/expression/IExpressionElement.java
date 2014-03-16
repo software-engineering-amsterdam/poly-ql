@@ -5,10 +5,12 @@ import edu.uva.softwarecons.visitor.IQuestionnaireElement;
 
 /**
  * Falconlabs
- * User: sancarbar
+ * @author Santiago Carrillo
  * Date: 3/5/14
  */
-public interface IExpressionElement extends IQuestionnaireElement {
+public interface IExpressionElement
+    extends IQuestionnaireElement
+{
 
-    Type accept(IExpressionElementVisitor visitor);
+    Type accept( IExpressionElementVisitor visitor );
 }

@@ -11,14 +11,16 @@ import org.antlr.v4.runtime.tree.ParseTreeVisitor;
  * @param <T> The return type of the visit operation. Use {@link Void} for
  *            operations with no return type.
  */
-public interface QuestionnaireVisitor<T> extends ParseTreeVisitor<T> {
+public interface QuestionnaireVisitor<T>
+    extends ParseTreeVisitor<T>
+{
     /**
      * Visit a parse tree produced by {@link QuestionnaireParser#else}.
      *
      * @param ctx the parse tree
      * @return the visitor result
      */
-    T visitElse(@NotNull QuestionnaireParser.ElseContext ctx);
+    T visitElse( @NotNull QuestionnaireParser.ElseContext ctx );
 
     /**
      * Visit a parse tree produced by {@link QuestionnaireParser#simpleQuestion}.
@@ -26,7 +28,7 @@ public interface QuestionnaireVisitor<T> extends ParseTreeVisitor<T> {
      * @param ctx the parse tree
      * @return the visitor result
      */
-    T visitSimpleQuestion(@NotNull QuestionnaireParser.SimpleQuestionContext ctx);
+    T visitSimpleQuestion( @NotNull QuestionnaireParser.SimpleQuestionContext ctx );
 
     /**
      * Visit a parse tree produced by {@link QuestionnaireParser#stringType}.
@@ -34,7 +36,7 @@ public interface QuestionnaireVisitor<T> extends ParseTreeVisitor<T> {
      * @param ctx the parse tree
      * @return the visitor result
      */
-    T visitStringType(@NotNull QuestionnaireParser.StringTypeContext ctx);
+    T visitStringType( @NotNull QuestionnaireParser.StringTypeContext ctx );
 
     /**
      * Visit a parse tree produced by {@link QuestionnaireParser#decimalType}.
@@ -42,7 +44,7 @@ public interface QuestionnaireVisitor<T> extends ParseTreeVisitor<T> {
      * @param ctx the parse tree
      * @return the visitor result
      */
-    T visitDecimalType(@NotNull QuestionnaireParser.DecimalTypeContext ctx);
+    T visitDecimalType( @NotNull QuestionnaireParser.DecimalTypeContext ctx );
 
     /**
      * Visit a parse tree produced by {@link QuestionnaireParser#booleanType}.
@@ -50,7 +52,7 @@ public interface QuestionnaireVisitor<T> extends ParseTreeVisitor<T> {
      * @param ctx the parse tree
      * @return the visitor result
      */
-    T visitBooleanType(@NotNull QuestionnaireParser.BooleanTypeContext ctx);
+    T visitBooleanType( @NotNull QuestionnaireParser.BooleanTypeContext ctx );
 
     /**
      * Visit a parse tree produced by {@link QuestionnaireParser#computedQuestion}.
@@ -58,7 +60,7 @@ public interface QuestionnaireVisitor<T> extends ParseTreeVisitor<T> {
      * @param ctx the parse tree
      * @return the visitor result
      */
-    T visitComputedQuestion(@NotNull QuestionnaireParser.ComputedQuestionContext ctx);
+    T visitComputedQuestion( @NotNull QuestionnaireParser.ComputedQuestionContext ctx );
 
     /**
      * Visit a parse tree produced by {@link QuestionnaireParser#integer}.
@@ -66,7 +68,7 @@ public interface QuestionnaireVisitor<T> extends ParseTreeVisitor<T> {
      * @param ctx the parse tree
      * @return the visitor result
      */
-    T visitInteger(@NotNull QuestionnaireParser.IntegerContext ctx);
+    T visitInteger( @NotNull QuestionnaireParser.IntegerContext ctx );
 
     /**
      * Visit a parse tree produced by {@link QuestionnaireParser#or}.
@@ -74,7 +76,7 @@ public interface QuestionnaireVisitor<T> extends ParseTreeVisitor<T> {
      * @param ctx the parse tree
      * @return the visitor result
      */
-    T visitOr(@NotNull QuestionnaireParser.OrContext ctx);
+    T visitOr( @NotNull QuestionnaireParser.OrContext ctx );
 
     /**
      * Visit a parse tree produced by {@link QuestionnaireParser#compare}.
@@ -82,7 +84,7 @@ public interface QuestionnaireVisitor<T> extends ParseTreeVisitor<T> {
      * @param ctx the parse tree
      * @return the visitor result
      */
-    T visitCompare(@NotNull QuestionnaireParser.CompareContext ctx);
+    T visitCompare( @NotNull QuestionnaireParser.CompareContext ctx );
 
     /**
      * Visit a parse tree produced by {@link QuestionnaireParser#mulDiv}.
@@ -90,7 +92,7 @@ public interface QuestionnaireVisitor<T> extends ParseTreeVisitor<T> {
      * @param ctx the parse tree
      * @return the visitor result
      */
-    T visitMulDiv(@NotNull QuestionnaireParser.MulDivContext ctx);
+    T visitMulDiv( @NotNull QuestionnaireParser.MulDivContext ctx );
 
     /**
      * Visit a parse tree produced by {@link QuestionnaireParser#intType}.
@@ -98,7 +100,7 @@ public interface QuestionnaireVisitor<T> extends ParseTreeVisitor<T> {
      * @param ctx the parse tree
      * @return the visitor result
      */
-    T visitIntType(@NotNull QuestionnaireParser.IntTypeContext ctx);
+    T visitIntType( @NotNull QuestionnaireParser.IntTypeContext ctx );
 
     /**
      * Visit a parse tree produced by {@link QuestionnaireParser#dateType}.
@@ -106,7 +108,7 @@ public interface QuestionnaireVisitor<T> extends ParseTreeVisitor<T> {
      * @param ctx the parse tree
      * @return the visitor result
      */
-    T visitDateType(@NotNull QuestionnaireParser.DateTypeContext ctx);
+    T visitDateType( @NotNull QuestionnaireParser.DateTypeContext ctx );
 
     /**
      * Visit a parse tree produced by {@link QuestionnaireParser#and}.
@@ -114,7 +116,7 @@ public interface QuestionnaireVisitor<T> extends ParseTreeVisitor<T> {
      * @param ctx the parse tree
      * @return the visitor result
      */
-    T visitAnd(@NotNull QuestionnaireParser.AndContext ctx);
+    T visitAnd( @NotNull QuestionnaireParser.AndContext ctx );
 
     /**
      * Visit a parse tree produced by {@link QuestionnaireParser#id}.
@@ -122,7 +124,7 @@ public interface QuestionnaireVisitor<T> extends ParseTreeVisitor<T> {
      * @param ctx the parse tree
      * @return the visitor result
      */
-    T visitId(@NotNull QuestionnaireParser.IdContext ctx);
+    T visitId( @NotNull QuestionnaireParser.IdContext ctx );
 
     /**
      * Visit a parse tree produced by {@link QuestionnaireParser#not}.
@@ -130,7 +132,7 @@ public interface QuestionnaireVisitor<T> extends ParseTreeVisitor<T> {
      * @param ctx the parse tree
      * @return the visitor result
      */
-    T visitNot(@NotNull QuestionnaireParser.NotContext ctx);
+    T visitNot( @NotNull QuestionnaireParser.NotContext ctx );
 
     /**
      * Visit a parse tree produced by {@link QuestionnaireParser#questionnaire}.
@@ -138,7 +140,7 @@ public interface QuestionnaireVisitor<T> extends ParseTreeVisitor<T> {
      * @param ctx the parse tree
      * @return the visitor result
      */
-    T visitQuestionnaire(@NotNull QuestionnaireParser.QuestionnaireContext ctx);
+    T visitQuestionnaire( @NotNull QuestionnaireParser.QuestionnaireContext ctx );
 
     /**
      * Visit a parse tree produced by {@link QuestionnaireParser#if}.
@@ -146,7 +148,7 @@ public interface QuestionnaireVisitor<T> extends ParseTreeVisitor<T> {
      * @param ctx the parse tree
      * @return the visitor result
      */
-    T visitIf(@NotNull QuestionnaireParser.IfContext ctx);
+    T visitIf( @NotNull QuestionnaireParser.IfContext ctx );
 
     /**
      * Visit a parse tree produced by {@link QuestionnaireParser#string}.
@@ -154,7 +156,7 @@ public interface QuestionnaireVisitor<T> extends ParseTreeVisitor<T> {
      * @param ctx the parse tree
      * @return the visitor result
      */
-    T visitString(@NotNull QuestionnaireParser.StringContext ctx);
+    T visitString( @NotNull QuestionnaireParser.StringContext ctx );
 
     /**
      * Visit a parse tree produced by {@link QuestionnaireParser#addSub}.
@@ -162,7 +164,7 @@ public interface QuestionnaireVisitor<T> extends ParseTreeVisitor<T> {
      * @param ctx the parse tree
      * @return the visitor result
      */
-    T visitAddSub(@NotNull QuestionnaireParser.AddSubContext ctx);
+    T visitAddSub( @NotNull QuestionnaireParser.AddSubContext ctx );
 
     /**
      * Visit a parse tree produced by {@link QuestionnaireParser#boolean}.
@@ -170,7 +172,7 @@ public interface QuestionnaireVisitor<T> extends ParseTreeVisitor<T> {
      * @param ctx the parse tree
      * @return the visitor result
      */
-    T visitBoolean(@NotNull QuestionnaireParser.BooleanContext ctx);
+    T visitBoolean( @NotNull QuestionnaireParser.BooleanContext ctx );
 
     /**
      * Visit a parse tree produced by {@link QuestionnaireParser#parenthesis}.
@@ -178,7 +180,7 @@ public interface QuestionnaireVisitor<T> extends ParseTreeVisitor<T> {
      * @param ctx the parse tree
      * @return the visitor result
      */
-    T visitParenthesis(@NotNull QuestionnaireParser.ParenthesisContext ctx);
+    T visitParenthesis( @NotNull QuestionnaireParser.ParenthesisContext ctx );
 
     /**
      * Visit a parse tree produced by {@link QuestionnaireParser#moneyType}.
@@ -186,5 +188,5 @@ public interface QuestionnaireVisitor<T> extends ParseTreeVisitor<T> {
      * @param ctx the parse tree
      * @return the visitor result
      */
-    T visitMoneyType(@NotNull QuestionnaireParser.MoneyTypeContext ctx);
+    T visitMoneyType( @NotNull QuestionnaireParser.MoneyTypeContext ctx );
 }

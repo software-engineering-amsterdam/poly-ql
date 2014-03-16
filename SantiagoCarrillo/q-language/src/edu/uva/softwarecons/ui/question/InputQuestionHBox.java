@@ -9,28 +9,33 @@ import javafx.scene.control.TextField;
 
 /**
  * Falconlabs
- * User: sancarbar
+ * @author Santiago Carrillo
  * Date: 3/13/14
  */
-public class InputQuestionHBox extends QuestionHBox {
+public class InputQuestionHBox
+    extends QuestionHBox
+{
 
     protected final TextField textField;
 
-    public InputQuestionHBox(BasicQuestion question, EventHandler<ActionEvent> eventHandler, TextField textField) {
-        super(question);
+    public InputQuestionHBox( BasicQuestion question, EventHandler<ActionEvent> eventHandler, TextField textField )
+    {
+        super( question );
         this.textField = textField;
-        getChildren().add(textField);
-        textField.setId(question.getId());
-        textField.setOnAction(eventHandler);
+        getChildren().add( textField );
+        textField.setId( question.getId() );
+        textField.setOnAction( eventHandler );
     }
 
     @Override
-    public Value getValue() {
-        return new StringValue(textField.getText());
+    public Value getValue()
+    {
+        return new StringValue( textField.getText() );
     }
 
     @Override
-    public void updateValue(Value value) {
-        textField.setText(value.getValue());
+    public void updateValue( Value value )
+    {
+        textField.setText( value.getValue() );
     }
 }

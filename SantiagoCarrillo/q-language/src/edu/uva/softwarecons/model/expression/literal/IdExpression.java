@@ -8,34 +8,41 @@ import edu.uva.softwarecons.visitor.expression.IExpressionEvalVisitor;
 
 /**
  * Falconlabs
- * User: sancarbar
+ * @author Santiago Carrillo
  * Date: 2/26/14
  */
-public class IdExpression implements Expression {
+public class IdExpression
+    implements Expression
+{
 
     private final String id;
 
-    public IdExpression(String id) {
+    public IdExpression( String id )
+    {
         this.id = id;
     }
 
-    public String getId() {
+    public String getId()
+    {
         return id;
     }
 
     @Override
-    public Type accept(IExpressionElementVisitor visitor) {
-        return visitor.visitIdExpression(this);
+    public Type accept( IExpressionElementVisitor visitor )
+    {
+        return visitor.visitIdExpression( this );
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals( Object o )
+    {
         return o instanceof IdExpression;
     }
 
 
     @Override
-    public Value accept(IExpressionEvalVisitor visitor) {
-        return visitor.visitIdExpression(this);
+    public Value accept( IExpressionEvalVisitor visitor )
+    {
+        return visitor.visitIdExpression( this );
     }
 }

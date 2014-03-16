@@ -11,30 +11,35 @@ import java.util.Locale;
 
 /**
  * Falconlabs
- * User: sancarbar
+ * @author Santiago Carrillo
  * Date: 3/16/14
  */
-public class DateQuestionHBox extends QuestionHBox {
+public class DateQuestionHBox
+    extends QuestionHBox
+{
 
     private final DatePicker datePicker;
 
-    public DateQuestionHBox(BasicQuestion question, EventHandler<ActionEvent> eventHandler) {
-        super(question);
-        datePicker = new DatePicker(Locale.ENGLISH, eventHandler, question.getId());
-        datePicker.setDateFormat(DateValue.dateFormat);
-        datePicker.getCalendarView().todayButtonTextProperty().set("Today");
-        datePicker.getCalendarView().setShowWeeks(false);
-        datePicker.getStylesheets().add("DatePicker.css");
-        datePicker.setId(question.getId());
-        getChildren().add(datePicker);
+    public DateQuestionHBox( BasicQuestion question, EventHandler<ActionEvent> eventHandler )
+    {
+        super( question );
+        datePicker = new DatePicker( Locale.ENGLISH, eventHandler, question.getId() );
+        datePicker.setDateFormat( DateValue.dateFormat );
+        datePicker.getCalendarView().todayButtonTextProperty().set( "Today" );
+        datePicker.getCalendarView().setShowWeeks( false );
+        datePicker.getStylesheets().add( "DatePicker.css" );
+        datePicker.setId( question.getId() );
+        getChildren().add( datePicker );
     }
 
     @Override
-    public DateValue getValue() {
-        return new DateValue(datePicker.getSelectedDate());
+    public DateValue getValue()
+    {
+        return new DateValue( datePicker.getSelectedDate() );
     }
 
     @Override
-    public void updateValue(Value value) {
+    public void updateValue( Value value )
+    {
     }
 }

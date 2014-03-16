@@ -9,22 +9,27 @@ import edu.uva.softwarecons.visitor.expression.IExpressionEvalVisitor;
 
 /**
  * Falconlabs
- * User: sancarbar
+ * @author Santiago Carrillo
  * Date: 2/20/14
  */
-public class LessExpression extends BinaryExpression {
+public class LessExpression
+    extends BinaryExpression
+{
 
-    public LessExpression(Expression leftOperand, Expression rightOperand) {
-        super(leftOperand, rightOperand);
+    public LessExpression( Expression leftOperand, Expression rightOperand )
+    {
+        super( leftOperand, rightOperand );
     }
 
     @Override
-    public Type accept(IExpressionElementVisitor visitor) {
-        return visitor.visitLessExpression(this);
+    public Type accept( IExpressionElementVisitor visitor )
+    {
+        return visitor.visitLessExpression( this );
     }
 
     @Override
-    public Value accept(IExpressionEvalVisitor visitor) {
-        return visitor.visitLessExpression(this);
+    public Value accept( IExpressionEvalVisitor visitor )
+    {
+        return visitor.visitLessExpression( this );
     }
 }

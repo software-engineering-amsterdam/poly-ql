@@ -9,23 +9,28 @@ import edu.uva.softwarecons.visitor.expression.IExpressionEvalVisitor;
 
 /**
  * Falconlabs
- * User: sancarbar
+ * @author Santiago Carrillo
  * Date: 2/20/14
  */
-public class LessEqualExpression extends BinaryExpression {
+public class LessEqualExpression
+    extends BinaryExpression
+{
 
 
-    public LessEqualExpression(Expression leftOperand, Expression rightOperand) {
-        super(leftOperand, rightOperand);
+    public LessEqualExpression( Expression leftOperand, Expression rightOperand )
+    {
+        super( leftOperand, rightOperand );
     }
 
     @Override
-    public Type accept(IExpressionElementVisitor visitor) {
-        return visitor.visitLessEqualExpression(this);
+    public Type accept( IExpressionElementVisitor visitor )
+    {
+        return visitor.visitLessEqualExpression( this );
     }
 
     @Override
-    public Value accept(IExpressionEvalVisitor visitor) {
-        return visitor.visitLessEqualExpression(this);
+    public Value accept( IExpressionEvalVisitor visitor )
+    {
+        return visitor.visitLessEqualExpression( this );
     }
 }

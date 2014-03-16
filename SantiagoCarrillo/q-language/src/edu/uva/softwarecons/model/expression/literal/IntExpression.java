@@ -9,38 +9,46 @@ import edu.uva.softwarecons.visitor.expression.IExpressionEvalVisitor;
 
 /**
  * Falconlabs
- * User: sancarbar
+ * @author Santiago Carrillo
  * Date: 3/3/14
  */
-public class IntExpression implements Expression {
+public class IntExpression
+    implements Expression
+{
 
     private final int value;
 
-    public IntExpression(int value) {
+    public IntExpression( int value )
+    {
         this.value = value;
     }
 
-    public int getValue() {
+    public int getValue()
+    {
         return value;
     }
 
     @Override
-    public Type accept(IExpressionElementVisitor visitor) {
+    public Type accept( IExpressionElementVisitor visitor )
+    {
         return new IntegerType();
     }
 
     @Override
-    public String toString() {
-        return String.valueOf(value);
+    public String toString()
+    {
+        return String.valueOf( value );
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals( Object obj )
+    {
         return obj instanceof IntExpression;
     }
 
     @Override
-    public Value accept(IExpressionEvalVisitor visitor) {
-        return visitor.visitIntExpression(this);
+    public Value accept( IExpressionEvalVisitor visitor )
+    {
+        return visitor.visitIntExpression( this );
     }
 }

@@ -9,23 +9,28 @@ import edu.uva.softwarecons.visitor.expression.IExpressionEvalVisitor;
 
 /**
  * Falconlabs
- * User: sancarbar
+ * @author Santiago Carrillo
  * Date: 2/20/14
  */
-public class NotEqualExpression extends BinaryExpression {
+public class NotEqualExpression
+    extends BinaryExpression
+{
 
 
-    public NotEqualExpression(Expression leftOperand, Expression rightOperand) {
-        super(leftOperand, rightOperand);
+    public NotEqualExpression( Expression leftOperand, Expression rightOperand )
+    {
+        super( leftOperand, rightOperand );
     }
 
     @Override
-    public Type accept(IExpressionElementVisitor visitor) {
-        return visitor.visitNotEqualExpression(this);
+    public Type accept( IExpressionElementVisitor visitor )
+    {
+        return visitor.visitNotEqualExpression( this );
     }
 
     @Override
-    public Value accept(IExpressionEvalVisitor visitor) {
-        return visitor.visitNotEqualExpression(this);
+    public Value accept( IExpressionEvalVisitor visitor )
+    {
+        return visitor.visitNotEqualExpression( this );
     }
 }

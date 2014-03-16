@@ -2,10 +2,12 @@ package edu.uva.softwarecons.model.type;
 
 /**
  * Falconlabs
- * User: sancarbar
+ * @author Santiago Carrillo
  * Date: 2/27/14
  */
-public abstract class NumericType implements Type {
+public abstract class NumericType
+    implements Type
+{
 
     /**
      * All classes that extend NumericType will be equal
@@ -15,7 +17,8 @@ public abstract class NumericType implements Type {
      * @return true if the Type is of NumericType
      */
     @Override
-    public boolean equals(Object o) {
+    public boolean equals( Object o )
+    {
         return o instanceof NumericType;
     }
 
