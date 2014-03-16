@@ -31,80 +31,67 @@ public class ExpressionTypeCheckerTest {
 
     @Test
     public void andExpressionInvalidTypeErrorTest(){
-        assertTrue(expressionContainsTypeError(new AndExpression(new BoolExpression(false), new IntExpression(0)),
-                new BooleanType(), null));
+        assertTrue(expressionContainsTypeError(new AndExpression(new BoolExpression(false), new IntExpression(0)), null));
     }
 
     @Test
     public void orExpressionInvalidTypeErrorTest(){
-        assertTrue(expressionContainsTypeError(new OrExpression(new BoolExpression(false), new IntExpression(0)),
-                new BooleanType(), null));
+        assertTrue(expressionContainsTypeError(new OrExpression(new BoolExpression(false), new IntExpression(0)), null));
     }
 
     @Test
     public void notExpressionInvalidTypeErrorTest(){
-        assertTrue(expressionContainsTypeError(new NotExpression(new IntExpression(0)),
-                new BooleanType(), null));
+        assertTrue(expressionContainsTypeError(new NotExpression(new IntExpression(0)), null));
     }
 
     @Test
     public void equalExpressionInvalidTypeErrorTest(){
-        assertTrue(expressionContainsTypeError(new EqualExpression(new BoolExpression(false), new IntExpression(0)),
-                new BooleanType(), null));
+        assertTrue(expressionContainsTypeError(new EqualExpression(new BoolExpression(false), new IntExpression(0)), null));
     }
 
     @Test
     public void notEqualExpressionInvalidTypeErrorTest(){
-        assertTrue(expressionContainsTypeError(new NotEqualExpression(new BoolExpression(false), new IntExpression(0)),
-                new BooleanType(), null));
+        assertTrue(expressionContainsTypeError(new NotEqualExpression(new BoolExpression(false), new IntExpression(0)), null));
     }
 
     @Test
     public void greaterExpressionInvalidTypeErrorTest(){
-        assertTrue(expressionContainsTypeError(new GreaterExpression(new BoolExpression(false), new IntExpression(0)),
-                new BooleanType(), null));
+        assertTrue(expressionContainsTypeError(new GreaterExpression(new BoolExpression(false), new IntExpression(0)), null));
     }
 
     @Test
     public void greaterEqualExpressionInvalidTypeErrorTest(){
-        assertTrue(expressionContainsTypeError(new GreaterEqualExpression(new BoolExpression(false), new IntExpression(0)),
-                new BooleanType(), null));
+        assertTrue(expressionContainsTypeError(new GreaterEqualExpression(new BoolExpression(false), new IntExpression(0)), null));
     }
 
     @Test
     public void lessExpressionInvalidTypeErrorTest(){
-        assertTrue(expressionContainsTypeError(new LessExpression(new BoolExpression(false), new IntExpression(0)),
-                new BooleanType(), null));
+        assertTrue(expressionContainsTypeError(new LessExpression(new BoolExpression(false), new IntExpression(0)), null));
     }
 
     @Test
     public void lessEqualExpressionInvalidTypeErrorTest(){
-        assertTrue(expressionContainsTypeError(new LessEqualExpression(new BoolExpression(false), new IntExpression(0)),
-                new BooleanType(), null));
+        assertTrue(expressionContainsTypeError(new LessEqualExpression(new BoolExpression(false), new IntExpression(0)), null));
     }
 
     @Test
     public void addExpressionInvalidTypeErrorTest(){
-        assertTrue(expressionContainsTypeError(new AddExpression(new BoolExpression(false), new IntExpression(0)),
-                new BooleanType(), null));
+        assertTrue(expressionContainsTypeError(new AddExpression(new BoolExpression(false), new IntExpression(0)), null));
     }
 
     @Test
     public void subExpressionInvalidTypeErrorTest(){
-        assertTrue(expressionContainsTypeError(new SubExpression(new BoolExpression(false), new IntExpression(0)),
-                new BooleanType(), null));
+        assertTrue(expressionContainsTypeError(new SubExpression(new BoolExpression(false), new IntExpression(0)), null));
     }
 
     @Test
     public void mulExpressionInvalidTypeErrorTest(){
-        assertTrue(expressionContainsTypeError(new MulExpression(new BoolExpression(false), new IntExpression(0)),
-                new BooleanType(), null));
+        assertTrue(expressionContainsTypeError(new MulExpression(new BoolExpression(false), new IntExpression(0)), null));
     }
 
     @Test
     public void divExpressionInvalidTypeErrorTest(){
-        assertTrue(expressionContainsTypeError(new DivExpression(new BoolExpression(false), new BoolExpression(false)),
-                new BooleanType(), null));
+        assertTrue(expressionContainsTypeError(new DivExpression(new BoolExpression(false), new BoolExpression(false)), null));
     }
 
     @Test
@@ -126,12 +113,12 @@ public class ExpressionTypeCheckerTest {
         String conditionId = "testQuestion";
         types.put(conditionId, type);
         IdExpression idExpression = new IdExpression(conditionId);
-        return expressionContainsTypeError(idExpression, new BooleanType(), types);
+        return expressionContainsTypeError(idExpression, types);
     }
 
-    private boolean expressionContainsTypeError(Expression expression, Type expectedType, Map<String, Type> types){
+    private boolean expressionContainsTypeError(Expression expression, Map<String, Type> types){
         ExpressionTypeChecker expressionTypeChecker = new ExpressionTypeChecker(types);
-        expressionTypeChecker.validateType("", expression, expectedType);
+        expressionTypeChecker.validateType("", expression);
         return !expressionTypeChecker.getErrors().isEmpty();
     }
 

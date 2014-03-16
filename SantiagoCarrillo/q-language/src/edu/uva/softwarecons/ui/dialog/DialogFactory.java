@@ -47,7 +47,7 @@ public class DialogFactory {
     }
 
 
-    public static void showErrorDialog(List<QuestionnaireError> errors){
+    public static void showQuestionnaireErrorDialog(List<QuestionnaireError> errors){
         Stage dialogStage = new Stage();
         dialogStage.setTitle("Error loading file");
         dialogStage.initModality(Modality.WINDOW_MODAL);

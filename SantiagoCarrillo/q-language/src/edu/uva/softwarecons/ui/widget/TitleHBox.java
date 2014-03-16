@@ -14,10 +14,8 @@ import javafx.scene.text.Text;
  */
 public class TitleHBox extends HBox{
 
-    final String name;
 
     public TitleHBox(String name, String backgroundColorHex, Paint textColor) {
-        this.name = name;
         setPadding(new Insets(15, 12, 20, 12));
         setSpacing(10);
         setStyle("-fx-background-color: "+backgroundColorHex+";");

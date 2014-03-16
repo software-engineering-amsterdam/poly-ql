@@ -114,9 +114,8 @@ public class TypeChecker extends FormBaseVisitor {
     private void checkIfStatementExpressionTypes(Form form, ExpressionTypeChecker expressionTypeChecker) {
         IfQuestion ifQuestion = new IfQuestion(null, null, null, null);
         for(Question q: form.getQuestions()){
-            if(ifQuestion.equals(q)){
-                expressionTypeChecker.validateType(((IfQuestion) q).getCondition(), ((IfQuestion) q).getExpression(), new BooleanType());
-            }
+            if(ifQuestion.equals(q))
+                expressionTypeChecker.validateType(((IfQuestion) q).getCondition(), ((IfQuestion) q).getExpression());
         }
     }
 
@@ -126,7 +125,7 @@ public class TypeChecker extends FormBaseVisitor {
             if(computedQuestion.equals(q)){
                 ComputedQuestion question = (ComputedQuestion) q;
                 if(question.getType() instanceof NumericType)
-                    expressionTypeChecker.validateType(question.getId(), question.getExpression(), new IntegerType());
+                    expressionTypeChecker.validateType(question.getId(), question.getExpression());
                 else
                     errors.add(new InvalidTypeError(question.getId(), NumericType.class.getSimpleName(), question.getType().toString()));
             }

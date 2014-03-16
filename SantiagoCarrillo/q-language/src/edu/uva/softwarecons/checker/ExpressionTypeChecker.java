@@ -52,15 +52,13 @@ public class ExpressionTypeChecker implements IExpressionElementVisitor {
 
     private String currentQuestionId;
 
-    private Type expectedType;
 
     public ExpressionTypeChecker(Map<String, Type> questionTypes) {
         this.questionTypes = questionTypes;
     }
 
-    public void validateType(String questionId, Expression expression, Type checkType){
+    public void validateType(String questionId, Expression expression){
         this.currentQuestionId = questionId;
-        this.expectedType = checkType;
         expression.accept(this);
     }
 

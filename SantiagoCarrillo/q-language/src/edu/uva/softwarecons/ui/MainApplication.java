@@ -119,7 +119,7 @@ public class MainApplication extends Application implements EventHandler<ActionE
         TypeChecker typeChecker = new TypeChecker();
         typeChecker.checkForm(form);
         if(!typeChecker.getErrors().isEmpty())
-            DialogFactory.showErrorDialog(typeChecker.getErrors());
+            DialogFactory.showQuestionnaireErrorDialog(typeChecker.getErrors());
         else{
             mainVBox.getChildren().add(new TitleHBox(form.getId(), "#336699", Color.WHITE));
             ScrollPane scrollPane = new ScrollPane();
