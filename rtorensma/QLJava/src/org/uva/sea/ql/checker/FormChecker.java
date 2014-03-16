@@ -1,11 +1,8 @@
 package org.uva.sea.ql.checker;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.uva.sea.ql.ast.expr.Ident;
 import org.uva.sea.ql.ast.form.Form;
 import org.uva.sea.ql.ast.stat.Block;
 import org.uva.sea.ql.ast.stat.Computed;
@@ -14,7 +11,6 @@ import org.uva.sea.ql.ast.stat.IfThenElse;
 import org.uva.sea.ql.ast.stat.Question;
 import org.uva.sea.ql.ast.stat.Stat;
 import org.uva.sea.ql.ast.types.Bool;
-import org.uva.sea.ql.ast.types.Type;
 
 //Check for cyclic dependencies  is not neccesary because questions can only
 // refer to already defined questions.
@@ -24,22 +20,21 @@ import org.uva.sea.ql.ast.types.Type;
 // when it is used in the condition of the first  if statement.
 public class FormChecker implements FormVisitor<Boolean> {
 	
-	private final Map<Ident, Type> typeEnv;
+	private final TypeEnvironment typeEnv;
 	private final List<String> errors;
 	
-	private FormChecker(Map<Ident, Type> env, List<String> errors) {
+	private FormChecker(TypeEnvironment env, List<String> errors) {
 		this.typeEnv = env;
 		this.errors = errors;
 	}
 	
 	public static boolean check(Form form) {
-		return FormChecker.check(form, new HashMap<Ident, Type>(), new ArrayList<String>());
+		return FormChecker.check(form, new TypeEnvironment(), new ArrayList<String>());
 	}
 	
-	public static boolean check(Form form, Map<Ident, Type> env, List<String> errors)
+	public static boolean check(Form form, TypeEnvironment env, List<String> errors)
 	{
-		FormChecker checker = new FormChecker(env, errors);
-		return form.accept(checker);
+		return form.accept(new FormChecker(env, errors));
 	}
 	
 	@Override
@@ -54,13 +49,13 @@ public class FormChecker implements FormVisitor<Boolean> {
 	
 	@Override
 	public Boolean visit(Question question) {
-		if (this.typeEnv.containsKey(question.getName())) {
+		if (this.typeEnv.isIdentDefined(question.getName())) {
 			this.errors.add(String.format("Question identifier '%s' already defined in question %s", 
 										   question.getName(), question.getLabel()));
 			return false;
 		}
 		else {
-			this.typeEnv.put(question.getName(),question.getType());
+			this.typeEnv.setTypeOfIdent(question.getName(), question.getType());
 		}
 		
 		return true;
@@ -68,13 +63,13 @@ public class FormChecker implements FormVisitor<Boolean> {
 
 	@Override
 	public Boolean visit(Computed computed) {
-		if (this.typeEnv.containsKey(computed.getName())) {
+		if (this.typeEnv.isIdentDefined(computed.getName())) {
 			this.errors.add(String.format("Question identifier '%s' already defined in computed question %s",
 										   computed.getName(), computed.getLabel()));
 			return false;
 		}
 		else {
-			this.typeEnv.put(computed.getName(),computed.getType());
+			this.typeEnv.setTypeOfIdent(computed.getName(), computed.getType());
 		}
 		
 		if (!ExprChecker.check(computed.getExpr(), this.typeEnv, this.errors)) {

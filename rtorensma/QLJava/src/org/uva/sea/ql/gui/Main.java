@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -15,10 +14,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 import org.apache.commons.io.FileUtils;
-import org.uva.sea.ql.ast.expr.Ident;
 import org.uva.sea.ql.ast.form.Form;
-import org.uva.sea.ql.ast.types.Type;
 import org.uva.sea.ql.checker.FormChecker;
+import org.uva.sea.ql.checker.TypeEnvironment;
 import org.uva.sea.ql.parser.antlr.ANTLRParser;
 import org.uva.sea.ql.parser.antlr.IParse;
 import org.uva.sea.ql.parser.antlr.ParseError;
@@ -30,7 +28,7 @@ public class Main {
 		String formString = FileUtils.readFileToString(new File("HouseOwning.ql"));
 		Form form = parser.parseForm(formString);
 		List<String> errors = new ArrayList<String>();
-		FormChecker.check(form, new HashMap<Ident, Type>(), errors);
+		FormChecker.check(form, new TypeEnvironment(), errors);
 		String printErrors = errors.size() + " error(s) gevonden";
 		for (String error : errors) {
 			printErrors += "\n-\t" + error + "";

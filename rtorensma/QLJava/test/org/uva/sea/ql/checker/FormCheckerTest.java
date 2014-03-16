@@ -5,14 +5,10 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
-import org.uva.sea.ql.ast.expr.Ident;
 import org.uva.sea.ql.ast.form.Form;
-import org.uva.sea.ql.ast.types.Type;
 import org.uva.sea.ql.parser.antlr.ANTLRParser;
 import org.uva.sea.ql.parser.antlr.IParse;
 import org.uva.sea.ql.parser.antlr.ParseError;
@@ -28,7 +24,7 @@ public class FormCheckerTest {
 		
 		Form form = parser.parseForm(formString);
 		
-		Map<Ident, Type> typeEnv = new HashMap<Ident, Type>();
+		TypeEnvironment typeEnv = new TypeEnvironment();
 		ArrayList<String> errors = new ArrayList<String>();
 		
 		assertTrue(FormChecker.check(form, typeEnv, errors));

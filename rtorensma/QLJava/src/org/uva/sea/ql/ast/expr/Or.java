@@ -1,9 +1,8 @@
 package org.uva.sea.ql.ast.expr;
 
-import java.util.Map;
-
 import org.uva.sea.ql.ast.types.Type;
 import org.uva.sea.ql.checker.ExprVisitor;
+import org.uva.sea.ql.checker.TypeEnvironment;
 
 
 public class Or extends BinaryExpr {
@@ -18,7 +17,7 @@ public class Or extends BinaryExpr {
 	}
 	
 	@Override
-	public Type typeOf(Map<Ident, Type> typeEnv) {
+	public Type typeOf(TypeEnvironment typeEnv) {
 		return new org.uva.sea.ql.ast.types.Bool();
 	}
 	

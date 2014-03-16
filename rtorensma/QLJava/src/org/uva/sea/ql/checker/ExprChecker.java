@@ -1,9 +1,7 @@
 package org.uva.sea.ql.checker;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.uva.sea.ql.ast.expr.Add;
 import org.uva.sea.ql.ast.expr.And;
@@ -31,19 +29,19 @@ import org.uva.sea.ql.ast.types.Type;
 
 public class ExprChecker implements ExprVisitor<Boolean> {
 	
-	private final Map<Ident, Type> typeEnv;
+	private final TypeEnvironment typeEnv;
 	private final List<String> errors;
 	
-	private ExprChecker(Map<Ident, Type> env, List<String> errors) {
+	private ExprChecker(TypeEnvironment env, List<String> errors) {
 		this.typeEnv = env;
 		this.errors = errors;
 	}
 	
 	public static boolean check(Expr expr) {
-		return ExprChecker.check(expr, new HashMap<Ident, Type>(), new ArrayList<String>());
+		return ExprChecker.check(expr, new TypeEnvironment(), new ArrayList<String>());
 	}
 	
-	public static boolean check(Expr expr, Map<Ident, Type> env, List<String> errors)
+	public static boolean check(Expr expr, TypeEnvironment env, List<String> errors)
 	{
 		ExprChecker checker = new ExprChecker(env, errors);
 		return expr.accept(checker);
@@ -86,7 +84,7 @@ public class ExprChecker implements ExprVisitor<Boolean> {
 
 	@Override
 	public Boolean visit(Ident expr) {
-		if (!this.typeEnv.containsKey(expr)) {
+		if (!this.typeEnv.isIdentDefined(expr)) {
 			this.errors.add(String.format("Identifier %s isn't defined", expr));
 			return false;
 		}
