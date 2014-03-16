@@ -6,7 +6,7 @@ import nl.uva.polyql.ast.Question;
 import nl.uva.polyql.ast.expressions.modifiers.Modifier;
 import nl.uva.polyql.ast.expressions.operations.Operator;
 import nl.uva.polyql.ast.types.Type;
-import nl.uva.polyql.view.ValueView;
+import nl.uva.polyql.view.QuestionView;
 
 /**
  * A value representation heavily utilising the visitor pattern to perform operations on different
@@ -27,9 +27,9 @@ public abstract class Value<T> {
         return mValue;
     }
 
-    public abstract ValueView getView(Question question);
+    public abstract QuestionView getView(Question question);
 
-    public abstract void setViewValue(ValueView view);
+    public abstract void setViewValue(QuestionView view);
 
     public abstract Type getType();
 

@@ -5,7 +5,7 @@ import nl.uva.polyql.ast.expressions.modifiers.Modifier;
 import nl.uva.polyql.ast.expressions.operations.Operator;
 import nl.uva.polyql.ast.types.Type;
 import nl.uva.polyql.view.StringValueView;
-import nl.uva.polyql.view.ValueView;
+import nl.uva.polyql.view.QuestionView;
 
 public class StringValue extends Value<String> {
 
@@ -19,12 +19,12 @@ public class StringValue extends Value<String> {
     }
 
     @Override
-    public ValueView getView(final Question question) {
+    public QuestionView getView(final Question question) {
         return new StringValueView(question);
     }
 
     @Override
-    public void setViewValue(final ValueView view) {
+    public void setViewValue(final QuestionView view) {
         view.setComponentValue(this);
     }
 

@@ -1,7 +1,7 @@
 form exampleForm {
     truth: "Is it true?" boolean
     echo: "Really?" boolean(truth)
-    truthwhy: "Why is(n't) it true?" string("bob")
+    truthwhy: "Why is(n't) it true?" string
     truthwhy2: "Why is(n't) it true?" boolean
     truthwhydouble: "Because: " boolean(truthwhy == " " + truthwhy + 123)
     

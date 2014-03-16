@@ -19,6 +19,8 @@ public class Initialiser {
 
     public static void main(final String... params) {
 
+        Log.setInfoLogging(false);
+
         try {
             final ANTLRInputStream input = new ANTLRInputStream(new FileInputStream("res/exampleform.txt"));
             final QuestionnaireLexer lexer = new QuestionnaireLexer(input);

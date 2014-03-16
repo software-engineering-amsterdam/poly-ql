@@ -1,9 +1,11 @@
 package nl.uva.polyql.ast;
 
+import java.awt.Component;
+
 import nl.uva.polyql.ast.expressions.Expression;
 import nl.uva.polyql.validation.InvalidTypeError;
 import nl.uva.polyql.validation.ValidationErrors;
-import nl.uva.polyql.view.ValueView;
+import nl.uva.polyql.view.QuestionView;
 
 public class Field extends Question implements Question.ValueListener {
 
@@ -27,10 +29,10 @@ public class Field extends Question implements Question.ValueListener {
     }
 
     @Override
-    public ValueView getView() {
-        final ValueView view = super.getView();
+    public Component getView() {
+        final QuestionView view = getValue().getView(this);
         addUpdateListener(view);
-        return view;
+        return view.getComponent();
     }
 
     @Override

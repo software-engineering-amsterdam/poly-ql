@@ -1,21 +1,19 @@
 package nl.uva.polyql.view;
 
 import java.awt.Color;
-import java.awt.Component;
+import java.awt.Insets;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.security.InvalidParameterException;
 
 import javax.swing.BorderFactory;
+import javax.swing.JComponent;
 import javax.swing.JTextField;
 
 import nl.uva.polyql.ast.Question;
 import nl.uva.polyql.ast.types.NumberType;
-import nl.uva.polyql.ast.values.BooleanValue;
 import nl.uva.polyql.ast.values.NumberValue;
-import nl.uva.polyql.ast.values.StringValue;
 
-public class NumberValueView extends ValueView {
+public class NumberValueView extends QuestionView {
 
     private JTextField mTextField;
 
@@ -26,6 +24,7 @@ public class NumberValueView extends ValueView {
     @Override
     protected void init() {
         mTextField = new JTextField();
+        mTextField.setMargin(new Insets(0, 0, 0, 0));
         mTextField.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(final KeyEvent e) {}
@@ -41,23 +40,13 @@ public class NumberValueView extends ValueView {
     }
 
     @Override
-    public Component getComponent() {
+    protected JComponent getValueComponent() {
         return mTextField;
     }
 
     @Override
     public void setComponentValue(final NumberValue value) {
         mTextField.setText(value.toString());
-    }
-
-    @Override
-    public void setComponentValue(final BooleanValue value) {
-        throw new InvalidParameterException("Booleans are invalid values for number views");
-    }
-
-    @Override
-    public void setComponentValue(final StringValue value) {
-        throw new InvalidParameterException("Strings are invalid values for number views");
     }
 
     @Override
@@ -68,7 +57,7 @@ public class NumberValueView extends ValueView {
     @Override
     protected void setValid(final boolean valid) {
         mTextField.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(valid ? Color.WHITE : Color.RED),
+                BorderFactory.createLineBorder(valid ? Color.LIGHT_GRAY : Color.RED),
                 BorderFactory.createEmptyBorder(2, 5, 2, 0)));
     }
 }

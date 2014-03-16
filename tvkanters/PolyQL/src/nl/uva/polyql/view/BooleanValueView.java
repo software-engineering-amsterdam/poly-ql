@@ -1,18 +1,15 @@
 package nl.uva.polyql.view;
 
-import java.awt.Component;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.security.InvalidParameterException;
 
 import javax.swing.JCheckBox;
+import javax.swing.JComponent;
 
 import nl.uva.polyql.ast.Question;
 import nl.uva.polyql.ast.values.BooleanValue;
-import nl.uva.polyql.ast.values.NumberValue;
-import nl.uva.polyql.ast.values.StringValue;
 
-public class BooleanValueView extends ValueView {
+public class BooleanValueView extends QuestionView {
 
     private JCheckBox mCheckBox;
 
@@ -32,7 +29,7 @@ public class BooleanValueView extends ValueView {
     }
 
     @Override
-    public Component getComponent() {
+    protected JComponent getValueComponent() {
         return mCheckBox;
     }
 
@@ -42,22 +39,7 @@ public class BooleanValueView extends ValueView {
     }
 
     @Override
-    public void setComponentValue(final NumberValue value) {
-        throw new InvalidParameterException("Numbers are invalid values for boolean views");
-    }
-
-    @Override
-    public void setComponentValue(final StringValue value) {
-        throw new InvalidParameterException("Strings are invalid values for boolean views");
-    }
-
-    @Override
     public void setEditable(final boolean enabled) {
         mCheckBox.setEnabled(enabled);
-    }
-
-    @Override
-    protected void setValid(final boolean valid) {
-        // A checkbox cannot be invalid
     }
 }

@@ -1,5 +1,6 @@
 package nl.uva.polyql.ast;
 
+import java.awt.Component;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,7 +11,6 @@ import nl.uva.polyql.ast.types.StringType;
 import nl.uva.polyql.ast.types.Type;
 import nl.uva.polyql.ast.values.Value;
 import nl.uva.polyql.validation.ValidationErrors;
-import nl.uva.polyql.view.ValueView;
 
 public class Question implements Rule {
 
@@ -23,7 +23,6 @@ public class Question implements Rule {
     private LineInfo mLineInfo;
 
     private final Set<ValueListener> mUpdateListeners = new HashSet<>();
-    private final Set<VisibilityListener> mVisibilityListeners = new HashSet<>();
 
     protected Question(final RuleContainer parent, final String id, final String label, final String type) {
         this(parent, id, label, Type.valueOf(type.toUpperCase()));
@@ -62,11 +61,9 @@ public class Question implements Rule {
         return mValueValid;
     }
 
-    public ValueView getView() {
-        final ValueView view = mValue.getView(this);
-        mVisibilityListeners.add(view);
-        view.onParentVisibilityUpdate(isVisible());
-        return view;
+    @Override
+    public Component getView() {
+        return mValue.getView(this).getComponent();
     }
 
     public void addUpdateListener(final ValueListener listener) {
@@ -79,13 +76,6 @@ public class Question implements Rule {
         final List<Question> questions = new LinkedList<>();
         questions.add(this);
         return questions;
-    }
-
-    @Override
-    public void onParentVisibilityUpdate(final boolean visible) {
-        for (final VisibilityListener listener : mVisibilityListeners) {
-            listener.onParentVisibilityUpdate(visible);
-        }
     }
 
     @Override

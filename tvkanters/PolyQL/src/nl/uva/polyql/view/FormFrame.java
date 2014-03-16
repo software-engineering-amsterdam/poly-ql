@@ -1,25 +1,24 @@
 package nl.uva.polyql.view;
 
 import java.awt.BorderLayout;
-import java.awt.GridLayout;
 import java.util.List;
 
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import nl.uva.polyql.ast.Form;
-import nl.uva.polyql.ast.Question;
+import nl.uva.polyql.ast.Rule;
 
 public class FormFrame extends JFrame {
 
     private static final long serialVersionUID = -4168793431805315522L;
 
-    private static final int WIDTH = 600;
-    private static final int HEIGHT = 500;
+    public static final int WIDTH = 600;
+    public static final int HEIGHT = 500;
 
     public FormFrame(final Form form) {
         super("Poly-QL");
@@ -32,19 +31,23 @@ public class FormFrame extends JFrame {
         }
 
         setSize(WIDTH, HEIGHT);
+        setLocationRelativeTo(null);
+        setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        final JPanel p = new JPanel();
+        // Construct the form container
+        final JPanel formPanel = new JPanel();
+        final JPanel container = new JPanel();
+        container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+        formPanel.add(container);
+        getContentPane().add(new JScrollPane(formPanel), BorderLayout.CENTER);
 
-        final List<Question> questions = form.getQuestions();
-        for (final Question question : questions) {
-            p.add(new JLabel(question.getLabel()));
-            p.add(question.getView().getComponent());
+        // Add content to the form container
+        final List<Rule> rules = form.getChildRules();
+        for (final Rule rule : rules) {
+            container.add(rule.getView());
         }
 
-        p.setLayout(new GridLayout(questions.size(), 2, 5, 5));
-
-        getContentPane().add(new JScrollPane(p), BorderLayout.CENTER);
         setVisible(true);
     }
 }

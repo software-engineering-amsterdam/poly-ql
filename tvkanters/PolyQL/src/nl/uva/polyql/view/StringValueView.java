@@ -1,21 +1,17 @@
 package nl.uva.polyql.view;
 
-import java.awt.Component;
-import java.awt.Insets;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.security.InvalidParameterException;
 
-import javax.swing.JTextArea;
+import javax.swing.JComponent;
+import javax.swing.JTextField;
 
 import nl.uva.polyql.ast.Question;
-import nl.uva.polyql.ast.values.BooleanValue;
-import nl.uva.polyql.ast.values.NumberValue;
 import nl.uva.polyql.ast.values.StringValue;
 
-public class StringValueView extends ValueView {
+public class StringValueView extends QuestionView {
 
-    private JTextArea mTextArea;
+    private JTextField mTextField;
 
     public StringValueView(final Question question) {
         super(question);
@@ -23,15 +19,14 @@ public class StringValueView extends ValueView {
 
     @Override
     protected void init() {
-        mTextArea = new JTextArea();
-        mTextArea.setMargin(new Insets(2, 5, 2, 5));
-        mTextArea.addKeyListener(new KeyListener() {
+        mTextField = new JTextField();
+        mTextField.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(final KeyEvent e) {}
 
             @Override
             public void keyReleased(final KeyEvent e) {
-                onNewInput(new StringValue(mTextArea.getText()));
+                onNewInput(new StringValue(mTextField.getText()));
             }
 
             @Override
@@ -40,32 +35,17 @@ public class StringValueView extends ValueView {
     }
 
     @Override
-    public Component getComponent() {
-        return mTextArea;
+    protected JComponent getValueComponent() {
+        return mTextField;
     }
 
     @Override
     public void setComponentValue(final StringValue value) {
-        mTextArea.setText(value.getValue());
+        mTextField.setText(value.getValue());
     }
 
     @Override
-    public void setComponentValue(final BooleanValue value) {
-        throw new InvalidParameterException("Booleans are invalid values for string views");
-    }
-
-    @Override
-    public void setComponentValue(final NumberValue value) {
-        throw new InvalidParameterException("Numbers are invalid values for string views");
-    }
-
-    @Override
-    public void setEditable(final boolean enabled) {
-        mTextArea.setEnabled(enabled);
-    }
-
-    @Override
-    protected void setValid(final boolean valid) {
-        // A string cannot be invalid
+    protected void setEditable(final boolean enabled) {
+        mTextField.setEnabled(enabled);
     }
 }

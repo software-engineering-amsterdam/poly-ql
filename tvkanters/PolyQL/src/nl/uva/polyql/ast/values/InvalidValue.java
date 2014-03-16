@@ -3,7 +3,7 @@ package nl.uva.polyql.ast.values;
 import nl.uva.polyql.ast.Question;
 import nl.uva.polyql.ast.expressions.modifiers.Modifier;
 import nl.uva.polyql.ast.types.Type;
-import nl.uva.polyql.view.ValueView;
+import nl.uva.polyql.view.QuestionView;
 
 public class InvalidValue extends Value<Object> {
 
@@ -17,12 +17,12 @@ public class InvalidValue extends Value<Object> {
     }
 
     @Override
-    public ValueView getView(final Question question) {
+    public QuestionView getView(final Question question) {
         return null;
     }
 
     @Override
-    public void setViewValue(final ValueView view) {}
+    public void setViewValue(final QuestionView view) {}
 
     @Override
     public InvalidValue applyModifier(final Modifier<?> modifier) {
