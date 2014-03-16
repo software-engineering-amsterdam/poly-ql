@@ -24,6 +24,6 @@ public abstract class QuestionHBox extends HBox {
 
     public abstract Value getValue();
 
-    public abstract void updateValue(Node node);
+    public abstract void updateValue(Value value);
 
 }

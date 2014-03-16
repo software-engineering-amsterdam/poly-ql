@@ -1,7 +1,8 @@
 package edu.uva.softwarecons.ui.question;
 
 import edu.uva.softwarecons.model.value.DateValue;
-import eu.schudt.javafx.controls.calendar.DatePicker;
+import edu.uva.softwarecons.model.value.Value;
+import edu.uva.softwarecons.ui.widget.DatePicker;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -19,7 +20,7 @@ public class DateQuestionHBox extends QuestionHBox{
 
     public DateQuestionHBox(String questionId, EventHandler<ActionEvent> eventHandler) {
         super(questionId);
-        datePicker = new DatePicker(Locale.ENGLISH);
+        datePicker = new DatePicker(Locale.ENGLISH, eventHandler, questionId);
         datePicker.setDateFormat(DateValue.dateFormat);
         datePicker.getCalendarView().todayButtonTextProperty().set("Today");
         datePicker.getCalendarView().setShowWeeks(false);
@@ -34,7 +35,5 @@ public class DateQuestionHBox extends QuestionHBox{
     }
 
     @Override
-    public void updateValue(Node node) {
-
-    }
+    public void updateValue(Value value) {}
 }

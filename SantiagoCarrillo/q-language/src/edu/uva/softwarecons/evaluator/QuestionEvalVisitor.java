@@ -33,6 +33,8 @@ public class QuestionEvalVisitor implements IFormElementVisitor {
     @Override
     public void visitComputedQuestion(ComputedQuestion question) {
         questions.get(question.getId()).setVisible(displayQuestion);
+        questions.get(question.getId()).
+                updateValue(question.getExpression().accept(expressionEvaluator));
     }
 
     @Override

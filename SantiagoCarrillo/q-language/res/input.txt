@@ -4,6 +4,11 @@ form Box1HouseOwning {
    birthDate: "What's your birth date?" date
    hasMainLoan: "Did you enter a loan for maintenance/reconstruction" boolean
    housePrice: "How much did you pay for the house" money
+   date1: "date 1" date
+   date2: "date 2" date
+   if(date1 < date2){
+        dateIfQuestion: "text" boolean
+   }
    if (hasSoldHouse && housePrice > 10) {
         sellingPrice: "Price the house was sold for:" money
         privateDebt: "Private debts for the sold house:" money

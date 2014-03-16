@@ -36,6 +36,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.antlr.v4.runtime.tree.ParseTree;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -61,10 +62,6 @@ public class Main extends Application implements EventHandler<ActionEvent> {
 
     private Form form;
 
-    private final int sceneWidth = 600;
-
-    private final int sceneHeight = 700;
-
 
     public static void main(String[] args) {
         launch(args);
@@ -74,7 +71,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
     public void start(final Stage primaryStage) {
         primaryStage.setTitle("Questionnaire Language");
         mainVBox.getChildren().add(getTopMenuBar(primaryStage));
-        Scene scene = new Scene(mainVBox, sceneWidth, sceneHeight);
+        Scene scene = new Scene(mainVBox, 600, 700);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -87,18 +84,18 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         menuItemOpen.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                    FileChooser fileChooser = new FileChooser();
-                    fileChooser.setTitle("Open Questionnaire");
-                    File selectedFile = fileChooser.showOpenDialog(stage);
-                    try {
-                        if(null != selectedFile){
-                            loadForm(selectedFile);
-                        }
-                    } catch (FileNotFoundException e1) {
-                        DialogFactory.showErrorDialog("File Not Found", "The specified file: " + selectedFile.getName() + "was not found");
-                    } catch (IOException e1) {
-                        DialogFactory.showErrorDialog("System Error", "Error loading file: " + selectedFile.getName());
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.setTitle("Open Questionnaire");
+                File selectedFile = fileChooser.showOpenDialog(stage);
+                try {
+                    if(null != selectedFile){
+                        loadForm(selectedFile);
                     }
+                } catch (FileNotFoundException e1) {
+                    DialogFactory.showErrorDialog("File Not Found", "The specified file: " + selectedFile.getName() + "was not found");
+                } catch (IOException e1) {
+                    DialogFactory.showErrorDialog("System Error", "Error loading file: " + selectedFile.getName());
+                }
             }
         });
         menuItemExit.setOnAction(new EventHandler<ActionEvent>() {
@@ -183,12 +180,18 @@ public class Main extends Application implements EventHandler<ActionEvent> {
     public void handle(ActionEvent actionEvent) {
         Node node = (Node) actionEvent.getSource();
         expressionEvaluator.addContextValue(node.getId(), questions.get(node.getId()).getValue());
+        System.out.println(node.getId());
         updateModel();
     }
 
     private void updateModel(){
         for(Question question: form.getQuestions()){
-            if(new IfQuestion(null, null, null, null).equals(question))
+            if(new ComputedQuestion(null, null, null, null).equals(question)){
+                ComputedQuestion computedQuestion = (ComputedQuestion) question;
+                questions.get(computedQuestion.getId()).
+                        updateValue(computedQuestion.getExpression().accept(expressionEvaluator));
+            }
+            else if(new IfQuestion(null, null, null, null).equals(question))
                 updateIfQuestion((IfQuestion) question);
         }
         for(QuestionHBox questionHBox: questions.values()){

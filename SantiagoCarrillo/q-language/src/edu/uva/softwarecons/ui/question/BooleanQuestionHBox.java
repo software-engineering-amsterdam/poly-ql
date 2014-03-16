@@ -1,6 +1,7 @@
 package edu.uva.softwarecons.ui.question;
 
 import edu.uva.softwarecons.model.value.BooleanValue;
+import edu.uva.softwarecons.model.value.Value;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -28,8 +29,8 @@ public class BooleanQuestionHBox extends QuestionHBox {
     }
 
     @Override
-    public void updateValue(Node node) {
-       checkBox.setSelected(((CheckBox) node).isSelected());
+    public void updateValue(Value value) {
+        checkBox.setSelected(Boolean.valueOf(value.getValue()));
     }
 
 

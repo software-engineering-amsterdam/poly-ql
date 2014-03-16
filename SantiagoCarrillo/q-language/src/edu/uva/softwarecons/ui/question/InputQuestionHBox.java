@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
+import javafx.scene.input.SwipeEvent;
 
 /**
  * Falconlabs
@@ -31,7 +32,7 @@ public class InputQuestionHBox extends QuestionHBox{
     }
 
     @Override
-    public void updateValue(Node node) {
-        textField.setText(((TextField)node).getText());
+    public void updateValue(Value value) {
+        textField.setText(value.getValue());
     }
 }

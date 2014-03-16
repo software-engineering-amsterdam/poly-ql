@@ -2,6 +2,7 @@ package edu.uva.softwarecons.ui.question;
 
 import edu.uva.softwarecons.model.value.ArithmeticValue;
 import edu.uva.softwarecons.model.value.IntegerValue;
+import edu.uva.softwarecons.model.value.Value;
 import javafx.scene.Node;
 import javafx.scene.text.Text;
 
@@ -26,8 +27,8 @@ public class ComputedQuestionHBox extends QuestionHBox{
     }
 
     @Override
-    public void updateValue(Node node) {
-        this.result.setText(((Text) node).getText());
+    public void updateValue(Value value) {
+        this.result.setText(value.getValue());
     }
 
 }
