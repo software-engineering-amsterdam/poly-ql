@@ -25,7 +25,7 @@ import static junit.framework.Assert.assertTrue;
  */
 public class ExpressionEvaluatorTest {
 
-    final ExpressionEvaluator expressionEvaluator =  new ExpressionEvaluator();
+    final ExpressionEvaluator expressionEvaluator = new ExpressionEvaluator();
 
     @Test
     public void evaluateArithmeticAddExpressionTest() {

@@ -1,5 +1,6 @@
 package edu.uva.softwarecons.ui.question;
 
+import edu.uva.softwarecons.model.question.BasicQuestion;
 import edu.uva.softwarecons.model.value.BooleanValue;
 import edu.uva.softwarecons.model.value.Value;
 import javafx.event.ActionEvent;
@@ -15,11 +16,11 @@ public class BooleanQuestionHBox extends QuestionHBox {
 
     private final CheckBox checkBox = new CheckBox("Yes");
 
-    public BooleanQuestionHBox(String questionId, EventHandler<ActionEvent> eventHandler) {
-        super(questionId);
+    public BooleanQuestionHBox(BasicQuestion question, EventHandler<ActionEvent> eventHandler) {
+        super(question);
         getChildren().add(checkBox);
         checkBox.setOnAction(eventHandler);
-        checkBox.setId(questionId);
+        checkBox.setId(question.getId());
     }
 
     @Override

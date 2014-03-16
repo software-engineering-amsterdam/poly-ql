@@ -23,11 +23,11 @@ import java.util.List;
  */
 public class DialogFactory {
 
-    public static void showErrorDialog(String title, String message){
+    public static void showErrorDialog(String title, String message) {
         Stage dialogStage = new Stage();
         dialogStage.setTitle(title);
         dialogStage.initModality(Modality.WINDOW_MODAL);
-        VBox vBox =  new VBox(25);
+        VBox vBox = new VBox(25);
         vBox.setAlignment(Pos.CENTER);
         Label messageText = new Label(message);
         messageText.setWrapText(true);
@@ -47,16 +47,16 @@ public class DialogFactory {
     }
 
 
-    public static void showQuestionnaireErrorDialog(List<QuestionnaireError> errors){
+    public static void showQuestionnaireErrorDialog(List<QuestionnaireError> errors) {
         Stage dialogStage = new Stage();
         dialogStage.setTitle("Error loading file");
         dialogStage.initModality(Modality.WINDOW_MODAL);
-        VBox vBox =  new VBox();
-        vBox.getChildren().add(new TitleHBox("Errors Found:","#ffffb2", Color.RED));
+        VBox vBox = new VBox();
+        vBox.getChildren().add(new TitleHBox("Errors Found:", "#ffffb2", Color.RED));
         Scene scene = new Scene(vBox, 600, 400);
         dialogStage.setScene(scene);
         dialogStage.show();
-        for(QuestionnaireError error: errors){
+        for (QuestionnaireError error : errors) {
             Text text = new Text(error.toString());
             text.setFill(Color.RED);
             vBox.getChildren().add(text);

@@ -12,7 +12,7 @@ import edu.uva.softwarecons.visitor.expression.IExpressionEvalVisitor;
  * User: sancarbar
  * Date: 2/20/14
  */
-public class GreaterEqualExpression extends BinaryExpression{
+public class GreaterEqualExpression extends BinaryExpression {
 
     public GreaterEqualExpression(Expression leftOperand, Expression rightOperand) {
         super(leftOperand, rightOperand);

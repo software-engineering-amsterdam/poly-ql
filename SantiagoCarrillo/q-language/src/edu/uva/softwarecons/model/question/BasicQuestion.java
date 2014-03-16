@@ -30,7 +30,7 @@ public class BasicQuestion implements Question {
 
     @Override
     public String toString() {
-        return ""+id+": "+text+" "+ (null != type ? type.toString() : "" );
+        return "" + id + ": " + text + " " + (null != type ? type.toString() : "");
     }
 
     public String getId() {

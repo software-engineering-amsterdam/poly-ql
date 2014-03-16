@@ -7,21 +7,21 @@ import edu.uva.softwarecons.model.type.Type;
  * User: sancarbar
  * Date: 3/3/14
  */
-public class InvalidTypeError extends QuestionnaireError{
+public class InvalidTypeError extends QuestionnaireError {
 
     public InvalidTypeError(String id, String expectedType, String definedType) {
-        super("Expected type: "+expectedType+" but got "+
-                definedType+
-                " for argument: '"+id+"'");
+        super("Expected type: " + expectedType + " but got " +
+                definedType +
+                " for argument: '" + id + "'");
     }
 
     public InvalidTypeError(String questionId, String expressionId, String expectedType, String definedType) {
-        super("Expected type: "+expectedType+" but got "+
-                definedType+
-                " for question: "+questionId+" and argument: '"+expressionId+"'");
+        super("Expected type: " + expectedType + " but got " +
+                definedType +
+                " for question: " + questionId + " and argument: '" + expressionId + "'");
     }
 
     public InvalidTypeError(String operand, Type type) {
-        super("InvalidType: "+type+" for operand: "+operand);
+        super("InvalidType: " + type + " for operand: " + operand);
     }
 }

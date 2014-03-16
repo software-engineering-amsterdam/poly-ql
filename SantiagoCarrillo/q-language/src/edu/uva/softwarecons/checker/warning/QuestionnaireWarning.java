@@ -15,6 +15,6 @@ public class QuestionnaireWarning {
 
     @Override
     public String toString() {
-        return "Warning:  "+message;
+        return "Warning:  " + message;
     }
 }

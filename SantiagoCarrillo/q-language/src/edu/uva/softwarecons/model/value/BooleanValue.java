@@ -5,7 +5,7 @@ package edu.uva.softwarecons.model.value;
  * User: sancarbar
  * Date: 3/13/14
  */
-public class BooleanValue implements Value{
+public class BooleanValue implements Value {
 
     private final boolean value;
 
@@ -24,18 +24,17 @@ public class BooleanValue implements Value{
         return ((BooleanValue) obj).value == this.value;
     }
 
-    public BooleanValue and(Value value){
+    public BooleanValue and(Value value) {
         return new BooleanValue(this.value && Boolean.parseBoolean(value.getValue()));
     }
 
-    public BooleanValue or(Value value){
+    public BooleanValue or(Value value) {
         return new BooleanValue(this.value || Boolean.parseBoolean(value.getValue()));
     }
 
-    public BooleanValue not(){
+    public BooleanValue not() {
         return new BooleanValue(!this.value);
     }
-
 
 
 }

@@ -7,7 +7,7 @@ import edu.uva.softwarecons.visitor.type.ITypeElementVisitor;
  * User: sancarbar
  * Date: 2/25/14
  */
-public class DecimalType extends NumericType{
+public class DecimalType extends NumericType {
 
 
     @Override

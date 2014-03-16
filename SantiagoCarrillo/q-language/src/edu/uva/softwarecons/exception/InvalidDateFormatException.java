@@ -5,7 +5,7 @@ package edu.uva.softwarecons.exception;
  * User: sancarbar
  * Date: 3/13/14
  */
-public class InvalidDateFormatException extends CompareException{
+public class InvalidDateFormatException extends CompareException {
 
     public InvalidDateFormatException(String message) {
         super(message);

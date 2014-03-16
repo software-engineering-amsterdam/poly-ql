@@ -5,7 +5,7 @@ package edu.uva.softwarecons.checker.error;
  * User: sancarbar
  * Date: 2/27/14
  */
-public class QuestionnaireError{
+public class QuestionnaireError {
 
     private String message;
 
@@ -15,6 +15,6 @@ public class QuestionnaireError{
 
     @Override
     public String toString() {
-        return "Error: "+message;
+        return "Error: " + message;
     }
 }

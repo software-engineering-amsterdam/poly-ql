@@ -5,7 +5,7 @@ package edu.uva.softwarecons.model.value;
  * User: sancarbar
  * Date: 3/13/14
  */
-public interface ComparableValue extends Value{
+public interface ComparableValue extends Value {
 
     public boolean greater(Value value);
 

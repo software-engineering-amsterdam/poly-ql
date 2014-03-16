@@ -12,10 +12,10 @@ import java.util.HashMap;
  */
 public class StringUtil {
 
-    public static String formToJson(Form form, HashMap<String, QuestionHBox> questions){
+    public static String formToJson(Form form, HashMap<String, QuestionHBox> questions) {
         StringBuffer formData = new StringBuffer();
         formData.append("{\"").append(form.getId()).append("\": {");
-        for(String questionId: questions.keySet()){
+        for (String questionId : questions.keySet()) {
             formData.append("\"").append(questionId).append("\": ");
             formData.append(questions.get(questionId).getValue().getValue());
             formData.append(",");

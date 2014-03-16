@@ -26,7 +26,7 @@ public class FormPrettyPrintVisitor implements IFormElementVisitor, IExpressionE
     @Override
     public void visitForm(Form form) {
         System.out.print("form " + form.getId() + "{\n");
-        for(Question question: form.getQuestions()){
+        for (Question question : form.getQuestions()) {
             question.accept(this);
         }
         System.out.print("\n}");
@@ -55,11 +55,11 @@ public class FormPrettyPrintVisitor implements IFormElementVisitor, IExpressionE
         question.getExpression().accept(this);
         System.out.print("){");
         System.out.print("\n");
-        for(Question q: question.getQuestions()){
+        for (Question q : question.getQuestions()) {
             q.accept(this);
         }
         System.out.print("\t}");
-        if(null != question.getElseQuestion())
+        if (null != question.getElseQuestion())
             question.getElseQuestion().accept(this);
 
     }
@@ -68,7 +68,7 @@ public class FormPrettyPrintVisitor implements IFormElementVisitor, IExpressionE
     public void visitElseQuestion(ElseQuestion question) {
 //        System.out.print("\t");
         System.out.print("else{\n");
-        for(Question q: question.getQuestions()){
+        for (Question q : question.getQuestions()) {
             q.accept(this);
         }
         System.out.print("\t}\n");

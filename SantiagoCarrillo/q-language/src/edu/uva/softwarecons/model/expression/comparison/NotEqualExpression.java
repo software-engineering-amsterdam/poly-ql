@@ -12,7 +12,7 @@ import edu.uva.softwarecons.visitor.expression.IExpressionEvalVisitor;
  * User: sancarbar
  * Date: 2/20/14
  */
-public class NotEqualExpression extends BinaryExpression{
+public class NotEqualExpression extends BinaryExpression {
 
 
     public NotEqualExpression(Expression leftOperand, Expression rightOperand) {

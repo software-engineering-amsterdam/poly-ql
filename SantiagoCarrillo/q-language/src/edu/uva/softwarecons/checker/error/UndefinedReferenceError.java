@@ -5,9 +5,9 @@ package edu.uva.softwarecons.checker.error;
  * User: sancarbar
  * Date: 2/27/14
  */
-public class UndefinedReferenceError  extends QuestionnaireError{
+public class UndefinedReferenceError extends QuestionnaireError {
 
     public UndefinedReferenceError(String id) {
-        super("Variable with id: '"+id+"' is undefined");
+        super("Variable with id: '" + id + "' is undefined");
     }
 }

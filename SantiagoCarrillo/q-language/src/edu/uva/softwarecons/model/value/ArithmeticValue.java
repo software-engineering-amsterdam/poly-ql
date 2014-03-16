@@ -6,7 +6,7 @@ package edu.uva.softwarecons.model.value;
  * User: sancarbar
  * Date: 3/13/14
  */
-public interface ArithmeticValue extends ComparableValue{
+public interface ArithmeticValue extends ComparableValue {
 
     public Value add(Value value);
 

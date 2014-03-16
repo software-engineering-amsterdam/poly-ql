@@ -1,5 +1,6 @@
 package edu.uva.softwarecons.ui.question;
 
+import edu.uva.softwarecons.model.question.BasicQuestion;
 import edu.uva.softwarecons.model.value.ArithmeticValue;
 import edu.uva.softwarecons.model.value.IntegerValue;
 import edu.uva.softwarecons.model.value.Value;
@@ -10,12 +11,12 @@ import javafx.scene.text.Text;
  * User: sancarbar
  * Date: 3/13/14
  */
-public class ComputedQuestionHBox extends QuestionHBox{
+public class ComputedQuestionHBox extends QuestionHBox {
 
     private final Text result = new Text("0");
 
-    public ComputedQuestionHBox(String questionId) {
-        super(questionId);
+    public ComputedQuestionHBox(BasicQuestion question) {
+        super(question);
         getChildren().add(result);
     }
 

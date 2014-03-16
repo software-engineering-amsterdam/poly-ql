@@ -5,7 +5,7 @@ package edu.uva.softwarecons.model.value;
  * User: sancarbar
  * Date: 3/13/14
  */
-public class StringValue implements Value{
+public class StringValue implements Value {
 
     private final String value;
 

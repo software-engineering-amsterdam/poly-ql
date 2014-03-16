@@ -13,7 +13,7 @@ import edu.uva.softwarecons.visitor.expression.IExpressionEvalVisitor;
  */
 public class IdExpression implements Expression {
 
-    private  final String id;
+    private final String id;
 
     public IdExpression(String id) {
         this.id = id;

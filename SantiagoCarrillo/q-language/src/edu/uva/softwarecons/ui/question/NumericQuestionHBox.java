@@ -1,5 +1,6 @@
 package edu.uva.softwarecons.ui.question;
 
+import edu.uva.softwarecons.model.question.BasicQuestion;
 import edu.uva.softwarecons.model.value.IntegerValue;
 import edu.uva.softwarecons.model.value.Value;
 import edu.uva.softwarecons.ui.widget.NumericTextField;
@@ -11,10 +12,10 @@ import javafx.event.EventHandler;
  * User: sancarbar
  * Date: 3/15/14
  */
-public class NumericQuestionHBox extends InputQuestionHBox{
+public class NumericQuestionHBox extends InputQuestionHBox {
 
-    public NumericQuestionHBox(String questionId, boolean textFieldDisabled, EventHandler<ActionEvent> eventHandler) {
-        super(questionId, textFieldDisabled, eventHandler, new NumericTextField());
+    public NumericQuestionHBox(BasicQuestion question, EventHandler<ActionEvent> eventHandler) {
+        super(question, eventHandler, new NumericTextField());
         textField.setText("0");
 
     }

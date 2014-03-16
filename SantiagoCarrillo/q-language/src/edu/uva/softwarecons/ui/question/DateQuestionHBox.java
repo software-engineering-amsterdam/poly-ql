@@ -1,5 +1,6 @@
 package edu.uva.softwarecons.ui.question;
 
+import edu.uva.softwarecons.model.question.BasicQuestion;
 import edu.uva.softwarecons.model.value.DateValue;
 import edu.uva.softwarecons.model.value.Value;
 import edu.uva.softwarecons.ui.widget.DatePicker;
@@ -13,18 +14,18 @@ import java.util.Locale;
  * User: sancarbar
  * Date: 3/16/14
  */
-public class DateQuestionHBox extends QuestionHBox{
+public class DateQuestionHBox extends QuestionHBox {
 
     private final DatePicker datePicker;
 
-    public DateQuestionHBox(String questionId, EventHandler<ActionEvent> eventHandler) {
-        super(questionId);
-        datePicker = new DatePicker(Locale.ENGLISH, eventHandler, questionId);
+    public DateQuestionHBox(BasicQuestion question, EventHandler<ActionEvent> eventHandler) {
+        super(question);
+        datePicker = new DatePicker(Locale.ENGLISH, eventHandler, question.getId());
         datePicker.setDateFormat(DateValue.dateFormat);
         datePicker.getCalendarView().todayButtonTextProperty().set("Today");
         datePicker.getCalendarView().setShowWeeks(false);
         datePicker.getStylesheets().add("DatePicker.css");
-        datePicker.setId(questionId);
+        datePicker.setId(question.getId());
         getChildren().add(datePicker);
     }
 
@@ -34,5 +35,6 @@ public class DateQuestionHBox extends QuestionHBox{
     }
 
     @Override
-    public void updateValue(Value value) {}
+    public void updateValue(Value value) {
+    }
 }

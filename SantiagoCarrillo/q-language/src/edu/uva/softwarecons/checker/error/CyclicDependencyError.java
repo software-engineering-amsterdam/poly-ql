@@ -5,9 +5,9 @@ package edu.uva.softwarecons.checker.error;
  * User: sancarbar
  * Date: 3/3/14
  */
-public class CyclicDependencyError extends QuestionnaireError{
+public class CyclicDependencyError extends QuestionnaireError {
 
     public CyclicDependencyError(String questionID) {
-        super("The question with ID: '"+questionID+"' has a cyclic dependency");
+        super("The question with ID: '" + questionID + "' has a cyclic dependency");
     }
 }

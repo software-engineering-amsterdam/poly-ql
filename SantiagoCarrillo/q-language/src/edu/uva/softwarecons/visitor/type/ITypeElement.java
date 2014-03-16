@@ -7,7 +7,7 @@ import edu.uva.softwarecons.visitor.IQuestionnaireElement;
  * User: sancarbar
  * Date: 3/5/14
  */
-public interface ITypeElement extends IQuestionnaireElement{
+public interface ITypeElement extends IQuestionnaireElement {
 
     void accept(ITypeElementVisitor visitor);
 }

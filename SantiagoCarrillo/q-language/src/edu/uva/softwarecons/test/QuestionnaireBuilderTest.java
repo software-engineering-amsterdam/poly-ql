@@ -28,12 +28,11 @@ public class QuestionnaireBuilderTest {
         try {
             ParseTree tree = parserBuilder.buildParseTree(FileReader.getFileContent("input.txt", "res"));
             QuestionnaireBuilderVisitor questionnaireBuilderVisitor = new QuestionnaireBuilderVisitor();
-            form  = (Form) questionnaireBuilderVisitor.visit(tree);
+            form = (Form) questionnaireBuilderVisitor.visit(tree);
         } catch (IOException e) {
             assert false : "Error reading the input file for the QuestionnaireBuilderTest";
         }
     }
-
 
 
 }

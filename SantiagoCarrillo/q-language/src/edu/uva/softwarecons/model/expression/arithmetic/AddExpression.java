@@ -26,7 +26,7 @@ public class AddExpression extends BinaryExpression {
     }
 
     @Override
-    public Value accept(IExpressionEvalVisitor visitor){
+    public Value accept(IExpressionEvalVisitor visitor) {
         return visitor.visitAddExpression(this);
     }
 }

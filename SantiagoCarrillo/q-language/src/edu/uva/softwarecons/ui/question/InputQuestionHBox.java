@@ -1,5 +1,6 @@
 package edu.uva.softwarecons.ui.question;
 
+import edu.uva.softwarecons.model.question.BasicQuestion;
 import edu.uva.softwarecons.model.value.StringValue;
 import edu.uva.softwarecons.model.value.Value;
 import javafx.event.ActionEvent;
@@ -11,16 +12,15 @@ import javafx.scene.control.TextField;
  * User: sancarbar
  * Date: 3/13/14
  */
-public class InputQuestionHBox extends QuestionHBox{
+public class InputQuestionHBox extends QuestionHBox {
 
     protected final TextField textField;
 
-    public InputQuestionHBox(String questionId, boolean textFieldDisabled, EventHandler<ActionEvent> eventHandler,  TextField textField) {
-        super(questionId);
+    public InputQuestionHBox(BasicQuestion question, EventHandler<ActionEvent> eventHandler, TextField textField) {
+        super(question);
         this.textField = textField;
-        textField.setDisable(textFieldDisabled);
         getChildren().add(textField);
-        textField.setId(questionId);
+        textField.setId(question.getId());
         textField.setOnAction(eventHandler);
     }
 

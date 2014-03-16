@@ -17,10 +17,10 @@ public class Main {
         Form form = (Form) questionnaireBuilderVisitor.visit(tree);
         TypeChecker typeChecker = new TypeChecker();
         typeChecker.checkForm(form);
-        for(QuestionnaireWarning questionnaireWarning: typeChecker.getWarnings()){
+        for (QuestionnaireWarning questionnaireWarning : typeChecker.getWarnings()) {
             System.out.println(questionnaireWarning);
         }
-        for(QuestionnaireError questionnaireError: typeChecker.getErrors()){
+        for (QuestionnaireError questionnaireError : typeChecker.getErrors()) {
             System.err.println(questionnaireError);
         }
     }

@@ -1,3 +1,4 @@
+//This is a test form
 form Box1HouseOwning {
    hasSoldHouse: "Did you sell a house in 2010?" boolean
    hasBoughtHouse: "Did you bought a house in 2010?" boolean

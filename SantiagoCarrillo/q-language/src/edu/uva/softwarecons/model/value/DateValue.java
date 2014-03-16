@@ -22,11 +22,11 @@ public class DateValue implements ComparableValue {
 
     @Override
     public boolean equals(Object obj) {
-        return ((DateValue)obj).getValue().equals(value.toString());
+        return ((DateValue) obj).getValue().equals(value.toString());
     }
 
     @Override
-    public boolean greater(Value value){
+    public boolean greater(Value value) {
         try {
             Date date = dateFormat.parse(value.getValue());
             return date.compareTo(this.value) > 0;
@@ -37,7 +37,7 @@ public class DateValue implements ComparableValue {
     }
 
     @Override
-    public boolean greaterEqual(Value value){
+    public boolean greaterEqual(Value value) {
         try {
             Date date = dateFormat.parse(value.getValue());
             return date.compareTo(this.value) > 0 || date.compareTo(this.value) == 0;
@@ -48,7 +48,7 @@ public class DateValue implements ComparableValue {
     }
 
     @Override
-    public boolean less(Value value){
+    public boolean less(Value value) {
         try {
             Date date = dateFormat.parse(value.getValue());
             return date.compareTo(this.value) < 0;
@@ -59,7 +59,7 @@ public class DateValue implements ComparableValue {
     }
 
     @Override
-    public boolean lessEqual(Value value){
+    public boolean lessEqual(Value value) {
         try {
             Date date = dateFormat.parse(value.getValue());
             return date.compareTo(this.value) < 0 || date.compareTo(this.value) == 0;
@@ -71,6 +71,6 @@ public class DateValue implements ComparableValue {
 
     @Override
     public String getValue() {
-        return "\"" + (null != value ? dateFormat.format(value): "") + "\"";
+        return "\"" + (null != value ? dateFormat.format(value) : "") + "\"";
     }
 }

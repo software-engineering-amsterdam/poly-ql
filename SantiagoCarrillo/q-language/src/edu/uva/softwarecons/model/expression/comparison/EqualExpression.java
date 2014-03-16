@@ -12,7 +12,7 @@ import edu.uva.softwarecons.visitor.expression.IExpressionEvalVisitor;
  * User: sancarbar
  * Date: 2/20/14
  */
-public class EqualExpression extends BinaryExpression{
+public class EqualExpression extends BinaryExpression {
 
     public EqualExpression(Expression leftOperand, Expression rightOperand) {
         super(leftOperand, rightOperand);
@@ -24,7 +24,7 @@ public class EqualExpression extends BinaryExpression{
     }
 
     @Override
-    public Value accept(IExpressionEvalVisitor visitor)  {
+    public Value accept(IExpressionEvalVisitor visitor) {
         return visitor.visitEqualExpression(this);
     }
 }

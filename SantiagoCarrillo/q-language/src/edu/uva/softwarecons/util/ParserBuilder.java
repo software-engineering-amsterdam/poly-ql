@@ -24,7 +24,7 @@ public class ParserBuilder {
     private QuestionnaireParser parser;
 
 
-    public ParseTree buildParseTree(String inputText){
+    public ParseTree buildParseTree(String inputText) {
         return getParseTree(new ANTLRInputStream(inputText));
     }
 

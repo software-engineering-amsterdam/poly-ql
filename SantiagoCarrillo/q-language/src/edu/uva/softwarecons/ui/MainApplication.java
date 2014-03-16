@@ -89,7 +89,7 @@ public class MainApplication extends Application implements EventHandler<ActionE
                 fileChooser.setTitle("Open Questionnaire");
                 File selectedFile = fileChooser.showOpenDialog(stage);
                 try {
-                    if(null != selectedFile){
+                    if (null != selectedFile) {
                         loadForm(selectedFile);
                     }
                 } catch (FileNotFoundException e1) {
@@ -108,7 +108,7 @@ public class MainApplication extends Application implements EventHandler<ActionE
         menuFile.getItems().add(menuItemOpen);
         menuFile.getItems().add(menuItemExit);
         menuBar.getMenus().add(menuFile);
-        return  menuBar;
+        return menuBar;
     }
 
     private void loadForm(File selectedFile) throws IOException {
@@ -118,9 +118,9 @@ public class MainApplication extends Application implements EventHandler<ActionE
         form = (Form) questionnaireBuilderVisitor.visit(tree);
         TypeChecker typeChecker = new TypeChecker();
         typeChecker.checkForm(form);
-        if(!typeChecker.getErrors().isEmpty())
+        if (!typeChecker.getErrors().isEmpty())
             DialogFactory.showQuestionnaireErrorDialog(typeChecker.getErrors());
-        else{
+        else {
             mainVBox.getChildren().add(new TitleHBox(form.getId(), "#336699", Color.WHITE));
             ScrollPane scrollPane = new ScrollPane();
             VBox.setVgrow(scrollPane, Priority.ALWAYS);
@@ -144,40 +144,39 @@ public class MainApplication extends Application implements EventHandler<ActionE
     }
 
     private void addQuestions(List<Question> questions) {
-        for(Question question: questions){
-            if(new IfQuestion(null, null, null, null).equals(question)){
+        for (Question question : questions) {
+            if (new IfQuestion(null, null, null, null).equals(question)) {
                 IfQuestion ifQuestion = (IfQuestion) question;
                 addQuestions(ifQuestion.getQuestions());
-                if(null != ifQuestion.getElseQuestion())
+                if (null != ifQuestion.getElseQuestion())
                     addQuestions(ifQuestion.getElseQuestion().getQuestions());
-            }else{
+            } else {
                 createQuestionLayout(question);
             }
         }
     }
 
-    private void updateIfQuestion(IfQuestion  ifQuestion){
+    private void updateIfQuestion(IfQuestion ifQuestion) {
         boolean display = Boolean.valueOf(ifQuestion.getExpression().accept(expressionEvaluator).getValue());
         ifQuestion.accept(new QuestionEvalVisitor(display, questions, expressionEvaluator));
     }
 
-    private void createQuestionLayout(Question question){
-        if(new ComputedQuestion(null, null, null, null).equals(question)){
-            ComputedQuestion computedQuestion =  (ComputedQuestion) question;
-            QuestionHBox questionHBox = new ComputedQuestionHBox(computedQuestion.getId());
+    private void createQuestionLayout(Question question) {
+        if (new ComputedQuestion(null, null, null, null).equals(question)) {
+            ComputedQuestion computedQuestion = (ComputedQuestion) question;
+            QuestionHBox questionHBox = new ComputedQuestionHBox(computedQuestion);
             questions.put(computedQuestion.getId(), questionHBox);
-        }
-        else if(new BasicQuestion(null, null, null).equals(question)){
-            BasicQuestion basicQuestion =  (BasicQuestion) question;
+        } else if (new BasicQuestion(null, null, null).equals(question)) {
+            BasicQuestion basicQuestion = (BasicQuestion) question;
             QuestionHBox questionHBox = null;
-            if(basicQuestion.getType().equals(new BooleanType())){
-                questionHBox =  new BooleanQuestionHBox(basicQuestion.getId(), this);
+            if (basicQuestion.getType().equals(new BooleanType())) {
+                questionHBox = new BooleanQuestionHBox(basicQuestion, this);
                 expressionEvaluator.addContextValue(basicQuestion.getId(), new BooleanValue(false));
-            }else if(basicQuestion.getType().equals(new IntegerType())){
-                questionHBox = new NumericQuestionHBox(basicQuestion.getId(), false, this);
+            } else if (basicQuestion.getType().equals(new IntegerType())) {
+                questionHBox = new NumericQuestionHBox(basicQuestion, this);
                 expressionEvaluator.addContextValue(basicQuestion.getId(), new IntegerValue(0));
-            }else if(basicQuestion.getType().equals(new DateType())){
-                questionHBox = new DateQuestionHBox(basicQuestion.getId(), this);
+            } else if (basicQuestion.getType().equals(new DateType())) {
+                questionHBox = new DateQuestionHBox(basicQuestion, this);
                 expressionEvaluator.addContextValue(basicQuestion.getId(), new DateValue(new Date()));
             }
             questions.put(basicQuestion.getId(), questionHBox);
@@ -185,22 +184,21 @@ public class MainApplication extends Application implements EventHandler<ActionE
     }
 
     private void addRemoveQuestions() {
-        for(QuestionHBox questionHBox: questions.values()){
-            if(questionHBox.isVisible() && !questionsVBox.getChildren().contains(questionHBox))
+        for (QuestionHBox questionHBox : questions.values()) {
+            if (questionHBox.isVisible() && !questionsVBox.getChildren().contains(questionHBox))
                 questionsVBox.getChildren().add(questionHBox);
-            else if(!questionHBox.isVisible() && questionsVBox.getChildren().contains(questionHBox))
+            else if (!questionHBox.isVisible() && questionsVBox.getChildren().contains(questionHBox))
                 questionsVBox.getChildren().remove(questionHBox);
         }
     }
 
-    private void updateModel(){
-        for(Question question: form.getQuestions()){
-            if(new ComputedQuestion(null, null, null, null).equals(question)){
+    private void updateModel() {
+        for (Question question : form.getQuestions()) {
+            if (new ComputedQuestion(null, null, null, null).equals(question)) {
                 ComputedQuestion computedQuestion = (ComputedQuestion) question;
                 questions.get(computedQuestion.getId()).
                         updateValue(computedQuestion.getExpression().accept(expressionEvaluator));
-            }
-            else if(new IfQuestion(null, null, null, null).equals(question))
+            } else if (new IfQuestion(null, null, null, null).equals(question))
                 updateIfQuestion((IfQuestion) question);
         }
         addRemoveQuestions();
@@ -212,11 +210,6 @@ public class MainApplication extends Application implements EventHandler<ActionE
         expressionEvaluator.addContextValue(node.getId(), questions.get(node.getId()).getValue());
         updateModel();
     }
-
-
-
-
-
 
 
 }

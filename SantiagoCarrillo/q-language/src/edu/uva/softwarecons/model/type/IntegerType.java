@@ -7,7 +7,7 @@ import edu.uva.softwarecons.visitor.type.ITypeElementVisitor;
  * User: sancarbar
  * Date: 2/19/14
  */
-public class IntegerType extends NumericType{
+public class IntegerType extends NumericType {
 
 
     @Override

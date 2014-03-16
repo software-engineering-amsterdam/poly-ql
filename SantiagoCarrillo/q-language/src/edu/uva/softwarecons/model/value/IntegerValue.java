@@ -5,7 +5,7 @@ package edu.uva.softwarecons.model.value;
  * User: sancarbar
  * Date: 3/13/14
  */
-public class IntegerValue implements ArithmeticValue{
+public class IntegerValue implements ArithmeticValue {
 
     private final int value;
 
@@ -21,7 +21,7 @@ public class IntegerValue implements ArithmeticValue{
 
     @Override
     public boolean equals(Object obj) {
-        return value == Integer.parseInt(((IntegerValue)obj).getValue());
+        return value == Integer.parseInt(((IntegerValue) obj).getValue());
     }
 
     @Override
@@ -45,22 +45,22 @@ public class IntegerValue implements ArithmeticValue{
     }
 
     @Override
-    public boolean greater(Value value){
+    public boolean greater(Value value) {
         return this.value > Integer.parseInt(value.getValue());
     }
 
     @Override
-    public boolean greaterEqual(Value value){
+    public boolean greaterEqual(Value value) {
         return this.value >= Integer.parseInt(value.getValue());
     }
 
     @Override
-    public boolean less(Value value){
+    public boolean less(Value value) {
         return this.value < Integer.parseInt(value.getValue());
     }
 
     @Override
-    public boolean lessEqual(Value value){
+    public boolean lessEqual(Value value) {
         return this.value <= Integer.parseInt(value.getValue());
     }
 }

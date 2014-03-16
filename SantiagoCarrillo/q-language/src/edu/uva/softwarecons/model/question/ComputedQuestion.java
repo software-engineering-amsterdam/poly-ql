@@ -29,7 +29,7 @@ public class ComputedQuestion extends BasicQuestion {
 
     @Override
     public String toString() {
-        return id+": "+text + " "+type + "(";
+        return id + ": " + text + " " + type + "(";
     }
 
     @Override

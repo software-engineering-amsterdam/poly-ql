@@ -23,7 +23,7 @@ public class BoolExpression implements Expression {
 
     @Override
     public Type accept(IExpressionElementVisitor visitor) {
-       return new BooleanType();
+        return new BooleanType();
     }
 
     @Override

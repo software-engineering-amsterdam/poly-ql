@@ -34,7 +34,7 @@ import java.util.TimerTask;
  * User: sancarbar
  * Date: 3/16/14
  */
-public class DatePicker extends HBox{
+public class DatePicker extends HBox {
 
 
     private static final String CSS_DATE_PICKER_VALID = "datepicker-valid";

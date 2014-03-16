@@ -5,10 +5,10 @@ package edu.uva.softwarecons.checker.error;
  * User: sancarbar
  * Date: 2/27/14
  */
-public class DuplicateQuestionError extends QuestionnaireError{
+public class DuplicateQuestionError extends QuestionnaireError {
 
 
     public DuplicateQuestionError(String id) {
-        super("The question with ID: '"+id+"' is duplicated");
+        super("The question with ID: '" + id + "' is duplicated");
     }
 }

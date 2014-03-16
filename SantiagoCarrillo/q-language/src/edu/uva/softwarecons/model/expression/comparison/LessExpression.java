@@ -12,7 +12,7 @@ import edu.uva.softwarecons.visitor.expression.IExpressionEvalVisitor;
  * User: sancarbar
  * Date: 2/20/14
  */
-public class LessExpression extends BinaryExpression{
+public class LessExpression extends BinaryExpression {
 
     public LessExpression(Expression leftOperand, Expression rightOperand) {
         super(leftOperand, rightOperand);

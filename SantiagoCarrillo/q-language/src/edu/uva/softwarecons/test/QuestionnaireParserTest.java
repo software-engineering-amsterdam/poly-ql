@@ -22,7 +22,7 @@ public class QuestionnaireParserTest {
     }
 
     @Test
-    public void basicQuestionTest(){
+    public void basicQuestionTest() {
         String input = "form Box1HouseOwning {hasSoldHouse: \"Did you sell a house in 2010?\" boolean}";
         ParseTree tree = parserBuilder.buildParseTree(input);
         assertEquals(tree.toStringTree(parserBuilder.getParser()),
@@ -31,7 +31,7 @@ public class QuestionnaireParserTest {
 
 
     @Test
-    public void conditionalIfFormTest(){
+    public void conditionalIfFormTest() {
         String input = "form Box1HouseOwning {if(a==b){hasSoldHouse: \"Did you sell a house in 2010?\" boolean}}";
         ParseTree tree = parserBuilder.buildParseTree(input);
         assertEquals(tree.toStringTree(parserBuilder.getParser()),
@@ -40,7 +40,7 @@ public class QuestionnaireParserTest {
 
 
     @Test
-    public void conditionalIfElseFormTest(){
+    public void conditionalIfElseFormTest() {
         String input = "form Box1HouseOwning {if(a==b){hasSoldHouse: \"text\" boolean} else { hasSoldHouse: \"text\" money }}";
         ParseTree tree = parserBuilder.buildParseTree(input);
         assertEquals(tree.toStringTree(parserBuilder.getParser()),
@@ -48,9 +48,8 @@ public class QuestionnaireParserTest {
     }
 
 
-
     @Test
-    public void booleansAndFormTest(){
+    public void booleansAndFormTest() {
         String input = "form Box1HouseOwning {if(a==b && a<b){hasSoldHouse: \"t\" date}}";
         ParseTree tree = parserBuilder.buildParseTree(input);
         assertEquals(tree.toStringTree(parserBuilder.getParser()),
@@ -59,7 +58,7 @@ public class QuestionnaireParserTest {
 
 
     @Test
-    public void booleansOrFormTest(){
+    public void booleansOrFormTest() {
         String input = "form Box1HouseOwning {if(a==b || a<b){hasSoldHouse: \"t\" date}}";
         ParseTree tree = parserBuilder.buildParseTree(input);
         assertEquals(tree.toStringTree(parserBuilder.getParser()),
@@ -67,9 +66,8 @@ public class QuestionnaireParserTest {
     }
 
 
-
     @Test
-    public void expressionComputedQuestionTest(){
+    public void expressionComputedQuestionTest() {
         String input = "form Box1HouseOwning { h: \"text\" money(1+5*5)}";
         ParseTree tree = parserBuilder.buildParseTree(input);
         assertEquals(tree.toStringTree(parserBuilder.getParser()),
@@ -77,7 +75,7 @@ public class QuestionnaireParserTest {
     }
 
     @Test
-    public void booleanTypeQuestionTest(){
+    public void booleanTypeQuestionTest() {
         String input = "form testForm {testQuestion: \"label\" boolean}";
         ParseTree tree = parserBuilder.buildParseTree(input);
         assertEquals(tree.toStringTree(parserBuilder.getParser()),
@@ -86,7 +84,7 @@ public class QuestionnaireParserTest {
 
 
     @Test
-    public void dateTypeQuestionTest(){
+    public void dateTypeQuestionTest() {
         String input = "form testForm {testQuestion: \"label\" date}";
         ParseTree tree = parserBuilder.buildParseTree(input);
         assertEquals(tree.toStringTree(parserBuilder.getParser()),
@@ -94,7 +92,7 @@ public class QuestionnaireParserTest {
     }
 
     @Test
-    public void decimalTypeQuestionTest(){
+    public void decimalTypeQuestionTest() {
         String input = "form testForm {testQuestion: \"label\" decimal}";
         ParseTree tree = parserBuilder.buildParseTree(input);
         assertEquals(tree.toStringTree(parserBuilder.getParser()),
@@ -102,7 +100,7 @@ public class QuestionnaireParserTest {
     }
 
     @Test
-    public void integerTypeQuestionTest(){
+    public void integerTypeQuestionTest() {
         String input = "form testForm {testQuestion: \"label\" integer}";
         ParseTree tree = parserBuilder.buildParseTree(input);
         assertEquals(tree.toStringTree(parserBuilder.getParser()),
@@ -110,7 +108,7 @@ public class QuestionnaireParserTest {
     }
 
     @Test
-    public void moneyTypeQuestionTest(){
+    public void moneyTypeQuestionTest() {
         String input = "form testForm {testQuestion: \"label\" money}";
         ParseTree tree = parserBuilder.buildParseTree(input);
         assertEquals(tree.toStringTree(parserBuilder.getParser()),
@@ -118,7 +116,7 @@ public class QuestionnaireParserTest {
     }
 
     @Test
-    public void stringTypeQuestionTest(){
+    public void stringTypeQuestionTest() {
         String input = "form testForm {testQuestion: \"label\" string}";
         ParseTree tree = parserBuilder.buildParseTree(input);
         assertEquals(tree.toStringTree(parserBuilder.getParser()),
@@ -126,7 +124,7 @@ public class QuestionnaireParserTest {
     }
 
     @Test
-    public void arithmeticAddExpressionTest(){
+    public void arithmeticAddExpressionTest() {
         String input = "form testForm {testQuestion: \"label\" money(a+b)}";
         ParseTree tree = parserBuilder.buildParseTree(input);
         assertEquals(tree.toStringTree(parserBuilder.getParser()),
@@ -134,7 +132,7 @@ public class QuestionnaireParserTest {
     }
 
     @Test
-    public void arithmeticSubExpressionTest(){
+    public void arithmeticSubExpressionTest() {
         String input = "form testForm {testQuestion: \"label\" money(a-b)}";
         ParseTree tree = parserBuilder.buildParseTree(input);
         assertEquals(tree.toStringTree(parserBuilder.getParser()),
@@ -142,7 +140,7 @@ public class QuestionnaireParserTest {
     }
 
     @Test
-    public void arithmeticMulExpressionTest(){
+    public void arithmeticMulExpressionTest() {
         String input = "form testForm {testQuestion: \"label\" money(a*b)}";
         ParseTree tree = parserBuilder.buildParseTree(input);
         assertEquals(tree.toStringTree(parserBuilder.getParser()),
@@ -150,7 +148,7 @@ public class QuestionnaireParserTest {
     }
 
     @Test
-    public void arithmeticDivExpressionTest(){
+    public void arithmeticDivExpressionTest() {
         String input = "form testForm {testQuestion: \"label\" money(a/b)}";
         ParseTree tree = parserBuilder.buildParseTree(input);
         assertEquals(tree.toStringTree(parserBuilder.getParser()),
@@ -158,7 +156,7 @@ public class QuestionnaireParserTest {
     }
 
     @Test
-    public void comparisonFormTest(){
+    public void comparisonFormTest() {
         String input = "form Box1HouseOwning {if(1<=2){hasSoldHouse: \"Did you sell a house in 2010?\" boolean}}";
         ParseTree tree = parserBuilder.buildParseTree(input);
         assertEquals(tree.toStringTree(parserBuilder.getParser()),

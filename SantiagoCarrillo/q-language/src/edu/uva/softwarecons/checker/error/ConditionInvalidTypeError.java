@@ -5,9 +5,9 @@ package edu.uva.softwarecons.checker.error;
  * User: sancarbar
  * Date: 2/27/14
  */
-public class ConditionInvalidTypeError extends QuestionnaireError{
+public class ConditionInvalidTypeError extends QuestionnaireError {
 
     public ConditionInvalidTypeError(String id) {
-        super("The argument with ID: '"+id+"' is not a Boolean Type");
+        super("The argument with ID: '" + id + "' is not a Boolean Type");
     }
 }

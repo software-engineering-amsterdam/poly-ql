@@ -21,14 +21,14 @@ import static org.junit.Assert.assertTrue;
 public class FormElmentsTest {
 
     @Test
-    public void isFormIdProperlySetTest(){
+    public void isFormIdProperlySetTest() {
         String formId = "testId";
         Form form = new Form(formId, null);
         assertTrue(form.getId().equals(formId));
     }
 
     @Test
-    public void isFormQuestionSetProperlyTest(){
+    public void isFormQuestionSetProperlyTest() {
         List<Question> questionList = new ArrayList<Question>();
         Question question = new BasicQuestion("", "", new IntegerType());
         questionList.add(question);
@@ -38,28 +38,28 @@ public class FormElmentsTest {
     }
 
     @Test
-    public void basicQuestionEqualsTest(){
+    public void basicQuestionEqualsTest() {
         BasicQuestion question = new BasicQuestion(null, null, null);
         BasicQuestion question2 = new BasicQuestion(null, null, null);
         assertTrue(question.equals(question2));
     }
 
     @Test
-    public void computedQuestionEqualsTest(){
+    public void computedQuestionEqualsTest() {
         ComputedQuestion question = new ComputedQuestion(null, null, null, null);
         ComputedQuestion question2 = new ComputedQuestion(null, null, null, null);
         assertTrue(question.equals(question2));
     }
 
     @Test
-    public void ifQuestionEqualsTest(){
+    public void ifQuestionEqualsTest() {
         IfQuestion question = new IfQuestion(null, null, null, null);
         IfQuestion question2 = new IfQuestion(null, null, null, null);
         assertTrue(question.equals(question2));
     }
 
     @Test
-    public void numericTypeEqualsTest(){
+    public void numericTypeEqualsTest() {
         DecimalType decimalType = new DecimalType();
         IntegerType integerType = new IntegerType();
         MoneyType moneyType = new MoneyType();
@@ -69,21 +69,21 @@ public class FormElmentsTest {
     }
 
     @Test
-    public void stringTypeEqualsTest(){
+    public void stringTypeEqualsTest() {
         StringType stringType = new StringType();
         StringType stringType2 = new StringType();
         assertTrue(stringType.equals(stringType2));
     }
 
     @Test
-    public void booleanTypeEqualsTest(){
+    public void booleanTypeEqualsTest() {
         BooleanType booleanType = new BooleanType();
         BooleanType booleanType2 = new BooleanType();
         assertTrue(booleanType.equals(booleanType2));
     }
 
     @Test
-    public void DateTypeEqualsTest(){
+    public void DateTypeEqualsTest() {
         DateType dateType = new DateType();
         DateType dateType2 = new DateType();
         assertTrue(dateType.equals(dateType2));

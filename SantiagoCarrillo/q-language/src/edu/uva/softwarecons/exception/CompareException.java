@@ -5,7 +5,7 @@ package edu.uva.softwarecons.exception;
  * User: sancarbar
  * Date: 3/13/14
  */
-public class CompareException extends Exception{
+public class CompareException extends Exception {
 
     public CompareException(String message) {
         super(message);

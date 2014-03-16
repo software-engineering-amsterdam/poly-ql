@@ -13,7 +13,7 @@ import edu.uva.softwarecons.visitor.expression.IExpressionEvalVisitor;
  * User: sancarbar
  * Date: 3/12/14
  */
-public class StringExpression implements Expression{
+public class StringExpression implements Expression {
 
     private String value;
 

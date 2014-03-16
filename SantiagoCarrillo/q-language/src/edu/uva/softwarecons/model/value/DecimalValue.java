@@ -5,7 +5,7 @@ package edu.uva.softwarecons.model.value;
  * User: sancarbar
  * Date: 3/13/14
  */
-public class DecimalValue implements ArithmeticValue{
+public class DecimalValue implements ArithmeticValue {
 
     private final float value;
 
@@ -20,7 +20,7 @@ public class DecimalValue implements ArithmeticValue{
 
     @Override
     public boolean equals(Object obj) {
-        return value == Float.parseFloat(((DecimalValue)obj).getValue());
+        return value == Float.parseFloat(((DecimalValue) obj).getValue());
     }
 
     @Override

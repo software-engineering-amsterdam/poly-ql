@@ -21,7 +21,7 @@ import java.util.HashMap;
  * User: sancarbar
  * Date: 3/13/14
  */
-public class ExpressionEvaluator implements IExpressionEvalVisitor{
+public class ExpressionEvaluator implements IExpressionEvalVisitor {
 
 
     private HashMap<String, Value> context = new HashMap<String, Value>();
@@ -29,49 +29,49 @@ public class ExpressionEvaluator implements IExpressionEvalVisitor{
     public ExpressionEvaluator() {
     }
 
-    public void addContextValue(String key, Value value){
+    public void addContextValue(String key, Value value) {
         context.put(key, value);
     }
 
     @Override
     public Value visitAddExpression(AddExpression expression) {
-        return ((ArithmeticValue)expression.getLeftExpression().accept(this)).
+        return ((ArithmeticValue) expression.getLeftExpression().accept(this)).
                 add(expression.getRightExpression().accept(this));
     }
 
     @Override
     public Value visitDivExpression(DivExpression expression) {
-        return ((ArithmeticValue)expression.getLeftExpression().accept(this)).
+        return ((ArithmeticValue) expression.getLeftExpression().accept(this)).
                 divide(expression.getRightExpression().accept(this));
     }
 
     @Override
     public Value visitMulExpression(MulExpression expression) {
-        return ((ArithmeticValue)expression.getLeftExpression().accept(this)).
+        return ((ArithmeticValue) expression.getLeftExpression().accept(this)).
                 multiply(expression.getRightExpression().accept(this));
     }
 
     @Override
     public Value visitSubExpression(SubExpression expression) {
-        return ((ArithmeticValue)expression.getLeftExpression().accept(this)).
+        return ((ArithmeticValue) expression.getLeftExpression().accept(this)).
                 subtract(expression.getRightExpression().accept(this));
     }
 
     @Override
     public Value visitAndExpression(AndExpression expression) {
-        return ((BooleanValue)expression.getLeftExpression().accept(this)).
+        return ((BooleanValue) expression.getLeftExpression().accept(this)).
                 and(expression.getRightExpression().accept(this));
     }
 
     @Override
     public Value visitOrExpression(OrExpression expression) {
-        return ((BooleanValue)expression.getLeftExpression().accept(this)).
+        return ((BooleanValue) expression.getLeftExpression().accept(this)).
                 or(expression.getRightExpression().accept(this));
     }
 
     @Override
     public Value visitNotExpression(NotExpression expression) {
-        return ((BooleanValue)expression.getArgument().accept(this)).not();
+        return ((BooleanValue) expression.getArgument().accept(this)).not();
     }
 
     @Override
@@ -88,25 +88,25 @@ public class ExpressionEvaluator implements IExpressionEvalVisitor{
 
     @Override
     public Value visitGreaterEqualExpression(GreaterEqualExpression expression) {
-        return new BooleanValue(((ComparableValue)expression.getLeftExpression().accept(this)).
+        return new BooleanValue(((ComparableValue) expression.getLeftExpression().accept(this)).
                 greaterEqual(expression.getRightExpression().accept(this)));
     }
 
     @Override
     public Value visitGreaterExpression(GreaterExpression expression) {
-        return new BooleanValue(((ComparableValue)expression.getLeftExpression().accept(this)).
+        return new BooleanValue(((ComparableValue) expression.getLeftExpression().accept(this)).
                 greater(expression.getRightExpression().accept(this)));
     }
 
     @Override
     public Value visitLessEqualExpression(LessEqualExpression expression) {
-        return new BooleanValue(((ComparableValue)expression.getLeftExpression().accept(this)).
+        return new BooleanValue(((ComparableValue) expression.getLeftExpression().accept(this)).
                 lessEqual(expression.getRightExpression().accept(this)));
     }
 
     @Override
     public Value visitLessExpression(LessExpression expression) {
-        return new BooleanValue(((ComparableValue)expression.getLeftExpression().accept(this)).
+        return new BooleanValue(((ComparableValue) expression.getLeftExpression().accept(this)).
                 less(expression.getRightExpression().accept(this)));
     }
 

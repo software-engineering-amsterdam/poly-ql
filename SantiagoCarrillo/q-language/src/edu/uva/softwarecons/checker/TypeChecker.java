@@ -9,8 +9,6 @@ import edu.uva.softwarecons.model.question.BasicQuestion;
 import edu.uva.softwarecons.model.question.ComputedQuestion;
 import edu.uva.softwarecons.model.question.IfQuestion;
 import edu.uva.softwarecons.model.question.Question;
-import edu.uva.softwarecons.model.type.BooleanType;
-import edu.uva.softwarecons.model.type.IntegerType;
 import edu.uva.softwarecons.model.type.NumericType;
 import edu.uva.softwarecons.model.type.Type;
 import edu.uva.softwarecons.visitor.form.FormBaseVisitor;
@@ -35,10 +33,9 @@ public class TypeChecker extends FormBaseVisitor {
     private List<QuestionnaireWarning> warnings = new ArrayList<QuestionnaireWarning>();
 
 
-
     @Override
     public void visitForm(Form form) {
-        for(Question question: form.getQuestions()){
+        for (Question question : form.getQuestions()) {
             question.accept(this);
         }
     }
@@ -49,7 +46,6 @@ public class TypeChecker extends FormBaseVisitor {
         questionTypes.put(question.getId(), question.getType());
         verifyDuplicatedQuestionText(question);
     }
-
 
 
     @Override
@@ -63,25 +59,24 @@ public class TypeChecker extends FormBaseVisitor {
     @Override
     public void visitIfQuestion(IfQuestion question) {
         question.getExpression().accept(this);
-        for(Question q: question.getQuestions()){
+        for (Question q : question.getQuestions()) {
             q.accept(this);
-            if(new BasicQuestion(null, null, null).equals(q))
+            if (new BasicQuestion(null, null, null).equals(q))
                 validateDuplicatedQuestion((BasicQuestion) q);
         }
-        if(null != question.getElseQuestion()){
-            for(Question q: question.getElseQuestion().getQuestions()){
+        if (null != question.getElseQuestion()) {
+            for (Question q : question.getElseQuestion().getQuestions()) {
                 q.accept(this);
-                if(new BasicQuestion(null, null, null).equals(q))
+                if (new BasicQuestion(null, null, null).equals(q))
                     validateDuplicatedQuestion((BasicQuestion) q);
             }
         }
     }
 
 
-
     @Override
     public Type visitIdExpression(IdExpression expression) {
-        if(!questionTypes.containsKey(expression.getId()))
+        if (!questionTypes.containsKey(expression.getId()))
             errors.add(new CyclicDependencyError(expression.getId()));
         referencedQuestions.add(expression.getId());
         return null;
@@ -89,19 +84,19 @@ public class TypeChecker extends FormBaseVisitor {
 
 
     private void validateDuplicatedQuestion(BasicQuestion question) {
-        if(questionTypes.containsKey(question.getId()) && !questionTypes.get(question.getId()).equals(question.getType())){
+        if (questionTypes.containsKey(question.getId()) && !questionTypes.get(question.getId()).equals(question.getType())) {
             errors.add(new DuplicateQuestionError(question.getId()));
         }
     }
 
     private void verifyDuplicatedQuestionText(BasicQuestion question) {
-        if(questionsText.containsKey(question.getText()))
+        if (questionsText.containsKey(question.getText()))
             warnings.add(new DuplicatedQuestionLabelWarning(questionsText.get(question.getText()).getId(), question.getId()));
         else
             questionsText.put(question.getText(), question);
     }
 
-    public void checkForm(Form form){
+    public void checkForm(Form form) {
         form.accept(this);
         findUndefinedVariables();
         ExpressionTypeChecker expressionTypeChecker = new ExpressionTypeChecker(questionTypes);
@@ -113,18 +108,18 @@ public class TypeChecker extends FormBaseVisitor {
 
     private void checkIfStatementExpressionTypes(Form form, ExpressionTypeChecker expressionTypeChecker) {
         IfQuestion ifQuestion = new IfQuestion(null, null, null, null);
-        for(Question q: form.getQuestions()){
-            if(ifQuestion.equals(q))
+        for (Question q : form.getQuestions()) {
+            if (ifQuestion.equals(q))
                 expressionTypeChecker.validateType(((IfQuestion) q).getCondition(), ((IfQuestion) q).getExpression());
         }
     }
 
     private void checkComputedQuestionExpressionsType(Form form, ExpressionTypeChecker expressionTypeChecker) {
         ComputedQuestion computedQuestion = new ComputedQuestion(null, null, null, null);
-        for(Question q: form.getQuestions()){
-            if(computedQuestion.equals(q)){
+        for (Question q : form.getQuestions()) {
+            if (computedQuestion.equals(q)) {
                 ComputedQuestion question = (ComputedQuestion) q;
-                if(question.getType() instanceof NumericType)
+                if (question.getType() instanceof NumericType)
                     expressionTypeChecker.validateType(question.getId(), question.getExpression());
                 else
                     errors.add(new InvalidTypeError(question.getId(), NumericType.class.getSimpleName(), question.getType().toString()));
@@ -133,8 +128,8 @@ public class TypeChecker extends FormBaseVisitor {
     }
 
     private void findUndefinedVariables() {
-        for(String questionKey: referencedQuestions){
-            if(!questionTypes.containsKey(questionKey)){
+        for (String questionKey : referencedQuestions) {
+            if (!questionTypes.containsKey(questionKey)) {
                 errors.add(new UndefinedReferenceError(questionKey));
             }
         }

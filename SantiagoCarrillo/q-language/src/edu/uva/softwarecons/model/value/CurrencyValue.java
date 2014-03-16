@@ -8,7 +8,7 @@ import java.math.BigDecimal;
  * User: sancarbar
  * Date: 3/13/14
  */
-public class CurrencyValue implements ArithmeticValue{
+public class CurrencyValue implements ArithmeticValue {
 
     private final BigDecimal value;
 
@@ -24,7 +24,7 @@ public class CurrencyValue implements ArithmeticValue{
 
     @Override
     public boolean equals(Object obj) {
-        return ((CurrencyValue) obj).value.equals(value) ;
+        return ((CurrencyValue) obj).value.equals(value);
     }
 
     @Override
