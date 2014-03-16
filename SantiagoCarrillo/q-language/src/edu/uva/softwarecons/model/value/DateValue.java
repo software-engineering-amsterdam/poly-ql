@@ -1,7 +1,5 @@
 package edu.uva.softwarecons.model.value;
 
-import edu.uva.softwarecons.exception.InvalidDateFormatException;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -28,42 +26,46 @@ public class DateValue implements ComparableValue {
     }
 
     @Override
-    public boolean greater(Value value) throws InvalidDateFormatException {
+    public boolean greater(Value value){
         try {
             Date date = dateFormat.parse(value.getValue());
             return date.compareTo(this.value) > 0;
         } catch (ParseException e) {
-            throw new InvalidDateFormatException("The format for the date: '"+value.getValue()+"' is invalid");
+            //Date not comparable with invalid date
+            return false;
         }
     }
 
     @Override
-    public boolean greaterEqual(Value value) throws InvalidDateFormatException{
+    public boolean greaterEqual(Value value){
         try {
             Date date = dateFormat.parse(value.getValue());
             return date.compareTo(this.value) > 0 || date.compareTo(this.value) == 0;
         } catch (ParseException e) {
-            throw new InvalidDateFormatException("The format for the date: '"+value.getValue()+"' is invalid");
+            //Date not comparable with invalid date
+            return false;
         }
     }
 
     @Override
-    public boolean less(Value value) throws InvalidDateFormatException{
+    public boolean less(Value value){
         try {
             Date date = dateFormat.parse(value.getValue());
             return date.compareTo(this.value) < 0;
         } catch (ParseException e) {
-            throw new InvalidDateFormatException("The format for the date: '"+value.getValue()+"' is invalid");
+            //Date not comparable with invalid date
+            return false;
         }
     }
 
     @Override
-    public boolean lessEqual(Value value) throws InvalidDateFormatException{
+    public boolean lessEqual(Value value){
         try {
             Date date = dateFormat.parse(value.getValue());
             return date.compareTo(this.value) < 0 || date.compareTo(this.value) == 0;
         } catch (ParseException e) {
-            throw new InvalidDateFormatException("The format for the date: '"+value.getValue()+"' is invalid");
+            //Date not comparable with invalid date
+            return false;
         }
     }
 

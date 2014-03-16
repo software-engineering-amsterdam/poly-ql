@@ -8,7 +8,6 @@ import edu.uva.softwarecons.model.question.Question;
 import edu.uva.softwarecons.model.type.*;
 import org.junit.Test;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,8 +53,8 @@ public class FormElmentsTest {
 
     @Test
     public void ifQuestionEqualsTest(){
-        IfQuestion question = new IfQuestion(null, null, null);
-        IfQuestion question2 = new IfQuestion(null, null, null);
+        IfQuestion question = new IfQuestion(null, null, null, null);
+        IfQuestion question2 = new IfQuestion(null, null, null, null);
         assertTrue(question.equals(question2));
     }
 

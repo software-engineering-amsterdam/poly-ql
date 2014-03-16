@@ -1,7 +1,5 @@
 package edu.uva.softwarecons.model.value;
 
-import edu.uva.softwarecons.exception.CompareException;
-
 /**
  * Falconlabs
  * User: sancarbar
@@ -46,22 +44,22 @@ public class DecimalValue implements ArithmeticValue{
     }
 
     @Override
-    public boolean greater(Value value) throws CompareException {
+    public boolean greater(Value value) {
         return this.value > Float.parseFloat(value.getValue());
     }
 
     @Override
-    public boolean greaterEqual(Value value) throws CompareException {
+    public boolean greaterEqual(Value value) {
         return this.value >= Float.parseFloat(value.getValue());
     }
 
     @Override
-    public boolean less(Value value) throws CompareException {
+    public boolean less(Value value) {
         return this.value < Float.parseFloat(value.getValue());
     }
 
     @Override
-    public boolean lessEqual(Value value) throws CompareException {
+    public boolean lessEqual(Value value) {
         return this.value <= Float.parseFloat(value.getValue());
     }
 }

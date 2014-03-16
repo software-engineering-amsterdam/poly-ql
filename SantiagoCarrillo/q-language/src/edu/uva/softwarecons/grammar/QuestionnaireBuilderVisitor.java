@@ -58,7 +58,7 @@ public class QuestionnaireBuilderVisitor extends QuestionnaireBaseVisitor<IQuest
         ElseQuestion elseQuestion = null;
         if (null != ctx.elsestat())
             elseQuestion = (ElseQuestion) ctx.elsestat().accept(this);
-        return new IfQuestion((Expression) ctx.expr().accept(this), questions, elseQuestion);
+        return new IfQuestion((Expression) ctx.expr().accept(this), questions, elseQuestion, ctx.expr().getText());
     }
 
     @Override

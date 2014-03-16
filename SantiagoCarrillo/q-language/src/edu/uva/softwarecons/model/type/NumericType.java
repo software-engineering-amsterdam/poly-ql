@@ -1,8 +1,5 @@
 package edu.uva.softwarecons.model.type;
 
-import edu.uva.softwarecons.visitor.form.IFormElementVisitor;
-import edu.uva.softwarecons.visitor.type.ITypeElementVisitor;
-
 /**
  * Falconlabs
  * User: sancarbar

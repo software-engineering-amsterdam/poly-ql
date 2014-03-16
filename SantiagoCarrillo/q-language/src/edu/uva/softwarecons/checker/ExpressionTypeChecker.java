@@ -151,7 +151,6 @@ public class ExpressionTypeChecker implements IExpressionElementVisitor {
 
     @Override
     public Type visitIdExpression(IdExpression idExpression) {
-        validateIdExpressionType(idExpression, expectedType);
         return questionTypes.get(idExpression.getId());
     }
 

@@ -1,7 +1,5 @@
 package edu.uva.softwarecons.model.value;
 
-import edu.uva.softwarecons.exception.CompareException;
-
 /**
  * Falconlabs
  * User: sancarbar
@@ -9,11 +7,11 @@ import edu.uva.softwarecons.exception.CompareException;
  */
 public interface ComparableValue extends Value{
 
-    public boolean greater(Value value) throws CompareException;
+    public boolean greater(Value value);
 
-    public boolean greaterEqual(Value value) throws CompareException;
+    public boolean greaterEqual(Value value);
 
-    public boolean less(Value value) throws CompareException;
+    public boolean less(Value value);
 
-    public boolean lessEqual(Value value) throws CompareException;
+    public boolean lessEqual(Value value);
 }

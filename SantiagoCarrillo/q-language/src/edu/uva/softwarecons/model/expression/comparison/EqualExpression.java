@@ -1,6 +1,5 @@
 package edu.uva.softwarecons.model.expression.comparison;
 
-import edu.uva.softwarecons.exception.CompareException;
 import edu.uva.softwarecons.model.expression.BinaryExpression;
 import edu.uva.softwarecons.model.expression.Expression;
 import edu.uva.softwarecons.model.type.Type;
@@ -25,7 +24,7 @@ public class EqualExpression extends BinaryExpression{
     }
 
     @Override
-    public Value accept(IExpressionEvalVisitor visitor) throws CompareException {
+    public Value accept(IExpressionEvalVisitor visitor)  {
         return visitor.visitEqualExpression(this);
     }
 }

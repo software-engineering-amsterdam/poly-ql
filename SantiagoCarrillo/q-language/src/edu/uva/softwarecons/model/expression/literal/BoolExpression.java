@@ -3,7 +3,6 @@ package edu.uva.softwarecons.model.expression.literal;
 import edu.uva.softwarecons.model.expression.Expression;
 import edu.uva.softwarecons.model.type.BooleanType;
 import edu.uva.softwarecons.model.type.Type;
-import edu.uva.softwarecons.model.value.BooleanValue;
 import edu.uva.softwarecons.model.value.Value;
 import edu.uva.softwarecons.visitor.expression.IExpressionElementVisitor;
 import edu.uva.softwarecons.visitor.expression.IExpressionEvalVisitor;
@@ -29,7 +28,7 @@ public class BoolExpression implements Expression {
 
     @Override
     public Value accept(IExpressionEvalVisitor visitor) {
-        return new BooleanValue(value);
+        return visitor.visitBoolExpression(this);
     }
 
     @Override

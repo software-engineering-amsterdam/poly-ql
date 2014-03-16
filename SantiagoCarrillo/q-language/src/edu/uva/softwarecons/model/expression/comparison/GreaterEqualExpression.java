@@ -1,13 +1,11 @@
 package edu.uva.softwarecons.model.expression.comparison;
 
-import edu.uva.softwarecons.exception.CompareException;
 import edu.uva.softwarecons.model.expression.BinaryExpression;
 import edu.uva.softwarecons.model.expression.Expression;
 import edu.uva.softwarecons.model.type.Type;
 import edu.uva.softwarecons.model.value.Value;
 import edu.uva.softwarecons.visitor.expression.IExpressionElementVisitor;
 import edu.uva.softwarecons.visitor.expression.IExpressionEvalVisitor;
-import edu.uva.softwarecons.visitor.form.IFormElementVisitor;
 
 /**
  * Falconlabs
@@ -26,7 +24,7 @@ public class GreaterEqualExpression extends BinaryExpression{
     }
 
     @Override
-    public Value accept(IExpressionEvalVisitor visitor) throws CompareException {
+    public Value accept(IExpressionEvalVisitor visitor) {
         return visitor.visitGreaterEqualExpression(this);
     }
 }

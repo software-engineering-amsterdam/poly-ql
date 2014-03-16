@@ -3,12 +3,9 @@ package edu.uva.softwarecons.model.expression.literal;
 import edu.uva.softwarecons.model.expression.Expression;
 import edu.uva.softwarecons.model.type.IntegerType;
 import edu.uva.softwarecons.model.type.Type;
-import edu.uva.softwarecons.model.value.IntegerValue;
 import edu.uva.softwarecons.model.value.Value;
 import edu.uva.softwarecons.visitor.expression.IExpressionElementVisitor;
 import edu.uva.softwarecons.visitor.expression.IExpressionEvalVisitor;
-import edu.uva.softwarecons.visitor.form.IFormElementVisitor;
-import sun.tools.jstat.Literal;
 
 /**
  * Falconlabs
@@ -44,6 +41,6 @@ public class IntExpression implements Expression {
 
     @Override
     public Value accept(IExpressionEvalVisitor visitor) {
-        return new IntegerValue(value);
+        return visitor.visitIntExpression(this);
     }
 }

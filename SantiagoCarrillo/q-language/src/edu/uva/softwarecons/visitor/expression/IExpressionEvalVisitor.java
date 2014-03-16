@@ -1,6 +1,5 @@
 package edu.uva.softwarecons.visitor.expression;
 
-import edu.uva.softwarecons.exception.CompareException;
 import edu.uva.softwarecons.model.expression.arithmetic.AddExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.DivExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.MulExpression;
@@ -21,31 +20,31 @@ import edu.uva.softwarecons.model.value.Value;
  */
 public interface IExpressionEvalVisitor {
 
-    Value visitAddExpression(AddExpression expression) throws CompareException;
+    Value visitAddExpression(AddExpression expression);
 
-    Value visitDivExpression(DivExpression expression) throws CompareException;
+    Value visitDivExpression(DivExpression expression);
 
-    Value visitMulExpression(MulExpression expression) throws CompareException;
+    Value visitMulExpression(MulExpression expression);
 
-    Value visitSubExpression(SubExpression expression) throws CompareException;
+    Value visitSubExpression(SubExpression expression);
 
-    Value visitAndExpression(AndExpression expression) throws CompareException;
+    Value visitAndExpression(AndExpression expression);
 
-    Value visitNotExpression(NotExpression expression) throws CompareException;
+    Value visitNotExpression(NotExpression expression);
 
-    Value visitOrExpression(OrExpression expression) throws CompareException;
+    Value visitOrExpression(OrExpression expression);
 
-    Value visitEqualExpression(EqualExpression expression) throws CompareException;
+    Value visitEqualExpression(EqualExpression expression);
 
-    Value visitGreaterEqualExpression(GreaterEqualExpression expression) throws CompareException;
+    Value visitGreaterEqualExpression(GreaterEqualExpression expression);
 
-    Value visitGreaterExpression(GreaterExpression expression) throws CompareException;
+    Value visitGreaterExpression(GreaterExpression expression);
 
-    Value visitLessEqualExpression(LessEqualExpression expression) throws CompareException;
+    Value visitLessEqualExpression(LessEqualExpression expression);
 
-    Value visitLessExpression(LessExpression expression) throws CompareException;
+    Value visitLessExpression(LessExpression expression);
 
-    Value visitNotEqualExpression(NotEqualExpression expression) throws CompareException;
+    Value visitNotEqualExpression(NotEqualExpression expression);
 
     Value visitIdExpression(IdExpression expression);
 

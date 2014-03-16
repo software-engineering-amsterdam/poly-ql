@@ -1,6 +1,9 @@
 package edu.uva.softwarecons.ui;
 
-import edu.uva.softwarecons.model.question.BasicQuestion;
+import edu.uva.softwarecons.model.value.BooleanValue;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 
 /**
@@ -12,15 +15,21 @@ public class BooleanQuestionHBox extends QuestionHBox {
 
     private final CheckBox checkBox = new CheckBox("Yes");
 
-    protected BooleanQuestionHBox(BasicQuestion question) {
-        super(question);
+    protected BooleanQuestionHBox(String questionId, EventHandler<ActionEvent> eventHandler) {
+        super(questionId);
         getChildren().add(checkBox);
-
+        checkBox.setOnAction(eventHandler);
+        checkBox.setId(questionId);
     }
 
     @Override
-    public String getValue() {
-        return String.valueOf(checkBox.isSelected());
+    public BooleanValue getValue() {
+        return new BooleanValue(checkBox.isSelected());
+    }
+
+    @Override
+    public void updateValue(Node node) {
+       checkBox.setSelected(((CheckBox) node).isSelected());
     }
 
 

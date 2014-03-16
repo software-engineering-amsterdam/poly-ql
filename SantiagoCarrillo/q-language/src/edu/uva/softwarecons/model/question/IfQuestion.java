@@ -18,10 +18,13 @@ public class IfQuestion implements Question {
 
     private final ElseQuestion elseQuestion;
 
-    public IfQuestion(Expression expression, List<Question> questions, ElseQuestion elseQuestion) {
+    private final String condition;
+
+    public IfQuestion(Expression expression, List<Question> questions, ElseQuestion elseQuestion, String condition) {
         this.expression = expression;
         this.questions = questions;
         this.elseQuestion = elseQuestion;
+        this.condition = condition;
     }
 
     public Expression getExpression() {
@@ -44,5 +47,9 @@ public class IfQuestion implements Question {
     @Override
     public boolean equals(Object o) {
         return o instanceof IfQuestion;
+    }
+
+    public String getCondition() {
+        return condition;
     }
 }
