@@ -1,5 +1,6 @@
 package nl.uva.polyql.view;
 
+import java.awt.Insets;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -20,6 +21,7 @@ public class StringValueView extends QuestionView {
     @Override
     protected void init() {
         mTextField = new JTextField();
+        mTextField.setMargin(new Insets(2, 5, 2, 0));
         mTextField.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(final KeyEvent e) {}

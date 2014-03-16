@@ -21,8 +21,8 @@ question[RuleContainer rc] returns [Question q] :
 	id=ID ':' label=STRING type=TYPE { $q = $rc.addQuestion($id.text, $label.text, $type.text); };
 
 ifstatement[RuleContainer rc] returns [IfStatement is, ElseStatement es] :
-	'if' '(' e=expr_main[$rc] { $is = $rc.addIfStatement($e.e); } ')' '{' formrule[$is]+ '}'
-	('else' { $es = $rc.addElseStatement($e.e); } '{' formrule[$es]+ '}' )?;
+	'if' '(' e=expr_main[$rc] { $is = $rc.addIfStatement($e.e); } ')' '{' formrule[$is]* '}'
+	('else' { $es = $rc.addElseStatement($e.e); } '{' formrule[$es]* '}' )?;
 
 expr_main[RuleContainer rc] returns [Expression e] :
 	expr=expr_or[$rc]{ $e = $expr.e; };
@@ -68,7 +68,7 @@ COMMENT : '//' ~('\n'|'\r')*;
 TYPE : ('boolean'|'number'|'string');
 BOOLEAN : ('true'|'false');
 ID : LETTER (LETTER | DIGIT)*;
-STRING : '"' (LETTER | DIGIT | PUNCTUATION)+ '"';
+STRING : '"' (LETTER | DIGIT | PUNCTUATION)* '"';
 LETTER : ('a'..'z'|'A'..'Z');
 NUMBER : '-'?DIGIT+('.'DIGIT+)?;
 DIGIT : ('0'..'9');

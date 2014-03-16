@@ -1,21 +1,19 @@
 form exampleForm {
-    truth: "Is it true?" boolean
-    echo: "Really?" boolean(!truth)
-    truthwhy: "Why is(n't) it true?" string
-    truthwhy2: "Why is(n't) it true?" boolean
-    truthwhydouble: "Because: " boolean(truthwhy == " " + truthwhy + 123)
-    numbers: "num" number(123)
-    negative: "Negative" number(numbers - ---numbers)
-    
-    // Comments here
-    if (!truthwhy2 | false || (2 + 6 * 3 * 9 - 4 - (4 + 5)) > 2 / 0) {
-    	wonga: "How much is it worth?" number
-    	morethandoublewonga: "WHY THAT'S ROUGHLY DOUBLE!" number(wonga * 2 + 1)
-	    if (-wonga > -100 - -morethandoublewonga) {
-	    	wonga2: "What's the price of pie?" number
-	    	wonga3: "Triple that!" string("Triple: " + wonga2 * 3)
-	    } else {
-	    	elsequestion: "Or else?" string
-	    }
-    }
+	num1: "Give a number" number
+	doubleNum1: "Double that" number(num1 * 2)
+	if (num1 > 5000) {
+		reason: "Why is the number so high?" string
+		if (reason != "") {
+			reasonText: "Explanation" string("Number is " + num1 + " because: " + reason)
+		}
+	} else {
+		negative: "The negative number is:" number(-num1)
+	}
+	
+	// Offer more questions
+	moreQuestions: "More questions?" boolean
+	if (moreQuestions) {
+		num2: "Give another number" number
+		math: "After some math, the number is:" number(100 + num2 / 5 * 523 - 1 / (1 - num2))
+	}
 }

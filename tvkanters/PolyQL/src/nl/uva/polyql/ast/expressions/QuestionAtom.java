@@ -36,7 +36,7 @@ public class QuestionAtom extends Expression {
 
     @Override
     public String toString() {
-        return mQuestion.getId();
+        return (mQuestion != null ? mQuestion.getId() : "No ID");
     }
 
     @Override
