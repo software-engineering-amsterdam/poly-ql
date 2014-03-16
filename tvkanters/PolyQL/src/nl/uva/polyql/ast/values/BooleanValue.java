@@ -3,7 +3,6 @@ package nl.uva.polyql.ast.values;
 import nl.uva.polyql.ast.Question;
 import nl.uva.polyql.ast.expressions.operations.BinaryOperator;
 import nl.uva.polyql.ast.expressions.operations.UnaryOperator;
-import nl.uva.polyql.ast.types.Type;
 import nl.uva.polyql.view.BooleanValueView;
 import nl.uva.polyql.view.QuestionView;
 

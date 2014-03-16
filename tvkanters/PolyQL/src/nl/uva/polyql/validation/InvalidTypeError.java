@@ -1,7 +1,7 @@
 package nl.uva.polyql.validation;
 
 import nl.uva.polyql.ast.CalculatedQuestion;
-import nl.uva.polyql.ast.types.Type;
+import nl.uva.polyql.ast.values.Type;
 
 public class InvalidTypeError extends ValidationError {
     private final Type mType;

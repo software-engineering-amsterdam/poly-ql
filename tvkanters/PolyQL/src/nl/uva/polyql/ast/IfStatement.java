@@ -5,8 +5,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import nl.uva.polyql.ast.expressions.Expression;
-import nl.uva.polyql.ast.types.Type;
 import nl.uva.polyql.ast.values.BooleanValue;
+import nl.uva.polyql.ast.values.Type;
 import nl.uva.polyql.validation.InvalidIfStatementError;
 import nl.uva.polyql.validation.ValidationErrors;
 import nl.uva.polyql.view.IfStatementView;

@@ -5,7 +5,7 @@ import java.util.Set;
 
 import nl.uva.polyql.ast.Question;
 import nl.uva.polyql.ast.RuleContainer;
-import nl.uva.polyql.ast.types.Type;
+import nl.uva.polyql.ast.values.Type;
 import nl.uva.polyql.ast.values.Value;
 import nl.uva.polyql.validation.UnknownIdError;
 import nl.uva.polyql.validation.ValidationErrors;

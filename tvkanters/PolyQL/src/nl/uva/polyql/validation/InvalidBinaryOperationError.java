@@ -1,7 +1,7 @@
 package nl.uva.polyql.validation;
 
 import nl.uva.polyql.ast.expressions.operations.BinaryOperation;
-import nl.uva.polyql.ast.types.Type;
+import nl.uva.polyql.ast.values.Type;
 
 public class InvalidBinaryOperationError extends ValidationError {
     private final Type mLeft;

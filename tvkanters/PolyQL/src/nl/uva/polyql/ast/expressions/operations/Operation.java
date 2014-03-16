@@ -1,7 +1,7 @@
 package nl.uva.polyql.ast.expressions.operations;
 
 import nl.uva.polyql.ast.expressions.Expression;
-import nl.uva.polyql.ast.types.Type;
+import nl.uva.polyql.ast.values.Type;
 import nl.uva.polyql.ast.values.Value;
 
 public abstract class Operation extends Expression {

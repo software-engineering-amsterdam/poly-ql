@@ -1,7 +1,7 @@
 package nl.uva.polyql.validation;
 
 import nl.uva.polyql.ast.IfStatement;
-import nl.uva.polyql.ast.types.Type;
+import nl.uva.polyql.ast.values.Type;
 
 public class InvalidIfStatementError extends ValidationError {
 

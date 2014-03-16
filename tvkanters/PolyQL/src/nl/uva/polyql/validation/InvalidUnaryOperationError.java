@@ -1,7 +1,7 @@
 package nl.uva.polyql.validation;
 
 import nl.uva.polyql.ast.expressions.operations.UnaryOperation;
-import nl.uva.polyql.ast.types.Type;
+import nl.uva.polyql.ast.values.Type;
 
 public class InvalidUnaryOperationError extends ValidationError {
     private final Type mType;

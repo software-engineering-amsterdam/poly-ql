@@ -4,8 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import nl.uva.polyql.ast.Question;
-import nl.uva.polyql.ast.types.Type;
 import nl.uva.polyql.ast.values.BooleanValue;
+import nl.uva.polyql.ast.values.Type;
 import nl.uva.polyql.validation.ValidationErrors;
 
 public class BooleanAtom extends Expression {

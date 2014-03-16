@@ -4,8 +4,8 @@ import java.awt.Component;
 import java.util.HashSet;
 import java.util.Set;
 
-import nl.uva.polyql.ast.types.Type;
 import nl.uva.polyql.ast.values.StringValue;
+import nl.uva.polyql.ast.values.Type;
 import nl.uva.polyql.ast.values.Value;
 import nl.uva.polyql.utils.Log;
 import nl.uva.polyql.validation.ValidationErrors;
