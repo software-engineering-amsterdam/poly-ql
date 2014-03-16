@@ -1,17 +1,17 @@
-﻿using System;
+﻿using ICSharpCode.TextEditor.Document;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using ICSharpCode.TextEditor.Document;
 
 namespace QL_Csharp
 {
-    public partial class Form1 : Form
+    public partial class SourceForm : Form
     {
-        readonly Dictionary<string, string> _demoPresets = new Dictionary<string, string>();
-        
-        public Form1()
+        private readonly Dictionary<string, string> _demoPresets = new Dictionary<string, string>();
+
+        public SourceForm()
         {
             InitializeComponent();
 
