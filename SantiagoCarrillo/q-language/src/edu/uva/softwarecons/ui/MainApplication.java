@@ -20,16 +20,17 @@ import edu.uva.softwarecons.ui.dialog.DialogFactory;
 import edu.uva.softwarecons.ui.question.*;
 import edu.uva.softwarecons.ui.widget.TitleHBox;
 import edu.uva.softwarecons.util.ParserBuilder;
+import edu.uva.softwarecons.util.StringUtil;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -50,7 +51,7 @@ import java.util.List;
  * User: sancarbar
  * Date: 3/6/14
  */
-public class Main extends Application implements EventHandler<ActionEvent> {
+public class MainApplication extends Application implements EventHandler<ActionEvent> {
 
     private HashMap<String, QuestionHBox> questions = new HashMap<String, QuestionHBox>();
 
@@ -124,7 +125,19 @@ public class Main extends Application implements EventHandler<ActionEvent> {
             ScrollPane scrollPane = new ScrollPane();
             VBox.setVgrow(scrollPane, Priority.ALWAYS);
             scrollPane.setContent(questionsVBox);
-            mainVBox.getChildren().add(scrollPane);
+            HBox hBox = new HBox(10);
+            hBox.setPadding(new Insets(12, 12, 12, 12));
+            hBox.setAlignment(Pos.CENTER);
+            Button button = new Button("Submit");
+            button.setOnAction(new EventHandler<ActionEvent>() {
+
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    System.out.println(StringUtil.formToJson(form, questions));
+                }
+            });
+            hBox.getChildren().add(button);
+            mainVBox.getChildren().addAll(scrollPane, hBox);
             addQuestions(form.getQuestions());
             updateModel();
         }
@@ -143,15 +156,10 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         }
     }
 
-
-
     private void updateIfQuestion(IfQuestion  ifQuestion){
         boolean display = Boolean.valueOf(ifQuestion.getExpression().accept(expressionEvaluator).getValue());
         ifQuestion.accept(new QuestionEvalVisitor(display, questions, expressionEvaluator));
     }
-
-
-
 
     private void createQuestionLayout(Question question){
         if(new ComputedQuestion(null, null, null, null).equals(question)){
@@ -176,12 +184,13 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         }
     }
 
-    @Override
-    public void handle(ActionEvent actionEvent) {
-        Node node = (Node) actionEvent.getSource();
-        expressionEvaluator.addContextValue(node.getId(), questions.get(node.getId()).getValue());
-        System.out.println(node.getId());
-        updateModel();
+    private void addRemoveQuestions() {
+        for(QuestionHBox questionHBox: questions.values()){
+            if(questionHBox.isVisible() && !questionsVBox.getChildren().contains(questionHBox))
+                questionsVBox.getChildren().add(questionHBox);
+            else if(!questionHBox.isVisible() && questionsVBox.getChildren().contains(questionHBox))
+                questionsVBox.getChildren().remove(questionHBox);
+        }
     }
 
     private void updateModel(){
@@ -194,13 +203,20 @@ public class Main extends Application implements EventHandler<ActionEvent> {
             else if(new IfQuestion(null, null, null, null).equals(question))
                 updateIfQuestion((IfQuestion) question);
         }
-        for(QuestionHBox questionHBox: questions.values()){
-            if(questionHBox.isVisible() && !questionsVBox.getChildren().contains(questionHBox))
-                questionsVBox.getChildren().add(questionHBox);
-            else if(!questionHBox.isVisible() && questionsVBox.getChildren().contains(questionHBox))
-                questionsVBox.getChildren().remove(questionHBox);
-        }
+        addRemoveQuestions();
     }
+
+    @Override
+    public void handle(ActionEvent actionEvent) {
+        Node node = (Node) actionEvent.getSource();
+        expressionEvaluator.addContextValue(node.getId(), questions.get(node.getId()).getValue());
+        updateModel();
+    }
+
+
+
+
+
 
 
 }

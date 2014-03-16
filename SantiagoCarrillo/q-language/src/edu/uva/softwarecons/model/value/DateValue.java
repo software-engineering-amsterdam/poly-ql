@@ -71,6 +71,6 @@ public class DateValue implements ComparableValue {
 
     @Override
     public String getValue() {
-        return dateFormat.format(value);
+        return "\"" + (null != value ? dateFormat.format(value): "") + "\"";
     }
 }
