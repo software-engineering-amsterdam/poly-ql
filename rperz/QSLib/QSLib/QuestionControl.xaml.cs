@@ -33,6 +33,9 @@ namespace QSLib
         public void AddIOControl(ITypeIO io)
         {
             this._iocontrol = io.GetControl();
+            this._iocontrol.VerticalAlignment = System.Windows.VerticalAlignment.Center;
+            this._iocontrol.HorizontalAlignment = System.Windows.HorizontalAlignment.Right;
+            this._iocontrol.Margin = new Thickness(0,7.5,0, 7.5);
             this._typeIO = io;
             this.ioControl.Children.Add(this._iocontrol);
         }
@@ -41,7 +44,7 @@ namespace QSLib
         {
             this._typeIO.SetIdentifier(id);
             this._typeIO.ValueChanged += new EventHandler(_typeIO_ValueChanged);
-            this._iocontrol.SetBinding(this._typeIO.GetDependencyProperty(), this._typeIO.GetInputBinding());
+            this._iocontrol.SetBinding(this._typeIO.GetDependencyProperty(), this._typeIO.GetBinding());
         }
 
         void _typeIO_ValueChanged(object sender, EventArgs e)
@@ -52,7 +55,8 @@ namespace QSLib
         internal void SetToOutput(Identifier id)
         {
             this._typeIO.SetIdentifier(id);
-            this._iocontrol.SetBinding(this._typeIO.GetDependencyProperty(), this._typeIO.GetOutputBinding());
+   
+            this._iocontrol.SetBinding(this._typeIO.GetDependencyProperty(), this._typeIO.GetBinding());
         }
 
         public event EventHandler ValueChanged;
@@ -68,7 +72,7 @@ namespace QSLib
 
         public void AddQuestionLabel(string qtext)
         {
-            this.qTextLbl.Content = qtext;
+            this.qTextLbl.Text = qtext;
         }
 
     }

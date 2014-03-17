@@ -1,6 +1,6 @@
 ﻿using System;
 using QSLib.Types;
-using QSLib.Expressions.Values;
+using QSLib.Values;
 using System.ComponentModel;
 
 namespace QSLib.Expressions.Binary

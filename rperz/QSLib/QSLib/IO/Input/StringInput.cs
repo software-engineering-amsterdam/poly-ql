@@ -5,14 +5,15 @@ using System.Text;
 using System.Windows.Controls;
 using System.Windows;
 using QSLib.Expressions.Unary;
+using System.Windows.Data;
 namespace QSLib.IO
 {
-    public class IntegerIO : ITypeIO
+    public class StringInput : ITypeIO 
     {
         private TextBox _control;
 
-        public IntegerIO()
-            : base("SetIntegerValue", "GetValue", TextBox.TextProperty)
+        public StringInput()
+            : base("SetStringValue", TextBox.TextProperty)
         {
          
         }
@@ -29,5 +30,14 @@ namespace QSLib.IO
             OnValueChanged(null);
         }
 
+        public override System.Windows.Data.Binding GetBinding()
+        {
+            Binding bindingObject = new Binding(this._binding);
+            bindingObject.Source = this._id;
+            bindingObject.ValidationRules.Add(new ExceptionValidationRule());
+            bindingObject.Mode = BindingMode.OneWayToSource;
+            bindingObject.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+            return bindingObject;
+        }
     }
 }

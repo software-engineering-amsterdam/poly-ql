@@ -1,5 +1,5 @@
 ﻿using QSLib.Types;
-using QSLib.Expressions.Values;
+using QSLib.Values;
 namespace QSLib.Expressions.Literals
 {
     public class QSNumber : Primary

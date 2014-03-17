@@ -50,7 +50,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CodeBlock.cs" />
+    <Compile Include="Statements\CodeBlock.cs" />
     <Compile Include="Expressions\Binary\Add.cs" />
     <Compile Include="Expressions\Binary\And.cs" />
     <Compile Include="Expressions\Binary\Divide.cs" />
@@ -65,15 +65,19 @@
     <Compile Include="Expressions\Binary\Subtract.cs" />
     <Compile Include="Expressions\Binary\Binary_Expression.cs" />
     <Compile Include="Expressions\Unary\Unary_Expression.cs" />
-    <Compile Include="Expressions\Values\BooleanValue.cs" />
-    <Compile Include="Expressions\Values\IntegerValue.cs" />
-    <Compile Include="Expressions\Values\StringValue.cs" />
-    <Compile Include="Expressions\Values\Value.cs" />
-    <Compile Include="GUIBuilder.cs" />
-    <Compile Include="IO\BooleanIO.cs" />
-    <Compile Include="IO\IntegerIO.cs" />
+    <Compile Include="IO\Input\BooleanInput.cs" />
+    <Compile Include="IO\Input\IntegerInput.cs" />
     <Compile Include="IO\ITypeIO.cs" />
-    <Compile Include="IO\StringIO.cs" />
+    <Compile Include="IO\Input\StringInput.cs" />
+    <Compile Include="Values\BooleanValue.cs" />
+    <Compile Include="Values\IntegerValue.cs" />
+    <Compile Include="Values\StringValue.cs" />
+    <Compile Include="Values\UndefinedValue.cs" />
+    <Compile Include="Values\Value.cs" />
+    <Compile Include="GUIBuilder.cs" />
+    <Compile Include="IO\Ouput\BooleanOutput.cs" />
+    <Compile Include="IO\Ouput\IntegerOutput.cs" />
+    <Compile Include="IO\Ouput\StringOutput.cs" />
     <Compile Include="QuestionControl.xaml.cs">
       <DependentUpon>QuestionControl.xaml</DependentUpon>
     </Compile>

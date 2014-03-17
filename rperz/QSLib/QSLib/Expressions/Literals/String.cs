@@ -1,6 +1,6 @@
 ﻿using System;
 using QSLib.Types;
-using QSLib.Expressions.Values;
+using QSLib.Values;
 
 namespace QSLib.Expressions.Literals
 {
@@ -22,7 +22,7 @@ namespace QSLib.Expressions.Literals
 
         public override string ToString()
         {
-            return this._value.ToString();
+            return this._value.ToString().Replace('\"', ' ');
         }
 
         public override int GetHashCode()

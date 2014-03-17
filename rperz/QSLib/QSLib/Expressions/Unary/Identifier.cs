@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using QSLib.Types;
 using QSLib.Expressions.Literals;
 using System.ComponentModel;
-using QSLib.Expressions.Values;
+using QSLib.Values;
 
 namespace QSLib.Expressions.Unary
 {
@@ -27,6 +27,7 @@ namespace QSLib.Expressions.Unary
             this._isInput = false;
             this._expr = expr;
             this._linenr = linenr;
+            this._value = this.Evaluate();
         }
 
         public Identifier(String name, QSType type, int linenr)
@@ -35,7 +36,7 @@ namespace QSLib.Expressions.Unary
             this._name = name;
             this._linenr = linenr;
             this._type = type;
-            this._value = this._type.GetUndefinedValue();
+            this._value = this._type.GetUndefinedValue(true);
         }
 
         public Identifier(String name, QSType type, QSExpression expr, int linenr)
@@ -46,13 +47,14 @@ namespace QSLib.Expressions.Unary
             this._expr = expr;
             this._linenr = linenr;
             this._type = type;
+            this._value = this.Type.GetUndefinedValue(false);
         }
 
         public string SetStringValue
         {
             set
             {
-                this._value = new StringValue(value);
+                this._value = new StringValue(value, true);
             }
         }
 
@@ -60,7 +62,7 @@ namespace QSLib.Expressions.Unary
         {
             set
             {
-                this._value = new BooleanValue(value);
+                this._value = new BooleanValue(value, true);
             }
         }
 
@@ -68,7 +70,7 @@ namespace QSLib.Expressions.Unary
         {
             set
             {
-                this._value = new IntegerValue(value);
+                this._value = new IntegerValue(value, true);
             }
         }
 
@@ -97,7 +99,6 @@ namespace QSLib.Expressions.Unary
             if (this._type == null)
             {
                 this._type = checker.TryGetType(this, this._linenr);
-                this._expr = checker.TryGetValue(this);
             }
             else
                 retVal &= checker.TryDeclare(this, this._linenr);
@@ -106,6 +107,8 @@ namespace QSLib.Expressions.Unary
                 retVal &= false;
 
             retVal &= base.CheckType(checker);
+            if(this._expr == null)
+                this._expr = checker.TryGetValue(this);
             return retVal;
         }
 
@@ -144,13 +147,17 @@ namespace QSLib.Expressions.Unary
 
 
         public void CreateGUI(GUIBuilder guiBuilder)
-        {
-            this._value.CreateGUI(guiBuilder);
+        {           
             if (this._isInput)
+            {
+                this._type.CreateGUI(guiBuilder);
                 guiBuilder.SetToInput(this);
+            }
             else
+            {
+                this._value.CreateGUI(guiBuilder);
                 guiBuilder.SetToOutput(this);
-
+            }
         }
 
     }

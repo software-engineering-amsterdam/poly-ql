@@ -1,4 +1,4 @@
-﻿using QSLib.Expressions.Values;
+﻿using QSLib.Values;
 namespace QSLib.Types
 {
     public abstract class QSType 
@@ -25,7 +25,7 @@ namespace QSLib.Types
             return false;
         }
 
-        public abstract Value GetUndefinedValue();
+        public abstract Value GetUndefinedValue(bool isInput);
 
         public abstract void CreateGUI(GUIBuilder guiBuilder);
     }

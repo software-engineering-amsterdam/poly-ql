@@ -1,5 +1,5 @@
 ﻿using QSLib.Types;
-using QSLib.Expressions.Values;
+using QSLib.Values;
 using System.ComponentModel;
 namespace QSLib.Expressions
 {
@@ -7,7 +7,7 @@ namespace QSLib.Expressions
     {
         protected QSType _type;
         protected int _linenr;
-        protected Value _value;
+        protected Value _value = new UndefinedValue();
 
         public abstract bool CheckType(TypeChecker checker);
 
@@ -24,9 +24,9 @@ namespace QSLib.Expressions
         // methods to update and get the value and notify on value change
         public abstract Value Evaluate();
 
-        public Value GetValue
+        public object GetValue
         {
-            get { return this._value; }
+            get { return this._value.GetValue; }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

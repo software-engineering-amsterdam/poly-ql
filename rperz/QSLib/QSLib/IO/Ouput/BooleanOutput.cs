@@ -8,12 +8,12 @@ using QSLib.Expressions.Unary;
 using System.Windows.Data;
 namespace QSLib.IO
 {
-    public class BooleanIO : ITypeIO
+    public class BooleanOutput : ITypeIO
     {
         private CheckBox _control;
 
-        public BooleanIO()
-            : base("SetBooleanValue", "GetValue", CheckBox.IsCheckedProperty)
+        public BooleanOutput()
+            : base("GetValue", CheckBox.IsCheckedProperty)
         {
          
         }
@@ -21,6 +21,7 @@ namespace QSLib.IO
         public override  Control GetControl()
         {
             this._control = new CheckBox();
+            this._control.IsEnabled = false;
             this._control.Checked += new RoutedEventHandler(_control_Checked);
             this._control.Unchecked += new RoutedEventHandler(_control_Checked);
             return this._control;
@@ -31,6 +32,12 @@ namespace QSLib.IO
             OnValueChanged(null);
         }
 
-
+        public override System.Windows.Data.Binding GetBinding()
+        {
+            Binding bindingObject = new Binding(this._binding);
+            bindingObject.Source = this._id;
+            bindingObject.Mode = BindingMode.OneWay;
+            return bindingObject;
+        }
     }
 }

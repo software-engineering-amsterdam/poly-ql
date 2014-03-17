@@ -31,7 +31,9 @@ namespace QSLib
 
         public bool CheckType(TypeChecker checker)
         {
-            return this._statements.TrueForAll(i => i.CheckType(checker) == true);
+            if(this._statements.Count > 0)
+                return this._statements.TrueForAll(i => i.CheckType(checker) == true);
+            return true;
         }
 
         public override bool Equals(object obj)
