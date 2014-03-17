@@ -2,8 +2,9 @@ package edu.uva.softwarecons.visitor;
 
 /**
  * Falconlabs
- * User: sancarbar
+ * @author Santiago Carrillo
  * Date: 3/5/14
  */
-public interface IQuestionnaireElement {
+public interface IQuestionnaireElement
+{
 }

@@ -1,0 +1,8 @@
+// Binary Arithmetic expressions
+form test {
+    qInteger: "How many times integer?" integer
+    qDecimal: "How many times decimal?" decimal
+    if (1 * 2 - 3) {
+        reason: "Reason: " text
+    }
+}

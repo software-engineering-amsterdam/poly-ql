@@ -6,12 +6,12 @@ namespace QL.QLClasses.Expressions.Identifier
 {
     public class QIdentifier : ExpressionBase
     {
-        private readonly QLMemoryManager _memory;
+        private readonly QLMemory _memory;
         private readonly string _name;
 
-        public QIdentifier(QLMemoryManager memoryManager, string name)
+        public QIdentifier(QLMemory memory, string name)
         {
-            _memory = memoryManager;
+            _memory = memory;
             _name = name;
         }
 
@@ -22,7 +22,7 @@ namespace QL.QLClasses.Expressions.Identifier
 
         public override QValue Evaluate()
         {
-            return _memory.GetDeclaredValue(_name).Evaluate();
+            return _memory.GetDeclaredValue(_name);
         }
 
         #region TypeChecker Implementation

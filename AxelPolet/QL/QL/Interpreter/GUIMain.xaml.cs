@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 using QL.Interpreter.Controls;
 
 namespace QL.Interpreter
@@ -8,18 +9,18 @@ namespace QL.Interpreter
     /// </summary>
     public partial class GUIMain : Window
     {
-        private GUIQuestionnaire _gui;
+        private readonly GUIQuestionnaire _guiQuestionnaire;
 
-        public GUIMain(GUIQuestionnaire gui)
+        public GUIMain(GUIQuestionnaire guiQuestionnaire)
         {
-            _gui = gui;
+            _guiQuestionnaire = guiQuestionnaire;
             InitializeComponent();
         }
 
         public void Initialize()
         {
-            _gui.Render();
-            CnvWrapper.Children.Add(_gui);
+            _guiQuestionnaire.Render();
+            CnvWrapper.Children.Add(_guiQuestionnaire);
         }
     }
 }

@@ -1,0 +1,6 @@
+// Computed Assign Statement with Money Type
+form test {
+    question1: "Money1: " money
+    question2: "Money2: " money
+    question2: "Value:" money(question1 - question2)
+}

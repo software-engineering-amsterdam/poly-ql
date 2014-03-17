@@ -47,11 +47,9 @@ public class Dependency implements IPair<String , String> {
 	
 	@Override
 	public void flip() {
-		System.out.println("flip: "+toString());
 		String z = getX();
 		setX(getY());
 		setY(z);
-		System.out.println("to: "+toString());
 	}
 	
 	public boolean equals(Dependency d){

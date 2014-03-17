@@ -52,9 +52,9 @@ questionStmt returns [Question result]
 	  (LPARENS ( expr=expression {qExpression = $expr.result;} ) RPARENS)?	
 	{
 		if(qExpression == null)
-			$result = new Question(_qlMemoryManager, $ID.text, $lbl.text, $t.result){ AntlrToken = $ID };
+			$result = new Question(_qlMemory, $ID.text, $lbl.text, $t.result){ AntlrToken = $ID };
 		else
-			$result = new ComputedQuestion(_qlMemoryManager, $ID.text, $lbl.text, $t.result, qExpression){ AntlrToken = $ID };
+			$result = new ComputedQuestion(_qlMemory, $ID.text, $lbl.text, $t.result, qExpression){ AntlrToken = $ID };
 	}
 	;
 
@@ -67,21 +67,11 @@ elseStmt returns [List<StatementBase> result]
 	@init { List<StatementBase> codeBlock = null; }
 	: ELSE ifSt=ifStmt													{$result = codeBlock = new List<StatementBase>(); codeBlock.Add($ifSt.result); $result = codeBlock;}							//else if
 	| ELSE body=codeblock 												{$result = $body.result;}
-	;	
-
-//ifStmt returns [StatementIf result]
-//	@init { StatementIf elseIfStatement = null; }
-//	: IF LPARENS cond=expression RPARENS body=codeblock													
-//	  (elifSt=elseStmt {elseIfStatement = $elifSt.result;})?			{$result = new StatementIf($cond.result, $body.result, elseIfStatement){ AntlrToken = $IF };}																		
-//	;													
-
-//elseStmt returns [StatementIf result]
-//	: ELSE ifSt=ifStmt													{$result = $ifSt.result;}											//else if
-//	| ELSE body=codeblock												{$result = new StatementIf(null, $body.result){ AntlrToken = $ELSE };}//else
-//	;													
+	;
 
 expression returns [ExpressionBase result]
-	: PLUS x=expression													{ $result = new Pos($x.result){ AntlrToken = $PLUS}; }
+	: LPARENS x=expression RPARENS										{ $result = $x.result;}
+	| PLUS x=expression													{ $result = new Pos($x.result){ AntlrToken = $PLUS}; }
     | MIN x=expression													{ $result = new Neg($x.result){ AntlrToken = $MIN}; }
     | NOT x=expression													{ $result = new Not($x.result){ AntlrToken = $NOT}; }
 	| l=expression MUL r=expression										{ $result = new Mul($l.result, $r.result){ AntlrToken = $MUL}; }
@@ -106,7 +96,7 @@ literal returns [ExpressionBase result]
 	;
 
 identifier returns [QIdentifier result]
-	: ID																{$result = new QIdentifier(_qlMemoryManager, $ID.text){ AntlrToken=$ID };} //also pass _qlMemoryManager (from partial class)
+	: ID																{$result = new QIdentifier(_qlMemory, $ID.text){ AntlrToken=$ID };} //also pass _qlMemory (from partial class)
 	;
 
 type returns [QType result]

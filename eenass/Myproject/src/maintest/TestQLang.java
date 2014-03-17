@@ -10,7 +10,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.RuleContext;
 import org.antlr.v4.runtime.Token;
 
-import typecheck.SymboleTable;
+import typecheck.SymbolTable;
 import antlr.*;
 import ast.ASTNode;
 import ast.expr.Expr;

@@ -4,11 +4,13 @@ import edu.uva.softwarecons.visitor.IQuestionnaireElement;
 
 /**
  * Falconlabs
- * User: sancarbar
+ * @author Santiago Carrillo
  * Date: 2/26/14
  */
-public interface IFormElement extends IQuestionnaireElement {
+public interface IFormElement
+    extends IQuestionnaireElement
+{
 
-    void accept(IFormElementVisitor visitor);
+    void accept( IFormElementVisitor visitor );
 
 }

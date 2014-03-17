@@ -1,4 +1,6 @@
-﻿namespace QL.QLClasses.Values
+﻿using QL.Interpreter.Controls.Input;
+
+namespace QL.QLClasses.Values
 {
     public class StringValue : QValue
     {
@@ -13,5 +15,14 @@
         {
             return _value;
         }
+
+        #region GUI Method Implementation
+
+        public override InputControl CreateInputControl(string name, QLMemory memory, bool isComputed)
+        {
+            return new StringTextBoxControl(name, memory, isComputed);
+        }
+
+        #endregion
     }
 }

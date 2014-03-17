@@ -1,6 +1,6 @@
 package ast.expr.literal;
 
-import typecheck.SymboleTable;
+import typecheck.SymbolTable;
 import ast.Visitor;
 import ast.expr.types.BoolType;
 import ast.expr.types.Type;
@@ -22,7 +22,7 @@ public class BoolLiteral extends Literals{
 	}
 
 	@Override
-	public Type typeof(SymboleTable symb) {
+	public Type typeof(SymbolTable symb) {
 		return new BoolType();
 	}
 }

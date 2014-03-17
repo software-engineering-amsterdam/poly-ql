@@ -1,12 +1,12 @@
 package org.uva.sea.ql.ast.statement;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.uva.sea.ql.ast.StatementVisitor;
 
-//TODO: MAKE THIS ITERABLE?
-public class Questions extends Statement{
+public class Questions extends Statement implements Iterable<Statement>{
 
 	private List<Statement> questions = new ArrayList<Statement>();
 	
@@ -27,8 +27,8 @@ public class Questions extends Statement{
 		
 	}
 	
-	public List<Statement> getQuestions(){
-		return this.questions;
+	public Iterator<Statement> iterator() {
+		return questions.iterator();
 	}
 	
 

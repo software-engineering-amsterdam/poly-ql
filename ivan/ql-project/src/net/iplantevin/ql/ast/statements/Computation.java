@@ -5,7 +5,7 @@ import net.iplantevin.ql.ast.expressions.Expression;
 import net.iplantevin.ql.ast.expressions.literals.ID;
 import net.iplantevin.ql.ast.expressions.literals.Str;
 import net.iplantevin.ql.ast.types.Type;
-import net.iplantevin.ql.ast.visitors.IASTVisitor;
+import net.iplantevin.ql.ast.visitors.IStatementVisitor;
 
 /**
  * Computed question. In addition to name, label and type, also has an Expression.
@@ -31,7 +31,7 @@ public class Computation extends Questionable {
     }
 
     @Override
-    public <T> T accept(IASTVisitor<T> visitor) {
+    public <T> T accept(IStatementVisitor<T> visitor) {
         return visitor.visit(this);
     }
 }

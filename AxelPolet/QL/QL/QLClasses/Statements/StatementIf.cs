@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using QL.Interpreter.Controls;
+using QL.Interpreter;
 using QL.QLClasses.Expressions;
 using QL.QLClasses.Types;
 using QL.TypeChecker;
@@ -54,21 +54,21 @@ namespace QL.QLClasses.Statements
 
         #region Builder Implementation
 
-        public override void Build(GUIQuestionnaire gui)
+        public override void Build(QLGuiBuilder guiBuilder)
         {
-            gui.SetShowCondition(_condition);
+            guiBuilder.SetShowCondition(_condition);
             foreach (StatementBase statement in _body)
             {
-                statement.Build(gui);
+                statement.Build(guiBuilder);
             }
-            gui.RemoveShowCondition();
+            guiBuilder.RemoveShowCondition();
 
-            gui.SetHideCondition(_condition);
+            guiBuilder.AppendHideCondition(_condition);
             foreach (StatementBase statement in _elseBody)
             {
-                statement.Build(gui);
+                statement.Build(guiBuilder);
             }
-            gui.RemoveHideCondition();
+            guiBuilder.RemoveHideConditions();
         }
 
         #endregion

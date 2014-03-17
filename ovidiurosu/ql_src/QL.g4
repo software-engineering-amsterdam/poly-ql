@@ -1,8 +1,8 @@
 /**
- * Questionnaire Language (QL)
+ * Grammar of Questionnaire Language (QL)
  * for describing questionnaires characterized by conditional entry fields
  *    and (spreadsheet-like) dependency-directed computation
- * boolean questions produce checkboxes,
+ * boolean questions produce check-boxes,
  * numeric fields are rendered as text-boxes,
  * computed values are read-only
  */
@@ -10,76 +10,84 @@ grammar QL;
 import CommonLexerRules;
 
 // The start rule -> begin parsing here
-init: (NEWLINE)*? form* (NEWLINE)*?;
+initialize: form* ;
 
 form: 'form' ID block;
 
-block: (NEWLINE)*? '{' NEWLINE stat* '}' (NEWLINE)*?;
+block: '{' statement* '}';
 
-stat: ID ':' STRING statType NEWLINE              #Assign
-    | ID ':' STRING statType '(' expr ')' NEWLINE #ComputAssign
-    | 'if' '(' expr ')' block                     #IfStat
-    | 'if' '(' expr ')' block 'else' block        #IfElseStat
+statement
+    : ID ':' STRING type                         #Assignment
+    | ID ':' STRING type '(' expression ')'      #ComputedAssignment
+    | 'if' '(' expression ')' block              #IfStatement
+    | 'if' '(' expression ')' block 'else' block #IfElseStatement
     ;
 
 // The precedence is given by the order
-expr: unaryOp expr                                #Unary
-    | expr multiplicativeOp expr                  #Multiplicative
-    | expr additiveOp expr                        #Additive
-    | expr relationalOp expr                      #Relational
-    | expr equalityOp expr                        #Equality
-    | expr LA expr                                #LogicalAnd
-    | expr LO expr                                #LogicalOr
+expression
+    // Unary
+    : ADD expression            #UnaryPlus
+    | SUB expression            #UnaryMinus
+    | NOT expression            #Not
 
-    | boolLiteral                                 #Bool
-    | ID                                          #Id
-    | numLiteral                                  #Num
-    | STRING                                      #String
+    // Multiplicative
+    | expression MUL expression #Multiply
+    | expression DIV expression #Divide
+    | expression REM expression #Remainder
 
-    | '(' expr ')'                                #Parens
+    // Additive
+    | expression ADD expression #Add
+    | expression SUB expression #Subtract
+
+    // Relational
+    | expression LT  expression #LessThan
+    | expression GT  expression #GreaterThan
+    | expression LTE expression #LessThanEqual
+    | expression GTE expression #GreaterThanEqual
+
+    // Equality
+    | expression EQ  expression #Equal
+    | expression NEQ expression #NotEqual
+
+    // Logical
+    | expression LA expression  #LogicalAnd
+    | expression LO expression  #LogicalOr
+
+    | booleanLiteralP           #BooleanLiteral
+    | ID                        #Id
+    | numberLiteralP            #NumberLiteral
+    | STRING                    #String
+
+    | '(' expression ')'        #Parentheses
     ;
 
 // Statement types
-statType: BOOLEAN #BOOLEANType // becomes JCheckBox
-        | MONEY   #MONEYType   // becomes JTextField
-        | TEXT    #TEXTType    // becomes JTextField
-        ;
+type: BOOLEAN #BooleanType // becomes JCheckBox
+    | INTEGER #IntegerType // becomes JTextField
+    | DECIMAL #DecimalType // becomes JTextField
+    | MONEY   #MoneyType   // becomes JTextField
+    | DATE    #DateType    // becomes JCalendar
+    | TEXT    #TextType    // becomes JTextField
 
-// Unary Operators
-unaryOp: ADD #UP
-       | SUB #UM
-       | NOT #NOT
-       ;
-
-// Multiplicative Operators
-multiplicativeOp: MUL #MUL
-                | DIV #DIV
-                | REM #REM
-                ;
-
-// Additive Operators
-additiveOp: ADD #ADD
-          | SUB #SUB
-          ;
-
-// Relational Operators
-relationalOp: LT  #LT
-            | GT  #GT
-            | LTQ #LTQ
-            | GTQ #GTQ
-            ;
-
-// Equality Operators
-equalityOp: EQ  #EQ
-          | NEQ #NEQ
-          ;
+    // Optional: Computed
+    | '(' enumTypeP ')' #EnumType         // becomes JList
+    | INT '..' INT      #IntegerRangeType // becomes JList
+    ;
 
 // Boolean Values
-boolLiteral: TRUE  #TRUE
-           | FALSE #FALSE
-           ;
+booleanLiteralP
+    : TRUE  #True
+    | FALSE #False
+    ;
 
 // Number Types
-numLiteral: INT #Int
-          | DEC #Dec
-          ;
+numberLiteralP
+    : INT #Integer
+    | DEC #Decimal
+    ;
+
+// Enum Type
+enumTypeP
+    : STRING (',' enumTypeP)?         #StringEnum
+    | numberLiteralP (',' enumTypeP)? #NumberEnum
+    ;

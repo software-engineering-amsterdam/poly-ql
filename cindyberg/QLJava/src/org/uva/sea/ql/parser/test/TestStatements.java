@@ -16,6 +16,8 @@ public class TestStatements extends TestParser{
 		
 			assertEquals(parser.parser("var : \"label\" boolean").getClass(), Question.class);
 			assertEquals(parser.parser("var : \"label\" boolean ( true ) ").getClass(), ExpressionQuestion.class);
+			assertEquals(parser.parser("var : \"label\" string (bla) ").getClass(), ExpressionQuestion.class);
+			//assertEquals(parser.parser("var : \"label\" string (hallo lange tekst)").getClass(), ExpressionQuestion.class);
 			
 		}
 		

@@ -1,4 +1,6 @@
-﻿namespace QL.QLClasses.Values
+﻿using QL.Interpreter.Controls.Input;
+
+namespace QL.QLClasses.Values
 {
     public class IntValue : QValue
     {
@@ -23,7 +25,7 @@
 
         public IntValue Div(IntValue secondValue)
         {
-            return new IntValue(_value + secondValue.GetValue());
+            return new IntValue(_value / secondValue.GetValue());
         }
 
         public IntValue Sub(IntValue secondValue)
@@ -63,6 +65,15 @@
         public BoolValue SmThEq(IntValue secondValue)
         {
             return new BoolValue(_value <= secondValue.GetValue());
+        }
+
+        #endregion
+
+        #region GUI Method Implementation
+
+        public override InputControl CreateInputControl(string name, QLMemory memory, bool isComputed)
+        {
+            return new IntTextBoxControl(name, memory, isComputed);
         }
 
         #endregion

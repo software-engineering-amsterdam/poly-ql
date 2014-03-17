@@ -55,22 +55,22 @@ stmt:
     | ifConditional     { $1 }
 
 assignment:
-    LABEL IDENTIFIER ASSIGN expression  { Assignment($2, $1, $4) }
+    LABEL IDENTIFIER ASSIGN expression  { Assignment($2, $1, $4, Position(parseState)) }
 
 question:
-    LABEL IDENTIFIER COLON qlType       { Question($2, $1, $4) }
+    LABEL IDENTIFIER COLON qlType       { Question($2, $1, $4, Position(parseState)) }
 
 ifElseConditional:
     IF B_OPEN expression B_CLOSE CB_OPEN
         stmtList
     CB_CLOSE ELSE CB_OPEN
         stmtList
-    CB_CLOSE                            { IfElseConditional($3, $6, $10) }
+    CB_CLOSE                            { IfElseConditional($3, $6, $10, Position(parseState)) }
 
 ifConditional:
     IF B_OPEN expression B_CLOSE CB_OPEN
         stmtList
-    CB_CLOSE                            { IfConditional($3, $6) }
+    CB_CLOSE                            { IfConditional($3, $6, Position(parseState)) }
 
 qlType:
     | QLBOOL    { QLBool }

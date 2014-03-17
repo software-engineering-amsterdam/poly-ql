@@ -2,7 +2,7 @@ package net.iplantevin.ql.ast.statements;
 
 import net.iplantevin.ql.ast.LineInfo;
 import net.iplantevin.ql.ast.expressions.Expression;
-import net.iplantevin.ql.ast.visitors.IASTVisitor;
+import net.iplantevin.ql.ast.visitors.IStatementVisitor;
 
 /**
  * IfElse statement. Adds a body for the else to the Conditional body.
@@ -28,7 +28,7 @@ public class IfElse extends Conditional {
     }
 
     @Override
-    public <T> T accept(IASTVisitor<T> visitor) {
+    public <T> T accept(IStatementVisitor<T> visitor) {
         return visitor.visit(this);
     }
 }

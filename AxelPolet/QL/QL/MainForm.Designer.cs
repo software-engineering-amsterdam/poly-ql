@@ -45,6 +45,8 @@
             // 
             // txtInput
             // 
+            this.txtInput.AcceptsReturn = true;
+            this.txtInput.AcceptsTab = true;
             this.txtInput.Location = new System.Drawing.Point(12, 29);
             this.txtInput.Multiline = true;
             this.txtInput.Name = "txtInput";
@@ -154,7 +156,7 @@
             this.Controls.Add(this.btnParse);
             this.Controls.Add(this.txtInput);
             this.Name = "MainForm";
-            this.Text = "Form1";
+            this.Text = "Questionnaire Language";
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
