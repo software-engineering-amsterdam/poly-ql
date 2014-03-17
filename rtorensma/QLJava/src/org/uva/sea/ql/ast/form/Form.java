@@ -6,7 +6,6 @@ import org.uva.sea.ql.ast.stat.Block;
 import org.uva.sea.ql.checker.FormVisitor;
 
 public class Form implements ASTNode {
-
 	private final Ident name;
 	private final Block body;
 

@@ -7,7 +7,6 @@ import org.uva.sea.ql.ast.expr.Ident;
 import org.uva.sea.ql.ast.types.Type;
 
 public class TypeEnvironment {
-	
 	private final Map<Ident, Type> typeEnv;
 	
 	public TypeEnvironment() {

@@ -4,9 +4,7 @@ import org.uva.sea.ql.ast.types.Type;
 import org.uva.sea.ql.checker.ExprVisitor;
 import org.uva.sea.ql.checker.TypeEnvironment;
 
-
 public class Pos extends UnaryExpr {
-
 	public Pos(Expr expr) {
 		super(expr);
 	}

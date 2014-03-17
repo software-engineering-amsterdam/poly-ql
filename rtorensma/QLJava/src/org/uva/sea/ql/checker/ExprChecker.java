@@ -28,7 +28,6 @@ import org.uva.sea.ql.ast.expr.UnaryExpr;
 import org.uva.sea.ql.ast.types.Type;
 
 public class ExprChecker implements ExprVisitor<Boolean> {
-	
 	private final TypeEnvironment typeEnv;
 	private final List<String> errors;
 	

@@ -8,7 +8,6 @@ import org.uva.sea.ql.parser.antlr.IParse;
 import org.uva.sea.ql.parser.antlr.ParseError;
 
 public class ExprTest {
-
 	private IParse parser = new ANTLRParser();
 
 	@Test

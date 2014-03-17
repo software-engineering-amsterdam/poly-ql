@@ -22,7 +22,6 @@ import org.uva.sea.ql.parser.antlr.IParse;
 import org.uva.sea.ql.parser.antlr.ParseError;
 
 public class Main {
-
 	public static void main(String[] args) throws ParseError, IOException {
 		IParse parser = new ANTLRParser();
 		String formString = FileUtils.readFileToString(new File("HouseOwning.ql"));

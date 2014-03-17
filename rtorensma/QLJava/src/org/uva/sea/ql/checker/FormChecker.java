@@ -19,7 +19,6 @@ import org.uva.sea.ql.ast.types.Bool;
 // will not validate because question x isn't defined 
 // when it is used in the condition of the first  if statement.
 public class FormChecker implements FormVisitor<Boolean> {
-	
 	private final TypeEnvironment typeEnv;
 	private final List<String> errors;
 	

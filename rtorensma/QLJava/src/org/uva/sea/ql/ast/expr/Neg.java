@@ -4,9 +4,7 @@ import org.uva.sea.ql.ast.types.Type;
 import org.uva.sea.ql.checker.ExprVisitor;
 import org.uva.sea.ql.checker.TypeEnvironment;
 
-
 public class Neg extends UnaryExpr {
-
 	public Neg(Expr expr) {
 		super(expr);
 	}

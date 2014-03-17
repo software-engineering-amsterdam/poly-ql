@@ -8,7 +8,6 @@ import org.uva.sea.ql.ast.stat.IfThenElse;
 import org.uva.sea.ql.ast.stat.Question;
 
 public interface FormVisitor<T> {
-	
 	T visit(Form ast);
 	T visit(Question ast);
 	T visit(Computed ast);

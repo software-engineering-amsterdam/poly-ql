@@ -3,7 +3,6 @@ package org.uva.sea.ql.checker;
 import org.uva.sea.ql.ast.expr.*;
 
 public interface ExprVisitor<T> {
-	
 	T visit(Add expr);
 	T visit(And expr);
 	T visit(Bool expr);

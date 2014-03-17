@@ -7,7 +7,6 @@ import org.uva.sea.ql.ast.expr.Expr;
 import org.uva.sea.ql.ast.form.Form;
 
 public class ANTLRParser implements IParse {
-
 	@Override
 	public Expr parseExpr(String src) throws ParseError {
 		ANTLRStringStream stream = new ANTLRStringStream(src);

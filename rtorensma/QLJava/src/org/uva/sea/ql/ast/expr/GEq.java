@@ -4,9 +4,7 @@ import org.uva.sea.ql.ast.types.Type;
 import org.uva.sea.ql.checker.ExprVisitor;
 import org.uva.sea.ql.checker.TypeEnvironment;
 
-
 public class GEq extends BinaryExpr {
-
 	public GEq(Expr lhs, Expr rhs) {
 		super(lhs, rhs);
 	}

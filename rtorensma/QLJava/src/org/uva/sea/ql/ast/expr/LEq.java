@@ -4,9 +4,7 @@ import org.uva.sea.ql.ast.types.Type;
 import org.uva.sea.ql.checker.ExprVisitor;
 import org.uva.sea.ql.checker.TypeEnvironment;
 
-
 public class LEq extends BinaryExpr {
-
 	public LEq(Expr lhs, Expr rhs) {
 		super(lhs, rhs);
 	}
