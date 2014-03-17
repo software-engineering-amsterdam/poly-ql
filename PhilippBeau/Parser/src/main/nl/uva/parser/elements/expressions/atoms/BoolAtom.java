@@ -1,14 +1,11 @@
 package main.nl.uva.parser.elements.expressions.atoms;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import main.nl.uva.parser.elements.errors.ValidationError;
-import main.nl.uva.parser.elements.expressions.Expression;
 import main.nl.uva.parser.elements.type.Bool;
 import main.nl.uva.parser.elements.type.Value;
+import main.nl.uva.parser.elements.validation.ASTValidation;
+import main.nl.uva.parser.elements.validation.Scope;
 
-public class BoolAtom extends Expression {
+public class BoolAtom extends AtomExpression {
 
     private final static String TRUE = "true";
     private final static String FALSE = "false";
@@ -22,6 +19,10 @@ public class BoolAtom extends Expression {
         _value = new Bool(parseBoolean(value));
     }
 
+    public BoolAtom(final Bool value) {
+        _value = value;
+    }
+
     private static boolean isBoolean(final String value) {
         return value.toLowerCase().equals(TRUE) || value.toLowerCase().equals(FALSE);
     }
@@ -31,17 +32,17 @@ public class BoolAtom extends Expression {
     }
 
     @Override
+    public ASTValidation validate(final Scope scope) {
+        return new ASTValidation();
+    }
+
+    @Override
+    public Value getValue() {
+        return _value;
+    }
+
+    @Override
     public String toString() {
         return "Bool: " + _value;
-    }
-
-    @Override
-    public List<ValidationError> validate() {
-        return new ArrayList<>();
-    }
-
-    @Override
-    public Value getType() {
-        return _value;
     }
 }

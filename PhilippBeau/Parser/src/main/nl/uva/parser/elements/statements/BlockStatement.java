@@ -2,19 +2,16 @@ package main.nl.uva.parser.elements.statements;
 
 import java.util.List;
 
-import main.nl.uva.parser.elements.expressions.Variable;
+import main.nl.uva.parser.elements.validation.Scope;
 
 public abstract class BlockStatement extends Statement {
 
     @Override
-    public Variable getVariable(final String variableName) {
-        return null;
-    }
+    public void removeYourselfFromScope(final Scope scope) {}
 
-    protected void setParentForChildren(final List<Statement> children) {
+    protected static void removeChildrenFromScope(final List<Statement> children, final Scope scope) {
         for (Statement child : children) {
-            child.setParent(this);
+            child.removeYourselfFromScope(scope);
         }
     }
-
 }

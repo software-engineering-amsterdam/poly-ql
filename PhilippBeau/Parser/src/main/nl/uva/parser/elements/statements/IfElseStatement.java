@@ -1,12 +1,9 @@
 package main.nl.uva.parser.elements.statements;
 
-import java.util.List;
-
-import javax.swing.JPanel;
-
-import main.nl.uva.parser.elements.ParserElement;
-import main.nl.uva.parser.elements.errors.ValidationError;
-import main.nl.uva.parser.elements.expressions.Variable;
+import main.nl.uva.parser.elements.ui.UIElement;
+import main.nl.uva.parser.elements.validation.ASTValidation;
+import main.nl.uva.parser.elements.validation.Scope;
+import main.nl.uva.ui.UI;
 
 public class IfElseStatement extends BlockStatement {
 
@@ -17,33 +14,23 @@ public class IfElseStatement extends BlockStatement {
 
         _ifStatement = ifStatement;
         _elseStatement = elseStatement;
+    }
 
-        _ifStatement.setParent(this);
-        _elseStatement.setParent(this);
+    @Override
+    public ASTValidation validate(final Scope scope) {
+        ASTValidation valid = _ifStatement.validate(scope);
+        valid.combine(_elseStatement.validate(scope));
+
+        return valid;
+    }
+
+    @Override
+    public UIElement getLayout(final UI parentUI) {
+        return null;
     }
 
     @Override
     public String toString() {
         return _ifStatement.toString() + _elseStatement.toString();
-    }
-
-    @Override
-    public Variable findVariable(final String variableName, final ParserElement scopeEnd) {
-        return _parent.findVariable(variableName, this);
-    }
-
-    @Override
-    public List<ValidationError> validate() {
-        List<ValidationError> ifStatement = _ifStatement.validate();
-        List<ValidationError> elseStatement = _elseStatement.validate();
-
-        ifStatement.addAll(elseStatement);
-
-        return ifStatement;
-    }
-
-    @Override
-    public JPanel getLayout() {
-        return new JPanel();
     }
 }
