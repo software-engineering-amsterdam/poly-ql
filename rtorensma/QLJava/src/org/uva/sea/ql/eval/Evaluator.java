@@ -30,116 +30,127 @@ public class Evaluator implements ExprVisitor<Value> {
 
 	@Override
 	public Value visit(Add expr) {
-		// TODO Auto-generated method stub
-		return null;
+		Value l = expr.getLhs().accept(this);
+		Value r = expr.getRhs().accept(this);
+		return l.add(r);
 	}
+
 
 	@Override
 	public Value visit(And expr) {
-		// TODO Auto-generated method stub
-		return null;
+		Value l = expr.getLhs().accept(this);
+		Value r = expr.getRhs().accept(this);
+		return l.and(r);
 	}
 
 	@Override
 	public Value visit(Bool expr) {
-		// TODO Auto-generated method stub
-		return null;
+		return new org.uva.sea.ql.eval.Bool(expr.getValue());
 	}
 
 	@Override
 	public Value visit(Div expr) {
-		// TODO Auto-generated method stub
-		return null;
+		Value l = expr.getLhs().accept(this);
+		Value r = expr.getRhs().accept(this);
+		return l.div(r);
 	}
 
 	@Override
 	public Value visit(Eq expr) {
-		// TODO Auto-generated method stub
-		return null;
+		Value l = expr.getLhs().accept(this);
+		Value r = expr.getRhs().accept(this);
+		return l.eq(r);
 	}
 
 	@Override
 	public Value visit(GEq expr) {
-		// TODO Auto-generated method stub
-		return null;
+		Value l = expr.getLhs().accept(this);
+		Value r = expr.getRhs().accept(this);
+		return l.geq(r);
 	}
 
 	@Override
 	public Value visit(GT expr) {
-		// TODO Auto-generated method stub
-		return null;
+		Value l = expr.getLhs().accept(this);
+		Value r = expr.getRhs().accept(this);
+		return l.gt(r);
 	}
 
 	@Override
 	public Value visit(Ident expr) {
-		// TODO Auto-generated method stub
-		return null;
+		if (this.valueEnv.isIdentDefined(expr)) {
+			return this.valueEnv.getValueOfIdent(expr);
+		}
+		return new Undefined();
 	}
 
 	@Override
 	public Value visit(Int expr) {
-		// TODO Auto-generated method stub
-		return null;
+		return new org.uva.sea.ql.eval.Int(expr.getValue());
 	}
 
 	@Override
 	public Value visit(LEq expr) {
-		// TODO Auto-generated method stub
-		return null;
+		Value l = expr.getLhs().accept(this);
+		Value r = expr.getRhs().accept(this);
+		return l.leq(r);
 	}
 
 	@Override
 	public Value visit(LT expr) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		Value l = expr.getLhs().accept(this);
+		Value r = expr.getRhs().accept(this);
+		return l.lt(r);	}
 
 	@Override
 	public Value visit(Mul expr) {
-		// TODO Auto-generated method stub
-		return null;
+		Value l = expr.getLhs().accept(this);
+		Value r = expr.getRhs().accept(this);
+		return l.mul(r);
 	}
 
 	@Override
 	public Value visit(Neg expr) {
-		// TODO Auto-generated method stub
-		return null;
+		Value a = expr.getExpr().accept(this);
+		return a.neg();
 	}
 
 	@Override
 	public Value visit(NEq expr) {
-		// TODO Auto-generated method stub
-		return null;
+		Value l = expr.getLhs().accept(this);
+		Value r = expr.getRhs().accept(this);
+		return l.neq(r);
 	}
 
 	@Override
 	public Value visit(Not expr) {
-		// TODO Auto-generated method stub
-		return null;
+		Value a = expr.getExpr().accept(this);
+		return a.not();
 	}
 
 	@Override
 	public Value visit(Or expr) {
-		// TODO Auto-generated method stub
-		return null;
+		Value l = expr.getLhs().accept(this);
+		Value r = expr.getRhs().accept(this);
+		return l.or(r);
 	}
 
 	@Override
 	public Value visit(Pos expr) {
-		// TODO Auto-generated method stub
-		return null;
+		Value a = expr.getExpr().accept(this);
+		return a.pos();
 	}
 
 	@Override
 	public Value visit(Sub expr) {
-		// TODO Auto-generated method stub
-		return null;
+		Value l = expr.getLhs().accept(this);
+		Value r = expr.getRhs().accept(this);
+		return l.sub(r);
 	}
 
 	@Override
 	public Value visit(Str expr) {
-		// TODO Auto-generated method stub
-		return null;
+		return new org.uva.sea.ql.eval.Str(expr.getValue());
 	}
 
 	public ValueEnvironment getValueEnv() {
