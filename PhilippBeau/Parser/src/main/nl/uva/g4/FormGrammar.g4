@@ -70,7 +70,7 @@ atom returns [Expression cEx]
 	| '!' bE=boolExp {$cEx = new NotExpression($bE.cEx);}
 	;
 
-simpleType returns [Type type]
+simpleType returns [Value type]
 	: BOOLEAN {$type = new Bool();}
     | MONEY {$type = new Money();}
     | TEXT {$type = new Text();}

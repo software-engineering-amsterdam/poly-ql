@@ -9,6 +9,7 @@ import main.nl.uva.g4.FormGrammarParser;
 import main.nl.uva.parser.elements.statements.ParserForm;
 import main.nl.uva.parser.elements.validation.ASTValidation;
 import main.nl.uva.parser.elements.validation.Scope;
+import main.nl.uva.ui.UI;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -48,7 +49,7 @@ public class Main {
             }
         }
 
-        // UI ui = new UI(pf.get(0));
-        // ui.setVisible(true);
+        UI ui = new UI(pf.get(0));
+        ui.setVisible(true);
     }
 }

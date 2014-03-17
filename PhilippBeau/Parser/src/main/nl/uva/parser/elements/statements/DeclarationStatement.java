@@ -5,6 +5,7 @@ import main.nl.uva.parser.elements.ui.DeclarationUIElement;
 import main.nl.uva.parser.elements.ui.UIElement;
 import main.nl.uva.parser.elements.validation.ASTValidation;
 import main.nl.uva.parser.elements.validation.Scope;
+import main.nl.uva.ui.UI;
 
 public class DeclarationStatement extends Statement {
 
@@ -31,8 +32,8 @@ public class DeclarationStatement extends Statement {
     }
 
     @Override
-    public UIElement getLayout() {
-        return new DeclarationUIElement(_variable, _function);
+    public UIElement getLayout(final UI parentUI) {
+        return new DeclarationUIElement(_variable, _function, parentUI);
     }
 
     @Override

@@ -12,6 +12,7 @@ import main.nl.uva.parser.elements.type.Bool;
 import main.nl.uva.parser.elements.type.Money;
 import main.nl.uva.parser.elements.type.Text;
 import main.nl.uva.parser.elements.ui.types.ValueUI;
+import main.nl.uva.ui.UI;
 
 public class DeclarationUIElement extends UIElement implements UIValueChangeListener {
 
@@ -19,7 +20,8 @@ public class DeclarationUIElement extends UIElement implements UIValueChangeList
 
     private final Variable _variable;
 
-    public DeclarationUIElement(final Variable variable, final String function) {
+    public DeclarationUIElement(final Variable variable, final String function, final UI parentUI) {
+        super(parentUI);
         _function = function;
         _variable = variable;
     }
@@ -40,16 +42,19 @@ public class DeclarationUIElement extends UIElement implements UIValueChangeList
     @Override
     public void onChange(final boolean newValue) {
         _variable.setExpression(new BoolAtom(new Bool(newValue)));
+        recalculateForm();
     }
 
     @Override
     public void onChange(final double newValue) {
         _variable.setExpression(new MoneyAtom(new Money(newValue)));
+        recalculateForm();
     }
 
     @Override
     public void onChange(final String newValue) {
         _variable.setExpression(new TextAtom(new Text(newValue)));
+        recalculateForm();
     }
 
 }

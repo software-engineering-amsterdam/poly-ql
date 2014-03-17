@@ -9,6 +9,7 @@ import main.nl.uva.parser.elements.expressions.Expression;
 import main.nl.uva.parser.elements.expressions.ExpressionChangeListener;
 import main.nl.uva.parser.elements.statements.Statement;
 import main.nl.uva.parser.elements.type.Bool;
+import main.nl.uva.ui.UI;
 
 public class IfUIElement extends UIElement implements ExpressionChangeListener {
 
@@ -16,9 +17,10 @@ public class IfUIElement extends UIElement implements ExpressionChangeListener {
 
     private final Expression _expression;
 
-    public IfUIElement(final Expression expression, final List<Statement> children) {
+    public IfUIElement(final Expression expression, final List<Statement> children, final UI parentUI) {
+        super(parentUI);
         _expression = expression;
-        // _expression.register(this);
+        _expression.registerListener(this);
 
         generateElement(children);
     }
@@ -27,7 +29,7 @@ public class IfUIElement extends UIElement implements ExpressionChangeListener {
         _panel.setLayout(new BoxLayout(_panel, BoxLayout.Y_AXIS));
 
         for (Statement child : children) {
-            _panel.add(child.getLayout().generateUIElement());
+            _panel.add(child.getLayout(_parentUI).generateUIElement());
         }
 
         _panel.setVisible(((Bool) _expression.getValue()).getValue());

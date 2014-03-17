@@ -4,8 +4,6 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -15,24 +13,23 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import main.nl.uva.parser.elements.statements.ParserForm;
+import main.nl.uva.parser.elements.ui.UIElement;
+import main.nl.uva.parser.elements.validation.Scope;
 
 public class UI extends JFrame {
 
     private final ParserForm _form;
 
-    private final List<JPanel> _panels = new ArrayList<>();
-
     public UI(final ParserForm form) {
         _form = form;
-        // this.setSize(640, 480);
 
         generateUI();
     }
 
     private void generateUI() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        this.add(_form.getLayout().generateUIElement());
+        UIElement layout = _form.getLayout(_form, this);
+        this.add(layout.generateUIElement());
 
         // Display the window.
         this.pack();
@@ -90,5 +87,10 @@ public class UI extends JFrame {
 
     private static void addInputField(final String text, final Container container) {
         addInputField(text, container, true);
+    }
+
+    public void refreshView() {
+        _form.validate(new Scope());
+        this.pack();
     }
 }

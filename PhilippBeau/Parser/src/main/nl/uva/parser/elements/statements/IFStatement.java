@@ -9,6 +9,7 @@ import main.nl.uva.parser.elements.ui.IfUIElement;
 import main.nl.uva.parser.elements.ui.UIElement;
 import main.nl.uva.parser.elements.validation.ASTValidation;
 import main.nl.uva.parser.elements.validation.Scope;
+import main.nl.uva.ui.UI;
 
 public class IFStatement extends BlockStatement {
 
@@ -37,6 +38,10 @@ public class IFStatement extends BlockStatement {
 
     @Override
     public String toString() {
+        return "if ( " + _expression + " ) \n";
+    }
+
+    public String printFull() {
         String erg = "if ( " + _expression + " ) \n{ \n";
         for (Statement child : _children) {
             erg += child + "\n";
@@ -46,7 +51,7 @@ public class IFStatement extends BlockStatement {
     }
 
     @Override
-    public UIElement getLayout() {
-        return new IfUIElement(_expression, _children);
+    public UIElement getLayout(final UI parentUI) {
+        return new IfUIElement(_expression, _children, parentUI);
     }
 }

@@ -3,6 +3,7 @@ package main.nl.uva.parser.elements.statements;
 import main.nl.uva.parser.elements.ui.UIElement;
 import main.nl.uva.parser.elements.validation.ASTValidation;
 import main.nl.uva.parser.elements.validation.Scope;
+import main.nl.uva.ui.UI;
 
 public class IfElseStatement extends BlockStatement {
 
@@ -24,7 +25,7 @@ public class IfElseStatement extends BlockStatement {
     }
 
     @Override
-    public UIElement getLayout() {
+    public UIElement getLayout(final UI parentUI) {
         return null;
     }
 

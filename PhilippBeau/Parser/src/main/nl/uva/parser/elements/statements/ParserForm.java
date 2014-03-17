@@ -7,6 +7,7 @@ import main.nl.uva.parser.elements.ui.FormUIElement;
 import main.nl.uva.parser.elements.ui.UIElement;
 import main.nl.uva.parser.elements.validation.ASTValidation;
 import main.nl.uva.parser.elements.validation.Scope;
+import main.nl.uva.ui.UI;
 
 public class ParserForm extends ASTNode {
 
@@ -24,8 +25,8 @@ public class ParserForm extends ASTNode {
         return validateChildren(new ASTValidation(), _children, scope);
     }
 
-    public UIElement getLayout() {
-        return new FormUIElement(_children);
+    public UIElement getLayout(final ParserForm form, final UI parentUI) {
+        return new FormUIElement(form, _children, parentUI);
     }
 
     @Override
