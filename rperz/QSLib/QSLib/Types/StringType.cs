@@ -1,4 +1,4 @@
-﻿
+﻿using QSLib.Expressions.Values;
 namespace QSLib.Types
 {
     public class StringType : QSType
@@ -28,6 +28,16 @@ namespace QSLib.Types
         public override int GetHashCode()
         {
             return base.GetHashCode();
+        }
+
+        public override void CreateGUI(GUIBuilder guiBuilder)
+        {
+            guiBuilder.CreateStringIO();
+        }
+
+        public override Value GetUndefinedValue()
+        {
+            return new StringValue("");
         }
     }
 }

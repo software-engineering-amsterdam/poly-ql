@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using QSLib.Types;
 using QSLib.Expressions.Literals;
+using System.ComponentModel;
+using QSLib.Expressions.Values;
 
 namespace QSLib.Expressions.Unary
 {
-    public abstract class Identifier : Unary_Expression, IEquatable<Identifier>
+    public class Identifier : Unary_Expression, IEquatable<Identifier>
 
     {
         private String _name;
@@ -18,7 +20,7 @@ namespace QSLib.Expressions.Unary
             this._linenr = linenr;
         }
 
-        public Identifier(String name, IExpression expr, int linenr)
+        public Identifier(String name, QSExpression expr, int linenr)
             : base(expr, linenr)
         {
             this._name = name;
@@ -33,9 +35,10 @@ namespace QSLib.Expressions.Unary
             this._name = name;
             this._linenr = linenr;
             this._type = type;
+            this._value = this._type.GetUndefinedValue();
         }
 
-        public Identifier(String name, QSType type, IExpression expr, int linenr)
+        public Identifier(String name, QSType type, QSExpression expr, int linenr)
             : base(expr, linenr)
         {
             this._name = name;
@@ -43,6 +46,30 @@ namespace QSLib.Expressions.Unary
             this._expr = expr;
             this._linenr = linenr;
             this._type = type;
+        }
+
+        public string SetStringValue
+        {
+            set
+            {
+                this._value = new StringValue(value);
+            }
+        }
+
+        public bool SetBooleanValue
+        {
+            set
+            {
+                this._value = new BooleanValue(value);
+            }
+        }
+
+        public int SetIntegerValue
+        {
+            set
+            {
+                this._value = new IntegerValue(value);
+            }
         }
 
         public string Name
@@ -64,7 +91,7 @@ namespace QSLib.Expressions.Unary
             }
         }
 
-        public override bool  CheckType(TypeChecker checker)
+        public override bool CheckType(TypeChecker checker)
         {
             bool retVal = true;
             if (this._type == null)
@@ -106,44 +133,24 @@ namespace QSLib.Expressions.Unary
             return this._name.Equals(other._name);
         }
 
-        public object GetValue()
+        public override Value Evaluate()
         {
-            return this._expr.GetValue();
-        }
-
-
-        /* tradeoff: I see two options, add these setters or maintain value outside this class,
-         * which would destroy all benefits from databinding
-         */
-
-        public string SetStringValue
-        {
-            set
-            {
-                this._expr = new QSString(value, 1);
-            }
-        }
-
-        public int SetNumberValue
-        {
-            set
-            {
-                this._expr = new QSNumber(value, 1);
-            }
-        }
-
-        public bool SetBooleanValue
-        {
-            set
-            {
-                this._expr = new QSBoolean(value, 1);
-            }
+            if (this._expr == null)
+                return this._value;
+            this._value = this._expr.Evaluate();
+            this.OnPropertyChanged("GetValue");
+            return this._value;
         }
 
 
         public void CreateGUI(GUIBuilder guiBuilder)
         {
-            guiBuilder.CreateIO(this._type, this._isInput);
+            this._value.CreateGUI(guiBuilder);
+            if (this._isInput)
+                guiBuilder.SetToInput(this);
+            else
+                guiBuilder.SetToOutput(this);
+
         }
 
     }

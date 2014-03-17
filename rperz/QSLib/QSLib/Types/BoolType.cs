@@ -1,4 +1,4 @@
-﻿
+﻿using QSLib.Expressions.Values;
 namespace QSLib.Types
 {
     public class BoolType : QSType
@@ -18,6 +18,11 @@ namespace QSLib.Types
             return true;
         }
 
+        public override Value GetUndefinedValue()
+        {
+            return new BooleanValue(false);
+        }
+
         public override bool Equals(object obj)
         {
             var temp = obj as BoolType;
@@ -28,6 +33,11 @@ namespace QSLib.Types
         public override int GetHashCode()
         {
             return base.GetHashCode();
+        }
+
+        public override void CreateGUI(GUIBuilder guiBuilder)
+        {
+            guiBuilder.CreateBooleanIO();
         }
     }
 }

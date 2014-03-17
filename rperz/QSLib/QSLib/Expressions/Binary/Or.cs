@@ -1,19 +1,25 @@
 ﻿using QSLib.Types;
+using QSLib.Expressions.Values;
+using System.ComponentModel;
 
 namespace QSLib.Expressions.Binary
 {
     class Or : Binary_Expression
     {
-        public Or(IExpression a, IExpression b, int linenr)
+
+        public Or(QSExpression a, QSExpression b, int linenr)
             : base(a, b, linenr)
         {
             base._operator = "||";
         }
 
-        public bool GetBoolValue()
+        public override Value Evaluate()
         {
-            return this._left.GetBoolValue() && this._right.GetBoolValue(this._right);
+            this._value = this._left.Evaluate().Or(this._right.Evaluate());
+            this.OnPropertyChanged("GetValue");
+            return this._value;
         }
+
 
         public override QSType Type
         {

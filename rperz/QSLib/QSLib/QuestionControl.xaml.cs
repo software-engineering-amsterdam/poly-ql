@@ -14,38 +14,56 @@ using System.Windows.Shapes;
 using QSLib.Expressions.Literals;
 using QSLib.Expressions;
 using QSLib.Expressions.Unary;
+using QSLib.IO;
+
 namespace QSLib
 {
     /// <summary>
     /// Interaction logic for QuestionControl.xaml
     /// </summary>
     public partial class QuestionControl : UserControl
-    {      
+    {
+        private Control _iocontrol;
+        private ITypeIO _typeIO;
         public QuestionControl()
         {
             InitializeComponent();
         }
 
-        public void AddIOControl(Control io)
+        public void AddIOControl(ITypeIO io)
         {
-            this.ioControl = io;
+            this._iocontrol = io.GetControl();
+            this._typeIO = io;
+            this.ioControl.Children.Add(this._iocontrol);
         }
 
-        public object GetValue()
+        public void SetToInput(Identifier id)
         {
-            return this.ioControl.GetValue(ContentProperty);
+            this._typeIO.SetIdentifier(id);
+            this._typeIO.ValueChanged += new EventHandler(_typeIO_ValueChanged);
+            this._iocontrol.SetBinding(this._typeIO.GetDependencyProperty(), this._typeIO.GetInputBinding());
         }
 
-        public void AddOutputBinding(Identifier id, DependencyProperty prop)
+        void _typeIO_ValueChanged(object sender, EventArgs e)
         {
-            this.ioControl.DataContext = id;
-            this.ioControl.SetBinding(prop, "GetValue");
+            OnValueChanged(null);
         }
 
-        public void AddInputBinding(Identifier id, DependencyProperty prop, string path)
+        internal void SetToOutput(Identifier id)
         {
-            this.ioControl.DataContext = id;
-            this.ioControl.SetBinding(prop, path);
+            this._typeIO.SetIdentifier(id);
+            this._iocontrol.SetBinding(this._typeIO.GetDependencyProperty(), this._typeIO.GetOutputBinding());
+        }
+
+        public event EventHandler ValueChanged;
+
+        protected virtual void OnValueChanged(EventArgs args)
+        {
+            var handler = this.ValueChanged;
+            if (handler != null)
+            {
+                handler(this, args);
+            }
         }
 
         public void AddQuestionLabel(string qtext)

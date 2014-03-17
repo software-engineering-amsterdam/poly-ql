@@ -7,12 +7,12 @@ namespace QSLib.Statements
 {
     public class IfStatement : IStatement
     {
-        private IExpression _condition;
+        private QSExpression _condition;
         private CodeBlock _code;
         private CodeBlock _elseBlock;
         private int _lineNr;
 
-        public IfStatement(IExpression con, CodeBlock code, CodeBlock elseBlock, int lineNr)
+        public IfStatement(QSExpression con, CodeBlock code, CodeBlock elseBlock, int lineNr)
         {
             this._condition = con;
             this._code = code;
@@ -20,7 +20,7 @@ namespace QSLib.Statements
             this._lineNr = lineNr;
         }
 
-        public IfStatement(IExpression con, CodeBlock code, int lineNr)
+        public IfStatement(QSExpression con, CodeBlock code, int lineNr)
         {
             this._condition = con;
             this._code = code;

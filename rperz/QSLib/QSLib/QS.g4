@@ -108,17 +108,17 @@ type_declaration returns [Identifier e]
 					}
 	;
 
-num_val returns [IExpression e]
+num_val returns [QSExpression e]
 	:
 	  v=NUMBER { $e = new QSNumber(Int32.Parse($v.text), $v.line); }
 	;
 
-bool_val returns [IExpression e]
+bool_val returns [QSExpression e]
 	:
 	  v=BOOL_VAL { $e = new QSBoolean(Boolean.Parse($v.text), $v.line); }
 	;
 
-expression returns [IExpression e]
+expression returns [QSExpression e]
 	: 
 	  l=expression o=MULTIPLY r=expression { $e = new Multiply($l.e, $r.e, $o.line); } 
 	| l=expression o=DIVIDE r=expression { $e = new Divide($l.e, $r.e, $o.line); } 
