@@ -1,4 +1,4 @@
-﻿
+﻿using QSLib.Expressions.Values;
 namespace QSLib.Types
 {
     public class NumberType : QSType
@@ -28,6 +28,16 @@ namespace QSLib.Types
         public override int GetHashCode()
         {
             return base.GetHashCode();
+        }
+
+        public override Value GetUndefinedValue()
+        {
+            return new IntegerValue(0);
+        }
+
+        public override void CreateGUI(GUIBuilder guiBuilder)
+        {
+            guiBuilder.CreateIntegerIO();
         }
     }
 }

@@ -1,10 +1,14 @@
 ﻿using QSLib.Types;
+using QSLib.Expressions.Values;
+using System.ComponentModel;
+
 namespace QSLib.Expressions.Unary
 {
     class Not : Unary_Expression
     {
 
-        public Not(IExpression left, int linenr)
+
+        public Not(QSExpression left, int linenr)
             : base(left, linenr)
         {
             base._operator = "!";
@@ -18,6 +22,15 @@ namespace QSLib.Expressions.Unary
             
             return retVal;
         }
+
+
+        public override Value Evaluate()
+        {
+            this._value = this._expr.Evaluate().Not();
+            this.OnPropertyChanged("GetValue");
+            return this._value;
+        }
+
 
         public override QSType Type
         {

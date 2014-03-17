@@ -1,6 +1,20 @@
 ﻿module QL_Grammar
 open System
 
+type public Position(startPos : Lexing.Position, endPos : Lexing.Position) =
+    member public this.StartLine      : int = startPos.Line+1
+    member public this.StartColumn    : int = startPos.Column
+    member public this.StartCharacter : int = startPos.AbsoluteOffset
+    member public this.EndLine        : int = endPos.Line+1
+    member public this.EndColumn      : int = endPos.Column
+    member public this.EndCharacter   : int = endPos.AbsoluteOffset
+
+    new(state : Parsing.IParseState) = let startPos, endPos = state.ResultRange
+                                       Position(startPos, endPos)
+    new() = Position(Lexing.Position.Empty, Lexing.Position.Empty)
+
+    override this.ToString() = "Position"
+
 // Question types
 type qlType = QLBool | QLString | QLInt | QLDecimal
 
@@ -13,34 +27,37 @@ type literal =
 
 // Expression
 type booleanOp = And | Or | Lt | Gt | Le | Ge | Eq | Ne
+    with override this.ToString() = match this with
+                                    | And -> "&&"
+                                    | Or  -> "||"
+                                    | Lt  -> "<"
+                                    | Gt  -> ">"
+                                    | Le  -> "<="
+                                    | Ge  -> ">="
+                                    | Eq  -> "=="
+                                    | Ne  -> "!="
+
 type arithmeticOp = Plus | Minus | Mult | Div
+    with override this.ToString() = match this with
+                                    | Plus  -> "+"
+                                    | Minus -> "-"
+                                    | Mult  -> "*"
+                                    | Div   -> "/"
+        
 type expression =
-    | ID            of string
-    | Literal       of literal
-    | Neg           of expression
-    | BooleanOp     of expression * booleanOp * expression
-    | ArithmeticOp  of expression * arithmeticOp * expression
+    | ID            of string * Position
+    | Literal       of literal * Position
+    | Neg           of expression * Position
+    | BooleanOp     of expression * booleanOp * expression * Position
+    | ArithmeticOp  of expression * arithmeticOp * expression * Position
 
 type statement =
-    | Assignment    of string * string * expression
-    | Question      of string * string * qlType
-    | Conditional   of expression * statement list
+    | Assignment        of string * string * expression * Position
+    | Question          of string * string * qlType * Position
+    | IfElseConditional of expression * statement list * statement list * Position
+    | IfConditional     of expression * statement list * Position
 
 type questionaire = 
     {   ID          : string;
         Statements  : statement list }
     override this.ToString() = sprintf "%+A" this
-
-
-type public Position(line, column, character) =
-    member public this.Line : int = line
-    member public this.Column : int = column
-    member public this.Character : int = character
-
-// Exception type for error reporting
-type public ParseErrorExceptionMessage(message, lastToken, startPos, endPos) = 
-    member public this.Message : string = message
-    member public this.LastToken : string = lastToken
-    member public this.StartPos : Position = startPos
-    member public this.EndPos : Position  = endPos
-exception ParseErrorException of ParseErrorExceptionMessage

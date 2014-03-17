@@ -1,53 +1,55 @@
 package edu.uva.softwarecons.visitor.expression;
 
-import edu.uva.softwarecons.model.expression.IdExpression;
-import edu.uva.softwarecons.model.expression.IntExpression;
-import edu.uva.softwarecons.model.expression.ParenthesisExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.AddExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.DivExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.MulExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.SubExpression;
-import edu.uva.softwarecons.model.expression.comparison.*;
+import edu.uva.softwarecons.model.expression.comparison.EqualExpression;
+import edu.uva.softwarecons.model.expression.comparison.GreaterEqualExpression;
+import edu.uva.softwarecons.model.expression.comparison.GreaterExpression;
+import edu.uva.softwarecons.model.expression.comparison.LessEqualExpression;
+import edu.uva.softwarecons.model.expression.comparison.LessExpression;
+import edu.uva.softwarecons.model.expression.comparison.NotEqualExpression;
+import edu.uva.softwarecons.model.expression.literal.IdExpression;
 import edu.uva.softwarecons.model.expression.logical.AndExpression;
 import edu.uva.softwarecons.model.expression.logical.NotExpression;
 import edu.uva.softwarecons.model.expression.logical.OrExpression;
+import edu.uva.softwarecons.model.type.Type;
 
 /**
  * Falconlabs
- * User: sancarbar
+ * @author Santiago Carrillo
  * Date: 3/5/14
  */
-public interface IExpressionElementVisitor {
+public interface IExpressionElementVisitor
+{
 
-    void visitAddExpression(AddExpression expression);
+    Type visitAddExpression( AddExpression expression );
 
-    void visitDivExpression(DivExpression expression);
+    Type visitDivExpression( DivExpression expression );
 
-    void visitMulExpression(MulExpression expression);
+    Type visitMulExpression( MulExpression expression );
 
-    void visitSubExpression(SubExpression expression);
+    Type visitSubExpression( SubExpression expression );
 
-    void visitAndExpression(AndExpression expression);
+    Type visitAndExpression( AndExpression expression );
 
-    void visitNotExpression(NotExpression expression);
+    Type visitNotExpression( NotExpression expression );
 
-    void visitOrExpression(OrExpression expression);
+    Type visitOrExpression( OrExpression expression );
 
-    void visitEqualExpression(EqualExpression expression);
+    Type visitEqualExpression( EqualExpression expression );
 
-    void visitGreaterEqualExpression(GreaterEqualExpression expression);
+    Type visitGreaterEqualExpression( GreaterEqualExpression expression );
 
-    void visitGreaterExpression(GreaterExpression expression);
+    Type visitGreaterExpression( GreaterExpression expression );
 
-    void visitLessEqualExpression(LessEqualExpression expression);
+    Type visitLessEqualExpression( LessEqualExpression expression );
 
-    void visitLessExpression(LessExpression expression);
+    Type visitLessExpression( LessExpression expression );
 
-    void visitNotEqualExpression(NotEqualExpression expression);
+    Type visitNotEqualExpression( NotEqualExpression expression );
 
-    void visitIdExpression(IdExpression expression);
+    Type visitIdExpression( IdExpression expression );
 
-    void visitIntExpression(IntExpression expression);
-
-    void visitParenthesisExpression(ParenthesisExpression expression);
 }

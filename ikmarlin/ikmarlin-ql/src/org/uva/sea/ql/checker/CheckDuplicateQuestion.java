@@ -8,19 +8,23 @@ import java.util.Set;
 
 import org.uva.sea.ql.ast.type.Type;
 import org.uva.sea.ql.checker.error.DuplicateQuestion;
+import org.uva.sea.ql.checker.error.Error;
 import org.uva.sea.ql.checker.warning.DuplicateLabel;
+import org.uva.sea.ql.checker.warning.Warning;
 
 public class CheckDuplicateQuestion {
 
 	private Map<String, List<Type>> symbolTable;
-	private List<String> errors;
+	private List<Error> errors;
+	private List<Warning> warnings;
 
 	public CheckDuplicateQuestion(Map<String, List<Type>> symbolTable) {
 		this.symbolTable = symbolTable;
-		errors = new ArrayList<String>();
+		errors = new ArrayList<Error>();
+		warnings = new ArrayList<Warning>();
 	}
 
-	public List<String> getDuplicates() {
+	public List<Error> getDuplicates() {
 		for (Map.Entry<String, List<Type>> entry : symbolTable.entrySet()) {
 			String ident = entry.getKey();
 			if (entry.getValue().size() > 1) {
@@ -29,9 +33,9 @@ public class CheckDuplicateQuestion {
 					uniqueTypes.add(t.toString());
 				}
 				if (uniqueTypes.size() > 1) {
-					addError(DuplicateQuestion.getMessage(ident));
+					errors.add(new DuplicateQuestion(ident));
 				} else {
-					addError(DuplicateLabel.getMessage(ident));
+					warnings.add(new DuplicateLabel(ident));
 				}
 			}
 		}
@@ -42,12 +46,16 @@ public class CheckDuplicateQuestion {
 		return !errors.isEmpty();
 	}
 
-	public List<String> getErrors() {
+	public List<Error> getErrors() {
 		return errors;
 	}
 
-	private void addError(String msg) {
-		errors.add(msg);
+	public boolean hasWarnings() {
+		return !warnings.isEmpty();
+	}
+
+	public List<Warning> getWarnings() {
+		return warnings;
 	}
 
 }

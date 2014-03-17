@@ -12,8 +12,8 @@
         <DockPanel Grid.RowSpan="121" >
             <Label  Name="qTextLbl" Content="{Binding Path=ToString()}" VerticalAlignment="Center" DockPanel.Dock="Left" />
         </DockPanel>
-        <Control Name="ioControl" Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Left" Width="314">
+        <StackPanel Name="ioControl" Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Left" Width="314">
 
-        </Control>
+        </StackPanel>
     </Grid>
 </UserControl>

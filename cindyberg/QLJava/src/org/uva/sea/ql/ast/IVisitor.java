@@ -17,12 +17,15 @@ import org.uva.sea.ql.ast.operators.logical.Not;
 import org.uva.sea.ql.ast.operators.logical.Or;
 import org.uva.sea.ql.ast.statement.ExpressionQuestion;
 import org.uva.sea.ql.ast.statement.Form;
-import org.uva.sea.ql.ast.statement.IfStatement;
 import org.uva.sea.ql.ast.statement.IfElseStatement;
+import org.uva.sea.ql.ast.statement.IfStatement;
 import org.uva.sea.ql.ast.statement.Question;
 import org.uva.sea.ql.ast.statement.Questions;
 import org.uva.sea.ql.ast.statement.Statement;
-import org.uva.sea.ql.ast.type.*;
+import org.uva.sea.ql.ast.type.BooleanType;
+import org.uva.sea.ql.ast.type.IntegerType;
+import org.uva.sea.ql.ast.type.StringType;
+import org.uva.sea.ql.ast.type.Type;
 
 public interface IVisitor {
 	
@@ -58,7 +61,6 @@ public interface IVisitor {
 	void visit(BooleanType bool);
 	void visit(IntegerType integer);
 	void visit(StringType string);
-	void visit(MoneyType money);
 	void visit(Type type);
 	void visit(Statement statement);
 

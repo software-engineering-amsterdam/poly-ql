@@ -1,3 +1,76 @@
+
+form BoxHouseOwning {
+    // Determinism
+    tra: "tra" boolean
+    bla: "bla" boolean
+    if (tra) { a: "A?" boolean }
+    if (bla) { a: "A?" boolean }
+
+    // Cyclic dependencies - variables need to be declared before being used
+    x: "X?" boolean
+    // x: "X second?" boolean(x)
+    if (x) { y: "Y?" boolean }
+    if (y) { x: "X?" boolean } //TODO this will always hide x => and y
+
+    // Duplicate IDs
+    id001: "test" boolean
+    id001: "test2" boolean
+    // id001: "test3" money
+
+    // Duplicate labels
+    id010: "test00" boolean
+    id010: "test00" boolean
+    // id011: "test00" money
+
+    // Compatibility
+    if (true) {}
+    // if (5) {}
+    if (5 > 2) {}
+    if (true || 4 == 4) {}
+
+    // Division by 0
+    /*
+    if (10 / 0 > 0) {
+        div0: "Division by 0" text
+    }
+    if (10.0 / 0.0 > 0) {
+        div0: "Division by 0" text
+    }
+    */
+
+    hasSoldHouse: "Did you sell a house in 2010?" boolean
+    if (hasSoldHouse || true && (2 > 2.2) && "test" != "test2") {
+        hasTestHouse: "Did you test a house in 2010?" boolean
+        if (hasTestHouse) {
+            testPrice: "Price the house was tested for:" money
+        }
+    } else {
+        hasTestHouse: "Did you test a house in 2010?" boolean
+        intTest: "Int test: " integer(-1 - -2)
+    }
+    howBad: "How bad?" ("good", "bad", "don't know")
+    whatDate: "What date?" date
+}
+
+form Box1HouseOwning {
+    hasSoldHouse: "Did you sell a house in 2010?" boolean
+    if (hasSoldHouse) {
+        sellingPrice: "Price the house was sold for:" money
+        privateDebt: "Private debts for the sold house:" money
+        valueResidue: "Value residue:" money(sellingPrice - privateDebt)
+    } else {
+        elseSellingPrice: "ELSE Price the house was sold for:" money
+        if (elseSellingPrice > 2) {
+            elsePrivateDebt: "ELSE > 2 Private debts for the sold house:" money
+            if (elsePrivateDebt > 4) {
+                bla: "bla: else private debt > 4:" money
+            }
+        } else {
+            elseValueResidue: "ELSE <= 2 Value residue:" money
+        }
+    }
+}
+
 form Box1HouseOwning {
     hasSoldHouse: "Did you sell a house in 2010?" boolean
     hasBoughtHouse: "Did you by a house in 2010?" boolean
@@ -6,15 +79,5 @@ form Box1HouseOwning {
         sellingPrice: "Price the house was sold for:" money
         privateDebt: "Private debts for the sold house:" money
         valueResidue: "Value residue:" money(sellingPrice - privateDebt)
-    }
-}
-
-form Box2HouseOwning {
-    hasSoldHouse: "Did you sell a house in 2010?" boolean
-    if (hasSoldHouse) {
-        hasTestHouse: "Did you test a house in 2010?" boolean
-        if (hasTestHouse) {
-            testPrice: "Price the house was tested for:" money
-        }
     }
 }

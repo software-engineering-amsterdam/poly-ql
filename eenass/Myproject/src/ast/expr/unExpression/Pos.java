@@ -1,6 +1,6 @@
 package ast.expr.unExpression;
 
-import typecheck.SymboleTable;
+import typecheck.SymbolTable;
 import ast.Visitor;
 import ast.expr.Expr;
 import ast.expr.types.IntType;
@@ -17,7 +17,7 @@ public class Pos extends UnExpr{
 	}
 
 	@Override
-	public Type typeof(SymboleTable symb) {
+	public Type typeof(SymbolTable symb) {
 		return new IntType();
 	}
 

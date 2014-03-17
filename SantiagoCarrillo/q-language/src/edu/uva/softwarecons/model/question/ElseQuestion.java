@@ -6,24 +6,29 @@ import java.util.List;
 
 /**
  * Falconlabs
- * User: sancarbar
+ * @author Santiago Carrillo
  * Date: 3/5/14
  */
-public class ElseQuestion implements Question {
+public class ElseQuestion
+    implements Question
+{
 
     private final List<Question> questions;
 
-    public ElseQuestion(List<Question> questions) {
+    public ElseQuestion( List<Question> questions )
+    {
         this.questions = questions;
     }
 
-    public List<Question> getQuestions() {
+    public List<Question> getQuestions()
+    {
         return questions;
     }
 
     @Override
-    public void accept(IFormElementVisitor visitor) {
-        visitor.visitElseQuestion(this);
+    public void accept( IFormElementVisitor visitor )
+    {
+        visitor.visitElseQuestion( this );
     }
 
 

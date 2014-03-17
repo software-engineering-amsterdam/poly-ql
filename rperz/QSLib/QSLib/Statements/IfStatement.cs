@@ -7,12 +7,12 @@ namespace QSLib.Statements
 {
     public class IfStatement : IStatement
     {
-        private IExpression _condition;
+        private QSExpression _condition;
         private CodeBlock _code;
         private CodeBlock _elseBlock;
         private int _lineNr;
 
-        public IfStatement(IExpression con, CodeBlock code, CodeBlock elseBlock, int lineNr)
+        public IfStatement(QSExpression con, CodeBlock code, CodeBlock elseBlock, int lineNr)
         {
             this._condition = con;
             this._code = code;
@@ -20,7 +20,7 @@ namespace QSLib.Statements
             this._lineNr = lineNr;
         }
 
-        public IfStatement(IExpression con, CodeBlock code, int lineNr)
+        public IfStatement(QSExpression con, CodeBlock code, int lineNr)
         {
             this._condition = con;
             this._code = code;
@@ -41,7 +41,7 @@ namespace QSLib.Statements
             }
 
             retVal &= this._code.CheckType(checker);
-            retVal &= (this._elseBlock == null || this._elseBlock.CheckType(checker));
+            retVal &= this._elseBlock.CheckType(checker);
 
             return retVal;
         }
@@ -55,12 +55,17 @@ namespace QSLib.Statements
             // check if all elements are equal
             return this._condition.Equals(comp._condition) &&
                     this._code.Equals(comp._code) &&
-                    ((this._elseBlock == null && comp._elseBlock == null) || this._elseBlock.Equals(comp._elseBlock));
+                    this._elseBlock.Equals(comp._elseBlock);
         }
 
         public override int GetHashCode()
         {
             return base.GetHashCode();
+        }
+
+        public void CreateGUI(GUIBuilder guiBuilder)
+        {
+            guiBuilder.CreateIfStatement(this._condition, this._code, this._elseBlock);
         }
     }
 }

@@ -41,7 +41,11 @@ namespace QSForm
             walker.Walk(listener, tree);
             TypeChecker check = TypeChecker.CheckTypes(listener.Root);
             tbOutput.Text = check.GetCheckerOutput();
-            
+
+            GUIBuilder builder = GUIBuilder.BuildGUI(listener.Root);
+            System.Windows.Window wind = new Window();
+            wind.Content = builder.GetResult();
+            wind.Show();
         }
 
     }

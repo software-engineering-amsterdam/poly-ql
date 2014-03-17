@@ -19,10 +19,10 @@ import ast.statement.StatementList;
 
 public class TypeChecker implements Visitor<Boolean>{
 	
-	private final SymboleTable symb_map;
+	private final SymbolTable symb_map;
 	private ErrorList errors;
 
-	public TypeChecker(SymboleTable symb_map, ErrorList errors) {
+	public TypeChecker(SymbolTable symb_map, ErrorList errors) {
 		this.symb_map = symb_map;
 		this.errors = errors;
 	}
@@ -30,8 +30,8 @@ public class TypeChecker implements Visitor<Boolean>{
 		return errors.toString();
 	}
 	
-	public boolean check_symb(ASTNode node, SymboleTable symboles, ErrorList errors){
-		TypeChecker visitor = new TypeChecker(symboles, errors);
+	public boolean check_symb(ASTNode node, SymbolTable symbols, ErrorList errors){
+		TypeChecker visitor = new TypeChecker(symbols, errors);
 		return node.accept(visitor);		
 	}
 	
@@ -77,7 +77,7 @@ public class TypeChecker implements Visitor<Boolean>{
 		return (isValid_lhs && isValid_rhs);
 	}	
 	
-	public boolean areEquel_types(Expr lhs, Expr rhs, String token){
+	public boolean areEqual_types(Expr lhs, Expr rhs, String token){
 		boolean isValid_lhs = isValidExpr(lhs);
 		boolean isValid_rhs = isValidExpr(rhs);
 				
@@ -147,7 +147,7 @@ public class TypeChecker implements Visitor<Boolean>{
 
 	@Override
 	public Boolean visit(Eq node) {
-		return areEquel_types(node.get_lhs(), node.get_rhs(), "==");
+		return areEqual_types(node.get_lhs(), node.get_rhs(), "==");
 	}
 
 	@Override
@@ -177,7 +177,7 @@ public class TypeChecker implements Visitor<Boolean>{
 
 	@Override
 	public Boolean visit(NEq node) {
-		return areEquel_types(node.get_lhs(), node.get_rhs(), "!=");
+		return areEqual_types(node.get_lhs(), node.get_rhs(), "!=");
 	}
 
 	@Override

@@ -1,23 +1,18 @@
 ﻿using System;
 using QSLib.Types;
+using QSLib.Expressions.Values;
+
 namespace QSLib.Expressions.Literals
 {
     public class QSString : Primary
     {
-        private String _value;
 
         public QSString(String value, int linenr)
         {
             base._type = new StringType();
-            this._value = value;
+            this._value = new StringValue(value);
             this._linenr = linenr;
         }
-
-        public string GetValue()
-        {
-            return this._value;
-        }
-
 
         public override bool Equals(object obj)
         {

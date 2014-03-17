@@ -2,7 +2,10 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry exported="true" kind="lib" path="lib/antlr-4.2-complete.jar" sourcepath="lib"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="C:/eclipse/plugins/org.junit_4.11.0.v201303080030/miglayout-4.0-swt.jar"/>
+	<classpathentry kind="lib" path="C:/Users/E. Butrus/Downloads/miglayout-4.0-swing.jar"/>
+	<classpathentry kind="lib" path="C:/Users/E. Butrus/Downloads/miglayout-4.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
