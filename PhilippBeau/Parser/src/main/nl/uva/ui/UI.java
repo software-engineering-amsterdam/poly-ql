@@ -3,9 +3,9 @@ package main.nl.uva.ui;
 import javax.swing.JFrame;
 
 import main.nl.uva.parser.element.statement.ParserForm;
-import main.nl.uva.parser.element.ui.UIElement;
 import main.nl.uva.parser.element.validation.ASTValidation;
 import main.nl.uva.parser.element.validation.Scope;
+import main.nl.uva.parser.ui.UIElement;
 
 public class UI extends JFrame {
 

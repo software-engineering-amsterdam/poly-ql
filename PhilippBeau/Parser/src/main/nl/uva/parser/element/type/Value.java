@@ -6,8 +6,8 @@ import main.nl.uva.parser.element.expression.atom.BoolAtom;
 import main.nl.uva.parser.element.expression.atom.MoneyAtom;
 import main.nl.uva.parser.element.expression.atom.TextAtom;
 import main.nl.uva.parser.element.statement.Statement;
-import main.nl.uva.parser.element.ui.DeclarationUIElement;
-import main.nl.uva.parser.element.ui.types.ValueUI;
+import main.nl.uva.parser.ui.DeclarationUIElement;
+import main.nl.uva.parser.ui.types.ValueUI;
 
 public abstract class Value {
 

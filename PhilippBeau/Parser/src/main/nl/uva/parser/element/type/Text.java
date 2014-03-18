@@ -3,9 +3,9 @@ package main.nl.uva.parser.element.type;
 import main.nl.uva.parser.element.expression.AdvancedExpression;
 import main.nl.uva.parser.element.expression.Expression;
 import main.nl.uva.parser.element.expression.atom.TextAtom;
-import main.nl.uva.parser.element.ui.DeclarationUIElement;
-import main.nl.uva.parser.element.ui.types.TextUI;
-import main.nl.uva.parser.element.ui.types.ValueUI;
+import main.nl.uva.parser.ui.DeclarationUIElement;
+import main.nl.uva.parser.ui.types.TextUI;
+import main.nl.uva.parser.ui.types.ValueUI;
 
 public class Text extends Value {
 

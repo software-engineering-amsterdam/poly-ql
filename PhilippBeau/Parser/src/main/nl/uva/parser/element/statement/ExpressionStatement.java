@@ -1,8 +1,8 @@
 package main.nl.uva.parser.element.statement;
 
 import main.nl.uva.parser.element.expression.Variable;
-import main.nl.uva.parser.element.ui.ExpressionUIElement;
-import main.nl.uva.parser.element.ui.UIElement;
+import main.nl.uva.parser.ui.ExpressionUIElement;
+import main.nl.uva.parser.ui.UIElement;
 import main.nl.uva.ui.UI;
 
 public class ExpressionStatement extends DeclarationStatement {

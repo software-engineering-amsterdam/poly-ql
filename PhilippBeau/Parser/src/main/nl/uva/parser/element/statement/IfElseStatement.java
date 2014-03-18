@@ -1,8 +1,8 @@
 package main.nl.uva.parser.element.statement;
 
-import main.nl.uva.parser.element.ui.UIElement;
 import main.nl.uva.parser.element.validation.ASTValidation;
 import main.nl.uva.parser.element.validation.Scope;
+import main.nl.uva.parser.ui.UIElement;
 import main.nl.uva.ui.UI;
 
 public class IfElseStatement extends BlockStatement {

@@ -1,4 +1,4 @@
-package main.nl.uva.parser.element.ui;
+package main.nl.uva.parser.ui;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package main.nl.uva.parser.element.ui.types;
+package main.nl.uva.parser.ui.types;
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -8,7 +8,7 @@ import javax.swing.JComponent;
 
 import main.nl.uva.parser.element.type.Bool;
 import main.nl.uva.parser.element.type.Value;
-import main.nl.uva.parser.element.ui.DeclarationUIElement;
+import main.nl.uva.parser.ui.DeclarationUIElement;
 
 public class BooleanUI extends ValueUI implements ItemListener {
 

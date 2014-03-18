@@ -1,4 +1,4 @@
-package main.nl.uva.parser.element.ui;
+package main.nl.uva.parser.ui;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -12,7 +12,7 @@ import main.nl.uva.parser.element.expression.atom.TextAtom;
 import main.nl.uva.parser.element.type.Bool;
 import main.nl.uva.parser.element.type.Money;
 import main.nl.uva.parser.element.type.Text;
-import main.nl.uva.parser.element.ui.types.ValueUI;
+import main.nl.uva.parser.ui.types.ValueUI;
 import main.nl.uva.ui.UI;
 
 public class DeclarationUIElement extends UIElement implements UIValueChangeListener, ExpressionChangeListener {
