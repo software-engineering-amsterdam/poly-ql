@@ -6,6 +6,8 @@ import java.awt.event.KeyListener;
 import javax.swing.JComponent;
 import javax.swing.JTextField;
 
+import main.nl.uva.parser.elements.type.Money;
+import main.nl.uva.parser.elements.type.Value;
 import main.nl.uva.parser.elements.ui.DeclarationUIElement;
 
 public class MoneyUI extends ValueUI implements KeyListener {
@@ -43,5 +45,16 @@ public class MoneyUI extends ValueUI implements KeyListener {
         }
 
         _parent.onChange(value);
+    }
+
+    @Override
+    public void valueChange(final Value value) {
+        Money money = (Money) value;
+        _textField.setText(money.getValue() + "");
+    }
+
+    @Override
+    public void setEditable(final boolean enabled) {
+        _textField.setEditable(false);
     }
 }

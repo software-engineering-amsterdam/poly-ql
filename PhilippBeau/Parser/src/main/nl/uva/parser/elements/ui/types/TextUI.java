@@ -6,6 +6,8 @@ import java.awt.event.KeyListener;
 import javax.swing.JComponent;
 import javax.swing.JTextField;
 
+import main.nl.uva.parser.elements.type.Text;
+import main.nl.uva.parser.elements.type.Value;
 import main.nl.uva.parser.elements.ui.DeclarationUIElement;
 
 public class TextUI extends ValueUI implements KeyListener {
@@ -37,4 +39,19 @@ public class TextUI extends ValueUI implements KeyListener {
         _parent.onChange(_textField.getText());
     }
 
+    @Override
+    public void valueChange(final Value value) {
+        Text text = (Text) value;
+
+        boolean isEditable = _textField.isEditable();
+
+        _textField.setEditable(true);
+        _textField.setText(text.getValue());
+        _textField.setEditable(isEditable);
+    }
+
+    @Override
+    public void setEditable(final boolean enabled) {
+        _textField.setEditable(enabled);
+    }
 }

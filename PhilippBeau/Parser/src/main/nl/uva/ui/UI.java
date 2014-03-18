@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 
 import main.nl.uva.parser.elements.statements.ParserForm;
 import main.nl.uva.parser.elements.ui.UIElement;
+import main.nl.uva.parser.elements.validation.ASTValidation;
 import main.nl.uva.parser.elements.validation.Scope;
 
 public class UI extends JFrame {
@@ -90,7 +91,8 @@ public class UI extends JFrame {
     }
 
     public void refreshView() {
-        _form.validate(new Scope());
+        ASTValidation validation = _form.validate(new Scope());
+        System.out.println("Has Errors: " + validation.hasErrors());
         this.pack();
     }
 }

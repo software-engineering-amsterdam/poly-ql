@@ -68,4 +68,9 @@ public class Money extends Value {
         _value = type._value;
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "Money: " + _value;
+    }
 }

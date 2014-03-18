@@ -68,4 +68,9 @@ public class Bool extends Value {
         _value = type._value;
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "Bool: " + _value;
+    }
 }

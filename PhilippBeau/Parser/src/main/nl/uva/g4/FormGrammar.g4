@@ -28,7 +28,7 @@ statement returns [Statement current]
 	LINEEND 
 	
     | ID ':' STRING sType=simpleType '(' ex=expression')'  	
-    { $current = new DeclarationStatement(new Variable($sType.type, $ID.text, $ex.cEx), $STRING.text);} 
+    { $current = new ExpressionStatement(new Variable($sType.type, $ID.text, $ex.cEx), $STRING.text);} 
     LINEEND
     
     | 'if' '(' ex=expression ')' ifBlock=block 

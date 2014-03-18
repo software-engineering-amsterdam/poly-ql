@@ -9,9 +9,9 @@ import main.nl.uva.ui.UI;
 
 public class DeclarationStatement extends Statement {
 
-    private final String _function;
+    protected final String _function;
 
-    private final Variable _variable;
+    protected final Variable _variable;
 
     public DeclarationStatement(final Variable variable, final String function) {
         _function = function;
