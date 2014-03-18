@@ -1,22 +1,17 @@
 package interpreter;
 
+import java.util.Map;
+
 import expr.ASTNode;
 import expr.Expression;
+import expr.Ident;
+import expr.literals.Literal;
 
 public class ValueComputer  {
 	
-	public boolean hasAllOperandsWithKnownValues() {
-		return false;
-	}
-	
-	public boolean computeCondition(Expression e, ASTNode root) {
-		return false;
-	}
-	
-	public int computeValue(Expression e, ASTNode root) {
-		return 0;
-	}
-	
-
-
+	public Literal compute(Expression e, ASTNode root) {
+		Map<Ident, Expression> identifiers;
+		identifiers= new IdentifiersCollecter().collect(root);		
+		return e.compute(identifiers);
+	}	
 }
