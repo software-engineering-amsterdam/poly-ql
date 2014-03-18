@@ -1,4 +1,4 @@
-﻿
+﻿using QSLib.Values;
 namespace QSLib.Types
 {
     public class NumberType : QSType
@@ -28,6 +28,16 @@ namespace QSLib.Types
         public override int GetHashCode()
         {
             return base.GetHashCode();
+        }
+
+        public override Value GetUndefinedValue(bool isInput)
+        {
+            return new IntegerValue(0, isInput);
+        }
+
+        public override void CreateGUI(GUIBuilder guiBuilder)
+        {
+            guiBuilder.CreateIntegerInput();
         }
     }
 }

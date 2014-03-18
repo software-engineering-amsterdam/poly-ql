@@ -1,19 +1,23 @@
 ﻿using QSLib.Types;
+using QSLib.Values;
+using System.ComponentModel;
 
 namespace QSLib.Expressions.Binary
 {
-    class LargerThan_Equals : Binary_Expression
+    public class LargerThan_Equals : Binary_Expression
     {
-        public LargerThan_Equals(IExpression a, IExpression b, int linenr)
+
+        public LargerThan_Equals(QSExpression a, QSExpression b, int linenr)
             : base(a, b, linenr)
         {
             base._operator = ">=";
         }
 
-
-        public object GetValue()
+        public override Value Evaluate()
         {
-            return (int)this._left.GetValue() >= (int)this._right.GetValue();
+            this._value = this._left.Evaluate().LargerThan_Equals(this._right.Evaluate());
+            this.OnPropertyChanged("GetValue");
+            return this._value;
         }
 
         public override QSType Type

@@ -1,28 +1,26 @@
 package main.nl.uva.parser.elements.expressions;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import main.nl.uva.parser.elements.ParserElement;
-import main.nl.uva.parser.elements.errors.ValidationError;
+import main.nl.uva.parser.elements.ASTNode;
 import main.nl.uva.parser.elements.type.Value;
 
-public abstract class Expression extends ParserElement {
+public abstract class Expression extends ASTNode {
 
-    protected Value _value = null;
+    private final List<ExpressionChangeListener> _listener = new ArrayList<>();
 
     public Expression() {}
 
-    public abstract Value getType();
-
-    @Override
-    public abstract List<ValidationError> validate();
-
-    @Override
-    public Variable findVariable(final String variableName, final ParserElement scopeEnd) {
-        if (_parent != null) {
-            return _parent.findVariable(variableName, this);
-        }
-
-        return null;
+    public boolean registerListener(final ExpressionChangeListener listener) {
+        return _listener.add(listener);
     }
+
+    protected void notifyListeners() {
+        for (ExpressionChangeListener listener : _listener) {
+            listener.onChange();
+        }
+    }
+
+    public abstract Value getValue();
 }

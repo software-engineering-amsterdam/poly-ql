@@ -48,7 +48,7 @@ namespace QSLib
 
         internal void CreateGUI(GUIBuilder guiBuilder)
         {
-            throw new NotImplementedException();
+            this._code.CreateGUI(guiBuilder);
         }
     }
 }

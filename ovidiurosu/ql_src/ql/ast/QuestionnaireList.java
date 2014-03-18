@@ -3,40 +3,27 @@ package ql.ast;
 import java.util.ArrayList;
 import java.util.List;
 
+import ql.ast.visitor_elements.IElement;
+
 /**
- * QL Questionnaire List
  * @author orosu
  */
-public class QuestionnaireList
+public class QuestionnaireList implements IElement
 {
-    /**
-     * List of QL Questionnaires
-     */
     private final List<Questionnaire> _questionnaires;
 
-    /**
-     * Constructor
-     */
     public QuestionnaireList()
     {
         this._questionnaires = new ArrayList<Questionnaire>();
     }
 
-    /**
-     * Add Questionnaire
-     * @param questionnaire
-     */
     public void addQuestionnaire(Questionnaire questionnaire)
     {
         this._questionnaires.add(questionnaire);
     }
 
-    /**
-     * Get Questionnaire List
-     * @return the _questionnaires
-     */
     public List<Questionnaire> getQuestionnaires()
     {
-        return _questionnaires;
+        return this._questionnaires;
     }
 }

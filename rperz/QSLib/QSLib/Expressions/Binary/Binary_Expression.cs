@@ -1,33 +1,29 @@
 ﻿using System;
 using QSLib.Types;
+using QSLib.Values;
+using System.ComponentModel;
 
 namespace QSLib.Expressions
 {
-    public abstract class Binary_Expression : IExpression
+    public abstract class Binary_Expression : QSExpression
     {
-        protected IExpression _left;
-        protected IExpression _right;
+        protected QSExpression _left;
+        protected QSExpression _right;
         protected String _operator;
-        protected int _linenr;
 
         public Binary_Expression(int linenr)
         {
             this._linenr = linenr;
         }
 
-        public Binary_Expression(IExpression a, IExpression b, int linenr)
+        public Binary_Expression(QSExpression a, QSExpression b, int linenr)
         {
             this._left = a;
             this._right = b;
             this._linenr = linenr;
         }
 
-        public abstract QSType Type
-        {
-            get;
-        }
-
-        public bool CheckType(TypeChecker checker)
+        public override bool CheckType(TypeChecker checker)
         {
             bool retVal = true;
             retVal &= this._left.CheckType(checker);
@@ -48,6 +44,13 @@ namespace QSLib.Expressions
             return retVal;
         }
 
+        public override abstract Value Evaluate();
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
         public override bool Equals(object obj)
         {
             var comp = obj as Binary_Expression;
@@ -58,9 +61,7 @@ namespace QSLib.Expressions
         {
             return this._left.ToString() + this._operator + this._right.ToString();
         }
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
+
+
     }
 }

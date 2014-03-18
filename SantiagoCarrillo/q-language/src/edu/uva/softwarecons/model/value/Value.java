@@ -2,10 +2,11 @@ package edu.uva.softwarecons.model.value;
 
 /**
  * Falconlabs
- * User: sancarbar
+ * @author Santiago Carrillo
  * Date: 3/13/14
  */
-public interface Value {
+public interface Value
+{
 
     public String getValue();
 

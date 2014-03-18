@@ -1,19 +1,24 @@
 ﻿using QSLib.Types;
+using QSLib.Values;
+using System.ComponentModel;
 namespace QSLib.Expressions.Binary
 {
     class Equals : Binary_Expression
     {
-        public Equals(IExpression a, IExpression b, int linenr)
+
+        public Equals(QSExpression a, QSExpression b, int linenr)
             : base(a, b, linenr)
         {
             base._operator = "==";
         }
 
-        public object GetValue()
+        public override Value Evaluate()
         {
-            return (int)this._left.GetValue() == (int)this._right.GetValue();
+            this._value = this._left.Evaluate().EqualTo(this._right.Evaluate());
+            this.OnPropertyChanged("GetValue");
+            return this._value;
         }
-
+        
         public override QSType Type
         {
             get { return new BoolType(); }

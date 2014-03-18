@@ -1,12 +1,11 @@
 package main.nl.uva.parser.elements.type;
 
-import java.awt.Component;
-
-import javax.swing.JTextField;
-
 import main.nl.uva.parser.elements.expressions.AdvancedExpression;
 import main.nl.uva.parser.elements.expressions.Expression;
 import main.nl.uva.parser.elements.expressions.atoms.MoneyAtom;
+import main.nl.uva.parser.elements.ui.DeclarationUIElement;
+import main.nl.uva.parser.elements.ui.types.MoneyUI;
+import main.nl.uva.parser.elements.ui.types.ValueUI;
 
 public class Money extends Value {
 
@@ -36,7 +35,7 @@ public class Money extends Value {
 
     @Override
     public Value visit(final Expression right, final AdvancedExpression expression) {
-        return right.getType().accept(this, expression);
+        return right.getValue().accept(this, expression);
     }
 
     @Override
@@ -55,12 +54,12 @@ public class Money extends Value {
     }
 
     @Override
-    public Component getLayout() {
-        return new JTextField();
+    public ValueUI getLayout(final DeclarationUIElement parent) {
+        return new MoneyUI(parent);
     }
 
     @Override
-    public boolean visitType(final Value type) {
+    public boolean applyValueTo(final Value type) {
         return type.acceptType(this);
     }
 

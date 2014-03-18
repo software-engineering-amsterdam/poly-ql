@@ -3,17 +3,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" d:DesignHeight="35">
-    <Grid Name="controlGrid" Height="33" Width="837">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="5*" />
-            <ColumnDefinition Width="3*" />
-        </Grid.ColumnDefinitions>
-        <DockPanel Grid.RowSpan="121" >
-            <Label  Name="qTextLbl" Content="{Binding Path=ToString()}" VerticalAlignment="Center" DockPanel.Dock="Left" />
-        </DockPanel>
-        <Control Name="ioControl" Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Left" Width="314">
+             mc:Ignorable="d" d:DesignHeight="50">
+    <Border BorderBrush="Blue" BorderThickness="1">
+        <Grid Name="controlGrid" Height="Auto" Width="450" Background="White">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300*" />
+                <ColumnDefinition Width="150*" />
+            </Grid.ColumnDefinitions>
+            <DockPanel Grid.RowSpan="121" >
+                    <TextBlock  Name="qTextLbl" Text="{Binding Path=ToString()}" Padding="5" HorizontalAlignment="Left" VerticalAlignment="Center" Height="Auto" Width="300" DockPanel.Dock="Left" TextWrapping="Wrap"/>
+            </DockPanel>
+            <StackPanel Name="ioControl" Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Center" Height="Auto" Width="150" VerticalAlignment="Center">
 
-        </Control>
-    </Grid>
+            </StackPanel>
+        </Grid>
+    </Border>
 </UserControl>

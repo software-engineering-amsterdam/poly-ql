@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows;
 using System.Windows.Data;
 using QSLib.Types;
+using QSLib.IO;
 
 namespace QSLib
 {
@@ -16,19 +17,21 @@ namespace QSLib
         private StackPanel _control;
         private StackPanel _currentPanel;
         private QuestionControl _currentQuestion;
-
+        private IList<QSExpression> _updateList = new List<QSExpression>();
         private GUIBuilder()
         {
             this._control = new StackPanel();
             this._currentPanel = this._control;
         }
 
-        public void BuildGUI(Form f)
+        public static GUIBuilder BuildGUI(Form f)
         {
-            f.CreateGUI(this);
+            GUIBuilder builder = new GUIBuilder();
+            f.CreateGUI(builder);
+            return builder;
         }
 
-        internal void CreateIfStatement(IExpression condition, CodeBlock codeBlock, CodeBlock elseBlock)
+        internal void CreateIfStatement(QSExpression condition, CodeBlock codeBlock, CodeBlock elseBlock)
         {
             AddVisibleIfTrue(condition, codeBlock);
             AddVisibleIfFalse(condition, elseBlock);
@@ -43,77 +46,95 @@ namespace QSLib
             this._currentQuestion = null;
         }
 
-        internal void CreateIO(QSType qsType, bool isInput)
+        public void CreateStringInput()
         {
-            throw new NotImplementedException();
+            this._currentQuestion.AddIOControl(new StringInput());
         }
 
-        public void SetStringInput(Identifier id)
+        public void CreateIntegerInput()
         {
-            this._currentQuestion.AddIOControl(new TextBox());
-            this._currentQuestion.AddInputBinding(id, TextBox.TextProperty, "SetStringValue");
+            this._currentQuestion.AddIOControl(new IntegerInput());
         }
 
-        public void SetIntegerInput(Identifier id)
+        public void CreateBooleanInput()
         {
-            this._currentQuestion.AddIOControl(new TextBox());
-            this._currentQuestion.AddInputBinding(id, TextBox.TextProperty, "SetIntegerValue");
+            this._currentQuestion.AddIOControl(new BooleanInput());
         }
 
-        public void SetBooleanInput(Identifier id)
+        public void CreateStringOutput()
         {
-            this._currentQuestion.AddIOControl(new CheckBox());
-            this._currentQuestion.AddInputBinding(id, CheckBox.IsCheckedProperty, "SetBooleanValue");
+            this._currentQuestion.AddIOControl(new StringOutput());
         }
 
-        public void SetStringOutput(Identifier id)
+        public void CreateIntegerOutput()
         {
-            this._currentQuestion.AddIOControl(new TextBox());
-            this._currentQuestion.AddOutputBinding(id, TextBox.TextProperty);
+            this._currentQuestion.AddIOControl(new IntegerOutput());
         }
 
-        public void SetIntegerOutput(Identifier id)
+        public void CreateBooleanOutput()
         {
-            this._currentQuestion.AddIOControl(new TextBox());
-            this._currentQuestion.AddOutputBinding(id, TextBox.TextProperty);
+            this._currentQuestion.AddIOControl(new BooleanOutput());
         }
 
-        public void SetBooleanOutput(Identifier id)
+        public void SetToInput(Identifier id)
         {
-            this._currentQuestion.AddIOControl(new CheckBox());
-            this._currentQuestion.AddOutputBinding(id, CheckBox.IsCheckedProperty);
+            this._currentQuestion.SetToInput(id);
+            this._currentQuestion.ValueChanged += new EventHandler(_currentQuestion_ValueChanged);
         }
 
-        public void AddVisibleIfTrue(IExpression condition, CodeBlock code)
+        public void SetToOutput(Identifier id)
+        {
+            this._currentQuestion.SetToOutput(id);
+            this._currentQuestion.ValueChanged += new EventHandler(_currentQuestion_ValueChanged);
+            this._updateList.Add(id);
+        }
+
+        void _currentQuestion_ValueChanged(object sender, EventArgs e)
+        {
+            foreach (QSExpression expr in this._updateList)
+            {
+                expr.Evaluate();
+            }
+        }
+
+        public void AddVisibleIfTrue(QSExpression condition, CodeBlock code)
         {
             StackPanel panel = new StackPanel();
 
-            // bind the visibility of the panel to the value of the expression
-            panel.DataContext = condition;
-            panel.SetBinding(StackPanel.IsVisibleProperty, "GetValue");
+            // bind the visibility to the value of the expression
+            this._updateList.Add(condition);
+
+            Binding visibleBinding = GetOneWayBinding("GetValue", condition);
+            visibleBinding.Converter = new BooleanToVisibilityConverter();
+            panel.SetBinding(StackPanel.VisibilityProperty, visibleBinding);
 
             this._currentPanel.Children.Add(panel);
             this._currentPanel = panel;
 
             code.CreateGUI(this);
-            this.EndBlock();
         }
 
-        public void AddVisibleIfFalse(IExpression condition, CodeBlock elseBlock)
+        public void AddVisibleIfFalse(QSExpression condition, CodeBlock elseBlock)
         {
             StackPanel panel = new StackPanel();
-            panel.DataContext = condition;
 
             // bind the visibility to the negation of the value of the expression
-            Binding bind = new Binding("GetValue");
-            bind.Converter = new QSLib.NotConverter();
-            panel.SetBinding(StackPanel.IsVisibleProperty, bind);
-            
+            Binding visibleBinding = GetOneWayBinding("GetValue", condition);
+            visibleBinding.Converter = new NotBoolToVisibilityConverter();
+            panel.SetBinding(StackPanel.VisibilityProperty, visibleBinding);           
+
             this._currentPanel.Children.Add(panel);
             this._currentPanel = panel;
 
             elseBlock.CreateGUI(this);
-            this.EndBlock();
+        }
+
+        private Binding GetOneWayBinding(string propertyName, QSExpression expression)
+        {
+            Binding visibleBinding = new Binding(propertyName);
+            visibleBinding.Source = expression;
+            visibleBinding.Mode = BindingMode.OneWay;
+            return visibleBinding;
         }
 
         public void EndBlock()
@@ -124,21 +145,6 @@ namespace QSLib
         public StackPanel GetResult()
         {
             return this._control;
-        }
-
-        internal void CreateBooleanIO(bool p)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal void CreateIntegerIO(bool p)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal void CreateStringIO(bool p)
-        {
-            throw new NotImplementedException();
         }
     }
 }

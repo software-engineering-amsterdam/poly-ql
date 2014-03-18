@@ -38,7 +38,7 @@ namespace QSLib
 
         public void CreateGUI(GUIBuilder guiBuilder)
         {
-            guiBuilder.CreateQuestion((string)this._text.GetValue(), this._id);
+            guiBuilder.CreateQuestion((string)this._text.Evaluate().GetValue, this._id);
         }
     }
 

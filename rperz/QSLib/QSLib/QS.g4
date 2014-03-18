@@ -54,71 +54,49 @@ statement returns [IStatement s]
 
 question_statement returns [Question q]
 	:
-	  a=STRING_LITERAL b=type_declaration { $q = new Question(new QSString($a.text,$a.line), $b.e, $a.line); }
+	  a=STRING_LITERAL b=type_declaration { $q = new Question(new QSString($a.text.Substring(1, $a.text.Length - 2),$a.line), $b.e, $a.line); }
 	;
 
 type_declaration returns [Identifier e]
-@init
-{
-	bool optionalExpr = false;
-	bool optionalType = false;
-}
 	:
 
-	  id=WORD (ASSIGN v=expression { optionalExpr = true; })? COLON TYPE_BOOL 
+	  id=WORD ASSIGN v=expression COLON TYPE_BOOL 
 					{ 
-						if(optionalExpr)
-						{
-							$e = new Identifier($id.text, new BoolType(), $v.e, $id.line);  
-						}
-						else 
-						{
-							$e = new Identifier($id.text, new BoolType(), $id.line);  
-						}
+						$e = new Identifier($id.text, new BoolType(), $v.e, $id.line);  
 					}
-	| id=WORD (ASSIGN v=expression { optionalExpr = true; })? COLON TYPE_INTEGER  
+	| id=WORD ASSIGN v=expression COLON TYPE_INTEGER  
 					{ 
-						if(optionalExpr)
-						{
-							$e = new Identifier($id.text, new NumberType(), $v.e, $id.line);  
-						}
-						else 
-						{
-							$e = new Identifier($id.text, new NumberType(), $id.line);  
-						}
+						$e = new Identifier($id.text, new NumberType(), $v.e, $id.line);  
 					}
-	 | id=WORD (ASSIGN v=expression { optionalExpr = true; })? (COLON TYPE_STRING { optionalType = true; })? 
+	| id=WORD ASSIGN v=expression  COLON TYPE_STRING
 					{ 
-						if(optionalExpr && optionalType)
-						{
-							$e = new Identifier($id.text, new StringType(), $v.e, $id.line);  
-						}
-						else if(optionalType)
-						{
-							$e = new Identifier($id.text, new StringType(), $id.line);
-						}	  
-						else if(optionalExpr)
-						{
-							$e = new Identifier($id.text, $v.e, $id.line); 
-						}
-						else
-						{
-							$e = new Identifier($id.text, $id.line);  
-						}
+						$e = new Identifier($id.text, new StringType(), $v.e, $id.line);    
+					}
+	| id=WORD COLON TYPE_BOOL 
+					{ 
+						$e = new Identifier($id.text, new BoolType(), $id.line);  
+					}
+	| id=WORD COLON TYPE_INTEGER  
+					{ 
+						$e = new Identifier($id.text, new NumberType(), $id.line);  
+					}
+	| id=WORD COLON TYPE_STRING
+					{ 
+						$e = new Identifier($id.text, new StringType(), $id.line);    
 					}
 	;
 
-num_val returns [IExpression e]
+num_val returns [QSExpression e]
 	:
 	  v=NUMBER { $e = new QSNumber(Int32.Parse($v.text), $v.line); }
 	;
 
-bool_val returns [IExpression e]
+bool_val returns [QSExpression e]
 	:
 	  v=BOOL_VAL { $e = new QSBoolean(Boolean.Parse($v.text), $v.line); }
 	;
 
-expression returns [IExpression e]
+expression returns [QSExpression e]
 	: 
 	  l=expression o=MULTIPLY r=expression { $e = new Multiply($l.e, $r.e, $o.line); } 
 	| l=expression o=DIVIDE r=expression { $e = new Divide($l.e, $r.e, $o.line); } 
@@ -135,7 +113,7 @@ expression returns [IExpression e]
 	| l=expression o=LARGER r=expression { $e = new LargerThan($l.e, $r.e, $o.line); }	
 	| d=num_val { $e = $d.e ; } 
 	| g=bool_val { $e = $g.e ; } 
-	| f=type_declaration { $e = $f.e ; } 
+	| f=WORD { $e = new Identifier($f.text, $f.line) ; } 
 	;
 
 if_statement returns [IfStatement i]

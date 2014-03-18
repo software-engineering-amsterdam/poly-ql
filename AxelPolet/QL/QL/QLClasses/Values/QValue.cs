@@ -1,9 +1,9 @@
-﻿using QL.Interpreter.Controls;
+﻿using QL.Interpreter.Controls.Input;
 
 namespace QL.QLClasses.Values
 {
     public abstract class QValue
     {
-        //public abstract InputControl AsWidget(InputControl.InputChangedEventHandler eventHandler);
+        public abstract InputControl CreateInputControl(string name, QLMemory memory, bool isComputed);
     }
 }

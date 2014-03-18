@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using QL.Interpreter;
-using QL.Interpreter.Controls;
 using QL.QLClasses.Expressions;
 using QL.QLClasses.Types;
 using QL.TypeChecker;
@@ -64,12 +63,12 @@ namespace QL.QLClasses.Statements
             }
             guiBuilder.RemoveShowCondition();
 
-            guiBuilder.SetHideCondition(_condition);
+            guiBuilder.AppendHideCondition(_condition);
             foreach (StatementBase statement in _elseBody)
             {
                 statement.Build(guiBuilder);
             }
-            guiBuilder.RemoveHideCondition();
+            guiBuilder.RemoveHideConditions();
         }
 
         #endregion

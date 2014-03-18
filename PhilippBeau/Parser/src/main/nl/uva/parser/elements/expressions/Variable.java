@@ -1,49 +1,49 @@
 package main.nl.uva.parser.elements.expressions;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.JPanel;
-
 import main.nl.uva.parser.elements.errors.InvalidTypeError;
-import main.nl.uva.parser.elements.errors.ValidationError;
-import main.nl.uva.parser.elements.expressions.atoms.VariableAtom;
 import main.nl.uva.parser.elements.type.Value;
+import main.nl.uva.parser.elements.validation.ASTValidation;
+import main.nl.uva.parser.elements.validation.Scope;
 
 public class Variable extends Expression {
 
+    private final Value _value;
+
     private final String _name;
 
-    private final Expression _expression;
-
-    private final List<VariableAtom> _linkedVariables = new ArrayList<>();
+    private Expression _expression;
 
     public Variable(final Value type, final String name, final Expression expression) {
         _value = type;
         _name = name;
         _expression = expression;
-
-        _expression.setParent(this);
     }
 
     public Variable(final Value type, final String name) {
         this(type, name, type.getAtom());
     }
 
-    @Override
-    public String toString() {
-        return "( " + _value.toString() + " " + _name + " " + _value + " )";
+    public boolean setExpression(final Expression newExpression) {
+        if (!newExpression.getValue().isOfSameType(_value)) {
+            // Type is not acceptable
+            return false;
+        }
+
+        _expression = newExpression;
+        _expression.getValue().applyValueTo(_value);
+
+        return true;
     }
 
     @Override
-    public List<ValidationError> validate() {
-        List<ValidationError> valError = _expression.validate();
+    public ASTValidation validate(final Scope scope) {
+        ASTValidation valid = _expression.validate(scope);
 
-        if (valError.isEmpty() && !_value.visitType(_expression.getType())) {
-            valError.add(new InvalidTypeError(this.toString()));
+        if (valid.hasErrors() && !_value.applyValueTo(_expression.getValue())) {
+            valid.addError(new InvalidTypeError(this.toString()));
         }
 
-        return valError;
+        return valid;
     }
 
     public String getName() {
@@ -51,15 +51,12 @@ public class Variable extends Expression {
     }
 
     @Override
-    public Value getType() {
+    public Value getValue() {
         return _value;
     }
 
-    public boolean setLinkedVariable(final VariableAtom linkedVariable) {
-        return _linkedVariables.add(linkedVariable);
-    }
-
-    public void addStuff(final JPanel panel) {
-
+    @Override
+    public String toString() {
+        return "( " + _value.toString() + " " + _name + " " + _value + " )";
     }
 }

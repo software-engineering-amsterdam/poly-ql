@@ -10,11 +10,12 @@ fragment DIGIT: [0-9];
 STRING: '"' (ESC|.)*? '"';
 fragment ESC : '\\"' | '\\\\'; // 2-char sequences \" and \\
 
-NEWLINE: '\r'? '\n'; // newlines
-
-// Types
+// Type tokens
 BOOLEAN: 'boolean';
+INTEGER: 'integer';
+DECIMAL: 'decimal';
 MONEY:   'money';
+DATE:    'date';
 TEXT:    'text';
 
 // Boolean Values
@@ -38,10 +39,10 @@ ADD: '+';
 SUB: '-';
 
 // Relational
+LTE: '<=';
+GTE: '>=';
 LT: '<';
 GT: '>';
-LTQ: '<=';
-GTQ: '>=';
 
 // Equality
 EQ: '==';
@@ -52,6 +53,7 @@ LA: '&&';
 LO: '||';
 
 // Skip rules
-WS: [ \t]+ -> skip;                     // remove whitespace
-LINE_COMMENT: '//' .*? NEWLINE -> skip; // remove single line comments
-COMMENT: '/*' .*? '*/' -> skip;         // remove multiline comments
+WHITESPACE: [ \t]+ -> skip;                // remove whitespace
+LINE_COMMENT: '//' .*? '\r'? '\n' -> skip; // remove single line comments
+MULTILINE_COMMENT: '/*' .*? '*/' -> skip;  // remove multiline comments
+NEWLINE: '\r'? '\n' -> skip;               // remove newlines

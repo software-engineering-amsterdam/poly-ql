@@ -1,0 +1,1 @@
+(init (form form test (block { (stat question : "Date1: " (type date)) (stat question2 : "Date2:" (type date)) })))

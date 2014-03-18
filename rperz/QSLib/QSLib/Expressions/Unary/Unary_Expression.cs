@@ -1,15 +1,16 @@
 ﻿using QSLib.Types;
-
+using QSLib.Values;
+using System;
+using System.ComponentModel;
 namespace QSLib.Expressions.Unary
 {
-    public abstract class Unary_Expression : IExpression 
+    public abstract class Unary_Expression : QSExpression 
     {
-        protected int _linenr;
-        protected string _operator;
-        protected IExpression _expr;
-        protected QSType _type;
 
-        public Unary_Expression(IExpression expr, int linenr)
+        protected string _operator;
+        protected QSExpression _expr;
+
+        public Unary_Expression(QSExpression expr, int linenr)
         {
             this._expr = expr;
             this._linenr = linenr;
@@ -20,7 +21,7 @@ namespace QSLib.Expressions.Unary
             return this._operator + this._expr.ToString();
         }
 
-        public virtual bool CheckType(TypeChecker checker)
+        public override bool CheckType(TypeChecker checker)
         {
             bool retVal = true;
 
@@ -36,20 +37,15 @@ namespace QSLib.Expressions.Unary
             return retVal;
         }
 
-        public abstract QSType Type
+        public override int GetHashCode()
         {
-            get;
+            return base.GetHashCode();
         }
 
         public override bool Equals(object obj)
         {
             var comp = obj as Unary_Expression;
             return comp != null && this.Type.IsCompatible(comp.Type) && ((this._expr == null && comp._expr == null) || this._expr.Equals(comp._expr));
-        }
-
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
         }
 
     }

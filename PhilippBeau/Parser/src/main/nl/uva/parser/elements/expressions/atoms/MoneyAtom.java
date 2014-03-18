@@ -1,14 +1,11 @@
 package main.nl.uva.parser.elements.expressions.atoms;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import main.nl.uva.parser.elements.errors.ValidationError;
-import main.nl.uva.parser.elements.expressions.Expression;
 import main.nl.uva.parser.elements.type.Money;
 import main.nl.uva.parser.elements.type.Value;
+import main.nl.uva.parser.elements.validation.ASTValidation;
+import main.nl.uva.parser.elements.validation.Scope;
 
-public class MoneyAtom extends Expression {
+public class MoneyAtom extends AtomExpression {
 
     public MoneyAtom() {
         this("0.0");
@@ -18,18 +15,22 @@ public class MoneyAtom extends Expression {
         _value = new Money(Double.parseDouble(value));
     }
 
+    public MoneyAtom(final Money value) {
+        _value = value;
+    }
+
+    @Override
+    public ASTValidation validate(final Scope scope) {
+        return new ASTValidation();
+    }
+
+    @Override
+    public Value getValue() {
+        return _value;
+    }
+
     @Override
     public String toString() {
         return "Money: " + _value;
-    }
-
-    @Override
-    public List<ValidationError> validate() {
-        return new ArrayList<>();
-    }
-
-    @Override
-    public Value getType() {
-        return _value;
     }
 }

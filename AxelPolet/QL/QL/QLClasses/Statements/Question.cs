@@ -56,7 +56,7 @@ namespace QL.QLClasses.Statements
 
         protected virtual void DeclareValue()
         {
-            Memory.DeclareValue(Name, new Undefined(Type));
+            Memory.DeclareValue(Name, new Undefined(Type).Evaluate());
         }
 
         #endregion
@@ -65,12 +65,7 @@ namespace QL.QLClasses.Statements
 
         public override void Build(QLGuiBuilder guiBuilder)
         {
-            if (Type.IsCompatibleWith(new QBool()))
-                guiBuilder.AppendQuestion(new GUICheckBox(Memory, Name, Label));
-            else if(Type.IsCompatibleWith(new QString()))
-                guiBuilder.AppendQuestion(new GUIStringTextBox(Memory, Name, Label));
-            else
-                guiBuilder.AppendQuestion(new GUIIntTextBox(Memory, Name, Label));
+            guiBuilder.BuildQuestion(Memory, Name, Label);
         }
 
         #endregion

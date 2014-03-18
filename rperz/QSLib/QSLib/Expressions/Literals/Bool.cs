@@ -1,20 +1,15 @@
 ﻿using QSLib.Types;
-
+using QSLib.Values;
 namespace QSLib.Expressions.Literals
 {
     public class QSBoolean : Primary 
     {
-        private bool _value;
+
         public QSBoolean(bool value, int linenr)
         {
             base._type = new BoolType();
-            this._value = value;
+            this._value = new BooleanValue(value);
             this._linenr = linenr;
-        }
-
-        public object GetValue()
-        {
-            return this._value;
         }
 
         public override string ToString()
