@@ -71,7 +71,7 @@ public class Variable extends Expression implements ExpressionChangeListener {
 
     @Override
     public String toString() {
-        return "( " + _value.toString() + " " + _name + " " + _value + " )";
+        return _name;
     }
 
     @Override

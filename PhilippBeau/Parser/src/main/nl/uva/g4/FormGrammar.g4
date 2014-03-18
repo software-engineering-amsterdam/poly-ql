@@ -49,6 +49,10 @@ boolExp returns [Expression cEx]
   	AND right=addExp {$cEx = new And($cEx, $right.cEx, new Line($AND));} 
   	| OR right=addExp {$cEx = new Or($cEx, $right.cEx, new Line($OR));}
   	| EQUAL right=addExp {$cEx = new Comparrison($cEx, $right.cEx, new Line($EQUAL));}
+  	| LOWER_THAN right=addExp {$cEx = new LowerThan($cEx, $right.cEx, new Line($LOWER_THAN));}
+  	| GRATER_THAN right=addExp {$cEx = new GraterThan($cEx, $right.cEx, new Line($GRATER_THAN));}
+  	| LOWER_EQUAL_THAN right=addExp {$cEx = new LowerEqualThan($cEx, $right.cEx, new Line($LOWER_EQUAL_THAN));}
+  	| GRATER_EQUAL_THAN right=addExp {$cEx = new GraterEqualThan($cEx, $right.cEx, new Line($GRATER_EQUAL_THAN));}
   )*
 	;
 
