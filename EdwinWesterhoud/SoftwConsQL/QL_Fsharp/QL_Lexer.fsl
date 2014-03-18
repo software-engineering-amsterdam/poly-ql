@@ -8,6 +8,7 @@ let keywords =
     [
         "form", FORM;
         "if", IF;
+        "else", ELSE;
         "boolean", QLBOOL;
         "string", QLSTRING;
         "integer", QLINT;

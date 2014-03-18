@@ -1,37 +1,49 @@
 package main.nl.uva.parser.elements.expressions;
 
-import main.nl.uva.parser.elements.type.Type;
+import main.nl.uva.parser.elements.errors.InvalidTypeError;
+import main.nl.uva.parser.elements.type.Value;
+import main.nl.uva.parser.elements.validation.ASTValidation;
+import main.nl.uva.parser.elements.validation.Scope;
 
 public class Variable extends Expression {
 
+    private final Value _value;
+
     private final String _name;
 
-    private final Expression _value;
+    private Expression _expression;
 
-    public Variable(final Type type, final String name, final Expression value) {
-        _type = type;
+    public Variable(final Value type, final String name, final Expression expression) {
+        _value = type;
         _name = name;
-        _value = value;
-
-        _value.setParent(this);
+        _expression = expression;
     }
 
-    public Variable(final Type type, final String name) {
+    public Variable(final Value type, final String name) {
         this(type, name, type.getAtom());
     }
 
-    @Override
-    public String toString() {
-        return "( " + _type.toString() + " " + _name + " " + _value + " )";
-    }
+    public boolean setExpression(final Expression newExpression) {
+        if (!newExpression.getValue().isOfSameType(_value)) {
+            // Type is not acceptable
+            return false;
+        }
 
-    @Override
-    public boolean validate() {
-        return _value.validate();
-    }
+        _expression = newExpression;
+        _expression.getValue().applyValueTo(_value);
 
-    private boolean validateType() {
         return true;
+    }
+
+    @Override
+    public ASTValidation validate(final Scope scope) {
+        ASTValidation valid = _expression.validate(scope);
+
+        if (valid.hasErrors() && !_value.applyValueTo(_expression.getValue())) {
+            valid.addError(new InvalidTypeError(this.toString()));
+        }
+
+        return valid;
     }
 
     public String getName() {
@@ -39,7 +51,12 @@ public class Variable extends Expression {
     }
 
     @Override
-    public Type getType() {
-        return _value.getType();
+    public Value getValue() {
+        return _value;
+    }
+
+    @Override
+    public String toString() {
+        return "( " + _value.toString() + " " + _name + " " + _value + " )";
     }
 }

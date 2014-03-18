@@ -1,56 +1,36 @@
 package main.nl.uva.parser.elements.statements;
 
-import java.util.List;
-
-import main.nl.uva.parser.elements.expressions.Expression;
-import main.nl.uva.parser.elements.expressions.Variable;
+import main.nl.uva.parser.elements.ui.UIElement;
+import main.nl.uva.parser.elements.validation.ASTValidation;
+import main.nl.uva.parser.elements.validation.Scope;
+import main.nl.uva.ui.UI;
 
 public class IfElseStatement extends BlockStatement {
 
-    private final List<Statement> _ifChildren;
-    private final List<Statement> _elseChildren;
-    private final Expression _expression;
+    private final IFStatement _ifStatement;
+    private final IFStatement _elseStatement;
 
-    public IfElseStatement(final Expression expression, final List<Statement> ifChildren,
-            final List<Statement> elseChildren) {
+    public IfElseStatement(final IFStatement ifStatement, final IFStatement elseStatement) {
 
-        _ifChildren = ifChildren;
-        _elseChildren = elseChildren;
+        _ifStatement = ifStatement;
+        _elseStatement = elseStatement;
+    }
 
-        setParentForChildren(_ifChildren);
-        setParentForChildren(_elseChildren);
+    @Override
+    public ASTValidation validate(final Scope scope) {
+        ASTValidation valid = _ifStatement.validate(scope);
+        valid.combine(_elseStatement.validate(scope));
 
-        _expression = expression;
+        return valid;
+    }
+
+    @Override
+    public UIElement getLayout(final UI parentUI) {
+        return null;
     }
 
     @Override
     public String toString() {
-        String erg = "if ( " + _expression + " ) { \n";
-        for (Statement child : _ifChildren) {
-            erg += child + "\n";
-        }
-
-        erg += "} else {\n";
-        for (Statement child : _elseChildren) {
-            erg += child + "\n";
-        }
-
-        return erg + "} \n";
-    }
-
-    @Override
-    public Variable findVariable(final String variableName, final Statement scopeEnd) {
-        Variable result = findVariableInChildren(_ifChildren, variableName, scopeEnd);
-
-        if (result == null) {
-            result = findVariableInChildren(_elseChildren, variableName, scopeEnd);
-        }
-
-        return result;
-    }
-
-    @Override
-    public boolean validate() {
-        return validateStatements(_ifChildren) && validateStatements(_elseChildren);
+        return _ifStatement.toString() + _elseStatement.toString();
     }
 }

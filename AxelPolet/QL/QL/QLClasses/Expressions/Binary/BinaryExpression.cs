@@ -8,7 +8,7 @@ namespace QL.QLClasses.Expressions.Binary
         protected ExpressionBase LeftExpression;
         protected ExpressionBase RightExpression; 
 
-        public BinaryExpression(ExpressionBase leftExpression, ExpressionBase rightExpression)
+        protected BinaryExpression(ExpressionBase leftExpression, ExpressionBase rightExpression)
         {
             LeftExpression = leftExpression;
             RightExpression = rightExpression;
@@ -19,7 +19,7 @@ namespace QL.QLClasses.Expressions.Binary
             return LeftExpression.CheckType(typeErrors) && RightExpression.CheckType(typeErrors);
         }
 
-        public override QBaseType GetResultType()
+        public override QType GetResultType()
         {
             return new QBool();
         }

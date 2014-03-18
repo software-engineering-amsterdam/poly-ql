@@ -1,57 +1,87 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using QL.Interpreter.Controls.Input;
 using QL.QLClasses.Expressions;
-using QL.QLClasses.Types;
+using QL.QLClasses.Values;
 
 namespace QL.Interpreter.Controls
 {
     public class GUIQuestion : StackPanel
     {
-        protected string ID;
-        protected Label Label;
-        protected QBaseType Type;
-        protected QLMemoryManager Memory;
-        protected ExpressionBase Computation;
-
-        public ExpressionBase ShowCondition { get; set; }
-        public List<ExpressionBase> DoNotShowConditions { get; set; }
-
         public delegate void ChangedEventHandler();
-        public ChangedEventHandler OnChanged { get; set; }
+
+        private readonly QLMemory _memory;
+        private readonly string _identifier;
+        private readonly Label _label;
+        private readonly bool _isComputed;
+
+        private readonly List<ExpressionBase> _hideConditions;
+        private ExpressionBase _showCondition;      
         
-        public GUIQuestion(QLMemoryManager memory, string id, string label, QBaseType type, ExpressionBase computation = null)
+        private readonly InputControl _input;
+        
+        public GUIQuestion(QLMemory memory, string identifier, string label, bool isComputed, ExpressionBase showCondition, ChangedEventHandler changeHandler)
         {
-            Memory = memory;
+            _hideConditions = new List<ExpressionBase>();
+            _showCondition = showCondition;
 
-            ID = id;
-            Type = type;
-            Computation = computation;
-            Label = new Label { Content = label, Width = 300 };
-
+            _memory = memory;
+            _identifier = identifier;            
+            _isComputed = isComputed;
+            
+            _label = new Label { Content = label, Width = 300 };
+            _input = _memory.GetDeclaredValue(_identifier).CreateInputControl(_identifier, _memory, _isComputed);
+            _input.OnChanged = changeHandler;
+            
+            //ui properties
             Orientation = Orientation.Horizontal;
             Width = 600;
-            Margin = new Thickness(0, 5, 0 ,5);
+            Margin = new Thickness(0, 5, 0 ,5); 
         }
 
-        public virtual void Render()
+        public void Render()
         {
             CheckVisibility();
-            Children.Add(Label);
+            Children.Add(_label);
+            Children.Add(_input);
+
+            _input.Render();
         }
 
-        public virtual void Refresh()
+        public void Refresh()
         {
             Children.Clear();
+        }
+        
+        public void AppendHideCondition(ExpressionBase condition)
+        {
+            _hideConditions.Add(condition);
+        }
+
+        public void SetShowCondition(ExpressionBase showCondition)
+        {
+            _showCondition = showCondition;
         }
 
         private void CheckVisibility()
         {
-            if (ShowCondition != null)
+            if (_showCondition != null)
             {
-                Visibility = Convert.ToBoolean(ShowCondition.GetResult().ToString()) ? Visibility.Visible : Visibility.Hidden;
+                Visibility = (((BoolValue)_showCondition.Evaluate()).GetValue() && !CheckHideConditions()) 
+                    ? Visibility.Visible 
+                    : Visibility.Hidden;
             }
+            else if(_hideConditions.Any())
+            {
+                Visibility = CheckHideConditions() ? Visibility.Hidden : Visibility.Visible;
+            }
+        }
+
+        private bool CheckHideConditions()
+        {
+            return (_hideConditions.Any(h => ((BoolValue) h.Evaluate()).GetValue()));
         }
     }
 }

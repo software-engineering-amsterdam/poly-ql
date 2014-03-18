@@ -66,7 +66,6 @@ public class FormCollection extends ASTNode {
         return formCollection;
     }
 
-    @Override
     public <T> T accept(IASTVisitor<T> visitor) {
         return visitor.visit(this);
     }

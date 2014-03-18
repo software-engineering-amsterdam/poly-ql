@@ -1,23 +1,18 @@
 ﻿using QSLib.Types;
-
+using QSLib.Values;
 namespace QSLib.Expressions.Literals
 {
     public class QSNumber : Primary
     {
-        private int _value;
 
-        public QSNumber(int value, int linenr)
+        public QSNumber(int value, int lineNr)
         {
             base._type = new NumberType();
-            this._value = value;
-            this._linenr = linenr;
+            this._value = new IntegerValue(value);
+            this._lineNr = lineNr;
         }
 
-        public int GetValue()
-        {
-            return this._value;
-        }
-
+        #region Object overrides
         public override string ToString()
         {
             return this._value.ToString();
@@ -29,9 +24,11 @@ namespace QSLib.Expressions.Literals
             return temp != null && base.Equals(obj) && this._value.Equals(temp._value);  
         }
 
+
         public override int GetHashCode()
         {
             return base.GetHashCode();
         }
+        #endregion
     }
 }

@@ -3,11 +3,29 @@ package main.nl.uva.parser.elements.type;
 import main.nl.uva.parser.elements.expressions.AdvancedExpression;
 import main.nl.uva.parser.elements.expressions.Expression;
 import main.nl.uva.parser.elements.expressions.atoms.MoneyAtom;
+import main.nl.uva.parser.elements.ui.DeclarationUIElement;
+import main.nl.uva.parser.elements.ui.types.MoneyUI;
+import main.nl.uva.parser.elements.ui.types.ValueUI;
 
-public class Money extends Type {
+public class Money extends Value {
+
+    private double _value;
 
     public Money() {
-        super(Type.Of.MONEY);
+        this(0.0d);
+    }
+
+    public Money(final double value) {
+        super(Value.Type.MONEY);
+        _value = value;
+    }
+
+    public void setValue(final double value) {
+        _value = value;
+    }
+
+    public double getValue() {
+        return _value;
     }
 
     @Override
@@ -16,22 +34,38 @@ public class Money extends Type {
     }
 
     @Override
-    public Type visit(final Expression right, final AdvancedExpression expression) {
-        return right.getType().accept(this, expression);
+    public Value visit(final Expression right, final AdvancedExpression expression) {
+        return right.getValue().accept(this, expression);
     }
 
     @Override
-    public Type accept(final Bool left, final AdvancedExpression expression) {
+    public Value accept(final Bool left, final AdvancedExpression expression) {
         return expression.calculateType(left, this);
     }
 
     @Override
-    public Type accept(final Money left, final AdvancedExpression expression) {
+    public Value accept(final Money left, final AdvancedExpression expression) {
         return expression.calculateType(left, this);
     }
 
     @Override
-    public Type accept(final Text left, final AdvancedExpression expression) {
+    public Value accept(final Text left, final AdvancedExpression expression) {
         return expression.calculateType(left, this);
+    }
+
+    @Override
+    public ValueUI getLayout(final DeclarationUIElement parent) {
+        return new MoneyUI(parent);
+    }
+
+    @Override
+    public boolean applyValueTo(final Value type) {
+        return type.acceptType(this);
+    }
+
+    @Override
+    public boolean acceptType(final Money type) {
+        _value = type._value;
+        return true;
     }
 }

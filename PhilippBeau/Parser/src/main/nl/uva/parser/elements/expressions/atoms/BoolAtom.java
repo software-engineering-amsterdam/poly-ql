@@ -1,15 +1,14 @@
 package main.nl.uva.parser.elements.expressions.atoms;
 
-import main.nl.uva.parser.elements.expressions.Expression;
 import main.nl.uva.parser.elements.type.Bool;
-import main.nl.uva.parser.elements.type.Type;
+import main.nl.uva.parser.elements.type.Value;
+import main.nl.uva.parser.elements.validation.ASTValidation;
+import main.nl.uva.parser.elements.validation.Scope;
 
-public class BoolAtom extends Expression {
+public class BoolAtom extends AtomExpression {
 
     private final static String TRUE = "true";
     private final static String FALSE = "false";
-
-    private final boolean _value;
 
     public BoolAtom() {
         this("false");
@@ -17,9 +16,11 @@ public class BoolAtom extends Expression {
 
     public BoolAtom(final String value) {
         assert isBoolean(value);
+        _value = new Bool(parseBoolean(value));
+    }
 
-        _type = new Bool();
-        _value = parseBoolean(value);
+    public BoolAtom(final Bool value) {
+        _value = value;
     }
 
     private static boolean isBoolean(final String value) {
@@ -31,18 +32,17 @@ public class BoolAtom extends Expression {
     }
 
     @Override
+    public ASTValidation validate(final Scope scope) {
+        return new ASTValidation();
+    }
+
+    @Override
+    public Value getValue() {
+        return _value;
+    }
+
+    @Override
     public String toString() {
         return "Bool: " + _value;
-    }
-
-    @Override
-    public boolean validate() {
-
-        return true;
-    }
-
-    @Override
-    public Type getType() {
-        return _type;
     }
 }

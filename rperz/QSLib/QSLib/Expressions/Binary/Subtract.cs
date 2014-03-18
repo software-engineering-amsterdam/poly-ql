@@ -1,13 +1,25 @@
 ﻿using QSLib.Types;
+using QSLib.Values;
+
 namespace QSLib.Expressions.Binary
 {
     class Subtract : Binary_Expression 
     {
-        public Subtract(IExpression a, IExpression b, int linenr)
-            : base(a, b, linenr)
+
+        public Subtract(QSExpression a, QSExpression b, int lineNr)
+            : base(a, b, lineNr)
         {
             base._operator = "-";
         }
+
+
+        public override Value Evaluate()
+        {
+            this._value = this._left.Evaluate().Subtract(this._right.Evaluate());
+            this.OnPropertyChanged("GetValue");
+            return this._value;
+        }
+
 
         public override QSType Type
         {

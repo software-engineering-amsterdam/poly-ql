@@ -2,36 +2,53 @@ package main.nl.uva.parser.elements.type;
 
 import main.nl.uva.parser.elements.expressions.AdvancedExpression;
 import main.nl.uva.parser.elements.expressions.Expression;
+import main.nl.uva.parser.elements.ui.DeclarationUIElement;
+import main.nl.uva.parser.elements.ui.types.ValueUI;
 
-public class Invalid extends Type {
+public class Invalid extends Value {
 
     public Invalid() {
-        super(Type.Of.INVALID);
+        super(Value.Type.INVALID);
     }
 
     @Override
     public Expression getAtom() {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
-    public Type visit(final Expression right, final AdvancedExpression expression) {
+    public boolean isInvalid() {
+        return true;
+    }
+
+    @Override
+    public Value visit(final Expression right, final AdvancedExpression expression) {
         return new Invalid();
     }
 
     @Override
-    public Type accept(final Bool left, final AdvancedExpression expression) {
+    public Value accept(final Bool left, final AdvancedExpression expression) {
         return new Invalid();
     }
 
     @Override
-    public Type accept(final Money left, final AdvancedExpression expression) {
+    public Value accept(final Money left, final AdvancedExpression expression) {
         return new Invalid();
     }
 
     @Override
-    public Type accept(final Text left, final AdvancedExpression expression) {
+    public Value accept(final Text left, final AdvancedExpression expression) {
         return new Invalid();
+    }
+
+    @Override
+    public ValueUI getLayout(final DeclarationUIElement parent) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean applyValueTo(final Value type) {
+        throw new UnsupportedOperationException();
     }
 
 }

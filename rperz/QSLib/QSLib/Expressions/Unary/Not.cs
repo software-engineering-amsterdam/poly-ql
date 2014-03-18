@@ -1,30 +1,40 @@
 ﻿using QSLib.Types;
+using QSLib.Values;
+
 namespace QSLib.Expressions.Unary
 {
     class Not : Unary_Expression
     {
-
-        public Not(IExpression left, int linenr)
-            : base(left, linenr)
+        #region Constructors
+        public Not(QSExpression left, int lineNr)
+            : base(left, lineNr)
         {
             base._operator = "!";
         }
+#endregion
 
-        public override bool CheckType(TypeChecker checker)
+        #region TypeChecker
+        public override void Check(TypeChecker checker)
         {
-            bool retVal = base.CheckType(checker);
-            if (!this._expr.Type.IsBoolean())
-                checker.ReportTypeMismatch(this._expr.Type, this._operator, this._linenr);
-            
-            return retVal;
+            checker.Check(this);
         }
+        #endregion
 
+        #region Getters
         public override QSType Type
         {
             get
             {
                 return new BoolType();
             }
+        }
+        #endregion
+
+        public override Value Evaluate()
+        {
+            this._value = this._internal.Evaluate().Not();
+            this.OnPropertyChanged("GetValue");
+            return this._value;
         }
     }
 }

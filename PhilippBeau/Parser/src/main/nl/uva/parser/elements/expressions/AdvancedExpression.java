@@ -1,80 +1,78 @@
 package main.nl.uva.parser.elements.expressions;
 
+import main.nl.uva.parser.elements.errors.InvalidTypeError;
 import main.nl.uva.parser.elements.type.Bool;
 import main.nl.uva.parser.elements.type.Invalid;
 import main.nl.uva.parser.elements.type.Money;
 import main.nl.uva.parser.elements.type.Text;
-import main.nl.uva.parser.elements.type.Type;
+import main.nl.uva.parser.elements.type.Value;
+import main.nl.uva.parser.elements.validation.ASTValidation;
+import main.nl.uva.parser.elements.validation.Scope;
 
 public abstract class AdvancedExpression extends Expression {
+    protected Value _value = null;
 
     protected Expression _left;
     protected Expression _right;
 
     public AdvancedExpression(final Expression left, final Expression right) {
-
         _left = left;
         _right = right;
-
-        _left.setParent(this);
-        _right.setParent(this);
     }
 
     @Override
-    public final boolean validate() {
-        boolean left = _left.validate();
-        boolean right = _right.validate();
-        _type = getType();
+    public final ASTValidation validate(final Scope scope) {
+        ASTValidation valid = _left.validate(scope);
+        valid.combine(_right.validate(scope));
 
-        return left && right && !(_type instanceof Invalid);
-    }
+        _value = _left.getValue().visit(_right, this);
+        notifyListeners();
 
-    @Override
-    public Type getType() {
-        if (_type != null) {
-            return _type;
+        if (_value.isInvalid()) {
+            valid.addError(new InvalidTypeError(this.toString()));
         }
 
-        _type = _left.getType().visit(_right, this);
-
-        if (_type instanceof Invalid) System.out.println(this + " is invalid");
-
-        return _type;
+        return valid;
     }
 
-    public Type calculateType(final Bool left, final Bool right) {
-        return new Bool();
+    @Override
+    public Value getValue() {
+        return _value;
     }
 
-    public Type calculateType(final Money left, final Money right) {
-        return new Money();
-    }
-
-    public Type calculateType(final Text left, final Text right) {
-        return new Text();
-    }
-
-    public final Type calculateType(final Bool left, final Money right) {
+    public Value calculateType(final Bool left, final Bool right) {
         return new Invalid();
     }
 
-    public final Type calculateType(final Bool left, final Text right) {
+    public Value calculateType(final Money left, final Money right) {
         return new Invalid();
     }
 
-    public final Type calculateType(final Money left, final Bool right) {
+    public Value calculateType(final Text left, final Text right) {
         return new Invalid();
     }
 
-    public final Type calculateType(final Money left, final Text right) {
+    public final Value calculateType(final Bool left, final Money right) {
         return new Invalid();
     }
 
-    public final Type calculateType(final Text left, final Bool right) {
+    public final Value calculateType(final Bool left, final Text right) {
         return new Invalid();
     }
 
-    public final Type calculateType(final Text left, final Money right) {
+    public final Value calculateType(final Money left, final Bool right) {
+        return new Invalid();
+    }
+
+    public final Value calculateType(final Money left, final Text right) {
+        return new Invalid();
+    }
+
+    public final Value calculateType(final Text left, final Bool right) {
+        return new Invalid();
+    }
+
+    public final Value calculateType(final Text left, final Money right) {
         return new Invalid();
     }
 }

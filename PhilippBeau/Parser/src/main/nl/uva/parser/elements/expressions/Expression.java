@@ -1,30 +1,26 @@
 package main.nl.uva.parser.elements.expressions;
 
-import main.nl.uva.parser.elements.statements.Statement;
-import main.nl.uva.parser.elements.type.Type;
+import java.util.ArrayList;
+import java.util.List;
 
-public abstract class Expression extends Statement {
+import main.nl.uva.parser.elements.ASTNode;
+import main.nl.uva.parser.elements.type.Value;
 
-    protected Type _type = null;
+public abstract class Expression extends ASTNode {
+
+    private final List<ExpressionChangeListener> _listener = new ArrayList<>();
 
     public Expression() {}
 
-    public abstract Type getType();
-
-    @Override
-    public Variable getVariable(final String variableName) {
-        return null;
+    public boolean registerListener(final ExpressionChangeListener listener) {
+        return _listener.add(listener);
     }
 
-    @Override
-    public abstract boolean validate();
-
-    @Override
-    public Variable findVariable(final String variableName, final Statement scopeEnd) {
-        if (_parent != null) {
-            return _parent.findVariable(variableName, this);
+    protected void notifyListeners() {
+        for (ExpressionChangeListener listener : _listener) {
+            listener.onChange();
         }
-
-        return null;
     }
+
+    public abstract Value getValue();
 }

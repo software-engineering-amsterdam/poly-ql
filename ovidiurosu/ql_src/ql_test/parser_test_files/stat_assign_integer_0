@@ -1,0 +1,5 @@
+// Assign Statement with Integer Type
+form test {
+    question: "How many times?" integer
+    question2: "How often?" integer
+}

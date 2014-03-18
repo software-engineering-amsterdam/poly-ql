@@ -1,46 +1,43 @@
 package main.nl.uva.parser.elements.expressions.atoms;
 
+import main.nl.uva.parser.elements.errors.VariableNotFoundError;
 import main.nl.uva.parser.elements.expressions.Expression;
-import main.nl.uva.parser.elements.expressions.Variable;
-import main.nl.uva.parser.elements.type.Type;
+import main.nl.uva.parser.elements.type.Invalid;
+import main.nl.uva.parser.elements.type.Value;
+import main.nl.uva.parser.elements.validation.ASTValidation;
+import main.nl.uva.parser.elements.validation.Scope;
 
 public class VariableAtom extends Expression {
 
     private final String _variableName;
 
-    private Variable _linkedVariable = null;
+    private Value _linkedValue = new Invalid();
 
     public VariableAtom(final String variableName) {
         _variableName = variableName;
     }
 
-    public void setLinkedVariable(final Variable variable) {
-        _linkedVariable = variable;
+    @Override
+    public ASTValidation validate(final Scope scope) {
+        ASTValidation valid = new ASTValidation();
+
+        if (scope.containsVariable(_variableName)) {
+            _linkedValue = scope.getVariableFromScope(_variableName).getValue();
+        } else {
+            valid.addError(new VariableNotFoundError(_variableName));
+        }
+
+        notifyListeners();
+        return valid;
+    }
+
+    @Override
+    public Value getValue() {
+        return _linkedValue;
     }
 
     @Override
     public String toString() {
         return _variableName;
-    }
-
-    @Override
-    public boolean validate() {
-        if (_parent == null) {
-            return false;
-        }
-
-        _linkedVariable = _parent.findVariable(_variableName, this);
-        if (_linkedVariable == null) {
-            System.err.println("Error: " + _variableName + " not found");
-        } else {
-            _type = _linkedVariable.getType();
-        }
-
-        return _linkedVariable != null;
-    }
-
-    @Override
-    public Type getType() {
-        return _type;
     }
 }
