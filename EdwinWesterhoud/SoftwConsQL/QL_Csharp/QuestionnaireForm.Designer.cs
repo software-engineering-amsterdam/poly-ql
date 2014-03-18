@@ -33,7 +33,10 @@
             // 
             // statementList1
             // 
-            this.statementList1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.statementList1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.statementList1.AutoScroll = true;
             this.statementList1.Location = new System.Drawing.Point(12, 12);
             this.statementList1.Name = "statementList1";
             this.statementList1.Size = new System.Drawing.Size(713, 444);
