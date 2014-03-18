@@ -17,8 +17,8 @@ public abstract class Value {
         TEXT,
         INVALID;
 
-        public static Expression getAtomFor(final Value.Type type) {
-            switch (type) {
+        public Expression getAtom() {
+            switch (this) {
             case MONEY:
                 return new MoneyAtom();
 
@@ -27,22 +27,6 @@ public abstract class Value {
 
             case TEXT:
                 return new TextAtom();
-
-            default:
-                return null;
-            }
-        }
-
-        public Value getTypeObject() {
-            switch (this) {
-            case MONEY:
-                return new Money();
-
-            case BOOLEAN:
-                return new Bool();
-
-            case TEXT:
-                return new Text();
 
             default:
                 return null;

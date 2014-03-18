@@ -10,7 +10,7 @@ import main.nl.uva.parser.validation.Scope;
 
 public class Variable extends Expression implements ExpressionChangeListener {
 
-    private final Value _value;
+    private final Value.Type _value;
 
     private final String _name;
 
@@ -18,7 +18,7 @@ public class Variable extends Expression implements ExpressionChangeListener {
 
     private final List<ExpressionChangeListener> _listener = new ArrayList<>();
 
-    public Variable(final Value type, final String name, final Expression expression) {
+    public Variable(final Value.Type type, final String name, final Expression expression) {
         _value = type;
         _name = name;
         _expression = expression;
@@ -26,7 +26,7 @@ public class Variable extends Expression implements ExpressionChangeListener {
         _expression.registerListener(this);
     }
 
-    public Variable(final Value type, final String name) {
+    public Variable(final Value.Type type, final String name) {
         this(type, name, type.getAtom());
     }
 
@@ -36,14 +36,13 @@ public class Variable extends Expression implements ExpressionChangeListener {
     }
 
     public boolean setExpression(final Expression newExpression) {
-        if (!newExpression.getValue().isOfSameType(_value)) {
+        if (!newExpression.getValue().isTypeOf(_value)) {
             // Type is not acceptable
             return false;
         }
 
         _expression = newExpression;
         _expression.registerListener(this);
-        _expression.getValue().applyValueTo(_value);
 
         return true;
     }
@@ -52,7 +51,7 @@ public class Variable extends Expression implements ExpressionChangeListener {
     public ASTValidation validate(final Scope scope) {
         ASTValidation valid = _expression.validate(scope);
 
-        if (valid.hasErrors() && !_value.applyValueTo(_expression.getValue())) {
+        if (!_expression.getValue().isTypeOf(_value)) {
             valid.addError(new InvalidTypeError(this.toString()));
         }
 
@@ -65,7 +64,7 @@ public class Variable extends Expression implements ExpressionChangeListener {
 
     @Override
     public Value getValue() {
-        return _value;
+        return _expression.getValue();
     }
 
     @Override
@@ -75,7 +74,6 @@ public class Variable extends Expression implements ExpressionChangeListener {
 
     @Override
     public void onChange() {
-        _expression.getValue().applyValueTo(_value);
 
         for (ExpressionChangeListener listener : _listener) {
             listener.onChange();

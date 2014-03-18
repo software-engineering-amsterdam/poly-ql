@@ -1,7 +1,6 @@
 package test.nl.uva;
 
 import java.io.IOException;
-import java.util.List;
 
 import main.nl.uva.g4.FormGrammarLexer;
 import main.nl.uva.g4.FormGrammarParser;
@@ -45,13 +44,11 @@ public class ParserTest {
         // create a parser that feeds off the tokens buffer
         FormGrammarParser parser = new FormGrammarParser(tokens);
 
-        List<Form> pf = parser.forms().data;
+        Form pf = parser.form().parsedForm;
 
-        for (Form f : pf) {
+        ASTValidation validation = pf.validate(new Scope());
+        validation.printErrors();
+        Assert.assertFalse(validation.hasErrors());
 
-            ASTValidation validation = f.validate(new Scope());
-            validation.printErrors();
-            Assert.assertFalse(validation.hasErrors());
-        }
     }
 }

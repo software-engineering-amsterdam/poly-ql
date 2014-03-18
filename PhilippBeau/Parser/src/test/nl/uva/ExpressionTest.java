@@ -7,10 +7,12 @@ import main.nl.uva.parser.element.expression.Division;
 import main.nl.uva.parser.element.expression.Multiplication;
 import main.nl.uva.parser.element.expression.Or;
 import main.nl.uva.parser.element.expression.Substraction;
+import main.nl.uva.parser.element.expression.Variable;
 import main.nl.uva.parser.element.expression.atom.BoolAtom;
 import main.nl.uva.parser.element.expression.atom.MoneyAtom;
 import main.nl.uva.parser.element.type.Bool;
 import main.nl.uva.parser.element.type.Money;
+import main.nl.uva.parser.element.type.Value;
 import main.nl.uva.parser.validation.Scope;
 
 import org.junit.Assert;
@@ -99,5 +101,13 @@ public class ExpressionTest {
 
         value = (Bool) expression.getValue();
         Assert.assertFalse(value.getValue());
+    }
+
+    @Test
+    public void testVariable() {
+        Variable variable = new Variable(Value.Type.MONEY, "payment", new Multiplication(new MoneyAtom("3"), new MoneyAtom("5")));
+        Assert.assertEquals(variable.getName(), "payment");
+        Assert.assertTrue(variable.getValue().isTypeOf(Value.Type.MONEY));
+        Assert.assertEquals(new Multiplication(new MoneyAtom("3"), new MoneyAtom("5")).getValue(), variable.getValue());
     }
 }

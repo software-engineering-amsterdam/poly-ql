@@ -13,8 +13,7 @@ import main.nl.uva.parser.element.statement.Declaration;
 import main.nl.uva.parser.element.statement.IF;
 import main.nl.uva.parser.element.statement.IfElse;
 import main.nl.uva.parser.element.statement.Statement;
-import main.nl.uva.parser.element.type.Bool;
-import main.nl.uva.parser.element.type.Money;
+import main.nl.uva.parser.element.type.Value;
 import main.nl.uva.parser.validation.Scope;
 
 import org.junit.Assert;
@@ -33,8 +32,8 @@ public class ValidationTest {
     @Test
     public void testValidVariableValidation() {
 
-        Variable v1 = new Variable(new Bool(), "testVar");
-        Variable v2 = new Variable(new Bool(), "testVar", new VariableAtom("testVar"));
+        Variable v1 = new Variable(Value.Type.BOOLEAN, "testVar");
+        Variable v2 = new Variable(Value.Type.BOOLEAN, "testVar", new VariableAtom("testVar"));
 
         Declaration decStatement1 = new Declaration(v1, "declares variable");
         Declaration decStatement2 = new Declaration(v2, "uses variabe");
@@ -50,8 +49,8 @@ public class ValidationTest {
     @Test
     public void testInvalidVariableValidation() {
 
-        Variable v1 = new Variable(new Bool(), "testVar");
-        Variable v2 = new Variable(new Bool(), "testVar", new VariableAtom("testVar"));
+        Variable v1 = new Variable(Value.Type.BOOLEAN, "testVar");
+        Variable v2 = new Variable(Value.Type.BOOLEAN, "testVar", new VariableAtom("testVar"));
 
         Declaration decStatement1 = new Declaration(v1, "declares variable");
         Declaration decStatement2 = new Declaration(v2, "uses variabe");
@@ -67,8 +66,8 @@ public class ValidationTest {
     @Test
     public void testValidExpression() {
 
-        Variable v1 = new Variable(new Bool(), "testBoolean");
-        Variable v2 = new Variable(new Bool(), "testBoolean2");
+        Variable v1 = new Variable(Value.Type.BOOLEAN, "testBoolean");
+        Variable v2 = new Variable(Value.Type.BOOLEAN, "testBoolean2");
 
         And andExpression = new And(v1, v2);
 
@@ -78,8 +77,8 @@ public class ValidationTest {
     @Test
     public void testInvalidExpression() {
 
-        Variable v1 = new Variable(new Bool(), "testBoolean");
-        Variable v2 = new Variable(new Money(), "testMoney");
+        Variable v1 = new Variable(Value.Type.BOOLEAN, "testBoolean");
+        Variable v2 = new Variable(Value.Type.MONEY, "testMoney");
 
         And andExpression = new And(v1, v2);
 
@@ -89,13 +88,13 @@ public class ValidationTest {
     @Test
     public void testIfElseValid() {
 
-        Variable v1 = new Variable(new Bool(), "testVar");
+        Variable v1 = new Variable(Value.Type.BOOLEAN, "testVar");
         List<Statement> children = new ArrayList<Statement>();
         children.add(new Declaration(v1, "declares variable"));
 
-        Variable v2 = new Variable(new Bool(), "testVarUser", new VariableAtom("testVar"));
-        Variable v3 = new Variable(new Bool(), "testBoolean");
-        Variable v4 = new Variable(new Money(), "testMoney");
+        Variable v2 = new Variable(Value.Type.BOOLEAN, "testVarUser", new VariableAtom("testVar"));
+        Variable v3 = new Variable(Value.Type.BOOLEAN, "testBoolean");
+        Variable v4 = new Variable(Value.Type.MONEY, "testMoney");
 
         Declaration decStatement1 = new Declaration(v3, "declares variable");
         Declaration decStatement2 = new Declaration(v4, "uses variabe");
@@ -121,9 +120,9 @@ public class ValidationTest {
     public void testIfElseInvalid() {
         List<Statement> children = new ArrayList<Statement>();
 
-        Variable v2 = new Variable(new Bool(), "testVarUser", new VariableAtom("testVar"));
-        Variable v3 = new Variable(new Bool(), "testBoolean");
-        Variable v4 = new Variable(new Money(), "testMoney");
+        Variable v2 = new Variable(Value.Type.BOOLEAN, "testVarUser", new VariableAtom("testVar"));
+        Variable v3 = new Variable(Value.Type.BOOLEAN, "testBoolean");
+        Variable v4 = new Variable(Value.Type.MONEY, "testMoney");
 
         Declaration decStatement1 = new Declaration(v3, "declares variable");
         Declaration decStatement2 = new Declaration(v4, "uses variabe");

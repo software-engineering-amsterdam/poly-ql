@@ -9,13 +9,13 @@ grammar FormGrammar;
 	import main.nl.uva.parser.element.*;
 }
 
-forms returns [List<Form> data] 
-@init {$data = new ArrayList<Form>();}
-	:(f=form {$data.add($f.f);})+ EOF  
-	;
+//forms returns [List<Form> data] 
+//@init {$data = new ArrayList<Form>();}
+//	:(f=form {$data.add($f.f);})+ EOF  
+//	;
 
-form returns [Form f]
-	: 'form' id=ID children=block {$f = new Form($id.text, $children.data);}  
+form returns [Form parsedForm]
+	: 'form' id=ID children=block {$parsedForm= new Form($id.text, $children.data);} EOF
 	;
 
 //Adds all subelements inside the block to the parent statement
@@ -80,10 +80,10 @@ atom returns [Expression cEx]
 	| '(' bE=boolExp ')' {$cEx = $bE.cEx;}
 	;
 
-simpleType returns [Value type]
-	: BOOLEAN {$type = new Bool();}
-    | MONEY {$type = new Money();}
-    | TEXT {$type = new Text();}
+simpleType returns [Value.Type type]
+	: BOOLEAN {$type = Value.Type.BOOLEAN;}
+    | MONEY {$type = Value.Type.MONEY;}
+    | TEXT {$type = Value.Type.TEXT;}
     ;
 
 boolLiteral

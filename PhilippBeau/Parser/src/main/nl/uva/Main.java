@@ -34,8 +34,7 @@ public class Main {
 
         // create a parser that feeds off the tokens buffer
         FormGrammarParser parser = new FormGrammarParser(tokens);
-
-        Form pf = parser.forms().data.get(0);
+        Form pf = parser.form().parsedForm;
 
         ASTValidation validation = pf.validate(new Scope());
         if (!validation.hasErrors()) {
