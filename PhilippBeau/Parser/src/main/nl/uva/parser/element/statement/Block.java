@@ -4,7 +4,7 @@ import java.util.List;
 
 import main.nl.uva.parser.validation.Scope;
 
-public abstract class BlockStatement extends Statement {
+public abstract class Block extends Statement {
 
     @Override
     public void removeYourselfFromScope(final Scope scope) {}

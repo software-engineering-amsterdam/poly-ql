@@ -5,7 +5,7 @@ import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
-import main.nl.uva.parser.element.statement.ParserForm;
+import main.nl.uva.parser.element.Form;
 import main.nl.uva.parser.element.statement.Statement;
 import main.nl.uva.ui.UI;
 
@@ -13,7 +13,7 @@ public class FormUI extends UIElement {
 
     private final List<Statement> _block;
 
-    public FormUI(final ParserForm form, final List<Statement> block, final UI parentUI) {
+    public FormUI(final Form form, final List<Statement> block, final UI parentUI) {
         super(parentUI);
         _block = block;
     }

@@ -7,13 +7,13 @@ import main.nl.uva.ui.UI;
 import main.nl.uva.ui.element.DeclarationUI;
 import main.nl.uva.ui.element.UIElement;
 
-public class DeclarationStatement extends Statement {
+public class Declaration extends Statement {
 
     protected final String _function;
 
     protected final Variable _variable;
 
-    public DeclarationStatement(final Variable variable, final String function) {
+    public Declaration(final Variable variable, final String function) {
         _function = function;
         _variable = variable;
     }

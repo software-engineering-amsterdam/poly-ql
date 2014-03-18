@@ -5,12 +5,12 @@ import main.nl.uva.parser.validation.Scope;
 import main.nl.uva.ui.UI;
 import main.nl.uva.ui.element.UIElement;
 
-public class IfElseStatement extends BlockStatement {
+public class IfElse extends Block {
 
-    private final IFStatement _ifStatement;
-    private final IFStatement _elseStatement;
+    private final IF _ifStatement;
+    private final IF _elseStatement;
 
-    public IfElseStatement(final IFStatement ifStatement, final IFStatement elseStatement) {
+    public IfElse(final IF ifStatement, final IF elseStatement) {
 
         _ifStatement = ifStatement;
         _elseStatement = elseStatement;

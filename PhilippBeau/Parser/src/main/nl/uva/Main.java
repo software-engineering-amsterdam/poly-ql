@@ -5,7 +5,7 @@ import java.io.FileInputStream;
 
 import main.nl.uva.g4.FormGrammarLexer;
 import main.nl.uva.g4.FormGrammarParser;
-import main.nl.uva.parser.element.statement.ParserForm;
+import main.nl.uva.parser.element.Form;
 import main.nl.uva.parser.validation.ASTValidation;
 import main.nl.uva.parser.validation.Scope;
 import main.nl.uva.ui.UI;
@@ -35,7 +35,7 @@ public class Main {
         // create a parser that feeds off the tokens buffer
         FormGrammarParser parser = new FormGrammarParser(tokens);
 
-        ParserForm pf = parser.forms().data.get(0);
+        Form pf = parser.forms().data.get(0);
 
         ASTValidation validation = pf.validate(new Scope());
         if (!validation.hasErrors()) {

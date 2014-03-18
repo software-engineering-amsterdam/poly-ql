@@ -6,15 +6,16 @@ grammar FormGrammar;
 	import main.nl.uva.parser.element.expression.*;
 	import main.nl.uva.parser.element.expression.atom.*;
 	import main.nl.uva.parser.element.type.*;
+	import main.nl.uva.parser.element.*;
 }
 
-forms returns [List<ParserForm> data] 
-@init {$data = new ArrayList<ParserForm>();}
+forms returns [List<Form> data] 
+@init {$data = new ArrayList<Form>();}
 	:(f=form {$data.add($f.f);})+ EOF  
 	;
 
-form returns [ParserForm f]
-	: 'form' id=ID children=block {$f = new ParserForm($id.text, $children.data);}  
+form returns [Form f]
+	: 'form' id=ID children=block {$f = new Form($id.text, $children.data);}  
 	;
 
 //Adds all subelements inside the block to the parent statement
@@ -24,18 +25,18 @@ block returns [List<Statement> data]
 
 statement returns [Statement current]
 	: ID ':' STRING sType=simpleType 
-	{$current = new DeclarationStatement(new Variable($sType.type, $ID.text), $STRING.text);}
+	{$current = new Declaration(new Variable($sType.type, $ID.text), $STRING.text);}
 	LINEEND 
 	
     | ID ':' STRING sType=simpleType '(' ex=expression')'  	
-    { $current = new ExpressionStatement(new Variable($sType.type, $ID.text, $ex.cEx), $STRING.text);} 
+    { $current = new FixedDeclaration(new Variable($sType.type, $ID.text, $ex.cEx), $STRING.text);} 
     LINEEND
     
     | 'if' '(' ex=expression ')' ifBlock=block 
-    {$current = new IFStatement($ex.cEx, $ifBlock.data);} 				
+    {$current = new IF($ex.cEx, $ifBlock.data);} 				
     
     | 'if' '(' ex=expression ')' ifBlock=block 'else' elseBlock=block
-    { $current = new IfElseStatement(new IFStatement($ex.cEx, $ifBlock.data), new IFStatement(new Not($ex.cEx), $elseBlock.data));} 
+    { $current = new IfElse(new IF($ex.cEx, $ifBlock.data), new IF(new Not($ex.cEx), $elseBlock.data));} 
     ;
 
 expression returns [Expression cEx]

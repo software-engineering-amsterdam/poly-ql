@@ -1,21 +1,21 @@
-package main.nl.uva.parser.element.statement;
+package main.nl.uva.parser.element;
 
 import java.util.List;
 
-import main.nl.uva.parser.element.ASTNode;
+import main.nl.uva.parser.element.statement.Statement;
 import main.nl.uva.parser.validation.ASTValidation;
 import main.nl.uva.parser.validation.Scope;
 import main.nl.uva.ui.UI;
 import main.nl.uva.ui.element.FormUI;
 import main.nl.uva.ui.element.UIElement;
 
-public class ParserForm extends ASTNode {
+public class Form extends ASTNode {
 
     private final List<Statement> _children;
 
     private final String _id;
 
-    public ParserForm(final String id, final List<Statement> children) {
+    public Form(final String id, final List<Statement> children) {
         _id = id;
         _children = children;
     }
@@ -25,7 +25,7 @@ public class ParserForm extends ASTNode {
         return validateChildren(new ASTValidation(), _children, scope);
     }
 
-    public UIElement getLayout(final ParserForm form, final UI parentUI) {
+    public UIElement getLayout(final Form form, final UI parentUI) {
         return new FormUI(form, _children, parentUI);
     }
 

@@ -5,7 +5,7 @@ import java.util.List;
 
 import main.nl.uva.g4.FormGrammarLexer;
 import main.nl.uva.g4.FormGrammarParser;
-import main.nl.uva.parser.element.statement.ParserForm;
+import main.nl.uva.parser.element.Form;
 import main.nl.uva.parser.validation.ASTValidation;
 import main.nl.uva.parser.validation.Scope;
 
@@ -45,9 +45,9 @@ public class ParserTest {
         // create a parser that feeds off the tokens buffer
         FormGrammarParser parser = new FormGrammarParser(tokens);
 
-        List<ParserForm> pf = parser.forms().data;
+        List<Form> pf = parser.forms().data;
 
-        for (ParserForm f : pf) {
+        for (Form f : pf) {
 
             ASTValidation validation = f.validate(new Scope());
             validation.printErrors();

@@ -5,9 +5,9 @@ import main.nl.uva.ui.UI;
 import main.nl.uva.ui.element.ExpressionUI;
 import main.nl.uva.ui.element.UIElement;
 
-public class ExpressionStatement extends DeclarationStatement {
+public class FixedDeclaration extends Declaration {
 
-    public ExpressionStatement(final Variable variable, final String function) {
+    public FixedDeclaration(final Variable variable, final String function) {
         super(variable, function);
     }
 

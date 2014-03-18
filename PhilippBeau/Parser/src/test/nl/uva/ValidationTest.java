@@ -3,15 +3,15 @@ package test.nl.uva;
 import java.util.ArrayList;
 import java.util.List;
 
+import main.nl.uva.parser.element.Form;
 import main.nl.uva.parser.element.error.ValidationError;
 import main.nl.uva.parser.element.expression.And;
 import main.nl.uva.parser.element.expression.Not;
 import main.nl.uva.parser.element.expression.Variable;
 import main.nl.uva.parser.element.expression.atom.VariableAtom;
-import main.nl.uva.parser.element.statement.DeclarationStatement;
-import main.nl.uva.parser.element.statement.IFStatement;
-import main.nl.uva.parser.element.statement.IfElseStatement;
-import main.nl.uva.parser.element.statement.ParserForm;
+import main.nl.uva.parser.element.statement.Declaration;
+import main.nl.uva.parser.element.statement.IF;
+import main.nl.uva.parser.element.statement.IfElse;
 import main.nl.uva.parser.element.statement.Statement;
 import main.nl.uva.parser.element.type.Bool;
 import main.nl.uva.parser.element.type.Money;
@@ -36,13 +36,13 @@ public class ValidationTest {
         Variable v1 = new Variable(new Bool(), "testVar");
         Variable v2 = new Variable(new Bool(), "testVar", new VariableAtom("testVar"));
 
-        DeclarationStatement decStatement1 = new DeclarationStatement(v1, "declares variable");
-        DeclarationStatement decStatement2 = new DeclarationStatement(v2, "uses variabe");
+        Declaration decStatement1 = new Declaration(v1, "declares variable");
+        Declaration decStatement2 = new Declaration(v2, "uses variabe");
 
         List<Statement> children = new ArrayList<Statement>();
         children.add(decStatement1);
         children.add(decStatement2);
-        ParserForm form = new ParserForm("testForm", children);
+        Form form = new Form("testForm", children);
 
         Assert.assertTrue("Valid statement was marked invalid", !form.validate(new Scope()).hasErrors());
     }
@@ -53,13 +53,13 @@ public class ValidationTest {
         Variable v1 = new Variable(new Bool(), "testVar");
         Variable v2 = new Variable(new Bool(), "testVar", new VariableAtom("testVar"));
 
-        DeclarationStatement decStatement1 = new DeclarationStatement(v1, "declares variable");
-        DeclarationStatement decStatement2 = new DeclarationStatement(v2, "uses variabe");
+        Declaration decStatement1 = new Declaration(v1, "declares variable");
+        Declaration decStatement2 = new Declaration(v2, "uses variabe");
 
         List<Statement> children = new ArrayList<Statement>();
         children.add(decStatement2);
         children.add(decStatement1);
-        ParserForm form = new ParserForm("testForm", children);
+        Form form = new Form("testForm", children);
 
         Assert.assertTrue("Invalid statement was not marked invalid", form.validate(new Scope()).hasErrors());
     }
@@ -91,14 +91,14 @@ public class ValidationTest {
 
         Variable v1 = new Variable(new Bool(), "testVar");
         List<Statement> children = new ArrayList<Statement>();
-        children.add(new DeclarationStatement(v1, "declares variable"));
+        children.add(new Declaration(v1, "declares variable"));
 
         Variable v2 = new Variable(new Bool(), "testVarUser", new VariableAtom("testVar"));
         Variable v3 = new Variable(new Bool(), "testBoolean");
         Variable v4 = new Variable(new Money(), "testMoney");
 
-        DeclarationStatement decStatement1 = new DeclarationStatement(v3, "declares variable");
-        DeclarationStatement decStatement2 = new DeclarationStatement(v4, "uses variabe");
+        Declaration decStatement1 = new Declaration(v3, "declares variable");
+        Declaration decStatement2 = new Declaration(v4, "uses variabe");
 
         List<Statement> ifBlock = new ArrayList<>();
         ifBlock.add(decStatement1);
@@ -106,13 +106,13 @@ public class ValidationTest {
         List<Statement> elseBlock = new ArrayList<>();
         elseBlock.add(decStatement2);
 
-        IFStatement ifStatement = new IFStatement(v2, ifBlock);
-        IFStatement elseStatement = new IFStatement(new Not(v2), elseBlock);
+        IF ifStatement = new IF(v2, ifBlock);
+        IF elseStatement = new IF(new Not(v2), elseBlock);
 
-        IfElseStatement ifElse = new IfElseStatement(ifStatement, elseStatement);
+        IfElse ifElse = new IfElse(ifStatement, elseStatement);
 
         children.add(ifElse);
-        ParserForm form = new ParserForm("testForm", children);
+        Form form = new Form("testForm", children);
 
         Assert.assertFalse("Valid statement was marked invalid", form.validate(new Scope()).hasErrors());
     }
@@ -125,8 +125,8 @@ public class ValidationTest {
         Variable v3 = new Variable(new Bool(), "testBoolean");
         Variable v4 = new Variable(new Money(), "testMoney");
 
-        DeclarationStatement decStatement1 = new DeclarationStatement(v3, "declares variable");
-        DeclarationStatement decStatement2 = new DeclarationStatement(v4, "uses variabe");
+        Declaration decStatement1 = new Declaration(v3, "declares variable");
+        Declaration decStatement2 = new Declaration(v4, "uses variabe");
 
         List<Statement> ifBlock = new ArrayList<>();
         ifBlock.add(decStatement1);
@@ -134,13 +134,13 @@ public class ValidationTest {
         List<Statement> elseBlock = new ArrayList<>();
         elseBlock.add(decStatement2);
 
-        IFStatement ifStatement = new IFStatement(v2, ifBlock);
-        IFStatement elseStatement = new IFStatement(new Not(v2), elseBlock);
+        IF ifStatement = new IF(v2, ifBlock);
+        IF elseStatement = new IF(new Not(v2), elseBlock);
 
-        IfElseStatement ifElse = new IfElseStatement(ifStatement, elseStatement);
+        IfElse ifElse = new IfElse(ifStatement, elseStatement);
 
         children.add(ifElse);
-        ParserForm form = new ParserForm("testForm", children);
+        Form form = new Form("testForm", children);
 
         Assert.assertTrue("Invalid statement was not marked invalid", form.validate(new Scope()).hasErrors());
     }
