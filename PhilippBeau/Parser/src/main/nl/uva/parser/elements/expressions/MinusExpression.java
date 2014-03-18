@@ -1,22 +1,22 @@
 package main.nl.uva.parser.elements.expressions;
 
-import main.nl.uva.parser.elements.type.Bool;
+import main.nl.uva.parser.elements.type.Money;
 import main.nl.uva.parser.elements.type.Value;
 import main.nl.uva.parser.elements.validation.ASTValidation;
 import main.nl.uva.parser.elements.validation.Scope;
 
-public class NotExpression extends Expression {
+public class MinusExpression extends Expression {
 
     private final Expression _expression;
 
-    public NotExpression(final Expression expression) {
+    public MinusExpression(final Expression expression) {
         _expression = expression;
     }
 
     @Override
     public Value getValue() {
-        Bool bool = (Bool) _expression.getValue();
-        return new Bool(!bool.getValue());
+        Money money = (Money) _expression.getValue();
+        return new Money(-money.getValue());
     }
 
     @Override

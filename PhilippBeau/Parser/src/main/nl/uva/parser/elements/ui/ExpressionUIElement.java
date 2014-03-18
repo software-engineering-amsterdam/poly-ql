@@ -18,4 +18,19 @@ public class ExpressionUIElement extends DeclarationUIElement {
 
         return panel;
     }
+
+    @Override
+    public void onChange(final boolean newValue) {
+        recalculateForm();
+    }
+
+    @Override
+    public void onChange(final double newValue) {
+        recalculateForm();
+    }
+
+    @Override
+    public void onChange(final String newValue) {
+        recalculateForm();
+    }
 }

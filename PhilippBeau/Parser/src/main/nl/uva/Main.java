@@ -2,7 +2,6 @@ package main.nl.uva;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.List;
 
 import main.nl.uva.g4.FormGrammarLexer;
 import main.nl.uva.g4.FormGrammarParser;
@@ -36,20 +35,16 @@ public class Main {
         // create a parser that feeds off the tokens buffer
         FormGrammarParser parser = new FormGrammarParser(tokens);
 
-        List<ParserForm> pf = parser.forms().data;
+        ParserForm pf = parser.forms().data.get(0);
 
-        for (ParserForm f : pf) {
-            // System.out.println(f);
-
-            ASTValidation validation = f.validate(new Scope());
-            if (!validation.hasErrors()) {
-                System.out.println("All OK");
-            } else {
-                validation.printErrors();
-            }
+        ASTValidation validation = pf.validate(new Scope());
+        if (!validation.hasErrors()) {
+            System.out.println("All OK");
+            UI ui = new UI(pf);
+            ui.setVisible(true);
+        } else {
+            validation.printErrors();
         }
 
-        UI ui = new UI(pf.get(0));
-        ui.setVisible(true);
     }
 }

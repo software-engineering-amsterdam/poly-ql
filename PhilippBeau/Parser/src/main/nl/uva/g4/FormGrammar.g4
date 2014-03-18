@@ -39,35 +39,44 @@ statement returns [Statement current]
     ;
 
 expression returns [Expression cEx]
-	: left=equalsExp {$cEx = $left.cEx;} 
+	: left=boolExp {$cEx = $left.cEx;} 
 	;
 
-equalsExp returns [Expression cEx]
-	: left=boolExp {$cEx = $left.cEx;} 
-  (EQUAL right=boolExp {$cEx = new ComparrisonExpression($left.cEx, $right.cEx);})*
-	;
+//equalsExp returns [Expression cEx]
+//	: left=boolExp {$cEx = $left.cEx;} 
+//  (EQUAL right=boolExp {$cEx = new ComparrisonExpression($left.cEx, $right.cEx);})*
+//	;
 
 boolExp returns [Expression cEx]
 	: left=addExp {$cEx = $left.cEx;} 
-  (AND right=addExp {$cEx = new AndExpression($left.cEx, $right.cEx);} | OR right=addExp {$cEx = new OrExpression($left.cEx, $right.cEx);})*
+  (
+  	AND right=addExp {$cEx = new AndExpression($cEx, $right.cEx);} 
+  	| OR right=addExp {$cEx = new OrExpression($cEx, $right.cEx);}
+  	| EQUAL right=addExp {$cEx = new ComparrisonExpression($cEx, $right.cEx);}
+  )*
 	;
 
 addExp returns [Expression cEx]
   : left=multExp {$cEx = $left.cEx;} 
-  (ADD right=multExp {$cEx = new AdditionExpression($left.cEx, $right.cEx);} | SUB right=multExp {$cEx = new SubstractionExpression($left.cEx, $right.cEx);})*
+  (ADD right=multExp {$cEx = new AdditionExpression($cEx, $right.cEx);} | SUB right=multExp {$cEx = new SubstractionExpression($cEx, $right.cEx);})*
   ;
 
 multExp returns [Expression cEx]
-  : left=atom {$cEx = $left.cEx;} 
-  (MUL right=atom {$cEx = new MultiplicationExpression($left.cEx, $right.cEx);} | DIV right=atom {$cEx = new MultiplicationExpression($left.cEx, $right.cEx);})*
+  : left=prefix {$cEx = $left.cEx;} 
+  (MUL right=prefix {$cEx = new MultiplicationExpression($cEx, $right.cEx);} | DIV right=prefix {$cEx = new MultiplicationExpression($cEx, $right.cEx);})*
   ;
+
+prefix returns [Expression cEx]
+	: '!' bE=atom {$cEx = new NotExpression($bE.cEx);}
+	| '-' bE=atom {$cEx = new MinusExpression($bE.cEx);}
+	| at=atom {$cEx = $at.cEx;}
+	;
 
 atom returns [Expression cEx]
 	: ID {$cEx = new VariableAtom($ID.text);}
 	| nL=numLiteral {$cEx = new MoneyAtom($nL.text);}
 	| bL=boolLiteral {$cEx = new BoolAtom($bL.text);}
 	| '(' bE=boolExp ')' {$cEx = $bE.cEx;}
-	| '!' bE=boolExp {$cEx = new NotExpression($bE.cEx);}
 	;
 
 simpleType returns [Value type]
