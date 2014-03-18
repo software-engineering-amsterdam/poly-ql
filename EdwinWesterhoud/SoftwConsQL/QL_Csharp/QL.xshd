@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" ?>
+<SyntaxDefinition name="QL" extensions=".ql">
+	
+	<Properties>
+        <Property name="LineComment" value="//"/>
+	</Properties>
+
+	<Digits name="Digits" bold="false" italic="false" color="DarkBlue" />
+
+	<RuleSets>
+		<RuleSet ignorecase="false">
+            <Delimiters>&amp;&lt;&gt;~!%^*()-+=|\#/{}[]:;"' ,   .?</Delimiters>
+
+            <MarkFollowing bold = "true" italic = "false" color = "MidnightBlue">form</MarkFollowing>
+
+            <KeyWords name = "Punctuation" bold = "false" italic = "false" color = "DarkGreen">
+                <Key word = "(" />
+                <Key word = ")" />
+                <Key word = "+" />
+                <Key word = "-" />
+                <Key word = "/" />
+                <Key word = "*" />
+                <Key word = "&lt;" />
+                <Key word = "&gt;" />
+                <Key word = "^" />
+                <Key word = "=" />
+                <Key word = "!" />
+                <Key word = "|" />
+                <Key word = "&amp;" />
+            </KeyWords>
+
+            <KeyWords name = "Keywords" bold = "true" italic = "false" color = "DarkGreen">
+                <Key word = "form" />
+                <Key word = "boolean" />
+                <Key word = "string" />
+                <Key word = "integer" />
+                <Key word = "decimal" />
+                <Key word = "if" />
+                <Key word = "else" />
+            </KeyWords>
+		</RuleSet>
+	</RuleSets>
+</SyntaxDefinition>

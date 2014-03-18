@@ -6,8 +6,9 @@ import java.util.List;
 
 import main.nl.uva.g4.FormGrammarLexer;
 import main.nl.uva.g4.FormGrammarParser;
-import main.nl.uva.parser.elements.errors.ValidationError;
 import main.nl.uva.parser.elements.statements.ParserForm;
+import main.nl.uva.parser.elements.validation.ASTValidation;
+import main.nl.uva.parser.elements.validation.Scope;
 import main.nl.uva.ui.UI;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
@@ -40,13 +41,11 @@ public class Main {
         for (ParserForm f : pf) {
             // System.out.println(f);
 
-            List<ValidationError> validation = f.validate();
-            if (validation.isEmpty()) {
+            ASTValidation validation = f.validate(new Scope());
+            if (!validation.hasErrors()) {
                 System.out.println("All OK");
             } else {
-                for (ValidationError error : validation) {
-                    System.out.println(error);
-                }
+                validation.printErrors();
             }
         }
 

@@ -1,19 +1,24 @@
 ﻿using QSLib.Types;
+using QSLib.Values;
 
 namespace QSLib.Expressions.Binary
 {
     class SmallerThan_Equals : Binary_Expression
     {
-        public SmallerThan_Equals(IExpression a, IExpression b, int linenr)
-            : base(a, b, linenr)
+
+        public SmallerThan_Equals(QSExpression a, QSExpression b, int lineNr)
+            : base(a, b, lineNr)
         {
             base._operator = "<=";
         }
 
-        public object GetValue()
+        public override Value Evaluate()
         {
-            return (int)this._left.GetValue() <= (int)this._right.GetValue();
+            this._value = this._left.Evaluate().SmallerThan_Equals(this._right.Evaluate());
+            this.OnPropertyChanged("GetValue");
+            return this._value;
         }
+
 
         public override QSType Type
         {

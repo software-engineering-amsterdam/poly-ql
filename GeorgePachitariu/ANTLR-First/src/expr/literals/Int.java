@@ -33,7 +33,7 @@ public class Int extends Literal {
 
 	@Override
 	public String toString() {
-		return "int";
+		return String.valueOf(this.value);
 	}
 
 	@Override
@@ -75,7 +75,7 @@ public class Int extends Literal {
 
 	@Override
 	public Literal div(int value) {
-		return new Int(this.value/value);
+		return new Int(value/this.value);
 	}
 
 	@Override
@@ -85,7 +85,7 @@ public class Int extends Literal {
 
 	@Override
 	public Literal mul(int value) {
-		return new Int(this.value/value);
+		return new Int(value*this.value);
 	}
 
 	@Override
@@ -95,7 +95,7 @@ public class Int extends Literal {
 
 	@Override
 	public Literal sub(int value) {
-		return new Int(this.value-value);
+		return new Int(value-this.value);
 	}
 
 	@Override
@@ -115,7 +115,7 @@ public class Int extends Literal {
 
 	@Override
 	public Literal geq(int value) {
-		return new Bool(this.value>=value);
+		return new Bool(value>=this.value);
 	}
 
 	@Override
@@ -125,7 +125,7 @@ public class Int extends Literal {
 
 	@Override
 	public Literal gt(int value) {
-		return new Bool(this.value>value);
+		return new Bool(value>this.value);
 	}
 
 	@Override
@@ -135,7 +135,7 @@ public class Int extends Literal {
 
 	@Override
 	public Literal leq(int value) {
-		return new Bool(this.value<=value);
+		return new Bool(value<=this.value);
 	}
 
 	@Override
@@ -145,7 +145,7 @@ public class Int extends Literal {
 
 	@Override
 	public Literal lt(int value) {
-		return new Bool(this.value<value);
+		return new Bool(value<this.value);
 	}
 
 	@Override

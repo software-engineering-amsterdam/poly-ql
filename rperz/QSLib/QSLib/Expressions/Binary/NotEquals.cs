@@ -1,20 +1,25 @@
 ﻿using System;
 using QSLib.Types;
+using QSLib.Values;
+
 namespace QSLib.Expressions.Binary
 {
     class NotEquals : Binary_Expression
     {
         protected new String _operator = "!=";
 
-        public NotEquals(IExpression a, IExpression b, int linenr)
-            : base(a, b, linenr)
+        public NotEquals(QSExpression a, QSExpression b, int lineNr)
+            : base(a, b, lineNr)
         {
             base._operator = "!=";
         }
 
-        public object GetValue()
+
+        public override Value Evaluate()
         {
-            return (int)this._left.GetValue() != (int)this._right.GetValue();
+            this._value = this._left.Evaluate().NotEquals(this._right.Evaluate());
+            this.OnPropertyChanged("GetValue");
+            return this._value;
         }
 
 

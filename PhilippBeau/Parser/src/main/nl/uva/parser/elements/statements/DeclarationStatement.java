@@ -1,14 +1,11 @@
 package main.nl.uva.parser.elements.statements;
 
-import java.util.List;
-
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
-import main.nl.uva.parser.elements.ParserElement;
-import main.nl.uva.parser.elements.errors.ValidationError;
 import main.nl.uva.parser.elements.expressions.Variable;
+import main.nl.uva.parser.elements.ui.DeclarationUIElement;
+import main.nl.uva.parser.elements.ui.UIElement;
+import main.nl.uva.parser.elements.validation.ASTValidation;
+import main.nl.uva.parser.elements.validation.Scope;
+import main.nl.uva.ui.UI;
 
 public class DeclarationStatement extends Statement {
 
@@ -19,47 +16,28 @@ public class DeclarationStatement extends Statement {
     public DeclarationStatement(final Variable variable, final String function) {
         _function = function;
         _variable = variable;
+    }
 
-        _variable.setParent(this);
+    @Override
+    public ASTValidation validate(final Scope scope) {
+        ASTValidation valid = _variable.validate(scope);
+
+        scope.addToScope(_variable);
+        return valid;
+    }
+
+    @Override
+    public void removeYourselfFromScope(final Scope scope) {
+        scope.removeFromScope(_variable);
+    }
+
+    @Override
+    public UIElement getLayout(final UI parentUI) {
+        return new DeclarationUIElement(_variable, _function, parentUI);
     }
 
     @Override
     public String toString() {
         return _variable + " " + _function;
-    }
-
-    @Override
-    public Variable findVariable(final String variableName, final ParserElement scopeEnd) {
-        if (_parent == null) {
-            return null;
-        }
-
-        return _parent.findVariable(variableName, this);
-    }
-
-    @Override
-    public List<ValidationError> validate() {
-        return _variable.validate();
-    }
-
-    @Override
-    public Variable getVariable(final String variableName) {
-        if (_variable.getName().equals(variableName)) {
-            return _variable;
-        }
-
-        return null;
-    }
-
-    @Override
-    public JPanel getLayout() {
-        JPanel layout = new JPanel();
-        layout.setLayout(new BoxLayout(layout, BoxLayout.X_AXIS));
-        JLabel label = new JLabel(_function);
-        layout.add(label);
-
-        _variable.addStuff(layout);
-
-        return layout;
     }
 }

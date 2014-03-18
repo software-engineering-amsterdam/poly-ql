@@ -1,7 +1,13 @@
 package gui.render;
 
+import gui.component.ComputedControl;
 import gui.component.Control;
 import gui.component.TypeToWidget;
+import gui.observers.ComputedQuestionObserver;
+import gui.observers.ControlChangeHandler;
+import gui.observers.ControlObserver;
+import gui.observers.IfElseObserver;
+import gui.observers.IfObserver;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -45,122 +51,134 @@ import ast.statement.StatementList;
 
 public class Renderer implements Visitor<JComponent>{
 	
-	private final JPanel panel;
-//	private final State state; 
+	private State state; 
 
+	public Renderer(State state) {
+		this.state = state;
+	}
 	
-	public Renderer() {
+	private JPanel createNewPanel(){
 		MigLayout layout = new MigLayout();
-		this.panel = new JPanel(layout);
-//		this.panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-	}
-	
-//	public Renderer(State state) {
-//		this.state = state;
-//		this.panel = new JPanel();
-//	}
-//
-//	public static JPanel render(Statement s, State state){
-//		Renderer r = new Renderer(state);
-//		s.accept(r);
-//		return r.getPanel();
-//		
-//	}
-	
-	
-	public static JPanel render(StatementList list){
-		Renderer r = new Renderer();
-		for(Statement s: list.getList()){
-			s.accept(r);
-		}
-		
-		JPanel panel2 = r.getPanel();
-		return panel2;
-	}
-	
-	private JPanel getPanel() {
-		return panel;
-	}
-	
-	private void addLabel(String str){
-		this.panel.add(new JLabel(str.replace("\"", "")));
-	}
-	
-	private Control typeToWidget(Type t, boolean visible){	
-		TypeToWidget vis = new TypeToWidget();
-		return t.accept(vis);
-	}
-	
-	private void addComponent(Control comp){
-		this.panel.add(comp.getComponent(), "wrap");
-	}
-	
-	private void addPanel(JPanel p){
-		this.panel.add(p, "wrap");
-	}
-	
-
-	@Override
-	public JComponent visit(Form node) {
-		return render(node.getStatements());
+		return new JPanel(layout);
 	}
 
-	@Override
-	public JComponent visit(StatementList node) {
-		for(Statement s: node.getList()){
-			panel.add(s.accept(this), "wrap");
-		}
-		return panel;
-	}
-
-	@Override
-	public JComponent visit(Question node) {
-		addLabel(node.getLabel().getVal());
-		Control comp = typeToWidget(node.getType(), true);
-		addComponent(comp);
-		return panel;
-	}
-
-	@Override
-	public JComponent visit(ComputedQuestion node) {
-		addLabel(node.getLabel().getVal());
-		Control comp = typeToWidget(node.getType(), false);
-		addComponent(comp);
-		return panel;
-	}
-
-	@Override
-	public JComponent visit(Block node) {
-		return visit(node.getStatements());
-	}
-
-	@Override
-	public JComponent visit(IfStatement node) {
-		JPanel ifComp = render(node.getStatements());
-		ifComp.setVisible(false);
-		addPanel(ifComp);
-		return panel;
-	}
-
-	@Override
-	public JComponent visit(IfelseStatement node) {
-		JPanel ifComp = render(node.getStatements());
-		JPanel elseComp = render(node.getElseStatements());
-		ifComp.setVisible(false);
-		elseComp.setVisible(false);
-		addPanel(ifComp);
-		addPanel(elseComp);		
-		return panel;
-	}
-	
 	public JComponent render(final Form form){
 		System.out.println("start rendering");
-		final Renderer renderer = new Renderer();
+		final Renderer renderer = new Renderer(new State());
 		JComponent comp = renderer.visit(form);
 		comp.add(new JButton("Submit"));
 		return new JScrollPane(comp);
 	}
 
+	private void registerObservers(ControlObserver obs){
+		System.out.println("registerObserver");
+		state.addAllObservers(obs);
+		System.out.println("observer added to state " + state.getobservables());
+		obs.evaluate();
+	}
+	
+	private void registerControlChangeHandler(Identifier ident, Control control){
+		System.out.println("registercontrolhandler");
+		ControlChangeHandler handler = new ControlChangeHandler(ident, control, state);
+		state.putObserver(ident, handler);
+		System.out.println("key added to state " + state.getobservables().containsKey(ident));
+	}
+	
+	
+	private void addLabel(JPanel panel, String str){
+		panel.add(new JLabel(str.replace("\"", "")));
+	}
+	
+	private Control typeToWidget(Type t){	
+		TypeToWidget vis = new TypeToWidget();
+		return t.accept(vis);
+	}
+	
+	private void addComponent(JPanel panel, Control comp){
+		panel.add(comp.getComponent(), "wrap");
+	}
+	
+	@Override
+	public JComponent visit(Form node) {
+		System.out.println("visit form");
+		JPanel panel = createNewPanel();
+		panel.add(node.getStatements().accept(this));
+		return new JScrollPane(panel);
+	}
+
+	@Override
+	public JComponent visit(StatementList node) {
+		System.out.println("visit statementlist");
+		State currentState = state.currentState();
+		JPanel panel = createNewPanel();
+		Renderer render = new Renderer(currentState);
+		System.out.println("StatementList size " + node.getList().size());
+		for(Statement s: node.getList()){
+			panel.add(s.accept(render), "wrap");
+		}
+		return panel;
+	}
+
+	@Override
+	public JComponent visit(Block node) {
+		System.out.println("visit block"); 
+		return visit(node.getStatements());
+	}
+	
+	@Override
+	public JComponent visit(Question node) {
+		System.out.println("visit question " + node.getId().getIdentName());
+		JPanel panel = createNewPanel();
+		Control comp = typeToWidget(node.getType());
+		state.addValue(node.getId(), comp.getValue());
+		System.out.println("The value of comp is " + comp.getValue());
+		registerControlChangeHandler(node.getId(), comp);
+		addLabel(panel, node.getLabel().getVal());
+		addComponent(panel, comp);
+		return panel;
+	}
+
+	@Override
+	public JComponent visit(ComputedQuestion node) {
+		System.out.println("visit computedquestion");
+		ComputedControl comp = new ComputedControl();
+		JPanel panel = createNewPanel();
+//		state.addValue(node.getId(), comp.getValue());
+		registerControlChangeHandler(node.getId(), comp);
+		ComputedQuestionObserver obs = new ComputedQuestionObserver(node, comp, state);
+		registerObservers(obs);
+		addLabel(panel, node.getLabel().getVal());
+		addComponent(panel, comp);
+		return panel;
+	}
+
+	@Override
+	public JComponent visit(IfStatement node) {
+		System.out.println("visit if");
+		JPanel panel = createNewPanel();
+		JComponent ifComp = node.getStatements().accept(this);
+		ifComp.setVisible(false);
+		panel.add(ifComp);
+		IfObserver obs = new IfObserver(node, ifComp, state);
+		registerObservers(obs);
+		return panel;
+	}
+
+	@Override
+	public JComponent visit(IfelseStatement node) {
+		System.out.println("visit ifelse");
+		JPanel panel = createNewPanel();
+		JComponent ifComp = node.getStatements().accept(this);
+		JComponent elseComp = node.getElseStatements().accept(this);
+		ifComp.setVisible(false);
+		elseComp.setVisible(false);
+		panel.add(ifComp);
+		panel.add(elseComp);
+		IfElseObserver obs = new IfElseObserver(node, ifComp, elseComp, state);
+		registerObservers(obs);
+		return panel;
+	}
+	
 	@Override
 	public JComponent visit(Pos node) {
 		return null;

@@ -16,6 +16,7 @@ import main.nl.uva.parser.elements.statements.ParserForm;
 import main.nl.uva.parser.elements.statements.Statement;
 import main.nl.uva.parser.elements.type.Bool;
 import main.nl.uva.parser.elements.type.Money;
+import main.nl.uva.parser.elements.validation.Scope;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -43,7 +44,7 @@ public class ValidationTest {
         children.add(decStatement2);
         ParserForm form = new ParserForm("testForm", children);
 
-        Assert.assertTrue("Valid statement was marked invalid", form.validate().isEmpty());
+        Assert.assertTrue("Valid statement was marked invalid", !form.validate(new Scope()).hasErrors());
     }
 
     @Test
@@ -60,7 +61,7 @@ public class ValidationTest {
         children.add(decStatement1);
         ParserForm form = new ParserForm("testForm", children);
 
-        Assert.assertFalse("Invalid statement was not marked invalid", form.validate().isEmpty());
+        Assert.assertTrue("Invalid statement was not marked invalid", form.validate(new Scope()).hasErrors());
     }
 
     @Test
@@ -71,7 +72,7 @@ public class ValidationTest {
 
         AndExpression andExpression = new AndExpression(v1, v2);
 
-        Assert.assertTrue("Valid statement was marked invalid", andExpression.validate().isEmpty());
+        Assert.assertFalse("Valid statement was marked invalid", andExpression.validate(new Scope()).hasErrors());
     }
 
     @Test
@@ -82,7 +83,7 @@ public class ValidationTest {
 
         AndExpression andExpression = new AndExpression(v1, v2);
 
-        Assert.assertFalse("Invalid statement was not marked invalid", andExpression.validate().isEmpty());
+        Assert.assertTrue("Invalid statement was not marked invalid", andExpression.validate(new Scope()).hasErrors());
     }
 
     @Test
@@ -113,7 +114,7 @@ public class ValidationTest {
         children.add(ifElse);
         ParserForm form = new ParserForm("testForm", children);
 
-        Assert.assertTrue("Valid statement was marked invalid", form.validate().isEmpty());
+        Assert.assertFalse("Valid statement was marked invalid", form.validate(new Scope()).hasErrors());
     }
 
     @Test
@@ -141,7 +142,7 @@ public class ValidationTest {
         children.add(ifElse);
         ParserForm form = new ParserForm("testForm", children);
 
-        Assert.assertFalse("Invalid statement was not marked invalid", form.validate().isEmpty());
+        Assert.assertTrue("Invalid statement was not marked invalid", form.validate(new Scope()).hasErrors());
     }
 
     public static void printErrors(final List<ValidationError> errors) {
