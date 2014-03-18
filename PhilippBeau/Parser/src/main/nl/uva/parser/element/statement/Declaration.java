@@ -14,6 +14,7 @@ public class Declaration extends Statement {
     protected final Variable _variable;
 
     public Declaration(final Variable variable, final String function) {
+        super(variable.getLineInfo());
         _function = function;
         _variable = variable;
     }

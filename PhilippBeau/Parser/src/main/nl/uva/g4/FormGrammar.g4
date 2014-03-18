@@ -15,7 +15,7 @@ grammar FormGrammar;
 //	;
 
 form returns [Form parsedForm]
-	: 'form' id=ID children=block {$parsedForm= new Form($id.text, $children.data);} EOF
+	: 'form' id=ID children=block {$parsedForm= new Form($id.text, $children.data, new Line($id));} EOF
 	;
 
 //Adds all subelements inside the block to the parent statement
@@ -25,18 +25,18 @@ block returns [List<Statement> data]
 
 statement returns [Statement current]
 	: ID ':' STRING sType=simpleType 
-	{$current = new Declaration(new Variable($sType.type, $ID.text), $STRING.text);}
+	{$current = new Declaration(new Variable($sType.type, $ID.text, new Line($ID)), $STRING.text);}
 	LINEEND 
 	
     | ID ':' STRING sType=simpleType '(' ex=expression')'  	
-    { $current = new FixedDeclaration(new Variable($sType.type, $ID.text, $ex.cEx), $STRING.text);} 
+    { $current = new FixedDeclaration(new Variable($sType.type, $ID.text, $ex.cEx, new Line($ID)), $STRING.text);} 
     LINEEND
     
-    | 'if' '(' ex=expression ')' ifBlock=block 
-    {$current = new IF($ex.cEx, $ifBlock.data);} 				
+    | ifToken='if' '(' ex=expression ')' ifBlock=block 
+    {$current = new IF($ex.cEx, $ifBlock.data, new Line($ifToken));} 				
     
-    | 'if' '(' ex=expression ')' ifBlock=block 'else' elseBlock=block
-    { $current = new IfElse(new IF($ex.cEx, $ifBlock.data), new IF(new Not($ex.cEx), $elseBlock.data));} 
+    | ifToken='if' '(' ex=expression ')' ifBlock=block elseToken='else' elseBlock=block
+    { $current = new IfElse(new IF($ex.cEx, $ifBlock.data, new Line($ifToken)), new IF(new Not($ex.cEx, Line.NO_LINE_NUMBER), $elseBlock.data, new Line($elseToken)), new Line($ifToken));} 
     ;
 
 expression returns [Expression cEx]
@@ -46,37 +46,37 @@ expression returns [Expression cEx]
 boolExp returns [Expression cEx]
 	: left=addExp {$cEx = $left.cEx;} 
   (
-  	AND right=addExp {$cEx = new And($cEx, $right.cEx);} 
-  	| OR right=addExp {$cEx = new Or($cEx, $right.cEx);}
-  	| EQUAL right=addExp {$cEx = new Comparrison($cEx, $right.cEx);}
+  	AND right=addExp {$cEx = new And($cEx, $right.cEx, new Line($AND));} 
+  	| OR right=addExp {$cEx = new Or($cEx, $right.cEx, new Line($OR));}
+  	| EQUAL right=addExp {$cEx = new Comparrison($cEx, $right.cEx, new Line($EQUAL));}
   )*
 	;
 
 addExp returns [Expression cEx]
   : left=multExp {$cEx = $left.cEx;} 
   (
-  	ADD right=multExp {$cEx = new Addition($cEx, $right.cEx);} 
-  	| SUB right=multExp {$cEx = new Substraction($cEx, $right.cEx);}
+  	ADD right=multExp {$cEx = new Addition($cEx, $right.cEx, new Line($ADD));} 
+  	| SUB right=multExp {$cEx = new Substraction($cEx, $right.cEx, new Line($SUB));}
   )*
   ;
 
 multExp returns [Expression cEx]
   : left=prefix {$cEx = $left.cEx;} 
-  (MUL right=prefix {$cEx = new Multiplication($cEx, $right.cEx);} 
-  	| DIV right=prefix {$cEx = new Multiplication($cEx, $right.cEx);}
+  (MUL right=prefix {$cEx = new Multiplication($cEx, $right.cEx, new Line($MUL));} 
+  	| DIV right=prefix {$cEx = new Multiplication($cEx, $right.cEx, new Line($DIV));}
   )*
   ;
 
 prefix returns [Expression cEx]
-	: '!' bE=atom {$cEx = new Not($bE.cEx);}
-	| '-' bE=atom {$cEx = new Minus($bE.cEx);}
+	: token='!' bE=atom {$cEx = new Not($bE.cEx, new Line($token));}
+	| token='-' bE=atom {$cEx = new Minus($bE.cEx, new Line($token));}
 	| at=atom {$cEx = $at.cEx;}
 	;
 
 atom returns [Expression cEx]
-	: ID {$cEx = new VariableAtom($ID.text);}
-	| nL=numLiteral {$cEx = new MoneyAtom($nL.text);}
-	| bL=boolLiteral {$cEx = new BoolAtom($bL.text);}
+	: ID {$cEx = new VariableAtom($ID.text, new Line($ID)); }
+	| nL=numLiteral {$cEx = new MoneyAtom($nL.text, new Line($nL.start));}
+	| bL=boolLiteral {$cEx = new BoolAtom($bL.text, new Line($bL.start));}
 	| '(' bE=boolExp ')' {$cEx = $bE.cEx;}
 	;
 

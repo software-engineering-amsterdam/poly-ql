@@ -4,13 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import main.nl.uva.parser.element.ASTNode;
+import main.nl.uva.parser.element.Line;
 import main.nl.uva.parser.element.type.Value;
 
 public abstract class Expression extends ASTNode {
 
     private final List<ExpressionChangeListener> _listener = new ArrayList<>();
 
-    public Expression() {}
+    public Expression(final Line lineInfo) {
+        super(lineInfo);
+    }
 
     public boolean registerListener(final ExpressionChangeListener listener) {
         return _listener.add(listener);

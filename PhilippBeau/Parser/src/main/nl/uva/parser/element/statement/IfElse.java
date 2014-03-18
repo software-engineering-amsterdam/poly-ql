@@ -1,5 +1,6 @@
 package main.nl.uva.parser.element.statement;
 
+import main.nl.uva.parser.element.Line;
 import main.nl.uva.parser.validation.ASTValidation;
 import main.nl.uva.parser.validation.Scope;
 import main.nl.uva.ui.UI;
@@ -10,7 +11,15 @@ public class IfElse extends Block {
     private final IF _ifStatement;
     private final IF _elseStatement;
 
+    public IfElse(final IF ifStatement, final IF elseStatement, final Line lineInfo) {
+        super(lineInfo);
+
+        _ifStatement = ifStatement;
+        _elseStatement = elseStatement;
+    }
+
     public IfElse(final IF ifStatement, final IF elseStatement) {
+        super(Line.NO_LINE_NUMBER);
 
         _ifStatement = ifStatement;
         _elseStatement = elseStatement;

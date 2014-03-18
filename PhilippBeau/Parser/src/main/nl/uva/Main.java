@@ -38,7 +38,6 @@ public class Main {
 
         ASTValidation validation = pf.validate(new Scope());
         if (!validation.hasErrors()) {
-            System.out.println("All OK");
             UI ui = new UI(pf);
             ui.setVisible(true);
         } else {

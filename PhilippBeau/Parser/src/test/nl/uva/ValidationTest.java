@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import main.nl.uva.parser.element.Form;
+import main.nl.uva.parser.element.Line;
 import main.nl.uva.parser.element.error.ValidationError;
 import main.nl.uva.parser.element.expression.And;
 import main.nl.uva.parser.element.expression.Not;
@@ -32,8 +33,8 @@ public class ValidationTest {
     @Test
     public void testValidVariableValidation() {
 
-        Variable v1 = new Variable(Value.Type.BOOLEAN, "testVar");
-        Variable v2 = new Variable(Value.Type.BOOLEAN, "testVar", new VariableAtom("testVar"));
+        Variable v1 = new Variable(Value.Type.BOOLEAN, "testVar", Line.NO_LINE_NUMBER);
+        Variable v2 = new Variable(Value.Type.BOOLEAN, "testVar", new VariableAtom("testVar", Line.NO_LINE_NUMBER), Line.NO_LINE_NUMBER);
 
         Declaration decStatement1 = new Declaration(v1, "declares variable");
         Declaration decStatement2 = new Declaration(v2, "uses variabe");
@@ -41,7 +42,7 @@ public class ValidationTest {
         List<Statement> children = new ArrayList<Statement>();
         children.add(decStatement1);
         children.add(decStatement2);
-        Form form = new Form("testForm", children);
+        Form form = new Form("testForm", children, Line.NO_LINE_NUMBER);
 
         Assert.assertTrue("Valid statement was marked invalid", !form.validate(new Scope()).hasErrors());
     }
@@ -49,8 +50,8 @@ public class ValidationTest {
     @Test
     public void testInvalidVariableValidation() {
 
-        Variable v1 = new Variable(Value.Type.BOOLEAN, "testVar");
-        Variable v2 = new Variable(Value.Type.BOOLEAN, "testVar", new VariableAtom("testVar"));
+        Variable v1 = new Variable(Value.Type.BOOLEAN, "testVar", Line.NO_LINE_NUMBER);
+        Variable v2 = new Variable(Value.Type.BOOLEAN, "testVar", new VariableAtom("testVar", Line.NO_LINE_NUMBER), Line.NO_LINE_NUMBER);
 
         Declaration decStatement1 = new Declaration(v1, "declares variable");
         Declaration decStatement2 = new Declaration(v2, "uses variabe");
@@ -58,7 +59,7 @@ public class ValidationTest {
         List<Statement> children = new ArrayList<Statement>();
         children.add(decStatement2);
         children.add(decStatement1);
-        Form form = new Form("testForm", children);
+        Form form = new Form("testForm", children, Line.NO_LINE_NUMBER);
 
         Assert.assertTrue("Invalid statement was not marked invalid", form.validate(new Scope()).hasErrors());
     }
@@ -66,10 +67,10 @@ public class ValidationTest {
     @Test
     public void testValidExpression() {
 
-        Variable v1 = new Variable(Value.Type.BOOLEAN, "testBoolean");
-        Variable v2 = new Variable(Value.Type.BOOLEAN, "testBoolean2");
+        Variable v1 = new Variable(Value.Type.BOOLEAN, "testBoolean", Line.NO_LINE_NUMBER);
+        Variable v2 = new Variable(Value.Type.BOOLEAN, "testBoolean2", Line.NO_LINE_NUMBER);
 
-        And andExpression = new And(v1, v2);
+        And andExpression = new And(v1, v2, Line.NO_LINE_NUMBER);
 
         Assert.assertFalse("Valid statement was marked invalid", andExpression.validate(new Scope()).hasErrors());
     }
@@ -77,10 +78,10 @@ public class ValidationTest {
     @Test
     public void testInvalidExpression() {
 
-        Variable v1 = new Variable(Value.Type.BOOLEAN, "testBoolean");
-        Variable v2 = new Variable(Value.Type.MONEY, "testMoney");
+        Variable v1 = new Variable(Value.Type.BOOLEAN, "testBoolean", Line.NO_LINE_NUMBER);
+        Variable v2 = new Variable(Value.Type.MONEY, "testMoney", Line.NO_LINE_NUMBER);
 
-        And andExpression = new And(v1, v2);
+        And andExpression = new And(v1, v2, Line.NO_LINE_NUMBER);
 
         Assert.assertTrue("Invalid statement was not marked invalid", andExpression.validate(new Scope()).hasErrors());
     }
@@ -88,13 +89,13 @@ public class ValidationTest {
     @Test
     public void testIfElseValid() {
 
-        Variable v1 = new Variable(Value.Type.BOOLEAN, "testVar");
+        Variable v1 = new Variable(Value.Type.BOOLEAN, "testVar", Line.NO_LINE_NUMBER);
         List<Statement> children = new ArrayList<Statement>();
         children.add(new Declaration(v1, "declares variable"));
 
-        Variable v2 = new Variable(Value.Type.BOOLEAN, "testVarUser", new VariableAtom("testVar"));
-        Variable v3 = new Variable(Value.Type.BOOLEAN, "testBoolean");
-        Variable v4 = new Variable(Value.Type.MONEY, "testMoney");
+        Variable v2 = new Variable(Value.Type.BOOLEAN, "testVarUser", new VariableAtom("testVar", Line.NO_LINE_NUMBER), Line.NO_LINE_NUMBER);
+        Variable v3 = new Variable(Value.Type.BOOLEAN, "testBoolean", Line.NO_LINE_NUMBER);
+        Variable v4 = new Variable(Value.Type.MONEY, "testMoney", Line.NO_LINE_NUMBER);
 
         Declaration decStatement1 = new Declaration(v3, "declares variable");
         Declaration decStatement2 = new Declaration(v4, "uses variabe");
@@ -105,13 +106,13 @@ public class ValidationTest {
         List<Statement> elseBlock = new ArrayList<>();
         elseBlock.add(decStatement2);
 
-        IF ifStatement = new IF(v2, ifBlock);
-        IF elseStatement = new IF(new Not(v2), elseBlock);
+        IF ifStatement = new IF(v2, ifBlock, Line.NO_LINE_NUMBER);
+        IF elseStatement = new IF(new Not(v2, Line.NO_LINE_NUMBER), elseBlock, Line.NO_LINE_NUMBER);
 
-        IfElse ifElse = new IfElse(ifStatement, elseStatement);
+        IfElse ifElse = new IfElse(ifStatement, elseStatement, Line.NO_LINE_NUMBER);
 
         children.add(ifElse);
-        Form form = new Form("testForm", children);
+        Form form = new Form("testForm", children, Line.NO_LINE_NUMBER);
 
         Assert.assertFalse("Valid statement was marked invalid", form.validate(new Scope()).hasErrors());
     }
@@ -120,9 +121,9 @@ public class ValidationTest {
     public void testIfElseInvalid() {
         List<Statement> children = new ArrayList<Statement>();
 
-        Variable v2 = new Variable(Value.Type.BOOLEAN, "testVarUser", new VariableAtom("testVar"));
-        Variable v3 = new Variable(Value.Type.BOOLEAN, "testBoolean");
-        Variable v4 = new Variable(Value.Type.MONEY, "testMoney");
+        Variable v2 = new Variable(Value.Type.BOOLEAN, "testVarUser", new VariableAtom("testVar", Line.NO_LINE_NUMBER), Line.NO_LINE_NUMBER);
+        Variable v3 = new Variable(Value.Type.BOOLEAN, "testBoolean", Line.NO_LINE_NUMBER);
+        Variable v4 = new Variable(Value.Type.MONEY, "testMoney", Line.NO_LINE_NUMBER);
 
         Declaration decStatement1 = new Declaration(v3, "declares variable");
         Declaration decStatement2 = new Declaration(v4, "uses variabe");
@@ -133,13 +134,13 @@ public class ValidationTest {
         List<Statement> elseBlock = new ArrayList<>();
         elseBlock.add(decStatement2);
 
-        IF ifStatement = new IF(v2, ifBlock);
-        IF elseStatement = new IF(new Not(v2), elseBlock);
+        IF ifStatement = new IF(v2, ifBlock, Line.NO_LINE_NUMBER);
+        IF elseStatement = new IF(new Not(v2, Line.NO_LINE_NUMBER), elseBlock, Line.NO_LINE_NUMBER);
 
-        IfElse ifElse = new IfElse(ifStatement, elseStatement);
+        IfElse ifElse = new IfElse(ifStatement, elseStatement, Line.NO_LINE_NUMBER);
 
         children.add(ifElse);
-        Form form = new Form("testForm", children);
+        Form form = new Form("testForm", children, Line.NO_LINE_NUMBER);
 
         Assert.assertTrue("Invalid statement was not marked invalid", form.validate(new Scope()).hasErrors());
     }

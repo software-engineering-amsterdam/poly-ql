@@ -1,5 +1,6 @@
 package main.nl.uva.parser.element.expression;
 
+import main.nl.uva.parser.element.Line;
 import main.nl.uva.parser.element.type.Bool;
 import main.nl.uva.parser.element.type.Money;
 import main.nl.uva.parser.element.type.Text;
@@ -7,8 +8,8 @@ import main.nl.uva.parser.element.type.Value;
 
 public class Comparrison extends AdvancedExpression {
 
-    public Comparrison(final Expression left, final Expression right) {
-        super(left, right);
+    public Comparrison(final Expression left, final Expression right, final Line lineInfo) {
+        super(left, right, lineInfo);
     }
 
     @Override

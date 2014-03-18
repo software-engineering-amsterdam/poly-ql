@@ -3,6 +3,7 @@ package main.nl.uva.parser.element.expression;
 import java.util.ArrayList;
 import java.util.List;
 
+import main.nl.uva.parser.element.Line;
 import main.nl.uva.parser.element.error.InvalidTypeError;
 import main.nl.uva.parser.element.type.Value;
 import main.nl.uva.parser.validation.ASTValidation;
@@ -18,7 +19,8 @@ public class Variable extends Expression implements ExpressionChangeListener {
 
     private final List<ExpressionChangeListener> _listener = new ArrayList<>();
 
-    public Variable(final Value.Type type, final String name, final Expression expression) {
+    public Variable(final Value.Type type, final String name, final Expression expression, final Line lineInfo) {
+        super(lineInfo);
         _value = type;
         _name = name;
         _expression = expression;
@@ -26,8 +28,8 @@ public class Variable extends Expression implements ExpressionChangeListener {
         _expression.registerListener(this);
     }
 
-    public Variable(final Value.Type type, final String name) {
-        this(type, name, type.getAtom());
+    public Variable(final Value.Type type, final String name, final Line lineInfo) {
+        this(type, name, type.getAtom(), lineInfo);
     }
 
     @Override
@@ -52,7 +54,7 @@ public class Variable extends Expression implements ExpressionChangeListener {
         ASTValidation valid = _expression.validate(scope);
 
         if (!_expression.getValue().isTypeOf(_value)) {
-            valid.addError(new InvalidTypeError(this.toString()));
+            valid.addError(new InvalidTypeError(this.toString(), getLineInfo()));
         }
 
         return valid;

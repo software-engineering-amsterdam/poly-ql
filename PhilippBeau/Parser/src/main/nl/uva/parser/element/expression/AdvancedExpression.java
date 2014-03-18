@@ -1,5 +1,6 @@
 package main.nl.uva.parser.element.expression;
 
+import main.nl.uva.parser.element.Line;
 import main.nl.uva.parser.element.error.InvalidTypeError;
 import main.nl.uva.parser.element.type.Bool;
 import main.nl.uva.parser.element.type.Invalid;
@@ -15,7 +16,8 @@ public abstract class AdvancedExpression extends Expression {
     protected Expression _left;
     protected Expression _right;
 
-    public AdvancedExpression(final Expression left, final Expression right) {
+    public AdvancedExpression(final Expression left, final Expression right, final Line lineInfo) {
+        super(lineInfo);
         _left = left;
         _right = right;
     }
@@ -29,7 +31,7 @@ public abstract class AdvancedExpression extends Expression {
         notifyListeners();
 
         if (_value.isInvalid()) {
-            valid.addError(new InvalidTypeError(this.toString()));
+            valid.addError(new InvalidTypeError(this.toString(), getLineInfo()));
         }
 
         return valid;

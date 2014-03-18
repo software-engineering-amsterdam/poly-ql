@@ -15,7 +15,8 @@ public class Form extends ASTNode {
 
     private final String _id;
 
-    public Form(final String id, final List<Statement> children) {
+    public Form(final String id, final List<Statement> children, final Line lineInfo) {
+        super(lineInfo);
         _id = id;
         _children = children;
     }

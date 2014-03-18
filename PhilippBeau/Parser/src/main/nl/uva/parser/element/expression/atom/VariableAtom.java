@@ -1,5 +1,6 @@
 package main.nl.uva.parser.element.expression.atom;
 
+import main.nl.uva.parser.element.Line;
 import main.nl.uva.parser.element.error.VariableNotFoundError;
 import main.nl.uva.parser.element.expression.Expression;
 import main.nl.uva.parser.element.type.Invalid;
@@ -13,7 +14,8 @@ public class VariableAtom extends Expression {
 
     private Value _linkedValue = new Invalid();
 
-    public VariableAtom(final String variableName) {
+    public VariableAtom(final String variableName, final Line lineInfo) {
+        super(lineInfo);
         _variableName = variableName;
     }
 
@@ -24,7 +26,7 @@ public class VariableAtom extends Expression {
         if (scope.containsVariable(_variableName)) {
             _linkedValue = scope.getVariableFromScope(_variableName).getValue();
         } else {
-            valid.addError(new VariableNotFoundError(_variableName));
+            valid.addError(new VariableNotFoundError(_variableName, getLineInfo()));
         }
 
         notifyListeners();

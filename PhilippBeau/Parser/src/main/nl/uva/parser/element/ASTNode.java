@@ -8,6 +8,16 @@ import main.nl.uva.parser.validation.Scope;
 
 public abstract class ASTNode {
 
+    private final Line _lineInfo;
+
+    public ASTNode(final Line lineInfo) {
+        _lineInfo = lineInfo;
+    }
+
+    public Line getLineInfo() {
+        return _lineInfo;
+    }
+
     public abstract ASTValidation validate(final Scope scope);
 
     protected static ASTValidation validateChildren(final ASTValidation valid, final List<Statement> statements, final Scope scope) {
@@ -16,5 +26,10 @@ public abstract class ASTNode {
         }
 
         return valid;
+    }
+
+    @Override
+    public String toString() {
+        return _lineInfo.toString();
     }
 }

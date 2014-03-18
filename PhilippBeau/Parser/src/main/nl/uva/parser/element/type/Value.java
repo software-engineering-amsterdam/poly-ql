@@ -55,8 +55,6 @@ public abstract class Value {
         return _typeOf.equals(other._typeOf);
     }
 
-    public abstract Expression getAtom();
-
     public abstract Value visit(Expression right, AdvancedExpression expression);
 
     public abstract Value accept(Bool left, AdvancedExpression expression);

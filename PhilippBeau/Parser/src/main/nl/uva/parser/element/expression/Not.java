@@ -1,5 +1,6 @@
 package main.nl.uva.parser.element.expression;
 
+import main.nl.uva.parser.element.Line;
 import main.nl.uva.parser.element.error.InvalidTypeError;
 import main.nl.uva.parser.element.type.Bool;
 import main.nl.uva.parser.element.type.Invalid;
@@ -12,7 +13,8 @@ public class Not extends Expression {
 
     private final Expression _expression;
 
-    public Not(final Expression expression) {
+    public Not(final Expression expression, final Line lineInfo) {
+        super(lineInfo);
         _expression = expression;
     }
 
@@ -31,7 +33,7 @@ public class Not extends Expression {
         ASTValidation valid = _expression.validate(scope);
 
         if (!_expression.getValue().isTypeOf(Type.BOOLEAN)) {
-            valid.addError(new InvalidTypeError(this.toString()));
+            valid.addError(new InvalidTypeError(this.toString(), getLineInfo()));
         }
 
         return valid;

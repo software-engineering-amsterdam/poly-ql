@@ -2,6 +2,7 @@ package main.nl.uva.parser.element.statement;
 
 import java.util.List;
 
+import main.nl.uva.parser.element.Line;
 import main.nl.uva.parser.element.error.InvalidTypeError;
 import main.nl.uva.parser.element.expression.Expression;
 import main.nl.uva.parser.element.type.Value;
@@ -17,7 +18,8 @@ public class IF extends Block {
 
     private final Expression _expression;
 
-    public IF(final Expression expression, final List<Statement> children) {
+    public IF(final Expression expression, final List<Statement> children, final Line lineInfo) {
+        super(lineInfo);
         _expression = expression;
         _children = children;
     }
@@ -27,7 +29,7 @@ public class IF extends Block {
         ASTValidation valid = _expression.validate(scope);
 
         if (!(_expression.getValue().isTypeOf(Value.Type.BOOLEAN))) {
-            valid.addError(new InvalidTypeError(this.toString()));
+            valid.addError(new InvalidTypeError(this.toString(), getLineInfo()));
         }
 
         valid = validateChildren(valid, _children, scope);

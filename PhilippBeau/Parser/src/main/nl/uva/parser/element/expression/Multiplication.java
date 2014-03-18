@@ -1,12 +1,13 @@
 package main.nl.uva.parser.element.expression;
 
+import main.nl.uva.parser.element.Line;
 import main.nl.uva.parser.element.type.Money;
 import main.nl.uva.parser.element.type.Value;
 
 public class Multiplication extends AdvancedExpression {
 
-    public Multiplication(final Expression left, final Expression right) {
-        super(left, right);
+    public Multiplication(final Expression left, final Expression right, final Line lineInfo) {
+        super(left, right, lineInfo);
     }
 
     @Override

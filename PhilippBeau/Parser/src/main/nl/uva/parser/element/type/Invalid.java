@@ -12,11 +12,6 @@ public class Invalid extends Value {
     }
 
     @Override
-    public Expression getAtom() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public boolean isInvalid() {
         return true;
     }

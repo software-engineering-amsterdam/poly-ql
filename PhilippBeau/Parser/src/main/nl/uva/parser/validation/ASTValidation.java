@@ -23,7 +23,7 @@ public class ASTValidation {
 
     public void printErrors() {
         for (ValidationError error : _validationErrors) {
-            System.out.println(error);
+            System.err.println(error);
         }
     }
 

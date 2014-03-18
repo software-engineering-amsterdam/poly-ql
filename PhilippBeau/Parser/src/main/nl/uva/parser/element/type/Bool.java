@@ -2,7 +2,6 @@ package main.nl.uva.parser.element.type;
 
 import main.nl.uva.parser.element.expression.AdvancedExpression;
 import main.nl.uva.parser.element.expression.Expression;
-import main.nl.uva.parser.element.expression.atom.BoolAtom;
 import main.nl.uva.ui.element.DeclarationUI;
 import main.nl.uva.ui.types.BooleanUI;
 import main.nl.uva.ui.types.ValueUI;
@@ -26,11 +25,6 @@ public class Bool extends Value {
 
     public boolean getValue() {
         return _value;
-    }
-
-    @Override
-    public Expression getAtom() {
-        return new BoolAtom();
     }
 
     @Override
