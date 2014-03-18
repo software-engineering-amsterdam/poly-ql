@@ -8,9 +8,19 @@
             label.Text = labelName;
         }
 
+        public void SetValue(string newValue)
+        {
+            textBoxValue.Text = newValue;
+        }
+
         public string GetValue()
         {
             return textBoxValue.Text;
+        }
+
+        public void SetReadOnly(bool isReadOnly)
+        {
+            textBoxValue.ReadOnly = isReadOnly;
         }
     }
 }

@@ -6,6 +6,7 @@ open System
 open QL_Grammar
 
 //// Type check info
+// REFACTOR 2 SPLIT
 type expressionType = TBool | TString | TInt | TDecimal | TError | TForm
     with override this.ToString() = match this with
                                     | TBool -> "Boolean"
