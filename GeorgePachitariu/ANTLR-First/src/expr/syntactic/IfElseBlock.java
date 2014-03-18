@@ -1,7 +1,9 @@
 package expr.syntactic;
 
+import java.util.LinkedList;
 import java.util.List;
 
+import expr.ASTNode;
 import expr.Expression;
 import visitor.ASTVisitor;
 
@@ -40,5 +42,17 @@ public class IfElseBlock extends IfBlock {
 			str+= "} \n";
 		}
 		return str;
+	}
+	
+	@Override
+	public ASTNode ReplaceQuestionValue(Question q) {
+		List<Statement> list=new LinkedList<>();
+		for(Statement s : this.thenStatements)
+			list.add((Statement)s.ReplaceQuestionValue(q));
+		
+		List<Statement> list2=new LinkedList<>();
+		for(Statement s : this.elseStatements)
+			list2.add((Statement)s.ReplaceQuestionValue(q));
+		return new IfElseBlock(this.condition,list,list2);
 	}
 }

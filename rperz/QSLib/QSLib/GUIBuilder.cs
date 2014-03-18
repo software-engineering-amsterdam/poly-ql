@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using QSLib.Expressions.Unary;
-using QSLib.Expressions;
 using System.Windows.Controls;
-using System.Windows;
 using System.Windows.Data;
-using QSLib.Types;
+using QSLib.Expressions;
+using QSLib.Expressions.Unary;
 using QSLib.IO;
 
 namespace QSLib

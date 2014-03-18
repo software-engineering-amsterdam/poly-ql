@@ -31,6 +31,11 @@ public class IntType implements Type {
 	}
 
 	@Override
+	public boolean isCompatibleWithString() {
+		return false;
+	}
+
+	@Override
 	public boolean isCompatibleWith(Type t) {
 		return t.isCompatibleWithInt();
 	}

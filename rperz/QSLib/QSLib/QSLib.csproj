@@ -50,6 +50,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Expressions\Unary\Identifiers\InputIdentifier.cs" />
+    <Compile Include="Expressions\Unary\Identifiers\OutputIdentifier.cs" />
     <Compile Include="Statements\CodeBlock.cs" />
     <Compile Include="Expressions\Binary\Add.cs" />
     <Compile Include="Expressions\Binary\And.cs" />
@@ -85,12 +87,12 @@
     <Compile Include="TypeChecker\ListEqualityComparer.cs" />
     <Compile Include="TypeChecker\NotConverter.cs" />
     <Compile Include="Types\BoolType.cs" />
-    <Compile Include="Expressions\Unary\Identifier.cs" />
+    <Compile Include="Expressions\Unary\Identifiers\Identifier.cs" />
     <Compile Include="Types\NumberType.cs" />
     <Compile Include="Types\StringType.cs" />
     <Compile Include="Types\QSType.cs" />
     <Compile Include="Expressions\Literals\Primary.cs" />
-    <Compile Include="Expressions\IExpression.cs" />
+    <Compile Include="Expressions\QSExpression.cs" />
     <Compile Include="Expressions\Literals\Bool.cs" />
     <Compile Include="Expressions\Unary\Not.cs" />
     <Compile Include="Form.cs" />

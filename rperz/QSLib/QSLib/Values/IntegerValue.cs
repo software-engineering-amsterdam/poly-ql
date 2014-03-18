@@ -1,20 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿
 namespace QSLib.Values
 {
     public class IntegerValue : Value
     {
         protected int _value;
         private bool _isInput;
+
+        #region Constructors
         public IntegerValue(int value, bool isInput = false)
         {
             this._isInput = isInput;
             this._value = value;
         }
+        #endregion
 
+        #region Getters
         public override object GetValue
         {
             get
@@ -22,6 +22,7 @@ namespace QSLib.Values
                 return this._value;
             }
         }
+        #endregion
 
         public override void CreateGUI(GUIBuilder guiBuilder)
         {
@@ -31,6 +32,7 @@ namespace QSLib.Values
                 guiBuilder.CreateIntegerOutput();
         }
 
+        #region dispatch value
         public override Value Add(Value otherValue)
         {
             return otherValue.Add(this);
@@ -80,15 +82,18 @@ namespace QSLib.Values
         {
             return otherValue.Subtract(this);
         }
+        #endregion
 
-        // double dispatch IntegerValue
+        #region double dispatch IntegerValue
         public override Value Add(IntegerValue otherValue)
         {
-            return new IntegerValue(this._value + otherValue._value);
+            return new IntegerValue(otherValue._value + this._value);
         }
         public override Value Divide(IntegerValue otherValue)
         {
-            return new IntegerValue(this._value / otherValue._value);
+            if (otherValue._value == 0)
+                return new IntegerValue(0);
+            return new IntegerValue(otherValue._value / this._value);
         }
         public override Value EqualTo(IntegerValue otherValue)
         {
@@ -96,15 +101,15 @@ namespace QSLib.Values
         }
         public override Value LargerThan(IntegerValue otherValue)
         {
-            return new BooleanValue(this._value > otherValue._value);
+            return new BooleanValue(this._value < otherValue._value);
         }
         public override Value LargerThan_Equals(IntegerValue otherValue)
         {
-            return new BooleanValue(this._value >= otherValue._value);
+            return new BooleanValue(this._value <= otherValue._value);
         }
         public override Value Multiply(IntegerValue otherValue)
         {
-            return new IntegerValue(this._value * otherValue._value);
+            return new IntegerValue(otherValue._value* this._value);
         }
         public override Value NotEquals(IntegerValue otherValue)
         {
@@ -112,16 +117,16 @@ namespace QSLib.Values
         }
         public override Value SmallerThan(IntegerValue otherValue)
         {
-            return new BooleanValue(this._value < otherValue._value);
+            return new BooleanValue(this._value > otherValue._value);
         }
         public override Value SmallerThan_Equals(IntegerValue otherValue)
         {
-            return new BooleanValue(this._value <= otherValue._value);
+            return new BooleanValue(this._value >= otherValue._value);
         }
         public override Value Subtract(IntegerValue otherValue)
         {
-            return new IntegerValue(this._value - otherValue._value);
+            return new IntegerValue(otherValue._value - this._value);
         }
-
+        #endregion
     }
 }

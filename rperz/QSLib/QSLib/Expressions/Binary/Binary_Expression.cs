@@ -1,7 +1,5 @@
-﻿using System;
-using QSLib.Types;
+﻿using QSLib.Types;
 using QSLib.Values;
-using System.ComponentModel;
 
 namespace QSLib.Expressions
 {
@@ -9,43 +7,48 @@ namespace QSLib.Expressions
     {
         protected QSExpression _left;
         protected QSExpression _right;
-        protected String _operator;
 
-        public Binary_Expression(int linenr)
+        public Binary_Expression(int lineNr)
         {
-            this._linenr = linenr;
+            this._lineNr = lineNr;
         }
 
-        public Binary_Expression(QSExpression a, QSExpression b, int linenr)
+        public Binary_Expression(QSExpression a, QSExpression b, int lineNr)
         {
             this._left = a;
             this._right = b;
-            this._linenr = linenr;
+            this._lineNr = lineNr;
         }
 
-        public override bool CheckType(TypeChecker checker)
+        public override void Check(TypeChecker checker)
         {
-            bool retVal = true;
-            retVal &= this._left.CheckType(checker);
-            retVal &= this._right.CheckType(checker);
+            checker.Check(this);
+        }
 
-            if (!(this._left.Type.IsCompatible(this._right.Type)))
-            {
-                retVal = false;
-                checker.ReportTypeMismatch(this._left.Type, this._right.Type, this._operator, this._linenr);
-            }
+        public void CheckLeft(TypeChecker checker)
+        {
+            this._left.Check(checker);
+        }
 
-            if (!this._left.Type.IsCompatible(this.Type))
-            {
-                checker.ReportTypeMismatch(this._left.Type, this._operator, this._linenr);
-                retVal = false;
-            }
+        public void CheckRight(TypeChecker checker)
+        {
+            this._right.Check(checker);
+        }
 
-            return retVal;
+        public QSType GetLeftType()
+        {
+            return this._left.Type;
+        }
+
+        public QSType GetRightType()
+        {
+            return this._right.Type;
         }
 
         public override abstract Value Evaluate();
 
+
+        #region Object overrides
         public override int GetHashCode()
         {
             return base.GetHashCode();
@@ -61,7 +64,6 @@ namespace QSLib.Expressions
         {
             return this._left.ToString() + this._operator + this._right.ToString();
         }
-
-
+        #endregion
     }
 }

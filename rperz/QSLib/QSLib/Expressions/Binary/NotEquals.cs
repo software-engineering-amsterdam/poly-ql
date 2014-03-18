@@ -1,7 +1,6 @@
 ﻿using System;
 using QSLib.Types;
 using QSLib.Values;
-using System.ComponentModel;
 
 namespace QSLib.Expressions.Binary
 {
@@ -9,8 +8,8 @@ namespace QSLib.Expressions.Binary
     {
         protected new String _operator = "!=";
 
-        public NotEquals(QSExpression a, QSExpression b, int linenr)
-            : base(a, b, linenr)
+        public NotEquals(QSExpression a, QSExpression b, int lineNr)
+            : base(a, b, lineNr)
         {
             base._operator = "!=";
         }

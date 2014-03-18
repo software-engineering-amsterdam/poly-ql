@@ -1,42 +1,31 @@
 ﻿using QSLib.Types;
-using QSLib.Values;
-using System;
-using System.ComponentModel;
 namespace QSLib.Expressions.Unary
 {
     public abstract class Unary_Expression : QSExpression 
     {
+        protected QSExpression _internal;
 
-        protected string _operator;
-        protected QSExpression _expr;
-
-        public Unary_Expression(QSExpression expr, int linenr)
+        #region Constructors
+        public Unary_Expression(QSExpression intern, int lineNr)
         {
-            this._expr = expr;
-            this._linenr = linenr;
+            this._internal = intern;
+            this._lineNr = lineNr;
+        }
+        #endregion
+
+        #region TypeChecker
+        public override void Check(TypeChecker checker)
+        {
+            checker.Check(this);
         }
 
-        public override string ToString()
+        internal virtual void CheckInternal(TypeChecker typeChecker)
         {
-            return this._operator + this._expr.ToString();
+            this._internal.Check(typeChecker);
         }
+        #endregion
 
-        public override bool CheckType(TypeChecker checker)
-        {
-            bool retVal = true;
-
-            retVal &= (this._expr == null || this._expr.CheckType(checker));
-
-            if (this._expr != null && !this.Type.IsCompatible(this._expr.Type))
-            {
-                // type of unary is not compatible with it's expression
-                retVal = false;
-                checker.ReportTypeMismatch(this._expr.Type, this._operator, this._linenr);
-            }
-
-            return retVal;
-        }
-
+        #region Object overrides
         public override int GetHashCode()
         {
             return base.GetHashCode();
@@ -45,8 +34,19 @@ namespace QSLib.Expressions.Unary
         public override bool Equals(object obj)
         {
             var comp = obj as Unary_Expression;
-            return comp != null && this.Type.IsCompatible(comp.Type) && ((this._expr == null && comp._expr == null) || this._expr.Equals(comp._expr));
+            return comp != null && (comp.Type == null || this.Type.IsCompatible(comp.Type)) && 
+                ((this._internal == null && comp._internal == null) || this._internal.Equals(comp._internal));
         }
 
+        public override string ToString()
+        {
+            return this._operator + this._internal.ToString();
+        }
+        #endregion
+
+        internal QSType GetInternalType()
+        {
+            return this._internal.Type;
+        }
     }
 }

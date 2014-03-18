@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Controls;
-using System.Windows;
-using QSLib.Expressions.Unary;
 using System.Windows.Data;
 
 namespace QSLib.IO
@@ -13,22 +8,19 @@ namespace QSLib.IO
     {
         private Label _control;
 
+        #region Constructors
         public StringOutput()
             : base("GetValue", Label.ContentProperty)
         {
          
         }
-
+        #endregion
+ 
         public override Control GetControl()
         {
             this._control = new Label();
             this._control.SourceUpdated += new EventHandler<System.Windows.Data.DataTransferEventArgs>(_control_SourceUpdated);
             return this._control;
-        }
-
-        void _control_SourceUpdated(object sender, System.Windows.Data.DataTransferEventArgs e)
-        {
-            OnValueChanged(null);
         }
 
         public override System.Windows.Data.Binding GetBinding()
@@ -37,6 +29,12 @@ namespace QSLib.IO
             bindingObject.Source = this._id;
             bindingObject.Mode = BindingMode.OneWay;
             return bindingObject;
+        }
+
+
+        void _control_SourceUpdated(object sender, System.Windows.Data.DataTransferEventArgs e)
+        {
+            OnValueChanged(null);
         }
     }
 }

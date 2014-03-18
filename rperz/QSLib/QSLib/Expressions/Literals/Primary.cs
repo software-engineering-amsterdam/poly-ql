@@ -1,14 +1,13 @@
 ﻿using QSLib.Types;
 using QSLib.Values;
-using System.ComponentModel;
 
 namespace QSLib.Expressions.Literals
 {
     public abstract class Primary : QSExpression
     {
-        public override bool CheckType(TypeChecker checker)
+        public override void Check(TypeChecker checker)
         {
-            return true;
+            checker.Check(this);
         }
 
         public override QSType Type
@@ -19,6 +18,14 @@ namespace QSLib.Expressions.Literals
             }
         }
 
+        public override Value Evaluate()
+        {
+            this.OnPropertyChanged("GetValue");
+            return this._value;
+        }
+
+
+        #region Object overrides
         public override int GetHashCode()
         {
             return base.GetHashCode();
@@ -29,11 +36,7 @@ namespace QSLib.Expressions.Literals
             var temp = obj as Primary;
             return temp != null && this.Type.IsCompatible(temp.Type);
         }
+        #endregion
 
-        public override Value Evaluate()
-        {
-            this.OnPropertyChanged("GetValue");
-            return this._value;
-        }
     }
 }

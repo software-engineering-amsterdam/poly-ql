@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace QSLib.Values
 {
@@ -10,8 +7,8 @@ namespace QSLib.Values
         public abstract object GetValue { get; }
         public abstract void CreateGUI(GUIBuilder guiBuilder);
 
+        #region dispatch value
         public abstract Value Add(Value otherValue);
-
         public abstract Value And(Value otherValue);
         public abstract Value Divide(Value otherValue);
         public abstract Value EqualTo(Value otherValue);
@@ -28,9 +25,9 @@ namespace QSLib.Values
         {
             throw new Exception("Not operator used on non-bool value");
         }
+        #endregion
 
-
-        // double dispatch BooleanValue
+        #region double dispatch BooleanValue
         public virtual Value Add(BooleanValue otherValue)
         {
             throw new Exception("Add operator used on bool value");
@@ -80,8 +77,9 @@ namespace QSLib.Values
         {
             throw new Exception("Subtract operator used on bool value");
         }
+        #endregion
 
-        // double dispatch IntegerValue
+        #region double dispatch IntegerValue
         public virtual Value Add(IntegerValue otherValue)
         {
             throw new Exception("Add operator used on non-integer value");
@@ -131,8 +129,9 @@ namespace QSLib.Values
         {
             throw new Exception("Subtract operator used on non-integer value");
         }
+        #endregion
 
-        // double dispatch Undefined Value
+        #region double dispatch Undefined Value
         public virtual Value Add(UndefinedValue otherValue)
         {
             throw new Exception("Add operator used on undefined value");
@@ -182,6 +181,13 @@ namespace QSLib.Values
         {
             throw new Exception("Subtract operator used on undefined value");
         }
+        #endregion
 
+        #region Object overrides
+        public override string ToString()
+        {
+            return this.GetValue.ToString();
+        }
+        #endregion
     }
 }

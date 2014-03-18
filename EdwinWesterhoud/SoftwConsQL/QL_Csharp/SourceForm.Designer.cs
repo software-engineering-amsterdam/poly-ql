@@ -33,7 +33,6 @@ namespace QL_Csharp
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.labelDemo = new System.Windows.Forms.Label();
             this.comboBoxDemos = new System.Windows.Forms.ComboBox();
-            this.checkBoxTypeCheck = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.textBoxSource = new ICSharpCode.TextEditor.TextEditorControl();
             this.buttonGenerate = new System.Windows.Forms.Button();
@@ -58,7 +57,6 @@ namespace QL_Csharp
             // 
             this.splitContainer1.Panel1.Controls.Add(this.labelDemo);
             this.splitContainer1.Panel1.Controls.Add(this.comboBoxDemos);
-            this.splitContainer1.Panel1.Controls.Add(this.checkBoxTypeCheck);
             this.splitContainer1.Panel1.Controls.Add(this.groupBox1);
             this.splitContainer1.Panel1.Controls.Add(this.buttonGenerate);
             // 
@@ -88,19 +86,6 @@ namespace QL_Csharp
             this.comboBoxDemos.Size = new System.Drawing.Size(144, 21);
             this.comboBoxDemos.TabIndex = 3;
             this.comboBoxDemos.SelectedIndexChanged += new System.EventHandler(this.comboBoxDemos_SelectedValueChanged);
-            // 
-            // checkBoxTypeCheck
-            // 
-            this.checkBoxTypeCheck.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.checkBoxTypeCheck.AutoSize = true;
-            this.checkBoxTypeCheck.Checked = true;
-            this.checkBoxTypeCheck.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxTypeCheck.Location = new System.Drawing.Point(106, 340);
-            this.checkBoxTypeCheck.Name = "checkBoxTypeCheck";
-            this.checkBoxTypeCheck.Size = new System.Drawing.Size(129, 17);
-            this.checkBoxTypeCheck.TabIndex = 2;
-            this.checkBoxTypeCheck.Text = "Enable Type Checker";
-            this.checkBoxTypeCheck.UseVisualStyleBackColor = true;
             // 
             // groupBox1
             // 
@@ -186,7 +171,6 @@ namespace QL_Csharp
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button buttonGenerate;
-        private System.Windows.Forms.CheckBox checkBoxTypeCheck;
         private System.Windows.Forms.ComboBox comboBoxDemos;
         private System.Windows.Forms.Label labelDemo;
         private ICSharpCode.TextEditor.TextEditorControl textBoxSource;
