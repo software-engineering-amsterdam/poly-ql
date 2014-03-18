@@ -62,27 +62,27 @@ type_declaration returns [Identifier e]
 
 	  id=WORD ASSIGN v=expression COLON TYPE_BOOL 
 					{ 
-						$e = new Identifier($id.text, new BoolType(), $v.e, $id.line);  
+						$e = new OutputIdentifier($id.text, new BoolType(), $v.e, $id.line);  
 					}
 	| id=WORD ASSIGN v=expression COLON TYPE_INTEGER  
 					{ 
-						$e = new Identifier($id.text, new NumberType(), $v.e, $id.line);  
+						$e = new OutputIdentifier($id.text, new NumberType(), $v.e, $id.line);  
 					}
 	| id=WORD ASSIGN v=expression  COLON TYPE_STRING
 					{ 
-						$e = new Identifier($id.text, new StringType(), $v.e, $id.line);    
+						$e = new OutputIdentifier($id.text, new StringType(), $v.e, $id.line);    
 					}
 	| id=WORD COLON TYPE_BOOL 
 					{ 
-						$e = new Identifier($id.text, new BoolType(), $id.line);  
+						$e = new InputIdentifier($id.text, new BoolType(), $id.line);  
 					}
 	| id=WORD COLON TYPE_INTEGER  
 					{ 
-						$e = new Identifier($id.text, new NumberType(), $id.line);  
+						$e = new InputIdentifier($id.text, new NumberType(), $id.line);  
 					}
 	| id=WORD COLON TYPE_STRING
 					{ 
-						$e = new Identifier($id.text, new StringType(), $id.line);    
+						$e = new InputIdentifier($id.text, new StringType(), $id.line);    
 					}
 	;
 

@@ -7,9 +7,8 @@ namespace QSLib.Expressions.Unary
     public class Identifier : Unary_Expression
 
     {
-        private Identifier _parent;
-        private String _name;
-        private bool _isInput = true;
+        protected Identifier _parent;
+        protected String _name;
 
         #region Constructors
         public Identifier(String name, int lineNr)
@@ -23,58 +22,21 @@ namespace QSLib.Expressions.Unary
             : base(internalExpression, lineNr)
         {
             this._name = name;
-            this._isInput = false;
             this._internal = internalExpression;
             this._lineNr = lineNr;
             this._value = this.Evaluate();
-        }
-
-        public Identifier(String name, QSType type, int lineNr)
-            : base(null, lineNr)
-        {
-            this._name = name;
-            this._lineNr = lineNr;
-            this._type = type;
-            this._value = this._type.GetUndefinedValue(true);
         }
 
         public Identifier(String name, QSType type, QSExpression internalExpression, int lineNr)
             : base(internalExpression, lineNr)
         {
             this._name = name;
-            this._isInput = false;
             this._internal = internalExpression;
             this._lineNr = lineNr;
             this._type = type;
             this._value = this.Type.GetUndefinedValue(false);
         }
 
-        #endregion
-
-        #region Value setters
-        public string SetStringValue
-        {
-            set
-            {
-                this._value = new StringValue(value, true);
-            }
-        }
-
-        public bool SetBooleanValue
-        {
-            set
-            {
-                this._value = new BooleanValue(value, true);
-            }
-        }
-
-        public int SetIntegerValue
-        {
-            set
-            {
-                this._value = new IntegerValue(value, true);
-            }
-        }
         #endregion
 
         #region getters/setters
@@ -157,18 +119,9 @@ namespace QSLib.Expressions.Unary
         }
 
 
-        public void CreateGUI(GUIBuilder guiBuilder)
+        public virtual void CreateGUI(GUIBuilder guiBuilder)
         {           
-            if (this._isInput)
-            {
-                this._type.CreateGUI(guiBuilder);
-                guiBuilder.SetToInput(this);
-            }
-            else
-            {
-                this._value.CreateGUI(guiBuilder);
-                guiBuilder.SetToOutput(this);
-            }
+            // this is neither a input nor an output, so no GUI is going to be build here.
         }
     }
 }

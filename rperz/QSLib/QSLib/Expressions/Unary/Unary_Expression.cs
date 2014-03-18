@@ -34,7 +34,8 @@ namespace QSLib.Expressions.Unary
         public override bool Equals(object obj)
         {
             var comp = obj as Unary_Expression;
-            return comp != null && this.Type.IsCompatible(comp.Type) && ((this._internal == null && comp._internal == null) || this._internal.Equals(comp._internal));
+            return comp != null && (comp.Type == null || this.Type.IsCompatible(comp.Type)) && 
+                ((this._internal == null && comp._internal == null) || this._internal.Equals(comp._internal));
         }
 
         public override string ToString()
