@@ -1,4 +1,5 @@
-﻿using QL.TypeChecker;
+﻿using QL.QLClasses.Values;
+using QL.TypeChecker;
 
 namespace QL.QLClasses.Types
 {
@@ -12,6 +13,11 @@ namespace QL.QLClasses.Types
         public override string ToString()
         {
             return "QBool";
+        }
+
+        public override QValue UndefinedValue()
+        {
+            return new BoolValue(false);
         }
 
         #region TypeChecker Implementation
