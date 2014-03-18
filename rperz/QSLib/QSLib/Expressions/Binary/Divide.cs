@@ -1,12 +1,11 @@
 ﻿using QSLib.Types;
 using QSLib.Values;
-using System.ComponentModel;
 namespace QSLib.Expressions.Binary
 {
     public class Divide : Binary_Expression 
     {
-        public Divide(QSExpression a, QSExpression b, int linenr)
-            : base(a, b, linenr)
+        public Divide(QSExpression a, QSExpression b, int lineNr)
+            : base(a, b, lineNr)
         {
             base._operator = "/";
         }

@@ -1,19 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿
 namespace QSLib.Values
 {
     public class BooleanValue : Value
     {
         protected bool _value;
         private bool _isInput;
+
+        #region Constructors
         public BooleanValue(bool value, bool isInput = false)
         {
             this._isInput = isInput;
             this._value = value;
         }
+        #endregion
 
         public override object GetValue
         {
@@ -31,6 +30,7 @@ namespace QSLib.Values
                 guiBuilder.CreateBooleanOutput();
         }
 
+        #region dispatch
         public override Value Not()
         {
             return new BooleanValue(!this._value);
@@ -85,23 +85,25 @@ namespace QSLib.Values
         {
             return otherValue.Subtract(this);
         }
+        #endregion
 
-        // double dispatch BoolValue
+        #region double dispatch BoolValue
         public override Value And(BooleanValue otherValue)
         {
-            return otherValue.And(this);
+            return new BooleanValue(otherValue._value && this._value);
         }
         public override Value EqualTo(BooleanValue otherValue)
         {
-            return otherValue.EqualTo(this);
+            return new BooleanValue(otherValue._value == this._value);
         }
         public override Value NotEquals(BooleanValue otherValue)
         {
-            return otherValue.NotEquals(this);
+            return new BooleanValue(otherValue._value != this._value);
         }
         public override Value Or(BooleanValue otherValue)
         {
-            return otherValue.Or(this);
+            return new BooleanValue(otherValue._value || this._value);
         }
+        #endregion
     }
 }

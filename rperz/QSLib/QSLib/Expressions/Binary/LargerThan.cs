@@ -1,13 +1,12 @@
 ﻿using QSLib.Types;
 using QSLib.Values;
-using System.ComponentModel;
 namespace QSLib.Expressions.Binary
 {
     class LargerThan : Binary_Expression
     {
 
-        public LargerThan(QSExpression a, QSExpression b, int linenr)
-            : base(a, b, linenr)
+        public LargerThan(QSExpression a, QSExpression b, int lineNr)
+            : base(a, b, lineNr)
         {
             base._operator = ">";
         }

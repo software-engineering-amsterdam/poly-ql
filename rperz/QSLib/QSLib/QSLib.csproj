@@ -90,7 +90,7 @@
     <Compile Include="Types\StringType.cs" />
     <Compile Include="Types\QSType.cs" />
     <Compile Include="Expressions\Literals\Primary.cs" />
-    <Compile Include="Expressions\IExpression.cs" />
+    <Compile Include="Expressions\QSExpression.cs" />
     <Compile Include="Expressions\Literals\Bool.cs" />
     <Compile Include="Expressions\Unary\Not.cs" />
     <Compile Include="Form.cs" />

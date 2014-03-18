@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿
 namespace QSLib.Values
 {
     public class UndefinedValue : Value
     {
+        #region Getter
         public override object GetValue
         {
             get
@@ -14,13 +11,14 @@ namespace QSLib.Values
                 return null;
             }
         }
+        #endregion
 
         public override void CreateGUI(GUIBuilder guiBuilder)
         {
             guiBuilder.CreateStringOutput();
         }
 
-
+        #region dispatch value
         public override Value Add(Value otherValue)
         {
             return otherValue.Add(this);
@@ -70,5 +68,6 @@ namespace QSLib.Values
         {
             return otherValue.Subtract(this);
         }
+        #endregion
     }
 }

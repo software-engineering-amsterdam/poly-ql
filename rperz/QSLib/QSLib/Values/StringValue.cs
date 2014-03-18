@@ -1,20 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿
 namespace QSLib.Values
 {
     public class StringValue : Value
     {
         protected string _value;
         private bool _isInput;
+
+        #region Constructor
         public StringValue(string value, bool isInput = false)
         {
             this._isInput = isInput;
             this._value = value;
         }
+        #endregion
 
+        #region dispatch value
         public override Value Add(Value otherValue)
         {
             return otherValue.Add(this);
@@ -64,8 +64,9 @@ namespace QSLib.Values
         {
             return otherValue.Subtract(this);
         }
+        #endregion
 
-
+        #region Getter
         public override object GetValue
         {
             get
@@ -73,6 +74,7 @@ namespace QSLib.Values
                 return this._value;
             }
         }
+        #endregion
 
         public override void CreateGUI(GUIBuilder guiBuilder)
         {

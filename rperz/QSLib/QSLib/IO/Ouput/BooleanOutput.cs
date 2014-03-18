@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows;
-using QSLib.Expressions.Unary;
 using System.Windows.Data;
 namespace QSLib.IO
 {
@@ -12,11 +7,13 @@ namespace QSLib.IO
     {
         private CheckBox _control;
 
+        #region Constructors
         public BooleanOutput()
             : base("GetValue", CheckBox.IsCheckedProperty)
         {
          
         }
+        #endregion
 
         public override  Control GetControl()
         {
@@ -27,17 +24,17 @@ namespace QSLib.IO
             return this._control;
         }
 
-        void _control_Checked(object sender, RoutedEventArgs e)
-        {
-            OnValueChanged(null);
-        }
-
         public override System.Windows.Data.Binding GetBinding()
         {
             Binding bindingObject = new Binding(this._binding);
             bindingObject.Source = this._id;
             bindingObject.Mode = BindingMode.OneWay;
             return bindingObject;
+        }
+
+        void _control_Checked(object sender, RoutedEventArgs e)
+        {
+            OnValueChanged(null);
         }
     }
 }

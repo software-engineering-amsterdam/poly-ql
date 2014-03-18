@@ -1,55 +1,57 @@
 ﻿using System;
-using System.Collections.Generic;
 using QSLib.Types;
-using QSLib.Expressions.Literals;
-using System.ComponentModel;
 using QSLib.Values;
 
 namespace QSLib.Expressions.Unary
 {
-    public class Identifier : Unary_Expression, IEquatable<Identifier>
+    public class Identifier : Unary_Expression
 
     {
+        private Identifier _parent;
         private String _name;
         private bool _isInput = true;
 
-        public Identifier(String name, int linenr)
-            : base(null, linenr)
+        #region Constructors
+        public Identifier(String name, int lineNr)
+            : base(null, lineNr)
         {
             this._name = name;
-            this._linenr = linenr;
+            this._lineNr = lineNr;
         }
 
-        public Identifier(String name, QSExpression expr, int linenr)
-            : base(expr, linenr)
+        public Identifier(String name, QSExpression internalExpression, int lineNr)
+            : base(internalExpression, lineNr)
         {
             this._name = name;
             this._isInput = false;
-            this._expr = expr;
-            this._linenr = linenr;
+            this._internal = internalExpression;
+            this._lineNr = lineNr;
             this._value = this.Evaluate();
         }
 
-        public Identifier(String name, QSType type, int linenr)
-            : base(null, linenr)
+        public Identifier(String name, QSType type, int lineNr)
+            : base(null, lineNr)
         {
             this._name = name;
-            this._linenr = linenr;
+            this._lineNr = lineNr;
             this._type = type;
             this._value = this._type.GetUndefinedValue(true);
         }
 
-        public Identifier(String name, QSType type, QSExpression expr, int linenr)
-            : base(expr, linenr)
+        public Identifier(String name, QSType type, QSExpression internalExpression, int lineNr)
+            : base(internalExpression, lineNr)
         {
             this._name = name;
             this._isInput = false;
-            this._expr = expr;
-            this._linenr = linenr;
+            this._internal = internalExpression;
+            this._lineNr = lineNr;
             this._type = type;
             this._value = this.Type.GetUndefinedValue(false);
         }
 
+        #endregion
+
+        #region Value setters
         public string SetStringValue
         {
             set
@@ -73,7 +75,9 @@ namespace QSLib.Expressions.Unary
                 this._value = new IntegerValue(value, true);
             }
         }
+        #endregion
 
+        #region getters/setters
         public string Name
         {
             get
@@ -93,31 +97,40 @@ namespace QSLib.Expressions.Unary
             }
         }
 
-        public override bool CheckType(TypeChecker checker)
+        public Identifier Parent
         {
-            bool retVal = true;
-            if (this._type == null)
+            get
             {
-                this._type = checker.TryGetType(this, this._linenr);
+                return this._parent;
             }
-            else
-                retVal &= checker.TryDeclare(this, this._linenr);
+            set
+            {
+                this._parent = value;
+                this._type = this._parent.Type;
+            }
+        }
+#endregion
 
-            if(this._type == null)
-                retVal &= false;
-
-            retVal &= base.CheckType(checker);
-            if(this._expr == null)
-                this._expr = checker.TryGetValue(this);
-            return retVal;
+        #region Type checker
+        public override void Check(TypeChecker checker)
+        {
+            checker.Check(this);
         }
 
+        internal override void CheckInternal(TypeChecker typeChecker)
+        {
+            if(this._internal != null)
+                this._internal.Check(typeChecker);
+        }
+        #endregion
+
+        #region Object overrides
         public override string ToString()
         {
-            if (this._expr == null)
+            if (this._internal  == null)
                 return this._name.ToString();
             else
-                return this._name.ToString() + " = " + this._expr.ToString();
+                return this._name.ToString() + " = " + this._internal.ToString();
         }
 
         public override bool Equals(object obj)
@@ -130,17 +143,15 @@ namespace QSLib.Expressions.Unary
         {
             return base.GetHashCode();
         }
-
-        bool IEquatable<Identifier>.Equals(Identifier other)
-        {
-            return this._name.Equals(other._name);
-        }
+        #endregion
 
         public override Value Evaluate()
         {
-            if (this._expr == null)
-                return this._value;
-            this._value = this._expr.Evaluate();
+            if (this._parent != null)
+                this._value = this._parent._value;
+            else if (this._internal != null)
+                this._value = this._internal.Evaluate();
+            
             this.OnPropertyChanged("GetValue");
             return this._value;
         }
@@ -159,6 +170,5 @@ namespace QSLib.Expressions.Unary
                 guiBuilder.SetToOutput(this);
             }
         }
-
     }
 }

@@ -1,14 +1,13 @@
 ﻿using QSLib.Types;
 using QSLib.Values;
-using System.ComponentModel;
 
 namespace QSLib.Expressions.Binary
 {
     class Or : Binary_Expression
     {
 
-        public Or(QSExpression a, QSExpression b, int linenr)
-            : base(a, b, linenr)
+        public Or(QSExpression a, QSExpression b, int lineNr)
+            : base(a, b, lineNr)
         {
             base._operator = "||";
         }

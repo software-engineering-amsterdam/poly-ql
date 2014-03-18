@@ -97,7 +97,7 @@ bool_val returns [QSExpression e]
 	;
 
 expression returns [QSExpression e]
-	: 
+	:  
 	  l=expression o=MULTIPLY r=expression { $e = new Multiply($l.e, $r.e, $o.line); } 
 	| l=expression o=DIVIDE r=expression { $e = new Divide($l.e, $r.e, $o.line); } 
 	| l=expression o=PLUS r=expression { $e = new Add($l.e, $r.e, $o.line); }
@@ -114,6 +114,7 @@ expression returns [QSExpression e]
 	| d=num_val { $e = $d.e ; } 
 	| g=bool_val { $e = $g.e ; } 
 	| f=WORD { $e = new Identifier($f.text, $f.line) ; } 
+	| L_HOOK l=expression R_HOOK { $e = $l.e; }
 	;
 
 if_statement returns [IfStatement i]
@@ -196,7 +197,7 @@ WORD :
 	;
 
 NUMBER :
-	  [0-9]+ 
+	  '-'?[0-9]+ 
 	;
 
 INTERPUNCT :
@@ -264,7 +265,7 @@ COMMENT
     ;
 
 STRING_LITERAL :
-	    SQ ((WORD+ INTERPUNCT?)|[ \t\r\n])+ SQ
+	    SQ (L_HOOK (WORD+ INTERPUNCT?) R_HOOK|(WORD+ INTERPUNCT?)|[ \t\r\n])+ SQ
 	  ;
 
 NEWLINE
