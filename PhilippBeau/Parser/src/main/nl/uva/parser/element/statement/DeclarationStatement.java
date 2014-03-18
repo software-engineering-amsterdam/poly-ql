@@ -1,11 +1,11 @@
 package main.nl.uva.parser.element.statement;
 
 import main.nl.uva.parser.element.expression.Variable;
-import main.nl.uva.parser.element.validation.ASTValidation;
-import main.nl.uva.parser.element.validation.Scope;
-import main.nl.uva.parser.ui.DeclarationUIElement;
-import main.nl.uva.parser.ui.UIElement;
+import main.nl.uva.parser.validation.ASTValidation;
+import main.nl.uva.parser.validation.Scope;
 import main.nl.uva.ui.UI;
+import main.nl.uva.ui.element.DeclarationUI;
+import main.nl.uva.ui.element.UIElement;
 
 public class DeclarationStatement extends Statement {
 
@@ -33,7 +33,7 @@ public class DeclarationStatement extends Statement {
 
     @Override
     public UIElement getLayout(final UI parentUI) {
-        return new DeclarationUIElement(_variable, _function, parentUI);
+        return new DeclarationUI(_variable, _function, parentUI);
     }
 
     @Override

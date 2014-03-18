@@ -15,7 +15,7 @@ import main.nl.uva.parser.element.statement.ParserForm;
 import main.nl.uva.parser.element.statement.Statement;
 import main.nl.uva.parser.element.type.Bool;
 import main.nl.uva.parser.element.type.Money;
-import main.nl.uva.parser.element.validation.Scope;
+import main.nl.uva.parser.validation.Scope;
 
 import org.junit.Assert;
 import org.junit.Before;

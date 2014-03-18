@@ -1,4 +1,4 @@
-package main.nl.uva.parser.ui;
+package main.nl.uva.ui.element;
 
 import javax.swing.JPanel;
 

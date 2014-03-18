@@ -3,8 +3,8 @@ package main.nl.uva.parser.element;
 import java.util.List;
 
 import main.nl.uva.parser.element.statement.Statement;
-import main.nl.uva.parser.element.validation.ASTValidation;
-import main.nl.uva.parser.element.validation.Scope;
+import main.nl.uva.parser.validation.ASTValidation;
+import main.nl.uva.parser.validation.Scope;
 
 public abstract class ASTNode {
 

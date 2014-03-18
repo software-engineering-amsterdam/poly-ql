@@ -1,4 +1,4 @@
-package main.nl.uva.parser.ui.types;
+package main.nl.uva.ui.types;
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -8,15 +8,15 @@ import javax.swing.JComponent;
 
 import main.nl.uva.parser.element.type.Bool;
 import main.nl.uva.parser.element.type.Value;
-import main.nl.uva.parser.ui.DeclarationUIElement;
+import main.nl.uva.ui.element.DeclarationUI;
 
 public class BooleanUI extends ValueUI implements ItemListener {
 
     private final JCheckBox _checkBox;
 
-    private final DeclarationUIElement _parent;
+    private final DeclarationUI _parent;
 
-    public BooleanUI(final DeclarationUIElement parent) {
+    public BooleanUI(final DeclarationUI parent) {
         _checkBox = new JCheckBox();
         _checkBox.addItemListener(this);
 

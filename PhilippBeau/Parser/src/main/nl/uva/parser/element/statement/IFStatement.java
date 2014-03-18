@@ -5,11 +5,11 @@ import java.util.List;
 import main.nl.uva.parser.element.error.InvalidTypeError;
 import main.nl.uva.parser.element.expression.Expression;
 import main.nl.uva.parser.element.type.Value;
-import main.nl.uva.parser.element.validation.ASTValidation;
-import main.nl.uva.parser.element.validation.Scope;
-import main.nl.uva.parser.ui.IfUIElement;
-import main.nl.uva.parser.ui.UIElement;
+import main.nl.uva.parser.validation.ASTValidation;
+import main.nl.uva.parser.validation.Scope;
 import main.nl.uva.ui.UI;
+import main.nl.uva.ui.element.IfUI;
+import main.nl.uva.ui.element.UIElement;
 
 public class IFStatement extends BlockStatement {
 
@@ -52,6 +52,6 @@ public class IFStatement extends BlockStatement {
 
     @Override
     public UIElement getLayout(final UI parentUI) {
-        return new IfUIElement(_expression, _children, parentUI);
+        return new IfUI(_expression, _children, parentUI);
     }
 }

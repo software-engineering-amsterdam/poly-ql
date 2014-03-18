@@ -1,4 +1,4 @@
-package main.nl.uva.parser.ui;
+package main.nl.uva.ui.element;
 
 import java.util.List;
 
@@ -11,13 +11,13 @@ import main.nl.uva.parser.element.statement.Statement;
 import main.nl.uva.parser.element.type.Bool;
 import main.nl.uva.ui.UI;
 
-public class IfUIElement extends UIElement implements ExpressionChangeListener {
+public class IfUI extends UIElement implements ExpressionChangeListener {
 
     private final JPanel _panel = new JPanel();
 
     private final Expression _expression;
 
-    public IfUIElement(final Expression expression, final List<Statement> children, final UI parentUI) {
+    public IfUI(final Expression expression, final List<Statement> children, final UI parentUI) {
         super(parentUI);
         _expression = expression;
         _expression.registerListener(this);

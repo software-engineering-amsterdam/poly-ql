@@ -1,4 +1,4 @@
-package main.nl.uva.parser.ui.types;
+package main.nl.uva.ui.types;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -8,15 +8,15 @@ import javax.swing.JTextField;
 
 import main.nl.uva.parser.element.type.Text;
 import main.nl.uva.parser.element.type.Value;
-import main.nl.uva.parser.ui.DeclarationUIElement;
+import main.nl.uva.ui.element.DeclarationUI;
 
 public class TextUI extends ValueUI implements KeyListener {
 
     private final JTextField _textField;
 
-    private final DeclarationUIElement _parent;
+    private final DeclarationUI _parent;
 
-    public TextUI(final DeclarationUIElement parent) {
+    public TextUI(final DeclarationUI parent) {
         _textField = new JTextField();
         _textField.addKeyListener(this);
 

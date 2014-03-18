@@ -2,8 +2,8 @@ package main.nl.uva.parser.element.expression.atom;
 
 import main.nl.uva.parser.element.type.Text;
 import main.nl.uva.parser.element.type.Value;
-import main.nl.uva.parser.element.validation.ASTValidation;
-import main.nl.uva.parser.element.validation.Scope;
+import main.nl.uva.parser.validation.ASTValidation;
+import main.nl.uva.parser.validation.Scope;
 
 public class TextAtom extends AtomExpression {
 

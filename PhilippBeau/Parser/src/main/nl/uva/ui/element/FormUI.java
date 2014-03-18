@@ -1,4 +1,4 @@
-package main.nl.uva.parser.ui;
+package main.nl.uva.ui.element;
 
 import java.util.List;
 
@@ -9,11 +9,11 @@ import main.nl.uva.parser.element.statement.ParserForm;
 import main.nl.uva.parser.element.statement.Statement;
 import main.nl.uva.ui.UI;
 
-public class FormUIElement extends UIElement {
+public class FormUI extends UIElement {
 
     private final List<Statement> _block;
 
-    public FormUIElement(final ParserForm form, final List<Statement> block, final UI parentUI) {
+    public FormUI(final ParserForm form, final List<Statement> block, final UI parentUI) {
         super(parentUI);
         _block = block;
     }

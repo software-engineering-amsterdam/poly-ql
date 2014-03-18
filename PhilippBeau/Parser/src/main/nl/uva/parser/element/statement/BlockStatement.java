@@ -2,7 +2,7 @@ package main.nl.uva.parser.element.statement;
 
 import java.util.List;
 
-import main.nl.uva.parser.element.validation.Scope;
+import main.nl.uva.parser.validation.Scope;
 
 public abstract class BlockStatement extends Statement {
 

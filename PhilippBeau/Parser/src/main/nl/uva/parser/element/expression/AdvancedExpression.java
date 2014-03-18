@@ -6,8 +6,8 @@ import main.nl.uva.parser.element.type.Invalid;
 import main.nl.uva.parser.element.type.Money;
 import main.nl.uva.parser.element.type.Text;
 import main.nl.uva.parser.element.type.Value;
-import main.nl.uva.parser.element.validation.ASTValidation;
-import main.nl.uva.parser.element.validation.Scope;
+import main.nl.uva.parser.validation.ASTValidation;
+import main.nl.uva.parser.validation.Scope;
 
 public abstract class AdvancedExpression extends Expression {
     protected Value _value = null;

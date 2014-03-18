@@ -11,7 +11,7 @@ import main.nl.uva.parser.element.expression.atom.BoolAtom;
 import main.nl.uva.parser.element.expression.atom.MoneyAtom;
 import main.nl.uva.parser.element.type.Bool;
 import main.nl.uva.parser.element.type.Money;
-import main.nl.uva.parser.element.validation.Scope;
+import main.nl.uva.parser.validation.Scope;
 
 import org.junit.Assert;
 import org.junit.Before;

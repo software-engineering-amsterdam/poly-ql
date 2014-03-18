@@ -1,4 +1,4 @@
-package main.nl.uva.parser.ui.types;
+package main.nl.uva.ui.types;
 
 import javax.swing.JComponent;
 

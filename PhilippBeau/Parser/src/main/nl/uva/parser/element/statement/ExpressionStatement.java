@@ -1,9 +1,9 @@
 package main.nl.uva.parser.element.statement;
 
 import main.nl.uva.parser.element.expression.Variable;
-import main.nl.uva.parser.ui.ExpressionUIElement;
-import main.nl.uva.parser.ui.UIElement;
 import main.nl.uva.ui.UI;
+import main.nl.uva.ui.element.ExpressionUI;
+import main.nl.uva.ui.element.UIElement;
 
 public class ExpressionStatement extends DeclarationStatement {
 
@@ -13,7 +13,7 @@ public class ExpressionStatement extends DeclarationStatement {
 
     @Override
     public UIElement getLayout(final UI parentUI) {
-        return new ExpressionUIElement(_variable, _function, parentUI);
+        return new ExpressionUI(_variable, _function, parentUI);
     }
 
 }

@@ -1,4 +1,4 @@
-package main.nl.uva.parser.ui;
+package main.nl.uva.ui;
 
 public interface UIValueChangeListener {
 

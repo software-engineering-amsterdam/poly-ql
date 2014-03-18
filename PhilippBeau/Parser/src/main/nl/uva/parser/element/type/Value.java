@@ -6,8 +6,8 @@ import main.nl.uva.parser.element.expression.atom.BoolAtom;
 import main.nl.uva.parser.element.expression.atom.MoneyAtom;
 import main.nl.uva.parser.element.expression.atom.TextAtom;
 import main.nl.uva.parser.element.statement.Statement;
-import main.nl.uva.parser.ui.DeclarationUIElement;
-import main.nl.uva.parser.ui.types.ValueUI;
+import main.nl.uva.ui.element.DeclarationUI;
+import main.nl.uva.ui.types.ValueUI;
 
 public abstract class Value {
 
@@ -81,7 +81,7 @@ public abstract class Value {
 
     public abstract Value accept(Text left, AdvancedExpression expression);
 
-    public abstract ValueUI getLayout(DeclarationUIElement parent);
+    public abstract ValueUI getLayout(DeclarationUI parent);
 
     public boolean isInvalid() {
         return false;

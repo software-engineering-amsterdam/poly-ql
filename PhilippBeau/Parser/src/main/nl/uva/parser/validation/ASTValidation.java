@@ -1,4 +1,4 @@
-package main.nl.uva.parser.element.validation;
+package main.nl.uva.parser.validation;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -2,8 +2,8 @@ package main.nl.uva.parser.element.expression;
 
 import main.nl.uva.parser.element.type.Bool;
 import main.nl.uva.parser.element.type.Value;
-import main.nl.uva.parser.element.validation.ASTValidation;
-import main.nl.uva.parser.element.validation.Scope;
+import main.nl.uva.parser.validation.ASTValidation;
+import main.nl.uva.parser.validation.Scope;
 
 public class Not extends Expression {
 

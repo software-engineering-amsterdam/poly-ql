@@ -1,13 +1,13 @@
-package main.nl.uva.parser.ui;
+package main.nl.uva.ui.element;
 
 import javax.swing.JPanel;
 
 import main.nl.uva.parser.element.expression.Variable;
 import main.nl.uva.ui.UI;
 
-public class ExpressionUIElement extends DeclarationUIElement {
+public class ExpressionUI extends DeclarationUI {
 
-    public ExpressionUIElement(final Variable variable, final String function, final UI parentUI) {
+    public ExpressionUI(final Variable variable, final String function, final UI parentUI) {
         super(variable, function, parentUI);
     }
 

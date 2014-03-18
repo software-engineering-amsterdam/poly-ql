@@ -3,9 +3,9 @@ package main.nl.uva.parser.element.type;
 import main.nl.uva.parser.element.expression.AdvancedExpression;
 import main.nl.uva.parser.element.expression.Expression;
 import main.nl.uva.parser.element.expression.atom.TextAtom;
-import main.nl.uva.parser.ui.DeclarationUIElement;
-import main.nl.uva.parser.ui.types.TextUI;
-import main.nl.uva.parser.ui.types.ValueUI;
+import main.nl.uva.ui.element.DeclarationUI;
+import main.nl.uva.ui.types.TextUI;
+import main.nl.uva.ui.types.ValueUI;
 
 public class Text extends Value {
 
@@ -54,7 +54,7 @@ public class Text extends Value {
     }
 
     @Override
-    public ValueUI getLayout(final DeclarationUIElement parent) {
+    public ValueUI getLayout(final DeclarationUI parent) {
         return new TextUI(parent);
     }
 
