@@ -62,7 +62,8 @@
             this.textBoxValue.Name = "textBoxValue";
             this.textBoxValue.Size = new System.Drawing.Size(100, 20);
             this.textBoxValue.TabIndex = 1;
-            this.textBoxValue.TextChanged += new System.EventHandler(this.textBoxValue_TextChanged);
+            this.textBoxValue.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxValue_Validating);
+            this.textBoxValue.Validated += new System.EventHandler(this.textBoxValue_Validated);
             // 
             // IntegerControl
             // 

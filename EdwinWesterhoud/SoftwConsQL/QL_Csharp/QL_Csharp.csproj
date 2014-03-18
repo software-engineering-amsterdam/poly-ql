@@ -69,8 +69,8 @@
     <Compile Include="PrimitiveControls\IntegerControl.Designer.cs">
       <DependentUpon>IntegerControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="PrimitiveControls\IPrimitiveControl.cs" />
-    <Compile Include="PrimitiveControls\StatementControl.cs">
+    <Compile Include="IPrimitiveControl.cs" />
+    <Compile Include="StatementControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="PrimitiveControls\StringControl.cs">
