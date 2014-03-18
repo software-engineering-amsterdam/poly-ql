@@ -105,4 +105,9 @@ public class Int extends Value {
 	public Value neg() {
 		return new Int(- this.getValue());
 	}
+	
+	@Override
+	public String toString() {
+		return "" + this.getValue();
+	}
 }

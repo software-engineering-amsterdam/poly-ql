@@ -13,5 +13,5 @@ public interface FormVisitor<T> {
 	T visit(Computed ast);
 	T visit(IfThen ast);
 	T visit(IfThenElse ast);
-	T visit(Block stat);
+	T visit(Block ast);
 }

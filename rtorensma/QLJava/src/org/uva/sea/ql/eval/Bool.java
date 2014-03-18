@@ -41,4 +41,9 @@ public class Bool extends Value {
 	public Value orBool(Bool arg) {
 		return new Bool(arg.getValue() || getValue());
 	}
+	
+	@Override
+	public String toString() {
+		return "" + this.getValue();
+	}
 }
