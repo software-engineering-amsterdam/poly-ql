@@ -11,7 +11,7 @@ namespace QL.QLClasses.Values
             _value = value;
         }
 
-        public string GetValue()
+        public string Value()
         {
             return _value;
         }

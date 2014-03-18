@@ -1,4 +1,4 @@
-﻿using QSLib.Expressions.Values;
+﻿using QSLib.Values;
 namespace QSLib.Types
 {
     public class NumberType : QSType
@@ -30,14 +30,14 @@ namespace QSLib.Types
             return base.GetHashCode();
         }
 
-        public override Value GetUndefinedValue()
+        public override Value GetUndefinedValue(bool isInput)
         {
-            return new IntegerValue(0);
+            return new IntegerValue(0, isInput);
         }
 
         public override void CreateGUI(GUIBuilder guiBuilder)
         {
-            guiBuilder.CreateIntegerIO();
+            guiBuilder.CreateIntegerInput();
         }
     }
 }

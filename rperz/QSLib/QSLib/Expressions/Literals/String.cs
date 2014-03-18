@@ -1,19 +1,20 @@
 ﻿using System;
 using QSLib.Types;
-using QSLib.Expressions.Values;
+using QSLib.Values;
 
 namespace QSLib.Expressions.Literals
 {
     public class QSString : Primary
     {
 
-        public QSString(String value, int linenr)
+        public QSString(String value, int lineNr)
         {
             base._type = new StringType();
             this._value = new StringValue(value);
-            this._linenr = linenr;
+            this._lineNr = lineNr;
         }
 
+        #region Object overrides
         public override bool Equals(object obj)
         {
             var temp = obj as QSString;
@@ -22,12 +23,13 @@ namespace QSLib.Expressions.Literals
 
         public override string ToString()
         {
-            return this._value.ToString();
+            return this._value.ToString().Replace('\"', ' ');
         }
 
         public override int GetHashCode()
         {
             return base.GetHashCode();
         }
+        #endregion
     }
 }

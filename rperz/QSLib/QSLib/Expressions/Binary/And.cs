@@ -1,13 +1,12 @@
 ﻿using QSLib.Types;
-using QSLib.Expressions.Values;
-using System.ComponentModel;
+using QSLib.Values;
 
 namespace QSLib.Expressions.Binary
 {
     class And : Binary_Expression
     {
-        public And(QSExpression a, QSExpression b, int linenr)
-            : base(a, b, linenr)
+        public And(QSExpression a, QSExpression b, int lineNr)
+            : base(a, b, lineNr)
         {
             base._operator = "&&";
         }

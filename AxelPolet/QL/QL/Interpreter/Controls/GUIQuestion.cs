@@ -30,20 +30,28 @@ namespace QL.Interpreter.Controls
             _memory = memory;
             _identifier = identifier;            
             _isComputed = isComputed;
-            
-            _label = new Label { Content = label, Width = 300 };
+
+            _label = new Label
+                {
+                    Content = label,
+                    Width = 300,
+                    Margin = new Thickness(0, 0, 25, 0),
+                    HorizontalContentAlignment = HorizontalAlignment.Right
+                };
+
             _input = _memory.GetDeclaredValue(_identifier).CreateInputControl(_identifier, _memory, _isComputed);
             _input.OnChanged = changeHandler;
             
             //ui properties
-            Orientation = Orientation.Horizontal;
             Width = 600;
-            Margin = new Thickness(0, 5, 0 ,5); 
+            Margin = new Thickness(0, 10, 0 , 0);
+            Orientation = Orientation.Horizontal;
         }
 
         public void Render()
         {
             CheckVisibility();
+
             Children.Add(_label);
             Children.Add(_input);
 
@@ -69,7 +77,7 @@ namespace QL.Interpreter.Controls
         {
             if (_showCondition != null)
             {
-                Visibility = (((BoolValue)_showCondition.Evaluate()).GetValue() && !CheckHideConditions()) 
+                Visibility = (((BoolValue)_showCondition.Evaluate()).Value() && !CheckHideConditions()) 
                     ? Visibility.Visible 
                     : Visibility.Hidden;
             }
@@ -81,7 +89,7 @@ namespace QL.Interpreter.Controls
 
         private bool CheckHideConditions()
         {
-            return (_hideConditions.Any(h => ((BoolValue) h.Evaluate()).GetValue()));
+            return (_hideConditions.Any(h => ((BoolValue) h.Evaluate()).Value()));
         }
     }
 }

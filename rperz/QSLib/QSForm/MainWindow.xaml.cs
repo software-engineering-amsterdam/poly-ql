@@ -44,6 +44,7 @@ namespace QSForm
 
             GUIBuilder builder = GUIBuilder.BuildGUI(listener.Root);
             System.Windows.Window wind = new Window();
+            wind.Width = 500;
             wind.Content = builder.GetResult();
             wind.Show();
         }

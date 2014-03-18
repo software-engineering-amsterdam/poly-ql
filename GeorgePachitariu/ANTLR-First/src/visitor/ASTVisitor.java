@@ -5,6 +5,7 @@ import java.util.List;
 import types.BoolType;
 import types.IntType;
 import types.MoneyType;
+import types.StringType;
 import types.Type;
 import expr.Expression;
 import expr.Ident;
@@ -16,6 +17,7 @@ import expr.conditional.And;
 import expr.conditional.Or;
 import expr.literals.Bool;
 import expr.literals.Int;
+import expr.literals.Str;
 import expr.relational.Eq;
 import expr.relational.GEq;
 import expr.relational.GT;
@@ -110,6 +112,7 @@ public abstract class ASTVisitor {
 	public void visit(BoolType bool) {}
 	public void visit(IntType intType) {}
 	public void visit(MoneyType moneyType) {}
+
 	
 	public void visit(Form form, List<Statement> list) {
 		for(Statement s : list)
@@ -143,4 +146,8 @@ public abstract class ASTVisitor {
 	}
 	
 	public void visit(QuestionBody questionBody) {}
+
+	public void visit(StringType stringType) {	}
+
+	public void visit(Str str) {}
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using QSLib.Types;
 
 namespace QSLib
 {
@@ -9,6 +8,7 @@ namespace QSLib
     {
         List<IStatement> _statements = new List<IStatement>();
 
+        #region Constructors
         public CodeBlock()
         {
         }
@@ -17,23 +17,22 @@ namespace QSLib
         {
             this._statements = statements;
         }
+        #endregion
 
-        public override string ToString()
+        #region TypeChecker
+        public void Check(TypeChecker checker)
         {
-            String retVal = "";
-            foreach (IStatement s in this._statements)
-            {
-                retVal += s.ToString() + "\r\n";
-            }
-            
-            return retVal;
+            checker.Check(this);
         }
 
-        public bool CheckType(TypeChecker checker)
+        public void CheckStatements(TypeChecker checker)
         {
-            return this._statements.TrueForAll(i => i.CheckType(checker) == true);
+            if(this._statements.Count > 0)
+                this._statements.ForEach(i => i.Check(checker));
         }
+        #endregion
 
+        #region Object overrides
         public override bool Equals(object obj)
         {
             var temp = obj as CodeBlock;
@@ -47,10 +46,23 @@ namespace QSLib
             return base.GetHashCode();
         }
 
+        public override string ToString()
+        {
+            String retVal = "";
+            foreach (IStatement s in this._statements)
+            {
+                retVal += s.ToString() + "\r\n";
+            }
+
+            return retVal;
+        }
+        #endregion
+
         public void CreateGUI(GUIBuilder guiBuilder)
         {
             this._statements.ForEach(x => x.CreateGUI(guiBuilder));
             guiBuilder.EndBlock();
         }
+
     }
 }

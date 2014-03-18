@@ -1,4 +1,5 @@
 ﻿using Antlr4.Runtime;
+using QL.QLClasses.Values;
 using QL.TypeChecker;
 
 namespace QL.QLClasses.Types
@@ -13,6 +14,11 @@ namespace QL.QLClasses.Types
         public override string ToString()
         {
             return "QString";
+        }
+
+        public override QValue UndefinedValue()
+        {
+            return new StringValue("");
         }
 
         #region TypeChecker Implementation

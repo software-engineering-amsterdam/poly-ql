@@ -13,18 +13,18 @@ namespace QL.QLClasses.Expressions.Unary
 
         public override QValue Evaluate()
         {
-            return new BoolValue(!((BoolValue)InnerExpression.Evaluate()).GetValue());
+            return new BoolValue(!((BoolValue)InnerExpression.Evaluate()).Value());
         }
 
         public override bool CheckType(QLTypeErrors typeErrors)
         {
             if (!(InnerExpression.GetResultType().IsCompatibleWith(new QBool())))
             {
-                typeErrors.ReportError(new QLTypeError
-                {
-                    Message = string.Format("The NOT (!) operator can only be applied on booleans! Got QType '{0}', with valuetype '{1}'",
-                            InnerExpression, InnerExpression.GetType()), TokenInfo = InnerExpression.TokenInfo
-                });
+                typeErrors.ReportError(new QLTypeError(
+                    string.Format("The NOT (!) operator can only be applied on booleans! Got '{0}'",
+                            InnerExpression.GetResultType()),
+                    InnerExpression.TokenInfo
+                ));
 
                 return false;
             }

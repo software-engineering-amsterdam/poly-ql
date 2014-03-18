@@ -6,6 +6,7 @@ open System
 open QL_Grammar
 
 //// Type check info
+// REFACTOR 2 SPLIT
 type expressionType = TBool | TString | TInt | TDecimal | TError | TForm
     with override this.ToString() = match this with
                                     | TBool -> "Boolean"
@@ -17,25 +18,39 @@ type expressionType = TBool | TString | TInt | TDecimal | TError | TForm
 
 type TypeCheckInfo(formName) = 
     let errors = new List<string * Position>()
+    let warnings = new List<string * Position>()
+
+    let labels = new List<string>()
     let identifiers = new Dictionary<string, expressionType>()
     do identifiers.Add(formName, TForm)
 
-    member this.RegisterIdentifier(id, exprType) =
-        if identifiers.ContainsKey(id) 
-        then false
-        else identifiers.Add(id, exprType)
-             true
+    
+    member this.RegisterError(message, position) = errors.Add("ERROR: " + message, position)
+    member this.RegisterWarning(message, position) = warnings.Add("WARNING: " + message, position)
+
+    member this.HasErrors = errors.Count > 0
+
+    member this.ErrorList = List.ofSeq errors
+    member this.WarningList = List.ofSeq warnings
+
+    member this.RegisterIdentifier(id, exprType, position : Position) =
+        if identifiers.ContainsKey(id) then
+            this.RegisterError(sprintf "Duplicate identifier on line %i (\"%s\")" position.StartLine id, position)
+        else
+            identifiers.Add(id, exprType)
+
+    member this.RegisterLabel(label, position : Position) =
+        if labels.Contains(label) then
+            this.RegisterWarning(sprintf "Duplicate label on line %i (\"%s\")" position.StartLine label, position)
+        else
+            labels.Add(label)
+        
     
     member this.GetIdentifierType(id) = 
         if identifiers.ContainsKey(id)
         then identifiers.[id]
         else TError
 
-    member this.RegisterError(message, position) = errors.Add(message, position)
-
-    member this.HasErrors = errors.Count > 0
-
-    member this.ErrorList = List.ofSeq errors
 
 
 let mapQLType qlType = match qlType with
@@ -118,10 +133,10 @@ let rec checkStmts stmts (checkInfo : TypeCheckInfo) =
     let checkStmt stmt = 
         match stmt with
         | Assignment(id, label, expression, pos) -> let exprType = checkExpression expression checkInfo
-                                                    if not <| checkInfo.RegisterIdentifier(id, exprType) then
-                                                        checkInfo.RegisterError(sprintf "Duplicate identifier on line %i (\"%s\")" pos.StartLine id, pos)
-        | Question(id, label, qlType, pos) ->       if not <| checkInfo.RegisterIdentifier(id, mapQLType qlType) then
-                                                        checkInfo.RegisterError(sprintf "Duplicate identifier on line %i (\"%s\")" pos.StartLine id, pos)
+                                                    checkInfo.RegisterIdentifier(id, exprType, pos)
+                                                    checkInfo.RegisterLabel(label, pos)
+        | Question(id, label, qlType, pos)       -> checkInfo.RegisterIdentifier(id, mapQLType qlType, pos)
+                                                    checkInfo.RegisterLabel(label, pos)
         | IfElseConditional(cond, ifStmts, elseStmts, pos) ->   let exprType = checkExpression cond checkInfo
                                                                 if not <| exprType.Equals(TBool) && not <| exprType.Equals(TError) then
                                                                     checkInfo.RegisterError(sprintf "Type error on line %i: expected Boolean expression" pos.StartLine, getExpressionPosition cond)
@@ -137,4 +152,3 @@ let rec checkStmts stmts (checkInfo : TypeCheckInfo) =
 let typeCheck ast = let checkInfo = new TypeCheckInfo(ast.ID)
                     checkStmts ast.Statements checkInfo
                     checkInfo
-

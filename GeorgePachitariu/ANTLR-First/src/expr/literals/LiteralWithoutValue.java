@@ -22,10 +22,20 @@ public class LiteralWithoutValue extends Literal {
 	public boolean areOperandsTypeValid(IdentifiersTypeMatcher typeMatcher) {
 		return false;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		return obj instanceof LiteralWithoutValue;
+	}
 
 	@Override
 	public boolean containsTreeNode(Expression e) {
 		return false;
+	}
+	
+	@Override
+	public boolean isLiteralWithoutValue() {
+		return true;
 	}
 
 	@Override

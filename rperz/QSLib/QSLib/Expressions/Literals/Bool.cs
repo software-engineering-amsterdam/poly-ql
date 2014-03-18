@@ -1,22 +1,18 @@
 ﻿using QSLib.Types;
-using QSLib.Expressions.Values;
+using QSLib.Values;
 namespace QSLib.Expressions.Literals
 {
     public class QSBoolean : Primary 
     {
 
-        public QSBoolean(bool value, int linenr)
+        public QSBoolean(bool value, int lineNr)
         {
             base._type = new BoolType();
             this._value = new BooleanValue(value);
-            this._linenr = linenr;
+            this._lineNr = lineNr;
         }
 
-        public override string ToString()
-        {
-            return this._value.ToString();
-        }
-
+        #region Object overrides
         public override bool Equals(object obj)
         {
             var temp = obj as QSBoolean;
@@ -27,6 +23,12 @@ namespace QSLib.Expressions.Literals
         {
             return base.GetHashCode();
         }
+
+        public override string ToString()
+        {
+            return this._value.ToString();
+        }
+        #endregion
     }
 
 

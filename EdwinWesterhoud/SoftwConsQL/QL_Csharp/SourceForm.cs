@@ -15,6 +15,11 @@ namespace QL_Csharp
         {
             InitializeComponent();
 
+            // Syntax Highlighting
+            var fsmProvider = new FileSyntaxModeProvider(Environment.CurrentDirectory);
+            HighlightingManager.Manager.AddSyntaxModeFileProvider(fsmProvider);
+            textBoxSource.SetHighlighting("QL");
+
             // Fill demo presets
             _demoPresets.Add("Empty Form", "form formName { }");
             _demoPresets.Add("Questions", "form formName { \r\n\t\"Does it work?\" boolQ1: boolean\r\n\t\"And with two questions?\" boolQ2: boolean\r\n}");
@@ -26,11 +31,6 @@ namespace QL_Csharp
         public void AddClickEventHandler(EventHandler handler)
         {
             buttonGenerate.Click += handler;
-        }
-
-        public bool CheckTypes
-        {
-            get { return checkBoxTypeCheck.Checked; }
         }
 
         public string InputText

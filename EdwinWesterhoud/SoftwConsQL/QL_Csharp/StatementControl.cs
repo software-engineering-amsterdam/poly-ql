@@ -8,6 +8,13 @@ namespace QL_Csharp.PrimitiveControls
         public delegate void ValueChangedEventHandler(StatementControl sender, EventArgs args);
         private event ValueChangedEventHandler ValueChanged;
 
+        // Allow no instantiation (apart from subclassing)
+        // The class should be abstract, I know. But it cannot be, because of the Visual Studio Designer.
+        protected StatementControl()
+        {
+            
+        }
+
         public void AddValueChangedEventHandler(ValueChangedEventHandler handler)
         {
             ValueChanged += handler;

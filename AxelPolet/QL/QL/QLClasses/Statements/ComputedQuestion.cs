@@ -28,11 +28,11 @@ namespace QL.QLClasses.Statements
 
             if (!Type.GetType().IsCompatibleWith(_value.GetResultType()))
             {
-                typeErrors.ReportError(new QLTypeError
-                {
-                    Message = string.Format("(ComputedQuestion) Assigned value does not match declared type. Expected type: '{0}', Given value: '{1}'",
-                            Type.GetType(), _value.GetResultType()), TokenInfo = TokenInfo
-                });
+                typeErrors.ReportError(new QLTypeError(
+                    string.Format("(ComputedQuestion) Assigned value does not match declared type. Expected type: '{0}', Given value: '{1}'",
+                            Type.GetType(), _value.GetResultType()), 
+                    TokenInfo = TokenInfo
+                ));
 
                 return false;
             }

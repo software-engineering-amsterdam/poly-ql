@@ -1,72 +1,33 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace QSLib.Expressions.Values
+namespace QSLib.Values
 {
     public abstract class Value
     {
         public abstract object GetValue { get; }
         public abstract void CreateGUI(GUIBuilder guiBuilder);
 
-        public virtual Value Add(Value otherValue)
-        {
-            return otherValue.Add(this);
-        }
-
-        public virtual Value And(Value otherValue)
-        {
-            return otherValue.And(this);
-        }
-        public virtual Value Divide(Value otherValue)
-        {
-            return otherValue.Divide(this);
-        }
-        public virtual Value EqualTo(Value otherValue)
-        {
-            return otherValue.EqualTo(this);
-        }
-        public virtual Value LargerThan(Value otherValue)
-        {
-            return otherValue.LargerThan(this);
-        }
-        public virtual Value LargerThan_Equals(Value otherValue)
-        {
-            return otherValue.LargerThan_Equals(this);
-        }
-        public virtual Value Multiply(Value otherValue)
-        {
-            return otherValue.Multiply(this);
-        }
-        public virtual Value NotEquals(Value otherValue)
-        {
-            return otherValue.NotEquals(this);
-        }
-        public virtual Value Or(Value otherValue)
-        {
-            return otherValue.Or(this);
-        }
-        public virtual Value SmallerThan(Value otherValue)
-        {
-            return otherValue.SmallerThan(this);
-        }
-        public virtual Value SmallerThan_Equals(Value otherValue)
-        {
-            return otherValue.SmallerThan_Equals(this);
-        }
-        public virtual Value Subtract(Value otherValue)
-        {
-            return otherValue.Subtract(this);
-        }
+        #region dispatch value
+        public abstract Value Add(Value otherValue);
+        public abstract Value And(Value otherValue);
+        public abstract Value Divide(Value otherValue);
+        public abstract Value EqualTo(Value otherValue);
+        public abstract Value LargerThan(Value otherValue);
+        public abstract Value LargerThan_Equals(Value otherValue);
+        public abstract Value Multiply(Value otherValue);
+        public abstract Value NotEquals(Value otherValue);
+        public abstract Value Or(Value otherValue);
+        public abstract Value SmallerThan(Value otherValue);
+        public abstract Value SmallerThan_Equals(Value otherValue);
+        public abstract Value Subtract(Value otherValue);
 
         public virtual Value Not()
         {
             throw new Exception("Not operator used on non-bool value");
         }
+        #endregion
 
-
-        // double dispatch BooleanValue
+        #region double dispatch BooleanValue
         public virtual Value Add(BooleanValue otherValue)
         {
             throw new Exception("Add operator used on bool value");
@@ -116,8 +77,9 @@ namespace QSLib.Expressions.Values
         {
             throw new Exception("Subtract operator used on bool value");
         }
+        #endregion
 
-        // double dispatch IntegerValue
+        #region double dispatch IntegerValue
         public virtual Value Add(IntegerValue otherValue)
         {
             throw new Exception("Add operator used on non-integer value");
@@ -167,5 +129,65 @@ namespace QSLib.Expressions.Values
         {
             throw new Exception("Subtract operator used on non-integer value");
         }
+        #endregion
+
+        #region double dispatch Undefined Value
+        public virtual Value Add(UndefinedValue otherValue)
+        {
+            throw new Exception("Add operator used on undefined value");
+        }
+
+        public virtual Value And(UndefinedValue otherValue)
+        {
+            throw new Exception("And operator used on undefined value");
+        }
+        public virtual Value Divide(UndefinedValue otherValue)
+        {
+            throw new Exception("Divide operator used on undefined value");
+        }
+        public virtual Value EqualTo(UndefinedValue otherValue)
+        {
+            throw new Exception("Equals operator used on undefined value");
+        }
+        public virtual Value LargerThan(UndefinedValue otherValue)
+        {
+            throw new Exception("Larger than operator used on undefined value");
+        }
+        public virtual Value LargerThan_Equals(UndefinedValue otherValue)
+        {
+            throw new Exception("Larger than or equals operator used on undefined value");
+        }
+        public virtual Value Multiply(UndefinedValue otherValue)
+        {
+            throw new Exception("Multiply operator used on undefined value");
+        }
+        public virtual Value NotEquals(UndefinedValue otherValue)
+        {
+            throw new Exception("Not equals operator used on undefined value");
+        }
+        public virtual Value Or(UndefinedValue otherValue)
+        {
+            throw new Exception("Or operator used on undefined value");
+        }
+        public virtual Value SmallerThan(UndefinedValue otherValue)
+        {
+            throw new Exception("Smaller than operator used on undefined value");
+        }
+        public virtual Value SmallerThan_Equals(UndefinedValue otherValue)
+        {
+            throw new Exception("Smaller than or equals operator used on undefined value");
+        }
+        public virtual Value Subtract(UndefinedValue otherValue)
+        {
+            throw new Exception("Subtract operator used on undefined value");
+        }
+        #endregion
+
+        #region Object overrides
+        public override string ToString()
+        {
+            return this.GetValue.ToString();
+        }
+        #endregion
     }
 }

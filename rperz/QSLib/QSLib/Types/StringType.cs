@@ -1,4 +1,4 @@
-﻿using QSLib.Expressions.Values;
+﻿using QSLib.Values;
 namespace QSLib.Types
 {
     public class StringType : QSType
@@ -32,12 +32,12 @@ namespace QSLib.Types
 
         public override void CreateGUI(GUIBuilder guiBuilder)
         {
-            guiBuilder.CreateStringIO();
+            guiBuilder.CreateStringInput();
         }
 
-        public override Value GetUndefinedValue()
+        public override Value GetUndefinedValue(bool isInput)
         {
-            return new StringValue("");
+            return new StringValue("", isInput);
         }
     }
 }

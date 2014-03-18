@@ -1,14 +1,13 @@
 ﻿using QSLib.Types;
-using QSLib.Expressions.Values;
-using System.ComponentModel;
+using QSLib.Values;
 
 namespace QSLib.Expressions.Binary
 {
     class Subtract : Binary_Expression 
     {
 
-        public Subtract(QSExpression a, QSExpression b, int linenr)
-            : base(a, b, linenr)
+        public Subtract(QSExpression a, QSExpression b, int lineNr)
+            : base(a, b, lineNr)
         {
             base._operator = "-";
         }

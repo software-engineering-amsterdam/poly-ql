@@ -18,12 +18,11 @@ namespace QL.QLClasses.Expressions.Binary.Conditional
             if (!(LeftExpression.GetResultType().IsCompatibleWith(new QBool()))
                 || !(RightExpression.GetResultType().IsCompatibleWith(new QBool())))
             {
-                typeErrors.ReportError(new QLTypeError
-                {
-                    Message = string.Format("Left -or Right Expression is not a boolean. Left: '{0}', Right: '{1}'",
+                typeErrors.ReportError(new QLTypeError(
+                string.Format("Left -or right expression is not a boolean. Left value: '{0}', right value: '{1}'",
                     LeftExpression.GetResultType(), RightExpression.GetResultType()),
                     TokenInfo = TokenInfo
-                });
+                ));
 
                 return false;
             }

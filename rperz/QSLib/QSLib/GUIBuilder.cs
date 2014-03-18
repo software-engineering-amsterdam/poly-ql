@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using QSLib.Expressions.Unary;
-using QSLib.Expressions;
 using System.Windows.Controls;
-using System.Windows;
 using System.Windows.Data;
-using QSLib.Types;
+using QSLib.Expressions;
+using QSLib.Expressions.Unary;
 using QSLib.IO;
 
 namespace QSLib
@@ -46,19 +42,34 @@ namespace QSLib
             this._currentQuestion = null;
         }
 
-        public void CreateStringIO()
+        public void CreateStringInput()
         {
-            this._currentQuestion.AddIOControl(new StringIO());
+            this._currentQuestion.AddIOControl(new StringInput());
         }
 
-        public void CreateIntegerIO()
+        public void CreateIntegerInput()
         {
-            this._currentQuestion.AddIOControl(new IntegerIO());
+            this._currentQuestion.AddIOControl(new IntegerInput());
         }
 
-        public void CreateBooleanIO()
+        public void CreateBooleanInput()
         {
-            this._currentQuestion.AddIOControl(new BooleanIO());
+            this._currentQuestion.AddIOControl(new BooleanInput());
+        }
+
+        public void CreateStringOutput()
+        {
+            this._currentQuestion.AddIOControl(new StringOutput());
+        }
+
+        public void CreateIntegerOutput()
+        {
+            this._currentQuestion.AddIOControl(new IntegerOutput());
+        }
+
+        public void CreateBooleanOutput()
+        {
+            this._currentQuestion.AddIOControl(new BooleanOutput());
         }
 
         public void SetToInput(Identifier id)
@@ -88,22 +99,15 @@ namespace QSLib
 
             // bind the visibility to the value of the expression
             this._updateList.Add(condition);
-            Binding visibleBinding = new Binding("GetValue");
-            visibleBinding.Source = condition;
-            visibleBinding.Mode = BindingMode.OneWay;
-            visibleBinding.NotifyOnTargetUpdated = true;
+
+            Binding visibleBinding = GetOneWayBinding("GetValue", condition);
             visibleBinding.Converter = new BooleanToVisibilityConverter();
             panel.SetBinding(StackPanel.VisibilityProperty, visibleBinding);
-            panel.TargetUpdated +=new EventHandler<DataTransferEventArgs>(OnTargetUpdated);
+
             this._currentPanel.Children.Add(panel);
             this._currentPanel = panel;
 
             code.CreateGUI(this);
-        }
-
-        private void OnTargetUpdated(Object sender, DataTransferEventArgs args)
-        {
-            MessageBox.Show("Target has been updated");
         }
 
         public void AddVisibleIfFalse(QSExpression condition, CodeBlock elseBlock)
@@ -111,9 +115,7 @@ namespace QSLib
             StackPanel panel = new StackPanel();
 
             // bind the visibility to the negation of the value of the expression
-            Binding visibleBinding = new Binding("GetValue");
-            visibleBinding.Source = condition;
-            visibleBinding.Mode = BindingMode.OneWay;
+            Binding visibleBinding = GetOneWayBinding("GetValue", condition);
             visibleBinding.Converter = new NotBoolToVisibilityConverter();
             panel.SetBinding(StackPanel.VisibilityProperty, visibleBinding);           
 
@@ -121,6 +123,14 @@ namespace QSLib
             this._currentPanel = panel;
 
             elseBlock.CreateGUI(this);
+        }
+
+        private Binding GetOneWayBinding(string propertyName, QSExpression expression)
+        {
+            Binding visibleBinding = new Binding(propertyName);
+            visibleBinding.Source = expression;
+            visibleBinding.Mode = BindingMode.OneWay;
+            return visibleBinding;
         }
 
         public void EndBlock()

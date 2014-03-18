@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 using QL.QLClasses.Values;
 
 namespace QL.Interpreter.Controls.Input
@@ -11,12 +12,14 @@ namespace QL.Interpreter.Controls.Input
             : base(idName, memory, isComputed)
         {
             _checkBox = new CheckBox {IsEnabled = !isComputed};
+            
             _checkBox.Checked += _checkBox_Checked;
             _checkBox.Unchecked += _checkBox_Checked;
+
             Children.Add(_checkBox);
         }
 
-        public void _checkBox_Checked(object sender, System.Windows.RoutedEventArgs e)
+        public void _checkBox_Checked(object sender, RoutedEventArgs e)
         {
             Memory.DeclareValue(IdName, new BoolValue(_checkBox.IsChecked ?? false));
 
@@ -26,7 +29,11 @@ namespace QL.Interpreter.Controls.Input
 
         public override void Render()
         {
-            _checkBox.IsChecked = ((BoolValue)Memory.GetDeclaredValue(IdName)).GetValue();
+            _checkBox.Checked -= _checkBox_Checked;
+            _checkBox.Unchecked -= _checkBox_Checked;
+            _checkBox.IsChecked = ((BoolValue)Memory.GetDeclaredValue(IdName)).Value();
+            _checkBox.Checked += _checkBox_Checked;
+            _checkBox.Unchecked += _checkBox_Checked;
         }
     }
 }

@@ -98,6 +98,7 @@ primary returns [Expression result]
   : INT   { $result = new Int(Integer.parseInt($INT.text)); }
   | IDENT { $result = new Ident($IDENT.text); }
   | BOOLEAN { $result = new Bool(Boolean.parseBoolean($BOOLEAN.text)); } //
+  | STRING {$result = new Str($STRING.text);}
   | '(' x=orExpr ')'{ $result = $x.result; }            
   ;
     
@@ -170,6 +171,7 @@ questiontype  returns [Type result]
   : 'boolean' { $result = new BoolType(); }
   | 'money'   { $result = new MoneyType(); }
   | 'integer' { $result = new IntType(); }
+  | 'string' { $result = new StringType(); }
   ;
   
   // Tokens

@@ -40,6 +40,7 @@
             this.textBoxValue.Name = "textBoxValue";
             this.textBoxValue.Size = new System.Drawing.Size(100, 20);
             this.textBoxValue.TabIndex = 0;
+            this.textBoxValue.TextChanged += new System.EventHandler(this.textBoxValue_TextChanged);
             // 
             // flowLayoutPanel1
             // 

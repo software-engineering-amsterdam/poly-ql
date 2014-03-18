@@ -268,5 +268,6 @@ public class TestsExpr {
 
 		Expression expected=new Or(new Ident("fst"),new Ident("snd"));
 		Assert.assertEquals(expected, actual);
-	}		  
+	}	
+	
 }

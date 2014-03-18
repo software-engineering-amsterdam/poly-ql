@@ -11,7 +11,7 @@ namespace QL.QLClasses.Values
             _value = value;
         }
 
-        public bool GetValue()
+        public bool Value()
         {
             return _value;
         }
@@ -20,12 +20,12 @@ namespace QL.QLClasses.Values
 
         public BoolValue And(BoolValue secondValue)
         {
-            return new BoolValue(_value && secondValue.GetValue());
+            return new BoolValue(_value && secondValue.Value());
         }
 
         public BoolValue Or(BoolValue secondValue)
         {
-            return new BoolValue(_value || secondValue.GetValue());
+            return new BoolValue(_value || secondValue.Value());
         }
 
         #endregion

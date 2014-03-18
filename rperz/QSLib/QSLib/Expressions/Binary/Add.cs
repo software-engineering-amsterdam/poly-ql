@@ -1,11 +1,11 @@
 ﻿using QSLib.Types;
-using QSLib.Expressions.Values;
+using QSLib.Values;
 namespace QSLib.Expressions.Binary
 {
     public class Add : Binary_Expression  
     {
-        public Add(QSExpression a, QSExpression b, int linenr)
-            : base(a, b, linenr)
+        public Add(QSExpression a, QSExpression b, int lineNr)
+            : base(a, b, lineNr)
         {
             base._operator = "+";
             

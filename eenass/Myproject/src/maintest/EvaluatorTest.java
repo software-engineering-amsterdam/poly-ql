@@ -1,22 +1,31 @@
 package maintest;
 
+import static org.junit.Assert.assertEquals;
 import gui.Evaluator;
 
 import java.util.Map;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
-import org.junit.*;
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
 import antlr.QLangLexer;
 import antlr.QLangParser;
 import ast.ASTNode;
 import ast.expr.Expr;
 import ast.expr.Identifier;
+import ast.expr.binExpr.Add;
+import ast.expr.binExpr.GT;
+import ast.expr.binExpr.LT;
+import ast.expr.binExpr.Mul;
+import ast.expr.binExpr.Sub;
 import ast.expr.evaluate.Bool;
 import ast.expr.evaluate.Int;
 import ast.expr.evaluate.Value;
+import ast.expr.literal.BoolLiteral;
+import ast.expr.literal.IntLiteral;
+import ast.expr.unExpression.Neg;
+import ast.expr.unExpression.Not;
 
 public class EvaluatorTest {
 
@@ -28,7 +37,7 @@ public class EvaluatorTest {
 		QLangParser parser = new QLangParser(tokens);
 		ASTNode tree = parser.orExpr().result;
 		Map<Identifier, Value> m = null;
-		Value result = Evaluator.Evaluate((Expr) tree, m);
+		Value result = ((Expr) tree).accept(new Evaluator(m));
 		if (expected instanceof Int){
 			assertEqualsInt((Int) expected,(Int) result);
 		} else if(expected instanceof Bool){
@@ -75,6 +84,30 @@ public class EvaluatorTest {
 		test(new Bool(true), "(10 - 3) == (6 + 1)");
 		test(new Bool(true), "-4 == 2-6");
 		test(new Bool(true), "+4 == 6-2");
+	}
+	
+	@Test
+	public void testIdentifiers(){
+		Identifier i = new Identifier("x");
+		IntLiteral a = new IntLiteral(5);
+		IntLiteral b = new IntLiteral(4);
+		assertEqual(new Bool(true), new GT(a, b));
+		assertEqual(new Bool(false), new LT(a, b));
+		assertEqual(new Int(9), new Add(a, b));
+		assertEqual(new Int(1), new Sub(a, b));
+		assertEqual(new Int(20), new Mul(a, b));
+		assertEqual(new Int(-5), new Neg(a));
+		assertEqual(new Bool(true), new Not(new BoolLiteral(false)));
+	}
+
+	private void assertEqual(Value expected, Expr exp) {
+		Map<Identifier, Value> m = null;
+		Value result = exp.accept(new Evaluator(m));
+		if (expected instanceof Int){
+			assertEqualsInt((Int) expected,(Int) result);
+		} else if(expected instanceof Bool){
+			assertEqualsBool((Bool) expected,(Bool) result);
+		}
 	}
 
 }

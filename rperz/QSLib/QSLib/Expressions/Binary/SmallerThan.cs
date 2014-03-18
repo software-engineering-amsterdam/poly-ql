@@ -1,14 +1,13 @@
 ﻿using QSLib.Types;
-using QSLib.Expressions.Values;
-using System.ComponentModel;
+using QSLib.Values;
 
 namespace QSLib.Expressions.Binary
 {
     class SmallerThan : Binary_Expression
     {
 
-        public SmallerThan(QSExpression a, QSExpression b, int linenr)
-            : base(a, b, linenr)
+        public SmallerThan(QSExpression a, QSExpression b, int lineNr)
+            : base(a, b, lineNr)
         {
             base._operator = "<";
         }

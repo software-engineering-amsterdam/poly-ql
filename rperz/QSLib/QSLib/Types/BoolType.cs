@@ -1,4 +1,4 @@
-﻿using QSLib.Expressions.Values;
+﻿using QSLib.Values;
 namespace QSLib.Types
 {
     public class BoolType : QSType
@@ -18,9 +18,9 @@ namespace QSLib.Types
             return true;
         }
 
-        public override Value GetUndefinedValue()
+        public override Value GetUndefinedValue(bool isInput)
         {
-            return new BooleanValue(false);
+            return new BooleanValue(false, isInput);
         }
 
         public override bool Equals(object obj)
@@ -37,7 +37,7 @@ namespace QSLib.Types
 
         public override void CreateGUI(GUIBuilder guiBuilder)
         {
-            guiBuilder.CreateBooleanIO();
+            guiBuilder.CreateBooleanInput();
         }
     }
 }

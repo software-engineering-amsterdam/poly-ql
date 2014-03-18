@@ -14,7 +14,6 @@ public class Bool extends Literal {
 	protected boolean value;
 
 	public Bool(boolean value) {
-		super();
 		this.value=value;
 	}
 
@@ -33,7 +32,7 @@ public class Bool extends Literal {
 
 	@Override
 	public String toString() {
-		return "boolean";
+		return String.valueOf(this.value);
 	}
 
 	@Override
@@ -90,7 +89,7 @@ public class Bool extends Literal {
 
 	@Override
 	public Literal and(boolean value) {
-		return new Bool(this.value && value);
+		return new Bool(value && this.value);
 	}
 
 	@Override
@@ -100,6 +99,16 @@ public class Bool extends Literal {
 
 	@Override
 	public Literal or(boolean value) {
-		return new Bool(this.value || value);
+		return new Bool(value || this.value);
+	}
+
+	@Override
+	public boolean isBoolean() {
+		return true;
+	}
+
+	@Override
+	public boolean getValue() {
+		return this.value;
 	}
 }
