@@ -19,12 +19,12 @@ let buttonGenerate_Click _ _ = let lexbuf = Lexing.LexBuffer<_>.FromString mainF
                                    let ast = QL_Parser.start QL_Lexer.tokenize lexbuf
                                    isParsing <- false
                                    let checkInfo = typeCheck ast
-                                   if mainForm.CheckTypes && checkInfo.HasErrors then
+                                   if checkInfo.HasErrors then
                                         // Type error(s):
                                         mainForm.SetOutputText(String.concat Environment.NewLine <| List.map fst checkInfo.ErrorList)
                                         List.iter (fun (_, position:Position) -> mainForm.UnderlineParseError(position.StartCharacter, position.EndCharacter - position.StartCharacter)) checkInfo.ErrorList
                                    else // No parse/type errors:
-                                        mainForm.SetOutputText(sprintf "%+A" ast)
+                                        mainForm.SetOutputText(String.concat Environment.NewLine <| List.map fst checkInfo.WarningList)
                                         let qForm = new QuestionnaireForm(ast.ID)
                                         qForm.AddControls(List.toArray <| QL_Interpreter.buildGUI ast)
                                         qForm.Show()

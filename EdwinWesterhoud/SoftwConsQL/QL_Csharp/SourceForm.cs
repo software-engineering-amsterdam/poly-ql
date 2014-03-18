@@ -28,11 +28,6 @@ namespace QL_Csharp
             buttonGenerate.Click += handler;
         }
 
-        public bool CheckTypes
-        {
-            get { return checkBoxTypeCheck.Checked; }
-        }
-
         public string InputText
         {
             get { return textBoxSource.Text; }
