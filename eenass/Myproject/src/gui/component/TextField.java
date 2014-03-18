@@ -15,7 +15,7 @@ public class TextField extends Control implements KeyListener{
 
 	public TextField() {
 		super();
-		textField = new JTextField();
+		textField = new JTextField(15);
 		textField.addKeyListener(this);
 	}
 	

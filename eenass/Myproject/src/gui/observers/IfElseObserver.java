@@ -1,31 +1,27 @@
 package gui.observers;
 
 import gui.Evaluator;
-import gui.component.Control;
 import gui.render.State;
 
-import java.util.Observable;
-import java.util.Observer;
-
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import ast.expr.evaluate.Bool;
 import ast.expr.evaluate.Value;
-import ast.statement.IfStatement;
 import ast.statement.IfelseStatement;
 
 public class IfElseObserver extends ControlObserver {
 
 	private final IfelseStatement ifelseStat;
-	protected JPanel ifPanel;
-	protected JPanel elsePanel;
+	protected JComponent ifPanel;
+	protected JComponent elsePanel;
 	private final State state;
 	
-	public IfElseObserver(IfelseStatement ifelseStat, JPanel ifPanel, JPanel elsePanel, State state) {
+	public IfElseObserver(IfelseStatement ifelseStat, JComponent ifComp, JComponent elseComp, State state) {
 		this.state = state;
 		this.ifelseStat = ifelseStat;
-		this.ifPanel = ifPanel;
-		this.elsePanel = elsePanel;
+		this.ifPanel = ifComp;
+		this.elsePanel = elseComp;
 	}
 
 	@Override

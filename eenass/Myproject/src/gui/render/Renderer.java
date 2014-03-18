@@ -9,9 +9,6 @@ import gui.observers.ControlObserver;
 import gui.observers.IfElseObserver;
 import gui.observers.IfObserver;
 
-import java.util.List;
-import java.util.Set;
-
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -20,7 +17,6 @@ import javax.swing.JScrollPane;
 
 import net.miginfocom.swing.MigLayout;
 import ast.Visitor;
-import ast.expr.Expr;
 import ast.expr.Identifier;
 import ast.expr.binExpr.Add;
 import ast.expr.binExpr.And;
@@ -34,6 +30,9 @@ import ast.expr.binExpr.Mul;
 import ast.expr.binExpr.NEq;
 import ast.expr.binExpr.Or;
 import ast.expr.binExpr.Sub;
+import ast.expr.evaluate.Bool;
+import ast.expr.evaluate.Int;
+import ast.expr.evaluate.Str;
 import ast.expr.literal.BoolLiteral;
 import ast.expr.literal.IntLiteral;
 import ast.expr.literal.StrLiteral;
@@ -55,13 +54,15 @@ import ast.statement.StatementList;
 
 public class Renderer implements Visitor<JComponent>{
 	
-	private JPanel panel;
 	private State state; 
 
 	public Renderer(State state) {
 		this.state = state;
+	}
+	
+	private JPanel createNewPanel(){
 		MigLayout layout = new MigLayout();
-		this.panel = new JPanel(layout	);
+		return new JPanel(layout);
 	}
 
 	public JComponent render(final Form form){
@@ -72,28 +73,29 @@ public class Renderer implements Visitor<JComponent>{
 		return new JScrollPane(comp);
 	}
 	
-	public JPanel render(StatementList list){
-		System.out.println("render statementlist");
-		State currentState = state.currentState();
-		Renderer render = new Renderer(currentState);
-		for(Statement s: list.getList()){
-			panel.add(s.accept(render));
-		}
-		return getPanel();
-	}
+//	public JPanel render(StatementList list){
+//		System.out.println("render statementlist");
+//		State currentState = state.currentState();
+//		JPanel panel = createNewPanel();
+//		Renderer render = new Renderer(currentState);
+//		for(Statement s: list.getList()){
+//			panel.add(s.accept(render));
+//		}
+//		return panel;
+//	}
 	
-	private JPanel getPanel() {
-		return panel;
-	}
+//	private JPanel getPanel() {
+//		return panel;
+//	}
 	
-	private void registerObservers(Expr exp, ControlObserver obs){
+	private void registerObservers(ControlObserver obs){
 		System.out.println("registerObserver");
-		List<Identifier> identList = exp.accept(new ExpressionIdentifiersVisitor());
-		System.out.println(identList.size());
-		for(Identifier ident : identList){
-			System.out.println(ident.getIdentName());
-			state.addObservers(ident, obs);
-		}
+//		List<Identifier> identList = exp.accept(new ExpressionIdentifiersVisitor());
+//		System.out.println(identList.size());
+//		for(Identifier ident : identList){
+//			state.addObservers(ident, obs);
+//		}
+		state.addAllObservers(obs);
 		obs.evaluate();
 	}
 	
@@ -104,8 +106,8 @@ public class Renderer implements Visitor<JComponent>{
 	}
 	
 	
-	private void addLabel(String str){
-		this.panel.add(new JLabel(str.replace("\"", "")));
+	private void addLabel(JPanel panel, String str){
+		panel.add(new JLabel(str.replace("\"", "")));
 	}
 	
 	private Control typeToWidget(Type t){	
@@ -113,30 +115,28 @@ public class Renderer implements Visitor<JComponent>{
 		return t.accept(vis);
 	}
 	
-	private void addComponent(Control comp){
-		this.panel.add(comp.getComponent(), "wrap");
+	private void addComponent(JPanel panel, Control comp){
+		panel.add(comp.getComponent(), "wrap");
 	}
 	
-//	private void addPanel(JPanel p){
-//		this.panel.add(p, "wrap");
-//	}
-	
-
 	@Override
 	public JComponent visit(Form node) {
 		System.out.println("visit form");
-		return this.render(node.getStatements());
+		JPanel panel = createNewPanel();
+		panel.add(node.getStatements().accept(this));
+		return new JScrollPane(panel);
 	}
 
 	@Override
 	public JComponent visit(StatementList node) {
 		System.out.println("visit statementlist");
 		State currentState = state.currentState();
+		JPanel panel = createNewPanel();
 		Renderer render = new Renderer(currentState);
 		for(Statement s: node.getList()){
-			panel.add(s.accept(render));
+			panel.add(s.accept(render), "wrap");
 		}
-		return getPanel();
+		return panel;
 	}
 
 	@Override
@@ -148,10 +148,20 @@ public class Renderer implements Visitor<JComponent>{
 	@Override
 	public JComponent visit(Question node) {
 		System.out.println("visit question");
+		JPanel panel = createNewPanel();
 		Control comp = typeToWidget(node.getType());
+//		if(node.getType() instanceof BoolType){
+//			state.addValue(node.getId(), new Bool(false));
+//		}
+//		else if(node.getType() instanceof IntType){
+//			state.addValue(node.getId(), new Int(0));
+//		}
+//		else{
+//			state.addValue(node.getId(), new Str(""));
+//		}
 		registerControlChangeHandler(node.getId(), comp);
-		addLabel(node.getLabel().getVal());
-		addComponent(comp);
+		addLabel(panel, node.getLabel().getVal());
+		addComponent(panel, comp);
 		return panel;
 	}
 
@@ -159,33 +169,39 @@ public class Renderer implements Visitor<JComponent>{
 	public JComponent visit(ComputedQuestion node) {
 		System.out.println("visit computedquestion");
 		ComputedControl comp = new ComputedControl();
+		JPanel panel = createNewPanel();
 		registerControlChangeHandler(node.getId(), comp);
-		addLabel(node.getLabel().getVal());
-		addComponent(comp);
 		ComputedObserver obs = new ComputedObserver(node, comp, state);
-		registerObservers(node.getExpr(), obs);
+		registerObservers(obs);
+		addLabel(panel, node.getLabel().getVal());
+		addComponent(panel, comp);
 		return panel;
 	}
 
 	@Override
 	public JComponent visit(IfStatement node) {
 		System.out.println("visit if");
-		JPanel ifComp = render(node.getStatements());
-//		addPanel(ifComp);
+		JPanel panel = createNewPanel();
+		JComponent ifComp = node.getStatements().accept(this);
+		ifComp.setVisible(false);
+		panel.add(ifComp);
 		IfObserver obs = new IfObserver(node, ifComp, state);
-		registerObservers(node.getExpr(), obs);
+		registerObservers(obs);
 		return panel;
 	}
 
 	@Override
 	public JComponent visit(IfelseStatement node) {
 		System.out.println("visit ifelse");
-		JPanel ifComp = render(node.getStatements());
-		JPanel elseComp = render(node.getElseStatements());
-//		addPanel(ifComp);
-//		addPanel(elseComp);	
+		JPanel panel = createNewPanel();
+		JComponent ifComp = node.getStatements().accept(this);
+		JComponent elseComp = node.getElseStatements().accept(this);
+		ifComp.setVisible(false);
+		elseComp.setVisible(false);
+		panel.add(ifComp);
+		panel.add(elseComp);
 		IfElseObserver obs = new IfElseObserver(node, ifComp, elseComp, state);
-		registerObservers(node.getExpr(), obs);
+		registerObservers(obs);
 		return panel;
 	}
 	

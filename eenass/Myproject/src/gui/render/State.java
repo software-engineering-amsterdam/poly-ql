@@ -11,7 +11,7 @@ import ast.expr.evaluate.Value;
 public class State {
 	
 	private final Map<Identifier, Value> env;
-	private final Map<Identifier, Observable> observables;
+	private Map<Identifier, Observable> observables;
 
 	public State() {
 		this.env = new HashMap<Identifier, Value>();
@@ -23,18 +23,20 @@ public class State {
 		this.observables = observables;
 	}
 	
-	public void addObservers(Identifier id, Observer obs){
-		observables.get(id).addObserver(obs);
+	public void addAllObservers(Observer obs){
+		for (Identifier ident: observables.keySet()){
+			observables.get(ident).addObserver(obs);
+		}
 	}
-	
-	public void putValue(Identifier id, Value val){
-		env.put(id, val);
-	}
-	
+
 	public void putObserver(Identifier id, Observable obs){
 		observables.put(id, obs);
 	}
 
+	public void addValue(Identifier id, Value val){
+		this.env.put(id, val);
+		notify(id);
+	}
 	public Map<Identifier, Value> getEnvValues() {
 		return env;
 	}
@@ -57,4 +59,5 @@ public class State {
 	public State currentState(){
 		return new State(env, observables);
 	}
+	
 }

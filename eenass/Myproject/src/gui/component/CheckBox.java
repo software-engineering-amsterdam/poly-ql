@@ -15,6 +15,7 @@ public class CheckBox extends Control implements ItemListener{
 	public CheckBox() {
 		super();
 		checkBox = new JCheckBox();
+		checkBox.addItemListener(this);
 	}
 
 	@Override

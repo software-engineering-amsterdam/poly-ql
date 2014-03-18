@@ -3,11 +3,9 @@ package gui.observers;
 import gui.component.Control;
 import gui.render.State;
 
-import java.util.Map;
 import java.util.Observable;
 
 import ast.expr.Identifier;
-import ast.expr.evaluate.Value;
 
 public class ControlChangeHandler extends Observable implements EventListener {
 
