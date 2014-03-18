@@ -1,23 +1,26 @@
 ﻿using System;
+using System.Globalization;
 
 namespace QL_Csharp.PrimitiveControls
 {
-    public partial class StringControl : StatementControl, IPrimitiveControl<string>
+    public partial class DecimalControl : StatementControl, IPrimitiveControl<double>
     {
-        public StringControl(string labelName)
+        public DecimalControl(string labelName)
         {
             InitializeComponent();
             label.Text = labelName;
         }
 
-        public void SetValue(string newValue)
+        public void SetValue(double newValue)
         {
-            textBoxValue.Text = newValue;
+            textBoxValue.Text = newValue.ToString(CultureInfo.InvariantCulture);
         }
 
-        public string GetValue()
+        public double GetValue()
         {
-            return textBoxValue.Text;
+            double value = 0.0;
+            double.TryParse(textBoxValue.Text, out value);
+            return value;
         }
 
         public void SetReadOnly(bool isReadOnly)

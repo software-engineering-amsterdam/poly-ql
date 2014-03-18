@@ -1,23 +1,26 @@
 ﻿using System;
+using System.Globalization;
 
 namespace QL_Csharp.PrimitiveControls
 {
-    public partial class StringControl : StatementControl, IPrimitiveControl<string>
+    public partial class IntegerControl : StatementControl, IPrimitiveControl<int>
     {
-        public StringControl(string labelName)
+        public IntegerControl(string labelName)
         {
             InitializeComponent();
             label.Text = labelName;
         }
 
-        public void SetValue(string newValue)
+        public void SetValue(int newValue)
         {
-            textBoxValue.Text = newValue;
+            textBoxValue.Text = newValue.ToString(CultureInfo.InvariantCulture);
         }
 
-        public string GetValue()
+        public int GetValue()
         {
-            return textBoxValue.Text;
+            int value = 0;
+            int.TryParse(textBoxValue.Text, out value);
+            return value;
         }
 
         public void SetReadOnly(bool isReadOnly)

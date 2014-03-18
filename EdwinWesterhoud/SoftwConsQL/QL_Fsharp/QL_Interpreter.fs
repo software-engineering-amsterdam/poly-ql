@@ -23,7 +23,22 @@ let getControlValue (control : StatementControl) =
                             Bool(bcontrol.GetValue())
     | :? StringControl   -> let scontrol = control :?> StringControl
                             String(scontrol.GetValue())
+    | :? IntegerControl  -> let icontrol = control :?> IntegerControl
+                            Int(icontrol.GetValue())
+    | :? DecimalControl  -> let dcontrol = control :?> DecimalControl
+                            Decimal(dcontrol.GetValue())
     | _                  -> failwith "Unknown control type (did you add a new control?)"
+
+let setControlValue (control : StatementControl) newValue =
+    match newValue with
+    | Bool(value) ->    let bcontrol = control :?> BooleanControl
+                        bcontrol.SetValue(value)
+    | String(value) ->  let scontrol = control :?> StringControl
+                        scontrol.SetValue(value)
+    | Int(value) ->     let icontrol = control :?> IntegerControl
+                        icontrol.SetValue(value)
+    | Decimal(value) -> let dcontrol = control :?> DecimalControl
+                        dcontrol.SetValue(value)
 
 let evalBooleanOp (left, op, right) =   
     match (left, op, right) with
@@ -101,20 +116,20 @@ let rec checkStmts stmts (controlMap : Dictionary<string, StatementControl>) : C
                                                                                 control.SetValue(value)
                                                                                 control.SetReadOnly(true)
                                                                                 upcast control
-                                                            | Int(value)     -> let control = new StringControl(label) // TODO CHANGE
-                                                                                //control.SetValue(value)
+                                                            | Int(value)     -> let control = new IntegerControl(label)
+                                                                                control.SetValue(value)
                                                                                 control.SetReadOnly(true)
                                                                                 upcast control
-                                                            | Decimal(value) -> let control = new StringControl(label) // TODO CHANGE
-                                                                                //control.SetValue(value)
+                                                            | Decimal(value) -> let control = new DecimalControl(label)
+                                                                                control.SetValue(value)
                                                                                 control.SetReadOnly(true)
                                                                                 upcast control
 
     let questionGUI label qlType : StatementControl =   match qlType with
                                                         | QLBool    -> upcast new BooleanControl(label)
-                                                        | QLString
-                                                        | QLInt
-                                                        | QLDecimal -> upcast new StringControl(label)
+                                                        | QLString  -> upcast new StringControl(label)
+                                                        | QLInt     -> upcast new IntegerControl(label)
+                                                        | QLDecimal -> upcast new DecimalControl(label)
 
     let rec getIdentifierControls expression =  match expression with
                                                 | ID(name, _)   -> [controlMap.[name]]
@@ -140,7 +155,7 @@ let rec checkStmts stmts (controlMap : Dictionary<string, StatementControl>) : C
             (
                 fun (identifier : StatementControl) ->
                     identifier.AddValueChangedEventHandler(
-                        fun _ _ -> ignore <| evalCondition expression controlMap // TODO control.SetValue
+                        fun _ _ -> setControlValue control <| evalExpression expression controlMap
                     )
             )
             identifierControls
@@ -149,6 +164,7 @@ let rec checkStmts stmts (controlMap : Dictionary<string, StatementControl>) : C
         match stmt with
         | Assignment(id, label, expression, pos)             -> let control = assignmentGUI label expression
                                                                 controlMap.Add(id, control)
+                                                                addAssigmentEvents expression control
                                                                 [control]
         | Question(id, label, qlType, pos)                   -> let control = questionGUI label qlType
                                                                 controlMap.Add(id, control)

@@ -57,6 +57,18 @@
     <Compile Include="PrimitiveControls\BooleanControl.Designer.cs">
       <DependentUpon>BooleanControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="PrimitiveControls\DecimalControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PrimitiveControls\DecimalControl.Designer.cs">
+      <DependentUpon>DecimalControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PrimitiveControls\IntegerControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PrimitiveControls\IntegerControl.Designer.cs">
+      <DependentUpon>IntegerControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="PrimitiveControls\IPrimitiveControl.cs" />
     <Compile Include="PrimitiveControls\StatementControl.cs">
       <SubType>UserControl</SubType>
@@ -89,6 +101,12 @@
     </Compile>
     <EmbeddedResource Include="PrimitiveControls\BooleanControl.resx">
       <DependentUpon>BooleanControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PrimitiveControls\DecimalControl.resx">
+      <DependentUpon>DecimalControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PrimitiveControls\IntegerControl.resx">
+      <DependentUpon>IntegerControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PrimitiveControls\StringControl.resx">
       <DependentUpon>StringControl.cs</DependentUpon>
