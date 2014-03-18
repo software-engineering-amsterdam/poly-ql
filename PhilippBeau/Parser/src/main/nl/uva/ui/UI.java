@@ -2,10 +2,10 @@ package main.nl.uva.ui;
 
 import javax.swing.JFrame;
 
-import main.nl.uva.parser.elements.statements.ParserForm;
-import main.nl.uva.parser.elements.ui.UIElement;
-import main.nl.uva.parser.elements.validation.ASTValidation;
-import main.nl.uva.parser.elements.validation.Scope;
+import main.nl.uva.parser.element.statement.ParserForm;
+import main.nl.uva.parser.element.ui.UIElement;
+import main.nl.uva.parser.element.validation.ASTValidation;
+import main.nl.uva.parser.element.validation.Scope;
 
 public class UI extends JFrame {
 

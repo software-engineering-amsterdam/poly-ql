@@ -5,9 +5,9 @@ import java.io.FileInputStream;
 
 import main.nl.uva.g4.FormGrammarLexer;
 import main.nl.uva.g4.FormGrammarParser;
-import main.nl.uva.parser.elements.statements.ParserForm;
-import main.nl.uva.parser.elements.validation.ASTValidation;
-import main.nl.uva.parser.elements.validation.Scope;
+import main.nl.uva.parser.element.statement.ParserForm;
+import main.nl.uva.parser.element.validation.ASTValidation;
+import main.nl.uva.parser.element.validation.Scope;
 import main.nl.uva.ui.UI;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
