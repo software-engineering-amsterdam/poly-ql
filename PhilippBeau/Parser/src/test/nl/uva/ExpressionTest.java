@@ -109,7 +109,7 @@ public class ExpressionTest {
         Variable variable = new Variable(Value.Type.MONEY, "payment", new Multiplication(new MoneyAtom("3"), new MoneyAtom("5"),
                 Line.NO_LINE_NUMBER), Line.NO_LINE_NUMBER);
         Assert.assertEquals(variable.getName(), "payment");
+        variable.validate(new Scope());
         Assert.assertTrue(variable.getValue().isTypeOf(Value.Type.MONEY));
-        Assert.assertEquals(new Multiplication(new MoneyAtom("3"), new MoneyAtom("5"), Line.NO_LINE_NUMBER).getValue(), variable.getValue());
     }
 }
