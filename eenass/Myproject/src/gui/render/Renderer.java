@@ -3,7 +3,7 @@ package gui.render;
 import gui.component.ComputedControl;
 import gui.component.Control;
 import gui.component.TypeToWidget;
-import gui.observers.ComputedObserver;
+import gui.observers.ComputedQuestionObserver;
 import gui.observers.ControlChangeHandler;
 import gui.observers.ControlObserver;
 import gui.observers.IfElseObserver;
@@ -30,9 +30,6 @@ import ast.expr.binExpr.Mul;
 import ast.expr.binExpr.NEq;
 import ast.expr.binExpr.Or;
 import ast.expr.binExpr.Sub;
-import ast.expr.evaluate.Bool;
-import ast.expr.evaluate.Int;
-import ast.expr.evaluate.Str;
 import ast.expr.literal.BoolLiteral;
 import ast.expr.literal.IntLiteral;
 import ast.expr.literal.StrLiteral;
@@ -72,30 +69,11 @@ public class Renderer implements Visitor<JComponent>{
 		comp.add(new JButton("Submit"));
 		return new JScrollPane(comp);
 	}
-	
-//	public JPanel render(StatementList list){
-//		System.out.println("render statementlist");
-//		State currentState = state.currentState();
-//		JPanel panel = createNewPanel();
-//		Renderer render = new Renderer(currentState);
-//		for(Statement s: list.getList()){
-//			panel.add(s.accept(render));
-//		}
-//		return panel;
-//	}
-	
-//	private JPanel getPanel() {
-//		return panel;
-//	}
-	
+
 	private void registerObservers(ControlObserver obs){
 		System.out.println("registerObserver");
-//		List<Identifier> identList = exp.accept(new ExpressionIdentifiersVisitor());
-//		System.out.println(identList.size());
-//		for(Identifier ident : identList){
-//			state.addObservers(ident, obs);
-//		}
 		state.addAllObservers(obs);
+		System.out.println("observer added to state " + state.getobservables());
 		obs.evaluate();
 	}
 	
@@ -103,6 +81,7 @@ public class Renderer implements Visitor<JComponent>{
 		System.out.println("registercontrolhandler");
 		ControlChangeHandler handler = new ControlChangeHandler(ident, control, state);
 		state.putObserver(ident, handler);
+		System.out.println("key added to state " + state.getobservables().containsKey(ident));
 	}
 	
 	
@@ -133,6 +112,7 @@ public class Renderer implements Visitor<JComponent>{
 		State currentState = state.currentState();
 		JPanel panel = createNewPanel();
 		Renderer render = new Renderer(currentState);
+		System.out.println("StatementList size " + node.getList().size());
 		for(Statement s: node.getList()){
 			panel.add(s.accept(render), "wrap");
 		}
@@ -147,18 +127,11 @@ public class Renderer implements Visitor<JComponent>{
 	
 	@Override
 	public JComponent visit(Question node) {
-		System.out.println("visit question");
+		System.out.println("visit question " + node.getId().getIdentName());
 		JPanel panel = createNewPanel();
 		Control comp = typeToWidget(node.getType());
-//		if(node.getType() instanceof BoolType){
-//			state.addValue(node.getId(), new Bool(false));
-//		}
-//		else if(node.getType() instanceof IntType){
-//			state.addValue(node.getId(), new Int(0));
-//		}
-//		else{
-//			state.addValue(node.getId(), new Str(""));
-//		}
+		state.addValue(node.getId(), comp.getValue());
+		System.out.println("The value of comp is " + comp.getValue());
 		registerControlChangeHandler(node.getId(), comp);
 		addLabel(panel, node.getLabel().getVal());
 		addComponent(panel, comp);
@@ -170,8 +143,9 @@ public class Renderer implements Visitor<JComponent>{
 		System.out.println("visit computedquestion");
 		ComputedControl comp = new ComputedControl();
 		JPanel panel = createNewPanel();
+//		state.addValue(node.getId(), comp.getValue());
 		registerControlChangeHandler(node.getId(), comp);
-		ComputedObserver obs = new ComputedObserver(node, comp, state);
+		ComputedQuestionObserver obs = new ComputedQuestionObserver(node, comp, state);
 		registerObservers(obs);
 		addLabel(panel, node.getLabel().getVal());
 		addComponent(panel, comp);

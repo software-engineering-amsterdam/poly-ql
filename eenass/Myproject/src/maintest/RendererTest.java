@@ -3,6 +3,11 @@ package maintest;
 import gui.render.Renderer;
 import gui.render.State;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -22,7 +27,7 @@ public class RendererTest extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
-	public RendererTest(){
+	public RendererTest() throws FileNotFoundException, IOException{
 		Renderer r = new Renderer(new State());
 		Form form = get_inputForm();
 		JComponent jc = r.render(form);
@@ -37,27 +42,40 @@ public class RendererTest extends JFrame {
 		 SwingUtilities.invokeLater(new Runnable() {
 			 @Override
 			 public void run() {
-				 RendererTest r = new RendererTest();
-				 r.setVisible(true);
+				 RendererTest r;
+				try {
+					r = new RendererTest();
+					 r.setVisible(true);
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
 			 }
 		 });
 	 }
 	 
-	 public static Form get_inputForm(){
-		 String form = "form Box1HouseOwning {" +
-			 "\nhasSoldHouse: \"Did you sell a house in 2010?\" boolean"+
-			 "\nhasBoughtHouse: \"Did you by a house in 2010?\" boolean"+
-			 "\nhasMaintLoan: \"Did you enter a loan for maintenance/reconstruction?\" boolean" +
-			 "\nif (hasSoldHouse == true) {"+
-			 "\nsellingPrice: \"Price the house was sold for:\" integer }}";
+	 public static Form get_inputForm() throws FileNotFoundException, IOException{
+//		 String form = "form Box1HouseOwning {" +
+//			 "\nhasSoldHouse: \"Did you sell a house in 2010?\" boolean"+
+//			 "\nhasBoughtHouse: \"Did you by a house in 2010?\" boolean"+
+//			 "\nhasMaintLoan: \"Did you enter a loan for maintenance/reconstruction?\" boolean" +
+//			 "\nif (hasSoldHouse == true) {"+
+//			 "\nsellingPrice: \"Price the house was sold for:\" integer"+
 //			 "\nprivateDebt: \"Private debts for the sold house:\" integer"+
 //			"\nvalueResidue: \"Value residue:\" integer(sellingPrice - privateDebt)"+
 //			"\n}"+
+//			"\nelse{ if(hasBoughtHouse == true) {"+
+//			 "\nbuyPrice: \"Price the house was bought with:\" integer"+
+//			 "\nprivateDebt1: \"Private debts for the bought house:\" integer"+
+//			 "\nvalueResidue1: \"Value residue:\" integer(buyPrice + privateDebt1)}"+
 //			"\nelse {"+
-//			"\nvalueResidue1: \"Value residue:\" integer(sellingPrice - privateDebt)"+
-//			"\n}" +
+//			"\nvalueResidue2: \"Value residue:\" integer(40 + 20)"+
+//			"\n}}" +
 //			"\n}";
-		 ANTLRInputStream input = new ANTLRInputStream(form);
+		 File in = new File("C:\\Users\\E. Butrus\\Dropbox\\MASTER\\SoftwareCon\\poly-ql\\eenass\\Myproject\\src\\maintest\\test.txt");
+			ANTLRInputStream input = new ANTLRInputStream(new FileInputStream(in));
 			QLangLexer lexer = new QLangLexer(input);
 			CommonTokenStream tokens = new CommonTokenStream(lexer);
 			QLangParser parser = new QLangParser(tokens);
@@ -69,6 +87,7 @@ public class RendererTest extends JFrame {
 			boolean result = checker.check_symb(tree, symb, errors);
 			System.out.println("result is " + result);
 			if(result) return (Form) tree;
+			else System.out.println(checker.get_errorList());
 			return null;
 		 
 	 }

@@ -25,7 +25,7 @@ public class IfObserver extends ControlObserver{
 	
 	@Override
 	public void evaluate() {
-		System.out.println("value map " + state.getEnvValues().size());
+		System.out.println("value map " + state.getEnvValues());
 		Value val = ifStat.getExpr().accept(new Evaluator(state.getEnvValues())); 
 		boolean visible = ((Bool)val).getValue();
 		ifPanel.setVisible(visible);	

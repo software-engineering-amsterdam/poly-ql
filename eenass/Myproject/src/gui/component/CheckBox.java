@@ -30,6 +30,7 @@ public class CheckBox extends Control implements ItemListener{
 
 	@Override
 	public Value getValue() {
+		System.out.println("checkBox.isSelected() " + checkBox.isSelected());
 		return new Bool(checkBox.isSelected());
 	}
 

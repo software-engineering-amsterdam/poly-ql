@@ -162,8 +162,8 @@ public class Evaluator implements Visitor<Value> {
 	public Value visit(Identifier node) {
 		System.out.println("Identifier visit " + environment.size());
 		if (environment.containsKey(node)){
-			System.out.println(node.getIdentName());
-			return environment.get(node.getIdentName());
+			System.out.println("true " + node.getIdentName() + " value " + environment.get(node));
+			return environment.get(node);
 		}
 		return null;
 	}
