@@ -71,10 +71,16 @@ multExp returns [Expression cEx]
   )*
   ;
 
+//prefix returns [Expression cEx]
+//	: ('!!')* | ('--')* bE=atom {$cEx = $bE.cEx;}
+//	| token='!' bE=atom {$cEx = new Not($bE.cEx, new Line($token));}
+//	| token='-' bE=atom {$cEx = new Minus($bE.cEx, new Line($token));}
+//	;
+	
 prefix returns [Expression cEx]
-	: token='!' bE=atom {$cEx = new Not($bE.cEx, new Line($token));}
-	| token='-' bE=atom {$cEx = new Minus($bE.cEx, new Line($token));}
-	| at=atom {$cEx = $at.cEx;}
+	: bE=atom {$cEx = $bE.cEx;}
+	| token='!' bEA=prefix {$cEx = new Not($bEA.cEx, new Line($token));}
+	| token='-' bEA=prefix {$cEx = new Minus($bEA.cEx, new Line($token));}
 	;
 
 atom returns [Expression cEx]

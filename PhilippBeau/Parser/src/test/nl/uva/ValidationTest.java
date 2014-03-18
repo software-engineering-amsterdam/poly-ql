@@ -5,7 +5,6 @@ import java.util.List;
 
 import main.nl.uva.parser.element.Form;
 import main.nl.uva.parser.element.Line;
-import main.nl.uva.parser.element.error.ValidationError;
 import main.nl.uva.parser.element.expression.And;
 import main.nl.uva.parser.element.expression.Not;
 import main.nl.uva.parser.element.expression.Variable;
@@ -143,11 +142,5 @@ public class ValidationTest {
         Form form = new Form("testForm", children, Line.NO_LINE_NUMBER);
 
         Assert.assertTrue("Invalid statement was not marked invalid", form.validate(new Scope()).hasErrors());
-    }
-
-    public static void printErrors(final List<ValidationError> errors) {
-        for (ValidationError error : errors) {
-            System.out.println(error);
-        }
     }
 }
