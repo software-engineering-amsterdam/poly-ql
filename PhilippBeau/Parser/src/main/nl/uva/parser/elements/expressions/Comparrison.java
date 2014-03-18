@@ -5,9 +5,9 @@ import main.nl.uva.parser.elements.type.Money;
 import main.nl.uva.parser.elements.type.Text;
 import main.nl.uva.parser.elements.type.Value;
 
-public class ComparrisonExpression extends AdvancedExpression {
+public class Comparrison extends AdvancedExpression {
 
-    public ComparrisonExpression(final Expression left, final Expression right) {
+    public Comparrison(final Expression left, final Expression right) {
         super(left, right);
     }
 

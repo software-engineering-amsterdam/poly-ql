@@ -3,19 +3,19 @@ package main.nl.uva.parser.elements.expressions;
 import main.nl.uva.parser.elements.type.Money;
 import main.nl.uva.parser.elements.type.Value;
 
-public class SubstractionExpression extends AdvancedExpression {
+public class Addition extends AdvancedExpression {
 
-    public SubstractionExpression(final Expression left, final Expression right) {
+    public Addition(final Expression left, final Expression right) {
         super(left, right);
     }
 
     @Override
     public Value calculateType(final Money left, final Money right) {
-        return new Money(left.getValue() - right.getValue());
+        return new Money(left.getValue() + right.getValue());
     }
 
     @Override
     public String toString() {
-        return _left + " - " + _right;
+        return _left + " + " + _right;
     }
 }

@@ -5,8 +5,8 @@ import java.util.List;
 
 import junit.framework.Assert;
 import main.nl.uva.parser.elements.errors.ValidationError;
-import main.nl.uva.parser.elements.expressions.AndExpression;
-import main.nl.uva.parser.elements.expressions.NotExpression;
+import main.nl.uva.parser.elements.expressions.And;
+import main.nl.uva.parser.elements.expressions.Not;
 import main.nl.uva.parser.elements.expressions.Variable;
 import main.nl.uva.parser.elements.expressions.atoms.VariableAtom;
 import main.nl.uva.parser.elements.statements.DeclarationStatement;
@@ -70,7 +70,7 @@ public class ValidationTest {
         Variable v1 = new Variable(new Bool(), "testBoolean");
         Variable v2 = new Variable(new Bool(), "testBoolean2");
 
-        AndExpression andExpression = new AndExpression(v1, v2);
+        And andExpression = new And(v1, v2);
 
         Assert.assertFalse("Valid statement was marked invalid", andExpression.validate(new Scope()).hasErrors());
     }
@@ -81,7 +81,7 @@ public class ValidationTest {
         Variable v1 = new Variable(new Bool(), "testBoolean");
         Variable v2 = new Variable(new Money(), "testMoney");
 
-        AndExpression andExpression = new AndExpression(v1, v2);
+        And andExpression = new And(v1, v2);
 
         Assert.assertTrue("Invalid statement was not marked invalid", andExpression.validate(new Scope()).hasErrors());
     }
@@ -107,7 +107,7 @@ public class ValidationTest {
         elseBlock.add(decStatement2);
 
         IFStatement ifStatement = new IFStatement(v2, ifBlock);
-        IFStatement elseStatement = new IFStatement(new NotExpression(v2), elseBlock);
+        IFStatement elseStatement = new IFStatement(new Not(v2), elseBlock);
 
         IfElseStatement ifElse = new IfElseStatement(ifStatement, elseStatement);
 
@@ -135,7 +135,7 @@ public class ValidationTest {
         elseBlock.add(decStatement2);
 
         IFStatement ifStatement = new IFStatement(v2, ifBlock);
-        IFStatement elseStatement = new IFStatement(new NotExpression(v2), elseBlock);
+        IFStatement elseStatement = new IFStatement(new Not(v2), elseBlock);
 
         IfElseStatement ifElse = new IfElseStatement(ifStatement, elseStatement);
 

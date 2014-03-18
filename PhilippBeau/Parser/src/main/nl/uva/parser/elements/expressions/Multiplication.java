@@ -3,19 +3,19 @@ package main.nl.uva.parser.elements.expressions;
 import main.nl.uva.parser.elements.type.Money;
 import main.nl.uva.parser.elements.type.Value;
 
-public class DivisionExpression extends AdvancedExpression {
+public class Multiplication extends AdvancedExpression {
 
-    public DivisionExpression(final Expression left, final Expression right) {
+    public Multiplication(final Expression left, final Expression right) {
         super(left, right);
     }
 
     @Override
     public Value calculateType(final Money left, final Money right) {
-        return new Money(left.getValue() / right.getValue());
+        return new Money(left.getValue() * right.getValue());
     }
 
     @Override
     public String toString() {
-        return _left + " / " + _right;
+        return _left + " * " + _right;
     }
 }

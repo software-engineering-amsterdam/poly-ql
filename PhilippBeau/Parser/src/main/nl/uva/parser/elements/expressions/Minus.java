@@ -5,11 +5,11 @@ import main.nl.uva.parser.elements.type.Value;
 import main.nl.uva.parser.elements.validation.ASTValidation;
 import main.nl.uva.parser.elements.validation.Scope;
 
-public class MinusExpression extends Expression {
+public class Minus extends Expression {
 
     private final Expression _expression;
 
-    public MinusExpression(final Expression expression) {
+    public Minus(final Expression expression) {
         _expression = expression;
     }
 

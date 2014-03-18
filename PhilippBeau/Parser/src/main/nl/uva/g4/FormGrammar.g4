@@ -35,40 +35,40 @@ statement returns [Statement current]
     {$current = new IFStatement($ex.cEx, $ifBlock.data);} 				
     
     | 'if' '(' ex=expression ')' ifBlock=block 'else' elseBlock=block
-    { $current = new IfElseStatement(new IFStatement($ex.cEx, $ifBlock.data), new IFStatement(new NotExpression($ex.cEx), $elseBlock.data));} 
+    { $current = new IfElseStatement(new IFStatement($ex.cEx, $ifBlock.data), new IFStatement(new Not($ex.cEx), $elseBlock.data));} 
     ;
 
 expression returns [Expression cEx]
 	: left=boolExp {$cEx = $left.cEx;} 
 	;
 
-//equalsExp returns [Expression cEx]
-//	: left=boolExp {$cEx = $left.cEx;} 
-//  (EQUAL right=boolExp {$cEx = new ComparrisonExpression($left.cEx, $right.cEx);})*
-//	;
-
 boolExp returns [Expression cEx]
 	: left=addExp {$cEx = $left.cEx;} 
   (
-  	AND right=addExp {$cEx = new AndExpression($cEx, $right.cEx);} 
-  	| OR right=addExp {$cEx = new OrExpression($cEx, $right.cEx);}
-  	| EQUAL right=addExp {$cEx = new ComparrisonExpression($cEx, $right.cEx);}
+  	AND right=addExp {$cEx = new And($cEx, $right.cEx);} 
+  	| OR right=addExp {$cEx = new Or($cEx, $right.cEx);}
+  	| EQUAL right=addExp {$cEx = new Comparrison($cEx, $right.cEx);}
   )*
 	;
 
 addExp returns [Expression cEx]
   : left=multExp {$cEx = $left.cEx;} 
-  (ADD right=multExp {$cEx = new AdditionExpression($cEx, $right.cEx);} | SUB right=multExp {$cEx = new SubstractionExpression($cEx, $right.cEx);})*
+  (
+  	ADD right=multExp {$cEx = new Addition($cEx, $right.cEx);} 
+  	| SUB right=multExp {$cEx = new Substraction($cEx, $right.cEx);}
+  )*
   ;
 
 multExp returns [Expression cEx]
   : left=prefix {$cEx = $left.cEx;} 
-  (MUL right=prefix {$cEx = new MultiplicationExpression($cEx, $right.cEx);} | DIV right=prefix {$cEx = new MultiplicationExpression($cEx, $right.cEx);})*
+  (MUL right=prefix {$cEx = new Multiplication($cEx, $right.cEx);} 
+  	| DIV right=prefix {$cEx = new Multiplication($cEx, $right.cEx);}
+  )*
   ;
 
 prefix returns [Expression cEx]
-	: '!' bE=atom {$cEx = new NotExpression($bE.cEx);}
-	| '-' bE=atom {$cEx = new MinusExpression($bE.cEx);}
+	: '!' bE=atom {$cEx = new Not($bE.cEx);}
+	| '-' bE=atom {$cEx = new Minus($bE.cEx);}
 	| at=atom {$cEx = $at.cEx;}
 	;
 
