@@ -17,6 +17,7 @@ open Microsoft.FSharp.Collections
 %token BOOL_TRUE
 %token BOOL_FALSE
 %token IF
+%token ELSE
 %token ASS
 %token BRACKET_OPEN
 %token BRACKET_CLOSE
@@ -62,7 +63,9 @@ Statement:
     | Question                                    { $1 }
 	| Condition                                   { $1 }
 
-Question: ID ASS STRING QuestionType              { Question($1,$3,$4) } 
+Question: 
+    | ID ASS STRING QuestionType PARENS_OPEN Expression PARENS_CLOSE { ComputedQuestion($1,$3,$4,$6) } 
+    | ID ASS STRING QuestionType              { Question($1,$3,$4,Position(parseState)) } 
 
 QuestionType:
 	|	QL_BOOLEAN				                  { QL_Boolean }
@@ -70,7 +73,10 @@ QuestionType:
 	|   QL_MONEY				                  { QL_Money }
 	|   QL_STRING				                  { QL_String }
 
-Condition: IF PARENS_OPEN Expression PARENS_CLOSE BRACKET_OPEN Statement_List BRACKET_CLOSE  { Condition($3,$6) } 
+Condition: 
+    |   IF PARENS_OPEN Expression PARENS_CLOSE BRACKET_OPEN Statement_List BRACKET_CLOSE ELSE BRACKET_OPEN Statement_List BRACKET_CLOSE  { IfThenElse($3,$6,$10) } 
+    |   IF PARENS_OPEN Expression PARENS_CLOSE BRACKET_OPEN Statement_List BRACKET_CLOSE  { IfThen($3,$6) } 
+
 
 Expression:
     | PARENS_OPEN Expression PARENS_CLOSE         { $2 }
