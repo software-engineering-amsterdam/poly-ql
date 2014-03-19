@@ -3,7 +3,7 @@ package test.nl.uva;
 import main.nl.uva.parser.element.Line;
 import main.nl.uva.parser.element.expression.Addition;
 import main.nl.uva.parser.element.expression.And;
-import main.nl.uva.parser.element.expression.Comparrison;
+import main.nl.uva.parser.element.expression.Equal;
 import main.nl.uva.parser.element.expression.Division;
 import main.nl.uva.parser.element.expression.Multiplication;
 import main.nl.uva.parser.element.expression.Or;
@@ -85,19 +85,19 @@ public class ExpressionTest {
 
     @Test
     public void testComparrison() {
-        Comparrison expression = new Comparrison(new BoolAtom("true"), new BoolAtom("false"), Line.NO_LINE_NUMBER);
+        Equal expression = new Equal(new BoolAtom("true"), new BoolAtom("false"), Line.NO_LINE_NUMBER);
         Assert.assertFalse(expression.validate(new Scope()).hasErrors());
 
         Bool value = (Bool) expression.getValue();
         Assert.assertFalse(value.getValue());
 
-        expression = new Comparrison(new MoneyAtom("3"), new MoneyAtom("3"), Line.NO_LINE_NUMBER);
+        expression = new Equal(new MoneyAtom("3"), new MoneyAtom("3"), Line.NO_LINE_NUMBER);
         Assert.assertFalse(expression.validate(new Scope()).hasErrors());
 
         value = (Bool) expression.getValue();
         Assert.assertTrue(value.getValue());
 
-        expression = new Comparrison(new MoneyAtom("3"), new MoneyAtom("4"), Line.NO_LINE_NUMBER);
+        expression = new Equal(new MoneyAtom("3"), new MoneyAtom("4"), Line.NO_LINE_NUMBER);
         Assert.assertFalse(expression.validate(new Scope()).hasErrors());
 
         value = (Bool) expression.getValue();

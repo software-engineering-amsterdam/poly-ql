@@ -16,6 +16,7 @@ public class Text extends Value {
 
     public Text(final String value) {
         super(Value.Type.TEXT);
+
         _value = value;
     }
 
@@ -49,7 +50,7 @@ public class Text extends Value {
 
     @Override
     public ValueUI getLayout(final DeclarationUI parent) {
-        return new TextUI(parent);
+        return new TextUI(parent, this);
     }
 
     @Override

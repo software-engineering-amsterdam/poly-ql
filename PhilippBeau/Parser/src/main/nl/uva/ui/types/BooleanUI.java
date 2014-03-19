@@ -16,10 +16,11 @@ public class BooleanUI extends ValueUI implements ItemListener {
 
     private final DeclarationUI _parent;
 
-    public BooleanUI(final DeclarationUI parent) {
+    public BooleanUI(final DeclarationUI parent, final Value value) {
         _checkBox = new JCheckBox();
-        _checkBox.addItemListener(this);
+        valueChange(value);
 
+        _checkBox.addItemListener(this);
         _parent = parent;
     }
 

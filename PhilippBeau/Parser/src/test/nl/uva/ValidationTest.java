@@ -6,12 +6,10 @@ import java.util.List;
 import main.nl.uva.parser.element.Form;
 import main.nl.uva.parser.element.Line;
 import main.nl.uva.parser.element.expression.And;
-import main.nl.uva.parser.element.expression.Not;
 import main.nl.uva.parser.element.expression.Variable;
 import main.nl.uva.parser.element.expression.atom.VariableAtom;
 import main.nl.uva.parser.element.statement.Declaration;
-import main.nl.uva.parser.element.statement.IF;
-import main.nl.uva.parser.element.statement.IfElse;
+import main.nl.uva.parser.element.statement.IfThenElse;
 import main.nl.uva.parser.element.statement.Statement;
 import main.nl.uva.parser.element.type.Value;
 import main.nl.uva.parser.validation.Scope;
@@ -105,10 +103,7 @@ public class ValidationTest {
         List<Statement> elseBlock = new ArrayList<>();
         elseBlock.add(decStatement2);
 
-        IF ifStatement = new IF(v2, ifBlock, Line.NO_LINE_NUMBER);
-        IF elseStatement = new IF(new Not(v2, Line.NO_LINE_NUMBER), elseBlock, Line.NO_LINE_NUMBER);
-
-        IfElse ifElse = new IfElse(ifStatement, elseStatement, Line.NO_LINE_NUMBER);
+        IfThenElse ifElse = new IfThenElse(v2, ifBlock, elseBlock, Line.NO_LINE_NUMBER);
 
         children.add(ifElse);
         Form form = new Form("testForm", children, Line.NO_LINE_NUMBER);
@@ -133,10 +128,7 @@ public class ValidationTest {
         List<Statement> elseBlock = new ArrayList<>();
         elseBlock.add(decStatement2);
 
-        IF ifStatement = new IF(v2, ifBlock, Line.NO_LINE_NUMBER);
-        IF elseStatement = new IF(new Not(v2, Line.NO_LINE_NUMBER), elseBlock, Line.NO_LINE_NUMBER);
-
-        IfElse ifElse = new IfElse(ifStatement, elseStatement, Line.NO_LINE_NUMBER);
+        IfThenElse ifElse = new IfThenElse(v2, ifBlock, elseBlock, Line.NO_LINE_NUMBER);
 
         children.add(ifElse);
         Form form = new Form("testForm", children, Line.NO_LINE_NUMBER);

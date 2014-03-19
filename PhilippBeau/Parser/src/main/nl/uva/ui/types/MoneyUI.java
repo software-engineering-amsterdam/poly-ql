@@ -16,8 +16,9 @@ public class MoneyUI extends ValueUI implements KeyListener {
 
     private final DeclarationUI _parent;
 
-    public MoneyUI(final DeclarationUI parent) {
+    public MoneyUI(final DeclarationUI parent, final Value value) {
         _textField = new JTextField();
+        valueChange(value);
         _textField.addKeyListener(this);
 
         _parent = parent;

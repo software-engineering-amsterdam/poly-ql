@@ -39,8 +39,7 @@ public class DeclarationUI extends UIElement implements UIValueChangeListener, E
         JLabel label = new JLabel(_function);
         layout.add(label);
 
-        _valueUI = _variable.getValue().getLayout(this);
-        _valueUI.valueChange(_variable.getValue());
+        _valueUI = _variable.getUserInterfaceRepresentation(this);
         layout.add(_valueUI.getComponent());
 
         return layout;

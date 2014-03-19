@@ -6,29 +6,29 @@ import main.nl.uva.parser.element.type.Money;
 import main.nl.uva.parser.element.type.Text;
 import main.nl.uva.parser.element.type.Value;
 
-public class Comparrison extends AdvancedExpression {
+public class UnEqual extends AdvancedExpression {
 
-    public Comparrison(final Expression left, final Expression right, final Line lineInfo) {
+    public UnEqual(final Expression left, final Expression right, final Line lineInfo) {
         super(left, right, lineInfo);
     }
 
     @Override
     public Value calculateType(final Bool left, final Bool right) {
-        return new Bool(left.getValue() == right.getValue());
+        return new Bool(left.getValue() != right.getValue());
     }
 
     @Override
     public Value calculateType(final Money left, final Money right) {
-        return new Bool(left.getValue() == right.getValue());
+        return new Bool(left.getValue() != right.getValue());
     }
 
     @Override
     public Value calculateType(final Text left, final Text right) {
-        return new Bool(left.getValue() == right.getValue());
+        return new Bool(left.getValue() != right.getValue());
     }
 
     @Override
     public String toString() {
-        return _left + " == " + _right;
+        return _left + " != " + _right;
     }
 }

@@ -27,9 +27,4 @@ public abstract class ASTNode {
 
         return valid;
     }
-
-    @Override
-    public String toString() {
-        return _lineInfo.toString();
-    }
 }

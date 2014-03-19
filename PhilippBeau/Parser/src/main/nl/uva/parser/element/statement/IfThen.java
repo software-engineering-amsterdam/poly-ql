@@ -9,19 +9,19 @@ import main.nl.uva.parser.element.type.Value;
 import main.nl.uva.parser.validation.ASTValidation;
 import main.nl.uva.parser.validation.Scope;
 import main.nl.uva.ui.UI;
-import main.nl.uva.ui.element.IfUI;
+import main.nl.uva.ui.element.IfThenUI;
 import main.nl.uva.ui.element.UIElement;
 
-public class IF extends Block {
+public class IfThen extends Block {
 
-    protected final List<Statement> _children;
+    protected final List<Statement> _ifStatements;
 
-    private final Expression _expression;
+    protected final Expression _expression;
 
-    public IF(final Expression expression, final List<Statement> children, final Line lineInfo) {
+    public IfThen(final Expression expression, final List<Statement> ifStatements, final Line lineInfo) {
         super(lineInfo);
         _expression = expression;
-        _children = children;
+        _ifStatements = ifStatements;
     }
 
     @Override
@@ -32,28 +32,19 @@ public class IF extends Block {
             valid.addError(new InvalidTypeError(this.toString(), getLineInfo()));
         }
 
-        valid = validateChildren(valid, _children, scope);
-        removeChildrenFromScope(_children, scope);
+        valid = validateChildren(valid, _ifStatements, scope);
+        removeChildrenFromScope(_ifStatements, scope);
 
         return valid;
     }
 
     @Override
     public String toString() {
-        return "if ( " + _expression + " ) \n";
-    }
-
-    public String printFull() {
-        String erg = "if ( " + _expression + " ) \n{ \n";
-        for (Statement child : _children) {
-            erg += child + "\n";
-        }
-
-        return erg + "} \n";
+        return "if ( " + _expression + " )";
     }
 
     @Override
     public UIElement getLayout(final UI parentUI) {
-        return new IfUI(_expression, _children, parentUI);
+        return new IfThenUI(_expression, _ifStatements, parentUI);
     }
 }
