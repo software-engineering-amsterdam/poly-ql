@@ -1,5 +1,6 @@
 package org.uva.sea.ql.gui;
 
+import java.awt.FlowLayout;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,19 +48,13 @@ public class Renderer implements FormVisitor<Void> {
 
 	@Override
 	public Void visit(Question ast) {
-		this.panel.add(new JLabel(ast.getLabel()));
-		InputField inputfield = InputFieldFactory.inputFieldForType(ast.getType(), true);
-		this.panel.add(inputfield.getComponent());
-		this.components.add(inputfield.getComponent());
+		this.renderQuestion(ast, true);
 		return null;
 	}
 
 	@Override
 	public Void visit(Computed ast) {
-		this.panel.add(new JLabel(ast.getLabel()));
-		InputField inputfield = InputFieldFactory.inputFieldForType(ast.getType(), false);
-		this.panel.add(inputfield.getComponent());
-		this.components.add(inputfield.getComponent());
+		this.renderQuestion(ast, false);
 		return null;
 	}
 
@@ -98,6 +93,15 @@ public class Renderer implements FormVisitor<Void> {
 		this.components.clear();
 		stat.accept(this);
 		return this.components;
+	}
+	
+	private void renderQuestion(Question question, boolean editable) {
+		JPanel container = new JPanel(new FlowLayout(FlowLayout.LEADING));
+		container.add(new JLabel(question.getLabel()));
+		InputField inputfield = InputFieldFactory.inputFieldForType(question.getType(), true);
+		container.add(inputfield.getComponent());
+		this.components.add(container);
+		this.panel.add(container);
 	}
 
 	public ValueEnvironment getValueEnv() {
