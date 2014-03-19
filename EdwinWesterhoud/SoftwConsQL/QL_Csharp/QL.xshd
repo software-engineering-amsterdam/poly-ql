@@ -10,6 +10,16 @@
 	<RuleSets>
 		<RuleSet ignorecase="false">
             <Delimiters>&amp;&lt;&gt;~!%^*()-+=|\#/{}[]:;"' ,   .?</Delimiters>
+            
+            <Span name = "comments" bold="false" italic="false" color="#a8a8a8" stopateol="true">
+                <Begin>//</Begin>
+            </Span>
+
+            <Span name = "stringliteral" bold="false" italic="false" color="DarkRed" stopateol="true">
+                <Begin>"</Begin>
+                <End>"</End>
+            </Span>
+
 
             <MarkFollowing bold = "true" italic = "false" color = "MidnightBlue">form</MarkFollowing>
 

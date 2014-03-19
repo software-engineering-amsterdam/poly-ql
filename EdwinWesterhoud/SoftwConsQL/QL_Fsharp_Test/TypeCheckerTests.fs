@@ -40,6 +40,17 @@ type TypeChecker() =
         Assert.IsTrue(errorMessage.Contains("expected Boolean expression"))
 
     [<TestMethod>]
+    member x.DuplicateLabel () = 
+        let text = "form formName { \"Duplicate\" intX1 : integer 
+                                    \"Duplicate\" intX2 : integer }"
+        let result = parse_string text
+        let checkInfo = typeCheck result
+        Assert.IsTrue(checkInfo.ErrorList.Length = 0)
+        Assert.IsTrue(checkInfo.WarningList.Length = 1)
+        let warningMessage = fst checkInfo.WarningList.Head
+        Assert.IsTrue(warningMessage.Contains("Duplicate label"))
+
+    [<TestMethod>]
     member x.InvalidAnd () = 
         let text = "form formName {
                 if (1 && 1) {
