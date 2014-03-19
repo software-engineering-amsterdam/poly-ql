@@ -4,8 +4,9 @@ import edu.uva.softwarecons.visitor.type.ITypeElementVisitor;
 
 /**
  * Falconlabs
+ *
  * @author Santiago Carrillo
- * Date: 2/20/14
+ *         Date: 2/20/14
  */
 public class DateType
     implements Type

@@ -6,9 +6,9 @@ import java.awt.event.KeyListener;
 import javax.swing.JComponent;
 import javax.swing.JTextField;
 
-import main.nl.uva.parser.element.type.Text;
-import main.nl.uva.parser.element.type.Value;
 import main.nl.uva.ui.element.DeclarationUI;
+import main.nl.uva.validation.type.Text;
+import main.nl.uva.validation.type.Value;
 
 public class TextUI extends ValueUI implements KeyListener {
 

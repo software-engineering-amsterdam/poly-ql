@@ -2,9 +2,9 @@ package main.nl.uva.ui;
 
 import javax.swing.JFrame;
 
-import main.nl.uva.parser.element.Form;
-import main.nl.uva.parser.validation.Scope;
+import main.nl.uva.parser.Form;
 import main.nl.uva.ui.element.UIElement;
+import main.nl.uva.validation.Scope;
 
 public class UI extends JFrame {
 
@@ -20,8 +20,8 @@ public class UI extends JFrame {
 
     private void generateUI() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        UIElement layout = _form.getLayout(_form, this);
-        this.add(layout.generateUIElement());
+        UIElement layout = _form.getLayout(this);
+        this.add(layout.getPanel());
 
         this.pack();
 

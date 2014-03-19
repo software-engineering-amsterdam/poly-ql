@@ -37,8 +37,9 @@ import java.util.TimerTask;
 
 /**
  * Falconlabs
+ *
  * @author Santiago Carrillo
- * Date: 3/16/14
+ *         Date: 3/16/14
  */
 public class DatePicker
     extends HBox

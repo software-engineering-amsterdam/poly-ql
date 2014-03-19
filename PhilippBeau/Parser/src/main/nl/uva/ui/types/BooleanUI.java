@@ -6,9 +6,9 @@ import java.awt.event.ItemListener;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 
-import main.nl.uva.parser.element.type.Bool;
-import main.nl.uva.parser.element.type.Value;
 import main.nl.uva.ui.element.DeclarationUI;
+import main.nl.uva.validation.type.Bool;
+import main.nl.uva.validation.type.Value;
 
 public class BooleanUI extends ValueUI implements ItemListener {
 

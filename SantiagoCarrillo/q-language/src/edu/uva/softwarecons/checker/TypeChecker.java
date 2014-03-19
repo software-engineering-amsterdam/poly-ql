@@ -26,8 +26,9 @@ import java.util.Set;
 
 /**
  * Falconlabs
+ *
  * @author Santiago Carrillo
- * Date: 2/27/14
+ *         Date: 2/27/14
  */
 public class TypeChecker
     extends FormBaseVisitor
@@ -75,12 +76,15 @@ public class TypeChecker
     public void visitIfQuestion( IfQuestion question )
     {
         question.getExpression().accept( this );
-        for ( Question q : question.getQuestions() )
+        if ( null != question.getQuestions() )
         {
-            q.accept( this );
-            if ( new BasicQuestion( null, null, null ).equals( q ) )
+            for ( Question q : question.getQuestions() )
             {
-                validateDuplicatedQuestion( (BasicQuestion) q );
+                q.accept( this );
+                if ( new BasicQuestion( null, null, null ).equals( q ) )
+                {
+                    validateDuplicatedQuestion( (BasicQuestion) q );
+                }
             }
         }
         if ( null != question.getElseQuestion() )
@@ -155,6 +159,9 @@ public class TypeChecker
         }
     }
 
+    //TODO this method is wrong. you need to check for the valid types of a computations
+    //TODO you need to validate the proper types for the IfQuestions
+    //TODO create separate type of errors for the TODOS above !!
     private void checkComputedQuestionExpressionsType( Form form, ExpressionTypeChecker expressionTypeChecker )
     {
         ComputedQuestion computedQuestion = new ComputedQuestion( null, null, null, null );

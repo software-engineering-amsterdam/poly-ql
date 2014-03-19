@@ -5,11 +5,11 @@ import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
-import main.nl.uva.parser.element.expression.Expression;
-import main.nl.uva.parser.element.expression.ExpressionChangeListener;
-import main.nl.uva.parser.element.statement.Statement;
-import main.nl.uva.parser.element.type.Bool;
+import main.nl.uva.parser.expression.Expression;
+import main.nl.uva.parser.expression.ExpressionChangeListener;
+import main.nl.uva.parser.statement.Statement;
 import main.nl.uva.ui.UI;
+import main.nl.uva.validation.type.Bool;
 
 public class IfThenUI extends UIElement implements ExpressionChangeListener {
 
@@ -22,23 +22,23 @@ public class IfThenUI extends UIElement implements ExpressionChangeListener {
         _expression = expression;
         _expression.registerListener(this);
 
-        _ifPanel = generateBlockPanel(_expression, children);
+        _ifPanel = generateBlockPanel(_expression, children, _parentUI);
         _ifPanel.setVisible(((Bool) expression.getValue()).getValue());
     }
 
-    protected JPanel generateBlockPanel(final Expression expression, final List<Statement> statements) {
-        JPanel parent = new JPanel();
-        parent.setLayout(new BoxLayout(parent, BoxLayout.Y_AXIS));
+    protected static JPanel generateBlockPanel(final Expression expression, final List<Statement> statements, final UI parent) {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
         for (Statement child : statements) {
-            parent.add(child.getLayout(_parentUI).generateUIElement());
+            panel.add(child.getLayout(parent).getPanel());
         }
 
-        return parent;
+        return panel;
     }
 
     @Override
-    public JPanel generateUIElement() {
+    public JPanel getPanel() {
         return _ifPanel;
     }
 

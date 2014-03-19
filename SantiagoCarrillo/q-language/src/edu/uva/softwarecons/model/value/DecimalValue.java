@@ -2,8 +2,9 @@ package edu.uva.softwarecons.model.value;
 
 /**
  * Falconlabs
+ *
  * @author Santiago Carrillo
- * Date: 3/13/14
+ *         Date: 3/13/14
  */
 public class DecimalValue
     implements ArithmeticValue
@@ -19,7 +20,7 @@ public class DecimalValue
     @Override
     public Float getValue()
     {
-        return  value;
+        return value;
     }
 
     @Override

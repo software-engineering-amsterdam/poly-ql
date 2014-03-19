@@ -25,11 +25,11 @@ form Box1HouseOwning {
     	A: "A:" money(200)
 	   	B: "B:" money(300)
 	   	if (hasBoughtHouse) {
-	        A: "A:" money(300)
-		   	B: "B:" money(200)
+	        C: "A:" money(300)
+		   	D: "B:" money(200)
 	    } else {
-	    	A: "A:" money(200)
-		   	B: "B:" money(300)
+	    	C: "A:" money(200)
+		   	D: "B:" money(300)
 	    }
     }
 }
