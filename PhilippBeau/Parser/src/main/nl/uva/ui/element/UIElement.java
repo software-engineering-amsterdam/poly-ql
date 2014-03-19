@@ -16,5 +16,5 @@ public abstract class UIElement {
         _parentUI.refreshView();
     }
 
-    public abstract JPanel generateUIElement();
+    public abstract JPanel getPanel();
 }

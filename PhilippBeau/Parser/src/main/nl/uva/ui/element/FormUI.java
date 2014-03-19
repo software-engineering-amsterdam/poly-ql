@@ -5,8 +5,8 @@ import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
-import main.nl.uva.parser.element.Form;
-import main.nl.uva.parser.element.statement.Statement;
+import main.nl.uva.parser.Form;
+import main.nl.uva.parser.statement.Statement;
 import main.nl.uva.ui.UI;
 
 public class FormUI extends UIElement {
@@ -19,12 +19,12 @@ public class FormUI extends UIElement {
     }
 
     @Override
-    public JPanel generateUIElement() {
+    public JPanel getPanel() {
         JPanel layout = new JPanel();
         layout.setLayout(new BoxLayout(layout, BoxLayout.Y_AXIS));
 
         for (Statement child : _block) {
-            layout.add(child.getLayout(_parentUI).generateUIElement());
+            layout.add(child.getLayout(_parentUI).getPanel());
         }
 
         return layout;

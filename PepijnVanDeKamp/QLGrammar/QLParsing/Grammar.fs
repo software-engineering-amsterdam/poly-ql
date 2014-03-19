@@ -1,6 +1,16 @@
 ﻿namespace QL
 module Grammar =
 
+
+    type Position(State : Microsoft.FSharp.Text.Parsing.IParseState) =
+        let startPos,endPos = State.ResultRange;
+        member this.ColumnStart = startPos.Column
+        member this.LineStart = startPos.Line
+        member this.ColumnEnd = endPos.Column
+        member this.LineEnd = endPos.Line
+        override m.ToString() = sprintf "Line:%i Column:%i" startPos.Line startPos.Column
+        
+
     type QuestionType = 
         | QL_Boolean 
         | QL_String 
@@ -35,9 +45,13 @@ module Grammar =
          | LiteralStatement of Literal
         
 
+        
+
     type Statement = 
-    | Question of string * string * QuestionType
-    | Condition of Expression * Statement list
+    | Question of string * string * QuestionType * Position
+    | ComputedQuestion of string * string * QuestionType * Expression
+    | IfThen of Expression * Statement list
+    | IfThenElse of Expression * Statement list * Statement list
 
 //    type Statement = 
 //        | QuestionStatement of Question
