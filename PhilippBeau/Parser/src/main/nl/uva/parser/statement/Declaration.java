@@ -24,9 +24,9 @@ public class Declaration extends Statement {
     public ASTValidation validate(final Scope scope) {
         ASTValidation valid = _variable.validate(scope);
 
-        if (scope.containsVariable(_variable.getName())) {
+        if (scope.variableAlreadyDefined(_variable.getName())) {
 
-            Variable original = scope.getVariableFromScope(_variable.getName());
+            Variable original = scope.getVariable(_variable.getName());
             valid.addError(new DuplicatedVariableError(original, getLineInfo()));
         } else {
 
