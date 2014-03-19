@@ -16,7 +16,7 @@ public class Question extends Stat {
 	}
 	
 	public String getLabel() {
-		return label;
+		return label.substring(1, label.length()-1);
 	}
 	
 	public Ident getName() {

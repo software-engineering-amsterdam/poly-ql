@@ -42,14 +42,16 @@ public class Renderer implements FormVisitor<Void> {
 	@Override
 	public Void visit(Question ast) {
 		this.panel.add(new JLabel(ast.getLabel()));
-		this.valueEnv.setValueOfIdent(ast.getName(), null);
+		InputField inputfield = InputFieldFactory.inputFieldForType(ast.getType(), true);
+		this.panel.add(inputfield.getComponent());
 		return null;
 	}
 
 	@Override
 	public Void visit(Computed ast) {
 		this.panel.add(new JLabel(ast.getLabel()));
-		this.valueEnv.setValueOfIdent(ast.getName(), null);
+		InputField inputfield = InputFieldFactory.inputFieldForType(ast.getType(), false);
+		this.panel.add(inputfield.getComponent());
 		return null;
 	}
 
