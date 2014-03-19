@@ -15,10 +15,6 @@ import org.antlr.v4.runtime.CommonTokenStream;
 
 public class Main {
     public static void main(final String[] args) throws Exception {
-        test3();
-    }
-
-    public static void test3() throws Exception {
         // Get sample file input stream
         File file = new File("questionaire.txt");
         FileInputStream fis = new FileInputStream(file);
@@ -43,6 +39,5 @@ public class Main {
         } else {
             validation.printErrors();
         }
-
     }
 }
