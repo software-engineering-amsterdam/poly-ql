@@ -2,6 +2,7 @@ package expr.syntactic;
 
 import types.Type;
 import visitor.ASTVisitor;
+import expr.ASTNode;
 import expr.Expression;
 import expr.Ident;
 
@@ -27,6 +28,10 @@ public class Question extends Statement {
 		this.questionBody = questionBody;
 		this.expr=null;
 		this.type=type;
+	}
+
+	public QuestionBody getQuestionBody() {
+		return questionBody;
 	}
 
 	@Override
@@ -60,6 +65,10 @@ public class Question extends Statement {
 	public Type getType() {
 		return this.type;
 	}
+	
+	public void setExpression(Expression e) {
+		this.expr=e; 
+	}
 
 	public Expression getExpression() {
 		return this.expr; 
@@ -78,5 +87,13 @@ public class Question extends Statement {
 		if(this.expr!=null)
 			return true;
 		return false;
+	}
+
+	@Override
+	public ASTNode ReplaceQuestionValue(Question question) {
+		if(this.ident.equals(question.getIdent())) {
+			return new Question(ident,questionBody,type,question.expr);
+		}
+		return new Question(ident,questionBody,type,expr);
 	}
 }

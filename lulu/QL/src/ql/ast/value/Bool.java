@@ -25,4 +25,5 @@ public class Bool extends Value {
 		else
 			return ((Bool)obj).getValue() == this.getValue();
 	}
+
 }

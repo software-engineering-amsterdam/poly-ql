@@ -11,7 +11,7 @@ namespace QL.QLClasses.Values
             _value = value;
         }
         
-        public int GetValue()
+        public int Value()
         {
             return _value;
         }
@@ -20,22 +20,22 @@ namespace QL.QLClasses.Values
 
         public IntValue Add(IntValue secondValue)
         {
-            return new IntValue(_value + secondValue.GetValue());
+            return new IntValue(_value + secondValue.Value());
         }
 
         public IntValue Div(IntValue secondValue)
         {
-            return new IntValue(_value / secondValue.GetValue());
+            return new IntValue(_value / secondValue.Value());
         }
 
         public IntValue Sub(IntValue secondValue)
         {
-            return new IntValue(_value - secondValue.GetValue());
+            return new IntValue(_value - secondValue.Value());
         }
 
         public IntValue Mul(IntValue secondValue)
         {
-            return new IntValue(_value * secondValue.GetValue());
+            return new IntValue(_value * secondValue.Value());
         }
 
         #endregion
@@ -44,27 +44,27 @@ namespace QL.QLClasses.Values
 
         public BoolValue Equals(IntValue secondValue)
         {
-            return new BoolValue(_value == secondValue.GetValue());
+            return new BoolValue(_value == secondValue.Value());
         }
 
         public BoolValue GrTh(IntValue secondValue)
         {
-            return new BoolValue(_value > secondValue.GetValue());
+            return new BoolValue(_value > secondValue.Value());
         }
 
         public BoolValue GrThEq(IntValue secondValue)
         {
-            return new BoolValue(_value >= secondValue.GetValue());
+            return new BoolValue(_value >= secondValue.Value());
         }
 
         public BoolValue SmTh(IntValue secondValue)
         {
-            return new BoolValue(_value < secondValue.GetValue());
+            return new BoolValue(_value < secondValue.Value());
         }
 
         public BoolValue SmThEq(IntValue secondValue)
         {
-            return new BoolValue(_value <= secondValue.GetValue());
+            return new BoolValue(_value <= secondValue.Value());
         }
 
         #endregion

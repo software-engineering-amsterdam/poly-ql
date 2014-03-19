@@ -7,10 +7,8 @@ public class Identifier extends Expression {
 
 	private final String name;
 	
-	public Identifier(String name) {
-		
+	public Identifier(String name) {	
 		this.name = name;
-
 	}
 	
 	public String getName(){
@@ -25,6 +23,7 @@ public class Identifier extends Expression {
 		return visitor.visit(this);
 	}
 	
+	@Override
 	public Type typeOf(TypeEnvironment environment){
 		assert (environment.isDeclared(this));
 		return environment.ofType(this);

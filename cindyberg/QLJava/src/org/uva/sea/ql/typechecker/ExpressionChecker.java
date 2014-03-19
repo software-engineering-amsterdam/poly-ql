@@ -73,7 +73,7 @@ public class ExpressionChecker implements ExpressionVisitor<Boolean> {
 	
 	private boolean checkComparison(Type type, Expression left, Expression right){
 		if(!typeOf(left).isCompatibleWith(typeOf(right))){
-			problems.addError(new CompatibleError(left,right));
+			problems.addError(new CompatibleError(left,right,environment));
 			return false;
 		}
 

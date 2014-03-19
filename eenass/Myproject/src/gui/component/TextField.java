@@ -15,7 +15,7 @@ public class TextField extends Control implements KeyListener{
 
 	public TextField() {
 		super();
-		textField = new JTextField();
+		textField = new JTextField(15);
 		textField.addKeyListener(this);
 	}
 	
@@ -29,7 +29,7 @@ public class TextField extends Control implements KeyListener{
 		if(!textField.getText().equals("")){
 			return new Int(Integer.parseInt(textField.getText()));
 		}
-		return null;
+		return new Int(0);
 	}
 	
 	@Override
@@ -44,6 +44,7 @@ public class TextField extends Control implements KeyListener{
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {
+		
 	}
 
 }

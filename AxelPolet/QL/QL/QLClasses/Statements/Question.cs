@@ -1,6 +1,4 @@
 ﻿using QL.Interpreter;
-using QL.Interpreter.Controls;
-using QL.QLClasses.Expressions;
 using QL.QLClasses.Types;
 using QL.TypeChecker;
 
@@ -27,11 +25,11 @@ namespace QL.QLClasses.Statements
         {
             if (Memory.IsDeclared(Name))
             {
-                typeErrors.ReportError(new QLTypeError
-                {
-                    Message = string.Format("(Question) Identifier '{0}' is already defined!", Name),
-                    TokenInfo = TokenInfo
-                });
+                typeErrors.ReportError(new QLTypeError(
+                    string.Format("(Question) Identifier '{0}' is already defined!", Name),
+                    TokenInfo
+                ));
+
                 return false;
             }
 
@@ -39,12 +37,11 @@ namespace QL.QLClasses.Statements
 
             if (Memory.LabelIsDeclared(Label))
             {
-                typeErrors.ReportError(new QLTypeError
-                {
-                    IsWarning = true,
-                    Message = string.Format("(Question) Declared label already exists: '{0}'", Label),
-                    TokenInfo = TokenInfo
-                });
+                typeErrors.ReportError(new QLTypeError(
+                    string.Format("(Question) Declared label already exists: '{0}'", Label),
+                    TokenInfo,
+                    true
+                ));
             }
 
             Memory.DeclareLabel(Label);
@@ -56,7 +53,7 @@ namespace QL.QLClasses.Statements
 
         protected virtual void DeclareValue()
         {
-            Memory.DeclareValue(Name, new Undefined(Type).Evaluate());
+            Memory.DeclareValue(Name, Type.UndefinedValue());
         }
 
         #endregion

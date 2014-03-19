@@ -52,9 +52,9 @@ questionStmt returns [Question result]
 	  (LPARENS ( expr=expression {qExpression = $expr.result;} ) RPARENS)?	
 	{
 		if(qExpression == null)
-			$result = new Question(_qlMemory, $ID.text, $lbl.text, $t.result){ AntlrToken = $ID };
+			$result = new Question(_qlMemory, $ID.text, $lbl.text.Trim('\"'), $t.result){ AntlrToken = $ID };
 		else
-			$result = new ComputedQuestion(_qlMemory, $ID.text, $lbl.text, $t.result, qExpression){ AntlrToken = $ID };
+			$result = new ComputedQuestion(_qlMemory, $ID.text, $lbl.text.Trim('\"'), $t.result, qExpression){ AntlrToken = $ID };
 	}
 	;
 
@@ -91,7 +91,7 @@ expression returns [ExpressionBase result]
 literal returns [ExpressionBase result]
 	: LIT_BOOL															{$result = new BoolLiteral(bool.Parse($LIT_BOOL.text)){ AntlrToken=$LIT_BOOL };}
 	| LIT_INT 															{$result = new IntLiteral(int.Parse($LIT_INT.text)){ AntlrToken=$LIT_INT };}
-	| LIT_STRING														{$result = new StringLiteral($LIT_STRING.text){ AntlrToken=$LIT_STRING };}
+	| LIT_STRING														{$result = new StringLiteral($LIT_STRING.text.Trim('\"')){ AntlrToken=$LIT_STRING };}
 	| id = identifier													{$result = $id.result;}
 	;
 

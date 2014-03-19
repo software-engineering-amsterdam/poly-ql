@@ -10,8 +10,9 @@ import edu.uva.softwarecons.visitor.expression.IExpressionEvalVisitor;
 
 /**
  * Falconlabs
+ *
  * @author Santiago Carrillo
- * Date: 3/12/14
+ *         Date: 3/12/14
  */
 public class StringExpression
     implements Expression

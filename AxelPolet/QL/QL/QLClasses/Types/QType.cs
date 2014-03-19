@@ -1,8 +1,12 @@
-﻿namespace QL.QLClasses.Types
+﻿using QL.QLClasses.Values;
+
+namespace QL.QLClasses.Types
 {
     public abstract class QType : ASTBase
     {              
         public new abstract QType GetType();
+
+        public abstract QValue UndefinedValue();
 
         #region Double Dispatch Implementation
 

@@ -3,7 +3,8 @@ open System
 open System.Windows.Forms;
 open QL_Grammar
 open QL_Checker
-open QL_Interpreter
+open TypeCheckInfo
+open QL_GUI
 open QL_Csharp
 
 Application.EnableVisualStyles()
@@ -26,7 +27,7 @@ let buttonGenerate_Click _ _ = let lexbuf = Lexing.LexBuffer<_>.FromString mainF
                                    else // No parse/type errors:
                                         mainForm.SetOutputText(String.concat Environment.NewLine <| List.map fst checkInfo.WarningList)
                                         let qForm = new QuestionnaireForm(ast.ID)
-                                        qForm.AddControls(List.toArray <| QL_Interpreter.buildGUI ast)
+                                        qForm.AddControls(List.toArray <| QL_GUI.buildGUI ast)
                                         qForm.Show()
                                with err when isParsing ->   let message = err.Message
                                                             let s_pos = lexbuf.StartPos

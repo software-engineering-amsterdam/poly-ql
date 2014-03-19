@@ -11,7 +11,7 @@ import org.uva.sea.ql.evaluate.BooleanValue;
 import org.uva.sea.ql.evaluate.Value;
 import org.uva.sea.ql.gui.questionaire.State;
 
-public class BooleanWidget extends Control{
+public class BooleanWidget extends Widget{
 
 	private JCheckBox checkbox;
 	
@@ -19,7 +19,6 @@ public class BooleanWidget extends Control{
 		super(identifier, state);
 		checkbox = new JCheckBox();
 		checkbox.addItemListener(new ItemListener() {
-
             public void itemStateChanged(ItemEvent e) {
               stateChanged(e);
             }
@@ -38,12 +37,10 @@ public class BooleanWidget extends Control{
 		checkbox.setEnabled(isEnabled);
 	}
 
-
-
 	public void setValue(Value value) {
 		checkbox.setSelected(((BooleanValue)value).getValue());
 		setChanged();
-		getState().putVariable(getIdentifier(), value);
+		getState().addIdentifier(getIdentifier(), value);
 		getState().notify(getIdentifier());
 	}
 

@@ -1,5 +1,4 @@
-﻿using System;
-using QL.QLClasses.Values;
+﻿using QL.QLClasses.Values;
 
 namespace QL.QLClasses.Expressions.Binary.Math
 {

@@ -2,6 +2,7 @@ package edu.uva.softwarecons.ui;
 
 
 import edu.uva.softwarecons.checker.TypeChecker;
+import edu.uva.softwarecons.checker.warning.QuestionnaireWarning;
 import edu.uva.softwarecons.evaluator.ExpressionEvaluator;
 import edu.uva.softwarecons.evaluator.QuestionEvalVisitor;
 import edu.uva.softwarecons.grammar.QuestionnaireBuilderVisitor;
@@ -42,6 +43,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -56,8 +58,9 @@ import java.util.List;
 
 /**
  * Falconlabs
+ *
  * @author Santiago Carrillo
- * Date: 3/6/14
+ *         Date: 3/6/14
  */
 public class MainApplication
     extends Application
@@ -69,6 +72,8 @@ public class MainApplication
     private final VBox questionsVBox = new VBox();
 
     private final VBox mainVBox = new VBox();
+
+    private HBox infoHBox;
 
     private final ExpressionEvaluator expressionEvaluator = new ExpressionEvaluator();
 
@@ -151,28 +156,50 @@ public class MainApplication
         }
         else
         {
-            mainVBox.getChildren().add( new TitleHBox( form.getId(), "#336699", Color.WHITE ) );
             ScrollPane scrollPane = new ScrollPane();
             VBox.setVgrow( scrollPane, Priority.ALWAYS );
             scrollPane.setContent( questionsVBox );
-            HBox hBox = new HBox( 10 );
-            hBox.setPadding( new Insets( 12, 12, 12, 12 ) );
-            hBox.setAlignment( Pos.CENTER );
-            Button button = new Button( "Submit" );
-            button.setOnAction( new EventHandler<ActionEvent>()
-            {
-
-                @Override
-                public void handle( ActionEvent actionEvent )
-                {
-                    System.out.println( StringUtil.formToJson( form, questions ) );
-                }
-            } );
-            hBox.getChildren().add( button );
-            mainVBox.getChildren().addAll( scrollPane, hBox );
+            mainVBox.getChildren().add( new TitleHBox( form.getId(), "#336699", Color.WHITE ) );
+            mainVBox.getChildren().addAll( scrollPane, getSubmitFormPanel(), getWarningsPanel( typeChecker ) );
             addQuestions( form.getQuestions() );
             updateModel();
         }
+    }
+
+    private HBox getSubmitFormPanel()
+    {
+
+        HBox hBox = new HBox( 10 );
+        hBox.setPadding( new Insets( 12, 12, 12, 12 ) );
+        hBox.setAlignment( Pos.CENTER );
+        Button button = new Button( "Submit" );
+        button.setOnAction( new EventHandler<ActionEvent>()
+        {
+
+            @Override
+            public void handle( ActionEvent actionEvent )
+            {
+                System.out.println( StringUtil.formToJson( form, questions ) );
+            }
+        } );
+        hBox.getChildren().add( button );
+        return hBox;
+    }
+
+    private ScrollPane getWarningsPanel( TypeChecker typeChecker )
+    {
+        infoHBox = new HBox( 10 );
+        infoHBox.setPadding( new Insets( 12, 12, 12, 12 ) );
+        infoHBox.setAlignment( Pos.CENTER );
+        StringBuffer warnings = new StringBuffer();
+        for ( QuestionnaireWarning warning : typeChecker.getWarnings() )
+        {
+            warnings.append( warning.toString() ).append( "\n" );
+        }
+        infoHBox.getChildren().add( new Text( warnings.toString() ) );
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setContent( infoHBox );
+        return scrollPane;
     }
 
     private void addQuestions( List<Question> questions )
@@ -197,7 +224,7 @@ public class MainApplication
 
     private void updateIfQuestion( IfQuestion ifQuestion )
     {
-        boolean display = Boolean.valueOf( ifQuestion.getExpression().accept( expressionEvaluator ).getValue() );
+        boolean display = ( (BooleanValue) ifQuestion.getExpression().accept( expressionEvaluator ) ).getValue();
         ifQuestion.accept( new QuestionEvalVisitor( display, questions, expressionEvaluator ) );
     }
 

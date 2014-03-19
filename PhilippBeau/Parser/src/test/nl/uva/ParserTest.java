@@ -1,17 +1,16 @@
 package test.nl.uva;
 
 import java.io.IOException;
-import java.util.List;
 
-import junit.framework.Assert;
 import main.nl.uva.g4.FormGrammarLexer;
 import main.nl.uva.g4.FormGrammarParser;
-import main.nl.uva.parser.elements.statements.ParserForm;
-import main.nl.uva.parser.elements.validation.ASTValidation;
-import main.nl.uva.parser.elements.validation.Scope;
+import main.nl.uva.parser.Form;
+import main.nl.uva.validation.ASTValidation;
+import main.nl.uva.validation.Scope;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -45,13 +44,11 @@ public class ParserTest {
         // create a parser that feeds off the tokens buffer
         FormGrammarParser parser = new FormGrammarParser(tokens);
 
-        List<ParserForm> pf = parser.forms().data;
+        Form pf = parser.form().parsedForm;
 
-        for (ParserForm f : pf) {
+        ASTValidation validation = pf.validate(new Scope());
+        validation.printErrors();
+        Assert.assertFalse(validation.hasErrors());
 
-            ASTValidation validation = f.validate(new Scope());
-            validation.printErrors();
-            Assert.assertFalse(validation.hasErrors());
-        }
     }
 }

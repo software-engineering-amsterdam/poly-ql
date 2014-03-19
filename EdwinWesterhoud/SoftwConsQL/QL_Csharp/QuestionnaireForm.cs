@@ -7,6 +7,7 @@ namespace QL_Csharp
         public QuestionnaireForm(string formName)
         {
             InitializeComponent();
+            AutoValidate = AutoValidate.EnableAllowFocusChange;
             Text = formName;
         }
 

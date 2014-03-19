@@ -10,7 +10,4 @@ public class UndefinedValue extends Value {
 	public Object getValue() {
 		return null;
 	}
-	
-	
-
 }

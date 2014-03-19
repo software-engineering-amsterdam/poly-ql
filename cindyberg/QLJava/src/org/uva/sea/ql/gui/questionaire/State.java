@@ -22,11 +22,11 @@ public class State {
 		observables.get(identifier).addObserver(observer);	
 	}
 	
-	public void putVariable(Identifier identifier, Value value){
+	public void addIdentifier(Identifier identifier, Value value){
 		environment.addIdentifier(identifier, value);
 	}
 
-	public void putObservable(Identifier identifier, Observable observable) {
+	public void addObservable(Identifier identifier, Observable observable) {
 		observables.put(identifier, observable);		
 	}
 
@@ -45,6 +45,5 @@ public class State {
 		for(Identifier id : observables.keySet()) {
 			addObserver(id, observer);
 		}
-		
 	}
 }

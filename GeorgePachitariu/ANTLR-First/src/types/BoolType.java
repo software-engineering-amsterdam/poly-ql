@@ -29,6 +29,11 @@ public class BoolType implements Type {
 	public boolean isCompatibleWithMoney() {
 		return false;
 	}
+	
+	@Override
+	public boolean isCompatibleWithString() {
+		return false;
+	}
 
 	@Override
 	public boolean isCompatibleWith(Type t) {

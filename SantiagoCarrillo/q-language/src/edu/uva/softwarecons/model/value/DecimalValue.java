@@ -2,8 +2,9 @@ package edu.uva.softwarecons.model.value;
 
 /**
  * Falconlabs
+ *
  * @author Santiago Carrillo
- * Date: 3/13/14
+ *         Date: 3/13/14
  */
 public class DecimalValue
     implements ArithmeticValue
@@ -17,62 +18,68 @@ public class DecimalValue
     }
 
     @Override
-    public String getValue()
+    public Float getValue()
     {
-        return String.valueOf( value );
+        return value;
     }
 
     @Override
     public boolean equals( Object obj )
     {
-        return value == Float.parseFloat( ( (DecimalValue) obj ).getValue() );
+        return value == ( (DecimalValue) obj ).getValue();
     }
 
     @Override
     public Value add( Value value )
     {
-        return new DecimalValue( this.value + Float.parseFloat( value.getValue() ) );
+        return new DecimalValue( this.value + ( (DecimalValue) value ).getValue() );
     }
 
     @Override
     public Value subtract( Value value )
     {
-        return new DecimalValue( this.value - Float.parseFloat( value.getValue() ) );
+        return new DecimalValue( this.value - ( (DecimalValue) value ).getValue() );
     }
 
     @Override
     public Value divide( Value value )
     {
-        return new DecimalValue( this.value / Float.parseFloat( value.getValue() ) );
+        return new DecimalValue( this.value / ( (DecimalValue) value ).getValue() );
     }
 
     @Override
     public Value multiply( Value value )
     {
-        return new DecimalValue( this.value * Float.parseFloat( value.getValue() ) );
+        return new DecimalValue( this.value * ( (DecimalValue) value ).getValue() );
     }
 
     @Override
     public boolean greater( Value value )
     {
-        return this.value > Float.parseFloat( value.getValue() );
+        return this.value > ( (DecimalValue) value ).getValue();
     }
 
     @Override
     public boolean greaterEqual( Value value )
     {
-        return this.value >= Float.parseFloat( value.getValue() );
+        return this.value >= ( (DecimalValue) value ).getValue();
     }
 
     @Override
     public boolean less( Value value )
     {
-        return this.value < Float.parseFloat( value.getValue() );
+        return this.value < ( (DecimalValue) value ).getValue();
     }
 
     @Override
     public boolean lessEqual( Value value )
     {
-        return this.value <= Float.parseFloat( value.getValue() );
+        return this.value <= ( (DecimalValue) value ).getValue();
+    }
+
+    @Override
+    public String toString()
+    {
+        return String.valueOf( value );
     }
 }

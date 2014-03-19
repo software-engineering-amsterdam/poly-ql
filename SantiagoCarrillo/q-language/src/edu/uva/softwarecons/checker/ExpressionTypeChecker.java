@@ -29,8 +29,9 @@ import java.util.Map;
 
 /**
  * Falconlabs
+ *
  * @author Santiago Carrillo
- * Date: 3/3/14
+ *         Date: 3/3/14
  */
 
 //TODO Propagate types upward by returning the Type and check at operations Type.isInteger()

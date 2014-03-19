@@ -6,7 +6,6 @@ import org.uva.sea.ql.ast.operators.comparison.*;
 import org.uva.sea.ql.ast.operators.logical.*;
 
 public interface ExpressionVisitor<T>{
-
 	
 	T visit(Add add);
 	T visit(Sub sub);

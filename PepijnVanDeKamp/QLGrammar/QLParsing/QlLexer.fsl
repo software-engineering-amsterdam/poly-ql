@@ -15,6 +15,7 @@ let keywords =
         "true", BOOL_TRUE;
         "false", BOOL_FALSE;
         "if", IF;
+        "else", ELSE;
     ] |> Map.ofList   
  
 let ops =   
@@ -50,7 +51,7 @@ let float       = '-'?digit+ '.' digit+
 let identifier  = char(char|digit|['-' '_' '.'])*   
 let symbol      = '{' | '}' | ':' | '(' | ')' | '+' | '-' | '/' | '*' | "==" | "!=" | '!' | '<' | '>' | "<=" | ">="
 let whitespace  = [' ' '\t']   
-let newline     = "\n\r" | '\n' | '\r'  
+let newline     = "\r\n" | "\n\r" | '\n' | '\r'  
  
 rule tokenize = parse   
 | whitespace    { tokenize lexbuf }   

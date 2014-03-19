@@ -2,8 +2,9 @@ package edu.uva.softwarecons.model.type;
 
 /**
  * Falconlabs
+ *
  * @author Santiago Carrillo
- * Date: 2/27/14
+ *         Date: 2/27/14
  */
 public abstract class NumericType
     implements Type

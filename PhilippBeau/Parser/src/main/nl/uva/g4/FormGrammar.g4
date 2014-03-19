@@ -1,79 +1,118 @@
 grammar FormGrammar; 
 
-@header{
-	import main.nl.uva.parser.elements.expressions.*;
-	import main.nl.uva.parser.elements.statements.*;
-	import main.nl.uva.parser.elements.expressions.*;
-	import main.nl.uva.parser.elements.expressions.atoms.*;
-	import main.nl.uva.parser.elements.type.*;
+@header {
+	import main.nl.uva.parser.expression.*;
+	import main.nl.uva.parser.statement.*;
+	import main.nl.uva.parser.expression.*;
+	import main.nl.uva.parser.expression.atom.*;
+	import main.nl.uva.validation.type.*;
+	import main.nl.uva.parser.*;
 }
 
-forms returns [List<ParserForm> data] 
-@init {$data = new ArrayList<ParserForm>();}
-	:(f=form {$data.add($f.f);})+ EOF  
+form returns [Form parsedForm]
+	: 'form' id=ID children=block {$parsedForm= new Form($id.text, $children.data, new Line($id));} EOF
 	;
 
-form returns [ParserForm f]
-	: 'form' id=ID children=block {$f = new ParserForm($id.text, $children.data);}  
-	;
-
-//Adds all subelements inside the block to the parent statement
 block returns [List<Statement> data]
 @init {$data = new ArrayList<Statement>();}
 	: (LINEEND)*? '{' LINEEND (child=statement { $data.add($child.current);})* '}' (LINEEND)*?;
 
 statement returns [Statement current]
-	: ID ':' STRING sType=simpleType 
-	{$current = new DeclarationStatement(new Variable($sType.type, $ID.text), $STRING.text);}
+	: ID ':' sLit=stringLiteral sType=simpleType 
+	{$current = new Declaration(new Variable($sType.type, $ID.text, new Line($ID)), $sLit.string);}
 	LINEEND 
 	
-    | ID ':' STRING sType=simpleType '(' ex=expression')'  	
-    { $current = new DeclarationStatement(new Variable($sType.type, $ID.text, $ex.cEx), $STRING.text);} 
+    | ID ':' sLit=stringLiteral sType=simpleType '(' ex=expression')'  	
+    { $current = new FixedDeclaration(new Variable($sType.type, $ID.text, $ex.cEx, new Line($ID)), $sLit.string);} 
     LINEEND
     
-    | 'if' '(' ex=expression ')' ifBlock=block 
-    {$current = new IFStatement($ex.cEx, $ifBlock.data);} 				
+    | ifToken='if' '(' ex=expression ')' ifBlock=block 
+    {$current = new IfThen($ex.cEx, $ifBlock.data, new Line($ifToken));} 				
     
-    | 'if' '(' ex=expression ')' ifBlock=block 'else' elseBlock=block
-    { $current = new IfElseStatement(new IFStatement($ex.cEx, $ifBlock.data), new IFStatement(new NotExpression($ex.cEx), $elseBlock.data));} 
+    | ifToken='if' '(' ex=expression ')' ifBlock=block elseToken='else' elseBlock=block
+    { $current = new IfThenElse($ex.cEx, $ifBlock.data, $elseBlock.data, new Line($ifToken));} 
     ;
 
 expression returns [Expression cEx]
-	: left=equalsExp {$cEx = $left.cEx;} 
+	: left=orExp {$cEx = $left.cEx;} 
 	;
 
-equalsExp returns [Expression cEx]
-	: left=boolExp {$cEx = $left.cEx;} 
-  (EQUAL right=boolExp {$cEx = new ComparrisonExpression($left.cEx, $right.cEx);})*
+orExp returns [Expression cEx]
+	: left=andExp {$cEx = $left.cEx;} 
+  (
+  	 OR right=andExp {$cEx = new Or($cEx, $right.cEx, new Line($OR));}
+  )*
+	;
+	
+andExp returns [Expression cEx]
+	: left=equalExp {$cEx = $left.cEx;} 
+  (
+  	 AND right=equalExp {$cEx = new And($cEx, $right.cEx, new Line($AND));}
+  )*
+	;
+	
+equalExp returns [Expression cEx]
+	: left=differenceExp {$cEx = $left.cEx;} 
+  (
+	EQUAL right=differenceExp {$cEx = new Equal($cEx, $right.cEx, new Line($EQUAL));}
+  	| NOT_EQUAL right=differenceExp {$cEx = new UnEqual($cEx, $right.cEx, new Line($EQUAL));}
+  )*
 	;
 
-boolExp returns [Expression cEx]
+differenceExp returns [Expression cEx]
 	: left=addExp {$cEx = $left.cEx;} 
-  (AND right=addExp {$cEx = new AndExpression($left.cEx, $right.cEx);} | OR right=addExp {$cEx = new OrExpression($left.cEx, $right.cEx);})*
+  (
+	LOWER_THAN right=addExp {$cEx = new LowerThan($cEx, $right.cEx, new Line($LOWER_THAN));}
+  	| GRATER_THAN right=addExp {$cEx = new GraterThan($cEx, $right.cEx, new Line($GRATER_THAN));}
+  	| LOWER_EQUAL_THAN right=addExp {$cEx = new LowerEqualThan($cEx, $right.cEx, new Line($LOWER_EQUAL_THAN));}
+  	| GRATER_EQUAL_THAN right=addExp {$cEx = new GraterEqualThan($cEx, $right.cEx, new Line($GRATER_EQUAL_THAN));}
+  )*
 	;
 
 addExp returns [Expression cEx]
   : left=multExp {$cEx = $left.cEx;} 
-  (ADD right=multExp {$cEx = new AdditionExpression($left.cEx, $right.cEx);} | SUB right=multExp {$cEx = new SubstractionExpression($left.cEx, $right.cEx);})*
+  (
+	ADD right=multExp {$cEx = new Addition($cEx, $right.cEx, new Line($ADD));} 
+  	| SUB right=multExp {$cEx = new Substraction($cEx, $right.cEx, new Line($SUB));}
+  )*
   ;
 
 multExp returns [Expression cEx]
-  : left=atom {$cEx = $left.cEx;} 
-  (MUL right=atom {$cEx = new MultiplicationExpression($left.cEx, $right.cEx);} | DIV right=atom {$cEx = new MultiplicationExpression($left.cEx, $right.cEx);})*
+  : left=prefix {$cEx = $left.cEx;} 
+  ( 
+	MUL right=prefix {$cEx = new Multiplication($cEx, $right.cEx, new Line($MUL));} 
+  	| DIV right=prefix {$cEx = new Division($cEx, $right.cEx, new Line($DIV));}
+  )*
   ;
 
-atom returns [Expression cEx]
-	: ID {$cEx = new VariableAtom($ID.text);}
-	| nL=numLiteral {$cEx = new MoneyAtom($nL.text);}
-	| bL=boolLiteral {$cEx = new BoolAtom($bL.text);}
-	| '(' bE=boolExp ')' {$cEx = $bE.cEx;}
-	| '!' bE=boolExp {$cEx = new NotExpression($bE.cEx);}
+prefix returns [Expression cEx]
+	: bE=atom {$cEx = $bE.cEx;}
+	| token='!' bEN=prefix {$cEx = new Not($bEN.cEx, new Line($token));}
+	| token='-' bEM=prefix {$cEx = new Minus($bEM.cEx, new Line($token));}
+	;
+	
+notPrefix returns [Expression cEx]
+	: bE=atom {$cEx = $bE.cEx;}
+	| token='!' bEA=notPrefix {$cEx = new Not($bEA.cEx, new Line($token));}
 	;
 
-simpleType returns [Value type]
-	: BOOLEAN {$type = new Bool();}
-    | MONEY {$type = new Money();}
-    | TEXT {$type = new Text();}
+minusPrefix returns [Expression cEx]
+	: bE=atom {$cEx = $bE.cEx;}
+	| token='-' bEM=minusPrefix {$cEx = new Minus($bEM.cEx, new Line($token));}
+	;
+
+atom returns [Expression cEx]
+	: ID {$cEx = new VariableAtom($ID.text, new Line($ID)); }
+	| nL=numLiteral {$cEx = new MoneyAtom($nL.text, new Line($nL.start));}
+	| bL=boolLiteral {$cEx = new BoolAtom($bL.text, new Line($bL.start));}
+	| tL=stringLiteral {$cEx = new TextAtom($tL.string, new Line($tL.start));}
+	| '(' bE=expression ')' {$cEx = $bE.cEx;}
+	;
+
+simpleType returns [Value.Type type]
+	: BOOLEAN {$type = Value.Type.BOOLEAN;}
+    | MONEY {$type = Value.Type.MONEY;}
+    | TEXT {$type = Value.Type.TEXT;}
     ;
 
 boolLiteral
@@ -85,7 +124,11 @@ numLiteral
 	: INTEGER
     | DOUBLE
     ;
-          
+      
+stringLiteral returns [String string]
+	: STRING {$string = new String($STRING.text.substring(1, $STRING.text.length()-1));}
+	;
+
 /** Primitives */
 INTEGER: [0-9]+;
 DOUBLE :  INTEGER '.' INTEGER;

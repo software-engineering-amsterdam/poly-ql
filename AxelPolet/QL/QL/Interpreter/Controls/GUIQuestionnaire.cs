@@ -1,35 +1,26 @@
 ﻿using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace QL.Interpreter.Controls
 {
     public class GUIQuestionnaire : StackPanel
     {
-        private readonly List<GUIQuestion> _questions;
-
         public GUIQuestionnaire()
         {
-            _questions = new List<GUIQuestion>();
-            Width = 500;
+            Width = 700;
+            Margin = new Thickness(0, 20, 0, 20);
         }
 
         public void AddQuestion(GUIQuestion guiQuestion)
         {
-            _questions.Add(guiQuestion);
-        }
-
-        public void Render()
-        {
-            foreach (GUIQuestion guiQuestion in _questions)
-            {
-                guiQuestion.Render();
-                Children.Add(guiQuestion);
-            }
+            Children.Add(guiQuestion);
+            guiQuestion.Render();
         }
 
         public void Refresh()
         {
-            foreach (GUIQuestion guiQuestion in _questions)
+            foreach (GUIQuestion guiQuestion in Children)
             {
                 guiQuestion.Refresh();
                 guiQuestion.Render();

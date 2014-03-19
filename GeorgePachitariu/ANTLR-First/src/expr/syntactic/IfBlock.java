@@ -1,7 +1,9 @@
 package expr.syntactic;
 
+import java.util.LinkedList;
 import java.util.List;
 
+import expr.ASTNode;
 import expr.Expression;
 import visitor.ASTVisitor;
 import visitor.IdentifiersTypeMatcher;
@@ -47,5 +49,13 @@ public class IfBlock extends Statement {
 
 	public Expression getCondition() {
 		return this.condition;
+	}
+
+	@Override
+	public ASTNode ReplaceQuestionValue(Question q) {
+		List<Statement> list=new LinkedList<>();
+		for(Statement s : this.thenStatements)
+			list.add((Statement)s.ReplaceQuestionValue(q));
+		return new IfBlock(this.condition,list);
 	}
 }

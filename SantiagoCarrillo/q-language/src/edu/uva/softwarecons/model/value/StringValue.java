@@ -2,8 +2,9 @@ package edu.uva.softwarecons.model.value;
 
 /**
  * Falconlabs
+ *
  * @author Santiago Carrillo
- * Date: 3/13/14
+ *         Date: 3/13/14
  */
 public class StringValue
     implements Value
@@ -18,6 +19,12 @@ public class StringValue
 
     @Override
     public String getValue()
+    {
+        return value;
+    }
+
+    @Override
+    public String toString()
     {
         return value;
     }

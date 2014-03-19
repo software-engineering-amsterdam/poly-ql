@@ -19,11 +19,11 @@ namespace QL.QLClasses.Expressions.Unary
         {
             if (!(InnerExpression.GetResultType().IsCompatibleWith(new QInt())))
             {
-                typeErrors.ReportError(new QLTypeError()
-                {
-                    Message = string.Format( "The POSITIVE (+) operator can only be applied on integers! Got QType '{0}', with valuetype '{1}'",
-                            InnerExpression, InnerExpression.GetType()), TokenInfo = InnerExpression.TokenInfo
-                });
+                typeErrors.ReportError(new QLTypeError(
+                    string.Format("The POSITIVE (+) operator can only be applied on integers! Got '{0}'",
+                            InnerExpression.GetResultType()), 
+                    TokenInfo = InnerExpression.TokenInfo
+                ));
 
                 return false;
             }

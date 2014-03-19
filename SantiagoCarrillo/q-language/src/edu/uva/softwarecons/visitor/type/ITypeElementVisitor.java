@@ -9,8 +9,9 @@ import edu.uva.softwarecons.model.type.StringType;
 
 /**
  * Falconlabs
+ *
  * @author Santiago Carrillo
- * Date: 3/5/14
+ *         Date: 3/5/14
  */
 public interface ITypeElementVisitor
 {

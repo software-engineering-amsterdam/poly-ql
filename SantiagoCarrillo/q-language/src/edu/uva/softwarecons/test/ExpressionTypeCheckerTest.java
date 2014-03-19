@@ -30,12 +30,14 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
  * Falconlabs
+ *
  * @author Santiago Carrillo
- * Date: 2/13/14
+ *         Date: 2/13/14
  */
 
 public class ExpressionTypeCheckerTest
@@ -145,31 +147,36 @@ public class ExpressionTypeCheckerTest
     @Test
     public void IdExpressionInvalidTypesErrorTest()
     {
-        assertTrue( hasIdExpressionInvalidBooleanType( new DateType() ) );
-        assertTrue( hasIdExpressionInvalidBooleanType( new DecimalType() ) );
-        assertTrue( hasIdExpressionInvalidBooleanType( new IntegerType() ) );
-        assertTrue( hasIdExpressionInvalidBooleanType( new MoneyType() ) );
-        assertTrue( hasIdExpressionInvalidBooleanType( new StringType() ) );
+        assertTrue( areIdTypesValidForBinaryExpression( new DateType(), new BooleanType() ) );
+        assertTrue( areIdTypesValidForBinaryExpression( new DecimalType(), new BooleanType() ) );
+        assertTrue( areIdTypesValidForBinaryExpression( new IntegerType(), new BooleanType() ) );
+        assertTrue( areIdTypesValidForBinaryExpression( new MoneyType(), new BooleanType() ) );
+        assertTrue( areIdTypesValidForBinaryExpression( new StringType(), new BooleanType() ) );
     }
 
     @Test
     public void IdExpressionValidTypeErrorTest()
     {
-        assertTrue( !hasIdExpressionInvalidBooleanType( new BooleanType() ) );
+        assertFalse( areIdTypesValidForBinaryExpression( new BooleanType(), new BooleanType() ) );
     }
 
-    private boolean hasIdExpressionInvalidBooleanType( Type type )
+    private boolean areIdTypesValidForBinaryExpression( Type leftType, Type rightType )
     {
         Map<String, Type> types = new HashMap<String, Type>();
-        String conditionId = "testQuestion";
-        types.put( conditionId, type );
-        IdExpression idExpression = new IdExpression( conditionId );
-        return expressionContainsTypeError( idExpression, types );
+        String leftQuestionId = "leftQuestionId";
+        types.put( leftQuestionId, leftType );
+        String rightQuestionId = "rightQuestionId";
+        types.put( rightQuestionId, rightType );
+        IdExpression idExpression1 = new IdExpression( leftQuestionId );
+        IdExpression idExpression2 = new IdExpression( rightQuestionId );
+         AndExpression andExpression = new AndExpression( idExpression1, idExpression2 );
+        return expressionContainsTypeError( andExpression, types );
     }
 
-    private boolean expressionContainsTypeError( Expression expression, Map<String, Type> types )
+
+    private boolean expressionContainsTypeError( Expression expression, Map<String, Type> questionsTypes )
     {
-        ExpressionTypeChecker expressionTypeChecker = new ExpressionTypeChecker( types );
+        ExpressionTypeChecker expressionTypeChecker = new ExpressionTypeChecker( questionsTypes );
         expressionTypeChecker.validateType( "", expression );
         return !expressionTypeChecker.getErrors().isEmpty();
     }

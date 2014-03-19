@@ -9,8 +9,7 @@ public class StartScreen {
 	private JPanel mainpanel;
 	
 	public StartScreen(){
-		this.frame =  new JFrame("Questionaire IDE");
-	   // frame.setSize(700, 500); 
+		this.frame =  new JFrame("Questionaire IDE"); 
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
