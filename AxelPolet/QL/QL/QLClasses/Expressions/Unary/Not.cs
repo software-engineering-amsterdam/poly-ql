@@ -1,16 +1,30 @@
-﻿using QL.QLClasses.Types;
+﻿using System;
+using QL.QLClasses.Types;
+using QL.QLClasses.Values;
 using QL.TypeChecker;
 
 namespace QL.QLClasses.Expressions.Unary
 {
     public class Not : UnaryExpression
     {
-        public override bool CheckType(ref QLException error)
+        public Not(ExpressionBase innerExpression) : base(innerExpression)
         {
-            if (!(InnerValue.GetResultType() is QBool))
+        }
+
+        public override QValue Evaluate()
+        {
+            return new BoolValue(!((BoolValue)InnerExpression.Evaluate()).Value());
+        }
+
+        public override bool CheckType(QLTypeErrors typeErrors)
+        {
+            if (!(InnerExpression.GetResultType().IsCompatibleWith(new QBool())))
             {
-                error.Message = string.Format("The NOT (!) operator can only be applied on booleans! Got QType '{0}', with valuetype '{1}'", InnerValue, InnerValue.GetType());
-                error.TokenInfo = InnerValue.TokenInfo;
+                typeErrors.ReportError(new QLTypeError(
+                    string.Format("The NOT (!) operator can only be applied on booleans! Got '{0}'",
+                            InnerExpression.GetResultType()),
+                    InnerExpression.TokenInfo
+                ));
 
                 return false;
             }

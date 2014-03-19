@@ -1,42 +1,49 @@
 package edu.uva.softwarecons.model;
 
 import edu.uva.softwarecons.model.question.Question;
-import edu.uva.softwarecons.visitor.IFormElement;
-import edu.uva.softwarecons.visitor.IFormElementVisitor;
+import edu.uva.softwarecons.visitor.form.IFormElement;
+import edu.uva.softwarecons.visitor.form.IFormElementVisitor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Falconlabs
- * User: sancarbar
+ * @author Santiago Carrillo
  * Date: 2/25/14
  */
-public class Form implements IFormElement {
+public class Form
+    implements IFormElement
+{
 
-    String id;
+    private final String id;
 
-    List<Question> questions = new ArrayList<Question>();
+    private final List<Question> questions;
 
-
-    public Form(String id) {
+    public Form( String id, List<Question> questions )
+    {
         this.id = id;
+        this.questions = questions;
     }
 
-    public void addQuestion(Question question){
-            questions.add(question);
-    }
-
-    @Override
-    public void accept(IFormElementVisitor visitor) {
-        visitor.visit(this);
-    }
-
-    public String getId() {
+    public String getId()
+    {
         return id;
     }
 
-    public List<Question> getQuestions() {
+    public List<Question> getQuestions()
+    {
         return questions;
+    }
+
+    @Override
+    public void accept( IFormElementVisitor visitor )
+    {
+        visitor.visitForm( this );
+    }
+
+    @Override
+    public boolean equals( Object obj )
+    {
+        return obj instanceof Form;
     }
 }

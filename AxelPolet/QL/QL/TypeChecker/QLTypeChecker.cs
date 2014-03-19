@@ -1,54 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using QL.Interfaces;
+﻿using System.Collections.Generic;
 using QL.QLClasses;
 
 namespace QL.TypeChecker
 {
     public class QLTypeChecker
     {
-        public delegate void ErrorHandler(string message);
-        public ErrorHandler OnError { get; set; }
+        public QLTypeErrors TypeErrors { get; private set; }
 
-        private static List<QLException> additionalErrors = new List<QLException>();
-
-        public static void SaveQLError(QLException ex)
-        {
-            additionalErrors.Add(ex);
-        }
-
-        public static void ClearAdditionalErrors()
-        {
-            additionalErrors.Clear();
-        }
-
-        private QLException _qlException;
-        
         public QLTypeChecker()
         {
-            _qlException = new QLException();
+            TypeErrors = new QLTypeErrors();
         }
 
-        public void Check(Questionnaire AST)
+        public void Run(Questionnaire AST)
         {
-            foreach (ITypeChecker typeChecker in AST.Body)
-            {
-                if (!typeChecker.CheckType(ref _qlException))
-                    SaveQLError(_qlException);
-            }
-
-            foreach (QLException additionalError in additionalErrors)
-            {
-                HandleError(additionalError);
-            }
+            AST.CheckType(TypeErrors);
         }
+    }
 
-        private void HandleError(QLException error)
+    public class QLTypeErrors : List<QLTypeError>
+    {
+        public void ReportError(QLTypeError typeError)
         {
-            OnError(string.Format("QLTypeChecker: {0} {1}"  +
-                            "<At token '{2}' on line {3}, column {4}>{5}", 
-                            error.Message, Environment.NewLine, 
-                            error.TokenInfo.TokenText, error.TokenInfo.TokenLine, error.TokenInfo.TokenText, Environment.NewLine));
+            Add(typeError);
+        }
+    }
+
+    public class QLTypeError
+    {
+        public QLTokenInfo TokenInfo { get; private set; }
+        public string Message { get; private set; }
+        public bool IsWarning { get; private set; }
+
+        public QLTypeError(string message, QLTokenInfo tokenInfo, bool isWarning = false)
+        {
+            TokenInfo = tokenInfo;
+            Message = message;
+            IsWarning = isWarning;
         }
     }
 }

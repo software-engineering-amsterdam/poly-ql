@@ -19,6 +19,7 @@ import ql.ast.operator.OperatorNeq;
 import ql.ast.operator.OperatorOr;
 import ql.ast.operator.OperatorSub;
 import ql.ast.statement.StatementAssignment;
+import ql.ast.statement.StatementExpressionAssignment;
 import ql.ast.statement.StatementIf;
 
 /**
@@ -26,7 +27,7 @@ import ql.ast.statement.StatementIf;
  */
 public interface ElementInterfaceVisitor {
 	/* Questionnares */
-	public void visit(Questionnare questionnare);
+	public void visit(Form form);
 
 	/* Expressions */
 	public void visit(ExpressionParentheses expressionParentheses);
@@ -49,10 +50,13 @@ public interface ElementInterfaceVisitor {
 
 	/* Statements */
 	public void visit(StatementAssignment statementAssignment);
+	public void visit(StatementExpressionAssignment statementExpressionAssignment);	
 	public void visit(StatementIf statementIf);
 
 	/* Literals */
 	public void visit(LiteralBool literalBool);
 	public void visit(LiteralString literalString);
 	public void visit(LiteralInt literalInt);
+
+	
 }

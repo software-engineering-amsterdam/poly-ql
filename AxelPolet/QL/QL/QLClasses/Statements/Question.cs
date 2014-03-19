@@ -1,5 +1,4 @@
-﻿using QL.QLClasses.Expressions;
-using QL.QLClasses.Expressions.Identifier;
+﻿using QL.Interpreter;
 using QL.QLClasses.Types;
 using QL.TypeChecker;
 
@@ -7,47 +6,65 @@ namespace QL.QLClasses.Statements
 {
     public class Question : StatementBase
     {
-        public QIdentifier Name { get; set; }
-        public string Label { get; set; }
-        public QBaseType Type { get; set; }
-        public ExpressionBase Value { get; set; }
+        protected string Name;
+        protected string Label;
+        protected QType Type;
+        protected QLMemory Memory;
 
-        public Question(QIdentifier identifier, string label, QBaseType type, ExpressionBase expression = null)
+        public Question(QLMemory memory, string name, string label, QType type)
         {
+            Memory = memory;
+            Name = name;
             Label = label;
             Type = type;
-            Value = expression;
-
-            Name = identifier;
-            Name.Referenced = false;
-            Name.InnerType = type;
-
-            if (expression != null)
-                Name.InnerValue = expression;
-
-            Name.DeclareSelf();
         }
 
-        public override bool CheckType(ref QLException error)
+        #region TypeChecker Implementation
+
+        public override bool CheckType(QLTypeErrors typeErrors)
         {
-            if (!Name.CheckType(ref error))
-                return false;
-
-            if (Value != null)
+            if (Memory.IsDeclared(Name))
             {
-                if (!Value.CheckType(ref error))
-                    return false;
+                typeErrors.ReportError(new QLTypeError(
+                    string.Format("(Question) Identifier '{0}' is already defined!", Name),
+                    TokenInfo
+                ));
 
-                if (!Type.GetType().IsCompatibleWith(Value.GetResultType()))
-                {
-                    error.Message = string.Format("(Question) Assigned value does not match declared type. Type: '{0}' ValueType: '{1}'", Type.GetType(), Value.GetType());
-                    error.TokenInfo = Name.TokenInfo;
-
-                    return false;
-                }
+                return false;
             }
+
+            Memory.Declare(Name, Type);
+
+            if (Memory.LabelIsDeclared(Label))
+            {
+                typeErrors.ReportError(new QLTypeError(
+                    string.Format("(Question) Declared label already exists: '{0}'", Label),
+                    TokenInfo,
+                    true
+                ));
+            }
+
+            Memory.DeclareLabel(Label);
+
+            DeclareValue();
             
             return true;
         }
+
+        protected virtual void DeclareValue()
+        {
+            Memory.DeclareValue(Name, Type.UndefinedValue());
+        }
+
+        #endregion
+
+        #region Builder Implementation
+
+        public override void Build(QLGuiBuilder guiBuilder)
+        {
+            guiBuilder.BuildQuestion(Memory, Name, Label);
+        }
+
+        #endregion
     }
 }

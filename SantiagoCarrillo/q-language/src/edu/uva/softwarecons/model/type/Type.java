@@ -1,15 +1,14 @@
 package edu.uva.softwarecons.model.type;
 
-import edu.uva.softwarecons.grammar.QuestionnaireLexer;
+import edu.uva.softwarecons.visitor.type.ITypeElement;
 
 /**
  * Falconlabs
- * User: sancarbar
+ * @author Santiago Carrillo
  * Date: 2/19/14
  */
-public abstract class Type {
-
-
-    public abstract Object getValue();
+public interface Type
+    extends ITypeElement
+{
 
 }

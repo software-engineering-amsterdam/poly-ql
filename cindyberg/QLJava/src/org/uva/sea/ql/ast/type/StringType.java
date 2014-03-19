@@ -1,6 +1,7 @@
 package org.uva.sea.ql.ast.type;
 
 import org.uva.sea.ql.ast.IVisitor;
+import org.uva.sea.ql.ast.TypeVisitor;
 
 
 public class StringType extends Type{
@@ -10,7 +11,7 @@ public class StringType extends Type{
 		
 	}
 	
-	public String show(){
+	public String toString(){
 		return "string";
 	}
 	
@@ -20,6 +21,11 @@ public class StringType extends Type{
 	
 	public boolean isCompatibleWithString(){
 		return true;
+	}
+
+	@Override
+	public <T> T accept(TypeVisitor<T> visitor) {
+		return visitor.visit(this);
 	}
 	
 

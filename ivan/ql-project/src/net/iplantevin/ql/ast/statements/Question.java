@@ -1,20 +1,19 @@
 package net.iplantevin.ql.ast.statements;
 
+import net.iplantevin.ql.ast.LineInfo;
 import net.iplantevin.ql.ast.expressions.literals.ID;
 import net.iplantevin.ql.ast.expressions.literals.Str;
 import net.iplantevin.ql.ast.types.Type;
-import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
-import org.antlr.v4.runtime.ParserRuleContext;
+import net.iplantevin.ql.ast.visitors.IStatementVisitor;
 
 /**
- * Created with IntelliJ IDEA.
+ * Regular questionnaire question.
  *
  * @author Ivan
- *         Regular questionnaire question.
  */
 public class Question extends Questionable {
-    public Question(ID name, Str label, Type type, ParserRuleContext ctx) {
-        super(name, label, type, ctx);
+    public Question(ID name, Str label, Type type, LineInfo lineInfo) {
+        super(name, label, type, lineInfo);
     }
 
     @Override
@@ -23,7 +22,7 @@ public class Question extends Questionable {
     }
 
     @Override
-    public void accept(IQLASTVisitor visitor) {
-        visitor.visit(this);
+    public <T> T accept(IStatementVisitor<T> visitor) {
+        return visitor.visit(this);
     }
 }

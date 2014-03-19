@@ -8,6 +8,7 @@ let keywords =
     [
         "form", FORM;
         "if", IF;
+        "else", ELSE;
         "boolean", QLBOOL;
         "string", QLSTRING;
         "integer", QLINT;
@@ -16,7 +17,7 @@ let keywords =
 
 let symbols =
     [
-        "==",    EQ;
+        "==",   EQ;
         "!=",   NE;
         "<",    LT;
         "<=",   LE;
@@ -54,7 +55,7 @@ rule tokenize = parse
 | whitespace    { tokenize lexbuf }   
 | newline       { lexbuf.EndPos <- lexbuf.EndPos.NextLine; tokenize lexbuf; }
 | int           { INT(Int32.Parse(LexBuffer<_>.LexemeString lexbuf)) }
-| float         { DECIMAL(Double.Parse(LexBuffer<_>.LexemeString lexbuf)) }
+| float         { DECIMAL(Double.Parse(LexBuffer<_>.LexemeString lexbuf, Globalization.NumberFormatInfo.InvariantInfo)) }
 | "\""			{ LABEL(string lexbuf.StartPos "" lexbuf) }
 | "true"		{ BOOL(true) }
 | "false"		{ BOOL(false) }

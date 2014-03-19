@@ -5,7 +5,7 @@ import org.uva.sea.ql.typechecker.TypeEnvironment;
 
 public class Identifier extends Expression {
 
-	private String name;
+	private final String name;
 	
 	public Identifier(String name) {
 		
@@ -17,27 +17,25 @@ public class Identifier extends Expression {
 		return this.name;
 	}
 	
-	public String show(){
+	public String toString(){
 		return name;};
 
 	@Override
 	public <T> T accept(ExpressionVisitor<T> visitor) {
 		return visitor.visit(this);
-		
 	}
 	
 	public Type typeOf(TypeEnvironment environment){
-		return environment.getType(this);
+		assert (environment.isDeclared(this));
+		return environment.ofType(this);
 	}
 	
 	@Override
 	public boolean equals(Object other) {
 	    if (other instanceof Identifier) {
 	        return name.equals(((Identifier) other).getName());
-	    }
-	    
+	    } 
 	    return false;
-
 	}
 	
 	@Override

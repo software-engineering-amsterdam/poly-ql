@@ -1,10 +1,10 @@
 package ast.expr.unExpression;
 
-import typecheck.Symboles;
+import typecheck.SymbolTable;
 import ast.Visitor;
 import ast.expr.Expr;
 import ast.expr.types.BoolType;
-import ast.expr.types.Types;
+import ast.expr.types.Type;
 
 public class Not extends UnExpr{
 	public Not(Expr operand){
@@ -17,12 +17,7 @@ public class Not extends UnExpr{
 	}
 
 	@Override
-	public Types typeof(Symboles symboles) {
+	public Type typeof(SymbolTable symboles) {
 		return new BoolType();
-	}
-
-	@Override
-	public String show() {
-		return "!";
 	}
 }

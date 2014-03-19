@@ -1,18 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Antlr4.Runtime;
+﻿using QL.QLClasses;
 
 namespace QL
 {
-    partial class QLParser : IAntlrErrorListener<IToken>
+    partial class QLParser
     {
-        public void SyntaxError(IRecognizer recognizer, IToken offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
+        private Questionnaire _ASTRoot;
+        private QLMemory _qlMemory;
+
+        public void SetIdManager(QLMemory qlMemory)
         {
-            //base.SyntaxError(recognizer, offendingSymbol, line, charPositionInLine, msg, e);
-            Console.WriteLine("Parser error at line {0}, char {1}", line, charPositionInLine);
+            _qlMemory = qlMemory;
+        }
+
+        public Questionnaire GetAST()
+        {
+            return _ASTRoot;
         }
     }
 }

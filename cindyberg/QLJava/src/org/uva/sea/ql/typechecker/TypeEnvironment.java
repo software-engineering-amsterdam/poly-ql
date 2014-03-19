@@ -3,7 +3,7 @@ package org.uva.sea.ql.typechecker;
 import java.util.HashMap;
 
 import org.uva.sea.ql.ast.Identifier;
-import org.uva.sea.ql.ast.type.NullType;
+import org.uva.sea.ql.ast.type.MissingType;
 import org.uva.sea.ql.ast.type.Type;
 
 public class TypeEnvironment {
@@ -14,20 +14,14 @@ public class TypeEnvironment {
 		return types.containsKey(id);
 	}
 	
-	public Type getType(Identifier id){
-		
-		if(isDeclared(id))
-		{
+	public Type ofType(Identifier id){	
+		if(isDeclared(id)){
 			return types.get(id);
 		}
-		return new NullType();
+		return new MissingType();
 	}
 	
-	public void addIdentifier(Identifier id, Type type){
+	public void declareIdentifier(Identifier id, Type type){
 		types.put(id,type);
-	}
-	
-	public HashMap<Identifier,Type> getEnvironment(){
-		return types;
 	}
 }

@@ -1,9 +1,9 @@
 package ast.expr.literal;
 
-import typecheck.Symboles;
+import typecheck.SymbolTable;
 import ast.Visitor;
 import ast.expr.types.BoolType;
-import ast.expr.types.Types;
+import ast.expr.types.Type;
 
 public class BoolLiteral extends Literals{
 	private final boolean val;
@@ -22,13 +22,7 @@ public class BoolLiteral extends Literals{
 	}
 
 	@Override
-	public Types typeof(Symboles symb) {
+	public Type typeof(SymbolTable symb) {
 		return new BoolType();
 	}
-
-	@Override
-	public String show() {
-		return Boolean.toString(val);
-	}
-
 }

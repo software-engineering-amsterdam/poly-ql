@@ -13,13 +13,14 @@
 
 @header
 {
-	using QSLib.Expressions;
-	using QSLib.Expressions.Math;
-	using QSLib.Expressions.Types;
-	using QSLib.Expressions.Conditions.Comparison;
-	using QSLib.Expressions.Conditions;
-	using QSLib.Expressions.Conditions.Binary;
 	using QSLib;
+	using QSLib.Expressions;
+	using QSLib.Expressions.Unary;
+	using QSLib.Expressions.Binary;
+	using QSLib.Expressions.Literals;
+	using QSLib.Statements;
+	using QSLib.Types;
+
 	using System;
 	using System.Linq;
 	using System.Text;
@@ -48,127 +49,89 @@ statement_list returns [List<IStatement> al]
 statement returns [IStatement s]
 	:
 	  a=question_statement { $s = $a.q; }
-	| b=conditional_statement { $s = $b.c; } 
+	| b=if_statement { $s = $b.i; } 
 	;
 
 question_statement returns [Question q]
 	:
-	  a=STRING_LITERAL b=type_declaration { $q = new Question(new QSString($a.text,$a.line), $b.e, $a.line); }
-	| a=STRING_LITERAL c=assignment { $q = new Question(new QSString($a.text,$a.line), $c.e, $a.line); }
+	  a=STRING_LITERAL b=type_declaration { $q = new Question(new QSString($a.text.Substring(1, $a.text.Length - 2),$a.line), $b.e, $a.line); }
 	;
 
 type_declaration returns [Identifier e]
 	:
-	  a=assignment COLON TYPE_STRING { $a.e.SetType = "".GetType(); $e = $a.e; $e.Declare();  }
-	| a=assignment COLON TYPE_BOOL	 { $a.e.SetType = true.GetType(); $e = $a.e; $e.Declare();  }
-	| a=assignment COLON TYPE_INTEGER  { $a.e.SetType = 1.GetType(); $e = $a.e; $e.Declare();  }
+
+	  id=WORD ASSIGN v=expression COLON TYPE_BOOL 
+					{ 
+						$e = new OutputIdentifier($id.text, new BoolType(), $v.e, $id.line);  
+					}
+	| id=WORD ASSIGN v=expression COLON TYPE_INTEGER  
+					{ 
+						$e = new OutputIdentifier($id.text, new NumberType(), $v.e, $id.line);  
+					}
+	| id=WORD ASSIGN v=expression  COLON TYPE_STRING
+					{ 
+						$e = new OutputIdentifier($id.text, new StringType(), $v.e, $id.line);    
+					}
+	| id=WORD COLON TYPE_BOOL 
+					{ 
+						$e = new InputIdentifier($id.text, new BoolType(), $id.line);  
+					}
+	| id=WORD COLON TYPE_INTEGER  
+					{ 
+						$e = new InputIdentifier($id.text, new NumberType(), $id.line);  
+					}
+	| id=WORD COLON TYPE_STRING
+					{ 
+						$e = new InputIdentifier($id.text, new StringType(), $id.line);    
+					}
 	;
 
-
-assignment returns [Identifier e]
-	:
-	  id=WORD ASSIGN v=expression { $e = new Identifier($id.text, $v.e, $id.line); }
-	| id=WORD	{ $e = new Identifier($id.text, $id.line); }
-	;
-
-num_val returns [IExpression e]
+num_val returns [QSExpression e]
 	:
 	  v=NUMBER { $e = new QSNumber(Int32.Parse($v.text), $v.line); }
 	;
 
-bool_val returns [IExpression e]
+bool_val returns [QSExpression e]
 	:
 	  v=BOOL_VAL { $e = new QSBoolean(Boolean.Parse($v.text), $v.line); }
 	;
 
-expression returns [IExpression e]
-	:
-	  a=math_expression { $e = ($a.e  as IExpression); }
-	| b=boolean_expression { $e = ($b.e as IExpression); }
-	| c=comparative_expression { $e = ($c.e as IExpression); }
-	;
-
-
-math_expression returns [IExpression e]
-	: 
-	  l=simple_math o=PLUS r=simple_math { $e = new Add($l.e, $r.e, $o.line); }
-	| l=simple_math o=MINUS r=simple_math { $e = new Subtract($l.e, $r.e, $o.line); } // than plus and minus 
-	| l=simple_math o=MULTIPLY r=simple_math { $e = new Multiply($l.e, $r.e, $o.line); } // multiply and divide have higher precedence
-	| l=simple_math o=DIVIDE r=simple_math { $e = new Divide($l.e, $r.e, $o.line); } 
-	| a=boolean_expression  { $e = ($a.e as IExpression); }
-	;
-
-simple_math returns [IExpression e]
-	: 
-      l=primary o=PLUS r=simple_math { $e = new Add($l.e, $r.e, $o.line); }
-	| l=primary o=MINUS r=simple_math { $e = new Subtract($l.e, $r.e, $o.line); } // than plus and minus 
-	| l=primary o=MULTIPLY r=simple_math { $e = new Multiply($l.e, $r.e, $o.line); } // multiply and divide have higher precedence
-	| l=primary o=DIVIDE r=simple_math { $e = new Divide($l.e, $r.e, $o.line); } 
-	| a=primary { $e = ($a.e as IExpression); }
-	;
-
-
-boolean_expression returns [IExpression e]
-	: 
-	  c=simple_bool o=OR b=simple_bool   { $e = new Or($c.e, $b.e, $o.line); } // than or
-	| c=simple_bool o=AND b=simple_bool  { $e = new And($c.e, $b.e, $o.line); } // and has higher precedence
-	| o=NOT a=simple_bool					 { $e = new Not($a.e, $o.line); } // not has highest precedence but
-	| d=comparative_expression { $e = ($d.e as IExpression); } 
-	;
-
-simple_bool returns [IExpression e]
-	: 
-	  c=primary o=OR b=simple_bool   { $e = new Or($c.e, $b.e, $o.line); } // than or
-	| c=primary o=AND b=simple_bool  { $e = new And($c.e, $b.e, $o.line); } // and has higher precedence
-	| o=NOT a=primary					 { $e = new Not($a.e, $o.line); } // not has highest precedence but
-	| a=primary { $e = ($a.e as IExpression); }
-	;
-
-
-comparative_expression returns [IExpression e]
-    :
-	  l=simple_compare o=SMALLER r=simple_compare { $e = new SmallerThan($l.e, $r.e, $o.line); }
-	| l=simple_compare o=SMALLEREQUALS r=simple_compare { $e = new SmallerThan_Equals($l.e, $r.e, $o.line); }
-	| l=simple_compare o=EQUALS r=simple_compare { $e = new Equals($l.e, $r.e, $o.line); }
-	| l=simple_compare o=NOTEQUALS r=simple_compare { $e = new NotEquals($l.e, $r.e, $o.line); }
-	| l=simple_compare o=LARGEREQUALS r=simple_compare { $e = new LargerThan_Equals($l.e, $r.e, $o.line); }
-	| l=simple_compare o=LARGER r=simple_compare { $e = new LargerThan($l.e, $r.e, $o.line); }	
-	| a=simple_compare  { $e = ($a.e as IExpression); }
-	;
-
-simple_compare returns [IExpression e]
-    :
-	  l=primary o=SMALLER r=simple_compare { $e = new SmallerThan($l.e, $r.e, $o.line); }
-	| l=primary o=SMALLEREQUALS r=simple_compare { $e = new SmallerThan_Equals($l.e, $r.e, $o.line); }
-	| l=primary o=EQUALS r=simple_compare { $e = new Equals($l.e, $r.e, $o.line); }
-	| l=primary o=NOTEQUALS r=simple_compare { $e = new NotEquals($l.e, $r.e, $o.line); }
-	| l=primary o=LARGEREQUALS r=simple_compare { $e = new LargerThan_Equals($l.e, $r.e, $o.line); }
-	| l=primary o=LARGER r=simple_compare { $e = new LargerThan($l.e, $r.e, $o.line); }	
-	| a=primary { $e = ($a.e as IExpression); }
-	;
-
-primary returns [IExpression e]
-	:
-	  d=num_val { $e = $d.e ; } 
+expression returns [QSExpression e]
+	:  
+	  l=expression o=MULTIPLY r=expression { $e = new Multiply($l.e, $r.e, $o.line); } 
+	| l=expression o=DIVIDE r=expression { $e = new Divide($l.e, $r.e, $o.line); } 
+	| l=expression o=PLUS r=expression { $e = new Add($l.e, $r.e, $o.line); }
+	| l=expression o=MINUS r=expression { $e = new Subtract($l.e, $r.e, $o.line); } 
+	| o=NOT a=expression					 { $e = new Not($a.e, $o.line); } 
+	| c=expression o=AND b=expression  { $e = new And($c.e, $b.e, $o.line); } 
+	| c=expression o=OR b=expression   { $e = new Or($c.e, $b.e, $o.line); } 
+	| l=expression o=SMALLER r=expression { $e = new SmallerThan($l.e, $r.e, $o.line); }
+	| l=expression o=SMALLEREQUALS r=expression { $e = new SmallerThan_Equals($l.e, $r.e, $o.line); }
+	| l=expression o=EQUALS r=expression { $e = new Equals($l.e, $r.e, $o.line); }
+	| l=expression o=NOTEQUALS r=expression { $e = new NotEquals($l.e, $r.e, $o.line); }
+	| l=expression o=LARGEREQUALS r=expression { $e = new LargerThan_Equals($l.e, $r.e, $o.line); }
+	| l=expression o=LARGER r=expression { $e = new LargerThan($l.e, $r.e, $o.line); }	
+	| d=num_val { $e = $d.e ; } 
 	| g=bool_val { $e = $g.e ; } 
-	| f=assignment { $e = $f.e ; } 
-	;
-
-conditional_statement returns [IfStatement c]
-	:
-	  a=if_statement { $c = $a.i; }
-	| a=if_statement n=else_statement { $c = $a.i; $c.SetElse = $n.e; }
+	| f=WORD { $e = new Identifier($f.text, $f.line) ; } 
+	| L_HOOK l=expression R_HOOK { $e = $l.e; }
 	;
 
 if_statement returns [IfStatement i]
 	:
 	  o=IF L_HOOK a=expression R_HOOK b=code_block { $i = new IfStatement($a.e, $b.c, $o.line); }
+	| o=IF L_HOOK a=expression R_HOOK b=code_block c=else_statement { $i = new IfStatement($a.e, $b.c, $c.c, $o.line); }
 	;
 
-else_statement returns [ElseStatement e]
+else_statement returns [CodeBlock c]
+@init
+{
+	List<IStatement> code = new List<IStatement>();
+}
 	:
-	  o=ELSE a=code_block { $e = new ElseStatement($a.c, $o.line); }
-	| o=ELSE b=if_statement { $e = new ElseStatement($o.line); $e.SetIf = $b.i; }
+	  o=ELSE a=code_block { $c = $a.c; }
+	| o=ELSE b=if_statement {	code.Add($b.i);
+								$c = new CodeBlock(code); }
 	;
 
 
@@ -234,7 +197,7 @@ WORD :
 	;
 
 NUMBER :
-	  [0-9]+ 
+	  '-'?[0-9]+ 
 	;
 
 INTERPUNCT :
@@ -302,7 +265,7 @@ COMMENT
     ;
 
 STRING_LITERAL :
-	    SQ ((WORD+ INTERPUNCT?)|[ \t\r\n])+ SQ
+	    SQ (L_HOOK (WORD+ INTERPUNCT?) R_HOOK|(WORD+ INTERPUNCT?)|[ \t\r\n])+ SQ
 	  ;
 
 NEWLINE

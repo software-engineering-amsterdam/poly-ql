@@ -1,28 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.IO;
-using System.Reflection;
-
-using Antlr4.Runtime;
-using Antlr4.Runtime.Tree;
-
-using QL.QLClasses;
-using QL.QLClasses.Statements;
-using QL.QLClasses.Expressions.Conditions;
-
 using QL.TypeChecker;
 
 namespace QL
 {
     public partial class MainForm : Form
     {
+        private QLController _qlController;
+        private int _errorYPos;
+
         public MainForm()
         {
             InitializeComponent();
@@ -30,52 +18,68 @@ namespace QL
 
         private void btnParse_Click(object sender, EventArgs e)
         {
-            txtOutput.Clear();
-            Identifiers.Reset();
-            QLTypeChecker.ClearAdditionalErrors();
+            txtMessages.Clear();
+            pnlErrors.Controls.Clear();
 
-            string inputString = txtInput.Text;
-            MemoryStream inputStream = new MemoryStream(Encoding.UTF8.GetBytes(inputString ?? ""));
+            _qlController = new QLController();
+            _errorYPos = 0;
+            
+            //build AST + check types
+            _qlController.BuildAST(txtInput.Text);
 
-            AntlrInputStream input = new AntlrInputStream(inputStream);
-            QLLexer lexer = new QLLexer(input);
-            CommonTokenStream tokens = new CommonTokenStream(lexer);
-            QLParser parser = new QLParser(tokens);
+            foreach (string lexerError in _qlController.LexerErrors)
+                WriteMessage(lexerError);
 
-            lexer.RemoveErrorListeners();
-            parser.RemoveErrorListeners();
+            if(_qlController.LexerErrors.Any())
+                WriteErrorLabel("Lexer errors occurred, see messages");
 
-            lexer.AddErrorListener(new LexerErrorListener(){OnError = WriteError});
-            parser.AddErrorListener(new ParserErrorListener(){OnError = WriteError});
+            foreach (string parserError in _qlController.ParserErrors)
+                WriteMessage(parserError);
 
-            IParseTree tree = parser.questionnaire();
-            Questionnaire AST = parser.theQuestionnaire;
+            if(_qlController.ParserErrors.Any())
+                WriteErrorLabel("Parser errors occurred, see messages");
 
-            if (AST == null)
+            //get type errors
+            QLTypeChecker typeChecker = _qlController.TypeChecker;
+            foreach (QLTypeError typeError in typeChecker.TypeErrors.OrderBy((te) => te.IsWarning))
             {
-                WriteError("AST is null!!!");
+                string error = string.Format("{5} QLTypeChecker: {0} {1}" +
+                                             "<At token '{2}' on line {3}, column {4}>",
+                    typeError.Message, Environment.NewLine,
+                    typeError.TokenInfo.TokenText,
+                    typeError.TokenInfo.TokenLine,
+                    typeError.TokenInfo.TokenColumn,
+                    typeError.IsWarning ? "(Warning)" : "(Error)");
 
-                txtOutput.Text += string.Format(@"{0}{0} Generated parse tree: 
-                                              {0} {1}"
-                                    , Environment.NewLine
-                                    , tree.ToStringTree(parser));
+                WriteErrorLabel(error, typeError.IsWarning);
             }
+            
+            WriteMessage(string.Format(@"Generated parse tree: 
+                                              {0} {1}"
+                    , Environment.NewLine
+                    , _qlController.GetParseTreeString()));
+
+            //check if generate is possible
+            if (_qlController.LexerErrors.Any() || _qlController.ParserErrors.Any() || typeChecker.TypeErrors.Any((te) => !te.IsWarning))
+                lblSuccess.Visible = btnGenerate.Enabled = false;
             else
-            {
-                QLTypeChecker typeChecker = new QLTypeChecker();
-                typeChecker.OnError += WriteError;
-                typeChecker.Check(AST);
-
-                txtOutput.Text += string.Format(@"{0}{0} Generated parse tree: 
-                                              {0} {1}"
-                                    , Environment.NewLine
-                                    , tree.ToStringTree(parser));
-            }
+                lblSuccess.Visible = btnGenerate.Enabled = true;
         }
             
-        public void WriteError(string error)
+        public void WriteErrorLabel(string error, bool isWarning = false)
         {
-            txtOutput.Text += Environment.NewLine + error;
+            pnlErrors.Controls.Add(new Label { Location = new Point(0, _errorYPos), Text = error, ForeColor = Color.White, BackColor = isWarning ? Color.Orange : Color.Red, Width = pnlErrors.Width, Height = 30 });
+            _errorYPos += 35;
+        }
+
+        public void WriteMessage(string message)
+        {
+            txtMessages.Text += Environment.NewLine + message;
+        }
+
+        private void btnGenerate_Click(object sender, EventArgs e)
+        {
+            _qlController.GenerateGUI();
         }
     }
 }

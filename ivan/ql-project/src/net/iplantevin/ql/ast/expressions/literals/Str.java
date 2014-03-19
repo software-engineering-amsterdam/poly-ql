@@ -5,31 +5,23 @@ import net.iplantevin.ql.ast.expressions.Expression;
 import net.iplantevin.ql.ast.types.StringType;
 import net.iplantevin.ql.ast.types.Type;
 import net.iplantevin.ql.ast.types.TypeEnvironment;
-import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
-import org.antlr.v4.runtime.ParserRuleContext;
+import net.iplantevin.ql.ast.visitors.IExpressionVisitor;
 
 /**
- * Created with IntelliJ IDEA.
- *
- * @user: Ivan
- * @date: 19-02-14
  * String.
+ *
+ * @author Ivan
  */
 public class Str extends Expression {
     private final String text;
 
-    public Str(String text, ParserRuleContext ctx) {
-        super(ctx);
-        this.text = text;
-    }
-
     public Str(String text, LineInfo lineInfo) {
         super(lineInfo);
-        this.text = text;
+        this.text = text.substring(1, text.length() - 1);
     }
 
     @Override
-    public Type getType(TypeEnvironment idTypeMap) {
+    public Type getType(TypeEnvironment idTypeStore) {
         return new StringType();
     }
 
@@ -39,11 +31,11 @@ public class Str extends Expression {
 
     @Override
     public String toString() {
-        return text;
+        return String.format("\"%s\"", text);
     }
 
     @Override
-    public void accept(IQLASTVisitor visitor) {
-        visitor.visit(this);
+    public <T> T accept(IExpressionVisitor<T> visitor) {
+        return visitor.visit(this);
     }
 }

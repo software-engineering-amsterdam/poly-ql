@@ -17,11 +17,12 @@ import org.uva.sea.ql.ast.operators.comparison.NEq;
 import org.uva.sea.ql.ast.operators.logical.And;
 import org.uva.sea.ql.ast.operators.logical.Not;
 import org.uva.sea.ql.ast.operators.logical.Or;
+import org.uva.sea.ql.parser.jacc.ParseException;
 
 public class TestExpressions extends TestParser{
 	
 	@Test
-	public void testArithmetic(){
+	public void testArithmetic() throws ParseException{
 		
 		assertEquals(parser.parser("a + b").getClass(), Add.class);
 		assertEquals(parser.parser("a + b + c").getClass(), Add.class);
@@ -48,7 +49,7 @@ public class TestExpressions extends TestParser{
 	}
 	
 	@Test
-	public void testLogical(){
+	public void testLogical() throws ParseException{
 		
 		assertEquals(parser.parser("a && b").getClass(), And.class);
 		assertEquals(parser.parser("a && b && c").getClass(), And.class);
@@ -62,7 +63,7 @@ public class TestExpressions extends TestParser{
 	}
 	
 	@Test
-	public void testComparison(){
+	public void testComparison() throws ParseException{
 		
 		assertEquals(parser.parser("a == a").getClass(), Eq.class);
 		assertEquals(parser.parser("a != c").getClass(), NEq.class);

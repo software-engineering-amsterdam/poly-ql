@@ -5,14 +5,12 @@ import net.iplantevin.ql.ast.expressions.Expression;
 import net.iplantevin.ql.ast.types.BooleanType;
 import net.iplantevin.ql.ast.types.Type;
 import net.iplantevin.ql.ast.types.TypeEnvironment;
-import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
+import net.iplantevin.ql.ast.visitors.IExpressionVisitor;
 
 /**
- * Created with IntelliJ IDEA.
- *
- * @user: Ivan
- * @date: 19-02-14
  * Logical OR (||).
+ *
+ * @author Ivan
  */
 public class Or extends Binary {
     public Or(Expression left, Expression right, LineInfo lineInfo) {
@@ -20,17 +18,17 @@ public class Or extends Binary {
     }
 
     @Override
-    public Type getType(TypeEnvironment idTypeMap) {
+    public Type getType(TypeEnvironment idTypeStore) {
         return new BooleanType();
     }
 
     @Override
     public String toString() {
-        return getLeftExpr() + " || " + getRightExpr();
+        return getLeftHS() + " || " + getRightHS();
     }
 
     @Override
-    public void accept(IQLASTVisitor visitor) {
-        visitor.visit(this);
+    public <T> T accept(IExpressionVisitor<T> visitor) {
+        return visitor.visit(this);
     }
 }

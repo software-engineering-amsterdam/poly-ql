@@ -2,29 +2,34 @@ package edu.uva.softwarecons.model.expression.arithmetic;
 
 import edu.uva.softwarecons.model.expression.BinaryExpression;
 import edu.uva.softwarecons.model.expression.Expression;
-import edu.uva.softwarecons.model.operation.Operator;
 import edu.uva.softwarecons.model.type.Type;
-import edu.uva.softwarecons.visitor.IFormElementVisitor;
+import edu.uva.softwarecons.model.value.Value;
+import edu.uva.softwarecons.visitor.expression.IExpressionElementVisitor;
+import edu.uva.softwarecons.visitor.expression.IExpressionEvalVisitor;
 
 /**
  * Falconlabs
- * User: sancarbar
+ * @author Santiago Carrillo
  * Date: 2/20/14
  */
-public class MulExpression extends BinaryExpression {
+public class MulExpression
+    extends BinaryExpression
+{
 
-    public MulExpression(Expression leftOperand, Expression rightOperand) {
-        super(leftOperand, rightOperand);
-        this.operator = Operator.MUL;
+    public MulExpression( Expression leftOperand, Expression rightOperand )
+    {
+        super( leftOperand, rightOperand );
     }
 
     @Override
-    public Type eval() {
-        return null;
+    public Type accept( IExpressionElementVisitor visitor )
+    {
+        return visitor.visitMulExpression( this );
     }
 
     @Override
-    public void accept(IFormElementVisitor visitor) {
-        visitor.visit(this);
+    public Value accept( IExpressionEvalVisitor visitor )
+    {
+        return visitor.visitMulExpression( this );
     }
 }

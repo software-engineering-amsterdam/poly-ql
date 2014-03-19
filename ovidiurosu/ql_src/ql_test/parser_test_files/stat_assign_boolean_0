@@ -1,0 +1,5 @@
+// Assign Statement with Boolean Type
+form test {
+    question: "Is it true?" boolean
+    question2: "Is it false?" boolean
+}

@@ -1,10 +1,10 @@
 package ast.expr.binExpr;
 
-import typecheck.Symboles;
+import typecheck.SymbolTable;
 import ast.Visitor;
 import ast.expr.Expr;
 import ast.expr.types.IntType;
-import ast.expr.types.Types;
+import ast.expr.types.Type;
 
 public class Add extends BinExpr{
 
@@ -17,13 +17,9 @@ public class Add extends BinExpr{
 	}
 
 	@Override
-	public Types typeof(Symboles symb) {
+	public Type typeof(SymbolTable symb) {
 		return new IntType();
 		
 	}
 	
-	public String show(){
-		return "+";
-	}
-
 }

@@ -1,16 +1,36 @@
 package edu.uva.softwarecons.model.type;
 
+import edu.uva.softwarecons.visitor.type.ITypeElementVisitor;
+
 /**
  * Falconlabs
- * User: sancarbar
+ * @author Santiago Carrillo
  * Date: 2/19/14
  */
-public class StringType extends Type{
+public class StringType
+    implements Type
+{
 
-    private String value;
+
+    public StringType()
+    {
+    }
 
     @Override
-    public String getValue() {
-        return value;
+    public String toString()
+    {
+        return "string";
+    }
+
+    @Override
+    public boolean equals( Object o )
+    {
+        return o instanceof StringType;
+    }
+
+    @Override
+    public void accept( ITypeElementVisitor visitor )
+    {
+        visitor.visitStringType( this );
     }
 }

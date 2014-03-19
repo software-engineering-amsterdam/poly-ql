@@ -1,28 +1,27 @@
 package net.iplantevin.ql.ast.expressions.literals;
 
+import net.iplantevin.ql.ast.LineInfo;
 import net.iplantevin.ql.ast.expressions.Expression;
 import net.iplantevin.ql.ast.types.IntegerType;
 import net.iplantevin.ql.ast.types.Type;
 import net.iplantevin.ql.ast.types.TypeEnvironment;
-import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
-import org.antlr.v4.runtime.ParserRuleContext;
+import net.iplantevin.ql.ast.visitors.IExpressionVisitor;
 
 /**
- * Created with IntelliJ IDEA.
+ * Integer.
  *
  * @author Ivan
- *         Integer.
  */
 public class Int extends Expression {
     private final Integer value;
 
-    public Int(Integer value, ParserRuleContext ctx) {
-        super(ctx);
+    public Int(Integer value, LineInfo lineInfo) {
+        super(lineInfo);
         this.value = value;
     }
 
     @Override
-    public Type getType(TypeEnvironment idTypeMap) {
+    public Type getType(TypeEnvironment idTypeStore) {
         return new IntegerType();
     }
 
@@ -36,7 +35,7 @@ public class Int extends Expression {
     }
 
     @Override
-    public void accept(IQLASTVisitor visitor) {
-        visitor.visit(this);
+    public <T> T accept(IExpressionVisitor<T> visitor) {
+        return visitor.visit(this);
     }
 }

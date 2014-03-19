@@ -28,15 +28,20 @@ GEq	:	'>=' ;
 Eq  :	'==' ;
 NEq :	'!=' ;
 
+//Booleans
+BOOLEAN  :  'true'|'false';
+
 //Conditionals
 IF   :   'if' ;
 ELSE :   'else';
 
 // Identifiers
-ID  :   [a-zA-Z0-9]+ ;      
+ID  :   [a-zA-Z][a-zA-Z0-9]*;
 
 //Numbers
 INT :   [0-9]+ ;
+
+
 
 STRING :  '"' (ESC | ~["\\])* '"' ;
 
@@ -44,6 +49,11 @@ fragment ESC :   '\\' (["\\/bfnrt] | UNICODE) ;
 fragment UNICODE : 'u' HEX HEX HEX HEX ;
 fragment HEX : [0-9a-fA-F] ;
 
-WS  :  [ \n\t\r]+ -> skip ; // toss out whitespace
+
+COMMENT: '//' .*? '\r'? '\n' -> skip;
+MULTYLINE_COMMENT:  '/*' .*? '*/' -> skip;
+
+
+WS  :  [ \n\t\r]+ -> skip ;
 
 

@@ -12,5 +12,4 @@ public abstract class UnExpr extends Expr{
 	public Expr getOperand() {
 		return this.operand;
 	}
-
 }

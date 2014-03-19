@@ -1,16 +1,26 @@
 package edu.uva.softwarecons.model.type;
 
+import edu.uva.softwarecons.visitor.type.ITypeElementVisitor;
+
 /**
  * Falconlabs
- * User: sancarbar
+ * @author Santiago Carrillo
  * Date: 2/25/14
  */
-public class DecimalType extends Type{
+public class DecimalType
+    extends NumericType
+{
 
-    private float value;
 
     @Override
-    public Object getValue() {
-        return value;
+    public String toString()
+    {
+        return "decimal";
+    }
+
+    @Override
+    public void accept( ITypeElementVisitor visitor )
+    {
+        visitor.visitDecimalType( this );
     }
 }

@@ -1,31 +1,31 @@
 package ql.ast.form;
 
-import ql.ast.expr.exprType.Expr;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import ql.ast.environment.Environment;
 import ql.ast.expr.exprType.Ident;
-import ql.ast.form.questionType.Type;
+import ql.ast.form.answer.AnswerComponent;
+import ql.ast.type.Type;
+import ql.ast.message.Error;
 
 public class Question extends FormItems{
-	private final Ident id;
+	private final Ident ident;
 	private final String question;
 	private final Type type;
-	private final Expr expr;
+	private final JLabel questionLabel;
+	private final AnswerComponent answerComponent;
 	
-	public Question(Ident id, String question, Type type, Expr expr){
-		this.id = id;
+	public Question(Ident ident, String question, Type type){
+		this.ident = ident;
 		this.question = question;
 		this.type = type;
-		this.expr = expr;
-	}
-	
-	public Question(Ident id, String question, Type type){
-		this.id = id;
-		this.question = question;
-		this.type = type;
-		this.expr = null;
+		this.answerComponent = type.getAnswer();
+		this.questionLabel = new JLabel(question);
 	}
 
-	public Ident getId() {
-		return id;
+	public Ident getIdent() {
+		return ident;
 	}
 
 	public String getQuestion() {
@@ -35,10 +35,41 @@ public class Question extends FormItems{
 	public Type getType() {
 		return type;
 	}
+	
+	public JLabel getQuestionLabel() {
+		return questionLabel;
+	}
 
-	public Expr getExpr() {
-		return expr;
+	public AnswerComponent getAnswerComponent() {
+		return answerComponent;
 	}
 	
+	@Override
+	public boolean validate(Environment environment) {
+		if (environment.containsType(ident)){ 
+			errors.add(new Error("Ident " + ident + "is already defined!"));
+		}
+		else{ 
+			environment.addType(ident, type);
+		}		
+		
+		return errors.size() == 0;
+	}
+
+	@Override
+	public void buildForm(JPanel panel, Environment environment, Form form) {
+		panel.add(questionLabel);
+		panel.add(answerComponent.getAnswerField(true, environment, form, ident), "span");
+	}
+
+	@Override
+	public void setVisible(Boolean visible) {
+		questionLabel.setVisible(visible);
+		answerComponent.setVisible(visible);
+	}
+
+	@Override
+	public void eval(Environment environment) {
+	}
 	
 }

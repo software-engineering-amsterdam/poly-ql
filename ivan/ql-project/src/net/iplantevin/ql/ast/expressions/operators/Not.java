@@ -5,14 +5,12 @@ import net.iplantevin.ql.ast.expressions.Expression;
 import net.iplantevin.ql.ast.types.BooleanType;
 import net.iplantevin.ql.ast.types.Type;
 import net.iplantevin.ql.ast.types.TypeEnvironment;
-import net.iplantevin.ql.ast.visitors.IQLASTVisitor;
+import net.iplantevin.ql.ast.visitors.IExpressionVisitor;
 
 /**
- * Created with IntelliJ IDEA.
- *
- * @user: Ivan
- * @date: 19-02-14
  * Negation. Type is Integer.
+ *
+ * @author Ivan
  */
 public class Not extends Unary {
     public Not(Expression expression, LineInfo lineInfo) {
@@ -20,7 +18,7 @@ public class Not extends Unary {
     }
 
     @Override
-    public Type getType(TypeEnvironment idTypeMap) {
+    public Type getType(TypeEnvironment idTypeStore) {
         return new BooleanType();
     }
 
@@ -30,7 +28,7 @@ public class Not extends Unary {
     }
 
     @Override
-    public void accept(IQLASTVisitor visitor) {
-        visitor.visit(this);
+    public <T> T accept(IExpressionVisitor<T> visitor) {
+        return visitor.visit(this);
     }
 }

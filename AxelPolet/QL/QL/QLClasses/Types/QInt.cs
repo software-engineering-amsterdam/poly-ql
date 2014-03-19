@@ -1,15 +1,38 @@
-﻿using QL.TypeChecker;
+﻿using Antlr4.Runtime;
+using QL.QLClasses.Values;
+using QL.TypeChecker;
 
 namespace QL.QLClasses.Types
 {
-    public class QInt : QBaseType
+    public class QInt : QType
     {
-        public override QBaseType GetType()
+        public override QType GetType()
         {
             return this;
         }
 
-        public override bool IsCompatibleWith(QBaseType type)
+        public override string ToString()
+        {
+            return "QInt";
+        }
+
+        public override QValue UndefinedValue()
+        {
+            return new IntValue(0);
+        }
+
+        #region TypeChecker Implementation
+
+        public override bool CheckType(QLTypeErrors typeErrors)
+        {
+            return true;
+        }
+
+        #endregion
+
+        #region Double Dispatch Implementation
+
+        public override bool IsCompatibleWith(QType type)
         {
             return type.IsCompatibleWithQInt(this);
         }
@@ -18,10 +41,7 @@ namespace QL.QLClasses.Types
         {
             return true;
         }
-        
-        public override bool CheckType(ref QLException error)
-        {
-            return true;
-        }
+
+        #endregion
     }
 }

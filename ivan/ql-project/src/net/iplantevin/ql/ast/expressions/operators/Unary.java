@@ -4,12 +4,10 @@ import net.iplantevin.ql.ast.LineInfo;
 import net.iplantevin.ql.ast.expressions.Expression;
 
 /**
- * Created with IntelliJ IDEA.
- *
- * @user: Ivan
- * @date: 19-02-14
  * Parent class of all unary expressions. Unary expressions have a single
  * expression.
+ *
+ * @author Ivan
  */
 public abstract class Unary extends Expression {
     private final Expression expression;

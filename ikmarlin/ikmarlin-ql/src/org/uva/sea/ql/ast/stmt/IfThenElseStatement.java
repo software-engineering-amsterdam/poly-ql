@@ -1,6 +1,7 @@
 package org.uva.sea.ql.ast.stmt;
 
 import org.uva.sea.ql.ast.expr.Expr;
+import org.uva.sea.ql.checker.visitor.IStmtVisitor;
 
 public class IfThenElseStatement extends ConditionalQuestion {
 	
@@ -21,6 +22,11 @@ public class IfThenElseStatement extends ConditionalQuestion {
 
 	public void setElseBlock(Block elseBlock) {
 		this.elseBlock = elseBlock;
+	}
+
+	@Override
+	public void accept(IStmtVisitor sv) {
+		sv.visit(this);
 	}
 	
 }

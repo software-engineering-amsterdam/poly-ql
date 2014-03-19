@@ -1,26 +1,31 @@
-﻿using System;
-using QL.QLClasses.Types;
+﻿using QL.QLClasses.Types;
+using QL.QLClasses.Values;
 using QL.TypeChecker;
 
 namespace QL.QLClasses.Expressions.Unary
 {
     public class UnaryExpression : ExpressionBase
     {
-        public ExpressionBase InnerValue { get; set; }
+        protected ExpressionBase InnerExpression;
 
-        public override bool CheckType(ref QLException error)
+        public UnaryExpression(ExpressionBase innerExpression)
         {
-            return InnerValue.CheckType(ref error);
+            InnerExpression = innerExpression;
         }
 
-        public override QBaseType GetResultType()
+        public override bool CheckType(QLTypeErrors typeErrors)
         {
-            return InnerValue.GetResultType();
+            return InnerExpression.CheckType(typeErrors);
         }
 
-        public override ExpressionBase GetResult()
+        public override QType GetResultType()
         {
-            return InnerValue.GetResult();
+            return InnerExpression.GetResultType();
+        }
+
+        public override QValue Evaluate()
+        {
+            return InnerExpression.Evaluate();
         }
     }
 }

@@ -2,76 +2,77 @@ package net.iplantevin.ql.ast.types;
 
 import net.iplantevin.ql.ast.LineInfo;
 import net.iplantevin.ql.ast.expressions.literals.ID;
-import net.iplantevin.ql.exceptions.ExceptionCollection;
-import net.iplantevin.ql.exceptions.QLTypeException;
+import net.iplantevin.ql.errors.TypeError;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
- * Created with IntelliJ IDEA.
+ * Type environment. Has a map of name->IDInfo and convenience methods.
  *
- * @user: Ivan
- * @date: 20-02-14
- * Type environment. Has a map of ID->IDTuple and convenience methods.
+ * @author Ivan
  */
 public class TypeEnvironment {
-    // TODO: change map from ID to Type.
-    private final HashMap<String, IDTuple> idTypeEnv;
-    private final ExceptionCollection exceptionCollection;
+    private final Map<String, IDInfo> idTypeStore;
 
-    public TypeEnvironment(ExceptionCollection exceptionCollection) {
-        idTypeEnv = new HashMap<String, IDTuple>();
-        this.exceptionCollection = exceptionCollection;
+    public TypeEnvironment() {
+        idTypeStore = new HashMap<String, IDInfo>();
     }
 
     public boolean isDeclared(ID identifier) {
-        return idTypeEnv.containsKey(identifier.getName());
+        return idTypeStore.containsKey(identifier.getName());
     }
 
-    private IDTuple getIdentifier(ID identifier) {
+    private IDInfo getIdentifier(ID identifier) {
         if (!isDeclared(identifier)) {
-            return new IDTuple(null, new UndefinedType());
+            return new IDInfo(null, new UndefinedType());
         }
-        return idTypeEnv.get(identifier.getName());
+        return idTypeStore.get(identifier.getName());
     }
 
     public Type getDeclaredType(ID identifier) {
-        return getIdentifier(identifier).type;
+        return getIdentifier(identifier).getDeclaredType();
     }
 
-    public void addIdentifier(ID identifier, Type type) {
+    public TypeError declareIdentifier(ID identifier, Type type) {
         if (isDeclared(identifier)) {
             if (!getDeclaredType(identifier).equals(type)) {
                 String message = "type mismatch on already declared identifier '" +
                         identifier.getName() + "' (declared at " +
                         getIdentifier(identifier).getDeclaredLineInfo() + ") !";
-                QLTypeException typeException = new QLTypeException(
+                TypeError typeError = new TypeError(
                         message,
                         identifier,
                         getDeclaredType(identifier),
                         type
                 );
-                exceptionCollection.addException(typeException);
+                return typeError;
             }
         } else {
-            idTypeEnv.put(identifier.getName(), new IDTuple(identifier, type));
+            idTypeStore.put(identifier.getName(),
+                    new IDInfo(identifier.getLineInfo(), type));
         }
+        return null; // No exception.
     }
 }
 
 /**
  * Tuple-like helper class.
  */
-class IDTuple {
-    public final ID id;
-    public final Type type;
+class IDInfo {
+    private final LineInfo declaredLineInfo;
+    private final Type declaredType;
 
-    public IDTuple(ID id, Type type) {
-        this.id = id;
-        this.type = type;
+    public IDInfo(LineInfo lineInfo, Type type) {
+        declaredLineInfo = lineInfo;
+        declaredType = type;
     }
 
     public LineInfo getDeclaredLineInfo() {
-        return id.getLineInfo();
+        return declaredLineInfo;
+    }
+
+    public Type getDeclaredType() {
+        return declaredType;
     }
 }

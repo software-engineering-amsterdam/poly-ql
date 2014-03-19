@@ -1,49 +1,44 @@
 ﻿module QL_Main
 open System
+open System.Windows.Forms;
 open QL_Grammar
 open QL_Checker
+open QL_Interpreter
+open QL_Csharp
 
-let parse lexbuf = QL_Parser.start QL_Lexer.tokenize lexbuf
+Application.EnableVisualStyles()
+Application.SetCompatibleTextRenderingDefault(false)
+let mainForm = new SourceForm()
 
-let parse_str str checkTypes = let lexbuf = Lexing.LexBuffer<_>.FromString str
-                               try 
-                                   let ast = parse lexbuf
-                                   if checkTypes then
-                                        typeCheck ast
-                                   else
-                                        ast
-                               with err ->
-                                       let message = err.Message
-                                       let s_pos = lexbuf.StartPos
-                                       let e_pos = lexbuf.EndPos
-                                       let startPos = Position(s_pos.Line+1, s_pos.Column+1)
-                                       let endPos = Position(e_pos.Line+1, e_pos.Column+1)
-                                       //let lastToken = new System.String(lexbuf.Lexeme)
-                                       raise << ParseErrorException <| ParseErrorExceptionMessage(message, startPos, endPos)
+let parse_string inputString = let lexbuf = Lexing.LexBuffer<_>.FromString inputString
+                               QL_Parser.start QL_Lexer.tokenize lexbuf
 
-// Used for direct input in console
-let x = Console.ReadLine()
+let buttonGenerate_Click _ _ = let lexbuf = Lexing.LexBuffer<_>.FromString mainForm.InputText
+                               let mutable isParsing = true
+                               try
+                                   let ast = QL_Parser.start QL_Lexer.tokenize lexbuf
+                                   isParsing <- false
+                                   let checkInfo = typeCheck ast
+                                   if checkInfo.HasErrors then
+                                        // Type error(s):
+                                        mainForm.SetOutputText(String.concat Environment.NewLine <| List.map fst checkInfo.ErrorList)
+                                        List.iter (fun (_, position:Position) -> mainForm.UnderlineParseError(position.StartCharacter, position.EndCharacter - position.StartCharacter)) checkInfo.ErrorList
+                                   else // No parse/type errors:
+                                        mainForm.SetOutputText(String.concat Environment.NewLine <| List.map fst checkInfo.WarningList)
+                                        let qForm = new QuestionnaireForm(ast.ID)
+                                        qForm.AddControls(List.toArray <| QL_Interpreter.buildGUI ast)
+                                        qForm.Show()
+                               with err when isParsing ->   let message = err.Message
+                                                            let s_pos = lexbuf.StartPos
+                                                            let e_pos = lexbuf.EndPos
+                                                            mainForm.SetOutputText(sprintf "%s between line %i, column %i and line %i column %i" 
+                                                                message
+                                                                (s_pos.Line+1) s_pos.Column
+                                                                (e_pos.Line+1) e_pos.Column)
 
-let y = let lexbuf = Lexing.LexBuffer<_>.FromString x
-        try 
-            parse lexbuf
-        with err ->
-                let pos = lexbuf.EndPos
-                let line = pos.Line
-                let column = pos.Column
-                let message = err.Message
-                //let lastToken = new System.String(lexbuf.Lexeme)
-                printf "%s at line %d, column %d:\n" message line column
-                printf "\n"
-                Console.WriteLine("(press any key)")
-                Console.ReadKey(true) |> ignore
-                exit 1;
+mainForm.AddClickEventHandler(new System.EventHandler(buttonGenerate_Click))
 
-printfn "%A" y
 
-Console.WriteLine();
-let check = typeCheck y
-printfn "%A" check
-
-Console.WriteLine("(press any key)")
-Console.ReadKey(true) |> ignore
+[<STAThread>]
+do Application.Run(mainForm)
+exit 0

@@ -1,10 +1,10 @@
 package ast.expr.binExpr;
 
-import typecheck.Symboles;
+import typecheck.SymbolTable;
 import ast.Visitor;
 import ast.expr.Expr;
 import ast.expr.types.BoolType;
-import ast.expr.types.Types;
+import ast.expr.types.Type;
 
 public class Or extends BinExpr{
 
@@ -18,12 +18,8 @@ public class Or extends BinExpr{
 	}
 
 	@Override
-	public Types typeof(Symboles symb) {
+	public Type typeof(SymbolTable symb) {
 		return new BoolType();
 	}
 
-	@Override
-	public String show() {
-		return "||";
-	}
 }

@@ -1,6 +1,5 @@
 package ql.parser.antlr;
 
-import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
 
@@ -34,7 +33,7 @@ public class FormParser{
 	}
 	
 	public Form parseForm(String src) throws ParseError, IOException {
-		QLParser parser = createFileParser(src);
+		QLParser parser = createStringParser(src);
 		try {
 			return parser.form().result;
 		} catch (RecognitionException e) {

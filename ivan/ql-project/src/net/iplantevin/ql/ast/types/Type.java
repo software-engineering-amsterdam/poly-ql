@@ -1,14 +1,13 @@
 package net.iplantevin.ql.ast.types;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Ivan
- * Date: 19-02-14
  * Abstract class for types. Defines default compatibility methods that
  * determine what types can be combined in expressions (default compatible with
  * nothing). Abstract method |isCompatibleTo| must be implemented by subclasses.
  * <p/>
- * Implements QLASTNode interface for visiting.
+ * Implements ASTNode interface for visiting.
+ *
+ * @author Ivan
  */
 public abstract class Type {
     public boolean isCompatibleToBoolean() {
@@ -37,4 +36,6 @@ public abstract class Type {
 
     @Override
     public abstract boolean equals(Object object);
+
+    public abstract <T> T accept(ITypeVisitor<T> visitor);
 }

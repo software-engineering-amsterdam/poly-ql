@@ -1,10 +1,4 @@
 package net.iplantevin.ql.tests;
-/**
- * Created with IntelliJ IDEA.
- * User: Ivan
- * Date: 13-02-14
- * Tests for antlr4 grammar
- */
 
 import net.iplantevin.ql.antlr.QLLexer;
 import net.iplantevin.ql.antlr.QLParser;
@@ -19,7 +13,11 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-
+/**
+ * Tests for antlr4 grammar
+ *
+ * @author Ivan
+ */
 public class GrammarTest {
     private static String basePath = "/Users/Ivan/Documents/Master SE/Software Construction/poly-ql/ivan/ql-project/src/net/iplantevin/tests/inputs/";
     private static String ext = ".txt";

@@ -1,20 +1,31 @@
 package edu.uva.softwarecons.model.type;
 
-import java.util.Date;
+import edu.uva.softwarecons.visitor.type.ITypeElementVisitor;
 
 /**
  * Falconlabs
- * User: sancarbar
+ * @author Santiago Carrillo
  * Date: 2/20/14
  */
-public class DateType extends Type {
-
-    private Date date;
-
+public class DateType
+    implements Type
+{
 
     @Override
-    public Date getValue() {
-        return date;
+    public String toString()
+    {
+        return "date";
     }
 
+    @Override
+    public boolean equals( Object o )
+    {
+        return o instanceof DateType;
+    }
+
+    @Override
+    public void accept( ITypeElementVisitor visitor )
+    {
+        visitor.visitDateType( this );
+    }
 }

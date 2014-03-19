@@ -1,17 +1,18 @@
 package net.iplantevin.ql.ast.statements;
 
-import net.iplantevin.ql.ast.QLASTNode;
-import org.antlr.v4.runtime.ParserRuleContext;
+import net.iplantevin.ql.ast.ASTNode;
+import net.iplantevin.ql.ast.LineInfo;
+import net.iplantevin.ql.ast.visitors.IStatementVisitor;
 
 /**
- * Created with IntelliJ IDEA.
- *
- * @user: Ivan
- * @date: 19-02-14
  * Main statement abstract class. Extended by all kinds of statements.
+ *
+ * @author Ivan
  */
-public abstract class Statement extends QLASTNode {
-    public Statement(ParserRuleContext ctx) {
-        super(ctx);
+public abstract class Statement extends ASTNode {
+    public Statement(LineInfo lineInfo) {
+        super(lineInfo);
     }
+
+    public abstract <T> T accept(IStatementVisitor<T> visitor);
 }

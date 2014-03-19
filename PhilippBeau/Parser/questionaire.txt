@@ -1,10 +1,18 @@
 form Box1HouseOwning {
     hasSoldHouse: "Did you sell a house in 2010?" boolean
     hasBoughtHouse: "Did you by a house in 2010?" boolean
+    moneyBling: "How much money?" money
     hasMaintLoan: "Did you enter a loan for maintenance/reconstruction?" boolean
-    if (hasSoldHouse && hasBoughtHouse) {
+    if (!!hasSoldHouse && hasBoughtHouse) {
         sellingPrice: "Price the house was sold for:" money
         privateDebt: "Private debts for the sold house:" money
-        valueResidue: "Value residue:" money(sellingPrice - privateDebt)
+        test: "Test" boolean(!hasSoldHouse || !hasBoughtHouse || (----privateDebt == 3))
+        valueResidue: "Value residue:" money(sellingPrice --- privateDebt)
+        if (privateDebt > 0) {
+	        A: "A:" money(privateDebt)
+	        B: "B:" money(A)
+    	}
+    } else {
+    	test: "Test two" money(moneyBling)
     }
 }

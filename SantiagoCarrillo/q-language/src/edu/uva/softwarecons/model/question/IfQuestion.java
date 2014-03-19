@@ -1,29 +1,64 @@
 package edu.uva.softwarecons.model.question;
 
 import edu.uva.softwarecons.model.expression.Expression;
+import edu.uva.softwarecons.visitor.form.IFormElementVisitor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Falconlabs
- * User: sancarbar
+ * @author Santiago Carrillo
  * Date: 2/26/14
  */
-public class IfQuestion extends Question {
+public class IfQuestion
+    implements Question
+{
 
-    Expression expression;
+    private final Expression expression;
 
-    List<Question> questions = new ArrayList<Question>();
+    private final List<Question> questions;
 
-    public IfQuestion() {
-    }
+    private final ElseQuestion elseQuestion;
 
-    public void addQuestion(Question question){
-        questions.add(question);
-    }
+    private final String condition;
 
-    public void setExpression(Expression expression) {
+    public IfQuestion( Expression expression, List<Question> questions, ElseQuestion elseQuestion, String condition )
+    {
         this.expression = expression;
+        this.questions = questions;
+        this.elseQuestion = elseQuestion;
+        this.condition = condition;
+    }
+
+    public Expression getExpression()
+    {
+        return expression;
+    }
+
+    public List<Question> getQuestions()
+    {
+        return questions;
+    }
+
+    public ElseQuestion getElseQuestion()
+    {
+        return elseQuestion;
+    }
+
+    @Override
+    public void accept( IFormElementVisitor visitor )
+    {
+        visitor.visitIfQuestion( this );
+    }
+
+    @Override
+    public boolean equals( Object o )
+    {
+        return o instanceof IfQuestion;
+    }
+
+    public String getCondition()
+    {
+        return condition;
     }
 }
