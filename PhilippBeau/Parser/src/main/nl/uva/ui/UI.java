@@ -21,7 +21,7 @@ public class UI extends JFrame {
     private void generateUI() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         UIElement layout = _form.getLayout(_form, this);
-        this.add(layout.generateUIElement());
+        this.add(layout.getPanel());
 
         this.pack();
 

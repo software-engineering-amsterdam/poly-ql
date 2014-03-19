@@ -36,7 +36,7 @@ public class IfThenElseUI extends IfThenUI {
     }
 
     @Override
-    public JPanel generateUIElement() {
+    public JPanel getPanel() {
         return _ifThenElsePanel;
     }
 

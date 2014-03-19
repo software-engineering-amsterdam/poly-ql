@@ -19,12 +19,12 @@ public class FormUI extends UIElement {
     }
 
     @Override
-    public JPanel generateUIElement() {
+    public JPanel getPanel() {
         JPanel layout = new JPanel();
         layout.setLayout(new BoxLayout(layout, BoxLayout.Y_AXIS));
 
         for (Statement child : _block) {
-            layout.add(child.getLayout(_parentUI).generateUIElement());
+            layout.add(child.getLayout(_parentUI).getPanel());
         }
 
         return layout;

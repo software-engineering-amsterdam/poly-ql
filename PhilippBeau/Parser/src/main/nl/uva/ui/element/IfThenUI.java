@@ -31,14 +31,14 @@ public class IfThenUI extends UIElement implements ExpressionChangeListener {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
         for (Statement child : statements) {
-            panel.add(child.getLayout(parent).generateUIElement());
+            panel.add(child.getLayout(parent).getPanel());
         }
 
         return panel;
     }
 
     @Override
-    public JPanel generateUIElement() {
+    public JPanel getPanel() {
         return _ifPanel;
     }
 

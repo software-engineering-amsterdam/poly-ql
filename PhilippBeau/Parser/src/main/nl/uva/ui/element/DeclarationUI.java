@@ -33,7 +33,7 @@ public class DeclarationUI extends UIElement implements UIValueChangeListener, E
     }
 
     @Override
-    public JPanel generateUIElement() {
+    public JPanel getPanel() {
         JPanel layout = new JPanel();
         layout.setLayout(new BoxLayout(layout, BoxLayout.X_AXIS));
         JLabel label = new JLabel(_function);

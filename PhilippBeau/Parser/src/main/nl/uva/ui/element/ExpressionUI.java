@@ -12,8 +12,8 @@ public class ExpressionUI extends DeclarationUI {
     }
 
     @Override
-    public JPanel generateUIElement() {
-        JPanel panel = super.generateUIElement();
+    public JPanel getPanel() {
+        JPanel panel = super.getPanel();
         _valueUI.setEditable(false);
 
         return panel;
