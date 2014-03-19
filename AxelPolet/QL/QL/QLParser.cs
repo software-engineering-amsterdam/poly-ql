@@ -7,14 +7,14 @@ namespace QL
         private Questionnaire _ASTRoot;
         private QLMemory _qlMemory;
 
-        public Questionnaire GetAST()
-        {
-            return _ASTRoot;
-        }
-
         public void SetIdManager(QLMemory qlMemory)
         {
             _qlMemory = qlMemory;
+        }
+
+        public Questionnaire GetAST()
+        {
+            return _ASTRoot;
         }
     }
 }

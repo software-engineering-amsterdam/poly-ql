@@ -1,0 +1,11 @@
+// Multiple Forms in different ways
+form form1 {
+}
+
+form form2 {
+    id: "label" integer
+}
+form form3
+{
+    
+}

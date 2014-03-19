@@ -8,20 +8,21 @@ import edu.uva.softwarecons.model.question.IfQuestion;
 
 /**
  * Falconlabs
- * User: sancarbar
+ * @author Santiago Carrillo
  * Date: 2/26/14
  */
-public interface IFormElementVisitor {
+public interface IFormElementVisitor
+{
 
-    void visitForm(Form form);
+    void visitForm( Form form );
 
-    void visitComputedQuestion(ComputedQuestion question);
+    void visitComputedQuestion( ComputedQuestion question );
 
-    void visitIfQuestion(IfQuestion question);
+    void visitIfQuestion( IfQuestion question );
 
-    void visitElseQuestion(ElseQuestion question);
+    void visitElseQuestion( ElseQuestion question );
 
-    void visitQuestion(BasicQuestion question);
+    void visitQuestion( BasicQuestion question );
 
 
 }

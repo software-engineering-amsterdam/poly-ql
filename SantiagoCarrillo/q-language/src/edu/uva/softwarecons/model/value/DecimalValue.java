@@ -1,70 +1,84 @@
 package edu.uva.softwarecons.model.value;
 
-import edu.uva.softwarecons.exception.CompareException;
-import edu.uva.softwarecons.exception.InvalidOperationException;
-
 /**
  * Falconlabs
- * User: sancarbar
+ * @author Santiago Carrillo
  * Date: 3/13/14
  */
-public class DecimalValue implements ArithmeticValue{
+public class DecimalValue
+    implements ArithmeticValue
+{
 
     private final float value;
 
-    public DecimalValue(float value) {
+    public DecimalValue( float value )
+    {
         this.value = value;
     }
 
     @Override
-    public String getValue() {
-        return String.valueOf(value);
+    public Float getValue()
+    {
+        return  value;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return value == Float.parseFloat(((DecimalValue)obj).getValue());
+    public boolean equals( Object obj )
+    {
+        return value == ( (DecimalValue) obj ).getValue();
     }
 
     @Override
-    public Value add(Value value) {
-        return new DecimalValue(this.value + Float.parseFloat(value.getValue()));
+    public Value add( Value value )
+    {
+        return new DecimalValue( this.value + ( (DecimalValue) value ).getValue() );
     }
 
     @Override
-    public Value subtract(Value value) {
-        return new DecimalValue(this.value - Float.parseFloat(value.getValue()));
+    public Value subtract( Value value )
+    {
+        return new DecimalValue( this.value - ( (DecimalValue) value ).getValue() );
     }
 
     @Override
-    public Value divide(Value value) throws InvalidOperationException {
-        if(Float.parseFloat(value.getValue()) == 0)
-            throw new InvalidOperationException("Invalid operation trying to divide by zero");
-        return new DecimalValue(this.value / Float.parseFloat(value.getValue()));
+    public Value divide( Value value )
+    {
+        return new DecimalValue( this.value / ( (DecimalValue) value ).getValue() );
     }
 
     @Override
-    public Value multiply(Value value) {
-        return new DecimalValue(this.value * Float.parseFloat(value.getValue()));
+    public Value multiply( Value value )
+    {
+        return new DecimalValue( this.value * ( (DecimalValue) value ).getValue() );
     }
 
     @Override
-    public boolean greater(Value value) throws CompareException {
-        return this.value > Float.parseFloat(value.getValue());
+    public boolean greater( Value value )
+    {
+        return this.value > ( (DecimalValue) value ).getValue();
     }
 
     @Override
-    public boolean greaterEqual(Value value) throws CompareException {
-        return this.value >= Float.parseFloat(value.getValue());
+    public boolean greaterEqual( Value value )
+    {
+        return this.value >= ( (DecimalValue) value ).getValue();
     }
 
     @Override
-    public boolean less(Value value) throws CompareException {
-        return this.value < Float.parseFloat(value.getValue());
+    public boolean less( Value value )
+    {
+        return this.value < ( (DecimalValue) value ).getValue();
     }
 
     @Override
-    public boolean lessEqual(Value value) throws CompareException {
-        return this.value <= Float.parseFloat(value.getValue());
+    public boolean lessEqual( Value value )
+    {
+        return this.value <= ( (DecimalValue) value ).getValue();
+    }
+
+    @Override
+    public String toString()
+    {
+        return String.valueOf( value );
     }
 }

@@ -1,5 +1,6 @@
 package expr.syntactic;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import visitor.ASTVisitor;
@@ -7,7 +8,7 @@ import visitor.ASTVisitor;
 import expr.ASTNode;
 import expr.Ident;
 
-public class Form implements ASTNode {
+public class Form implements SyntacticExpressions {
 	protected Ident identifier;
 	protected List<Statement> list;
 
@@ -41,6 +42,14 @@ public class Form implements ASTNode {
 			str+=s.toString() + "\n";
 		str+= "}";
 		return str;
+	}
+
+	@Override
+	public ASTNode ReplaceQuestionValue(Question q) {
+		List<Statement> list=new LinkedList<>();
+		for(Statement s : this.list)
+			list.add((Statement)s.ReplaceQuestionValue(q));
+		return new Form(this.identifier,list);
 	}
 }
 

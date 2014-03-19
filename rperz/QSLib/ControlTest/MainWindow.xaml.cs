@@ -23,7 +23,7 @@ namespace ControlTest
         {
             InitializeComponent();
             Question q = new Question(new QSLib.Expressions.Literals.QSString("Dit is een testvraag?", 1), new QSLib.Expressions.Unary.Identifier("TestNaam", 1), 1);
-            this.userControl.Children.Add(new QuestionControl(q));
+            this.userControl.Children.Add(new QuestionControl());
         }
     }
 }

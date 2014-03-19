@@ -1,25 +1,21 @@
 ﻿using System;
-using QSLib.Expressions.Literals;
-using QSLib.Expressions.Unary;
 
 namespace QSLib
 {
     public class Form
     {
         private CodeBlock _code;
-        private int _linenr;
+        private int _lineNr;
 
-        public Form(CodeBlock code, int linenr)
+        #region Constructors
+        public Form(CodeBlock code, int lineNr)
         {
             this._code = code;
-            this._linenr = linenr;
+            this._lineNr = lineNr;
         }
+        #endregion
 
-        public override string ToString()
-        {
-            return "form \r\n { \r\n" + this._code.ToString() + "\r\n }";
-        }
-
+        #region Getters
         public Type Type
         {
             get
@@ -27,14 +23,21 @@ namespace QSLib
                 return null;
             }
         }
-        public bool CheckType(TypeChecker checker)
+        #endregion
+
+        #region TypeChecker
+        public void Check(TypeChecker checker)
         {
-            if(this._code != null)
-                return this._code.CheckType(checker);
-            checker.ReportEmptyBlockWarning("form", this._linenr);
-            return true;
+            checker.Check(this);
         }
 
+        internal void CheckCode(TypeChecker checker)
+        {
+            this._code.Check(checker);
+        }
+        #endregion
+
+        #region Object overrides
         public override bool Equals(object obj)
         {
             var comp = obj as Form;
@@ -46,9 +49,15 @@ namespace QSLib
             return base.GetHashCode();
         }
 
+        public override string ToString()
+        {
+            return "form \r\n { \r\n" + this._code.ToString() + "\r\n }";
+        }
+        #endregion
+
         internal void CreateGUI(GUIBuilder guiBuilder)
         {
-            throw new NotImplementedException();
+            this._code.CreateGUI(guiBuilder);
         }
     }
 }

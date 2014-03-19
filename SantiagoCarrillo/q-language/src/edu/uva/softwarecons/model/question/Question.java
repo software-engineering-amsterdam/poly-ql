@@ -4,8 +4,10 @@ import edu.uva.softwarecons.visitor.form.IFormElement;
 
 /**
  * Falconlabs
- * User: sancarbar
+ * @author Santiago Carrillo
  * Date: 3/5/14
  */
-public interface Question extends IFormElement {
+public interface Question
+    extends IFormElement
+{
 }

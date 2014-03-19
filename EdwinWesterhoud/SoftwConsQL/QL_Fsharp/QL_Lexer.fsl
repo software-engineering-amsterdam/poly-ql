@@ -54,6 +54,7 @@ let symbol      = ">" | ">=" | "<" | "<=" | "==" | "!=" | "&&" | "||" | "!" // B
 rule tokenize = parse   
 | whitespace    { tokenize lexbuf }   
 | newline       { lexbuf.EndPos <- lexbuf.EndPos.NextLine; tokenize lexbuf; }
+| "//"          { comment lexbuf}
 | int           { INT(Int32.Parse(LexBuffer<_>.LexemeString lexbuf)) }
 | float         { DECIMAL(Double.Parse(LexBuffer<_>.LexemeString lexbuf, Globalization.NumberFormatInfo.InvariantInfo)) }
 | "\""			{ LABEL(string lexbuf.StartPos "" lexbuf) }
@@ -70,5 +71,8 @@ and string pos res = parse
 | newline       { lexbuf.EndPos <- lexbuf.EndPos.NextLine; string pos (res + "\n") lexbuf; }
 | eof			{ failwith "Unterminated string" }
 | _				{ string pos (res + (LexBuffer<_>.LexemeString lexbuf)) lexbuf }
+and comment = parse
+| newline       { lexbuf.EndPos <- lexbuf.EndPos.NextLine; tokenize lexbuf; }
+| _             { comment lexbuf }
 
 

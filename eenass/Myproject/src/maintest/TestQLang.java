@@ -10,7 +10,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.RuleContext;
 import org.antlr.v4.runtime.Token;
 
-import typecheck.SymboleTable;
+import typecheck.SymbolTable;
 import antlr.*;
 import ast.ASTNode;
 import ast.expr.Expr;
@@ -28,11 +28,11 @@ public class TestQLang {
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 		QLangParser parser = new QLangParser(tokens);
 		parser.setBuildParseTree(true);
-		RuleContext t = parser.form();
-		t.inspect(parser);
-//		ASTNode tree = parser.init().result;
-//		BaseVisitor visitor = new BaseVisitor();
-//		System.out.println(tree.accept(visitor));
+//		RuleContext t = parser.form();
+//		t.inspect(parser);
+		ASTNode tree = parser.init().result;
+		BaseVisitor visitor = new BaseVisitor();
+		System.out.println(tree.accept(visitor));
 	}
 
 }

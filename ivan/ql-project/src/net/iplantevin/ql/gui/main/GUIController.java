@@ -12,8 +12,11 @@ import org.antlr.v4.runtime.tree.ParseTree;
 
 import javax.swing.*;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Parses, type checks and runs gui for a given file.
@@ -22,8 +25,14 @@ import java.io.InputStream;
  */
 public class GUIController {
     private FormCollection forms;
+    private final List<FormFrame> frames;
 
     public GUIController(String inputFile) throws IOException {
+        forms = buildForms(inputFile);
+        frames = new ArrayList<FormFrame>();
+    }
+
+    private FormCollection buildForms(String inputFile) throws IOException {
         InputStream is = System.in;
         if (inputFile != null) is = new FileInputStream(inputFile);
 
@@ -35,7 +44,7 @@ public class GUIController {
         ParseTree tree = parser.forms(); // Parse.
 
         ASTBuilderVisitor builder = new ASTBuilderVisitor();
-        forms = builder.visitForms((QLParser.FormsContext) tree);
+        return builder.visitForms((QLParser.FormsContext) tree);
     }
 
     public boolean typeCheck() {
@@ -56,14 +65,25 @@ public class GUIController {
             return;
         }
 
+        final GUIController controller = this;
+
         for (final Form form : forms.getForms()) {
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
-                    FormFrame frame = new FormFrame(form);
+                    FormFrame frame = FormFrameBuilder.build(form, controller);
+                    frames.add(frame);
                     frame.setVisible(true);
                 }
             });
+        }
+    }
+
+    public void closeForm(FormFrame frame) {
+        frames.remove(frame);
+        frame.dispose();
+        if (frames.size() == 0) {
+            System.exit(0);
         }
     }
 }

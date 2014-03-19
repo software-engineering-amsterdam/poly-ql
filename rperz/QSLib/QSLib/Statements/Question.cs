@@ -1,5 +1,4 @@
 ﻿using QSLib.Expressions.Literals;
-using QSLib.Types;
 using QSLib.Expressions.Unary;
 namespace QSLib
 {
@@ -7,24 +6,48 @@ namespace QSLib
     {
         private Identifier _id;
         private QSString _text;
-        private int _linenr;
-        public Question(QSString text, Identifier id, int linenr)
+        private int _lineNr;
+
+        #region Constructors
+        public Question(QSString text, Identifier id, int lineNr)
         {
             this._text = text;
             this._id = id;
-            this._linenr = linenr;
+            this._lineNr = lineNr;
         }
+        #endregion
 
-        public override string ToString()
+        #region Getters
+        public string Text
         {
-            return this._text.ToString() + this._id.ToString();
+            get
+            {
+                return this._text.ToString();
+            }
         }
 
-        public bool CheckType(TypeChecker checker)
+        public int Line
         {
-            return this._id.CheckType(checker);
+            get
+            {
+                return this._lineNr;
+            }
+        }
+        #endregion
+
+        #region TypeChecker
+        public void Check(TypeChecker checker)
+        {
+            checker.Check(this);
         }
 
+        public void CheckIdentifier(TypeChecker checker)
+        {
+            this._id.Check(checker);
+        }
+        #endregion
+
+        #region Object overrides
         public override bool Equals(object obj)
         {
             var comp = obj as Question;
@@ -36,9 +59,15 @@ namespace QSLib
             return base.GetHashCode();
         }
 
+        public override string ToString()
+        {
+            return this._text.ToString() + this._id.ToString();
+        }
+        #endregion
+
         public void CreateGUI(GUIBuilder guiBuilder)
         {
-            guiBuilder.CreateQuestion((string)this._text.GetValue(), this._id);
+            guiBuilder.CreateQuestion((string)this._text.Evaluate().GetValue, this._id);
         }
     }
 

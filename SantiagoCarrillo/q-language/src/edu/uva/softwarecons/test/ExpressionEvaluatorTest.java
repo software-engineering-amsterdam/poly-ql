@@ -1,74 +1,140 @@
 package edu.uva.softwarecons.test;
 
 import edu.uva.softwarecons.evaluator.ExpressionEvaluator;
-import edu.uva.softwarecons.exception.CompareException;
-import edu.uva.softwarecons.model.expression.Expression;
 import edu.uva.softwarecons.model.expression.arithmetic.AddExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.DivExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.MulExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.SubExpression;
+import edu.uva.softwarecons.model.expression.comparison.EqualExpression;
+import edu.uva.softwarecons.model.expression.comparison.NotEqualExpression;
+import edu.uva.softwarecons.model.expression.literal.BoolExpression;
 import edu.uva.softwarecons.model.expression.literal.IntExpression;
+import edu.uva.softwarecons.model.expression.logical.AndExpression;
+import edu.uva.softwarecons.model.expression.logical.NotExpression;
+import edu.uva.softwarecons.model.expression.logical.OrExpression;
+import edu.uva.softwarecons.model.value.IntegerValue;
 import edu.uva.softwarecons.model.value.Value;
 import org.junit.Test;
 
+import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
 /**
  * Falconlabs
- * User: sancarbar
- * Date: 3/13/14
+ *
+ * @author Santiago Carrillo
+ *         Date: 3/13/14
  */
-public class ExpressionEvaluatorTest {
+public class ExpressionEvaluatorTest
+{
+
+    final ExpressionEvaluator expressionEvaluator = new ExpressionEvaluator();
 
     @Test
-    public void evaluateArithmeticAddExpressionTest() {
-        try {
-            AddExpression addExpression = new AddExpression(new IntExpression(2), new IntExpression(3));
-            ExpressionEvaluator expressionEvaluator =  new ExpressionEvaluator(null);
-            Value value = expressionEvaluator.visitAddExpression(addExpression);
-            assertTrue(Integer.parseInt(value.getValue()) == 5);
-        } catch (CompareException e) {}
+    public void evaluateArithmeticAddExpressionTest()
+    {
+        AddExpression addExpression = new AddExpression( new IntExpression( 2 ), new IntExpression( 3 ) );
+        Value value = expressionEvaluator.visitAddExpression( addExpression );
+        assertTrue( ( (IntegerValue) value ).getValue() == 5 );
     }
 
     @Test
-    public void evaluateArithmeticSubExpressionTest() {
-        try {
-            SubExpression subExpression = new SubExpression(new IntExpression(5), new IntExpression(3));
-            ExpressionEvaluator expressionEvaluator =  new ExpressionEvaluator(null);
-            Value value = expressionEvaluator.visitSubExpression(subExpression);
-            assertTrue(Integer.parseInt(value.getValue()) == 2);
-        } catch (CompareException e) {}
+    public void evaluateArithmeticSubExpressionTest()
+    {
+        SubExpression subExpression = new SubExpression( new IntExpression( 5 ), new IntExpression( 3 ) );
+        Value value = expressionEvaluator.visitSubExpression( subExpression );
+        assertTrue( ( (IntegerValue) value ).getValue() == 2 );
     }
 
     @Test
-    public void evaluateArithmeticMulExpressionTest() {
-        try {
-            MulExpression mulExpression = new MulExpression(new IntExpression(5), new IntExpression(3));
-            ExpressionEvaluator expressionEvaluator =  new ExpressionEvaluator(null);
-            Value value = expressionEvaluator.visitMulExpression(mulExpression);
-            assertTrue(Integer.parseInt(value.getValue()) == 15);
-        } catch (CompareException e) {}
+    public void evaluateArithmeticMulExpressionTest()
+    {
+        MulExpression mulExpression = new MulExpression( new IntExpression( 5 ), new IntExpression( 3 ) );
+        Value value = expressionEvaluator.visitMulExpression( mulExpression );
+        assertTrue( ( (IntegerValue) value ).getValue() == 15 );
     }
 
     @Test
-    public void evaluateArithmeticDivExpressionTest() {
-        try {
-            DivExpression divExpression = new DivExpression(new IntExpression(10), new IntExpression(2));
-            ExpressionEvaluator expressionEvaluator =  new ExpressionEvaluator(null);
-            Value value = expressionEvaluator.visitDivExpression(divExpression);
-            assertTrue(Integer.parseInt(value.getValue()) == 5);
-        } catch (CompareException e) {}
+    public void evaluateArithmeticDivExpressionTest()
+    {
+        DivExpression divExpression = new DivExpression( new IntExpression( 10 ), new IntExpression( 2 ) );
+        Value value = expressionEvaluator.visitDivExpression( divExpression );
+        assertTrue( ( (IntegerValue) value ).getValue() == 5 );
     }
 
     @Test
-    public void evaluateArithmeticDivZeroExpressionTest() {
-        try {
-            DivExpression divExpression = new DivExpression(new IntExpression(1), new IntExpression(0));
-            ExpressionEvaluator expressionEvaluator =  new ExpressionEvaluator(null);
-            expressionEvaluator.visitDivExpression(divExpression);
-            assertTrue(false);
-        } catch (CompareException e) {
-            assertTrue(true);
-        }
+    public void evaluateAndExpressionTest()
+    {
+        AndExpression andExpression = new AndExpression( new BoolExpression( true ), new BoolExpression( false ) );
+        assertFalse( (Boolean) expressionEvaluator.visitAndExpression( andExpression ).getValue() );
+    }
+
+    @Test
+    public void evaluateOrExpressionTest()
+    {
+        OrExpression orExpression = new OrExpression( new BoolExpression( true ), new BoolExpression( false ) );
+        assertTrue( (Boolean) expressionEvaluator.visitOrExpression( orExpression ).getValue() );
+    }
+
+    @Test
+    public void evaluateNotExpressionTest()
+    {
+        NotExpression notExpression = new NotExpression( new BoolExpression( true ) );
+        assertFalse( (Boolean) expressionEvaluator.visitNotExpression( notExpression ).getValue() );
+    }
+
+    @Test
+    public void evaluateNotEqualBooleanExpressionTest()
+    {
+        NotEqualExpression notEqualExpression =
+            new NotEqualExpression( new BoolExpression( false ), new BoolExpression( true ) );
+        assertTrue( (Boolean) expressionEvaluator.visitNotEqualExpression( notEqualExpression ).getValue() );
+    }
+
+
+    @Test
+    public void evaluateEqualBooleanExpressionTest()
+    {
+        EqualExpression equalExpression = new EqualExpression( new BoolExpression( true ), new BoolExpression( true ) );
+        assertTrue( (Boolean) expressionEvaluator.visitEqualExpression( equalExpression ).getValue() );
+    }
+
+    @Test
+    public void evaluateEqualNumericExpressionTest()
+    {
+        EqualExpression equalExpression = new EqualExpression( new IntExpression( 1 ), new IntExpression( 1 ) );
+        assertTrue( (Boolean) expressionEvaluator.visitEqualExpression( equalExpression ).getValue() );
+    }
+
+    @Test
+    public void evaluateNotEqualNumericExpressionTest()
+    {
+        NotEqualExpression notEqualExpression =
+            new NotEqualExpression( new IntExpression( 2 ), new IntExpression( 1 ) );
+        assertTrue( (Boolean) expressionEvaluator.visitNotEqualExpression( notEqualExpression ).getValue() );
+    }
+
+    @Test
+    public void evaluateEqualDateExpressionTest()
+    {
+        EqualExpression equalExpression = new EqualExpression( new IntExpression( 1 ), new IntExpression( 1 ) );
+        assertTrue( (Boolean) expressionEvaluator.visitEqualExpression( equalExpression ).getValue() );
+    }
+
+    @Test
+    public void evaluateNotEqualDateExpressionTest()
+    {
+        NotEqualExpression notEqualExpression =
+            new NotEqualExpression( new IntExpression( 2 ), new IntExpression( 1 ) );
+        assertTrue( (Boolean) expressionEvaluator.visitNotEqualExpression( notEqualExpression ).getValue() );
+    }
+
+
+    @Test
+    public void evaluateGreaterNumericExpressionTest()
+    {
+        NotEqualExpression notEqualExpression =
+            new NotEqualExpression( new IntExpression( 2 ), new IntExpression( 1 ) );
+        assertTrue( (Boolean) expressionEvaluator.visitNotEqualExpression( notEqualExpression ).getValue() );
     }
 }

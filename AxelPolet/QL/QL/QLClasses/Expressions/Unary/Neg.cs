@@ -1,5 +1,4 @@
-﻿using System;
-using QL.QLClasses.Types;
+﻿using QL.QLClasses.Types;
 using QL.QLClasses.Values;
 using QL.TypeChecker;
 
@@ -13,18 +12,18 @@ namespace QL.QLClasses.Expressions.Unary
 
         public override QValue Evaluate()
         {
-            return new IntValue(((IntValue)InnerExpression.Evaluate()).GetValue() * -1);
+            return new IntValue(((IntValue)InnerExpression.Evaluate()).Value() * -1);
         }
 
         public override bool CheckType(QLTypeErrors typeErrors)
         {
             if (!(InnerExpression.GetResultType().IsCompatibleWith(new QInt())))
             {
-                typeErrors.ReportError(new QLTypeError
-                {
-                    Message = string.Format("The NEGATIVE (-) operator can only be applied on integers! Got QType '{0}', with valuetype '{1}'",
-                            InnerExpression, InnerExpression.GetType()), TokenInfo = InnerExpression.TokenInfo
-                });
+                typeErrors.ReportError(new QLTypeError(
+                    string.Format("The NEGATIVE (-) operator can only be applied on integers! Got '{0}'",
+                            InnerExpression.GetResultType()), 
+                    InnerExpression.TokenInfo
+                ));
 
                 return false;
             }

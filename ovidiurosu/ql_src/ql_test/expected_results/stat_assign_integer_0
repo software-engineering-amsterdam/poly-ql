@@ -1,0 +1,1 @@
+(init (form form test (block { (stat question : "How many times?" (type integer)) (stat question2 : "How often?" (type integer)) })))

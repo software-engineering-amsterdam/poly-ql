@@ -4,39 +4,7 @@
 open System.Collections.Generic
 open System
 open QL_Grammar
-
-//// Type check info
-type expressionType = TBool | TString | TInt | TDecimal | TError | TForm
-    with override this.ToString() = match this with
-                                    | TBool -> "Boolean"
-                                    | TString -> "String"
-                                    | TInt -> "Integer"
-                                    | TDecimal -> "Decimal"
-                                    | TForm -> "Form"
-                                    | TError -> "Error"
-
-type TypeCheckInfo(formName) = 
-    let errors = new List<string * Position>()
-    let identifiers = new Dictionary<string, expressionType>()
-    do identifiers.Add(formName, TForm)
-
-    member this.RegisterIdentifier(id, exprType) =
-        if identifiers.ContainsKey(id) 
-        then false
-        else identifiers.Add(id, exprType)
-             true
-    
-    member this.GetIdentifierType(id) = 
-        if identifiers.ContainsKey(id)
-        then identifiers.[id]
-        else TError
-
-    member this.RegisterError(message, position) = errors.Add(message, position)
-
-    member this.HasErrors = errors.Count > 0
-
-    member this.ErrorList = List.ofSeq errors
-
+open TypeCheckInfo
 
 let mapQLType qlType = match qlType with
                        | QLBool -> TBool
@@ -118,10 +86,10 @@ let rec checkStmts stmts (checkInfo : TypeCheckInfo) =
     let checkStmt stmt = 
         match stmt with
         | Assignment(id, label, expression, pos) -> let exprType = checkExpression expression checkInfo
-                                                    if not <| checkInfo.RegisterIdentifier(id, exprType) then
-                                                        checkInfo.RegisterError(sprintf "Duplicate identifier on line %i (\"%s\")" pos.StartLine id, pos)
-        | Question(id, label, qlType, pos) ->       if not <| checkInfo.RegisterIdentifier(id, mapQLType qlType) then
-                                                        checkInfo.RegisterError(sprintf "Duplicate identifier on line %i (\"%s\")" pos.StartLine id, pos)
+                                                    checkInfo.RegisterIdentifier(id, exprType, pos)
+                                                    checkInfo.RegisterLabel(label, pos)
+        | Question(id, label, qlType, pos)       -> checkInfo.RegisterIdentifier(id, mapQLType qlType, pos)
+                                                    checkInfo.RegisterLabel(label, pos)
         | IfElseConditional(cond, ifStmts, elseStmts, pos) ->   let exprType = checkExpression cond checkInfo
                                                                 if not <| exprType.Equals(TBool) && not <| exprType.Equals(TError) then
                                                                     checkInfo.RegisterError(sprintf "Type error on line %i: expected Boolean expression" pos.StartLine, getExpressionPosition cond)
@@ -137,4 +105,3 @@ let rec checkStmts stmts (checkInfo : TypeCheckInfo) =
 let typeCheck ast = let checkInfo = new TypeCheckInfo(ast.ID)
                     checkStmts ast.Statements checkInfo
                     checkInfo
-

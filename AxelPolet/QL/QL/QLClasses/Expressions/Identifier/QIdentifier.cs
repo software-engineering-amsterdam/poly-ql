@@ -22,7 +22,7 @@ namespace QL.QLClasses.Expressions.Identifier
 
         public override QValue Evaluate()
         {
-            return _memory.GetDeclaredValue(_name).Evaluate();
+            return _memory.GetDeclaredValue(_name);
         }
 
         #region TypeChecker Implementation
@@ -31,11 +31,11 @@ namespace QL.QLClasses.Expressions.Identifier
         {
             if (!_memory.IsDeclared(_name))
             {
-                typeErrors.ReportError(new QLTypeError
-                {
-                    Message = string.Format("Referenced identifier '{0}' is not defined!", _name),
-                    TokenInfo = TokenInfo
-                });
+                typeErrors.ReportError(new QLTypeError(
+                    string.Format("Referenced identifier '{0}' is not defined!", _name),
+                    TokenInfo
+                ));
+
                 return false;
             }
 

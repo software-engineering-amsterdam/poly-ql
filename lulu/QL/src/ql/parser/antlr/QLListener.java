@@ -2,9 +2,9 @@
 
 package ql.parser.antlr;
 import ql.ast.expr.*;
-import ql.ast.stat.*;
+import ql.ast.form.stat.*;
 import ql.ast.form.*;
-import ql.ast.form.questionType.*;
+import ql.ast.type.*;
 import ql.ast.expr.exprType.*;
 import ql.ast.expr.operation.*;
 import ql.ast.expr.operation.add.*;
@@ -130,6 +130,17 @@ public interface QLListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitUnExpr(@NotNull QLParser.UnExprContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link QLParser#stat}.
+	 * @param ctx the parse tree
+	 */
+	void enterStat(@NotNull QLParser.StatContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QLParser#stat}.
+	 * @param ctx the parse tree
+	 */
+	void exitStat(@NotNull QLParser.StatContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link QLParser#orExpr}.

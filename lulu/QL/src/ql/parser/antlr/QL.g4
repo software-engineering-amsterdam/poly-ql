@@ -5,9 +5,9 @@ grammar QL;
 {
 package ql.parser.antlr;
 import ql.ast.expr.*;
-import ql.ast.stat.*;
+import ql.ast.form.stat.*;
 import ql.ast.form.*;
-import ql.ast.form.questionType.*;
+import ql.ast.type.*;
 import ql.ast.expr.exprType.*;
 import ql.ast.expr.operation.*;
 import ql.ast.expr.operation.add.*;
@@ -27,13 +27,11 @@ form returns[Form result]
 { $result = new Form(new Ident($Ident.text), $f.result); }
 ;
 
-//(WS | WS COMMENT WS) 
-
 formItems returns [List<FormItems> result]
 @init { List<FormItems> formItems = new ArrayList(); }
 : '{' NEWLINE
 	(q=question {formItems.add($q.result);}
-//	| s=stat {formItems.add($s.result);}
+	| s=stat {formItems.add($s.result);}
 	)* 
 	'}' NEWLINE
 	
@@ -44,21 +42,25 @@ formItems returns [List<FormItems> result]
 question returns [Question result]
 : Ident ':' Str t=type NEWLINE
 { $result = new Question(new Ident($Ident.text), $Str.text, $t.result); }
-| Ident ':' Str t=type '(' x=orExpr ')' (WS | WS COMMENT WS)
-{ $result = new Question(new Ident($Ident.text), $Str.text, $t.result, $x.result); }
+| Ident ':' Str t=type '(' x=orExpr ')' NEWLINE
+{ $result = new ComputedQuestion(new Ident($Ident.text), $Str.text, $t.result, $x.result); }
 ;
 
-type returns [TypeQue result]
-: 'boolean' { $result = new BoolQue();}
-| 'int' { $result = new IntQue();}	
-| 'string' { $result = new StrQue();}
+type returns [Type result]
+: 'boolean' { $result = new BoolType();}
+| 'int' { $result = new IntType();}	
+| 'string' { $result = new StrType();}
 ;
 
-//stat returns [Statement result]
-//: 'if' '(' orExpr ')' formItems	#IFstatement
-//;
-// 
-//    
+stat returns [Statement result]
+: 'if' '(' or=orExpr ')' ifBody=formItems
+{ $result = new IfStatement($or.result, $ifBody.result); }
+| 'if' '(' or=orExpr ')' ifBody=formItems
+  'else' elseBody=formItems 
+{ $result = new IfElseStatement($or.result, $ifBody.result, $elseBody.result); }
+;
+ 
+    
 
 unExpr returns [Expr result]
     :  '+' x=unExpr { $result = new Pos($x.result); }
@@ -137,11 +139,11 @@ orExpr returns [Expr result]
 //;
 
 Str: '"' .*? '"' ;
-NEWLINE : '\r'? '\n' ;
+NEWLINE : '\r'? '\n';
 WS  :	(' ' | '\t' | '\n' | '\r') -> channel(HIDDEN)
     ;
 
-COMMENT : ('/*' .*? '*/' | '//' .*?) -> channel(HIDDEN)
+COMMENT : '\r' ('/*' .*? '*/' | '//' .*?) -> channel(HIDDEN)
     ;
 
 Int: ('0'..'9')+;

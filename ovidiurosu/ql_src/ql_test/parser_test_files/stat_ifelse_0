@@ -1,0 +1,16 @@
+// If / else assignment
+form test {
+    question: "Is it true?" boolean
+    question2: "Is it false?" boolean
+    if (question) {
+        reason: "Reason: " text
+    } else {
+        reason2: "Why? " text
+    }
+    if (question2) {
+    } else {}
+    
+    if (question1 && question2) {} else {
+    
+    }
+}

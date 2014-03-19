@@ -31,7 +31,7 @@ namespace QL
             TypeChecker = new QLTypeChecker();
         }
 
-        public Questionnaire Run(string inputString)
+        public Questionnaire BuildAST(string inputString)
         {
             MemoryStream inputStream = new MemoryStream(Encoding.UTF8.GetBytes(inputString ?? ""));
 

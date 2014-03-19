@@ -1,71 +1,86 @@
 package edu.uva.softwarecons.model.value;
 
-import edu.uva.softwarecons.exception.CompareException;
-import edu.uva.softwarecons.exception.InvalidOperationException;
-
 /**
  * Falconlabs
- * User: sancarbar
- * Date: 3/13/14
+ *
+ * @author Santiago Carrillo
+ *         Date: 3/13/14
  */
-public class IntegerValue implements ArithmeticValue{
+public class IntegerValue
+    implements ArithmeticValue
+{
 
     private final int value;
 
-    public IntegerValue(int value) {
+    public IntegerValue( int value )
+    {
         this.value = value;
     }
 
 
     @Override
-    public String getValue() {
-        return String.valueOf(value);
+    public Integer getValue()
+    {
+        return value;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return value == Integer.parseInt(((IntegerValue)obj).getValue());
+    public boolean equals( Object obj )
+    {
+        return value == ( (IntegerValue) obj ).getValue();
     }
 
     @Override
-    public Value add(Value value) {
-        return new IntegerValue(this.value + Integer.parseInt(value.getValue()));
+    public Value add( Value value )
+    {
+        return new IntegerValue( this.value + ( (IntegerValue) value ).getValue() );
     }
 
     @Override
-    public Value subtract(Value value) {
-        return new IntegerValue(this.value - Integer.parseInt(value.getValue()));
+    public Value subtract( Value value )
+    {
+        return new IntegerValue( this.value - ( (IntegerValue) value ).getValue() );
     }
 
     @Override
-    public Value divide(Value value) throws InvalidOperationException {
-        if(Integer.parseInt(value.getValue()) == 0)
-            throw new InvalidOperationException("Invalid operation trying to divide by zero");
-        return new IntegerValue(this.value / Integer.parseInt(value.getValue()));
+    public Value divide( Value value )
+    {
+        return new IntegerValue( this.value / ( (IntegerValue) value ).getValue() );
     }
 
     @Override
-    public Value multiply(Value value) {
-        return new IntegerValue(this.value * Integer.parseInt(value.getValue()));
+    public Value multiply( Value value )
+    {
+        return new IntegerValue( this.value * ( (IntegerValue) value ).getValue() );
     }
 
     @Override
-    public boolean greater(Value value) throws CompareException {
-        return this.value > Integer.parseInt(value.getValue());
+    public boolean greater( Value value )
+    {
+        return this.value > ( (IntegerValue) value ).getValue();
     }
 
     @Override
-    public boolean greaterEqual(Value value) throws CompareException {
-        return this.value >= Integer.parseInt(value.getValue());
+    public boolean greaterEqual( Value value )
+    {
+        return this.value >= ( (IntegerValue) value ).getValue();
     }
 
     @Override
-    public boolean less(Value value) throws CompareException {
-        return this.value < Integer.parseInt(value.getValue());
+    public boolean less( Value value )
+    {
+        return this.value < ( (IntegerValue) value ).getValue();
     }
 
     @Override
-    public boolean lessEqual(Value value) throws CompareException {
-        return this.value <= Integer.parseInt(value.getValue());
+    public boolean lessEqual( Value value )
+    {
+        return this.value <= ( (IntegerValue) value ).getValue();
+    }
+
+    @Override
+    public String toString()
+    {
+        return String.valueOf( value );
     }
 }

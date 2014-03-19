@@ -53,3 +53,12 @@ form Box1HouseOwning {
  hasSoldHouse: "invert hasBoughtHouse" boolean(!hasBoughtHouse)
  hasBoughtHouse: "invert hasBoughtHouse" boolean(!hasBoughtHouse)*/
 }
+
+form aSecondForm {
+ happy: "Are you happy?" boolean
+ if (happy) {
+   showGlad: "I am glad you're happy :D" string("")
+ } else {
+   showCheerUp: "Let me cheer you up ^^" string("")
+ }
+}

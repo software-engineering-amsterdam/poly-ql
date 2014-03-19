@@ -18,12 +18,11 @@ namespace QL.QLClasses.Expressions.Binary.Compare
             if (!LeftExpression.GetResultType().IsCompatibleWith(new QInt()) ||
                 !RightExpression.GetResultType().IsCompatibleWith(new QInt()))
             {
-                typeErrors.ReportError(new QLTypeError
-                {
-                    Message = string.Format("Can only compare values of type QInt! Left: '{0}', Right: '{1}'",
+                typeErrors.ReportError(new QLTypeError(
+                    string.Format("Can only compare values of type QInt! Left value: '{0}', right value: '{1}'",
                             LeftExpression.GetResultType(), RightExpression.GetResultType()), 
-                    TokenInfo = LeftExpression.TokenInfo
-                });
+                    LeftExpression.TokenInfo
+                ));
                 return false;
             }
 

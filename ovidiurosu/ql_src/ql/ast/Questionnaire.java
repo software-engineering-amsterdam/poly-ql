@@ -2,58 +2,31 @@ package ql.ast;
 
 import java.util.List;
 
-import ql.ast.stat.IStat;
-import ql.ast.visitor.IElement;
-import ql.ast.visitor.IElementVisitor;
+import ql.ast.statement.Block;
+import ql.ast.statement.IStatement;
+import ql.ast.visitor_elements.IElement;
 
 /**
- * QL Questionnaire
  * @author orosu
  */
 public class Questionnaire implements IElement
 {
-    /**
-     * ID
-     */
     private final String _id;
+    private final Block _block;
 
-    /**
-     * Statements
-     */
-    private final List<IStat> _stats;
-
-    /**
-     * Constructor
-     */
-    public Questionnaire(String id, List<IStat> stats)
+    public Questionnaire(String id, Block block)
     {
         this._id = id;
-        this._stats = stats;
+        this._block = block;
     }
 
-    /**
-     * @return the _id
-     */
     public String getId()
     {
-        return _id;
+        return this._id;
     }
 
-    /**
-     * @return the _stats
-     */
-    public List<IStat> getStats()
+    public List<IStatement> getStatements()
     {
-        return _stats;
-    }
-
-    @Override
-    public void accept(IElementVisitor visitor)
-    {
-        for(IElement stat: this._stats) {
-            stat.accept(visitor);
-        }
-
-        visitor.visit(this);
+        return this._block.statements;
     }
 }

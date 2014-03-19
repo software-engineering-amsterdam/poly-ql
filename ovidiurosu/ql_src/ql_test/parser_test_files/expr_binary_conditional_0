@@ -1,0 +1,8 @@
+// Binary Conditional expressions
+form test {
+    qInteger: "How many times integer?" integer
+    qDecimal: "How many times decimal?" decimal
+    if (qInteger > 3 && qDecimal < 3.2 || 5 > 3) {
+        reason: "Reason: " text
+    }
+}

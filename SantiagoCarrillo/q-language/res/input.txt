@@ -1,16 +1,33 @@
+//This is a test form
 form Box1HouseOwning {
    hasSoldHouse: "Did you sell a house in 2010?" boolean
    hasBoughtHouse: "Did you bought a house in 2010?" boolean
+   birthDate: "What's your birth date?" date
    hasMainLoan: "Did you enter a loan for maintenance/reconstruction" boolean
    housePrice: "How much did you pay for the house" money
-   if (hasSoldHouse && (false == true)) {
+   date1: "date 1" date
+   date2: "date 2" date
+   if(date1 < date2){
+        dateIfQuestion: "text" boolean
+   }
+   if (hasSoldHouse && housePrice > 10) {
         sellingPrice: "Price the house was sold for:" money
         privateDebt: "Private debts for the sold house:" money
         valueResidue: "Value residue:" money(sellingPrice * privateDebt)
-        if (hasSoldHouse) {
+        internalIfCondition: "label:" boolean
+         if (true) {
+            alwaysShowQuestion: "Vamos !!" money(sellingPrice * privateDebt)
+            secondIdShowSubQuestion: "label" boolean
+            if (secondIdShowSubQuestion) {
+                insideSubQuestion: "Vamos !!" money(sellingPrice * privateDebt)
+            }
+        }
+        if (internalIfCondition) {
             subQuestion1: "Vamos !!" money(sellingPrice * privateDebt)
         }else{
-            subQuestion3: "Vamos !!" money(sellingPrice * privateDebt)
+            subQuestion2: "Vamos !!" money(sellingPrice * privateDebt)
         }
-       }
+   }else{
+        firstElseQuestion: "Text" boolean
+   }
  }

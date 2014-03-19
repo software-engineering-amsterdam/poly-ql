@@ -1,0 +1,45 @@
+form 
+{ 
+  "A" iA : Integer
+  "B" iB : Integer
+  "Som" iC = iA + iB : Integer  
+}
+
+form 
+{ 
+  "A" iA : Boolean
+  if(iA)
+  {
+  "B" iB : Integer
+  }
+}
+
+form
+{
+  "Dubbele vraag" iA : Boolean
+  "Dubbele vraag" iB : Boolean
+}
+
+form
+{
+	"Wilt u uw pensioengegevens invullen?" bPensioen : Boolean
+	if(bPensioen)
+	{
+		"Ouderdomspensioen" iOP : Integer
+		"Tijdelijk ouderdomspension" iTOP : Integer
+		"Totaal (T)OP" iOPTOP = iOP + iTOP : Integer
+		"Nabestaandenpensioen" iNP : Integer
+	}
+}
+
+form
+{
+	"Wilt u uw pensioengegevens invullen?" bPensioen : Boolean
+	if(bPensioen)
+	{
+		"Ouderdomspensioen" iOP : Integer
+		"Tijdelijk ouderdomspension" iTOP : Integer
+		"Totaal (T)OP" iOPTOP = (iOP + iTOP) / iOP : Integer
+		"Nabestaandenpensioen" iNP : Integer
+	}
+}

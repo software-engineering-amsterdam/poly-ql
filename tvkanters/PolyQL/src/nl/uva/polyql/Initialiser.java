@@ -3,31 +3,46 @@ package nl.uva.polyql;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-import nl.uva.polyql.antlr4.*;
+import nl.uva.polyql.antlr4.LineInfoListener;
+import nl.uva.polyql.antlr4.QuestionnaireLexer;
+import nl.uva.polyql.antlr4.QuestionnaireParser;
 import nl.uva.polyql.antlr4.QuestionnaireParser.FormContext;
-import nl.uva.polyql.model.Rule;
-import nl.uva.polyql.model.RuleContainer;
+import nl.uva.polyql.ast.Rule;
+import nl.uva.polyql.ast.RuleContainer;
+import nl.uva.polyql.utils.Log;
+import nl.uva.polyql.validation.Validator;
+import nl.uva.polyql.view.FormFrame;
 
-import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
 
 public class Initialiser {
 
     public static void main(final String... params) {
+
+        Log.setInfoLogging(false);
 
         try {
             final ANTLRInputStream input = new ANTLRInputStream(new FileInputStream("res/exampleform.txt"));
             final QuestionnaireLexer lexer = new QuestionnaireLexer(input);
             final CommonTokenStream tokens = new CommonTokenStream(lexer);
             final QuestionnaireParser parser = new QuestionnaireParser(tokens);
+            parser.addParseListener(new LineInfoListener());
             final FormContext tree = parser.form();
 
-            System.out.println("==========================");
+            Log.i("==========================");
 
-            System.out.println(tree.toStringTree(parser));
+            Log.i(tree.toStringTree(parser));
 
-            System.out.println("==========================");
+            Log.i("==========================");
 
             printRuleContainer(tree.f, 0);
+
+            final Validator validator = Validator.validate(tree.f);
+            validator.print();
+            if (!validator.isFatal()) {
+                new FormFrame(tree.f);
+            }
 
         } catch (final IOException ex) {
             ex.printStackTrace();
@@ -41,7 +56,7 @@ public class Initialiser {
         }
 
         for (final Rule rule : form.getRules()) {
-            System.out.println(indent + rule);
+            Log.i(indent + rule);
 
             if (rule instanceof RuleContainer) {
                 printRuleContainer((RuleContainer) rule, level + 1);

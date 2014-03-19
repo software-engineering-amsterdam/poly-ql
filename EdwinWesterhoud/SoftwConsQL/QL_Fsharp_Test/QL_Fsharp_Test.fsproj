@@ -40,6 +40,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
     <DocumentationFile>bin\Debug\QL_Fsharp_Test.XML</DocumentationFile>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -65,10 +66,11 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UnitTest.fs" />
     <None Include="App.config" />
     <None Include="MSTest.runsettings" />
     <None Include="packages.config" />
+    <Compile Include="ParserTests.fs" />
+    <Compile Include="TypeCheckerTests.fs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\QL_Fsharp\QL_Fsharp.fsproj">

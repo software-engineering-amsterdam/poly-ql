@@ -50,9 +50,10 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interpreter\Controls\GUIStringTextBox.cs" />
-    <Compile Include="Interpreter\Controls\GUIIntTextBox.cs" />
-    <Compile Include="Interpreter\Controls\GUICheckBox.cs" />
+    <Compile Include="Interpreter\Controls\Input\IntTextBoxControl.cs" />
+    <Compile Include="Interpreter\Controls\Input\StringTextBoxControl.cs" />
+    <Compile Include="Interpreter\Controls\Input\InputControl.cs" />
+    <Compile Include="Interpreter\Controls\Input\CheckBoxControl.cs" />
     <Compile Include="Interpreter\Controls\GUIQuestion.cs" />
     <Compile Include="Interpreter\Controls\GUIQuestionnaire.cs" />
     <Compile Include="Interpreter\GUIMain.xaml.cs">
@@ -68,12 +69,6 @@
     <Compile Include="QLClasses\Expressions\Binary\Compare\SmThEq.cs" />
     <Compile Include="QLClasses\Expressions\Binary\Conditional\And.cs" />
     <Compile Include="QLClasses\Expressions\Binary\Compare\CompareExpression.cs" />
-    <Compile Include="QLClasses\Expressions\Binary\Compare\Operators\Equals.cs" />
-    <Compile Include="QLClasses\Expressions\Binary\Compare\Operators\GrTh.cs" />
-    <Compile Include="QLClasses\Expressions\Binary\Compare\Operators\GrThEq.cs" />
-    <Compile Include="QLClasses\Expressions\Binary\Compare\Operators\OperatorBase.cs" />
-    <Compile Include="QLClasses\Expressions\Binary\Compare\Operators\SmTh.cs" />
-    <Compile Include="QLClasses\Expressions\Binary\Compare\Operators\SmThEq.cs" />
     <Compile Include="QLClasses\Expressions\Binary\Conditional\ConditionalExpression.cs" />
     <Compile Include="QLClasses\Expressions\Binary\Conditional\Or.cs" />
     <Compile Include="QLClasses\Expressions\Binary\Math\Add.cs" />
@@ -85,7 +80,6 @@
     <Compile Include="QLClasses\Expressions\Literals\BoolLiteral.cs" />
     <Compile Include="QLClasses\Expressions\Literals\StringLiteral.cs" />
     <Compile Include="QLClasses\Expressions\Literals\IntLiteral.cs" />
-    <Compile Include="QLClasses\Expressions\Undefined.cs" />
     <Compile Include="QLClasses\Statements\ComputedQuestion.cs" />
     <Compile Include="QLClasses\Values\IntValue.cs" />
     <Compile Include="QLClasses\Values\StringValue.cs" />

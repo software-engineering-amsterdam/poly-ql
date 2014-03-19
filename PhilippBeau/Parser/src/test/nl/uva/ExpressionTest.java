@@ -1,16 +1,20 @@
 package test.nl.uva;
 
-import main.nl.uva.parser.elements.expressions.AdditionExpression;
-import main.nl.uva.parser.elements.expressions.AndExpression;
-import main.nl.uva.parser.elements.expressions.ComparrisonExpression;
-import main.nl.uva.parser.elements.expressions.DivisionExpression;
-import main.nl.uva.parser.elements.expressions.MultiplicationExpression;
-import main.nl.uva.parser.elements.expressions.OrExpression;
-import main.nl.uva.parser.elements.expressions.SubstractionExpression;
-import main.nl.uva.parser.elements.expressions.atoms.BoolAtom;
-import main.nl.uva.parser.elements.expressions.atoms.MoneyAtom;
-import main.nl.uva.parser.elements.type.Bool;
-import main.nl.uva.parser.elements.type.Money;
+import main.nl.uva.parser.element.Line;
+import main.nl.uva.parser.element.expression.Addition;
+import main.nl.uva.parser.element.expression.And;
+import main.nl.uva.parser.element.expression.Equal;
+import main.nl.uva.parser.element.expression.Division;
+import main.nl.uva.parser.element.expression.Multiplication;
+import main.nl.uva.parser.element.expression.Or;
+import main.nl.uva.parser.element.expression.Substraction;
+import main.nl.uva.parser.element.expression.Variable;
+import main.nl.uva.parser.element.expression.atom.BoolAtom;
+import main.nl.uva.parser.element.expression.atom.MoneyAtom;
+import main.nl.uva.parser.element.type.Bool;
+import main.nl.uva.parser.element.type.Money;
+import main.nl.uva.parser.element.type.Value;
+import main.nl.uva.parser.validation.Scope;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -27,76 +31,85 @@ public class ExpressionTest {
 
     @Test
     public void testAddition() {
-        AdditionExpression expression = new AdditionExpression(new MoneyAtom("3"), new MoneyAtom("5"));
-        Assert.assertTrue(expression.validate().isEmpty());
+        Addition expression = new Addition(new MoneyAtom("3"), new MoneyAtom("5"), Line.NO_LINE_NUMBER);
+        Assert.assertFalse(expression.validate(new Scope()).hasErrors());
 
-        Money value = (Money) expression.getType();
+        Money value = (Money) expression.getValue();
         Assert.assertEquals(8, value.getValue(), 0.0001);
     }
 
     @Test
     public void testSubstraction() {
-        SubstractionExpression expression = new SubstractionExpression(new MoneyAtom("3"), new MoneyAtom("5"));
-        Assert.assertTrue(expression.validate().isEmpty());
+        Substraction expression = new Substraction(new MoneyAtom("3"), new MoneyAtom("5"), Line.NO_LINE_NUMBER);
+        Assert.assertFalse(expression.validate(new Scope()).hasErrors());
 
-        Money value = (Money) expression.getType();
+        Money value = (Money) expression.getValue();
         Assert.assertEquals(-2, value.getValue(), 0.0001);
     }
 
     @Test
     public void testMultiplication() {
-        MultiplicationExpression expression = new MultiplicationExpression(new MoneyAtom("3"), new MoneyAtom("5"));
-        Assert.assertTrue(expression.validate().isEmpty());
+        Multiplication expression = new Multiplication(new MoneyAtom("3"), new MoneyAtom("5"), Line.NO_LINE_NUMBER);
+        Assert.assertFalse(expression.validate(new Scope()).hasErrors());
 
-        Money value = (Money) expression.getType();
+        Money value = (Money) expression.getValue();
         Assert.assertEquals(15, value.getValue(), 0.0001);
     }
 
     @Test
     public void testDivision() {
-        DivisionExpression expression = new DivisionExpression(new MoneyAtom("3"), new MoneyAtom("5"));
-        Assert.assertTrue(expression.validate().isEmpty());
+        Division expression = new Division(new MoneyAtom("3"), new MoneyAtom("5"), Line.NO_LINE_NUMBER);
+        Assert.assertFalse(expression.validate(new Scope()).hasErrors());
 
-        Money value = (Money) expression.getType();
+        Money value = (Money) expression.getValue();
         Assert.assertEquals(3.0 / 5.0, value.getValue(), 0.0001);
     }
 
     @Test
     public void testAnd() {
-        AndExpression expression = new AndExpression(new BoolAtom("true"), new BoolAtom("false"));
-        Assert.assertTrue(expression.validate().isEmpty());
+        And expression = new And(new BoolAtom("true"), new BoolAtom("false"), Line.NO_LINE_NUMBER);
+        Assert.assertFalse(expression.validate(new Scope()).hasErrors());
 
-        Bool value = (Bool) expression.getType();
+        Bool value = (Bool) expression.getValue();
         Assert.assertFalse(value.getValue());
     }
 
     @Test
     public void testOr() {
-        OrExpression expression = new OrExpression(new BoolAtom("true"), new BoolAtom("false"));
-        Assert.assertTrue(expression.validate().isEmpty());
+        Or expression = new Or(new BoolAtom("true"), new BoolAtom("false"), Line.NO_LINE_NUMBER);
+        Assert.assertFalse(expression.validate(new Scope()).hasErrors());
 
-        Bool value = (Bool) expression.getType();
+        Bool value = (Bool) expression.getValue();
         Assert.assertTrue(value.getValue());
     }
 
     @Test
     public void testComparrison() {
-        ComparrisonExpression expression = new ComparrisonExpression(new BoolAtom("true"), new BoolAtom("false"));
-        Assert.assertTrue(expression.validate().isEmpty());
+        Equal expression = new Equal(new BoolAtom("true"), new BoolAtom("false"), Line.NO_LINE_NUMBER);
+        Assert.assertFalse(expression.validate(new Scope()).hasErrors());
 
-        Bool value = (Bool) expression.getType();
+        Bool value = (Bool) expression.getValue();
         Assert.assertFalse(value.getValue());
 
-        expression = new ComparrisonExpression(new MoneyAtom("3"), new MoneyAtom("3"));
-        Assert.assertTrue(expression.validate().isEmpty());
+        expression = new Equal(new MoneyAtom("3"), new MoneyAtom("3"), Line.NO_LINE_NUMBER);
+        Assert.assertFalse(expression.validate(new Scope()).hasErrors());
 
-        value = (Bool) expression.getType();
+        value = (Bool) expression.getValue();
         Assert.assertTrue(value.getValue());
 
-        expression = new ComparrisonExpression(new MoneyAtom("3"), new MoneyAtom("4"));
-        Assert.assertTrue(expression.validate().isEmpty());
+        expression = new Equal(new MoneyAtom("3"), new MoneyAtom("4"), Line.NO_LINE_NUMBER);
+        Assert.assertFalse(expression.validate(new Scope()).hasErrors());
 
-        value = (Bool) expression.getType();
+        value = (Bool) expression.getValue();
         Assert.assertFalse(value.getValue());
+    }
+
+    @Test
+    public void testVariable() {
+        Variable variable = new Variable(Value.Type.MONEY, "payment", new Multiplication(new MoneyAtom("3"), new MoneyAtom("5"),
+                Line.NO_LINE_NUMBER), Line.NO_LINE_NUMBER);
+        Assert.assertEquals(variable.getName(), "payment");
+        variable.validate(new Scope());
+        Assert.assertTrue(variable.getValue().isTypeOf(Value.Type.MONEY));
     }
 }
