@@ -40,16 +40,7 @@ public class IfThen extends Block {
 
     @Override
     public String toString() {
-        return "if ( " + _expression + " ) \n";
-    }
-
-    public String printFull() {
-        String erg = "if ( " + _expression + " ) \n{ \n";
-        for (Statement child : _ifStatements) {
-            erg += child + "\n";
-        }
-
-        return erg + "} \n";
+        return "if ( " + _expression + " )";
     }
 
     @Override

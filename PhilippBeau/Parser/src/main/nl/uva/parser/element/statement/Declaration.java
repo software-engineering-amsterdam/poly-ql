@@ -1,5 +1,6 @@
 package main.nl.uva.parser.element.statement;
 
+import main.nl.uva.parser.element.error.DuplicatedVariableError;
 import main.nl.uva.parser.element.expression.Variable;
 import main.nl.uva.parser.validation.ASTValidation;
 import main.nl.uva.parser.validation.Scope;
@@ -23,7 +24,15 @@ public class Declaration extends Statement {
     public ASTValidation validate(final Scope scope) {
         ASTValidation valid = _variable.validate(scope);
 
-        scope.addToScope(_variable);
+        if (scope.containsVariable(_variable.getName())) {
+
+            Variable original = scope.getVariableFromScope(_variable.getName());
+            valid.addError(new DuplicatedVariableError(original, getLineInfo()));
+        } else {
+
+            scope.addToScope(_variable);
+        }
+
         return valid;
     }
 

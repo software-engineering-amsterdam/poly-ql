@@ -81,14 +81,14 @@ multExp returns [Expression cEx]
   : left=prefix {$cEx = $left.cEx;} 
   ( 
 	MUL right=prefix {$cEx = new Multiplication($cEx, $right.cEx, new Line($MUL));} 
-  	| DIV right=prefix {$cEx = new Multiplication($cEx, $right.cEx, new Line($DIV));}
+  	| DIV right=prefix {$cEx = new Division($cEx, $right.cEx, new Line($DIV));}
   )*
   ;
 
 prefix returns [Expression cEx]
 	: bE=atom {$cEx = $bE.cEx;}
-	| token='!' bEN=notPrefix {$cEx = new Not($bEN.cEx, new Line($token));}
-	| token='-' bEM=minusPrefix {$cEx = new Minus($bEM.cEx, new Line($token));}
+	| token='!' bEN=prefix {$cEx = new Not($bEN.cEx, new Line($token));}
+	| token='-' bEM=prefix {$cEx = new Minus($bEM.cEx, new Line($token));}
 	;
 	
 notPrefix returns [Expression cEx]

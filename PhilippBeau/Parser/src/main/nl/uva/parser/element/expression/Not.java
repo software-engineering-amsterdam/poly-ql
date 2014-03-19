@@ -41,6 +41,6 @@ public class Not extends Expression {
 
     @Override
     public String toString() {
-        return "-";
+        return "!" + _expression;
     }
 }

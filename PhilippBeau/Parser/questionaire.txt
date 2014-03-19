@@ -7,7 +7,7 @@ form Box1HouseOwning {
     if (!!hasSoldHouse && hasBoughtHouse) {
         sellingPrice: "Price the house was sold for:" money
         privateDebt: "Private debts for the sold house:" money
-        test: "Test" boolean(!!!!!!!hasSoldHouse || !hasBoughtHouse || ----------------privateDebt == 3)
+        test: "Test" boolean(!!!!!!hasSoldHouse || !hasBoughtHouse || ----------------privateDebt == 3)
         valueResidue: "Value residue:" money(sellingPrice --- privateDebt)
         if (privateDebt > 0) {
 	        A: "A:" money(privateDebt)
@@ -24,5 +24,12 @@ form Box1HouseOwning {
     } else {
     	A: "A:" money(200)
 	   	B: "B:" money(300)
+	   	if (hasBoughtHouse) {
+	        A: "A:" money(300)
+		   	B: "B:" money(200)
+	    } else {
+	    	A: "A:" money(200)
+		   	B: "B:" money(300)
+	    }
     }
 }
