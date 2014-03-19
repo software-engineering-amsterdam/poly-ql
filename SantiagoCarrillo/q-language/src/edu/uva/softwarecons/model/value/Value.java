@@ -8,6 +8,6 @@ package edu.uva.softwarecons.model.value;
 public interface Value
 {
 
-    public String getValue();
+    public Object getValue();
 
 }

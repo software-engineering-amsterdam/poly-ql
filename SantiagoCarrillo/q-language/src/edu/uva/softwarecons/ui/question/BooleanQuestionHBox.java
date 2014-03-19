@@ -35,7 +35,7 @@ public class BooleanQuestionHBox
     @Override
     public void updateValue( Value value )
     {
-        checkBox.setSelected( Boolean.valueOf( value.getValue() ) );
+        checkBox.setSelected( ((BooleanValue) value).getValue() );
     }
 
 

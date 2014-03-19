@@ -197,7 +197,7 @@ public class MainApplication
 
     private void updateIfQuestion( IfQuestion ifQuestion )
     {
-        boolean display = Boolean.valueOf( ifQuestion.getExpression().accept( expressionEvaluator ).getValue() );
+        boolean display = ((BooleanValue) ifQuestion.getExpression().accept( expressionEvaluator )).getValue();
         ifQuestion.accept( new QuestionEvalVisitor( display, questions, expressionEvaluator ) );
     }
 
