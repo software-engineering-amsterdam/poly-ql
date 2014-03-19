@@ -21,7 +21,7 @@ public class FormFrame extends JFrame {
     public static final int HEIGHT = 500;
 
     public FormFrame(final Form form) {
-        super("Poly-QL");
+        super(form.getLabel());
 
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());

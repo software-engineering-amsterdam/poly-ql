@@ -8,6 +8,7 @@ import nl.uva.polyql.antlr4.QuestionnaireParser.Expr_numContext;
 import nl.uva.polyql.antlr4.QuestionnaireParser.Expr_orContext;
 import nl.uva.polyql.antlr4.QuestionnaireParser.Expr_prodContext;
 import nl.uva.polyql.antlr4.QuestionnaireParser.Expr_sumContext;
+import nl.uva.polyql.antlr4.QuestionnaireParser.Expr_unaryContext;
 import nl.uva.polyql.antlr4.QuestionnaireParser.IfstatementContext;
 import nl.uva.polyql.antlr4.QuestionnaireParser.QuestionContext;
 import nl.uva.polyql.ast.LineInfo;
@@ -82,6 +83,13 @@ public class LineInfoListener extends QuestionnaireBaseListener {
 
     @Override
     public void exitExpr_sum(final Expr_sumContext ctx) {
+        if (ctx.e != null) {
+            ctx.e.setLineInfo(new LineInfo(ctx));
+        }
+    }
+
+    @Override
+    public void exitExpr_unary(final Expr_unaryContext ctx) {
         if (ctx.e != null) {
             ctx.e.setLineInfo(new LineInfo(ctx));
         }

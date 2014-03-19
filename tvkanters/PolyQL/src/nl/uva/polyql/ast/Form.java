@@ -8,6 +8,10 @@ public class Form extends RuleContainer {
         mLabel = label;
     }
 
+    public String getLabel() {
+        return mLabel;
+    }
+
     @Override
     public String toString() {
         return "FORM " + mLabel;

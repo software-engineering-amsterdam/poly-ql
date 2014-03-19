@@ -1,7 +1,7 @@
 form exampleForm {
 	num1: "Give a number" number
 	doubleNum1: "Double that" number(num1 * 2)
-	if (num1 > 5000) {
+	if (!(num1 < 5000)) {
 		reason: "Why is the number so high?" string
 		if (reason != "") {
 			reasonText: "Explanation" string("Number is " + num1 + " because: " + reason)
