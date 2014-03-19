@@ -49,7 +49,7 @@ public class Text extends Value {
 
     @Override
     public ValueUI getLayout(final DeclarationUI parent) {
-        return new TextUI(parent);
+        return new TextUI(parent, this);
     }
 
     @Override

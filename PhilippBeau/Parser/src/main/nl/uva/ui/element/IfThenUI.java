@@ -13,36 +13,38 @@ import main.nl.uva.ui.UI;
 
 public class IfThenUI extends UIElement implements ExpressionChangeListener {
 
-    private final JPanel _panel = new JPanel();
+    protected final JPanel _ifPanel;
 
-    private final Expression _expression;
+    protected final Expression _expression;
 
     public IfThenUI(final Expression expression, final List<Statement> children, final UI parentUI) {
         super(parentUI);
         _expression = expression;
         _expression.registerListener(this);
 
-        generateElement(children);
+        _ifPanel = generateBlockPanel(_expression, children);
+        _ifPanel.setVisible(((Bool) expression.getValue()).getValue());
     }
 
-    private void generateElement(final List<Statement> children) {
-        _panel.setLayout(new BoxLayout(_panel, BoxLayout.Y_AXIS));
+    protected JPanel generateBlockPanel(final Expression expression, final List<Statement> statements) {
+        JPanel parent = new JPanel();
+        parent.setLayout(new BoxLayout(parent, BoxLayout.Y_AXIS));
 
-        for (Statement child : children) {
-            _panel.add(child.getLayout(_parentUI).generateUIElement());
+        for (Statement child : statements) {
+            parent.add(child.getLayout(_parentUI).generateUIElement());
         }
 
-        _panel.setVisible(((Bool) _expression.getValue()).getValue());
+        return parent;
     }
 
     @Override
     public JPanel generateUIElement() {
-        return _panel;
+        return _ifPanel;
     }
 
     @Override
     public void onChange() {
-        _panel.setVisible(((Bool) _expression.getValue()).getValue());
+        _ifPanel.setVisible(((Bool) _expression.getValue()).getValue());
     }
 
 }

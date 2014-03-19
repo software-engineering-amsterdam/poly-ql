@@ -8,6 +8,8 @@ import main.nl.uva.parser.element.error.InvalidTypeError;
 import main.nl.uva.parser.element.type.Value;
 import main.nl.uva.parser.validation.ASTValidation;
 import main.nl.uva.parser.validation.Scope;
+import main.nl.uva.ui.element.DeclarationUI;
+import main.nl.uva.ui.types.ValueUI;
 
 public class Variable extends Expression implements ExpressionChangeListener {
 
@@ -67,6 +69,10 @@ public class Variable extends Expression implements ExpressionChangeListener {
     @Override
     public Value getValue() {
         return _expression.getValue();
+    }
+
+    public ValueUI getUserInterfaceRepresentation(final DeclarationUI parent) {
+        return _expression.getValue().getLayout(parent);
     }
 
     @Override

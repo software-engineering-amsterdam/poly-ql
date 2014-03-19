@@ -7,6 +7,7 @@ import main.nl.uva.parser.element.expression.Expression;
 import main.nl.uva.parser.validation.ASTValidation;
 import main.nl.uva.parser.validation.Scope;
 import main.nl.uva.ui.UI;
+import main.nl.uva.ui.element.IfThenElseUI;
 import main.nl.uva.ui.element.UIElement;
 
 public class IfThenElse extends IfThen {
@@ -38,7 +39,7 @@ public class IfThenElse extends IfThen {
 
     @Override
     public UIElement getLayout(final UI parentUI) {
-        return null;
+        return new IfThenElseUI(_expression, _ifStatements, _elseStatements, parentUI);
     }
 
     @Override

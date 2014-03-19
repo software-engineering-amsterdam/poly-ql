@@ -49,7 +49,7 @@ public class Money extends Value {
 
     @Override
     public ValueUI getLayout(final DeclarationUI parent) {
-        return new MoneyUI(parent);
+        return new MoneyUI(parent, this);
     }
 
     @Override

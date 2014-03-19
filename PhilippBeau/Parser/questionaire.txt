@@ -13,5 +13,16 @@ form Box1HouseOwning {
 	        A: "A:" money(privateDebt)
 	        B: "B:" money(A)
     	}
+    } else {
+    	A: "A:" money(200)
+	   	B: "B:" money(300)
+    }
+    
+    if (hasBoughtHouse) {
+        A: "A:" money(300)
+	   	B: "B:" money(200)
+    } else {
+    	A: "A:" money(200)
+	   	B: "B:" money(300)
     }
 }

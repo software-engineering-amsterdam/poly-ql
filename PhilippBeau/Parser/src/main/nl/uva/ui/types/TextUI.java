@@ -16,8 +16,9 @@ public class TextUI extends ValueUI implements KeyListener {
 
     private final DeclarationUI _parent;
 
-    public TextUI(final DeclarationUI parent) {
+    public TextUI(final DeclarationUI parent, final Value value) {
         _textField = new JTextField();
+        valueChange(value);
         _textField.addKeyListener(this);
 
         _parent = parent;

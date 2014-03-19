@@ -49,7 +49,7 @@ public class Bool extends Value {
 
     @Override
     public ValueUI getLayout(final DeclarationUI parent) {
-        return new BooleanUI(parent);
+        return new BooleanUI(parent, this);
     }
 
     @Override
