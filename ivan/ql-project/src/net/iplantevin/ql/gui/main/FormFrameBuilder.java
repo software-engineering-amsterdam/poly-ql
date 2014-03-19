@@ -26,20 +26,20 @@ public class FormFrameBuilder implements IStatementVisitor<AbstractFormComponent
     private final FormFrame formFrame;
     private final Set<AbstractFormComponent> formComponents;
 
-    private FormFrameBuilder(Form form) {
+    private FormFrameBuilder(Form form, GUIController controller) {
         formComponents = new OrderedHashSet<AbstractFormComponent>();
         formFrame = new FormFrame(form.getName());
         AbstractFormComponent topComponent = form.getBody().accept(this);
         initValues();
-        formFrame.initUI(topComponent);
+        formFrame.initUI(topComponent, controller);
     }
 
     public FormFrame getFormFrame() {
         return formFrame;
     }
 
-    public static FormFrame build(Form form) {
-        FormFrameBuilder builder = new FormFrameBuilder(form);
+    public static FormFrame build(Form form, GUIController controller) {
+        FormFrameBuilder builder = new FormFrameBuilder(form, controller);
         return builder.getFormFrame();
     }
 
