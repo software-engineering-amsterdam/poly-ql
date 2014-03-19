@@ -1,7 +1,6 @@
 package edu.uva.softwarecons.model.value;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -68,6 +67,6 @@ public class DateValue
     @Override
     public String toString()
     {
-        return null != value ? ("\"" + dateFormat.format( value ) + "\"") : null;
+        return null != value ? ( "\"" + dateFormat.format( value ) + "\"" ) : null;
     }
 }

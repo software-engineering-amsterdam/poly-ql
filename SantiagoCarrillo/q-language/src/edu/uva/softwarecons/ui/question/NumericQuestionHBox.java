@@ -9,8 +9,9 @@ import javafx.event.EventHandler;
 
 /**
  * Falconlabs
+ *
  * @author Santiago Carrillo
- * Date: 3/15/14
+ *         Date: 3/15/14
  */
 public class NumericQuestionHBox
     extends InputQuestionHBox

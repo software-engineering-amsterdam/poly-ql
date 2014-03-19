@@ -11,8 +11,9 @@ import java.util.Locale;
 
 /**
  * Falconlabs
+ *
  * @author Santiago Carrillo
- * Date: 3/16/14
+ *         Date: 3/16/14
  */
 public class DateQuestionHBox
     extends QuestionHBox

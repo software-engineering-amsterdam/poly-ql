@@ -34,8 +34,9 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * Falconlabs
+ *
  * @author Santiago Carrillo
- * Date: 2/13/14
+ *         Date: 2/13/14
  */
 
 public class ExpressionTypeCheckerTest

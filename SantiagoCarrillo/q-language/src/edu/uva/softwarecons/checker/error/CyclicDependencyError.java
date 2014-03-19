@@ -2,8 +2,9 @@ package edu.uva.softwarecons.checker.error;
 
 /**
  * Falconlabs
+ *
  * @author Santiago Carrillo
- * Date: 3/3/14
+ *         Date: 3/3/14
  */
 public class CyclicDependencyError
     extends QuestionnaireError

@@ -4,8 +4,9 @@ import edu.uva.softwarecons.model.type.Type;
 
 /**
  * Falconlabs
+ *
  * @author Santiago Carrillo
- * Date: 3/3/14
+ *         Date: 3/3/14
  */
 public class InvalidTypeError
     extends QuestionnaireError

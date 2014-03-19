@@ -14,8 +14,9 @@ import java.util.HashMap;
 
 /**
  * Falconlabs
+ *
  * @author Santiago Carrillo
- * Date: 3/16/14
+ *         Date: 3/16/14
  */
 public class QuestionEvalVisitor
     implements IFormElementVisitor
@@ -57,7 +58,7 @@ public class QuestionEvalVisitor
     @Override
     public void visitIfQuestion( IfQuestion question )
     {
-        boolean display = (( BooleanValue) question.getExpression().accept( expressionEvaluator )).getValue();
+        boolean display = ( (BooleanValue) question.getExpression().accept( expressionEvaluator ) ).getValue();
         for ( Question q : question.getQuestions() )
         {
             q.accept( new QuestionEvalVisitor( displayQuestion && display, questions, expressionEvaluator ) );

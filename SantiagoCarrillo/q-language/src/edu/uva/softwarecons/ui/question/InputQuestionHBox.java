@@ -9,8 +9,9 @@ import javafx.scene.control.TextField;
 
 /**
  * Falconlabs
+ *
  * @author Santiago Carrillo
- * Date: 3/13/14
+ *         Date: 3/13/14
  */
 public class InputQuestionHBox
     extends QuestionHBox
