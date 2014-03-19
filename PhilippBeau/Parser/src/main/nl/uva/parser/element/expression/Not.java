@@ -38,4 +38,9 @@ public class Not extends Expression {
 
         return valid;
     }
+
+    @Override
+    public String toString() {
+        return "-";
+    }
 }

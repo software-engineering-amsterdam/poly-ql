@@ -11,13 +11,13 @@ import main.nl.uva.parser.element.statement.Statement;
 import main.nl.uva.parser.element.type.Bool;
 import main.nl.uva.ui.UI;
 
-public class IfUI extends UIElement implements ExpressionChangeListener {
+public class IfThenUI extends UIElement implements ExpressionChangeListener {
 
     private final JPanel _panel = new JPanel();
 
     private final Expression _expression;
 
-    public IfUI(final Expression expression, final List<Statement> children, final UI parentUI) {
+    public IfThenUI(final Expression expression, final List<Statement> children, final UI parentUI) {
         super(parentUI);
         _expression = expression;
         _expression.registerListener(this);

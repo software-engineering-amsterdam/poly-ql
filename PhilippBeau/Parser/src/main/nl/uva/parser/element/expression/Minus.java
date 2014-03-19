@@ -38,4 +38,9 @@ public class Minus extends Expression {
 
         return valid;
     }
+
+    @Override
+    public String toString() {
+        return "-" + _expression;
+    }
 }
