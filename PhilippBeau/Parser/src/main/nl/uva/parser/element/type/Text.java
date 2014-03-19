@@ -16,6 +16,7 @@ public class Text extends Value {
 
     public Text(final String value) {
         super(Value.Type.TEXT);
+
         _value = value;
     }
 

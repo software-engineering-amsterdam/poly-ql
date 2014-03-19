@@ -18,12 +18,12 @@ block returns [List<Statement> data]
 	: (LINEEND)*? '{' LINEEND (child=statement { $data.add($child.current);})* '}' (LINEEND)*?;
 
 statement returns [Statement current]
-	: ID ':' STRING sType=simpleType 
-	{$current = new Declaration(new Variable($sType.type, $ID.text, new Line($ID)), $STRING.text);}
+	: ID ':' sLit=stringLiteral sType=simpleType 
+	{$current = new Declaration(new Variable($sType.type, $ID.text, new Line($ID)), $sLit.string);}
 	LINEEND 
 	
-    | ID ':' STRING sType=simpleType '(' ex=expression')'  	
-    { $current = new FixedDeclaration(new Variable($sType.type, $ID.text, $ex.cEx, new Line($ID)), $STRING.text);} 
+    | ID ':' sLit=stringLiteral sType=simpleType '(' ex=expression')'  	
+    { $current = new FixedDeclaration(new Variable($sType.type, $ID.text, $ex.cEx, new Line($ID)), $sLit.string);} 
     LINEEND
     
     | ifToken='if' '(' ex=expression ')' ifBlock=block 
@@ -105,7 +105,7 @@ atom returns [Expression cEx]
 	: ID {$cEx = new VariableAtom($ID.text, new Line($ID)); }
 	| nL=numLiteral {$cEx = new MoneyAtom($nL.text, new Line($nL.start));}
 	| bL=boolLiteral {$cEx = new BoolAtom($bL.text, new Line($bL.start));}
-	| tL=textLiteral {$cEx = new TextAtom($tL.text, new Line($tL.start));}
+	| tL=stringLiteral {$cEx = new TextAtom($tL.string, new Line($tL.start));}
 	| '(' bE=expression ')' {$cEx = $bE.cEx;}
 	;
 
@@ -125,8 +125,8 @@ numLiteral
     | DOUBLE
     ;
       
-textLiteral
-	: STRING
+stringLiteral returns [String string]
+	: STRING {$string = new String($STRING.text.substring(1, $STRING.text.length()-1));}
 	;
 
 /** Primitives */
