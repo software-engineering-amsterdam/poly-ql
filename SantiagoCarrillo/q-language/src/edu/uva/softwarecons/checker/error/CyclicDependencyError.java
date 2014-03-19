@@ -14,4 +14,10 @@ public class CyclicDependencyError
     {
         super( "The question with ID: '" + questionID + "' has a cyclic dependency" );
     }
+
+    @Override
+    public boolean equals( Object obj )
+    {
+        return obj instanceof CyclicDependencyError;
+    }
 }

@@ -2,37 +2,38 @@ package visitor;
 
 import java.util.List;
 
+import nodeAST.Expression;
+import nodeAST.Ident;
+import nodeAST.arithmetic.Add;
+import nodeAST.arithmetic.Div;
+import nodeAST.arithmetic.Mul;
+import nodeAST.arithmetic.Sub;
+import nodeAST.conditional.And;
+import nodeAST.conditional.Or;
+import nodeAST.literals.Bool;
+import nodeAST.literals.Int;
+import nodeAST.literals.Str;
+import nodeAST.relational.Eq;
+import nodeAST.relational.GEq;
+import nodeAST.relational.GT;
+import nodeAST.relational.LEq;
+import nodeAST.relational.LT;
+import nodeAST.relational.NEq;
+import nodeAST.syntactic.Form;
+import nodeAST.syntactic.IfBlock;
+import nodeAST.syntactic.IfElseBlock;
+import nodeAST.syntactic.Question;
+import nodeAST.syntactic.QuestionBody;
+import nodeAST.syntactic.Statement;
+
+
 import types.BoolType;
 import types.IntType;
-import types.MoneyType;
 import types.StringType;
 import types.Type;
-import expr.Expression;
-import expr.Ident;
-import expr.arithmetic.Add;
-import expr.arithmetic.Div;
-import expr.arithmetic.Mul;
-import expr.arithmetic.Sub;
-import expr.conditional.And;
-import expr.conditional.Or;
-import expr.literals.Bool;
-import expr.literals.Int;
-import expr.literals.Str;
-import expr.relational.Eq;
-import expr.relational.GEq;
-import expr.relational.GT;
-import expr.relational.LEq;
-import expr.relational.LT;
-import expr.relational.NEq;
-import expr.sign.Neg;
-import expr.sign.Not;
-import expr.sign.Pos;
-import expr.syntactic.Form;
-import expr.syntactic.IfBlock;
-import expr.syntactic.IfElseBlock;
-import expr.syntactic.Question;
-import expr.syntactic.QuestionBody;
-import expr.syntactic.Statement;
+import nodeAST.sign.Neg;
+import nodeAST.sign.Not;
+import nodeAST.sign.Pos;
 
 public abstract class ASTVisitor {
 	public void visit(Ident ident) {}
@@ -111,7 +112,6 @@ public abstract class ASTVisitor {
 
 	public void visit(BoolType bool) {}
 	public void visit(IntType intType) {}
-	public void visit(MoneyType moneyType) {}
 
 	
 	public void visit(Form form, List<Statement> list) {
@@ -145,8 +145,9 @@ public abstract class ASTVisitor {
 			expr.accept(this);
 	}
 	
+	
 	public void visit(QuestionBody questionBody) {}
-
+	
 	public void visit(StringType stringType) {	}
 
 	public void visit(Str str) {}

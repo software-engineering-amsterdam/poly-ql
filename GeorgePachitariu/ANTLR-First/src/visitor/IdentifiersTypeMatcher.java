@@ -3,13 +3,15 @@ package visitor;
 import java.util.HashMap;
 import java.util.Map;
 
+import nodeAST.ASTNode;
+import nodeAST.Expression;
+import nodeAST.Ident;
+import nodeAST.syntactic.Question;
+import nodeAST.syntactic.QuestionBody;
+
+
 import types.Type;
 
-import expr.ASTNode;
-import expr.Expression;
-import expr.Ident;
-import expr.syntactic.Question;
-import expr.syntactic.QuestionBody;
 
 public class IdentifiersTypeMatcher extends ASTVisitor {
 

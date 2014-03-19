@@ -30,4 +30,10 @@ public class InvalidTypeError
     {
         super( "InvalidType: " + type + " for operand: " + operand );
     }
+
+    @Override
+    public boolean equals( Object obj )
+    {
+        return obj instanceof InvalidTypeError;
+    }
 }

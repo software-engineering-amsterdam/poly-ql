@@ -3,27 +3,29 @@ package typeChecker;
 import java.util.LinkedList;
 import java.util.List;
 
+import nodeAST.ASTNode;
+import nodeAST.Expression;
+import nodeAST.arithmetic.Add;
+import nodeAST.arithmetic.Div;
+import nodeAST.arithmetic.Mul;
+import nodeAST.arithmetic.Sub;
+import nodeAST.conditional.And;
+import nodeAST.conditional.Or;
+import nodeAST.relational.Eq;
+import nodeAST.relational.GEq;
+import nodeAST.relational.GT;
+import nodeAST.relational.LEq;
+import nodeAST.relational.LT;
+import nodeAST.relational.NEq;
+
+
 import visitor.ASTVisitor;
 import visitor.IdentifiersTypeMatcher;
 
 
-import expr.ASTNode;
-import expr.Expression;
-import expr.arithmetic.Add;
-import expr.arithmetic.Div;
-import expr.arithmetic.Mul;
-import expr.arithmetic.Sub;
-import expr.conditional.And;
-import expr.conditional.Or;
-import expr.relational.Eq;
-import expr.relational.GEq;
-import expr.relational.GT;
-import expr.relational.LEq;
-import expr.relational.LT;
-import expr.relational.NEq;
-import expr.sign.Neg;
-import expr.sign.Not;
-import expr.sign.Pos;
+import nodeAST.sign.Neg;
+import nodeAST.sign.Not;
+import nodeAST.sign.Pos;
 
 public class InvalidTypeOperands extends ASTVisitor {
 
@@ -35,10 +37,17 @@ public class InvalidTypeOperands extends ASTVisitor {
 		this.typeMatcher=new IdentifiersTypeMatcher();
 	}
 
-	public List<Expression> check(ASTNode root) {
+	public void check(ASTNode root) throws Exception {
 		this.typeMatcher.search(root);
 		root.accept(this);
-		return this.operandsList;
+		
+		if(operandsList.size()!=0) {
+			String message= "ERROR: The following expressions contain operands of invalid" +
+					" type to operators: \n";
+			for(Expression e: operandsList)
+				message+=e.toString()+"\n";
+			throw new Exception(message);
+		}
 	}
 
 	@Override

@@ -69,7 +69,7 @@ public class StatementChecker implements StatementVisitor {
 		checkIdentifier(id,type);
 				
 		if(!expression.typeOf(environment).isCompatibleWith(id.typeOf(environment))){
-			problems.addError(new CompatibleError(id,expression));
+			problems.addError(new CompatibleError(id,expression, environment));
 		}
 	}
 

@@ -13,13 +13,13 @@ options {
 @header {
   package parser;
 
-  import expr.*;
-  import expr.literals.*;
-  import expr.arithmetic.*;
-  import expr.conditional.*;
-  import expr.relational.*;
-  import expr.sign.*;
-  import expr.syntactic.*;
+  import nodeAST.*;
+  import nodeAST.literals.*;
+  import nodeAST.arithmetic.*;
+  import nodeAST.conditional.*;
+  import nodeAST.relational.*;
+  import nodeAST.sign.*;
+  import nodeAST.syntactic.*;
   import types.*;
   import typeChecker.*;
   import java.util.LinkedList;
@@ -169,7 +169,6 @@ orExpr returns [Expression result]
 
 questiontype  returns [Type result]
   : 'boolean' { $result = new BoolType(); }
-  | 'money'   { $result = new MoneyType(); }
   | 'integer' { $result = new IntType(); }
   | 'string' { $result = new StringType(); }
   ;

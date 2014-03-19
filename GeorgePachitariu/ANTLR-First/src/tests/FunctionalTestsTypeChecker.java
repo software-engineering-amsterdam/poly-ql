@@ -1,12 +1,11 @@
 package tests;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import junit.framework.Assert;
 
+import nodeAST.syntactic.Form;
 import org.antlr.runtime.RecognitionException;
 import org.junit.Test;
+
 
 import parser.QLParser;
 import typeChecker.BooleanConditions;
@@ -15,16 +14,6 @@ import typeChecker.DuplicateLabels;
 import typeChecker.DuplicatedIdentifier;
 import typeChecker.InvalidTypeOperands;
 import typeChecker.UndefinedIdentifier;
-import types.BoolType;
-import types.MoneyType;
-import expr.Expression;
-import expr.Ident;
-import expr.arithmetic.Sub;
-import expr.literals.Bool;
-import expr.relational.Eq;
-import expr.syntactic.Form;
-import expr.syntactic.Question;
-import expr.syntactic.QuestionBody;
 
 public class FunctionalTestsTypeChecker {
 
@@ -34,41 +23,45 @@ public class FunctionalTestsTypeChecker {
 				"	form Box1HouseOwning { " +
 						"hasSoldHouse: \"Did you sell a house in 2010?\" boolean " +
 						"if (hasSoldHouse) { " +
-						"sellingPrice: \"Price the house was sold for:\" money " +
-						"privateDebt: \"Private debts for the sold house:\" money " +
-						"valueResidue: \"Value residue:\" money(sellingPrice - privateDebt) "+
+						"sellingPrice: \"Price the house was sold for:\" integer " +
+						"privateDebt: \"Private debts for the sold house:\" integer " +
+						"valueResidue: \"Value residue:\" integer(sellingPrice - privateDebt) "+
 						" } } "; 
 
 
-		QLParser parser=TestsExpr.getParser(str);
-		Form ast=parser.form().result;			
-		List<Ident> actual = new UndefinedIdentifier().check(ast);
-		List<Ident> expected=new LinkedList<>();
-
-		Assert.assertEquals(expected, actual);
+		QLParser parser=ASTNodes.getParser(str);
+		Form ast=parser.form().result;
+		
+		try {
+			new UndefinedIdentifier().check(ast);
+			Assert.assertTrue(true); 
+		} catch (Exception e) {
+			Assert.assertTrue(false); 
+		}
 	}
 
 	@Test
-	public void undefinedIdentifierCheckerWith_2Undefined() throws RecognitionException {
+	public void undefinedIdentifierCheckerWith_1Undefined() throws RecognitionException {
 		String str=
 				"	form Box1HouseOwning { " +
 						"hasSoldHouse: \"Did you sell a house in 2010?\" boolean " +
 						"if (undef) { " +
-						"sellingPrice: \"Price the house was sold for:\" money " +
-						"privateDebt: \"Private debts for the sold house:\" money " +
-						"valueResidue: \"Value residue:\" money(sellingPrice - debt) "+
+						"sellingPrice: \"Price the house was sold for:\" integer " +
 						" } } "; 
 
 
-		QLParser parser=TestsExpr.getParser(str);
+		QLParser parser=ASTNodes.getParser(str);
 		Form ast=parser.form().result;			
-		List<Ident> actual = new UndefinedIdentifier().check(ast);
+		
 
-		List<Ident> expected=new LinkedList<>();
-		expected.add(new Ident("undef"));
-		expected.add(new Ident("debt"));
-
-		Assert.assertEquals(expected, actual);
+		try {
+			new UndefinedIdentifier().check(ast);
+			Assert.assertTrue(false); 
+		} catch (Exception e) {
+			String actual = e.getMessage();
+			String expected = "ERROR: The following references are not defined: undef, ";
+			Assert.assertTrue(actual.equals(expected)); 
+		}		
 	}
 
 
@@ -78,18 +71,21 @@ public class FunctionalTestsTypeChecker {
 				"	form Box1HouseOwning { " +
 						"hasSoldHouse: \"Did you sell a house in 2010?\" boolean " +
 						"if (hasSoldHouse) { " +
-						"sellingPrice: \"Price the house was sold for:\" money " +
-						"privateDebt: \"Private debts for the sold house:\" money " +
-						"valueResidue: \"Value residue:\" money(sellingPrice - privateDebt) "+
+						"sellingPrice: \"Price the house was sold for:\" integer " +
+						"privateDebt: \"Private debts for the sold house:\" integer " +
+						"valueResidue: \"Value residue:\" integer(sellingPrice - privateDebt) "+
 						" } } "; 
 
 
-		QLParser parser=TestsExpr.getParser(str);
+		QLParser parser=ASTNodes.getParser(str);
 		Form ast=parser.form().result;			
-		List<Question> actual = new DuplicatedIdentifier().check(ast);
-		List<Question> expected=new LinkedList<>();
-
-		Assert.assertEquals(expected, actual);
+		
+		try {
+			new DuplicatedIdentifier().check(ast);
+			Assert.assertTrue(true); 
+		} catch (Exception e) {
+			Assert.assertTrue(false); 
+		}
 	}
 
 
@@ -99,106 +95,70 @@ public class FunctionalTestsTypeChecker {
 				"	form Box1HouseOwning { " +
 						"hasSoldHouse: \"Did you sell a house in 2010?\" boolean " +
 						"if (hasSoldHouse) { " +
-						"sellingPrice: \"Price the house was sold for:\" money " +
-						"hasSoldHouse: \"Private debts for the sold house:\" money " +
-						"privateDebt: \"Value residue:\" boolean(sellingPrice - privateDebt) "+
+						"hasSoldHouse: \"Private debts for the sold house:\" integer " +
 						" } } "; 
 
 
-		QLParser parser=TestsExpr.getParser(str);
+		QLParser parser=ASTNodes.getParser(str);
 		Form ast=parser.form().result;			
-		List<Question> actual = new DuplicatedIdentifier().check(ast);
-
-		List<Question> expected=new LinkedList<>();
-		expected.add (new Question(new Ident("hasSoldHouse"),
-				new QuestionBody("\"Did you sell a house in 2010?\""), new BoolType()));
-		expected.add (new Question(new Ident("hasSoldHouse"),
-				new QuestionBody("\"Private debts for the sold house:\""), new MoneyType()));
-
-		Assert.assertEquals(expected, actual);
-	}
-
-	@Test 
-	public void booleanConditionsChecker_0WrongConditions() throws RecognitionException {
-		String str=
-				"	form Box1HouseOwning { " +
-						"hasSoldHouse: \"Did you sell a house in 2010?\" boolean " +
-						"if (hasSoldHouse) { " +
-						"sellingPrice: \"Price the house was sold for:\" money "+
-						" } } "; 
-
-
-		QLParser parser=TestsExpr.getParser(str);
-		Form ast=parser.form().result;			
-		List<String> actual = new BooleanConditions().check(ast);
-
-		List<Expression> expected=new LinkedList<>();
-
-		Assert.assertEquals(expected, actual);
+		
+		try {
+			new DuplicatedIdentifier().check(ast);
+			Assert.assertTrue(false); 
+		} catch (Exception e) {
+			String actual = e.getMessage();
+			String expected = "ERROR: The following questions have the same question declaration but with different types \n"+
+					"hasSoldHouse: \"Did you sell a house in 2010?\" boolean\n"+
+					"hasSoldHouse: \"Private debts for the sold house:\" integer\n";
+			Assert.assertTrue(actual.equals(expected)); 
+		}	
 	}
 
 	@Test 
 	public void booleanConditionsChecker_1WrongConditions() throws RecognitionException {
 		String str=
 				"	form Box1HouseOwning { " +
-						"hasSoldHouse: \"Did you sell a house in 2010?\" money " +
+						"hasSoldHouse: \"Did you sell a house in 2010?\" integer " +
 						"if (hasSoldHouse) { " +
-						"sellingPrice: \"Price the house was sold for:\" money "+
-						" } } "; 
+						"sellingPrice: \"Price the house was sold for:\" integer "+
+						"}  } "; 
 
 
-		QLParser parser=TestsExpr.getParser(str);
+		QLParser parser=ASTNodes.getParser(str);
 		Form ast=parser.form().result;			
-		List<String> actual = new BooleanConditions().check(ast);
+		
+		try {
+			new BooleanConditions().check(ast);
+			Assert.assertTrue(false); 
+		} catch (Exception e) {
+			String actual = e.getMessage();
+			String expected="ERROR: The following conditions contained in 'if' structures should " +
+					"be of type boolean but are not: \nhasSoldHouse\n";
+			Assert.assertTrue(actual.equals(expected)); 
+		}	
 
-		List<String> expected=new LinkedList<>();
-		expected.add("hasSoldHouse");
-
-		Assert.assertEquals(expected, actual);
 	}
 
 	@Test 
-	public void invalidTypeOperandsChecker_0WrongOperands() throws RecognitionException {
+	public void invalidTypeOperandsChecker_1WrongOperand() throws RecognitionException {
 		String str=
 				"	form Box1HouseOwning { " +
-						"hasSoldHouse: \"Did you sell a house in 2010?\" boolean " +
+						"hasSoldHouse: \"Did you sell a house in 2010?\" integer " +
 						"sellingPrice: \"Price the house was sold for:\" integer " +
 						"if (hasSoldHouse == true && (sellingPrice < 1000)) { " +
 						"privateDebt: \"Private debts for the sold house:\" integer " +
-						"result: \"Value residue:\" boolean(sellingPrice - privateDebt) "+
 						" } } "; 
 
 
-		QLParser parser=TestsExpr.getParser(str);
+		QLParser parser=ASTNodes.getParser(str);
 		Form ast=parser.form().result;			
-		List<Expression> actual = new InvalidTypeOperands().check(ast);
-
-		List<Expression> expected=new LinkedList<>();
-
-		Assert.assertEquals(expected, actual);
-	}
-
-	@Test 
-	public void invalidTypeOperandsChecker_2WrongOperands() throws RecognitionException {
-		String str=
-				"	form Box1HouseOwning { " +
-						"hasSoldHouse: \"Did you sell a house in 2010?\" money " +
-						"sellingPrice: \"Price the house was sold for:\" integer " +
-						"if (hasSoldHouse == true && (sellingPrice < 1000)) { " +
-						"privateDebt: \"Private debts for the sold house:\" money " +
-						"result: \"Value residue:\" boolean(sellingPrice - privateDebt) "+
-						" } } "; 
-
-
-		QLParser parser=TestsExpr.getParser(str);
-		Form ast=parser.form().result;			
-		List<Expression> actual = new InvalidTypeOperands().check(ast);
-
-		List<Expression> expected=new LinkedList<>();
-		expected.add(new Eq(new Ident("hasSoldHouse"), new Bool(true)));
-		expected.add(new Sub(new Ident("sellingPrice"), new Ident("privateDebt")));
-
-		Assert.assertEquals(expected, actual);
+		
+		try {
+			new InvalidTypeOperands().check(ast);
+			Assert.assertTrue(false); 
+		} catch (Exception e) {
+			Assert.assertTrue(true); 
+		}	
 	}
 
 
@@ -206,43 +166,24 @@ public class FunctionalTestsTypeChecker {
 	public void duplicateLabelsChecker_1WrongLabels() throws RecognitionException {
 		String str=
 				"	form Box1HouseOwning { " +
-						"hasSoldHouse: \"Did you sell a house in 2010?\" money " +
+						"hasSoldHouse: \"Did you sell a house in 2010?\" integer " +
 						"sellingPrice: \"Price the house was sold for:\" integer " +
-						"hasSoldHouse: \"Private debts for the sold house:\" money " +
+						"hasSoldHouse: \"Private debts for the sold house:\" integer " +
 						"result: \"Value residue:\" boolean(sellingPrice - privateDebt) "+
-						" } } "; 
+						" } "; 
 
 
-		QLParser parser=TestsExpr.getParser(str);
-		Form ast=parser.form().result;			
-		List<Ident> actual = new DuplicateLabels().check(ast);
+		QLParser parser=ASTNodes.getParser(str);
+		Form ast=parser.form().result;
 
-		List<Ident> expected=new LinkedList<>();
-		expected.add(new Ident("hasSoldHouse"));
-
-		Assert.assertEquals(expected, actual);
+		try {
+			new DuplicateLabels().check(ast);
+			Assert.assertTrue(true); 
+		} catch (Exception e) {
+			Assert.assertTrue(false); 
+		}	
 	}
 
-
-	@Test 
-	public void cyclicDependenciesChecker_NoCycle() throws RecognitionException {
-		String str=
-				"	form Box1HouseOwning { " +
-						"hasSoldHouse: \"Did you sell a house in 2010?\" money " +
-						"sellingPrice: \"Price the house was sold for:\" integer " +
-						"hasSoldHouse: \"Private debts for the sold house:\" money " +
-						"result: \"Value residue:\" boolean(sellingPrice - privateDebt) "+
-						" } } "; 
-
-
-		QLParser parser=TestsExpr.getParser(str);
-		Form ast=parser.form().result;			
-		List<Question> actual = new CyclicDependencies().check(ast);
-
-		List<Question> expected=new LinkedList<>();
-
-		Assert.assertEquals(expected, actual);
-	}
 
 	@Test 
 	public void cyclicDependenciesChecker_WithCycle() throws RecognitionException {
@@ -254,12 +195,13 @@ public class FunctionalTestsTypeChecker {
 						" } } "; 
 
 
-		QLParser parser=TestsExpr.getParser(str);
-		Form ast=parser.form().result;			
-		List<Question> actual = new CyclicDependencies().check(ast);
-
-		List<Question> expected=new LinkedList<>();
-
-		Assert.assertNotSame(expected, actual);
+		QLParser parser=ASTNodes.getParser(str);
+		Form ast=parser.form().result;
+		try {
+			new CyclicDependencies().check(ast);
+			Assert.assertTrue(false); 
+		} catch (Exception e) {
+			Assert.assertTrue(true); 
+		}
 	}
 }

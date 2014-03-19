@@ -14,4 +14,10 @@ public class UndefinedReferenceError
     {
         super( "Variable with id: '" + id + "' is undefined" );
     }
+
+    @Override
+    public boolean equals( Object obj )
+    {
+        return obj instanceof UndefinedReferenceError;
+    }
 }
