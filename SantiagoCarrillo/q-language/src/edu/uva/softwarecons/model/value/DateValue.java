@@ -7,8 +7,9 @@ import java.util.Date;
 
 /**
  * Falconlabs
+ *
  * @author Santiago Carrillo
- * Date: 3/13/14
+ *         Date: 3/13/14
  */
 public class DateValue
     implements ComparableValue
@@ -32,66 +33,41 @@ public class DateValue
     @Override
     public boolean greater( Value value )
     {
-        try
-        {
-            Date date = dateFormat.parse( value.getValue() );
-            return date.compareTo( this.value ) > 0;
-        }
-        catch ( ParseException e )
-        {
-            //Date not comparable with invalid date
-            return false;
-        }
+        Date date = ( (DateValue) value ).getValue();
+        return date.compareTo( this.value ) > 0;
     }
 
     @Override
     public boolean greaterEqual( Value value )
     {
-        try
-        {
-            Date date = dateFormat.parse( value.getValue() );
-            return date.compareTo( this.value ) > 0 || date.compareTo( this.value ) == 0;
-        }
-        catch ( ParseException e )
-        {
-            //Date not comparable with invalid date
-            return false;
-        }
+        Date date = ( (DateValue) value ).getValue();
+        return date.compareTo( this.value ) > 0 || date.compareTo( this.value ) == 0;
     }
 
     @Override
     public boolean less( Value value )
     {
-        try
-        {
-            Date date = dateFormat.parse( value.getValue() );
-            return date.compareTo( this.value ) < 0;
-        }
-        catch ( ParseException e )
-        {
-            //Date not comparable with invalid date
-            return false;
-        }
+        Date date = ( (DateValue) value ).getValue();
+        return date.compareTo( this.value ) < 0;
     }
 
     @Override
     public boolean lessEqual( Value value )
     {
-        try
-        {
-            Date date = dateFormat.parse( value.getValue() );
-            return date.compareTo( this.value ) < 0 || date.compareTo( this.value ) == 0;
-        }
-        catch ( ParseException e )
-        {
-            //Date not comparable with invalid date
-            return false;
-        }
+        Date date = ( (DateValue) value ).getValue();
+        return date.compareTo( this.value ) < 0 || date.compareTo( this.value ) == 0;
     }
 
     @Override
-    public String getValue()
+    public Date getValue()
     {
-        return "\"" + ( null != value ? dateFormat.format( value ) : "" ) + "\"";
+        return value;
+    }
+
+
+    @Override
+    public String toString()
+    {
+        return null != value ? ("\"" + dateFormat.format( value ) + "\"") : null;
     }
 }

@@ -33,7 +33,7 @@ public class ComputedQuestionHBox
     @Override
     public void updateValue( Value value )
     {
-        this.result.setText( value.getValue() );
+        this.result.setText( value.getValue().toString() );
     }
 
 }

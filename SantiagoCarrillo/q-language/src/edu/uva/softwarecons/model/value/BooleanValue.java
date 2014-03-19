@@ -2,8 +2,9 @@ package edu.uva.softwarecons.model.value;
 
 /**
  * Falconlabs
+ *
  * @author Santiago Carrillo
- * Date: 3/13/14
+ *         Date: 3/13/14
  */
 public class BooleanValue
     implements Value
@@ -18,9 +19,9 @@ public class BooleanValue
 
 
     @Override
-    public String getValue()
+    public Boolean getValue()
     {
-        return String.valueOf( value );
+        return value;
     }
 
     @Override
@@ -31,17 +32,23 @@ public class BooleanValue
 
     public BooleanValue and( Value value )
     {
-        return new BooleanValue( this.value && Boolean.parseBoolean( value.getValue() ) );
+        return new BooleanValue( this.value && ( (BooleanValue) value ).getValue() );
     }
 
     public BooleanValue or( Value value )
     {
-        return new BooleanValue( this.value || Boolean.parseBoolean( value.getValue() ) );
+        return new BooleanValue( this.value || ( (BooleanValue) value ).getValue() );
     }
 
     public BooleanValue not()
     {
         return new BooleanValue( !this.value );
+    }
+
+    @Override
+    public String toString()
+    {
+        return String.valueOf( value );
     }
 
 

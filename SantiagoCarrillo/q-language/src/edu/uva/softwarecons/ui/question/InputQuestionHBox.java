@@ -36,6 +36,6 @@ public class InputQuestionHBox
     @Override
     public void updateValue( Value value )
     {
-        textField.setText( value.getValue() );
+        textField.setText( value.getValue().toString() );
     }
 }
