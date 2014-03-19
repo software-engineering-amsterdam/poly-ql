@@ -39,5 +39,7 @@ public class Main {
         } else {
             validation.printErrors();
         }
+
+        validation.printWarnings();
     }
 }

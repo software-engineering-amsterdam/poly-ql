@@ -21,7 +21,9 @@ public class ASTValidation {
     }
 
     public boolean combine(final ASTValidation other) {
-        return _validationErrors.addAll(other._validationErrors);
+        boolean validError = _validationErrors.addAll(other._validationErrors);
+        boolean validWarning = _validationWarnings.addAll(other._validationWarnings);
+        return validError && validWarning;
     }
 
     public void printErrors() {

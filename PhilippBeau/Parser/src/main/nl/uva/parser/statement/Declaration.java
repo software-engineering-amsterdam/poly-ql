@@ -7,16 +7,17 @@ import main.nl.uva.ui.element.UIElement;
 import main.nl.uva.validation.ASTValidation;
 import main.nl.uva.validation.Scope;
 import main.nl.uva.validation.error.DuplicatedVariableError;
+import main.nl.uva.validation.warning.DuplicateLabelWarning;
 
 public class Declaration extends Statement {
 
-    protected final String _function;
+    protected final String _label;
 
     protected final Variable _variable;
 
     public Declaration(final Variable variable, final String function) {
         super(variable.getLineInfo());
-        _function = function;
+        _label = function;
         _variable = variable;
     }
 
@@ -24,13 +25,19 @@ public class Declaration extends Statement {
     public ASTValidation validate(final Scope scope) {
         ASTValidation valid = _variable.validate(scope);
 
+        if (scope.labelAlreadyDefined(_label)) {
+            valid.addWarning(new DuplicateLabelWarning(_label, scope.getFirstDeclarationForLabel(_label), getLineInfo()));
+        } else {
+            scope.defineLabel(_label, getLineInfo());
+        }
+
         if (scope.variableAlreadyDefined(_variable.getName())) {
 
             Variable original = scope.getVariable(_variable.getName());
             valid.addError(new DuplicatedVariableError(original, getLineInfo()));
         } else {
 
-            scope.addToScope(_variable);
+            scope.defineVariable(_variable);
         }
 
         return valid;
@@ -38,16 +45,17 @@ public class Declaration extends Statement {
 
     @Override
     public void removeYourselfFromScope(final Scope scope) {
-        scope.removeFromScope(_variable);
+        scope.removeVariable(_variable);
+        scope.removeLabel(_label);
     }
 
     @Override
     public UIElement getLayout(final UI parentUI) {
-        return new DeclarationUI(_variable, _function, parentUI);
+        return new DeclarationUI(_variable, _label, parentUI);
     }
 
     @Override
     public String toString() {
-        return _variable + " " + _function;
+        return _variable + " " + _label;
     }
 }

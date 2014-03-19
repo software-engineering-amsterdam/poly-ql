@@ -23,19 +23,23 @@ public class Scope {
         return _variableScope.get(variableName);
     }
 
-    public void addToScope(final String label, final Line lineInfo) {
+    public Line getFirstDeclarationForLabel(final String label) {
+        return _labelScope.get(label);
+    }
+
+    public void defineLabel(final String label, final Line lineInfo) {
         _labelScope.put(label, lineInfo);
     }
 
-    public void removeFromScope(final String label) {
+    public void removeLabel(final String label) {
         _labelScope.remove(label);
     }
 
-    public void addToScope(final Variable variable) {
+    public void defineVariable(final Variable variable) {
         _variableScope.put(variable.getName(), variable);
     }
 
-    public void removeFromScope(final Variable variable) {
+    public void removeVariable(final Variable variable) {
         _variableScope.remove(variable.getName());
     }
 }
