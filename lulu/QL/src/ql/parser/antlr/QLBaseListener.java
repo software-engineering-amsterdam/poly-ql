@@ -2,9 +2,9 @@
 
 package ql.parser.antlr;
 import ql.ast.expr.*;
-import ql.ast.stat.*;
+import ql.ast.form.stat.*;
 import ql.ast.form.*;
-import ql.ast.form.questionType.*;
+import ql.ast.type.*;
 import ql.ast.expr.exprType.*;
 import ql.ast.expr.operation.*;
 import ql.ast.expr.operation.add.*;
@@ -154,6 +154,19 @@ public class QLBaseListener implements QLListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitUnExpr(@NotNull QLParser.UnExprContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterStat(@NotNull QLParser.StatContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStat(@NotNull QLParser.StatContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
