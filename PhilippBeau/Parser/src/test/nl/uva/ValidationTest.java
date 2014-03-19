@@ -3,14 +3,14 @@ package test.nl.uva;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.nl.uva.parser.element.Form;
-import main.nl.uva.parser.element.Line;
-import main.nl.uva.parser.element.expression.And;
-import main.nl.uva.parser.element.expression.Variable;
-import main.nl.uva.parser.element.expression.atom.VariableAtom;
-import main.nl.uva.parser.element.statement.Declaration;
-import main.nl.uva.parser.element.statement.IfThenElse;
-import main.nl.uva.parser.element.statement.Statement;
+import main.nl.uva.parser.Form;
+import main.nl.uva.parser.Line;
+import main.nl.uva.parser.expression.And;
+import main.nl.uva.parser.expression.Variable;
+import main.nl.uva.parser.expression.atom.VariableAtom;
+import main.nl.uva.parser.statement.Declaration;
+import main.nl.uva.parser.statement.IfThenElse;
+import main.nl.uva.parser.statement.Statement;
 import main.nl.uva.validation.Scope;
 import main.nl.uva.validation.type.Value;
 
@@ -31,7 +31,7 @@ public class ValidationTest {
     public void testValidVariableValidation() {
 
         Variable v1 = new Variable(Value.Type.BOOLEAN, "testVar", Line.NO_LINE_NUMBER);
-        Variable v2 = new Variable(Value.Type.BOOLEAN, "testVar", new VariableAtom("testVar", Line.NO_LINE_NUMBER), Line.NO_LINE_NUMBER);
+        Variable v2 = new Variable(Value.Type.BOOLEAN, "usesTestVar", new VariableAtom("testVar", Line.NO_LINE_NUMBER), Line.NO_LINE_NUMBER);
 
         Declaration decStatement1 = new Declaration(v1, "declares variable");
         Declaration decStatement2 = new Declaration(v2, "uses variabe");
@@ -41,6 +41,7 @@ public class ValidationTest {
         children.add(decStatement2);
         Form form = new Form("testForm", children, Line.NO_LINE_NUMBER);
 
+        form.validate(new Scope()).printErrors();
         Assert.assertTrue("Valid statement was marked invalid", !form.validate(new Scope()).hasErrors());
     }
 

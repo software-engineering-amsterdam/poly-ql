@@ -2,7 +2,7 @@ package main.nl.uva.ui.element;
 
 import javax.swing.JPanel;
 
-import main.nl.uva.parser.element.expression.Variable;
+import main.nl.uva.parser.expression.Variable;
 import main.nl.uva.ui.UI;
 
 public class ExpressionUI extends DeclarationUI {

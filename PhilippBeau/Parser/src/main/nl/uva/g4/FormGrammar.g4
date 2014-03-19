@@ -1,12 +1,12 @@
 grammar FormGrammar; 
 
 @header{
-	import main.nl.uva.parser.element.expression.*;
-	import main.nl.uva.parser.element.statement.*;
-	import main.nl.uva.parser.element.expression.*;
-	import main.nl.uva.parser.element.expression.atom.*;
-	import main.nl.uva.parser.element.type.*;
-	import main.nl.uva.parser.element.*;
+	import main.nl.uva.parser.expression.*;
+	import main.nl.uva.parser.statement.*;
+	import main.nl.uva.parser.expression.*;
+	import main.nl.uva.parser.expression.atom.*;
+	import main.nl.uva.validation.type.*;
+	import main.nl.uva.parser.*;
 }
 
 form returns [Form parsedForm]

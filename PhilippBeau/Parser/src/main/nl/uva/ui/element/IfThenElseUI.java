@@ -5,8 +5,8 @@ import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
-import main.nl.uva.parser.element.expression.Expression;
-import main.nl.uva.parser.element.statement.Statement;
+import main.nl.uva.parser.expression.Expression;
+import main.nl.uva.parser.statement.Statement;
 import main.nl.uva.ui.UI;
 import main.nl.uva.validation.type.Bool;
 

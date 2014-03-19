@@ -1,7 +1,7 @@
 package main.nl.uva.validation.type;
 
-import main.nl.uva.parser.element.expression.AdvancedExpression;
-import main.nl.uva.parser.element.expression.Expression;
+import main.nl.uva.parser.expression.AdvancedExpression;
+import main.nl.uva.parser.expression.Expression;
 import main.nl.uva.ui.element.DeclarationUI;
 import main.nl.uva.ui.types.ValueUI;
 

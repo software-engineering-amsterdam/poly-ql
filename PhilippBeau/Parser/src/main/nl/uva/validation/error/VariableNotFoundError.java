@@ -1,6 +1,6 @@
 package main.nl.uva.validation.error;
 
-import main.nl.uva.parser.element.Line;
+import main.nl.uva.parser.Line;
 
 public class VariableNotFoundError extends ValidationError {
 

@@ -2,7 +2,7 @@ package main.nl.uva.validation;
 
 import java.util.HashMap;
 
-import main.nl.uva.parser.element.expression.Variable;
+import main.nl.uva.parser.expression.Variable;
 
 public class Scope {
 

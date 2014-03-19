@@ -2,7 +2,7 @@ package main.nl.uva.ui;
 
 import javax.swing.JFrame;
 
-import main.nl.uva.parser.element.Form;
+import main.nl.uva.parser.Form;
 import main.nl.uva.ui.element.UIElement;
 import main.nl.uva.validation.Scope;
 

@@ -1,16 +1,16 @@
 package test.nl.uva;
 
-import main.nl.uva.parser.element.Line;
-import main.nl.uva.parser.element.expression.Addition;
-import main.nl.uva.parser.element.expression.And;
-import main.nl.uva.parser.element.expression.Equal;
-import main.nl.uva.parser.element.expression.Division;
-import main.nl.uva.parser.element.expression.Multiplication;
-import main.nl.uva.parser.element.expression.Or;
-import main.nl.uva.parser.element.expression.Substraction;
-import main.nl.uva.parser.element.expression.Variable;
-import main.nl.uva.parser.element.expression.atom.BoolAtom;
-import main.nl.uva.parser.element.expression.atom.MoneyAtom;
+import main.nl.uva.parser.Line;
+import main.nl.uva.parser.expression.Addition;
+import main.nl.uva.parser.expression.And;
+import main.nl.uva.parser.expression.Division;
+import main.nl.uva.parser.expression.Equal;
+import main.nl.uva.parser.expression.Multiplication;
+import main.nl.uva.parser.expression.Or;
+import main.nl.uva.parser.expression.Substraction;
+import main.nl.uva.parser.expression.Variable;
+import main.nl.uva.parser.expression.atom.BoolAtom;
+import main.nl.uva.parser.expression.atom.MoneyAtom;
 import main.nl.uva.validation.Scope;
 import main.nl.uva.validation.type.Bool;
 import main.nl.uva.validation.type.Money;

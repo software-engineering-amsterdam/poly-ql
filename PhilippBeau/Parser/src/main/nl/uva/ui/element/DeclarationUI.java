@@ -4,11 +4,11 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import main.nl.uva.parser.element.expression.ExpressionChangeListener;
-import main.nl.uva.parser.element.expression.Variable;
-import main.nl.uva.parser.element.expression.atom.BoolAtom;
-import main.nl.uva.parser.element.expression.atom.MoneyAtom;
-import main.nl.uva.parser.element.expression.atom.TextAtom;
+import main.nl.uva.parser.expression.ExpressionChangeListener;
+import main.nl.uva.parser.expression.Variable;
+import main.nl.uva.parser.expression.atom.BoolAtom;
+import main.nl.uva.parser.expression.atom.MoneyAtom;
+import main.nl.uva.parser.expression.atom.TextAtom;
 import main.nl.uva.ui.UI;
 import main.nl.uva.ui.UIValueChangeListener;
 import main.nl.uva.ui.types.ValueUI;

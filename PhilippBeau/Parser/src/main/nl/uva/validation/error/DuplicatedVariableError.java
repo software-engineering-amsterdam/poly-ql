@@ -1,7 +1,7 @@
 package main.nl.uva.validation.error;
 
-import main.nl.uva.parser.element.Line;
-import main.nl.uva.parser.element.expression.Variable;
+import main.nl.uva.parser.Line;
+import main.nl.uva.parser.expression.Variable;
 
 public class DuplicatedVariableError extends ValidationError {
 

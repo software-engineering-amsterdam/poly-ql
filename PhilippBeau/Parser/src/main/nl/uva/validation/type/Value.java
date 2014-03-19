@@ -1,11 +1,11 @@
 package main.nl.uva.validation.type;
 
-import main.nl.uva.parser.element.expression.AdvancedExpression;
-import main.nl.uva.parser.element.expression.Expression;
-import main.nl.uva.parser.element.expression.atom.BoolAtom;
-import main.nl.uva.parser.element.expression.atom.MoneyAtom;
-import main.nl.uva.parser.element.expression.atom.TextAtom;
-import main.nl.uva.parser.element.statement.Statement;
+import main.nl.uva.parser.expression.AdvancedExpression;
+import main.nl.uva.parser.expression.Expression;
+import main.nl.uva.parser.expression.atom.BoolAtom;
+import main.nl.uva.parser.expression.atom.MoneyAtom;
+import main.nl.uva.parser.expression.atom.TextAtom;
+import main.nl.uva.parser.statement.Statement;
 import main.nl.uva.ui.element.DeclarationUI;
 import main.nl.uva.ui.types.ValueUI;
 
