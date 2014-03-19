@@ -11,6 +11,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.Set;
 
 /**
@@ -35,8 +37,9 @@ public class FormFrame extends JFrame {
      *
      * @param topComponent the top most panel containing all form elements.
      */
-    public void initUI(AbstractFormComponent topComponent) {
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    public void initUI(AbstractFormComponent topComponent,
+                       final GUIController controller) {
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         // This disables horizontal scrolling (and sets a width of 850px).
         addComponentListener(new ComponentAdapter() {
@@ -44,6 +47,16 @@ public class FormFrame extends JFrame {
             public void componentResized(ComponentEvent e) {
                 setSize(new Dimension(850, getHeight()));
                 super.componentResized(e);
+            }
+
+        });
+
+        final FormFrame thisFrame = this;
+
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                controller.closeForm(thisFrame);
             }
         });
 
