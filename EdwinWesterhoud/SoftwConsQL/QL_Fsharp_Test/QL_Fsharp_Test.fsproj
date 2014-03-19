@@ -66,10 +66,11 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UnitTest.fs" />
     <None Include="App.config" />
     <None Include="MSTest.runsettings" />
     <None Include="packages.config" />
+    <Compile Include="ParserTests.fs" />
+    <Compile Include="TypeCheckerTests.fs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\QL_Fsharp\QL_Fsharp.fsproj">

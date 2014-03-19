@@ -70,7 +70,7 @@
       <DependentUpon>IntegerControl.cs</DependentUpon>
     </Compile>
     <Compile Include="IPrimitiveControl.cs" />
-    <Compile Include="StatementControl.cs">
+    <Compile Include="PrimitiveControls\StatementControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="PrimitiveControls\StringControl.cs">

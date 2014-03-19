@@ -204,19 +204,3 @@ type Precedence() =
                                             ]}
         let result = parse_string text
         Assert.AreEqual(tree.ToString(), result.ToString())
-
-//// Type checker
-//[<TestClass>]
-//type TypeChecker() = 
-//    [<TestMethod>]
-//    member x.PrecPlusMult () = 
-//        let text = "form formName { \"Testing assignment\" intX = 1 + 2 * 3}"
-//        let tree = { ID = "formName"; Statements = [
-//                                        Assignment({
-//                                                    ID = "intX";
-//                                                    Label = "Testing assignment"
-//                                                    Expression = ArithmeticOp(Literal(Int(1)), arithmeticOp.Plus, ArithmeticOp(Literal(Int(2)), arithmeticOp.Mult, Literal(Int(3))))
-//                                                })
-//                                            ]}
-//        let result = parse_string text
-//        Assert.AreEqual(tree.ToString(), result.ToString())

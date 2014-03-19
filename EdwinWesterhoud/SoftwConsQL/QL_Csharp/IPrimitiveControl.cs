@@ -1,4 +1,4 @@
-﻿namespace QL_Csharp.PrimitiveControls
+﻿namespace QL_Csharp
 {
     public interface IPrimitiveControl<T>
     {
