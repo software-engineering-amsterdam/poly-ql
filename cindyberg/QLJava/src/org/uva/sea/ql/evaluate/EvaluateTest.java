@@ -42,11 +42,6 @@ public class EvaluateTest {
 		assertEquals(evalResult("6 >= 3").getValue(),new BooleanValue(true).getValue());
 	}
 	
-	/*@Test
-	public void evaluateString() throws ParseException{
-		assertEquals(evalResult("bla").getValue(),new StringValue("bla").getValue());
-	}*/
-	
 	private Value evalResult(String expression) throws ParseException{
 		Expression exp = (Expression) parser.parser(expression);
 		return exp.accept(eval);

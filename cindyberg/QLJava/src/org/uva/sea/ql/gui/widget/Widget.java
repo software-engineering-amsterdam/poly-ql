@@ -8,12 +8,12 @@ import org.uva.sea.ql.ast.Identifier;
 import org.uva.sea.ql.evaluate.Value;
 import org.uva.sea.ql.gui.questionaire.State;
 
-public abstract class Control extends Observable {
+public abstract class Widget extends Observable {
 
 	private Identifier identifier;
 	private State state;
 	
-	public Control(Identifier identifier, State state) {
+	public Widget(Identifier identifier, State state) {
 		this.identifier = identifier;
 		this.state = state;
 	}

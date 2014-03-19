@@ -43,7 +43,7 @@ public class TestTypeChecker extends AbstractTestTypeChecker{
 		}
 		
 		Warning expectedWarning = new DuplicateLabelWarning(new StringLiteral("vraag"));
-		assertTrue(problems.getWarnings().contains(expectedWarning));
+		assertTrue(((ArrayList<Warning>) problems.warnings).contains(expectedWarning));
 	}
 	
 	@Test 
@@ -59,7 +59,7 @@ public class TestTypeChecker extends AbstractTestTypeChecker{
 		}
 		
 		Warning expectedWarning = new RedeclaredWarning(new Identifier("id1"), new BooleanType());
-		assertTrue(problems.getWarnings().contains(expectedWarning));
+		assertTrue(((ArrayList<Warning>)problems.warnings).contains(expectedWarning));
 	}
 	
 	@Test
@@ -71,7 +71,7 @@ public class TestTypeChecker extends AbstractTestTypeChecker{
 		
 		Error expectedError = new TypeError(left,add.typeOf(env));
 
-		assertTrue(problems.getErrors().contains(expectedError));
+		assertTrue(((ArrayList<Error>)problems.errors).contains(expectedError));
 	}
 	
 	public void testComparible(){
@@ -80,8 +80,8 @@ public class TestTypeChecker extends AbstractTestTypeChecker{
 		GT gt = new GT(left,right); //true>1 
 		ExpressionChecker.checkExpression(env, problems, gt);
 		
-		Error expectedError = new CompatibleError(left,right);
-		assertTrue(problems.getErrors().contains(expectedError));
+		Error expectedError = new CompatibleError(left,right,env);
+		assertTrue(((ArrayList<Error>)problems.errors).contains(expectedError));
 	}
 	
 	@Test
@@ -93,7 +93,7 @@ public class TestTypeChecker extends AbstractTestTypeChecker{
 		
 		con.accept(stat);
 		Error expectedError = new NotDeclaredError(left);
-		assertTrue(problems.getErrors().contains(expectedError));
+		assertTrue(((ArrayList<Error>)problems.errors).contains(expectedError));
 		
 	}
 }

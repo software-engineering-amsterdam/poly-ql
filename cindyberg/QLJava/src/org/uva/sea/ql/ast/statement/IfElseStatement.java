@@ -28,8 +28,7 @@ public class IfElseStatement extends Statement {
 	}
 	
 	public void accept(StatementVisitor visitor) {
-		visitor.visit(this);
-		
+		visitor.visit(this);		
 	}
 
 }

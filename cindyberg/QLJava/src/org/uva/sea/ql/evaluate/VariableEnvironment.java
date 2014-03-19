@@ -12,12 +12,11 @@ public class VariableEnvironment {
 		return variables.containsKey(id);
 	}
 	
-	public Value getValue(Identifier id){
-		
-		if(isDeclared(id))
-		{
+	public Value getValue(Identifier id){	
+		if(isDeclared(id)){
 			return variables.get(id);
 		}
+		
 		return new UndefinedValue();
 	}
 	

@@ -20,7 +20,6 @@ public class QuestionaireView {
 	public void newScreen(Form form){
 		mainpanel = Renderer.render(form, new State());
 		frame.add(mainpanel);
-		//frame.pack();
 		frame.setVisible(true);
 	}
 }

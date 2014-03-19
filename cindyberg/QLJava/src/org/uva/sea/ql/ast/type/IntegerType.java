@@ -5,7 +5,7 @@ import org.uva.sea.ql.ast.TypeVisitor;
 public class IntegerType extends Type{
 	
 	public String toString(){
-		return "int";
+		return "integer";
 	}
 	
 	@Override
@@ -13,6 +13,7 @@ public class IntegerType extends Type{
 		return true;
 	}
 	
+	@Override
 	public boolean isCompatibleWith(Type t){
 		return t.isCompatibleWithInteger();
 	}

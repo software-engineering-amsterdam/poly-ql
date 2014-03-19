@@ -15,23 +15,20 @@ import org.uva.sea.ql.ast.statement.IfStatement;
 import org.uva.sea.ql.ast.statement.Question;
 import org.uva.sea.ql.ast.statement.Questions;
 import org.uva.sea.ql.ast.statement.Statement;
-import org.uva.sea.ql.gui.widget.Control;
+import org.uva.sea.ql.gui.widget.Widget;
 
 public class Renderer implements StatementVisitor {
 
 	JPanel mainpanel;
 	State state;
-	
-	
+		
 	public static JPanel render(Statement statement, State state){
-
 		Renderer renderer = new Renderer(state);
 		statement.accept(renderer);
 		return renderer.getPanel();
 	}
 	
-	public Renderer(State state)
-	{
+	public Renderer(State state){
 		this.state = state;
 		this.mainpanel = new JPanel();
 		mainpanel.setLayout(new MigLayout("wrap 2"));
@@ -46,49 +43,40 @@ public class Renderer implements StatementVisitor {
 		mainpanel.add(questionLabel, " grow");
 	}
 	
-	private void add(Control control){
-		
+	private void addWidget(Widget control){	
 		mainpanel.add(control.UIElement(), "width 50%, grow");
 	}
 	
-	private Control typeToWidget(Question question, boolean isEnabled){
-		Control control = question.getType().accept( new TypeToWidget(question.getIdentifier(), state) );
+	private Widget typeToWidget(Question question, boolean isEnabled){
+		Widget control = question.getType().accept( new TypeToWidget(question.getIdentifier(), state) );
 		control.setEnabled(isEnabled);
 		return control;
 	}
-	
-	/*//TODO make Expr question subset of question
-	private Control typeToWidget2(ExpressionQuestion question, boolean isEnabled){
-		Control control = question.getType().accept( new TypeToWidget(question.getIdentifier(), state) );
-		control.setEnabled(isEnabled);
-		return control;
-	}*/
-	
-	private void registerHandler(Question question, Control control){
-		state.putObservable(question.getIdentifier(), control);
+
+	private void registerHandler(Question question, Widget control){
+		state.addObservable(question.getIdentifier(), control);
 	}
 	
-	private void registerExprQuestion(ExpressionQuestion exprquestion, Control control){
+	private void registerExprQuestion(ExpressionQuestion exprquestion, Widget control){
 		ExpressionObserver exprObserver = new ExpressionObserver(control, state, exprquestion);
-		//subscribe
+		//subscribe to the identifiers in the statement
 		state.addGlobalObservers(exprObserver);
 		//make itself observable
-		state.putObservable(exprquestion.getIdentifier(), control);
+		state.addObservable(exprquestion.getIdentifier(), control);
 	}
 	
 	public void visit(ExpressionQuestion exprquestion) {
 		addLabel(exprquestion.getLabel());
-		Control control = typeToWidget(exprquestion, false);
+		Widget control = typeToWidget(exprquestion, false);
 		registerExprQuestion(exprquestion, control);
-		add(control);
-		
+		addWidget(control);
 	}
 
 	public void visit(Question question) {
 		addLabel(question.getLabel());
-		Control control = typeToWidget(question, true);
+		Widget control = typeToWidget(question, true);
 		registerHandler(question,control);
-		add(control);
+		addWidget(control);
 	}
 
 	public void visit(IfStatement ifconditional) {
@@ -103,11 +91,10 @@ public class Renderer implements StatementVisitor {
 		JPanel falseIf = render(ifelseconditional.getElseBody(),state);
 		registerConditionDeps(ifelseconditional.getConditional(), trueIf, falseIf);
 		trueIf.setVisible(false);
-		falseIf.setVisible(false);
+		falseIf.setVisible(true);
 		
 		this.mainpanel.add(trueIf, "span");
 		this.mainpanel.add(falseIf, "span");
-		
 	}
 
 	private void registerConditionDeps(Expression conditional, JPanel trueIf,
@@ -118,7 +105,6 @@ public class Renderer implements StatementVisitor {
 
 	public void visit(Form form) {
 		form.getBody().accept(this);
-
 	}
 
 	public void visit(Questions body) {
@@ -126,5 +112,4 @@ public class Renderer implements StatementVisitor {
 			s.accept(this);
 		}
 	}
-
 }

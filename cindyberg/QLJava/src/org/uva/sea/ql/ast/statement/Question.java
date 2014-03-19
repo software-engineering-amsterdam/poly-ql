@@ -13,13 +13,11 @@ public class Question extends Statement  {
 	
 	
 	public Question(Identifier questionname, StringLiteral label,
-			Type type) {
-		
+			Type type) {	
 		this.name = questionname;
 		this.label = label;
 		this.type = type;
-		
-		
+	
 	}
 	
 	public Identifier getIdentifier(){
@@ -36,9 +34,6 @@ public class Question extends Statement  {
 
 
 	public void accept(StatementVisitor visitor) {
-		visitor.visit(this);
-		
+		visitor.visit(this);	
 	}
-
-
 }

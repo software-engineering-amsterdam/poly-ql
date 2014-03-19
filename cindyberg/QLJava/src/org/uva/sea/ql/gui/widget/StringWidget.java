@@ -11,23 +11,21 @@ import org.uva.sea.ql.evaluate.StringValue;
 import org.uva.sea.ql.evaluate.Value;
 import org.uva.sea.ql.gui.questionaire.State;
 
-public class StringWidget extends Control{
+public class StringWidget extends Widget{
 
 	private JTextField textfield;
 	
 	public StringWidget(Identifier identifier, State state) {
 		super(identifier, state);
 		textfield = new JTextField();
-		//TODO implement caretlistener
 		textfield.addActionListener(new ActionListener(){
 			
 			public void actionPerformed(ActionEvent e){
-					setValue(textToStringValue());
+				setValue(textToStringValue());
 			}
 		
 		});
 		setValue(new StringValue("empty"));
-		
 	}
 
 	@Override
@@ -43,11 +41,12 @@ public class StringWidget extends Control{
 	public Value textToStringValue(){
 		return new StringValue(textfield.getText());
 	}
+	
 	@Override
 	public void setValue(Value value) {
 		textfield.setText(((StringValue) value).getValue());		
 		setChanged();
-		getState().putVariable(getIdentifier(), value);
+		getState().addIdentifier(getIdentifier(), value);
 		getState().notify(getIdentifier());	
 	}
 

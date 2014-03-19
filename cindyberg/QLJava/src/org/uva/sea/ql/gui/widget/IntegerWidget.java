@@ -12,22 +12,20 @@ import org.uva.sea.ql.evaluate.IntegerValue;
 import org.uva.sea.ql.evaluate.Value;
 import org.uva.sea.ql.gui.questionaire.State;
 
-public class IntegerWidget extends Control{
+public class IntegerWidget extends Widget{
 
 	private JTextField textfield;
 	
 	public IntegerWidget(Identifier identifier, State state) {
 		super(identifier, state);
 		textfield = new JTextField();
-		textfield.addActionListener(new ActionListener(){
-			
+		textfield.addActionListener(new ActionListener(){	
 			public void actionPerformed(ActionEvent e){
 				if(isInteger()){
 					setValue(textToIntValue());
 				}
 			}
-		});	
-		
+		});		
 		setValue(new IntegerValue(0));
 	}
 	
@@ -56,11 +54,12 @@ public class IntegerWidget extends Control{
 	public Value textToIntValue(){
 		return new IntegerValue(Integer.parseInt(textfield.getText()));
 	}
+	
 	@Override
 	public void setValue(Value value) {
 		textfield.setText(((IntegerValue) value).getValue().toString());		
 		setChanged();
-		getState().putVariable(getIdentifier(), value);
+		getState().addIdentifier(getIdentifier(), value);
 		getState().notify(getIdentifier());
 		
 	}

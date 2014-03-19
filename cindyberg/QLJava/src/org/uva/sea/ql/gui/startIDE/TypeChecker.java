@@ -8,12 +8,12 @@ import org.uva.sea.ql.typechecker.TypeEnvironment;
 
 import problems.Problems;
 
-public class StartScreenController {
+public class TypeChecker {
 	
-	private Parser parser;
-	private Problems problems;
+	private final Parser parser;
+	private final Problems problems;
 	
-	public StartScreenController(){
+	public TypeChecker(){
 		this.parser = new Parser();
 		this.problems = new Problems();	
 	}

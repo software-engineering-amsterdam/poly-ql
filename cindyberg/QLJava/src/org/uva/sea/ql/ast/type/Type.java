@@ -10,7 +10,6 @@ public abstract class Type extends ASTNode {
 	
 	public abstract String toString();
 	
-
 	public boolean isCompatibleWithBoolean(){
 		return false;
 	}
