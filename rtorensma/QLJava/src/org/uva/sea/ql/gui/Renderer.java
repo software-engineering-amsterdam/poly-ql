@@ -96,7 +96,7 @@ public class Renderer implements FormVisitor<Void> {
 	}
 	
 	private void renderQuestion(Question question, boolean editable) {
-		JPanel container = new JPanel(new FlowLayout(FlowLayout.LEADING));
+		JPanel container = new JPanel(new FlowLayout(FlowLayout.LEADING, 5, 0));
 		container.add(new JLabel(question.getLabel()));
 		InputField inputfield = InputFieldFactory.inputFieldForType(question.getType(), true);
 		container.add(inputfield.getComponent());

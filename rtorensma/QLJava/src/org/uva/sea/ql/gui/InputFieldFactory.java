@@ -23,7 +23,7 @@ public class InputFieldFactory implements TypeVisitor<InputField, Boolean> {
 
 	@Override
 	public InputField visit(Int type, Boolean arg) {
-		JTextField textfield = new JTextField(20);
+		JTextField textfield = new JTextField(10);
 		textfield.setEnabled(arg);
 		return new InputField(textfield);
 	}
