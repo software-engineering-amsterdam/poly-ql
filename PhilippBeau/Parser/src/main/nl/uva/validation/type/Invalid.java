@@ -1,4 +1,4 @@
-package main.nl.uva.parser.element.type;
+package main.nl.uva.validation.type;
 
 import main.nl.uva.parser.element.expression.AdvancedExpression;
 import main.nl.uva.parser.element.expression.Expression;

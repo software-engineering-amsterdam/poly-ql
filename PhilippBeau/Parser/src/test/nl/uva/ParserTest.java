@@ -5,8 +5,8 @@ import java.io.IOException;
 import main.nl.uva.g4.FormGrammarLexer;
 import main.nl.uva.g4.FormGrammarParser;
 import main.nl.uva.parser.element.Form;
-import main.nl.uva.parser.validation.ASTValidation;
-import main.nl.uva.parser.validation.Scope;
+import main.nl.uva.validation.ASTValidation;
+import main.nl.uva.validation.Scope;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;

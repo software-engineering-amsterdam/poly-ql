@@ -2,7 +2,7 @@ package main.nl.uva.ui.types;
 
 import javax.swing.JComponent;
 
-import main.nl.uva.parser.element.type.Value;
+import main.nl.uva.validation.type.Value;
 
 public abstract class ValueUI {
 

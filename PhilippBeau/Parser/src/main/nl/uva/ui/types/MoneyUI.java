@@ -6,9 +6,9 @@ import java.awt.event.KeyListener;
 import javax.swing.JComponent;
 import javax.swing.JTextField;
 
-import main.nl.uva.parser.element.type.Money;
-import main.nl.uva.parser.element.type.Value;
 import main.nl.uva.ui.element.DeclarationUI;
+import main.nl.uva.validation.type.Money;
+import main.nl.uva.validation.type.Value;
 
 public class MoneyUI extends ValueUI implements KeyListener {
 

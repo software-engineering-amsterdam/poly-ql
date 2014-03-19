@@ -1,4 +1,4 @@
-package main.nl.uva.parser.validation;
+package main.nl.uva.validation;
 
 import java.util.HashMap;
 

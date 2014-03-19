@@ -5,7 +5,7 @@ import java.util.List;
 
 import main.nl.uva.parser.element.ASTNode;
 import main.nl.uva.parser.element.Line;
-import main.nl.uva.parser.element.type.Value;
+import main.nl.uva.validation.type.Value;
 
 public abstract class Expression extends ASTNode {
 

@@ -1,29 +1,29 @@
-package main.nl.uva.parser.element.type;
+package main.nl.uva.validation.type;
 
 import main.nl.uva.parser.element.expression.AdvancedExpression;
 import main.nl.uva.parser.element.expression.Expression;
 import main.nl.uva.ui.element.DeclarationUI;
-import main.nl.uva.ui.types.MoneyUI;
+import main.nl.uva.ui.types.BooleanUI;
 import main.nl.uva.ui.types.ValueUI;
 
-public class Money extends Value {
+public class Bool extends Value {
 
-    private double _value;
+    private boolean _value;
 
-    public Money() {
-        this(0.0d);
+    public Bool() {
+        this(false);
     }
 
-    public Money(final double value) {
-        super(Value.Type.MONEY);
+    public Bool(final boolean value) {
+        super(Value.Type.BOOLEAN);
         _value = value;
     }
 
-    public void setValue(final double value) {
+    public void setValue(final boolean value) {
         _value = value;
     }
 
-    public double getValue() {
+    public boolean getValue() {
         return _value;
     }
 
@@ -49,7 +49,7 @@ public class Money extends Value {
 
     @Override
     public ValueUI getLayout(final DeclarationUI parent) {
-        return new MoneyUI(parent, this);
+        return new BooleanUI(parent, this);
     }
 
     @Override
@@ -58,13 +58,13 @@ public class Money extends Value {
     }
 
     @Override
-    public boolean acceptType(final Money type) {
+    public boolean acceptType(final Bool type) {
         _value = type._value;
         return true;
     }
 
     @Override
     public String toString() {
-        return "Money: " + _value;
+        return "Bool: " + _value;
     }
 }

@@ -1,14 +1,14 @@
 package main.nl.uva.parser.element.expression;
 
 import main.nl.uva.parser.element.Line;
-import main.nl.uva.parser.element.error.InvalidTypeError;
-import main.nl.uva.parser.element.type.Bool;
-import main.nl.uva.parser.element.type.Invalid;
-import main.nl.uva.parser.element.type.Money;
-import main.nl.uva.parser.element.type.Text;
-import main.nl.uva.parser.element.type.Value;
-import main.nl.uva.parser.validation.ASTValidation;
-import main.nl.uva.parser.validation.Scope;
+import main.nl.uva.validation.ASTValidation;
+import main.nl.uva.validation.Scope;
+import main.nl.uva.validation.error.InvalidTypeError;
+import main.nl.uva.validation.type.Bool;
+import main.nl.uva.validation.type.Invalid;
+import main.nl.uva.validation.type.Money;
+import main.nl.uva.validation.type.Text;
+import main.nl.uva.validation.type.Value;
 
 public abstract class AdvancedExpression extends Expression {
     protected Value _value = null;

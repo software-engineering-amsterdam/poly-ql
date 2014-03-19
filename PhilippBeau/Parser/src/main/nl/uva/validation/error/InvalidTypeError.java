@@ -1,4 +1,4 @@
-package main.nl.uva.parser.element.error;
+package main.nl.uva.validation.error;
 
 import main.nl.uva.parser.element.Line;
 

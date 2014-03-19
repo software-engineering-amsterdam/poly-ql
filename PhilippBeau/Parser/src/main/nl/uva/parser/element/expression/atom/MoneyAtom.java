@@ -1,10 +1,10 @@
 package main.nl.uva.parser.element.expression.atom;
 
 import main.nl.uva.parser.element.Line;
-import main.nl.uva.parser.element.type.Money;
-import main.nl.uva.parser.element.type.Value;
-import main.nl.uva.parser.validation.ASTValidation;
-import main.nl.uva.parser.validation.Scope;
+import main.nl.uva.validation.ASTValidation;
+import main.nl.uva.validation.Scope;
+import main.nl.uva.validation.type.Money;
+import main.nl.uva.validation.type.Value;
 
 public class MoneyAtom extends AtomExpression {
 

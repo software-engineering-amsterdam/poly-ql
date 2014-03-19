@@ -3,11 +3,11 @@ package main.nl.uva.parser.element;
 import java.util.List;
 
 import main.nl.uva.parser.element.statement.Statement;
-import main.nl.uva.parser.validation.ASTValidation;
-import main.nl.uva.parser.validation.Scope;
 import main.nl.uva.ui.UI;
 import main.nl.uva.ui.element.FormUI;
 import main.nl.uva.ui.element.UIElement;
+import main.nl.uva.validation.ASTValidation;
+import main.nl.uva.validation.Scope;
 
 public class Form extends ASTNode {
 

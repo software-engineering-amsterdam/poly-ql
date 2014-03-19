@@ -1,9 +1,9 @@
-package main.nl.uva.parser.validation;
+package main.nl.uva.validation;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import main.nl.uva.parser.element.error.ValidationError;
+import main.nl.uva.validation.error.ValidationError;
 
 public class ASTValidation {
 

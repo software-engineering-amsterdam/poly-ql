@@ -1,29 +1,30 @@
-package main.nl.uva.parser.element.type;
+package main.nl.uva.validation.type;
 
 import main.nl.uva.parser.element.expression.AdvancedExpression;
 import main.nl.uva.parser.element.expression.Expression;
 import main.nl.uva.ui.element.DeclarationUI;
-import main.nl.uva.ui.types.BooleanUI;
+import main.nl.uva.ui.types.TextUI;
 import main.nl.uva.ui.types.ValueUI;
 
-public class Bool extends Value {
+public class Text extends Value {
 
-    private boolean _value;
+    private String _value;
 
-    public Bool() {
-        this(false);
+    public Text() {
+        this("");
     }
 
-    public Bool(final boolean value) {
-        super(Value.Type.BOOLEAN);
+    public Text(final String value) {
+        super(Value.Type.TEXT);
+
         _value = value;
     }
 
-    public void setValue(final boolean value) {
+    public void setValue(final String value) {
         _value = value;
     }
 
-    public boolean getValue() {
+    public String getValue() {
         return _value;
     }
 
@@ -49,7 +50,7 @@ public class Bool extends Value {
 
     @Override
     public ValueUI getLayout(final DeclarationUI parent) {
-        return new BooleanUI(parent, this);
+        return new TextUI(parent, this);
     }
 
     @Override
@@ -58,13 +59,8 @@ public class Bool extends Value {
     }
 
     @Override
-    public boolean acceptType(final Bool type) {
+    public boolean acceptType(final Text type) {
         _value = type._value;
         return true;
-    }
-
-    @Override
-    public String toString() {
-        return "Bool: " + _value;
     }
 }

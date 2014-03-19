@@ -1,9 +1,9 @@
 package main.nl.uva.parser.element.expression;
 
 import main.nl.uva.parser.element.Line;
-import main.nl.uva.parser.element.type.Bool;
-import main.nl.uva.parser.element.type.Money;
-import main.nl.uva.parser.element.type.Value;
+import main.nl.uva.validation.type.Bool;
+import main.nl.uva.validation.type.Money;
+import main.nl.uva.validation.type.Value;
 
 public class LowerEqualThan extends AdvancedExpression {
 

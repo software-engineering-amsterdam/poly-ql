@@ -3,14 +3,14 @@ package main.nl.uva.parser.element.statement;
 import java.util.List;
 
 import main.nl.uva.parser.element.Line;
-import main.nl.uva.parser.element.error.InvalidTypeError;
 import main.nl.uva.parser.element.expression.Expression;
-import main.nl.uva.parser.element.type.Value;
-import main.nl.uva.parser.validation.ASTValidation;
-import main.nl.uva.parser.validation.Scope;
 import main.nl.uva.ui.UI;
 import main.nl.uva.ui.element.IfThenUI;
 import main.nl.uva.ui.element.UIElement;
+import main.nl.uva.validation.ASTValidation;
+import main.nl.uva.validation.Scope;
+import main.nl.uva.validation.error.InvalidTypeError;
+import main.nl.uva.validation.type.Value;
 
 public class IfThen extends Block {
 

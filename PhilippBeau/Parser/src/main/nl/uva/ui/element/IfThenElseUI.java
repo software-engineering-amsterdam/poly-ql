@@ -7,8 +7,8 @@ import javax.swing.JPanel;
 
 import main.nl.uva.parser.element.expression.Expression;
 import main.nl.uva.parser.element.statement.Statement;
-import main.nl.uva.parser.element.type.Bool;
 import main.nl.uva.ui.UI;
+import main.nl.uva.validation.type.Bool;
 
 public class IfThenElseUI extends IfThenUI {
 

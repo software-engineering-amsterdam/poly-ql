@@ -11,8 +11,8 @@ import main.nl.uva.parser.element.expression.atom.VariableAtom;
 import main.nl.uva.parser.element.statement.Declaration;
 import main.nl.uva.parser.element.statement.IfThenElse;
 import main.nl.uva.parser.element.statement.Statement;
-import main.nl.uva.parser.element.type.Value;
-import main.nl.uva.parser.validation.Scope;
+import main.nl.uva.validation.Scope;
+import main.nl.uva.validation.type.Value;
 
 import org.junit.Assert;
 import org.junit.Before;

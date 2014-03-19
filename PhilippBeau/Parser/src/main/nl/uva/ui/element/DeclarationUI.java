@@ -9,12 +9,12 @@ import main.nl.uva.parser.element.expression.Variable;
 import main.nl.uva.parser.element.expression.atom.BoolAtom;
 import main.nl.uva.parser.element.expression.atom.MoneyAtom;
 import main.nl.uva.parser.element.expression.atom.TextAtom;
-import main.nl.uva.parser.element.type.Bool;
-import main.nl.uva.parser.element.type.Money;
-import main.nl.uva.parser.element.type.Text;
 import main.nl.uva.ui.UI;
 import main.nl.uva.ui.UIValueChangeListener;
 import main.nl.uva.ui.types.ValueUI;
+import main.nl.uva.validation.type.Bool;
+import main.nl.uva.validation.type.Money;
+import main.nl.uva.validation.type.Text;
 
 public class DeclarationUI extends UIElement implements UIValueChangeListener, ExpressionChangeListener {
 

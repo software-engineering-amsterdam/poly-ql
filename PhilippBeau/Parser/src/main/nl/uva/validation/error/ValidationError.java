@@ -1,4 +1,4 @@
-package main.nl.uva.parser.element.error;
+package main.nl.uva.validation.error;
 
 public abstract class ValidationError {
 

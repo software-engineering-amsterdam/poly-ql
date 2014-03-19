@@ -11,10 +11,10 @@ import main.nl.uva.parser.element.expression.Substraction;
 import main.nl.uva.parser.element.expression.Variable;
 import main.nl.uva.parser.element.expression.atom.BoolAtom;
 import main.nl.uva.parser.element.expression.atom.MoneyAtom;
-import main.nl.uva.parser.element.type.Bool;
-import main.nl.uva.parser.element.type.Money;
-import main.nl.uva.parser.element.type.Value;
-import main.nl.uva.parser.validation.Scope;
+import main.nl.uva.validation.Scope;
+import main.nl.uva.validation.type.Bool;
+import main.nl.uva.validation.type.Money;
+import main.nl.uva.validation.type.Value;
 
 import org.junit.Assert;
 import org.junit.Before;

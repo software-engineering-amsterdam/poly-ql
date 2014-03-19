@@ -1,12 +1,12 @@
 package main.nl.uva.parser.element.statement;
 
-import main.nl.uva.parser.element.error.DuplicatedVariableError;
 import main.nl.uva.parser.element.expression.Variable;
-import main.nl.uva.parser.validation.ASTValidation;
-import main.nl.uva.parser.validation.Scope;
 import main.nl.uva.ui.UI;
 import main.nl.uva.ui.element.DeclarationUI;
 import main.nl.uva.ui.element.UIElement;
+import main.nl.uva.validation.ASTValidation;
+import main.nl.uva.validation.Scope;
+import main.nl.uva.validation.error.DuplicatedVariableError;
 
 public class Declaration extends Statement {
 

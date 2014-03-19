@@ -1,13 +1,13 @@
 package main.nl.uva.parser.element.expression;
 
 import main.nl.uva.parser.element.Line;
-import main.nl.uva.parser.element.error.InvalidTypeError;
-import main.nl.uva.parser.element.type.Bool;
-import main.nl.uva.parser.element.type.Invalid;
-import main.nl.uva.parser.element.type.Value;
-import main.nl.uva.parser.element.type.Value.Type;
-import main.nl.uva.parser.validation.ASTValidation;
-import main.nl.uva.parser.validation.Scope;
+import main.nl.uva.validation.ASTValidation;
+import main.nl.uva.validation.Scope;
+import main.nl.uva.validation.error.InvalidTypeError;
+import main.nl.uva.validation.type.Bool;
+import main.nl.uva.validation.type.Invalid;
+import main.nl.uva.validation.type.Value;
+import main.nl.uva.validation.type.Value.Type;
 
 public class Not extends Expression {
 

@@ -1,30 +1,29 @@
-package main.nl.uva.parser.element.type;
+package main.nl.uva.validation.type;
 
 import main.nl.uva.parser.element.expression.AdvancedExpression;
 import main.nl.uva.parser.element.expression.Expression;
 import main.nl.uva.ui.element.DeclarationUI;
-import main.nl.uva.ui.types.TextUI;
+import main.nl.uva.ui.types.MoneyUI;
 import main.nl.uva.ui.types.ValueUI;
 
-public class Text extends Value {
+public class Money extends Value {
 
-    private String _value;
+    private double _value;
 
-    public Text() {
-        this("");
+    public Money() {
+        this(0.0d);
     }
 
-    public Text(final String value) {
-        super(Value.Type.TEXT);
-
+    public Money(final double value) {
+        super(Value.Type.MONEY);
         _value = value;
     }
 
-    public void setValue(final String value) {
+    public void setValue(final double value) {
         _value = value;
     }
 
-    public String getValue() {
+    public double getValue() {
         return _value;
     }
 
@@ -50,7 +49,7 @@ public class Text extends Value {
 
     @Override
     public ValueUI getLayout(final DeclarationUI parent) {
-        return new TextUI(parent, this);
+        return new MoneyUI(parent, this);
     }
 
     @Override
@@ -59,8 +58,13 @@ public class Text extends Value {
     }
 
     @Override
-    public boolean acceptType(final Text type) {
+    public boolean acceptType(final Money type) {
         _value = type._value;
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Money: " + _value;
     }
 }
