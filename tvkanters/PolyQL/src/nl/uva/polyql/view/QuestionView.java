@@ -57,9 +57,9 @@ public abstract class QuestionView implements Question.ValueListener {
 
     private void setValue(final Value<?> value, final boolean updateSelf) {
         mValue = value;
-        onValidityChanged(value != null);
+        onValidityChanged(value.isValid());
 
-        if (updateSelf && value != null) {
+        if (updateSelf && value.isValid()) {
             value.setViewValue(this);
         }
     }

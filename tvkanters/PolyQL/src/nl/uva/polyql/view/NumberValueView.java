@@ -9,7 +9,9 @@ import javax.swing.JComponent;
 import javax.swing.JTextField;
 
 import nl.uva.polyql.ast.Question;
+import nl.uva.polyql.ast.values.InvalidValue;
 import nl.uva.polyql.ast.values.NumberValue;
+import nl.uva.polyql.ast.values.Value;
 
 public class NumberValueView extends QuestionView {
 
@@ -28,7 +30,13 @@ public class NumberValueView extends QuestionView {
 
             @Override
             public void keyReleased(final KeyEvent e) {
-                onNewInput(NumberValue.parse(mTextField.getText()));
+                Value<?> value;
+                try {
+                    value = NumberValue.parse(mTextField.getText());
+                } catch (final NumberFormatException ex) {
+                    value = new InvalidValue();
+                }
+                onNewInput(value);
             }
 
             @Override

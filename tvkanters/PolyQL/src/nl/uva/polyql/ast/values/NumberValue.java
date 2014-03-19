@@ -53,14 +53,13 @@ public class NumberValue extends Value<Double> {
      * @param input
      *            The user input
      * 
-     * @return The number value or null if it couldn't be parsed
+     * @return The number value
+     * 
+     * @throws NumberFormatException
+     *             Thrown when the input could not be parsed as a number
      */
-    public static NumberValue parse(final String input) {
-        try {
-            return new NumberValue(Double.parseDouble(input));
-        } catch (final NumberFormatException ex) {
-            return null;
-        }
+    public static NumberValue parse(final String input) throws NumberFormatException {
+        return new NumberValue(Double.parseDouble(input));
     }
 
 }

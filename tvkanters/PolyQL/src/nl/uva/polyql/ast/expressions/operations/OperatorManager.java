@@ -6,7 +6,7 @@ import nl.uva.polyql.ast.expressions.operators.Divide;
 import nl.uva.polyql.ast.expressions.operators.Equals;
 import nl.uva.polyql.ast.expressions.operators.GreaterThan;
 import nl.uva.polyql.ast.expressions.operators.GreaterThanOrEquals;
-import nl.uva.polyql.ast.expressions.operators.Inverse;
+import nl.uva.polyql.ast.expressions.operators.Not;
 import nl.uva.polyql.ast.expressions.operators.LesserThan;
 import nl.uva.polyql.ast.expressions.operators.LesserThanOrEquals;
 import nl.uva.polyql.ast.expressions.operators.Multiply;
@@ -34,7 +34,7 @@ public class OperatorManager {
         register(new GreaterThan());
         register(new LesserThan());
         register(new GreaterThanOrEquals());
-        register(new Inverse());
+        register(new Not());
         register(new LesserThanOrEquals());
         register(new Multiply());
         register(new Negative());

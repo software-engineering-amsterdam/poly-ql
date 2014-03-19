@@ -26,6 +26,10 @@ public abstract class Value<T> {
         return mValue;
     }
 
+    public boolean isValid() {
+        return getType() != Type.INVALID;
+    }
+
     public abstract QuestionView getView(Question question);
 
     public abstract void setViewValue(QuestionView view);

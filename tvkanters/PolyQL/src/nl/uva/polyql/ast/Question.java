@@ -34,15 +34,16 @@ public class Question implements Rule {
     }
 
     /**
-     * Sets this question's value and determines if the value is valid.
+     * Sets this question's value and determines if the value is valid. Informs listeners of the
+     * change.
      * 
      * @param value
      *            The new value
      * 
-     * @return True iff the value is valid (not null)
+     * @return True iff the value is valid
      */
     public boolean setValue(final Value<?> value) {
-        if (value != null) {
+        if (value.getType() == mType) {
             mValue = value;
             mValueValid = true;
         } else {

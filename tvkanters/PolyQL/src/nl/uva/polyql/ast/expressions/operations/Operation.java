@@ -24,6 +24,6 @@ public abstract class Operation extends Expression {
 
     @Override
     public boolean isValid() {
-        return mValue.getType() != Type.INVALID;
+        return mValue.isValid();
     }
 }
