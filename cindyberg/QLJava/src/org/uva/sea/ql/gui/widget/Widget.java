@@ -10,8 +10,8 @@ import org.uva.sea.ql.gui.questionaire.State;
 
 public abstract class Widget extends Observable {
 
-	private Identifier identifier;
-	private State state;
+	private final Identifier identifier;
+	private final State state;
 	
 	public Widget(Identifier identifier, State state) {
 		this.identifier = identifier;

@@ -19,8 +19,8 @@ import org.uva.sea.ql.gui.widget.Widget;
 
 public class Renderer implements StatementVisitor {
 
-	JPanel mainpanel;
-	State state;
+	private final JPanel mainpanel;
+	private final State state;
 		
 	public static JPanel render(Statement statement, State state){
 		Renderer renderer = new Renderer(state);
@@ -43,40 +43,38 @@ public class Renderer implements StatementVisitor {
 		mainpanel.add(questionLabel, " grow");
 	}
 	
-	private void addWidget(Widget control){	
-		mainpanel.add(control.UIElement(), "width 50%, grow");
+	private void addWidget(Widget widget){	
+		mainpanel.add(widget.UIElement(), "width 50%, grow");
 	}
 	
 	private Widget typeToWidget(Question question, boolean isEnabled){
-		Widget control = question.getType().accept( new TypeToWidget(question.getIdentifier(), state) );
-		control.setEnabled(isEnabled);
-		return control;
+		Widget widget = question.getType().accept( new TypeToWidget(question.getIdentifier(), state) );
+		widget.setEnabled(isEnabled);
+		return widget;
 	}
 
-	private void registerHandler(Question question, Widget control){
-		state.addObservable(question.getIdentifier(), control);
+	private void registerHandler(Question question, Widget widget){
+		state.addObservable(question.getIdentifier(), widget);
 	}
 	
-	private void registerExprQuestion(ExpressionQuestion exprquestion, Widget control){
-		ExpressionObserver exprObserver = new ExpressionObserver(control, state, exprquestion);
-		//subscribe to the identifiers in the statement
+	private void registerExprQuestion(ExpressionQuestion exprquestion, Widget widget){
+		ExpressionObserver exprObserver = new ExpressionObserver(widget, state, exprquestion);
 		state.addGlobalObservers(exprObserver);
-		//make itself observable
-		state.addObservable(exprquestion.getIdentifier(), control);
+		state.addObservable(exprquestion.getIdentifier(), widget);
 	}
 	
 	public void visit(ExpressionQuestion exprquestion) {
 		addLabel(exprquestion.getLabel());
-		Widget control = typeToWidget(exprquestion, false);
-		registerExprQuestion(exprquestion, control);
-		addWidget(control);
+		Widget widget = typeToWidget(exprquestion, false);
+		registerExprQuestion(exprquestion, widget);
+		addWidget(widget);
 	}
 
 	public void visit(Question question) {
 		addLabel(question.getLabel());
-		Widget control = typeToWidget(question, true);
-		registerHandler(question,control);
-		addWidget(control);
+		Widget widget = typeToWidget(question, true);
+		registerHandler(question,widget);
+		addWidget(widget);
 	}
 
 	public void visit(IfStatement ifconditional) {

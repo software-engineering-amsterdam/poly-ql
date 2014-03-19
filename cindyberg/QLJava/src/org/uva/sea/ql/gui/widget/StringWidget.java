@@ -13,7 +13,7 @@ import org.uva.sea.ql.gui.questionaire.State;
 
 public class StringWidget extends Widget{
 
-	private JTextField textfield;
+	private final JTextField textfield;
 	
 	public StringWidget(Identifier identifier, State state) {
 		super(identifier, state);

@@ -10,8 +10,8 @@ import org.uva.sea.ql.evaluate.VariableEnvironment;
 
 public class State {
 
-	private VariableEnvironment environment;
-	private HashMap<Identifier, Observable> observables;
+	private final VariableEnvironment environment;
+	private final HashMap<Identifier, Observable> observables;
 	
 	public State(){
 		this.environment =  new VariableEnvironment();

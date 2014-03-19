@@ -19,9 +19,9 @@ import net.miginfocom.swing.MigLayout;
 
 public class IDERenderer {
 
-	private JPanel mainpanel;
+	private final JPanel mainpanel;
 	private JFrame frame;
-	private Controller controller;
+	private final IDEController controller;
 	static JTextArea input;
 	private JList<String> warningList;
 	private JList<String> errorList;
@@ -37,7 +37,7 @@ public class IDERenderer {
 	public IDERenderer(JFrame frame)
 	{
 		this.frame = frame;
-		controller = new Controller(frame);
+		controller = new IDEController(frame);
 		this.mainpanel = new JPanel();
 		mainpanel.setLayout(new MigLayout());
 		

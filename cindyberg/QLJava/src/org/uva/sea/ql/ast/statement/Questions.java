@@ -8,7 +8,7 @@ import org.uva.sea.ql.ast.StatementVisitor;
 
 public class Questions extends Statement implements Iterable<Statement>{
 
-	private List<Statement> questions = new ArrayList<Statement>();
+	private final List<Statement> questions = new ArrayList<Statement>();
 	
 	public Questions(Statement single) {
 		questions.add(single);

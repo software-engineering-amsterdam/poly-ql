@@ -8,7 +8,7 @@ import org.uva.sea.ql.ast.type.Type;
 
 public class TypeEnvironment {
 
-	private HashMap<Identifier, Type> types = new HashMap<Identifier,Type>();
+	private final HashMap<Identifier, Type> types = new HashMap<Identifier,Type>();
 	
 	public Boolean isDeclared(Identifier id){
 		return types.containsKey(id);

@@ -6,7 +6,7 @@ import org.uva.sea.ql.ast.Identifier;
 
 public class VariableEnvironment {
 
-	private HashMap<Identifier,Value> variables = new HashMap<Identifier,Value>();
+	private final HashMap<Identifier,Value> variables = new HashMap<Identifier,Value>();
 	
 	public Boolean isDeclared(Identifier id){
 		return variables.containsKey(id);

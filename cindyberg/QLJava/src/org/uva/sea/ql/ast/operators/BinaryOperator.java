@@ -4,8 +4,8 @@ import org.uva.sea.ql.ast.Expression;
 
 	public abstract class BinaryOperator extends Expression {
 		
-		Expression left;
-		Expression right;
+		private final Expression left;
+		private final Expression right;
 
 		public BinaryOperator(Expression left, Expression right) {		
 			this.left = left;

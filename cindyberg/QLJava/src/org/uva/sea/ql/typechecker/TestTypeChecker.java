@@ -29,7 +29,6 @@ import problems.Warning;
 
 public class TestTypeChecker extends AbstractTestTypeChecker{
 
-	
 	@Test
 	public void testDuplicateLabel(){
 		Question q1 = new Question(new Identifier("id1"), new StringLiteral("vraag"), new BooleanType());
@@ -39,7 +38,7 @@ public class TestTypeChecker extends AbstractTestTypeChecker{
 		questions.add(q2);
 
 		for(Statement q : questions){
-			q.accept(stat);
+			q.accept(this.statementChecker);
 		}
 		
 		Warning expectedWarning = new DuplicateLabelWarning(new StringLiteral("vraag"));
@@ -55,7 +54,7 @@ public class TestTypeChecker extends AbstractTestTypeChecker{
 		questions.add(q2);
 
 		for(Statement q : questions){
-			q.accept(stat);
+			q.accept(this.statementChecker);
 		}
 		
 		Warning expectedWarning = new RedeclaredWarning(new Identifier("id1"), new BooleanType());
@@ -91,7 +90,7 @@ public class TestTypeChecker extends AbstractTestTypeChecker{
 		Questions qs = new Questions(q1);
 		IfStatement con = new IfStatement(left, qs);
 		
-		con.accept(stat);
+		con.accept(this.statementChecker);
 		Error expectedError = new NotDeclaredError(left);
 		assertTrue(((ArrayList<Error>)problems.errors).contains(expectedError));
 		

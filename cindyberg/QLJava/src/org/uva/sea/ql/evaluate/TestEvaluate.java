@@ -7,10 +7,10 @@ import org.uva.sea.ql.ast.Expression;
 import org.uva.sea.ql.parser.jacc.ParseException;
 import org.uva.sea.ql.parser.jacc.Parser;
 
-public class EvaluateTest {
+public class TestEvaluate {
 
-	private Parser parser = new Parser();
-	private EvaluateExpression eval = new EvaluateExpression(new VariableEnvironment());
+	private final Parser parser = new Parser();
+	private final EvaluateExpression eval = new EvaluateExpression(new VariableEnvironment());
 	
 	@Test
 	public void evaluateArithmetic() throws ParseException{

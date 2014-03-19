@@ -9,12 +9,12 @@ import org.uva.sea.ql.evaluate.Value;
 import org.uva.sea.ql.gui.widget.Widget;
 
 public class ExpressionObserver implements Observer {
-	 private final Widget control;
+	 private final Widget widget;
 	 private final State state;
 	 private final ExpressionQuestion question;
 	
-	 public ExpressionObserver(Widget control, State state, ExpressionQuestion question){
-		 this.control = control;
+	 public ExpressionObserver(Widget widget, State state, ExpressionQuestion question){
+		 this.widget = widget;
 		 this.state = state;
 		 this.question = question;
 	 }
@@ -23,6 +23,6 @@ public class ExpressionObserver implements Observer {
 		 Value value = question.getExpression().accept(new EvaluateExpression(state.getEnvironment()));
 	 	 state.addIdentifier(question.getIdentifier(), value);
 	 	 state.notify(question.getIdentifier());
-	 	 control.setValue(value);		
+	 	 widget.setValue(value);		
 	} 
 }

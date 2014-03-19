@@ -23,12 +23,12 @@ import problems.Error;
 import problems.Problems;
 import problems.Warning;
 
-public class Controller {
+public class IDEController {
 	
-	private JFrame frame;
+	private final JFrame frame;
 	private Form form;
 	
-	public Controller(JFrame frame){
+	public IDEController(JFrame frame){
 		this.frame = frame;
 	}
 

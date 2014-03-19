@@ -13,7 +13,7 @@ import org.uva.sea.ql.gui.questionaire.State;
 
 public class BooleanWidget extends Widget{
 
-	private JCheckBox checkbox;
+	private final JCheckBox checkbox;
 	
 	public BooleanWidget(Identifier identifier, State state) {
 		super(identifier, state);

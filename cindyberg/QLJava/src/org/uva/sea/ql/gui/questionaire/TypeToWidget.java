@@ -13,8 +13,8 @@ import org.uva.sea.ql.gui.widget.StringWidget;
 
 public class TypeToWidget implements TypeVisitor<Widget> {
 
-	Identifier identifier;
-	State state;
+	private final Identifier identifier;
+	private final State state;
 	
 	public TypeToWidget(Identifier identifier, State state){
 		this.identifier = identifier;
