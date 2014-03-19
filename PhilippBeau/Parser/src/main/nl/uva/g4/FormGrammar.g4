@@ -1,6 +1,6 @@
 grammar FormGrammar; 
 
-@header{
+@header {
 	import main.nl.uva.parser.expression.*;
 	import main.nl.uva.parser.statement.*;
 	import main.nl.uva.parser.expression.*;

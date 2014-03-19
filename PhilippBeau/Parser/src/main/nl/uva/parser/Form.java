@@ -26,8 +26,8 @@ public class Form extends ASTNode {
         return validateChildren(new ASTValidation(), _children, scope);
     }
 
-    public UIElement getLayout(final Form form, final UI parentUI) {
-        return new FormUI(form, _children, parentUI);
+    public UIElement getLayout(final UI parentUI) {
+        return new FormUI(this, _children, parentUI);
     }
 
     @Override
