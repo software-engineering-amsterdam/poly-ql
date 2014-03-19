@@ -63,12 +63,12 @@ let evalArithmeticOp (left, op, right) =
     | (Int(left),     arithmeticOp.Plus,  Int(right))     -> Int(left + right)
     | (Int(left),     arithmeticOp.Minus, Int(right))     -> Int(left - right)
     | (Int(left),     arithmeticOp.Mult,  Int(right))     -> Int(left * right)
-    | (Int(left),     arithmeticOp.Div,   Int(right))     -> Int(left / right)
+    | (Int(left),     arithmeticOp.Div,   Int(right))     -> if right = 0 then Int(0) else Int(left / right)
 
     | (Decimal(left), arithmeticOp.Plus,  Decimal(right)) -> Decimal(left + right)
     | (Decimal(left), arithmeticOp.Minus, Decimal(right)) -> Decimal(left - right)
     | (Decimal(left), arithmeticOp.Mult,  Decimal(right)) -> Decimal(left * right)
-    | (Decimal(left), arithmeticOp.Div,   Decimal(right)) -> Decimal(left / right)
+    | (Decimal(left), arithmeticOp.Div,   Decimal(right)) -> if right = 0.0 then Decimal(0.0) else Decimal(left / right)
 
     | (_, _, _) -> failwith "Unexpected application of a boolean operation (may indicate problem in typechecker)"
 
