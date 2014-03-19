@@ -22,19 +22,19 @@ public class IfThenUI extends UIElement implements ExpressionChangeListener {
         _expression = expression;
         _expression.registerListener(this);
 
-        _ifPanel = generateBlockPanel(_expression, children);
+        _ifPanel = generateBlockPanel(_expression, children, _parentUI);
         _ifPanel.setVisible(((Bool) expression.getValue()).getValue());
     }
 
-    protected JPanel generateBlockPanel(final Expression expression, final List<Statement> statements) {
-        JPanel parent = new JPanel();
-        parent.setLayout(new BoxLayout(parent, BoxLayout.Y_AXIS));
+    protected static JPanel generateBlockPanel(final Expression expression, final List<Statement> statements, final UI parent) {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
         for (Statement child : statements) {
-            parent.add(child.getLayout(_parentUI).generateUIElement());
+            panel.add(child.getLayout(parent).generateUIElement());
         }
 
-        return parent;
+        return panel;
     }
 
     @Override
