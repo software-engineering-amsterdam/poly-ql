@@ -12,7 +12,7 @@ form returns [Form f] :
 	'form' ID { $f = new Form($ID.text); } '{' (r = formrule[$f])* '}';
 
 formrule[RuleContainer rc] :
-	COMMENT | (calcquestion[$rc] | question[$rc] | ifstatement[$rc]);
+	calcquestion[$rc] | question[$rc] | ifstatement[$rc] | COMMENT;
 	
 calcquestion[RuleContainer rc] returns [CalculatedQuestion cq] : 
 	id=ID ':' label=STRING type=TYPE '(' e=expr_main[$rc] ')' { $cq = $rc.addCalculatedQuestion($id.text, $label.text, $type.text, $e.e); };
@@ -25,7 +25,7 @@ ifstatement[RuleContainer rc] returns [IfStatement is, ElseStatement es] :
 	('else' { $es = $rc.addElseStatement($e.e); } '{' formrule[$es]* '}')?;
 
 expr_main[RuleContainer rc] returns [Expression e] :
-	expr=expr_or[$rc]{ $e = $expr.e; };
+	expr=expr_or[$rc] { $e = $expr.e; };
 
 expr_or[RuleContainer rc] returns [Expression e] :
 	left=expr_and[$rc] { $e = $left.e; } (op=op_or right=expr_and[$rc] { $e = new BinaryOperation($e, $op.text, $right.e); })*;
