@@ -1,5 +1,5 @@
 form Modifier {
     num: "Give a number" number
-	num2: "Negative" (-num)
-	num3: "Inverse" (!num)
+	num2: "Negative" number(-num)
+	num3: "Inverse" boolean(!num)
 }

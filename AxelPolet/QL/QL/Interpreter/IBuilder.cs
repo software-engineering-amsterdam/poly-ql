@@ -1,6 +1,4 @@
-﻿using QL.Interpreter.Controls;
-
-namespace QL.Interpreter
+﻿namespace QL.Interpreter
 {
     interface IBuilder
     {

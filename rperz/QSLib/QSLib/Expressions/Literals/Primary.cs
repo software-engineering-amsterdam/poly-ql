@@ -1,20 +1,16 @@
 ﻿using QSLib.Types;
+using QSLib.Values;
 
 namespace QSLib.Expressions.Literals
 {
-    public abstract class Primary : IExpression
+    public abstract class Primary : QSExpression
     {
-        protected int _linenr;
-        protected QSType _type;
-
-        public virtual bool CheckType(TypeChecker checker)
+        public override void Check(TypeChecker checker)
         {
-            return true;
+            checker.Check(this);
         }
 
-        public abstract object GetValue();
-
-        public QSType Type
+        public override QSType Type
         {
             get 
             {
@@ -22,15 +18,25 @@ namespace QSLib.Expressions.Literals
             }
         }
 
+        public override Value Evaluate()
+        {
+            this.OnPropertyChanged("GetValue");
+            return this._value;
+        }
+
+
+        #region Object overrides
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
         public override bool Equals(object obj)
         {
             var temp = obj as Primary;
             return temp != null && this.Type.IsCompatible(temp.Type);
         }
+        #endregion
 
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
     }
 }

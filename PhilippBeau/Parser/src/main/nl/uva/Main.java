@@ -2,12 +2,12 @@ package main.nl.uva;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.List;
 
 import main.nl.uva.g4.FormGrammarLexer;
 import main.nl.uva.g4.FormGrammarParser;
-import main.nl.uva.parser.elements.errors.ValidationError;
-import main.nl.uva.parser.elements.statements.ParserForm;
+import main.nl.uva.parser.element.Form;
+import main.nl.uva.parser.validation.ASTValidation;
+import main.nl.uva.parser.validation.Scope;
 import main.nl.uva.ui.UI;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
@@ -34,23 +34,15 @@ public class Main {
 
         // create a parser that feeds off the tokens buffer
         FormGrammarParser parser = new FormGrammarParser(tokens);
+        Form pf = parser.form().parsedForm;
 
-        List<ParserForm> pf = parser.forms().data;
-
-        for (ParserForm f : pf) {
-            // System.out.println(f);
-
-            List<ValidationError> validation = f.validate();
-            if (validation.isEmpty()) {
-                System.out.println("All OK");
-            } else {
-                for (ValidationError error : validation) {
-                    System.out.println(error);
-                }
-            }
+        ASTValidation validation = pf.validate(new Scope());
+        if (!validation.hasErrors()) {
+            UI ui = new UI(pf);
+            ui.setVisible(true);
+        } else {
+            validation.printErrors();
         }
 
-        UI ui = new UI(pf.get(0));
-        ui.setVisible(true);
     }
 }

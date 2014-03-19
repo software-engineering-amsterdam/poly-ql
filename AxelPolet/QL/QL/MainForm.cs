@@ -2,7 +2,6 @@
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using QL.QLClasses;
 using QL.TypeChecker;
 
 namespace QL
@@ -21,10 +20,12 @@ namespace QL
         {
             txtMessages.Clear();
             pnlErrors.Controls.Clear();
+
+            _qlController = new QLController();
             _errorYPos = 0;
             
-            _qlController = new QLController();
-            Questionnaire AST = _qlController.Run(txtInput.Text);
+            //build AST + check types
+            _qlController.BuildAST(txtInput.Text);
 
             foreach (string lexerError in _qlController.LexerErrors)
                 WriteMessage(lexerError);
@@ -38,6 +39,7 @@ namespace QL
             if(_qlController.ParserErrors.Any())
                 WriteErrorLabel("Parser errors occurred, see messages");
 
+            //get type errors
             QLTypeChecker typeChecker = _qlController.TypeChecker;
             foreach (QLTypeError typeError in typeChecker.TypeErrors.OrderBy((te) => te.IsWarning))
             {
@@ -57,6 +59,7 @@ namespace QL
                     , Environment.NewLine
                     , _qlController.GetParseTreeString()));
 
+            //check if generate is possible
             if (_qlController.LexerErrors.Any() || _qlController.ParserErrors.Any() || typeChecker.TypeErrors.Any((te) => !te.IsWarning))
                 lblSuccess.Visible = btnGenerate.Enabled = false;
             else

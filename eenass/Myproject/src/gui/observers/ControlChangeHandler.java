@@ -1,29 +1,28 @@
 package gui.observers;
 
 import gui.component.Control;
+import gui.render.State;
 
-import java.util.Map;
 import java.util.Observable;
 
 import ast.expr.Identifier;
-import ast.expr.evaluate.Value;
 
 public class ControlChangeHandler extends Observable implements EventListener {
 
 	private Identifier ident;
 	private Control control;
-	private Map<Identifier, Value> environment;
+	private State state;
 	
-	public ControlChangeHandler(Identifier ident, Control control, Map<Identifier, Value> environment) {
+	public ControlChangeHandler(Identifier ident, Control control, State state) {
 		this.ident = ident;
 		this.control = control;
-		this.environment = environment;
+		this.state = state;
 		control.addListener(this);
 	}
 
 	@Override
 	public void handleEvent(EventChange e) {
-		environment.put(ident, control.getValue());
+		state.getEnvValues().put(ident, control.getValue());
 		setChanged();
 		notifyObservers();		
 	}

@@ -1,18 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using QSLib.Expressions;
+using QSLib.Types;
+
 namespace QSLib.Statements
 {
     public class IfStatement : IStatement
     {
-        private IExpression _condition;
+        private QSExpression _condition;
         private CodeBlock _code;
         private CodeBlock _elseBlock;
         private int _lineNr;
 
-        public IfStatement(IExpression con, CodeBlock code, CodeBlock elseBlock, int lineNr)
+        #region Constructors
+        public IfStatement(QSExpression con, CodeBlock code, CodeBlock elseBlock, int lineNr)
         {
             this._condition = con;
             this._code = code;
@@ -20,32 +20,38 @@ namespace QSLib.Statements
             this._lineNr = lineNr;
         }
 
-        public IfStatement(IExpression con, CodeBlock code, int lineNr)
+        public IfStatement(QSExpression con, CodeBlock code, int lineNr)
         {
             this._condition = con;
             this._code = code;
             this._elseBlock = new CodeBlock(new List<IStatement>());
             this._lineNr = lineNr;
         }
+        #endregion
 
-        public bool CheckType(TypeChecker checker)
+        #region TypeCheckers
+        public void Check(TypeChecker checker)
         {
-            bool retVal = true;
-
-            retVal &= this._condition.CheckType(checker);
-
-            if (!this._condition.Type.IsBoolean())
-            {
-                checker.ReportTypeMismatch(this._condition.Type, "if-statement", this._lineNr);
-                retVal = false;
-            }
-
-            retVal &= this._code.CheckType(checker);
-            retVal &= this._elseBlock.CheckType(checker);
-
-            return retVal;
+            checker.Check(this);
         }
 
+        internal void CheckCondition(TypeChecker checker)
+        {
+            checker.Check(this._condition);
+        }
+
+        internal void CheckCode(TypeChecker checker)
+        {
+            checker.Check(this._code);
+        }
+
+        internal void CheckElse(TypeChecker checker)
+        {
+            checker.Check(this._elseBlock);
+        }
+        #endregion
+
+        #region Object overrides
         public override bool Equals(object obj)
         {
             var comp = obj as IfStatement;
@@ -62,10 +68,31 @@ namespace QSLib.Statements
         {
             return base.GetHashCode();
         }
+        #endregion
+
+        #region Getters
+        public int Line
+        {
+            get
+            {
+                return this._lineNr;
+            }
+        }
+        #endregion
 
         public void CreateGUI(GUIBuilder guiBuilder)
         {
             guiBuilder.CreateIfStatement(this._condition, this._code, this._elseBlock);
+        }
+
+        internal bool IsConditionBoolean()
+        {
+            return this._condition.Type.IsBoolean();
+        }
+
+        internal QSType GetConditionType()
+        {
+            return this._condition.Type ;
         }
     }
 }

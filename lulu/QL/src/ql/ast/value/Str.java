@@ -18,7 +18,6 @@ private final String value;
 
 	@Override
 	public boolean equals(Object obj) {
-		// TODO Auto-generated method stub
 		if (obj == null || obj.getClass() != this.getClass())
 			return false;
 		else if (obj == this)
@@ -26,4 +25,5 @@ private final String value;
 		else
 			return ((Str)obj).getValue().equals(this.getValue());
 	}
+	
 }

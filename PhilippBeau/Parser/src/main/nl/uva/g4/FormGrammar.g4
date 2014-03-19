@@ -1,20 +1,21 @@
 grammar FormGrammar; 
 
 @header{
-	import main.nl.uva.parser.elements.expressions.*;
-	import main.nl.uva.parser.elements.statements.*;
-	import main.nl.uva.parser.elements.expressions.*;
-	import main.nl.uva.parser.elements.expressions.atoms.*;
-	import main.nl.uva.parser.elements.type.*;
+	import main.nl.uva.parser.element.expression.*;
+	import main.nl.uva.parser.element.statement.*;
+	import main.nl.uva.parser.element.expression.*;
+	import main.nl.uva.parser.element.expression.atom.*;
+	import main.nl.uva.parser.element.type.*;
+	import main.nl.uva.parser.element.*;
 }
 
-forms returns [List<ParserForm> data] 
-@init {$data = new ArrayList<ParserForm>();}
-	:(f=form {$data.add($f.f);})+ EOF  
-	;
+//forms returns [List<Form> data] 
+//@init {$data = new ArrayList<Form>();}
+//	:(f=form {$data.add($f.f);})+ EOF  
+//	;
 
-form returns [ParserForm f]
-	: 'form' id=ID children=block {$f = new ParserForm($id.text, $children.data);}  
+form returns [Form parsedForm]
+	: 'form' id=ID children=block {$parsedForm= new Form($id.text, $children.data, new Line($id));} EOF
 	;
 
 //Adds all subelements inside the block to the parent statement
@@ -24,56 +25,85 @@ block returns [List<Statement> data]
 
 statement returns [Statement current]
 	: ID ':' STRING sType=simpleType 
-	{$current = new DeclarationStatement(new Variable($sType.type, $ID.text), $STRING.text);}
+	{$current = new Declaration(new Variable($sType.type, $ID.text, new Line($ID)), $STRING.text);}
 	LINEEND 
 	
     | ID ':' STRING sType=simpleType '(' ex=expression')'  	
-    { $current = new DeclarationStatement(new Variable($sType.type, $ID.text, $ex.cEx), $STRING.text);} 
+    { $current = new FixedDeclaration(new Variable($sType.type, $ID.text, $ex.cEx, new Line($ID)), $STRING.text);} 
     LINEEND
     
-    | 'if' '(' ex=expression ')' ifBlock=block 
-    {$current = new IFStatement($ex.cEx, $ifBlock.data);} 				
+    | ifToken='if' '(' ex=expression ')' ifBlock=block 
+    {$current = new IF($ex.cEx, $ifBlock.data, new Line($ifToken));} 				
     
-    | 'if' '(' ex=expression ')' ifBlock=block 'else' elseBlock=block
-    { $current = new IfElseStatement(new IFStatement($ex.cEx, $ifBlock.data), new IFStatement(new NotExpression($ex.cEx), $elseBlock.data));} 
+    | ifToken='if' '(' ex=expression ')' ifBlock=block elseToken='else' elseBlock=block
+    { $current = new IfElse(new IF($ex.cEx, $ifBlock.data, new Line($ifToken)), new IF(new Not($ex.cEx, Line.NO_LINE_NUMBER), $elseBlock.data, new Line($elseToken)), new Line($ifToken));} 
     ;
 
 expression returns [Expression cEx]
-	: left=equalsExp {$cEx = $left.cEx;} 
-	;
-
-equalsExp returns [Expression cEx]
 	: left=boolExp {$cEx = $left.cEx;} 
-  (EQUAL right=boolExp {$cEx = new ComparrisonExpression($left.cEx, $right.cEx);})*
 	;
 
 boolExp returns [Expression cEx]
 	: left=addExp {$cEx = $left.cEx;} 
-  (AND right=addExp {$cEx = new AndExpression($left.cEx, $right.cEx);} | OR right=addExp {$cEx = new OrExpression($left.cEx, $right.cEx);})*
+  (
+  	AND right=addExp {$cEx = new And($cEx, $right.cEx, new Line($AND));} 
+  	| OR right=addExp {$cEx = new Or($cEx, $right.cEx, new Line($OR));}
+  	| EQUAL right=addExp {$cEx = new Comparrison($cEx, $right.cEx, new Line($EQUAL));}
+  	| LOWER_THAN right=addExp {$cEx = new LowerThan($cEx, $right.cEx, new Line($LOWER_THAN));}
+  	| GRATER_THAN right=addExp {$cEx = new GraterThan($cEx, $right.cEx, new Line($GRATER_THAN));}
+  	| LOWER_EQUAL_THAN right=addExp {$cEx = new LowerEqualThan($cEx, $right.cEx, new Line($LOWER_EQUAL_THAN));}
+  	| GRATER_EQUAL_THAN right=addExp {$cEx = new GraterEqualThan($cEx, $right.cEx, new Line($GRATER_EQUAL_THAN));}
+  )*
 	;
 
 addExp returns [Expression cEx]
   : left=multExp {$cEx = $left.cEx;} 
-  (ADD right=multExp {$cEx = new AdditionExpression($left.cEx, $right.cEx);} | SUB right=multExp {$cEx = new SubstractionExpression($left.cEx, $right.cEx);})*
+  (
+  	ADD right=multExp {$cEx = new Addition($cEx, $right.cEx, new Line($ADD));} 
+  	| SUB right=multExp {$cEx = new Substraction($cEx, $right.cEx, new Line($SUB));}
+  )*
   ;
 
 multExp returns [Expression cEx]
-  : left=atom {$cEx = $left.cEx;} 
-  (MUL right=atom {$cEx = new MultiplicationExpression($left.cEx, $right.cEx);} | DIV right=atom {$cEx = new MultiplicationExpression($left.cEx, $right.cEx);})*
+  : left=prefix {$cEx = $left.cEx;} 
+  (MUL right=prefix {$cEx = new Multiplication($cEx, $right.cEx, new Line($MUL));} 
+  	| DIV right=prefix {$cEx = new Multiplication($cEx, $right.cEx, new Line($DIV));}
+  )*
   ;
 
-atom returns [Expression cEx]
-	: ID {$cEx = new VariableAtom($ID.text);}
-	| nL=numLiteral {$cEx = new MoneyAtom($nL.text);}
-	| bL=boolLiteral {$cEx = new BoolAtom($bL.text);}
-	| '(' bE=boolExp ')' {$cEx = $bE.cEx;}
-	| '!' bE=boolExp {$cEx = new NotExpression($bE.cEx);}
+//prefix returns [Expression cEx]
+//	: ('!!')* | ('--')* bE=atom {$cEx = $bE.cEx;}
+//	| token='!' bE=atom {$cEx = new Not($bE.cEx, new Line($token));}
+//	| token='-' bE=atom {$cEx = new Minus($bE.cEx, new Line($token));}
+//	;
+	
+prefix returns [Expression cEx]
+	: bE=atom {$cEx = $bE.cEx;}
+	| token='!' bEN=notPrefix {$cEx = new Not($bEN.cEx, new Line($token));}
+	| token='-' bEM=minusPrefix {$cEx = new Minus($bEM.cEx, new Line($token));}
+	;
+	
+notPrefix returns [Expression cEx]
+	: bE=atom {$cEx = $bE.cEx;}
+	| token='!' bEA=notPrefix {$cEx = new Not($bEA.cEx, new Line($token));}
 	;
 
-simpleType returns [Type type]
-	: BOOLEAN {$type = new Bool();}
-    | MONEY {$type = new Money();}
-    | TEXT {$type = new Text();}
+minusPrefix returns [Expression cEx]
+	: bE=atom {$cEx = $bE.cEx;}
+	| token='-' bEM=minusPrefix {$cEx = new Minus($bEM.cEx, new Line($token));}
+	;
+
+atom returns [Expression cEx]
+	: ID {$cEx = new VariableAtom($ID.text, new Line($ID)); }
+	| nL=numLiteral {$cEx = new MoneyAtom($nL.text, new Line($nL.start));}
+	| bL=boolLiteral {$cEx = new BoolAtom($bL.text, new Line($bL.start));}
+	| '(' bE=boolExp ')' {$cEx = $bE.cEx;}
+	;
+
+simpleType returns [Value.Type type]
+	: BOOLEAN {$type = Value.Type.BOOLEAN;}
+    | MONEY {$type = Value.Type.MONEY;}
+    | TEXT {$type = Value.Type.TEXT;}
     ;
 
 boolLiteral

@@ -18,11 +18,11 @@ namespace QL.QLClasses.Expressions.Binary.Math
             if (!LeftExpression.GetResultType().IsCompatibleWith(new QInt()) || 
                 !RightExpression.GetResultType().IsCompatibleWith(new QInt()))
             {
-                typeErrors.ReportError(new QLTypeError()
-                {
-                    Message = string.Format("(MathExpression) Expected 2 integers! LeftValue: '{0}', RightValue '{1}'",
-                            LeftExpression.GetResultType(), RightExpression.GetResultType()), TokenInfo = LeftExpression.TokenInfo
-                });
+                typeErrors.ReportError(new QLTypeError(
+                    string.Format("Can only apply math on 2 integers! Left value: '{0}', right value '{1}'",
+                        LeftExpression.GetResultType(), RightExpression.GetResultType()),
+                    LeftExpression.TokenInfo
+                    ));
                 return false;
             }
 

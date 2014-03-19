@@ -51,11 +51,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="StatementControl.cs">
+    <Compile Include="PrimitiveControls\BooleanControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="StatementControl.Designer.cs">
-      <DependentUpon>StatementControl.cs</DependentUpon>
+    <Compile Include="PrimitiveControls\BooleanControl.Designer.cs">
+      <DependentUpon>BooleanControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PrimitiveControls\DecimalControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PrimitiveControls\DecimalControl.Designer.cs">
+      <DependentUpon>DecimalControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PrimitiveControls\IntegerControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PrimitiveControls\IntegerControl.Designer.cs">
+      <DependentUpon>IntegerControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IPrimitiveControl.cs" />
+    <Compile Include="PrimitiveControls\StatementControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PrimitiveControls\StringControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PrimitiveControls\StringControl.Designer.cs">
+      <DependentUpon>StringControl.cs</DependentUpon>
     </Compile>
     <Compile Include="QuestionnaireForm.cs">
       <SubType>Form</SubType>
@@ -77,8 +99,17 @@
     <Compile Include="StatementList.Designer.cs">
       <DependentUpon>StatementList.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="StatementControl.resx">
-      <DependentUpon>StatementControl.cs</DependentUpon>
+    <EmbeddedResource Include="PrimitiveControls\BooleanControl.resx">
+      <DependentUpon>BooleanControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PrimitiveControls\DecimalControl.resx">
+      <DependentUpon>DecimalControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PrimitiveControls\IntegerControl.resx">
+      <DependentUpon>IntegerControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PrimitiveControls\StringControl.resx">
+      <DependentUpon>StringControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="QuestionnaireForm.resx">
       <DependentUpon>QuestionnaireForm.cs</DependentUpon>
@@ -99,6 +130,9 @@
     <EmbeddedResource Include="StatementList.resx">
       <DependentUpon>StatementList.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="QL.xshd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

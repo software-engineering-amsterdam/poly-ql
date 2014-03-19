@@ -90,8 +90,8 @@ namespace ParserTest
             string q2 = "\"Oh is that it?\"";
             string code = "form \r\n{ \r\n" + q1 + " bAnswer : Boolean\r\nif(bAnswer)\r\n { \r\n" + q2 + " bYesNo : Boolean \r\n} \r\n}";
             Form parse = init_parse(code);
-            Identifier bYesNo = new Identifier("bYesNo", new BoolType(), 1);
-            Identifier bAnswer = new Identifier("bAnswer", new BoolType(), 1);
+            Identifier bYesNo = new InputIdentifier("bYesNo", new BoolType(), 1);
+            Identifier bAnswer = new InputIdentifier("bAnswer", new BoolType(), 1);
             Question q2o = new Question(new QSString(q2,1), bYesNo, 1);
             Question q1o = new Question(new QSString(q1,1), bAnswer, 1);
             List<IStatement> ilist = new List<IStatement>();
@@ -118,8 +118,8 @@ namespace ParserTest
             string q3 = "\"Last Question?\"";
             string code = "form \r\n{ \r\n" + q1 + " bAnswer : Boolean\r\nif(bAnswer)\r\n { \r\n" + q2 + " bYesNo : Boolean \r\n} else { " + q3 + " bAnswer } \r\n}";
             Form parse = init_parse(code);
-            Identifier bYesNo = new Identifier("bYesNo", new BoolType(), 1);
-            Identifier bAnswer = new Identifier("bAnswer", new BoolType(), 1);
+            Identifier bYesNo = new InputIdentifier("bYesNo", new BoolType(), 1);
+            Identifier bAnswer = new InputIdentifier("bAnswer", new BoolType(), 1);
 
             // now we need to set the type and the declaration
             Identifier bAnswerUndec = new Identifier("bAnswer", 1);
@@ -227,7 +227,7 @@ namespace ParserTest
             string q1 = "\"Whats the question?\"";
             string q2 = "\"Oh is that it?\"";
             string code = "form \r\n{ \r\n" + q1 + " iAnswer : Integer  " + q2 + " iDivAnswer = iAnswer + iAnswer / 2 : Integer \r\n}";
-            Identifier iAnswer = new Identifier("iAnswer", new NumberType(), 1);
+            Identifier iAnswer = new InputIdentifier("iAnswer", new NumberType(), 1);
             Question q1o = new Question(new QSString(q1, 1), iAnswer, 1);
             Identifier iAnswer2 = new Identifier("iAnswer", 1);
             Identifier iAnswer3 = new Identifier("iAnswer", 1);
@@ -249,7 +249,7 @@ namespace ParserTest
             string q1 = "\"Whats the question?\"";
             string q2 = "\"Oh is that it?\"";
             string code = "form \r\n{ \r\n" + q1 + " iAnswer : Integer  " + q2 + " iDivAnswer = iAnswer + iAnswer * 2 : Integer \r\n}";
-            Identifier iAnswer = new Identifier("iAnswer", new NumberType(), 1);
+            Identifier iAnswer = new InputIdentifier("iAnswer", new NumberType(), 1);
             Question q1o = new Question(new QSString(q1, 1), iAnswer, 1);
             Identifier iAnswer2 = new Identifier("iAnswer", 1);
             Identifier iAnswer3 = new Identifier("iAnswer", 1);

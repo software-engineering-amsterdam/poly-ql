@@ -29,5 +29,13 @@ public class Identifier extends Expr{
 		}
 		return null;
 	}
+	
+	public int hashCode(){
+		return identName.hashCode();
+	}
+	
+	public boolean equals(Object other){
+		return identName.equals(((Identifier)other).getIdentName());
+	}
 
 }

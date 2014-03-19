@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using QL.Interpreter;
-using QL.Interpreter.Controls;
 using QL.QLClasses.Expressions;
 using QL.QLClasses.Types;
 using QL.TypeChecker;
@@ -37,11 +36,11 @@ namespace QL.QLClasses.Statements
 
             if (!_condition.GetResultType().IsCompatibleWith(new QBool()))
             {
-                typeErrors.ReportError(new QLTypeError
-                {
-                    Message = string.Format("Condition is not a boolean. Got QType '{0}'", _condition.GetResultType()),
-                    TokenInfo = _condition.TokenInfo
-                });
+                typeErrors.ReportError(new QLTypeError(
+                    string.Format("Condition is not a boolean. Got QType '{0}'", _condition.GetResultType()),
+                    _condition.TokenInfo
+                ));
+
                 return false;
             }
             
@@ -64,12 +63,12 @@ namespace QL.QLClasses.Statements
             }
             guiBuilder.RemoveShowCondition();
 
-            guiBuilder.SetHideCondition(_condition);
+            guiBuilder.AppendHideCondition(_condition);
             foreach (StatementBase statement in _elseBody)
             {
                 statement.Build(guiBuilder);
             }
-            guiBuilder.RemoveHideCondition();
+            guiBuilder.RemoveHideConditions();
         }
 
         #endregion

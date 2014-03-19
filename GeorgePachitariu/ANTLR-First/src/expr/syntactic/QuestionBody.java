@@ -7,7 +7,7 @@ public class QuestionBody implements ASTNode {
 	protected String questionBody;
 
 	public QuestionBody(String questionBody) {
-		this.questionBody=questionBody;
+		this.questionBody=questionBody.substring(1, questionBody.length()-1);
 	}
 
 	@Override

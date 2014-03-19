@@ -35,11 +35,12 @@
             // 
             this.statementListPanel.AutoScroll = true;
             this.statementListPanel.AutoSize = true;
+            this.statementListPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.statementListPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.statementListPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.statementListPanel.Location = new System.Drawing.Point(0, 0);
             this.statementListPanel.Name = "statementListPanel";
-            this.statementListPanel.Size = new System.Drawing.Size(57, 16);
+            this.statementListPanel.Size = new System.Drawing.Size(0, 0);
             this.statementListPanel.TabIndex = 0;
             this.statementListPanel.WrapContents = false;
             // 
@@ -47,10 +48,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
             this.AutoSize = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.Controls.Add(this.statementListPanel);
             this.Name = "StatementList";
-            this.Size = new System.Drawing.Size(57, 16);
+            this.Size = new System.Drawing.Size(0, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
