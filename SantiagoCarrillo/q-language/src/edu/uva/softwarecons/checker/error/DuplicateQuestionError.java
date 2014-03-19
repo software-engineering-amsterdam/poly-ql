@@ -15,4 +15,10 @@ public class DuplicateQuestionError
     {
         super( "The question with ID: '" + id + "' is duplicated" );
     }
+
+    @Override
+    public boolean equals( Object obj )
+    {
+        return obj instanceof DuplicateQuestionError;
+    }
 }
