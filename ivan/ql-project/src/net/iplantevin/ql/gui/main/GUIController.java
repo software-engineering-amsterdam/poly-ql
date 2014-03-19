@@ -60,7 +60,7 @@ public class GUIController {
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
-                    FormFrame frame = new FormFrame(form);
+                    FormFrame frame = FormFrameBuilder.build(form);
                     frame.setVisible(true);
                 }
             });
