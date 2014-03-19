@@ -3,14 +3,16 @@ package typeChecker;
 import java.util.LinkedList;
 import java.util.List;
 
+import nodeAST.ASTNode;
+import nodeAST.Expression;
+import nodeAST.Ident;
+import nodeAST.syntactic.Question;
+import nodeAST.syntactic.QuestionBody;
+
+
 import types.Type;
 import visitor.ASTVisitor;
 
-import expr.ASTNode;
-import expr.Expression;
-import expr.Ident;
-import expr.syntactic.Question;
-import expr.syntactic.QuestionBody;
 
 public class DuplicatedIdentifier extends ASTVisitor {
 	protected List<Question> exprIdent;
@@ -19,7 +21,19 @@ public class DuplicatedIdentifier extends ASTVisitor {
 		this.exprIdent=new LinkedList<>();
 	}
 
-	public List<Question> check(ASTNode root) {
+	public void check(ASTNode root) throws Exception {
+		List<Question> list = buildListWithDuplicatedIdentifiers(root);
+		
+		if(list.size()!=0) {
+			String message= "ERROR: The following questions have the same question " +
+					"declaration but with different types \n";
+			for(Question q: list)
+				message+=q.toString()+"\n";
+			throw new Exception(message);
+		}
+	}
+
+	private List<Question> buildListWithDuplicatedIdentifiers(ASTNode root) {
 		root.accept(this);
 
 		List<Question> list=new LinkedList<>();
