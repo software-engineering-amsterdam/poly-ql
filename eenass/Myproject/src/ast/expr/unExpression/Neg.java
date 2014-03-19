@@ -7,6 +7,7 @@ import ast.expr.types.IntType;
 import ast.expr.types.Type;
 
 public class Neg extends UnExpr{
+	
 	public Neg(Expr operand){
 		super(operand);		
 	}

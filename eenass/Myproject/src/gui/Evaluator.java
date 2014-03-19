@@ -1,6 +1,5 @@
 package gui;
 
-import java.util.Collections;
 import java.util.Map;
 
 import ast.Visitor;
@@ -93,7 +92,6 @@ public class Evaluator implements Visitor<Value> {
 	public Value visit(Eq node) {
 		Value l = node.get_lhs().accept(this);
 		Value r = node.get_rhs().accept(this);
-		System.out.println("l " + l + " r " + r);
 		return l.eq(r);
 	}
 
@@ -160,9 +158,7 @@ public class Evaluator implements Visitor<Value> {
 
 	@Override
 	public Value visit(Identifier node) {
-		System.out.println("Identifier visit " + environment.size());
 		if (environment.containsKey(node)){
-			System.out.println("true " + node.getIdentName() + " value " + environment.get(node));
 			return environment.get(node);
 		}
 		return null;

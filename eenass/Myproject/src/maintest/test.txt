@@ -28,6 +28,11 @@ e: "Enter the first value" integer
 f: "Enter the second value" integer
 x3:"The result is: " integer(e * f)
 }
+if(testDiv == true){
+g: "Enter the first value" integer
+h: "Enter the second value" integer
+x4:"The result is: " integer(g / h)
+}
 
 if(testPos == true){
 s:"Enter an integer" integer
