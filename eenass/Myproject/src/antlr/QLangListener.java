@@ -6,8 +6,8 @@ import ast.expr.Identifier;
 import ast.expr.binExpr.*;
 import ast.expr.unExpression.*;
 import ast.expr.literal.*;
-import ast.expr.types.*;
 import ast.statement.*;
+import ast.types.*;
 
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ParseTreeListener;

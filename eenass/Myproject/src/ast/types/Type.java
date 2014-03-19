@@ -1,4 +1,4 @@
-package ast.expr.types;
+package ast.types;
 
 import ast.ASTNode;
 

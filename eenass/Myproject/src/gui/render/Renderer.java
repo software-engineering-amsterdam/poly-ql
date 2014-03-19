@@ -33,10 +33,6 @@ import ast.expr.binExpr.Sub;
 import ast.expr.literal.BoolLiteral;
 import ast.expr.literal.IntLiteral;
 import ast.expr.literal.StrLiteral;
-import ast.expr.types.BoolType;
-import ast.expr.types.IntType;
-import ast.expr.types.StrType;
-import ast.expr.types.Type;
 import ast.expr.unExpression.Neg;
 import ast.expr.unExpression.Not;
 import ast.expr.unExpression.Pos;
@@ -48,6 +44,10 @@ import ast.statement.IfelseStatement;
 import ast.statement.Question;
 import ast.statement.Statement;
 import ast.statement.StatementList;
+import ast.types.BoolType;
+import ast.types.IntType;
+import ast.types.StrType;
+import ast.types.Type;
 
 public class Renderer implements Visitor<JComponent>{
 	

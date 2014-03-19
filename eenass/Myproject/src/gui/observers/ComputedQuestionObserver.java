@@ -21,7 +21,6 @@ public class ComputedQuestionObserver extends ControlObserver{
 	@Override
 	public void evaluate() {
 		Value val = statement.getExpr().accept(new Evaluator(state.getEnvValues()));
-		System.out.println("Value is " + val);
 		panel.setValue(val);
 		panel.getComponent().setVisible(true);
 		

@@ -2,8 +2,8 @@ package ast.expr.literal;
 
 import typecheck.SymbolTable;
 import ast.Visitor;
-import ast.expr.types.IntType;
-import ast.expr.types.Type;
+import ast.types.IntType;
+import ast.types.Type;
 
 public class IntLiteral extends Literals{
 	

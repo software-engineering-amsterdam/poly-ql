@@ -1,9 +1,9 @@
-package ast.expr.types;
+package ast.types;
 
 import ast.Visitor;
 
-public class BoolType extends Type {
-
+public class StrType extends Type {
+	
 	@Override
 	public <T> T accept(Visitor<T> visitor) {
 		return visitor.visit(this);
@@ -11,11 +11,11 @@ public class BoolType extends Type {
 
 	@Override
 	public boolean isCompatibleTo(Type type) {
-		return (type.isCompatibleToBool() && !type.isCompatibleToInt() && !type.isCompatibleToStr());
+		return (this.isCompatibleToStr() && !type.isCompatibleToBool() && !type.isCompatibleToInt());
 	}
 	
 	@Override
-	public boolean isCompatibleToBool(){
+	public boolean isCompatibleToStr(){
 		return true;
 	}
 

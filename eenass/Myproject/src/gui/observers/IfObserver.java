@@ -5,7 +5,6 @@ import gui.render.State;
 
 import javax.swing.JComponent;
 
-import ast.expr.Identifier;
 import ast.expr.evaluate.Bool;
 import ast.expr.evaluate.Value;
 import ast.statement.IfStatement;

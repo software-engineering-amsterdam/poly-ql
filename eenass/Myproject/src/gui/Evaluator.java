@@ -24,9 +24,6 @@ import ast.expr.evaluate.Value;
 import ast.expr.literal.BoolLiteral;
 import ast.expr.literal.IntLiteral;
 import ast.expr.literal.StrLiteral;
-import ast.expr.types.BoolType;
-import ast.expr.types.IntType;
-import ast.expr.types.StrType;
 import ast.expr.unExpression.Neg;
 import ast.expr.unExpression.Not;
 import ast.expr.unExpression.Pos;
@@ -37,6 +34,9 @@ import ast.statement.IfStatement;
 import ast.statement.IfelseStatement;
 import ast.statement.Question;
 import ast.statement.StatementList;
+import ast.types.BoolType;
+import ast.types.IntType;
+import ast.types.StrType;
 
 
 public class Evaluator implements Visitor<Value> {

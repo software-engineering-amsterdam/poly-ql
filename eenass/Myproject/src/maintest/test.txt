@@ -1,45 +1,45 @@
 form testQL {
-q1: "Would you like to test Arithmetic expressions?" boolean
-q2: "would you like to test Unary expressions?" boolean
-if (q1 == true) {
-testAdd: "Test addition? " boolean
-testSub: "Test subtraction? " boolean
-testMul:"Test Multiplication?" boolean
-testDiv:"Test Division?" boolean
-}else{
-	if(q2 == true){
-		testPos:"Test Positive?" boolean
-		testNeg:"Test negative?" boolean
+	q1: "Would you like to test Arithmetic expressions?" boolean
+	q2: "would you like to test Unary expressions?" boolean
+	if (q1 == true) {
+		testAdd: "Test addition? " boolean
+		testSub: "Test subtraction? " boolean
+		testMul:"Test Multiplication?" boolean
+		testDiv:"Test Division?" boolean
+		if(testAdd == true){
+			a: "Enter the first value" integer
+			b: "Enter the second value" integer
+			x1:"The result is: " integer(a + b)
+		}
+		if(testSub == true){
+			c: "Enter the first value" integer
+			d: "Enter the second value" integer
+			x2:"The result is: " integer(c - d)
+		}
+		if(testMul == true){
+			e: "Enter the first value" integer
+			f: "Enter the second value" integer
+			x3:"The result is: " integer(e * f)
+		}
+		if(testDiv == true){
+			g: "Enter the first value" integer
+			h: "Enter the second value" integer
+			x4:"The result is: " integer(g / h)
+		}
+			
+	}else{
+		if(q2 == true){
+			testPos:"Test Positive?" boolean
+			testNeg:"Test negative?" boolean
+			
+			if(testPos == true){
+				s:"Enter an integer" integer
+				x10:"The result is: " integer(+s)
+			}
+			if(testNeg == true){
+				t:"Enter an integer" integer
+				x11:"The result is:" integer(-t)
+			}
+		}
 	}
-}
-
-if(testAdd == true){
-a: "Enter the first value" integer
-b: "Enter the second value" integer
-x1:"The result is: " integer(a + b)
-}
-if(testSub == true){
-c: "Enter the first value" integer
-d: "Enter the second value" integer
-x2:"The result is: " integer(c - d)
-}
-if(testMul == true){
-e: "Enter the first value" integer
-f: "Enter the second value" integer
-x3:"The result is: " integer(e * f)
-}
-if(testDiv == true){
-g: "Enter the first value" integer
-h: "Enter the second value" integer
-x4:"The result is: " integer(g / h)
-}
-
-if(testPos == true){
-s:"Enter an integer" integer
-x10:"The result is: " integer(+s)
-}
-if(testNeg == true){
-t:"Enter an integer" integer
-x11:"The result is:" integer(-t)
-}
 }
