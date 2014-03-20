@@ -8,7 +8,6 @@ import org.uva.sea.ql.ast.expr.Add;
 import org.uva.sea.ql.ast.expr.And;
 import org.uva.sea.ql.ast.expr.Binary;
 import org.uva.sea.ql.ast.expr.BoolLiteral;
-import org.uva.sea.ql.ast.expr.DecimalLiteral;
 import org.uva.sea.ql.ast.expr.Div;
 import org.uva.sea.ql.ast.expr.Eq;
 import org.uva.sea.ql.ast.expr.GEq;
@@ -17,7 +16,6 @@ import org.uva.sea.ql.ast.expr.Ident;
 import org.uva.sea.ql.ast.expr.IntLiteral;
 import org.uva.sea.ql.ast.expr.LEq;
 import org.uva.sea.ql.ast.expr.LT;
-import org.uva.sea.ql.ast.expr.MoneyLiteral;
 import org.uva.sea.ql.ast.expr.Mul;
 import org.uva.sea.ql.ast.expr.NEq;
 import org.uva.sea.ql.ast.expr.Neg;
@@ -29,10 +27,10 @@ import org.uva.sea.ql.ast.expr.Sub;
 import org.uva.sea.ql.ast.expr.Unary;
 import org.uva.sea.ql.ast.type.Null;
 import org.uva.sea.ql.ast.type.Type;
-import org.uva.sea.ql.checker.error.Error;
-import org.uva.sea.ql.checker.error.IllegalArithmeticError;
-import org.uva.sea.ql.checker.error.IllegalBooleanError;
-import org.uva.sea.ql.checker.error.IncompatibleTypesError;
+import org.uva.sea.ql.checker.exception.error.Error;
+import org.uva.sea.ql.checker.exception.error.IllegalArithmeticError;
+import org.uva.sea.ql.checker.exception.error.IllegalBooleanError;
+import org.uva.sea.ql.checker.exception.error.IncompatibleTypesError;
 
 public class ExprVisitorType implements IExprVisitor<Type> {
 	
@@ -209,17 +207,7 @@ public class ExprVisitorType implements IExprVisitor<Type> {
 	}
 
 	@Override
-	public Type visit(DecimalLiteral ex) {
-		return ex.hasType();
-	}
-
-	@Override
 	public Type visit(IntLiteral ex) {
-		return ex.hasType();
-	}
-
-	@Override
-	public Type visit(MoneyLiteral ex) {
 		return ex.hasType();
 	}
 
