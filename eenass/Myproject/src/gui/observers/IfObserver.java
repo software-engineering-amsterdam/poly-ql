@@ -9,7 +9,7 @@ import ast.expr.evaluate.Bool;
 import ast.expr.evaluate.Value;
 import ast.statement.IfStatement;
 
-public class IfObserver extends ControlObserver{
+public class IfObserver extends WidgetObserver{
 	
 	private final IfStatement ifStat;
 	protected JComponent ifPanel;

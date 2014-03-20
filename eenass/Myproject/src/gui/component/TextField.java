@@ -10,7 +10,7 @@ import ast.expr.evaluate.Int;
 import ast.expr.evaluate.Undefined;
 import ast.expr.evaluate.Value;
 
-public class TextField extends Control implements KeyListener{
+public class TextField extends Widget implements KeyListener{
 	
 	private JTextField textField;
 

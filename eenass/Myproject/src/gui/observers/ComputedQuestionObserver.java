@@ -1,18 +1,18 @@
 package gui.observers;
 
 import gui.Evaluator;
-import gui.component.ComputedControl;
+import gui.component.ComputedWidget;
 import gui.render.State;
 import ast.expr.evaluate.Value;
 import ast.statement.ComputedQuestion;
 
-public class ComputedQuestionObserver extends ControlObserver{
+public class ComputedQuestionObserver extends WidgetObserver{
 	
 	private ComputedQuestion statement;
-	private ComputedControl panel;
+	private ComputedWidget panel;
 	private State state;
 
-	public ComputedQuestionObserver(ComputedQuestion statement, ComputedControl panel, State state) {
+	public ComputedQuestionObserver(ComputedQuestion statement, ComputedWidget panel, State state) {
 		this.statement = statement;
 		this.panel = panel;
 		this.state = state;

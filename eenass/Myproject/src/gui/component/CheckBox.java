@@ -9,7 +9,7 @@ import javax.swing.JComponent;
 import ast.expr.evaluate.Bool;
 import ast.expr.evaluate.Value;
 
-public class CheckBox extends Control implements ItemListener{
+public class CheckBox extends Widget implements ItemListener{
 
 	private JCheckBox checkBox;
 	public CheckBox() {

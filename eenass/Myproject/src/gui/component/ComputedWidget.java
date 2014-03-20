@@ -7,12 +7,12 @@ import ast.expr.evaluate.Int;
 import ast.expr.evaluate.Undefined;
 import ast.expr.evaluate.Value;
 
-public class ComputedControl extends Control{
+public class ComputedWidget extends Widget{
 
 	private final JLabel label;
 	private Value value;
 	
-	public ComputedControl() {
+	public ComputedWidget() {
 		super();
 		label = new JLabel();
 		label.setVisible(false);

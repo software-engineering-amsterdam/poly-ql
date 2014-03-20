@@ -31,154 +31,154 @@ import ast.types.BoolType;
 import ast.types.IntType;
 import ast.types.StrType;
 
-public class TypeToWidget implements Visitor<Control> {
+public class TypeToWidget implements Visitor<Widget> {
 	
 	public TypeToWidget(){
 		
 	}
 	
 	@Override
-	public Control visit(BoolType node) {
+	public Widget visit(BoolType node) {
 		return new CheckBox();
 	}
 
 	@Override
-	public Control visit(IntType node) {
+	public Widget visit(IntType node) {
 		return new TextField();
 	}
 
 	@Override
-	public Control visit(StrType node) {
+	public Widget visit(StrType node) {
 		return new TextField();
 	}
 
 	@Override
-	public Control visit(Pos node) {
+	public Widget visit(Pos node) {
 		return null;
 	}
 
 	@Override
-	public Control visit(Neg node) {
+	public Widget visit(Neg node) {
 		return null;
 	}
 
 	@Override
-	public Control visit(Not node) {
+	public Widget visit(Not node) {
 		return null;
 	}
 
 	@Override
-	public Control visit(Add node) {
+	public Widget visit(Add node) {
 		return null;
 	}
 
 	@Override
-	public Control visit(And node) {
+	public Widget visit(And node) {
 		return null;
 	}
 
 	@Override
-	public Control visit(Div node) {
+	public Widget visit(Div node) {
 		return null;
 	}
 
 	@Override
-	public Control visit(Eq node) {
+	public Widget visit(Eq node) {
 		return null;
 	}
 
 	@Override
-	public Control visit(GEq node) {
+	public Widget visit(GEq node) {
 		return null;
 	}
 
 	@Override
-	public Control visit(GT node) {
+	public Widget visit(GT node) {
 		return null;
 	}
 
 	@Override
-	public Control visit(LEq node) {
+	public Widget visit(LEq node) {
 		return null;
 	}
 
 	@Override
-	public Control visit(LT node) {
+	public Widget visit(LT node) {
 		return null;
 	}
 
 	@Override
-	public Control visit(Mul node) {
+	public Widget visit(Mul node) {
 		return null;
 	}
 
 	@Override
-	public Control visit(NEq node) {
+	public Widget visit(NEq node) {
 		return null;
 	}
 
 	@Override
-	public Control visit(Or node) {
+	public Widget visit(Or node) {
 		return null;
 	}
 
 	@Override
-	public Control visit(Sub node) {
+	public Widget visit(Sub node) {
 		return null;
 	}
 
 	@Override
-	public Control visit(BoolLiteral node) {
+	public Widget visit(BoolLiteral node) {
 		return null;
 	}
 
 	@Override
-	public Control visit(Identifier node) {
+	public Widget visit(Identifier node) {
 		return null;
 	}
 
 	@Override
-	public Control visit(IntLiteral node) {
+	public Widget visit(IntLiteral node) {
 		return null;
 	}
 
 	@Override
-	public Control visit(StrLiteral node) {
+	public Widget visit(StrLiteral node) {
 		return null;
 	}
 
 	@Override
-	public Control visit(StatementList node) {
+	public Widget visit(StatementList node) {
 		return null;
 	}
 
 	@Override
-	public Control visit(Question node) {
+	public Widget visit(Question node) {
 		return null;
 	}
 
 	@Override
-	public Control visit(ComputedQuestion node) {
+	public Widget visit(ComputedQuestion node) {
 		return null;
 	}
 
 	@Override
-	public Control visit(Block node) {
+	public Widget visit(Block node) {
 		return null;
 	}
 
 	@Override
-	public Control visit(IfStatement node) {
+	public Widget visit(IfStatement node) {
 		return null;
 	}
 
 	@Override
-	public Control visit(IfelseStatement node) {
+	public Widget visit(IfelseStatement node) {
 		return null;
 	}
 
 	@Override
-	public Control visit(Form node) {
+	public Widget visit(Form node) {
 		return null;
 	}
 	
