@@ -33,9 +33,9 @@ import ast.types.IntType;
 import ast.types.StrType;
 import ast.types.Type;
 
-public class BaseVisitor implements Visitor<String> {
+public class ParserVisitor implements Visitor<String> {
 
-	public BaseVisitor(){
+	public ParserVisitor(){
 	}
 
 	@Override

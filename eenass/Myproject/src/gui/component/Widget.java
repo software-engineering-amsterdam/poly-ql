@@ -10,7 +10,7 @@ import java.util.List;
 
 import javax.swing.JComponent;
 
-import ast.expr.evaluate.Value;
+import ast.expr.value.Value;
 
 public abstract class Widget implements EventSource{
 	

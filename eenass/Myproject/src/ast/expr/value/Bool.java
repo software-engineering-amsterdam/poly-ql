@@ -1,4 +1,4 @@
-package ast.expr.evaluate;
+package ast.expr.value;
 
 public class Bool extends Value{
 	

@@ -5,8 +5,8 @@ import gui.render.State;
 
 import javax.swing.JComponent;
 
-import ast.expr.evaluate.Bool;
-import ast.expr.evaluate.Value;
+import ast.expr.value.Bool;
+import ast.expr.value.Value;
 import ast.statement.IfStatement;
 
 public class IfObserver extends WidgetObserver{

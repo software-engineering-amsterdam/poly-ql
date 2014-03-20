@@ -11,9 +11,9 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import antlr.QLangLexer;
 import antlr.QLangParser;
 import ast.ASTNode;
-import ast.visitors.BaseVisitor;
+import ast.visitors.ParserVisitor;
 
-public class TestQLang {
+public class ParserTest {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		File in = new File("C:\\Users\\E. Butrus\\Dropbox\\MASTER\\SoftwareCon\\poly-ql\\eenass\\Myproject\\src\\maintest\\test.txt");
@@ -24,7 +24,7 @@ public class TestQLang {
 		QLangParser parser = new QLangParser(tokens);
 		parser.setBuildParseTree(true);
 		ASTNode tree = parser.init().result;
-		BaseVisitor visitor = new BaseVisitor();
+		ParserVisitor visitor = new ParserVisitor();
 		System.out.println(tree.accept(visitor));
 	}
 

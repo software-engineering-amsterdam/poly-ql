@@ -6,7 +6,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import ast.expr.Identifier;
-import ast.expr.evaluate.Value;
+import ast.expr.value.Value;
 
 public class State {
 	

@@ -19,13 +19,13 @@ import ast.expr.binExpr.GT;
 import ast.expr.binExpr.LT;
 import ast.expr.binExpr.Mul;
 import ast.expr.binExpr.Sub;
-import ast.expr.evaluate.Bool;
-import ast.expr.evaluate.Int;
-import ast.expr.evaluate.Value;
 import ast.expr.literal.BoolLiteral;
 import ast.expr.literal.IntLiteral;
 import ast.expr.unExpression.Neg;
 import ast.expr.unExpression.Not;
+import ast.expr.value.Bool;
+import ast.expr.value.Int;
+import ast.expr.value.Value;
 
 public class EvaluatorTest {
 

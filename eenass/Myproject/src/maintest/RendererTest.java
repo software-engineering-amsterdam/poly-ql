@@ -57,23 +57,6 @@ public class RendererTest extends JFrame {
 	 }
 	 
 	 public static Form get_inputForm() throws FileNotFoundException, IOException{
-//		 String form = "form Box1HouseOwning {" +
-//			 "\nhasSoldHouse: \"Did you sell a house in 2010?\" boolean"+
-//			 "\nhasBoughtHouse: \"Did you by a house in 2010?\" boolean"+
-//			 "\nhasMaintLoan: \"Did you enter a loan for maintenance/reconstruction?\" boolean" +
-//			 "\nif (hasSoldHouse == true) {"+
-//			 "\nsellingPrice: \"Price the house was sold for:\" integer"+
-//			 "\nprivateDebt: \"Private debts for the sold house:\" integer"+
-//			"\nvalueResidue: \"Value residue:\" integer(sellingPrice - privateDebt)"+
-//			"\n}"+
-//			"\nelse{ if(hasBoughtHouse == true) {"+
-//			 "\nbuyPrice: \"Price the house was bought with:\" integer"+
-//			 "\nprivateDebt1: \"Private debts for the bought house:\" integer"+
-//			 "\nvalueResidue1: \"Value residue:\" integer(buyPrice + privateDebt1)}"+
-//			"\nelse {"+
-//			"\nvalueResidue2: \"Value residue:\" integer(40 + 20)"+
-//			"\n}}" +
-//			"\n}";
 		 File in = new File("C:\\Users\\E. Butrus\\Dropbox\\MASTER\\SoftwareCon\\poly-ql\\eenass\\Myproject\\src\\maintest\\test.txt");
 			ANTLRInputStream input = new ANTLRInputStream(new FileInputStream(in));
 			QLangLexer lexer = new QLangLexer(input);

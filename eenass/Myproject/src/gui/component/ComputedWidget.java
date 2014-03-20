@@ -3,9 +3,9 @@ package gui.component;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 
-import ast.expr.evaluate.Int;
-import ast.expr.evaluate.Undefined;
-import ast.expr.evaluate.Value;
+import ast.expr.value.Int;
+import ast.expr.value.Undefined;
+import ast.expr.value.Value;
 
 public class ComputedWidget extends Widget{
 

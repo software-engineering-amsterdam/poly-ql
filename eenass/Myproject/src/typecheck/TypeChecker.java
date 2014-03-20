@@ -227,7 +227,7 @@ public class TypeChecker implements Visitor<Boolean>{
 	}
 
 	@Override
-	public Boolean visit(StrType nodde) {
+	public Boolean visit(StrType node) {
 		return true;
 	}
 
