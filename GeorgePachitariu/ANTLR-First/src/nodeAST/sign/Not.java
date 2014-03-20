@@ -5,8 +5,6 @@ import java.util.Map;
 import nodeAST.Expression;
 import nodeAST.Ident;
 import nodeAST.UnaryExpr;
-import nodeAST.literals.Bool;
-import nodeAST.literals.Int;
 import nodeAST.literals.Literal;
 
 
@@ -41,7 +39,7 @@ public class Not extends UnaryExpr {
 		Type t1=this.operand.getType(typeMatcher);
 		return t1.isBoolean();
 	}
-	
+
 	@Override
 	public Literal compute(Map<Ident, Expression> identifiers) {
 		return this.operand.compute(identifiers).not();

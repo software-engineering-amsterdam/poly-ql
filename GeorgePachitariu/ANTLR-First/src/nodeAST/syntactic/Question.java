@@ -1,6 +1,5 @@
 package nodeAST.syntactic;
 
-import nodeAST.ASTNode;
 import nodeAST.Expression;
 import nodeAST.Ident;
 import types.Type;
@@ -65,7 +64,7 @@ public class Question extends Statement {
 	public Type getType() {
 		return this.type;
 	}
-	
+
 	public void setExpression(Expression e) {
 		this.expr=e; 
 	}

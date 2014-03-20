@@ -22,16 +22,11 @@ public class FunctionalTestsTypeChecker {
 		String str=
 				"	form Box1HouseOwning { " +
 						"hasSoldHouse: \"Did you sell a house in 2010?\" boolean " +
-						"if (hasSoldHouse) { " +
-						"sellingPrice: \"Price the house was sold for:\" integer " +
-						"privateDebt: \"Private debts for the sold house:\" integer " +
-						"valueResidue: \"Value residue:\" integer(sellingPrice - privateDebt) "+
-						" } } "; 
-
+						" } "; 
 
 		QLParser parser=ASTNodes.getParser(str);
 		Form ast=parser.form().result;
-		
+
 		try {
 			new UndefinedIdentifier().check(ast);
 			Assert.assertTrue(true); 
@@ -44,15 +39,12 @@ public class FunctionalTestsTypeChecker {
 	public void undefinedIdentifierCheckerWith_1Undefined() throws RecognitionException {
 		String str=
 				"	form Box1HouseOwning { " +
-						"hasSoldHouse: \"Did you sell a house in 2010?\" boolean " +
 						"if (undef) { " +
 						"sellingPrice: \"Price the house was sold for:\" integer " +
 						" } } "; 
 
-
 		QLParser parser=ASTNodes.getParser(str);
 		Form ast=parser.form().result;			
-		
 
 		try {
 			new UndefinedIdentifier().check(ast);
@@ -70,16 +62,11 @@ public class FunctionalTestsTypeChecker {
 		String str=
 				"	form Box1HouseOwning { " +
 						"hasSoldHouse: \"Did you sell a house in 2010?\" boolean " +
-						"if (hasSoldHouse) { " +
-						"sellingPrice: \"Price the house was sold for:\" integer " +
-						"privateDebt: \"Private debts for the sold house:\" integer " +
-						"valueResidue: \"Value residue:\" integer(sellingPrice - privateDebt) "+
-						" } } "; 
-
+						" } "; 
 
 		QLParser parser=ASTNodes.getParser(str);
 		Form ast=parser.form().result;			
-		
+
 		try {
 			new DuplicatedIdentifier().check(ast);
 			Assert.assertTrue(true); 
@@ -98,10 +85,9 @@ public class FunctionalTestsTypeChecker {
 						"hasSoldHouse: \"Private debts for the sold house:\" integer " +
 						" } } "; 
 
-
 		QLParser parser=ASTNodes.getParser(str);
 		Form ast=parser.form().result;			
-		
+
 		try {
 			new DuplicatedIdentifier().check(ast);
 			Assert.assertTrue(false); 
@@ -123,10 +109,9 @@ public class FunctionalTestsTypeChecker {
 						"sellingPrice: \"Price the house was sold for:\" integer "+
 						"}  } "; 
 
-
 		QLParser parser=ASTNodes.getParser(str);
 		Form ast=parser.form().result;			
-		
+
 		try {
 			new BooleanConditions().check(ast);
 			Assert.assertTrue(false); 
@@ -149,10 +134,9 @@ public class FunctionalTestsTypeChecker {
 						"privateDebt: \"Private debts for the sold house:\" integer " +
 						" } } "; 
 
-
 		QLParser parser=ASTNodes.getParser(str);
 		Form ast=parser.form().result;			
-		
+
 		try {
 			new InvalidTypeOperands().check(ast);
 			Assert.assertTrue(false); 
@@ -167,11 +151,8 @@ public class FunctionalTestsTypeChecker {
 		String str=
 				"	form Box1HouseOwning { " +
 						"hasSoldHouse: \"Did you sell a house in 2010?\" integer " +
-						"sellingPrice: \"Price the house was sold for:\" integer " +
 						"hasSoldHouse: \"Private debts for the sold house:\" integer " +
-						"result: \"Value residue:\" boolean(sellingPrice - privateDebt) "+
 						" } "; 
-
 
 		QLParser parser=ASTNodes.getParser(str);
 		Form ast=parser.form().result;
@@ -190,10 +171,8 @@ public class FunctionalTestsTypeChecker {
 		String str=
 				"	form Box1HouseOwning { " +
 						"hasSoldHouse: \"Did you sell a house in 2010?\" boolean(sellingPrice == true) " +
-						"sellingPrice: \"Price the house was sold for:\" boolean(hasSoldHouse == result) " +
-						"result: \"Private debts for the sold house:\" boolean " +
+						"sellingPrice: \"Price the house was sold for:\" boolean(hasSoldHouse == false) " +
 						" } } "; 
-
 
 		QLParser parser=ASTNodes.getParser(str);
 		Form ast=parser.form().result;

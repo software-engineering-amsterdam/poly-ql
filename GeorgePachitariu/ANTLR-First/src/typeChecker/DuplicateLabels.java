@@ -25,7 +25,7 @@ public class DuplicateLabels extends ASTVisitor {
 		this.listIdent=new LinkedList<>();
 		this.duplicates=new LinkedList<>();
 		root.accept(this);
-		
+
 		if(duplicates.size()!=0) {
 			String message= "WARNING: The following Labels are duplicated: \n";
 			for(Ident i: duplicates)
@@ -33,7 +33,7 @@ public class DuplicateLabels extends ASTVisitor {
 			System.err.println(message);
 		}
 	}
-	
+
 	@Override
 	public void visit(Question question, Ident ident, 
 			QuestionBody questionBody, Type type, Expression expr) {

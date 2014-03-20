@@ -55,9 +55,7 @@ public class ASTNodes {
 	public void testPrimaryInt() throws RecognitionException  {
 		String str="1";
 		QLParser parser=ASTNodes.getParser(str);
-
 		Expression actual=parser.primary().result;
-
 		Expression expected=new Int(1);
 		Assert.assertEquals(expected, actual);
 	}
@@ -66,9 +64,7 @@ public class ASTNodes {
 	public void testPrimaryIdent() throws RecognitionException  {
 		String str="question";
 		QLParser parser=ASTNodes.getParser(str);
-
 		Expression actual=parser.primary().result;
-
 		Expression expected=new Ident("question");
 		Assert.assertEquals(expected, actual);
 	}
@@ -77,9 +73,7 @@ public class ASTNodes {
 	public void testPrimaryParanth() throws RecognitionException  {
 		String str="(3)";
 		QLParser parser=ASTNodes.getParser(str);
-
 		Expression actual=parser.primary().result;
-
 		Expression expected=new Int(3);
 		Assert.assertEquals(expected, actual);
 	}
@@ -88,9 +82,7 @@ public class ASTNodes {
 	public void testUnExprPos() throws RecognitionException  {
 		String str="+1";
 		QLParser parser=ASTNodes.getParser(str);
-
 		Expression actual=parser.unExpr().result;
-
 		Expression expected=new Pos(new Int(1));
 		Assert.assertEquals(expected, actual);
 	}
@@ -99,9 +91,7 @@ public class ASTNodes {
 	public void testUnExprNeg() throws RecognitionException  {
 		String str="-1";
 		QLParser parser=ASTNodes.getParser(str);
-
 		Expression actual=parser.unExpr().result;
-
 		Expression expected=new Neg(new Int(1));
 		Assert.assertEquals(expected, actual);
 	}
@@ -110,9 +100,7 @@ public class ASTNodes {
 	public void testUnExprNot() throws RecognitionException  {
 		String str="!ab";
 		QLParser parser=ASTNodes.getParser(str);
-
 		Expression actual=parser.unExpr().result;
-
 		Expression expected=new Not(new Ident("ab"));
 		Assert.assertEquals(expected, actual);
 	}
@@ -121,9 +109,7 @@ public class ASTNodes {
 	public void testUnExprSimple() throws RecognitionException  {
 		String str="1";
 		QLParser parser=ASTNodes.getParser(str);
-
 		Expression actual=parser.unExpr().result;
-
 		Expression expected=new Int(1);
 		Assert.assertEquals(expected, actual);
 	}
@@ -132,9 +118,7 @@ public class ASTNodes {
 	public void testMulExprMul() throws RecognitionException  {
 		String str="1*3";
 		QLParser parser=ASTNodes.getParser(str);
-
 		Expression actual=parser.mulExpr().result;
-
 		Expression expected=new Mul(new Int(1),new Int(3));
 		Assert.assertEquals(expected, actual);
 	}
@@ -143,9 +127,7 @@ public class ASTNodes {
 	public void testMulExprDiv() throws RecognitionException  {
 		String str="1/3";
 		QLParser parser=ASTNodes.getParser(str);
-
 		Expression actual=parser.mulExpr().result;
-
 		Expression expected=new Div(new Int(1),new Int(3));
 		Assert.assertEquals(expected, actual);
 	}
@@ -154,9 +136,7 @@ public class ASTNodes {
 	public void testMulExprCombined() throws RecognitionException  {
 		String str="6*2/3";
 		QLParser parser=ASTNodes.getParser(str);
-
 		Expression actual=parser.mulExpr().result;
-
 		Expression expected=new Div(new Mul(new Int(6),(new Int(2))),new Int(3));
 		Assert.assertEquals(expected, actual);
 	}
@@ -165,9 +145,7 @@ public class ASTNodes {
 	public void testAddExprAdd() throws RecognitionException  {
 		String str="6+2";
 		QLParser parser=ASTNodes.getParser(str);
-
 		Expression actual=parser.addExpr().result;
-
 		Expression expected=new Add(new Int(6),new Int(2));
 		Assert.assertEquals(expected, actual);
 	}
@@ -176,9 +154,7 @@ public class ASTNodes {
 	public void testAddExprSub() throws RecognitionException  {
 		String str="6-2";
 		QLParser parser=ASTNodes.getParser(str);
-
 		Expression actual=parser.addExpr().result;
-
 		Expression expected=new Sub(new Int(6),new Int(2));
 		Assert.assertEquals(expected, actual);
 	}
@@ -187,9 +163,7 @@ public class ASTNodes {
 	public void testRelExprLT() throws RecognitionException  {
 		String str="6<2";
 		QLParser parser=ASTNodes.getParser(str);
-
 		Expression actual=parser.relExpr().result;
-
 		Expression expected=new LT(new Int(6),new Int(2));
 		Assert.assertEquals(expected, actual);
 	}
@@ -198,9 +172,7 @@ public class ASTNodes {
 	public void testRelExprLEq() throws RecognitionException  {
 		String str="6<=2";
 		QLParser parser=ASTNodes.getParser(str);
-
 		Expression actual=parser.relExpr().result;
-
 		Expression expected=new LEq(new Int(6),new Int(2));
 		Assert.assertEquals(expected, actual);
 	}
@@ -209,9 +181,7 @@ public class ASTNodes {
 	public void testRelExprGT() throws RecognitionException  {
 		String str="6>2";
 		QLParser parser=ASTNodes.getParser(str);
-
 		Expression actual=parser.relExpr().result;
-
 		Expression expected=new GT(new Int(6),new Int(2));
 		Assert.assertEquals(expected, actual);
 	}
@@ -220,9 +190,7 @@ public class ASTNodes {
 	public void testRelExprGEq() throws RecognitionException  {
 		String str="6>=2";
 		QLParser parser=ASTNodes.getParser(str);
-
 		Expression actual=parser.relExpr().result;
-
 		Expression expected=new GEq(new Int(6),new Int(2));
 		Assert.assertEquals(expected, actual);
 	}
@@ -231,9 +199,7 @@ public class ASTNodes {
 	public void testRelExprEq() throws RecognitionException  {
 		String str="6==2";
 		QLParser parser=ASTNodes.getParser(str);
-
 		Expression actual=parser.relExpr().result;
-
 		Expression expected=new Eq(new Int(6),new Int(2));
 		Assert.assertEquals(expected, actual);
 	}
@@ -242,9 +208,7 @@ public class ASTNodes {
 	public void testRelExprNEq() throws RecognitionException  {
 		String str="6!=2";
 		QLParser parser=ASTNodes.getParser(str);
-
 		Expression actual=parser.relExpr().result;
-
 		Expression expected=new NEq(new Int(6),new Int(2));
 		Assert.assertEquals(expected, actual);
 	}
@@ -253,9 +217,7 @@ public class ASTNodes {
 	public void testAndExpr() throws RecognitionException  {
 		String str="fst&&snd";
 		QLParser parser=ASTNodes.getParser(str);
-
 		Expression actual=parser.andExpr().result;
-
 		Expression expected=new And(new Ident("fst"),new Ident("snd"));
 		Assert.assertEquals(expected, actual);
 	}
@@ -264,11 +226,9 @@ public class ASTNodes {
 	public void testOrExpr() throws RecognitionException  {
 		String str="fst||snd";
 		QLParser parser=ASTNodes.getParser(str);
-
 		Expression actual=parser.orExpr().result;
-
 		Expression expected=new Or(new Ident("fst"),new Ident("snd"));
 		Assert.assertEquals(expected, actual);
 	}	
-	
+
 }

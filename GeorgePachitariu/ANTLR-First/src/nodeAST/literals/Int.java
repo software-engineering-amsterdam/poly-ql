@@ -54,22 +54,22 @@ public class Int extends Literal {
 			return true;
 		return false;
 	}
-	
+
 	@Override
 	public Literal compute(Map<Ident, Expression> identifiers) {
 		return this;
 	}
-	
+
 	@Override
 	public Literal add(Literal lit) {
 		return lit.add(this.value);
 	}
-	
+
 	@Override
 	public Literal add(int value) {
 		return new Int(this.value+value);
 	}
-	
+
 	@Override
 	public Literal div(Literal operand) {
 		return operand.div(this.value);

@@ -23,7 +23,7 @@ public class DuplicatedIdentifier extends ASTVisitor {
 
 	public void check(ASTNode root) throws Exception {
 		List<Question> list = buildListWithDuplicatedIdentifiers(root);
-		
+
 		if(list.size()!=0) {
 			String message= "ERROR: The following questions have the same question " +
 					"declaration but with different types \n";

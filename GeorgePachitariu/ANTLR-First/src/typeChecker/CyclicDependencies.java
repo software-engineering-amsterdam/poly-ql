@@ -26,7 +26,7 @@ public class CyclicDependencies extends ASTVisitor {
 
 	public void check(ASTNode root) throws Exception {
 		List<Question> list = findCycles(root);
-		
+
 		if(list.size()!=0) {
 			String message= "ERROR: The following questions form a cycle of dependencies: \n";
 			for(Question q: list)
@@ -48,7 +48,7 @@ public class CyclicDependencies extends ASTVisitor {
 		}
 		return new LinkedList<>();
 	}
-	
+
 	private List<Question> getFirstCycle(List<Question> dependencies) {
 		List<Question> returnList=new LinkedList<>();
 		for(int i=0; i< dependencies.size(); i++) {

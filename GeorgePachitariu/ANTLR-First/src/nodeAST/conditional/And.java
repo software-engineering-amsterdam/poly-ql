@@ -5,8 +5,6 @@ import java.util.Map;
 import nodeAST.BinaryExpr;
 import nodeAST.Expression;
 import nodeAST.Ident;
-import nodeAST.literals.Bool;
-import nodeAST.literals.Int;
 import nodeAST.literals.Literal;
 
 
@@ -47,7 +45,7 @@ public class And extends BinaryExpr {
 	@Override
 	public Literal compute(Map<Ident, Expression> identifiers) {
 		return this.leftHandOperand.compute(identifiers).and(
-					this.rightHandOperand.compute(identifiers)
+				this.rightHandOperand.compute(identifiers)
 				);
 	}
 }

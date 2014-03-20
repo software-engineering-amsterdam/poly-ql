@@ -1,9 +1,7 @@
 package nodeAST.syntactic;
 
-import java.util.LinkedList;
 import java.util.List;
 
-import nodeAST.ASTNode;
 import nodeAST.Expression;
 
 

@@ -5,7 +5,6 @@ import java.util.Map;
 import nodeAST.BinaryExpr;
 import nodeAST.Expression;
 import nodeAST.Ident;
-import nodeAST.literals.Int;
 import nodeAST.literals.Literal;
 
 
@@ -21,7 +20,7 @@ public class Add extends BinaryExpr {
 
 	@Override
 	public void accept(ASTVisitor visitor) {
-	    visitor.visit(this, this.leftHandOperand, this.rightHandOperand);
+		visitor.visit(this, this.leftHandOperand, this.rightHandOperand);
 	}
 
 	@Override
@@ -46,7 +45,7 @@ public class Add extends BinaryExpr {
 	@Override
 	public Literal compute(Map<Ident, Expression> identifiers) {
 		return this.leftHandOperand.compute(identifiers).add(
-					this.rightHandOperand.compute(identifiers)
+				this.rightHandOperand.compute(identifiers)
 				);
 	}
 }

@@ -24,7 +24,7 @@ public class LiteralWithoutValue extends Literal {
 	public boolean areOperandsTypeValid(IdentifiersTypeMatcher typeMatcher) {
 		return false;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		return obj instanceof LiteralWithoutValue;
@@ -34,7 +34,7 @@ public class LiteralWithoutValue extends Literal {
 	public boolean containsTreeNode(Expression e) {
 		return false;
 	}
-	
+
 	@Override
 	public boolean isLiteralWithoutValue() {
 		return true;
@@ -60,7 +60,7 @@ public class LiteralWithoutValue extends Literal {
 	public Literal sub(Literal operand) {
 		return this;
 	}
-	
+
 	public Literal eq(Literal operand) {
 		return this;
 	}
@@ -68,7 +68,7 @@ public class LiteralWithoutValue extends Literal {
 	public Literal geq(Literal operand) {
 		return this;
 	}
-	
+
 	public Literal gt(Literal operand) {
 		return this;
 	}

@@ -53,7 +53,7 @@ public class Bool extends Literal {
 			return true;
 		return false;
 	}
-	
+
 	@Override
 	public Literal compute(Map<Ident, Expression> identifiers) {
 		return this;

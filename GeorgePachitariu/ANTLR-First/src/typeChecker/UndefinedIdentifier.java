@@ -49,7 +49,7 @@ public class UndefinedIdentifier extends ASTVisitor {
 	public void visit(Ident ident) {
 		expressionIdentifiers.add(ident);
 	}
-	
+
 	@Override
 	public void visit(Question question, Ident ident, 
 			QuestionBody questionBody, Type type, Expression expr) {
@@ -63,7 +63,7 @@ public class UndefinedIdentifier extends ASTVisitor {
 	@Override
 	public void visit(Form form, List<Statement> list) {
 		definedIdentifiers.add(form.getIdent());
-		
+
 		for(Statement s : list)
 			s.accept(this);
 	}

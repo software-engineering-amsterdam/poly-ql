@@ -5,8 +5,6 @@ import java.util.Map;
 import nodeAST.BinaryExpr;
 import nodeAST.Expression;
 import nodeAST.Ident;
-import nodeAST.literals.Bool;
-import nodeAST.literals.Int;
 import nodeAST.literals.Literal;
 
 
