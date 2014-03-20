@@ -2,6 +2,7 @@ package org.uva.sea.ql.checker.visitor;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.Set;
 import org.uva.sea.ql.ast.expr.And;
 import org.uva.sea.ql.ast.expr.Expr;
 import org.uva.sea.ql.ast.expr.Ident;
+import org.uva.sea.ql.ast.form.Form;
 import org.uva.sea.ql.ast.stmt.AnswerableQuestion;
 import org.uva.sea.ql.ast.stmt.Block;
 import org.uva.sea.ql.ast.stmt.ComputedQuestion;
@@ -28,20 +30,38 @@ public class StmtVisitorDependencies implements IStmtVisitor {
 	private int depth;
 	private List<Dependency> dependencies;
 
-	public StmtVisitorDependencies() {
+	public StmtVisitorDependencies(Form form) {
 		depth = 0;
 		conditionScope = new LinkedHashMap<Expr, Integer>();
 		dependencies = new ArrayList<Dependency>();
+		form.getBlock().accept(this);
 	}
 	
 	public List<Dependency> getDependencies(){
 		return dependencies;
 	}
+
+	public Map<String, List<String>> getDependencyMap(){
+		 Map<String, List<String>> dependencyMap = new  HashMap<String, List<String>>();
+		 List<String> dependents = null;
+		 for(Dependency d : dependencies){
+			 if(dependencyMap.containsKey(d.getX())){
+				 dependents = dependencyMap.get(d.getX());
+			 }else{
+				 dependents = new ArrayList<String>();
+			 }
+			 dependents.add(d.getY());
+			 dependencyMap.put(d.getX(), dependents);
+		 }
+		 return dependencyMap;
+	}
 	
 	private void addDependencies(Set<Ident> masters, Question slave){
-		for(Ident ident : masters){
-			Dependency dependency = new Dependency(ident.getName(), slave.getIdent().getName());
-			dependencies.add(dependency);
+		if(masters != null){
+			for(Ident ident : masters){
+				Dependency dependency = new Dependency(ident.getName(), slave.getIdent().getName());
+				dependencies.add(dependency);
+			}
 		}
 	}
 	
