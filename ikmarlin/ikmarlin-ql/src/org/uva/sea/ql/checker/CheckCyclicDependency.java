@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.uva.sea.ql.ast.form.Form;
-import org.uva.sea.ql.checker.error.Error;
-import org.uva.sea.ql.checker.error.CyclicDependencyError;
+import org.uva.sea.ql.checker.exception.error.CyclicDependencyError;
+import org.uva.sea.ql.checker.exception.error.Error;
 import org.uva.sea.ql.checker.helper.Dependency;
 import org.uva.sea.ql.checker.visitor.StmtVisitorDependencies;
 
@@ -15,8 +15,7 @@ public class CheckCyclicDependency {
 	private List<Error> errors;
 
 	public CheckCyclicDependency(Form form){
-		StmtVisitorDependencies sv = new StmtVisitorDependencies();
-		form.getBlock().accept(sv);
+		StmtVisitorDependencies sv = new StmtVisitorDependencies(form);
 		dependencies = sv.getDependencies();
 		errors = new ArrayList<Error>();
 	}
@@ -41,5 +40,5 @@ public class CheckCyclicDependency {
 	public List<Error> getErrors() {
 		return errors;
 	}
-
+	
 }
