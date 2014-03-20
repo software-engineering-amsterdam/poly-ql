@@ -24,7 +24,6 @@ public class Results implements IStmtVisitor {
 	}
 	
 	public void setValue(String ident, Value<?> value) {
-		System.out.println(String.format("setValue(%s, %s);", ident, value));
 		values.put(ident, value);
 	}
 

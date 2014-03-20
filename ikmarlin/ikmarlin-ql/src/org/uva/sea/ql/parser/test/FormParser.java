@@ -9,6 +9,7 @@ import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 import org.uva.sea.ql.ast.form.Form;
+import org.uva.sea.ql.checker.ErrorGUI;
 import org.uva.sea.ql.parser.antlr.QLLexer;
 import org.uva.sea.ql.parser.antlr.QLParser;
 
@@ -34,7 +35,11 @@ public class FormParser implements IParser<Form> {
 		tokens.setTokenSource(new QLLexer(stream));
 		QLParser parser = new QLParser(tokens);
 		try {
-			return parser.form();
+			Form form = parser.form();
+			if(parser.hasErrors()){
+				new ErrorGUI(parser.getAllErrors()).show();
+			}
+			return form;
 		} catch (RecognitionException e) {
 			throw new ParseError(e.getMessage());
 		}

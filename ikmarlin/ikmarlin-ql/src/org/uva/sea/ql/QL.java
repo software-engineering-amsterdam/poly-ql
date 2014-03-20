@@ -20,7 +20,7 @@ public class QL {
 	private static Form form = null;
 	private static SemanticChecker checker = null;
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ParseError {
 		final JFileChooser fc = new JFileChooser();
 		fc.setFileFilter(new FileNameExtensionFilter("*.ql", "ql"));
 		fc.setAcceptAllFileFilterUsed(false);
@@ -34,13 +34,9 @@ public class QL {
 		}
 	}
 	
-	private static void parse(File file){
+	private static void parse(File file) throws ParseError{
 		FormParser fp = new FormParser();
-		try {
 			form = fp.parse(file);
-		} catch (ParseError e) {
-			e.printStackTrace();
-		}
 	}
 	
 	private static void check(){

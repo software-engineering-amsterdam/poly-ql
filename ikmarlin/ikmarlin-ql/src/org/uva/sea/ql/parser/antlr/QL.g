@@ -9,6 +9,8 @@ import org.uva.sea.ql.ast.form.*;
 import org.uva.sea.ql.ast.type.*;
 import org.uva.sea.ql.ast.stmt.*;
 import antlr.ANTLRException;
+import org.uva.sea.ql.checker.exception.QLException;
+import org.uva.sea.ql.parser.test.ParseError;
 }
 
 @lexer::header
@@ -17,10 +19,10 @@ package org.uva.sea.ql.parser.antlr;
 }
 
 @parser::members {
-	private List<String> errors = new ArrayList <String> ();
+	private List<QLException> errors = new ArrayList <QLException> ();
 	 
-	public List<String> getAllErrors() {
-	  return new ArrayList<String>(errors);
+	public List<QLException> getAllErrors() {
+	  return new ArrayList<QLException>(errors);
 	}
 	
 	public boolean hasErrors() {
@@ -42,7 +44,7 @@ package org.uva.sea.ql.parser.antlr;
 		} else {
 			msg = getErrorMessage(e, tokenNames);
 		}
-    errors.add(hdr+msg);
+    errors.add(new ParseError(hdr+" "+msg));
 	}
 }
 
