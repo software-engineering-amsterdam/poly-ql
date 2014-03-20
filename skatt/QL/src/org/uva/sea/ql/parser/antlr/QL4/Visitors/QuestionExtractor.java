@@ -34,6 +34,7 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Decimal;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Identifier;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Label;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Number;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Text;
 
 /**
  * While visiting a form, this visitor will maintain a map of 
@@ -186,6 +187,13 @@ public class QuestionExtractor implements IQLVisitor<Map<Identifier, Question>> 
 	public Map<Identifier, Question> visit(Number number) {
 		return null;
 	}
+	
+
+	@Override
+	public Map<Identifier, Question> visit(Text text) {
+		return null;
+	}
+	
 
 	///////////////// ignore types
 	

@@ -35,6 +35,7 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Decimal;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Identifier;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Label;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Number;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Text;
 
 /**
  * List<Identifier>his visitor will extract the (question) dependencies on a QL ASList<Identifier>.
@@ -223,6 +224,11 @@ public class IdentifierExtractor implements IQLVisitor<List<Identifier>> {
 		return null;
 	}
 	
+	@Override
+	public List<Identifier> visit(Text text) {
+		return null;
+	}
+	
 	/**
 	 * Whenever children are visited, one should check
 	 * whether the children themselves are not null,
@@ -243,4 +249,6 @@ public class IdentifierExtractor implements IQLVisitor<List<Identifier>> {
 		
 		return ids;
 	}
+
+	
 }

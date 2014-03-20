@@ -1,1 +1,9 @@
-question : "This is a question label" : boolean;
+question : "This is a question label" : string;
+
+if (question) {
+    question2: "This is question label 2" : boolean;
+}
+
+if (question2) {
+    question3: "This is question label 3" : integer;
+}

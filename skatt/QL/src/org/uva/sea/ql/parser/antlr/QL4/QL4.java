@@ -134,7 +134,6 @@ public class QL4 {
 		ASTChecker = new CyclicDependencyChecker();
 		msgs.addAll(ASTChecker.visit(ast));
 		
-		System.out.println(ASTChecker);
 		return msgs;
 	}
 }

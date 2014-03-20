@@ -29,6 +29,7 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Decimal;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Identifier;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Label;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Number;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Text;
 
 /**
  * Interface for visitors. Visitors must visit AST classes
@@ -83,4 +84,5 @@ public interface IQLVisitor<T> {
 	public T visit(CurrencyType currencyType);
 	public T visit(NullType nullType);
 	public T visit(StringType stringType);
+	public T visit(Text text);
 }
