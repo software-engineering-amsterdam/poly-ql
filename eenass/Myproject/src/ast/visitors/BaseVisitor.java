@@ -186,7 +186,7 @@ public class BaseVisitor implements Visitor<String> {
 
 	@Override
 	public String visit(Form node) {
-		String str = node.getId().accept(this) + "{\n" + node.getStatements().accept(this) + "}";
+		String str = "form " + node.getId().accept(this) + "{\n" + node.getStatements().accept(this) + "}";
 		return str;
 	}
 
