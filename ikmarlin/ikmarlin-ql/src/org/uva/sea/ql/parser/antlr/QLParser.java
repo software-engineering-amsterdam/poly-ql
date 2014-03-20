@@ -1,4 +1,4 @@
-// $ANTLR 3.4 C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g 2014-03-12 12:01:56
+// $ANTLR 3.4 C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g 2014-03-20 13:41:58
 
 package org.uva.sea.ql.parser.antlr;
 import org.uva.sea.ql.ast.expr.*;
@@ -16,10 +16,11 @@ import java.util.ArrayList;
 @SuppressWarnings({"all", "warnings", "unchecked"})
 public class QLParser extends Parser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "Bool", "Decimal", "Ident", "Int", "MLCOMMENT", "SLComment", "Str", "WS", "'!'", "'!='", "'&&'", "'('", "')'", "'*'", "'+'", "'-'", "'/'", "':'", "'<'", "'<='", "'=='", "'>'", "'>='", "'boolean'", "'decimal'", "'else'", "'form'", "'if'", "'integer'", "'money'", "'string'", "'{'", "'||'", "'}'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "Bool", "Ident", "Int", "MLCOMMENT", "SLComment", "Str", "WS", "'!'", "'!='", "'&&'", "'('", "')'", "'*'", "'+'", "'-'", "'/'", "':'", "'<'", "'<='", "'=='", "'>'", "'>='", "'boolean'", "'else'", "'form'", "'if'", "'integer'", "'string'", "'{'", "'||'", "'}'"
     };
 
     public static final int EOF=-1;
+    public static final int T__11=11;
     public static final int T__12=12;
     public static final int T__13=13;
     public static final int T__14=14;
@@ -43,17 +44,13 @@ public class QLParser extends Parser {
     public static final int T__32=32;
     public static final int T__33=33;
     public static final int T__34=34;
-    public static final int T__35=35;
-    public static final int T__36=36;
-    public static final int T__37=37;
     public static final int Bool=4;
-    public static final int Decimal=5;
-    public static final int Ident=6;
-    public static final int Int=7;
-    public static final int MLCOMMENT=8;
-    public static final int SLComment=9;
-    public static final int Str=10;
-    public static final int WS=11;
+    public static final int Ident=5;
+    public static final int Int=6;
+    public static final int MLCOMMENT=7;
+    public static final int SLComment=8;
+    public static final int Str=9;
+    public static final int WS=10;
 
     // delegates
     public Parser[] getDelegates() {
@@ -105,22 +102,23 @@ public class QLParser extends Parser {
 
 
     // $ANTLR start "primary"
-    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:49:1: primary returns [Expr result] : ( Bool | Decimal | Int | Str | Ident );
+    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:49:1: primary returns [Expr result] : ( Bool | Int | Str | Ident | '(' x= orExpr ')' );
     public final Expr primary() throws RecognitionException {
         Expr result = null;
 
         int primary_StartIndex = input.index();
 
         Token Bool1=null;
-        Token Decimal2=null;
-        Token Int3=null;
-        Token Str4=null;
-        Token Ident5=null;
+        Token Int2=null;
+        Token Str3=null;
+        Token Ident4=null;
+        Expr x =null;
+
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 1) ) { return result; }
 
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:50:5: ( Bool | Decimal | Int | Str | Ident )
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:50:5: ( Bool | Int | Str | Ident | '(' x= orExpr ')' )
             int alt1=5;
             switch ( input.LA(1) ) {
             case Bool:
@@ -128,22 +126,22 @@ public class QLParser extends Parser {
                 alt1=1;
                 }
                 break;
-            case Decimal:
+            case Int:
                 {
                 alt1=2;
                 }
                 break;
-            case Int:
+            case Str:
                 {
                 alt1=3;
                 }
                 break;
-            case Str:
+            case Ident:
                 {
                 alt1=4;
                 }
                 break;
-            case Ident:
+            case 14:
                 {
                 alt1=5;
                 }
@@ -173,38 +171,46 @@ public class QLParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:57:7: Decimal
+                    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:57:7: Int
                     {
-                    Decimal2=(Token)match(input,Decimal,FOLLOW_Decimal_in_primary74); 
+                    Int2=(Token)match(input,Int,FOLLOW_Int_in_primary74); 
 
-                    result = new DecimalLiteral(Float.parseFloat((Decimal2!=null?Decimal2.getText():null)));
+                     result = new IntLiteral(Integer.parseInt((Int2!=null?Int2.getText():null))); 
 
                     }
                     break;
                 case 3 :
-                    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:58:7: Int
+                    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:58:7: Str
                     {
-                    Int3=(Token)match(input,Int,FOLLOW_Int_in_primary84); 
+                    Str3=(Token)match(input,Str,FOLLOW_Str_in_primary84); 
 
-                    result = new IntLiteral(Integer.parseInt((Int3!=null?Int3.getText():null)));
+                     result = new StrLiteral((Str3!=null?Str3.getText():null)); 
 
                     }
                     break;
                 case 4 :
-                    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:59:7: Str
+                    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:59:7: Ident
                     {
-                    Str4=(Token)match(input,Str,FOLLOW_Str_in_primary94); 
+                    Ident4=(Token)match(input,Ident,FOLLOW_Ident_in_primary94); 
 
-                    result = new StrLiteral((Str4!=null?Str4.getText():null));
+                     result = new Ident((Ident4!=null?Ident4.getText():null)); 
 
                     }
                     break;
                 case 5 :
-                    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:60:7: Ident
+                    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:60:7: '(' x= orExpr ')'
                     {
-                    Ident5=(Token)match(input,Ident,FOLLOW_Ident_in_primary104); 
+                    match(input,14,FOLLOW_14_in_primary104); 
 
-                    result = new Ident((Ident5!=null?Ident5.getText():null));
+                    pushFollow(FOLLOW_orExpr_in_primary110);
+                    x=orExpr();
+
+                    state._fsp--;
+
+
+                    match(input,15,FOLLOW_15_in_primary112); 
+
+                     result = x; 
 
                     }
                     break;
@@ -241,26 +247,26 @@ public class QLParser extends Parser {
             // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:64:5: ( '+' x= unExpr | '-' x= unExpr | '!' x= unExpr |x= primary )
             int alt2=4;
             switch ( input.LA(1) ) {
-            case 18:
+            case 17:
                 {
                 alt2=1;
                 }
                 break;
-            case 19:
+            case 18:
                 {
                 alt2=2;
                 }
                 break;
-            case 12:
+            case 11:
                 {
                 alt2=3;
                 }
                 break;
             case Bool:
-            case Decimal:
             case Ident:
             case Int:
             case Str:
+            case 14:
                 {
                 alt2=4;
                 }
@@ -277,9 +283,9 @@ public class QLParser extends Parser {
                 case 1 :
                     // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:64:8: '+' x= unExpr
                     {
-                    match(input,18,FOLLOW_18_in_unExpr132); 
+                    match(input,17,FOLLOW_17_in_unExpr140); 
 
-                    pushFollow(FOLLOW_unExpr_in_unExpr136);
+                    pushFollow(FOLLOW_unExpr_in_unExpr144);
                     x=unExpr();
 
                     state._fsp--;
@@ -292,9 +298,9 @@ public class QLParser extends Parser {
                 case 2 :
                     // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:65:8: '-' x= unExpr
                     {
-                    match(input,19,FOLLOW_19_in_unExpr147); 
+                    match(input,18,FOLLOW_18_in_unExpr155); 
 
-                    pushFollow(FOLLOW_unExpr_in_unExpr151);
+                    pushFollow(FOLLOW_unExpr_in_unExpr159);
                     x=unExpr();
 
                     state._fsp--;
@@ -307,9 +313,9 @@ public class QLParser extends Parser {
                 case 3 :
                     // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:66:8: '!' x= unExpr
                     {
-                    match(input,12,FOLLOW_12_in_unExpr162); 
+                    match(input,11,FOLLOW_11_in_unExpr170); 
 
-                    pushFollow(FOLLOW_unExpr_in_unExpr166);
+                    pushFollow(FOLLOW_unExpr_in_unExpr174);
                     x=unExpr();
 
                     state._fsp--;
@@ -322,7 +328,7 @@ public class QLParser extends Parser {
                 case 4 :
                     // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:67:8: x= primary
                     {
-                    pushFollow(FOLLOW_primary_in_unExpr179);
+                    pushFollow(FOLLOW_primary_in_unExpr187);
                     x=primary();
 
                     state._fsp--;
@@ -368,7 +374,7 @@ public class QLParser extends Parser {
             // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:71:5: (lhs= unExpr (op= ( '*' | '/' ) rhs= unExpr )* )
             // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:71:9: lhs= unExpr (op= ( '*' | '/' ) rhs= unExpr )*
             {
-            pushFollow(FOLLOW_unExpr_in_mulExpr217);
+            pushFollow(FOLLOW_unExpr_in_mulExpr225);
             lhs=unExpr();
 
             state._fsp--;
@@ -382,7 +388,7 @@ public class QLParser extends Parser {
                 int alt3=2;
                 int LA3_0 = input.LA(1);
 
-                if ( (LA3_0==17||LA3_0==20) ) {
+                if ( (LA3_0==16||LA3_0==19) ) {
                     alt3=1;
                 }
 
@@ -393,7 +399,7 @@ public class QLParser extends Parser {
             	    {
             	    op=(Token)input.LT(1);
 
-            	    if ( input.LA(1)==17||input.LA(1)==20 ) {
+            	    if ( input.LA(1)==16||input.LA(1)==19 ) {
             	        input.consume();
             	        state.errorRecovery=false;
             	    }
@@ -403,7 +409,7 @@ public class QLParser extends Parser {
             	    }
 
 
-            	    pushFollow(FOLLOW_unExpr_in_mulExpr237);
+            	    pushFollow(FOLLOW_unExpr_in_mulExpr245);
             	    rhs=unExpr();
 
             	    state._fsp--;
@@ -463,7 +469,7 @@ public class QLParser extends Parser {
             // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:83:5: (lhs= mulExpr (op= ( '+' | '-' ) rhs= mulExpr )* )
             // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:83:9: lhs= mulExpr (op= ( '+' | '-' ) rhs= mulExpr )*
             {
-            pushFollow(FOLLOW_mulExpr_in_addExpr275);
+            pushFollow(FOLLOW_mulExpr_in_addExpr283);
             lhs=mulExpr();
 
             state._fsp--;
@@ -477,7 +483,7 @@ public class QLParser extends Parser {
                 int alt4=2;
                 int LA4_0 = input.LA(1);
 
-                if ( ((LA4_0 >= 18 && LA4_0 <= 19)) ) {
+                if ( ((LA4_0 >= 17 && LA4_0 <= 18)) ) {
                     alt4=1;
                 }
 
@@ -488,7 +494,7 @@ public class QLParser extends Parser {
             	    {
             	    op=(Token)input.LT(1);
 
-            	    if ( (input.LA(1) >= 18 && input.LA(1) <= 19) ) {
+            	    if ( (input.LA(1) >= 17 && input.LA(1) <= 18) ) {
             	        input.consume();
             	        state.errorRecovery=false;
             	    }
@@ -498,7 +504,7 @@ public class QLParser extends Parser {
             	    }
 
 
-            	    pushFollow(FOLLOW_mulExpr_in_addExpr293);
+            	    pushFollow(FOLLOW_mulExpr_in_addExpr301);
             	    rhs=mulExpr();
 
             	    state._fsp--;
@@ -558,7 +564,7 @@ public class QLParser extends Parser {
             // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:95:5: (lhs= addExpr (op= ( '<' | '<=' | '>' | '>=' | '==' | '!=' ) rhs= addExpr )* )
             // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:95:9: lhs= addExpr (op= ( '<' | '<=' | '>' | '>=' | '==' | '!=' ) rhs= addExpr )*
             {
-            pushFollow(FOLLOW_addExpr_in_relExpr328);
+            pushFollow(FOLLOW_addExpr_in_relExpr336);
             lhs=addExpr();
 
             state._fsp--;
@@ -572,7 +578,7 @@ public class QLParser extends Parser {
                 int alt5=2;
                 int LA5_0 = input.LA(1);
 
-                if ( (LA5_0==13||(LA5_0 >= 22 && LA5_0 <= 26)) ) {
+                if ( (LA5_0==12||(LA5_0 >= 21 && LA5_0 <= 25)) ) {
                     alt5=1;
                 }
 
@@ -583,7 +589,7 @@ public class QLParser extends Parser {
             	    {
             	    op=(Token)input.LT(1);
 
-            	    if ( input.LA(1)==13||(input.LA(1) >= 22 && input.LA(1) <= 26) ) {
+            	    if ( input.LA(1)==12||(input.LA(1) >= 21 && input.LA(1) <= 25) ) {
             	        input.consume();
             	        state.errorRecovery=false;
             	    }
@@ -593,7 +599,7 @@ public class QLParser extends Parser {
             	    }
 
 
-            	    pushFollow(FOLLOW_addExpr_in_relExpr352);
+            	    pushFollow(FOLLOW_addExpr_in_relExpr360);
             	    rhs=addExpr();
 
             	    state._fsp--;
@@ -664,7 +670,7 @@ public class QLParser extends Parser {
             // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:119:5: (lhs= relExpr ( '&&' rhs= relExpr )* )
             // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:119:9: lhs= relExpr ( '&&' rhs= relExpr )*
             {
-            pushFollow(FOLLOW_relExpr_in_andExpr390);
+            pushFollow(FOLLOW_relExpr_in_andExpr398);
             lhs=relExpr();
 
             state._fsp--;
@@ -678,7 +684,7 @@ public class QLParser extends Parser {
                 int alt6=2;
                 int LA6_0 = input.LA(1);
 
-                if ( (LA6_0==14) ) {
+                if ( (LA6_0==13) ) {
                     alt6=1;
                 }
 
@@ -687,9 +693,9 @@ public class QLParser extends Parser {
             	case 1 :
             	    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:119:48: '&&' rhs= relExpr
             	    {
-            	    match(input,14,FOLLOW_14_in_andExpr396); 
+            	    match(input,13,FOLLOW_13_in_andExpr404); 
 
-            	    pushFollow(FOLLOW_relExpr_in_andExpr400);
+            	    pushFollow(FOLLOW_relExpr_in_andExpr408);
             	    rhs=relExpr();
 
             	    state._fsp--;
@@ -741,7 +747,7 @@ public class QLParser extends Parser {
             // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:123:5: (lhs= andExpr ( '||' rhs= andExpr )* )
             // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:123:9: lhs= andExpr ( '||' rhs= andExpr )*
             {
-            pushFollow(FOLLOW_andExpr_in_orExpr434);
+            pushFollow(FOLLOW_andExpr_in_orExpr442);
             lhs=andExpr();
 
             state._fsp--;
@@ -755,7 +761,7 @@ public class QLParser extends Parser {
                 int alt7=2;
                 int LA7_0 = input.LA(1);
 
-                if ( (LA7_0==36) ) {
+                if ( (LA7_0==33) ) {
                     alt7=1;
                 }
 
@@ -764,9 +770,9 @@ public class QLParser extends Parser {
             	case 1 :
             	    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:123:50: '||' rhs= andExpr
             	    {
-            	    match(input,36,FOLLOW_36_in_orExpr440); 
+            	    match(input,33,FOLLOW_33_in_orExpr448); 
 
-            	    pushFollow(FOLLOW_andExpr_in_orExpr444);
+            	    pushFollow(FOLLOW_andExpr_in_orExpr452);
             	    rhs=andExpr();
 
             	    state._fsp--;
@@ -801,7 +807,7 @@ public class QLParser extends Parser {
 
 
     // $ANTLR start "type"
-    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:126:1: type returns [Type result] : ( 'boolean' | 'string' | 'integer' | 'decimal' | 'money' );
+    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:126:1: type returns [Type result] : ( 'boolean' | 'string' | 'integer' );
     public final Type type() throws RecognitionException {
         Type result = null;
 
@@ -810,32 +816,22 @@ public class QLParser extends Parser {
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 8) ) { return result; }
 
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:127:5: ( 'boolean' | 'string' | 'integer' | 'decimal' | 'money' )
-            int alt8=5;
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:127:5: ( 'boolean' | 'string' | 'integer' )
+            int alt8=3;
             switch ( input.LA(1) ) {
-            case 27:
+            case 26:
                 {
                 alt8=1;
                 }
                 break;
-            case 34:
+            case 31:
                 {
                 alt8=2;
                 }
                 break;
-            case 32:
+            case 30:
                 {
                 alt8=3;
-                }
-                break;
-            case 28:
-                {
-                alt8=4;
-                }
-                break;
-            case 33:
-                {
-                alt8=5;
                 }
                 break;
             default:
@@ -850,7 +846,7 @@ public class QLParser extends Parser {
                 case 1 :
                     // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:127:7: 'boolean'
                     {
-                    match(input,27,FOLLOW_27_in_type474); 
+                    match(input,26,FOLLOW_26_in_type482); 
 
                     result = new Bool(); 
 
@@ -859,7 +855,7 @@ public class QLParser extends Parser {
                 case 2 :
                     // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:128:7: 'string'
                     {
-                    match(input,34,FOLLOW_34_in_type484); 
+                    match(input,31,FOLLOW_31_in_type492); 
 
                     result = new Str(); 
 
@@ -868,27 +864,9 @@ public class QLParser extends Parser {
                 case 3 :
                     // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:129:7: 'integer'
                     {
-                    match(input,32,FOLLOW_32_in_type494); 
+                    match(input,30,FOLLOW_30_in_type502); 
 
                     result = new Int(); 
-
-                    }
-                    break;
-                case 4 :
-                    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:131:7: 'decimal'
-                    {
-                    match(input,28,FOLLOW_28_in_type505); 
-
-                    result = new Decimal(); 
-
-                    }
-                    break;
-                case 5 :
-                    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:132:7: 'money'
-                    {
-                    match(input,33,FOLLOW_33_in_type515); 
-
-                    result = new Money(); 
 
                     }
                     break;
@@ -910,156 +888,29 @@ public class QLParser extends Parser {
 
 
     // $ANTLR start "stmt"
-    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:135:1: stmt returns [Stmt result] : ( computedQuestion | answerableQuestion | conditionalQuestion );
+    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:132:1: stmt returns [Stmt result] : ( question | conditionalQuestion );
     public final Stmt stmt() throws RecognitionException {
         Stmt result = null;
 
         int stmt_StartIndex = input.index();
 
-        Stmt computedQuestion6 =null;
+        Stmt question5 =null;
 
-        Stmt answerableQuestion7 =null;
-
-        Stmt conditionalQuestion8 =null;
+        Stmt conditionalQuestion6 =null;
 
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 9) ) { return result; }
 
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:136:5: ( computedQuestion | answerableQuestion | conditionalQuestion )
-            int alt9=3;
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:133:5: ( question | conditionalQuestion )
+            int alt9=2;
             int LA9_0 = input.LA(1);
 
             if ( (LA9_0==Ident) ) {
-                int LA9_1 = input.LA(2);
-
-                if ( (LA9_1==21) ) {
-                    int LA9_3 = input.LA(3);
-
-                    if ( (LA9_3==Str) ) {
-                        switch ( input.LA(4) ) {
-                        case 27:
-                            {
-                            int LA9_5 = input.LA(5);
-
-                            if ( (LA9_5==15) ) {
-                                alt9=1;
-                            }
-                            else if ( (LA9_5==Ident||LA9_5==31||LA9_5==37) ) {
-                                alt9=2;
-                            }
-                            else {
-                                NoViableAltException nvae =
-                                    new NoViableAltException("", 9, 5, input);
-
-                                throw nvae;
-
-                            }
-                            }
-                            break;
-                        case 34:
-                            {
-                            int LA9_6 = input.LA(5);
-
-                            if ( (LA9_6==15) ) {
-                                alt9=1;
-                            }
-                            else if ( (LA9_6==Ident||LA9_6==31||LA9_6==37) ) {
-                                alt9=2;
-                            }
-                            else {
-                                NoViableAltException nvae =
-                                    new NoViableAltException("", 9, 6, input);
-
-                                throw nvae;
-
-                            }
-                            }
-                            break;
-                        case 32:
-                            {
-                            int LA9_7 = input.LA(5);
-
-                            if ( (LA9_7==15) ) {
-                                alt9=1;
-                            }
-                            else if ( (LA9_7==Ident||LA9_7==31||LA9_7==37) ) {
-                                alt9=2;
-                            }
-                            else {
-                                NoViableAltException nvae =
-                                    new NoViableAltException("", 9, 7, input);
-
-                                throw nvae;
-
-                            }
-                            }
-                            break;
-                        case 28:
-                            {
-                            int LA9_8 = input.LA(5);
-
-                            if ( (LA9_8==15) ) {
-                                alt9=1;
-                            }
-                            else if ( (LA9_8==Ident||LA9_8==31||LA9_8==37) ) {
-                                alt9=2;
-                            }
-                            else {
-                                NoViableAltException nvae =
-                                    new NoViableAltException("", 9, 8, input);
-
-                                throw nvae;
-
-                            }
-                            }
-                            break;
-                        case 33:
-                            {
-                            int LA9_9 = input.LA(5);
-
-                            if ( (LA9_9==15) ) {
-                                alt9=1;
-                            }
-                            else if ( (LA9_9==Ident||LA9_9==31||LA9_9==37) ) {
-                                alt9=2;
-                            }
-                            else {
-                                NoViableAltException nvae =
-                                    new NoViableAltException("", 9, 9, input);
-
-                                throw nvae;
-
-                            }
-                            }
-                            break;
-                        default:
-                            NoViableAltException nvae =
-                                new NoViableAltException("", 9, 4, input);
-
-                            throw nvae;
-
-                        }
-
-                    }
-                    else {
-                        NoViableAltException nvae =
-                            new NoViableAltException("", 9, 3, input);
-
-                        throw nvae;
-
-                    }
-                }
-                else {
-                    NoViableAltException nvae =
-                        new NoViableAltException("", 9, 1, input);
-
-                    throw nvae;
-
-                }
+                alt9=1;
             }
-            else if ( (LA9_0==31) ) {
-                alt9=3;
+            else if ( (LA9_0==29) ) {
+                alt9=2;
             }
             else {
                 NoViableAltException nvae =
@@ -1070,41 +921,28 @@ public class QLParser extends Parser {
             }
             switch (alt9) {
                 case 1 :
-                    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:136:7: computedQuestion
+                    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:133:7: question
                     {
-                    pushFollow(FOLLOW_computedQuestion_in_stmt542);
-                    computedQuestion6=computedQuestion();
+                    pushFollow(FOLLOW_question_in_stmt529);
+                    question5=question();
 
                     state._fsp--;
 
 
-                     result = computedQuestion6; 
+                     result = question5; 
 
                     }
                     break;
                 case 2 :
-                    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:137:7: answerableQuestion
+                    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:134:7: conditionalQuestion
                     {
-                    pushFollow(FOLLOW_answerableQuestion_in_stmt552);
-                    answerableQuestion7=answerableQuestion();
+                    pushFollow(FOLLOW_conditionalQuestion_in_stmt539);
+                    conditionalQuestion6=conditionalQuestion();
 
                     state._fsp--;
 
 
-                     result = answerableQuestion7; 
-
-                    }
-                    break;
-                case 3 :
-                    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:138:7: conditionalQuestion
-                    {
-                    pushFollow(FOLLOW_conditionalQuestion_in_stmt562);
-                    conditionalQuestion8=conditionalQuestion();
-
-                    state._fsp--;
-
-
-                     result = conditionalQuestion8; 
+                     result = conditionalQuestion6; 
 
                     }
                     break;
@@ -1126,7 +964,7 @@ public class QLParser extends Parser {
 
 
     // $ANTLR start "ifThenStatement"
-    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:141:1: ifThenStatement returns [Stmt result] : 'if' '(' condition= orExpr ')' '{' ifBlock= block '}' ;
+    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:137:1: ifThenStatement returns [Stmt result] : 'if' '(' condition= orExpr ')' '{' ifBlock= block '}' ;
     public final Stmt ifThenStatement() throws RecognitionException {
         Stmt result = null;
 
@@ -1140,30 +978,30 @@ public class QLParser extends Parser {
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 10) ) { return result; }
 
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:142:5: ( 'if' '(' condition= orExpr ')' '{' ifBlock= block '}' )
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:142:7: 'if' '(' condition= orExpr ')' '{' ifBlock= block '}'
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:138:5: ( 'if' '(' condition= orExpr ')' '{' ifBlock= block '}' )
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:138:7: 'if' '(' condition= orExpr ')' '{' ifBlock= block '}'
             {
-            match(input,31,FOLLOW_31_in_ifThenStatement589); 
+            match(input,29,FOLLOW_29_in_ifThenStatement566); 
 
-            match(input,15,FOLLOW_15_in_ifThenStatement591); 
+            match(input,14,FOLLOW_14_in_ifThenStatement568); 
 
-            pushFollow(FOLLOW_orExpr_in_ifThenStatement595);
+            pushFollow(FOLLOW_orExpr_in_ifThenStatement572);
             condition=orExpr();
 
             state._fsp--;
 
 
-            match(input,16,FOLLOW_16_in_ifThenStatement597); 
+            match(input,15,FOLLOW_15_in_ifThenStatement574); 
 
-            match(input,35,FOLLOW_35_in_ifThenStatement599); 
+            match(input,32,FOLLOW_32_in_ifThenStatement576); 
 
-            pushFollow(FOLLOW_block_in_ifThenStatement605);
+            pushFollow(FOLLOW_block_in_ifThenStatement582);
             ifBlock=block();
 
             state._fsp--;
 
 
-            match(input,37,FOLLOW_37_in_ifThenStatement607); 
+            match(input,34,FOLLOW_34_in_ifThenStatement584); 
 
              result = new IfThenStatement(condition, ifBlock); 
 
@@ -1185,7 +1023,7 @@ public class QLParser extends Parser {
 
 
     // $ANTLR start "conditionalQuestion"
-    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:145:1: conditionalQuestion returns [Stmt result] : 'if' '(' condition= orExpr ')' '{' ifBlock= block '}' ( 'else' '{' elseBlock= block '}' )? ;
+    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:141:1: conditionalQuestion returns [Stmt result] : 'if' '(' condition= orExpr ')' '{' ifBlock= block '}' ( 'else' '{' elseBlock= block '}' )? ;
     public final Stmt conditionalQuestion() throws RecognitionException {
         Stmt result = null;
 
@@ -1201,55 +1039,55 @@ public class QLParser extends Parser {
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 11) ) { return result; }
 
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:146:5: ( 'if' '(' condition= orExpr ')' '{' ifBlock= block '}' ( 'else' '{' elseBlock= block '}' )? )
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:146:7: 'if' '(' condition= orExpr ')' '{' ifBlock= block '}' ( 'else' '{' elseBlock= block '}' )?
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:142:5: ( 'if' '(' condition= orExpr ')' '{' ifBlock= block '}' ( 'else' '{' elseBlock= block '}' )? )
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:142:7: 'if' '(' condition= orExpr ')' '{' ifBlock= block '}' ( 'else' '{' elseBlock= block '}' )?
             {
-            match(input,31,FOLLOW_31_in_conditionalQuestion634); 
+            match(input,29,FOLLOW_29_in_conditionalQuestion611); 
 
-            match(input,15,FOLLOW_15_in_conditionalQuestion636); 
+            match(input,14,FOLLOW_14_in_conditionalQuestion613); 
 
-            pushFollow(FOLLOW_orExpr_in_conditionalQuestion640);
+            pushFollow(FOLLOW_orExpr_in_conditionalQuestion617);
             condition=orExpr();
 
             state._fsp--;
 
 
-            match(input,16,FOLLOW_16_in_conditionalQuestion642); 
+            match(input,15,FOLLOW_15_in_conditionalQuestion619); 
 
-            match(input,35,FOLLOW_35_in_conditionalQuestion644); 
+            match(input,32,FOLLOW_32_in_conditionalQuestion621); 
 
-            pushFollow(FOLLOW_block_in_conditionalQuestion650);
+            pushFollow(FOLLOW_block_in_conditionalQuestion627);
             ifBlock=block();
 
             state._fsp--;
 
 
-            match(input,37,FOLLOW_37_in_conditionalQuestion652); 
+            match(input,34,FOLLOW_34_in_conditionalQuestion629); 
 
              result = new IfThenStatement(condition, ifBlock); 
 
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:147:7: ( 'else' '{' elseBlock= block '}' )?
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:143:7: ( 'else' '{' elseBlock= block '}' )?
             int alt10=2;
             int LA10_0 = input.LA(1);
 
-            if ( (LA10_0==29) ) {
+            if ( (LA10_0==27) ) {
                 alt10=1;
             }
             switch (alt10) {
                 case 1 :
-                    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:147:8: 'else' '{' elseBlock= block '}'
+                    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:143:8: 'else' '{' elseBlock= block '}'
                     {
-                    match(input,29,FOLLOW_29_in_conditionalQuestion663); 
+                    match(input,27,FOLLOW_27_in_conditionalQuestion640); 
 
-                    match(input,35,FOLLOW_35_in_conditionalQuestion665); 
+                    match(input,32,FOLLOW_32_in_conditionalQuestion642); 
 
-                    pushFollow(FOLLOW_block_in_conditionalQuestion671);
+                    pushFollow(FOLLOW_block_in_conditionalQuestion648);
                     elseBlock=block();
 
                     state._fsp--;
 
 
-                    match(input,37,FOLLOW_37_in_conditionalQuestion673); 
+                    match(input,34,FOLLOW_34_in_conditionalQuestion650); 
 
                      result = new IfThenElseStatement(condition, ifBlock, elseBlock); 
 
@@ -1276,49 +1114,65 @@ public class QLParser extends Parser {
 
 
 
-    // $ANTLR start "computedQuestion"
-    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:150:1: computedQuestion returns [Stmt result] : Ident ':' Str type '(' computation= orExpr ')' ;
-    public final Stmt computedQuestion() throws RecognitionException {
+    // $ANTLR start "question"
+    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:146:1: question returns [Stmt result] : answerableQuestion ( '(' computation= orExpr ')' )? ;
+    public final Stmt question() throws RecognitionException {
         Stmt result = null;
 
-        int computedQuestion_StartIndex = input.index();
+        int question_StartIndex = input.index();
 
-        Token Ident9=null;
-        Token Str10=null;
         Expr computation =null;
 
-        Type type11 =null;
+        Question answerableQuestion7 =null;
 
 
+
+              Question q = null;
+            
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 12) ) { return result; }
 
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:151:5: ( Ident ':' Str type '(' computation= orExpr ')' )
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:151:7: Ident ':' Str type '(' computation= orExpr ')'
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:151:5: ( answerableQuestion ( '(' computation= orExpr ')' )? )
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:151:7: answerableQuestion ( '(' computation= orExpr ')' )?
             {
-            Ident9=(Token)match(input,Ident,FOLLOW_Ident_in_computedQuestion702); 
-
-            match(input,21,FOLLOW_21_in_computedQuestion704); 
-
-            Str10=(Token)match(input,Str,FOLLOW_Str_in_computedQuestion706); 
-
-            pushFollow(FOLLOW_type_in_computedQuestion708);
-            type11=type();
+            pushFollow(FOLLOW_answerableQuestion_in_question692);
+            answerableQuestion7=answerableQuestion();
 
             state._fsp--;
 
 
-            match(input,15,FOLLOW_15_in_computedQuestion710); 
+             result = q = answerableQuestion7; 
 
-            pushFollow(FOLLOW_orExpr_in_computedQuestion716);
-            computation=orExpr();
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:152:7: ( '(' computation= orExpr ')' )?
+            int alt11=2;
+            int LA11_0 = input.LA(1);
 
-            state._fsp--;
+            if ( (LA11_0==14) ) {
+                alt11=1;
+            }
+            switch (alt11) {
+                case 1 :
+                    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:152:8: '(' computation= orExpr ')'
+                    {
+                    match(input,14,FOLLOW_14_in_question703); 
+
+                    pushFollow(FOLLOW_orExpr_in_question709);
+                    computation=orExpr();
+
+                    state._fsp--;
 
 
-            match(input,16,FOLLOW_16_in_computedQuestion718); 
+                    match(input,15,FOLLOW_15_in_question711); 
 
-             result = new ComputedQuestion(new Ident((Ident9!=null?Ident9.getText():null)), (Str10!=null?Str10.getText():null), type11, computation); 
+
+                    				  result = new ComputedQuestion(q.getIdent(), q.getLabel(), q.getType(), computation); 
+                    				
+
+                    }
+                    break;
+
+            }
+
 
             }
 
@@ -1333,41 +1187,41 @@ public class QLParser extends Parser {
         }
         return result;
     }
-    // $ANTLR end "computedQuestion"
+    // $ANTLR end "question"
 
 
 
     // $ANTLR start "answerableQuestion"
-    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:154:1: answerableQuestion returns [Stmt result] : Ident ':' Str type ;
-    public final Stmt answerableQuestion() throws RecognitionException {
-        Stmt result = null;
+    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:159:1: answerableQuestion returns [Question result] : Ident ':' label= Str type ;
+    public final Question answerableQuestion() throws RecognitionException {
+        Question result = null;
 
         int answerableQuestion_StartIndex = input.index();
 
-        Token Ident12=null;
-        Token Str13=null;
-        Type type14 =null;
+        Token label=null;
+        Token Ident8=null;
+        Type type9 =null;
 
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 13) ) { return result; }
 
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:155:5: ( Ident ':' Str type )
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:155:7: Ident ':' Str type
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:160:5: ( Ident ':' label= Str type )
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:160:7: Ident ':' label= Str type
             {
-            Ident12=(Token)match(input,Ident,FOLLOW_Ident_in_answerableQuestion745); 
+            Ident8=(Token)match(input,Ident,FOLLOW_Ident_in_answerableQuestion752); 
 
-            match(input,21,FOLLOW_21_in_answerableQuestion747); 
+            match(input,20,FOLLOW_20_in_answerableQuestion754); 
 
-            Str13=(Token)match(input,Str,FOLLOW_Str_in_answerableQuestion749); 
+            label=(Token)match(input,Str,FOLLOW_Str_in_answerableQuestion760); 
 
-            pushFollow(FOLLOW_type_in_answerableQuestion751);
-            type14=type();
+            pushFollow(FOLLOW_type_in_answerableQuestion762);
+            type9=type();
 
             state._fsp--;
 
 
-             result = new AnswerableQuestion(new Ident((Ident12!=null?Ident12.getText():null)), (Str13!=null?Str13.getText():null), type14); 
+             result = new AnswerableQuestion(new Ident((Ident8!=null?Ident8.getText():null)), (label!=null?label.getText():null), type9); 
 
             }
 
@@ -1387,13 +1241,13 @@ public class QLParser extends Parser {
 
 
     // $ANTLR start "block"
-    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:158:1: block returns [Block result] : ( stmt )* ;
+    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:163:1: block returns [Block result] : ( stmt )* ;
     public final Block block() throws RecognitionException {
         Block result = null;
 
         int block_StartIndex = input.index();
 
-        Stmt stmt15 =null;
+        Stmt stmt10 =null;
 
 
 
@@ -1402,37 +1256,37 @@ public class QLParser extends Parser {
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 14) ) { return result; }
 
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:163:5: ( ( stmt )* )
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:163:7: ( stmt )*
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:168:5: ( ( stmt )* )
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:168:7: ( stmt )*
             {
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:163:7: ( stmt )*
-            loop11:
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:168:7: ( stmt )*
+            loop12:
             do {
-                int alt11=2;
-                int LA11_0 = input.LA(1);
+                int alt12=2;
+                int LA12_0 = input.LA(1);
 
-                if ( (LA11_0==Ident||LA11_0==31) ) {
-                    alt11=1;
+                if ( (LA12_0==Ident||LA12_0==29) ) {
+                    alt12=1;
                 }
 
 
-                switch (alt11) {
+                switch (alt12) {
             	case 1 :
-            	    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:163:8: stmt
+            	    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:168:8: stmt
             	    {
-            	    pushFollow(FOLLOW_stmt_in_block788);
-            	    stmt15=stmt();
+            	    pushFollow(FOLLOW_stmt_in_block803);
+            	    stmt10=stmt();
 
             	    state._fsp--;
 
 
-            	     result.addStmt(stmt15); 
+            	     result.addStmt(stmt10); 
 
             	    }
             	    break;
 
             	default :
-            	    break loop11;
+            	    break loop12;
                 }
             } while (true);
 
@@ -1455,37 +1309,37 @@ public class QLParser extends Parser {
 
 
     // $ANTLR start "form"
-    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:166:1: form returns [Form result] : 'form' Ident '{' block '}' ;
+    // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:171:1: form returns [Form result] : 'form' Ident '{' block '}' ;
     public final Form form() throws RecognitionException {
         Form result = null;
 
         int form_StartIndex = input.index();
 
-        Token Ident16=null;
-        Block block17 =null;
+        Token Ident11=null;
+        Block block12 =null;
 
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 15) ) { return result; }
 
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:167:5: ( 'form' Ident '{' block '}' )
-            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:167:7: 'form' Ident '{' block '}'
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:172:5: ( 'form' Ident '{' block '}' )
+            // C:\\server\\nginx\\WempServer\\www\\SW4\\poly-ql\\ikmarlin\\ikmarlin-ql\\src\\org\\uva\\sea\\ql\\parser\\antlr\\QL.g:172:7: 'form' Ident '{' block '}'
             {
-            match(input,30,FOLLOW_30_in_form817); 
+            match(input,28,FOLLOW_28_in_form832); 
 
-            Ident16=(Token)match(input,Ident,FOLLOW_Ident_in_form819); 
+            Ident11=(Token)match(input,Ident,FOLLOW_Ident_in_form834); 
 
-            match(input,35,FOLLOW_35_in_form821); 
+            match(input,32,FOLLOW_32_in_form836); 
 
-            pushFollow(FOLLOW_block_in_form823);
-            block17=block();
+            pushFollow(FOLLOW_block_in_form838);
+            block12=block();
 
             state._fsp--;
 
 
-            match(input,37,FOLLOW_37_in_form825); 
+            match(input,34,FOLLOW_34_in_form840); 
 
-             result = new Form(new Ident((Ident16!=null?Ident16.getText():null)), block17); 
+             result = new Form(new Ident((Ident11!=null?Ident11.getText():null)), block12); 
 
             }
 
@@ -1508,74 +1362,70 @@ public class QLParser extends Parser {
  
 
     public static final BitSet FOLLOW_Bool_in_primary64 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_Decimal_in_primary74 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_Int_in_primary84 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_Str_in_primary94 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_Ident_in_primary104 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_18_in_unExpr132 = new BitSet(new long[]{0x00000000000C14F0L});
-    public static final BitSet FOLLOW_unExpr_in_unExpr136 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_19_in_unExpr147 = new BitSet(new long[]{0x00000000000C14F0L});
-    public static final BitSet FOLLOW_unExpr_in_unExpr151 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_12_in_unExpr162 = new BitSet(new long[]{0x00000000000C14F0L});
-    public static final BitSet FOLLOW_unExpr_in_unExpr166 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_primary_in_unExpr179 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_unExpr_in_mulExpr217 = new BitSet(new long[]{0x0000000000120002L});
-    public static final BitSet FOLLOW_set_in_mulExpr225 = new BitSet(new long[]{0x00000000000C14F0L});
-    public static final BitSet FOLLOW_unExpr_in_mulExpr237 = new BitSet(new long[]{0x0000000000120002L});
-    public static final BitSet FOLLOW_mulExpr_in_addExpr275 = new BitSet(new long[]{0x00000000000C0002L});
-    public static final BitSet FOLLOW_set_in_addExpr283 = new BitSet(new long[]{0x00000000000C14F0L});
-    public static final BitSet FOLLOW_mulExpr_in_addExpr293 = new BitSet(new long[]{0x00000000000C0002L});
-    public static final BitSet FOLLOW_addExpr_in_relExpr328 = new BitSet(new long[]{0x0000000007C02002L});
-    public static final BitSet FOLLOW_set_in_relExpr336 = new BitSet(new long[]{0x00000000000C14F0L});
-    public static final BitSet FOLLOW_addExpr_in_relExpr352 = new BitSet(new long[]{0x0000000007C02002L});
-    public static final BitSet FOLLOW_relExpr_in_andExpr390 = new BitSet(new long[]{0x0000000000004002L});
-    public static final BitSet FOLLOW_14_in_andExpr396 = new BitSet(new long[]{0x00000000000C14F0L});
-    public static final BitSet FOLLOW_relExpr_in_andExpr400 = new BitSet(new long[]{0x0000000000004002L});
-    public static final BitSet FOLLOW_andExpr_in_orExpr434 = new BitSet(new long[]{0x0000001000000002L});
-    public static final BitSet FOLLOW_36_in_orExpr440 = new BitSet(new long[]{0x00000000000C14F0L});
-    public static final BitSet FOLLOW_andExpr_in_orExpr444 = new BitSet(new long[]{0x0000001000000002L});
-    public static final BitSet FOLLOW_27_in_type474 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_34_in_type484 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_32_in_type494 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_28_in_type505 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_33_in_type515 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_computedQuestion_in_stmt542 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_answerableQuestion_in_stmt552 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_conditionalQuestion_in_stmt562 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_31_in_ifThenStatement589 = new BitSet(new long[]{0x0000000000008000L});
-    public static final BitSet FOLLOW_15_in_ifThenStatement591 = new BitSet(new long[]{0x00000000000C14F0L});
-    public static final BitSet FOLLOW_orExpr_in_ifThenStatement595 = new BitSet(new long[]{0x0000000000010000L});
-    public static final BitSet FOLLOW_16_in_ifThenStatement597 = new BitSet(new long[]{0x0000000800000000L});
-    public static final BitSet FOLLOW_35_in_ifThenStatement599 = new BitSet(new long[]{0x0000002080000040L});
-    public static final BitSet FOLLOW_block_in_ifThenStatement605 = new BitSet(new long[]{0x0000002000000000L});
-    public static final BitSet FOLLOW_37_in_ifThenStatement607 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_31_in_conditionalQuestion634 = new BitSet(new long[]{0x0000000000008000L});
-    public static final BitSet FOLLOW_15_in_conditionalQuestion636 = new BitSet(new long[]{0x00000000000C14F0L});
-    public static final BitSet FOLLOW_orExpr_in_conditionalQuestion640 = new BitSet(new long[]{0x0000000000010000L});
-    public static final BitSet FOLLOW_16_in_conditionalQuestion642 = new BitSet(new long[]{0x0000000800000000L});
-    public static final BitSet FOLLOW_35_in_conditionalQuestion644 = new BitSet(new long[]{0x0000002080000040L});
-    public static final BitSet FOLLOW_block_in_conditionalQuestion650 = new BitSet(new long[]{0x0000002000000000L});
-    public static final BitSet FOLLOW_37_in_conditionalQuestion652 = new BitSet(new long[]{0x0000000020000002L});
-    public static final BitSet FOLLOW_29_in_conditionalQuestion663 = new BitSet(new long[]{0x0000000800000000L});
-    public static final BitSet FOLLOW_35_in_conditionalQuestion665 = new BitSet(new long[]{0x0000002080000040L});
-    public static final BitSet FOLLOW_block_in_conditionalQuestion671 = new BitSet(new long[]{0x0000002000000000L});
-    public static final BitSet FOLLOW_37_in_conditionalQuestion673 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_Ident_in_computedQuestion702 = new BitSet(new long[]{0x0000000000200000L});
-    public static final BitSet FOLLOW_21_in_computedQuestion704 = new BitSet(new long[]{0x0000000000000400L});
-    public static final BitSet FOLLOW_Str_in_computedQuestion706 = new BitSet(new long[]{0x0000000718000000L});
-    public static final BitSet FOLLOW_type_in_computedQuestion708 = new BitSet(new long[]{0x0000000000008000L});
-    public static final BitSet FOLLOW_15_in_computedQuestion710 = new BitSet(new long[]{0x00000000000C14F0L});
-    public static final BitSet FOLLOW_orExpr_in_computedQuestion716 = new BitSet(new long[]{0x0000000000010000L});
-    public static final BitSet FOLLOW_16_in_computedQuestion718 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_Ident_in_answerableQuestion745 = new BitSet(new long[]{0x0000000000200000L});
-    public static final BitSet FOLLOW_21_in_answerableQuestion747 = new BitSet(new long[]{0x0000000000000400L});
-    public static final BitSet FOLLOW_Str_in_answerableQuestion749 = new BitSet(new long[]{0x0000000718000000L});
-    public static final BitSet FOLLOW_type_in_answerableQuestion751 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_stmt_in_block788 = new BitSet(new long[]{0x0000000080000042L});
-    public static final BitSet FOLLOW_30_in_form817 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_Ident_in_form819 = new BitSet(new long[]{0x0000000800000000L});
-    public static final BitSet FOLLOW_35_in_form821 = new BitSet(new long[]{0x0000002080000040L});
-    public static final BitSet FOLLOW_block_in_form823 = new BitSet(new long[]{0x0000002000000000L});
-    public static final BitSet FOLLOW_37_in_form825 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_Int_in_primary74 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_Str_in_primary84 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_Ident_in_primary94 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_14_in_primary104 = new BitSet(new long[]{0x0000000000064A70L});
+    public static final BitSet FOLLOW_orExpr_in_primary110 = new BitSet(new long[]{0x0000000000008000L});
+    public static final BitSet FOLLOW_15_in_primary112 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_17_in_unExpr140 = new BitSet(new long[]{0x0000000000064A70L});
+    public static final BitSet FOLLOW_unExpr_in_unExpr144 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_18_in_unExpr155 = new BitSet(new long[]{0x0000000000064A70L});
+    public static final BitSet FOLLOW_unExpr_in_unExpr159 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_11_in_unExpr170 = new BitSet(new long[]{0x0000000000064A70L});
+    public static final BitSet FOLLOW_unExpr_in_unExpr174 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_primary_in_unExpr187 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_unExpr_in_mulExpr225 = new BitSet(new long[]{0x0000000000090002L});
+    public static final BitSet FOLLOW_set_in_mulExpr233 = new BitSet(new long[]{0x0000000000064A70L});
+    public static final BitSet FOLLOW_unExpr_in_mulExpr245 = new BitSet(new long[]{0x0000000000090002L});
+    public static final BitSet FOLLOW_mulExpr_in_addExpr283 = new BitSet(new long[]{0x0000000000060002L});
+    public static final BitSet FOLLOW_set_in_addExpr291 = new BitSet(new long[]{0x0000000000064A70L});
+    public static final BitSet FOLLOW_mulExpr_in_addExpr301 = new BitSet(new long[]{0x0000000000060002L});
+    public static final BitSet FOLLOW_addExpr_in_relExpr336 = new BitSet(new long[]{0x0000000003E01002L});
+    public static final BitSet FOLLOW_set_in_relExpr344 = new BitSet(new long[]{0x0000000000064A70L});
+    public static final BitSet FOLLOW_addExpr_in_relExpr360 = new BitSet(new long[]{0x0000000003E01002L});
+    public static final BitSet FOLLOW_relExpr_in_andExpr398 = new BitSet(new long[]{0x0000000000002002L});
+    public static final BitSet FOLLOW_13_in_andExpr404 = new BitSet(new long[]{0x0000000000064A70L});
+    public static final BitSet FOLLOW_relExpr_in_andExpr408 = new BitSet(new long[]{0x0000000000002002L});
+    public static final BitSet FOLLOW_andExpr_in_orExpr442 = new BitSet(new long[]{0x0000000200000002L});
+    public static final BitSet FOLLOW_33_in_orExpr448 = new BitSet(new long[]{0x0000000000064A70L});
+    public static final BitSet FOLLOW_andExpr_in_orExpr452 = new BitSet(new long[]{0x0000000200000002L});
+    public static final BitSet FOLLOW_26_in_type482 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_31_in_type492 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_30_in_type502 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_question_in_stmt529 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_conditionalQuestion_in_stmt539 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_29_in_ifThenStatement566 = new BitSet(new long[]{0x0000000000004000L});
+    public static final BitSet FOLLOW_14_in_ifThenStatement568 = new BitSet(new long[]{0x0000000000064A70L});
+    public static final BitSet FOLLOW_orExpr_in_ifThenStatement572 = new BitSet(new long[]{0x0000000000008000L});
+    public static final BitSet FOLLOW_15_in_ifThenStatement574 = new BitSet(new long[]{0x0000000100000000L});
+    public static final BitSet FOLLOW_32_in_ifThenStatement576 = new BitSet(new long[]{0x0000000420000020L});
+    public static final BitSet FOLLOW_block_in_ifThenStatement582 = new BitSet(new long[]{0x0000000400000000L});
+    public static final BitSet FOLLOW_34_in_ifThenStatement584 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_29_in_conditionalQuestion611 = new BitSet(new long[]{0x0000000000004000L});
+    public static final BitSet FOLLOW_14_in_conditionalQuestion613 = new BitSet(new long[]{0x0000000000064A70L});
+    public static final BitSet FOLLOW_orExpr_in_conditionalQuestion617 = new BitSet(new long[]{0x0000000000008000L});
+    public static final BitSet FOLLOW_15_in_conditionalQuestion619 = new BitSet(new long[]{0x0000000100000000L});
+    public static final BitSet FOLLOW_32_in_conditionalQuestion621 = new BitSet(new long[]{0x0000000420000020L});
+    public static final BitSet FOLLOW_block_in_conditionalQuestion627 = new BitSet(new long[]{0x0000000400000000L});
+    public static final BitSet FOLLOW_34_in_conditionalQuestion629 = new BitSet(new long[]{0x0000000008000002L});
+    public static final BitSet FOLLOW_27_in_conditionalQuestion640 = new BitSet(new long[]{0x0000000100000000L});
+    public static final BitSet FOLLOW_32_in_conditionalQuestion642 = new BitSet(new long[]{0x0000000420000020L});
+    public static final BitSet FOLLOW_block_in_conditionalQuestion648 = new BitSet(new long[]{0x0000000400000000L});
+    public static final BitSet FOLLOW_34_in_conditionalQuestion650 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_answerableQuestion_in_question692 = new BitSet(new long[]{0x0000000000004002L});
+    public static final BitSet FOLLOW_14_in_question703 = new BitSet(new long[]{0x0000000000064A70L});
+    public static final BitSet FOLLOW_orExpr_in_question709 = new BitSet(new long[]{0x0000000000008000L});
+    public static final BitSet FOLLOW_15_in_question711 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_Ident_in_answerableQuestion752 = new BitSet(new long[]{0x0000000000100000L});
+    public static final BitSet FOLLOW_20_in_answerableQuestion754 = new BitSet(new long[]{0x0000000000000200L});
+    public static final BitSet FOLLOW_Str_in_answerableQuestion760 = new BitSet(new long[]{0x00000000C4000000L});
+    public static final BitSet FOLLOW_type_in_answerableQuestion762 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_stmt_in_block803 = new BitSet(new long[]{0x0000000020000022L});
+    public static final BitSet FOLLOW_28_in_form832 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_Ident_in_form834 = new BitSet(new long[]{0x0000000100000000L});
+    public static final BitSet FOLLOW_32_in_form836 = new BitSet(new long[]{0x0000000420000020L});
+    public static final BitSet FOLLOW_block_in_form838 = new BitSet(new long[]{0x0000000400000000L});
+    public static final BitSet FOLLOW_34_in_form840 = new BitSet(new long[]{0x0000000000000002L});
 
 }

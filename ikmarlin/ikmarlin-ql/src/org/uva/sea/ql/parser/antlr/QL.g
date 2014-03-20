@@ -54,10 +54,10 @@ primary returns [Expr result]
           $result = new BoolLiteral(false);
         }
       }
-    | Decimal {$result = new DecimalLiteral(Float.parseFloat($Decimal.text));}
-    | Int {$result = new IntLiteral(Integer.parseInt($Int.text));}
-    | Str {$result = new StrLiteral($Str.text);}
-    | Ident {$result = new Ident($Ident.text);}
+    | Int { $result = new IntLiteral(Integer.parseInt($Int.text)); }
+    | Str { $result = new StrLiteral($Str.text); }
+    | Ident { $result = new Ident($Ident.text); }
+    | '(' x = orExpr ')' { $result = $x.result; }
     ;
     
 unExpr returns [Expr result]
@@ -127,14 +127,10 @@ type returns [Type result]
     : 'boolean' {$result = new Bool(); }
     | 'string' {$result = new Str(); }
     | 'integer' {$result = new Int(); }
-//    | 'date'
-    | 'decimal' {$result = new Decimal(); }
-    | 'money' {$result = new Money(); }
     ;
     
 stmt returns [Stmt result]
-    : computedQuestion { $result = $computedQuestion.result; }
-    | answerableQuestion { $result = $answerableQuestion.result; }
+    : question { $result = $question.result; }
     | conditionalQuestion { $result = $conditionalQuestion.result; }
     ;
     
@@ -147,14 +143,23 @@ conditionalQuestion returns [Stmt result]
       ('else' '{' elseBlock = block '}' { $result = new IfThenElseStatement($condition.result, $ifBlock.result, $elseBlock.result); })?
     ;
     
-computedQuestion returns [Stmt result]
-    : Ident ':' Str type '(' computation = orExpr ')' { $result = new ComputedQuestion(new Ident($Ident.text), $Str.text, $type.result, $computation.result); }
+question returns [Stmt result]
+    @init
+    {
+      Question q = null;
+    }
+    : answerableQuestion { $result = q = $answerableQuestion.result; }
+      ('(' computation = orExpr ')' 
+				{
+				  $result = new ComputedQuestion(q.getIdent(), q.getLabel(), q.getType(), $computation.result); 
+				}
+      )?
     ;
     
-answerableQuestion returns [Stmt result]
-    : Ident ':' Str type { $result = new AnswerableQuestion(new Ident($Ident.text), $Str.text, $type.result); }
+answerableQuestion returns [Question result]
+    : Ident ':' label = Str type { $result = new AnswerableQuestion(new Ident($Ident.text), $label.text, $type.result); }
     ;
-
+    
 block returns [Block result]
     @init
     {
@@ -184,18 +189,14 @@ Bool
     | 'false'
     ;
     
-Ident
-    :   ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*
-    ;
-
-Str
-    : '"' .* '"'
-    ;
-
 Int
     : ('0'..'9')+
     ;
     
-Decimal
-    : Int ',' Int
+Str
+    : '"' .* '"'
+    ;
+    
+Ident
+    :   ('_')* ('a'..'z'|'A'..'Z'|'0'..'9') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')*
     ;
