@@ -6,8 +6,8 @@ import java.awt.event.ItemListener;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 
-import ast.expr.value.Bool;
-import ast.expr.value.Value;
+import ast.value.Bool;
+import ast.value.Value;
 
 public class CheckBox extends Widget implements ItemListener{
 

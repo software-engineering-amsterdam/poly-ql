@@ -6,9 +6,9 @@ import java.awt.event.KeyListener;
 import javax.swing.JComponent;
 import javax.swing.JTextField;
 
-import ast.expr.value.Int;
-import ast.expr.value.Undefined;
-import ast.expr.value.Value;
+import ast.value.Int;
+import ast.value.Undefined;
+import ast.value.Value;
 
 public class TextField extends Widget implements KeyListener{
 	
@@ -28,7 +28,6 @@ public class TextField extends Widget implements KeyListener{
 	@Override
 	public Value getValue() {
 		if(!textField.getText().equals("")){
-			System.out.println("getvalue of textfield " + textField.getText());
 			return new Int(Integer.parseInt(textField.getText()));
 		}
 		return new Undefined();

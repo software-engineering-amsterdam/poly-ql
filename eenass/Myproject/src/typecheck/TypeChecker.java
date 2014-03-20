@@ -296,5 +296,10 @@ public class TypeChecker implements Visitor<Boolean>{
 		boolean validStatement_else = node.getElseStatements().accept(this);
 		return (validExpr && validStatement_if && validStatement_else);
 	}
+	
+	@Override
+	public Boolean visit(UnknownType node) {
+		return false;
+	}
 
 }

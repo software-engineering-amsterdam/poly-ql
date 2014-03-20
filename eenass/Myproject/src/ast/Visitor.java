@@ -43,5 +43,6 @@ public interface Visitor<T> {
 	T visit(IfStatement node);
 	T visit(IfelseStatement node);
 	T visit(Form node);
+	T visit(UnknownType node);
 	
 }

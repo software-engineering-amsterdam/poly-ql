@@ -30,6 +30,7 @@ import ast.statement.StatementList;
 import ast.types.BoolType;
 import ast.types.IntType;
 import ast.types.StrType;
+import ast.types.UnknownType;
 
 public class TypeToWidget implements Visitor<Widget> {
 	
@@ -179,6 +180,11 @@ public class TypeToWidget implements Visitor<Widget> {
 
 	@Override
 	public Widget visit(Form node) {
+		return null;
+	}
+
+	@Override
+	public Widget visit(UnknownType node) {
 		return null;
 	}
 	

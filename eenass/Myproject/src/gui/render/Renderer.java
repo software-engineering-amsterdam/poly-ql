@@ -48,6 +48,7 @@ import ast.types.BoolType;
 import ast.types.IntType;
 import ast.types.StrType;
 import ast.types.Type;
+import ast.types.UnknownType;
 
 public class Renderer implements Visitor<JComponent>{
 	
@@ -271,6 +272,11 @@ public class Renderer implements Visitor<JComponent>{
 
 	@Override
 	public JComponent visit(StrType node) {
+		return null;
+	}
+
+	@Override
+	public JComponent visit(UnknownType node) {
 		return null;
 	}
 

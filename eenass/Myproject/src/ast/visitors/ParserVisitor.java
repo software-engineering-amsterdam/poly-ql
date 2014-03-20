@@ -32,6 +32,7 @@ import ast.types.BoolType;
 import ast.types.IntType;
 import ast.types.StrType;
 import ast.types.Type;
+import ast.types.UnknownType;
 
 public class ParserVisitor implements Visitor<String> {
 
@@ -164,9 +165,9 @@ public class ParserVisitor implements Visitor<String> {
 
 	private String visit(Type type) {
 		if (type.isCompatibleToBool()) return visit((BoolType)type);
-		else if (type.isCompatibleToStr()) return visit((StrType)type);
-		else if (type.isCompatibleToInt()) return visit((IntType)type);
-		else return "unknown";
+		if (type.isCompatibleToStr()) return visit((StrType)type);
+		if (type.isCompatibleToInt()) return visit((IntType)type);
+		else return new UnknownType().toString();
 	}
 
 	@Override
@@ -193,6 +194,11 @@ public class ParserVisitor implements Visitor<String> {
 	@Override
 	public String visit(IfelseStatement node){
 		return "\nif " + node.getExpr().accept(this) + "{\n" + visit(node.getStatements()) + "}\nelse{\n" + visit(node.getElseStatements()) + "}";
+	}
+
+	@Override
+	public String visit(UnknownType node) {
+		return new UnknownType().toString();
 	}
 
 }

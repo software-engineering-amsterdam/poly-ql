@@ -3,8 +3,8 @@ package gui.observers;
 import gui.component.ComputedWidget;
 import gui.render.Evaluator;
 import gui.render.State;
-import ast.expr.value.Value;
 import ast.statement.ComputedQuestion;
+import ast.value.Value;
 
 public class ComputedQuestionObserver extends WidgetObserver{
 	
