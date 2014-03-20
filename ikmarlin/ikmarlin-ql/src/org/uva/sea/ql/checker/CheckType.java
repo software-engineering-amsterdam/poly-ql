@@ -13,9 +13,9 @@ import org.uva.sea.ql.ast.stmt.IfThenElseStatement;
 import org.uva.sea.ql.ast.stmt.IfThenStatement;
 import org.uva.sea.ql.ast.stmt.Stmt;
 import org.uva.sea.ql.ast.type.Type;
-import org.uva.sea.ql.checker.error.Error;
-import org.uva.sea.ql.checker.error.IllegalBooleanError;
-import org.uva.sea.ql.checker.error.IncompatibleTypesError;
+import org.uva.sea.ql.checker.exception.error.Error;
+import org.uva.sea.ql.checker.exception.error.IllegalBooleanError;
+import org.uva.sea.ql.checker.exception.error.IncompatibleTypesError;
 import org.uva.sea.ql.checker.visitor.IStmtVisitor;
 import org.uva.sea.ql.checker.visitor.ExprVisitorType;
 
