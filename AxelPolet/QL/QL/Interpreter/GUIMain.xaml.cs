@@ -19,8 +19,8 @@ namespace QL.Interpreter
 
         public void Initialize()
         {
-            _guiQuestionnaire.Render();
             CnvWrapper.Children.Add(_guiQuestionnaire);
+            //_guiQuestionnaire.Render();
         }
     }
 }

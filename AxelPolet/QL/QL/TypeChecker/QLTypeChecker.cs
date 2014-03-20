@@ -28,8 +28,15 @@ namespace QL.TypeChecker
 
     public class QLTypeError
     {
-        public QLTokenInfo TokenInfo { get; set; }
-        public string Message { get; set; }
-        public bool IsWarning { get; set; }
+        public QLTokenInfo TokenInfo { get; private set; }
+        public string Message { get; private set; }
+        public bool IsWarning { get; private set; }
+
+        public QLTypeError(string message, QLTokenInfo tokenInfo, bool isWarning = false)
+        {
+            TokenInfo = tokenInfo;
+            Message = message;
+            IsWarning = isWarning;
+        }
     }
 }

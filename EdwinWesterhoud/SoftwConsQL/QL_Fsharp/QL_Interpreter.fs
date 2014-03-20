@@ -1,22 +1,14 @@
 ﻿module QL_Interpreter
 
-open System.Collections.Generic
 open System
-open System.Windows.Forms;
+open System.Collections.Generic
+open System.Windows.Forms
 open QL_Grammar
 open QL_Checker
+open ControlInfo
 open QL_Csharp
 open QL_Csharp.PrimitiveControls
 
-//// GUI HELPERS
-let indentBlock (stmtListControl : StatementList) = let mutable margin = stmtListControl.Margin
-                                                    margin.Left <- 25
-                                                    stmtListControl.Margin <- margin
-
-let setBlockVisibility (block : StatementList) newVisibility = block.Visible <- newVisibility
-/// END
-
-//// EVAL
 let getControlValue (control : StatementControl) =
     match control with
     | :? BooleanControl  -> let bcontrol = control :?> BooleanControl
@@ -71,123 +63,33 @@ let evalArithmeticOp (left, op, right) =
     | (Int(left),     arithmeticOp.Plus,  Int(right))     -> Int(left + right)
     | (Int(left),     arithmeticOp.Minus, Int(right))     -> Int(left - right)
     | (Int(left),     arithmeticOp.Mult,  Int(right))     -> Int(left * right)
-    | (Int(left),     arithmeticOp.Div,   Int(right))     -> Int(left / right)
+    | (Int(left),     arithmeticOp.Div,   Int(right))     -> if right = 0 then Int(0) else Int(left / right)
 
     | (Decimal(left), arithmeticOp.Plus,  Decimal(right)) -> Decimal(left + right)
     | (Decimal(left), arithmeticOp.Minus, Decimal(right)) -> Decimal(left - right)
     | (Decimal(left), arithmeticOp.Mult,  Decimal(right)) -> Decimal(left * right)
-    | (Decimal(left), arithmeticOp.Div,   Decimal(right)) -> Decimal(left / right)
+    | (Decimal(left), arithmeticOp.Div,   Decimal(right)) -> if right = 0.0 then Decimal(0.0) else Decimal(left / right)
 
     | (_, _, _) -> failwith "Unexpected application of a boolean operation (may indicate problem in typechecker)"
 
 
-let rec evalExpression expression (controlMap : Dictionary<string, StatementControl>) =
+let rec evalExpression expression (controlInfo : ControlInfo) =
     match expression with
-    | ID(name, _)     -> getControlValue controlMap.[name]
+    | ID(name, _)     -> getControlValue <| controlInfo.GetControl(name)
     | Literal(lit, _) -> lit
-    | Neg(expr, _)    -> let evalInner = evalExpression expr controlMap
+    | Neg(expr, _)    -> let evalInner = evalExpression expr controlInfo
                          match evalInner with
                          | Bool(value) -> Bool(not value)
                          | _           -> failwith "Unexpected result (may indicate problem in typechecker)"
-    | BooleanOp(left, op, right, _)    -> let evalLeft = evalExpression left controlMap
-                                          let evalRight = evalExpression right controlMap
+    | BooleanOp(left, op, right, _)    -> let evalLeft = evalExpression left controlInfo
+                                          let evalRight = evalExpression right controlInfo
                                           evalBooleanOp (evalLeft, op, evalRight)
-    | ArithmeticOp(left, op, right, _) -> let evalLeft = evalExpression left controlMap
-                                          let evalRight = evalExpression right controlMap
+    | ArithmeticOp(left, op, right, _) -> let evalLeft = evalExpression left controlInfo
+                                          let evalRight = evalExpression right controlInfo
                                           evalArithmeticOp (evalLeft, op, evalRight)
 
-let evalCondition condition (controlMap : Dictionary<string, StatementControl>) =
-    let evaluated = evalExpression condition controlMap
+let evalCondition condition (controlInfo : ControlInfo) =
+    let evaluated = evalExpression condition controlInfo
     match evaluated with
     | Bool(value) -> value
     | _           -> failwith "Unexpected result (may indicate problem in typechecker)"
-
-//// END
-
-
-let rec checkStmts stmts (controlMap : Dictionary<string, StatementControl>) : Control list =
-    let assignmentGUI label expression : StatementControl = let expressionEval = evalExpression expression controlMap
-                                                            match expressionEval with
-                                                            | Bool(value)    -> let control = new BooleanControl(label)
-                                                                                control.SetValue(value)
-                                                                                control.SetReadOnly(true)
-                                                                                upcast control
-                                                            | String(value)  -> let control = new StringControl(label)
-                                                                                control.SetValue(value)
-                                                                                control.SetReadOnly(true)
-                                                                                upcast control
-                                                            | Int(value)     -> let control = new IntegerControl(label)
-                                                                                control.SetValue(value)
-                                                                                control.SetReadOnly(true)
-                                                                                upcast control
-                                                            | Decimal(value) -> let control = new DecimalControl(label)
-                                                                                control.SetValue(value)
-                                                                                control.SetReadOnly(true)
-                                                                                upcast control
-
-    let questionGUI label qlType : StatementControl =   match qlType with
-                                                        | QLBool    -> upcast new BooleanControl(label)
-                                                        | QLString  -> upcast new StringControl(label)
-                                                        | QLInt     -> upcast new IntegerControl(label)
-                                                        | QLDecimal -> upcast new DecimalControl(label)
-
-    let rec getIdentifierControls expression =  match expression with
-                                                | ID(name, _)   -> [controlMap.[name]]
-                                                | Literal(_, _) -> []
-                                                | Neg(expr, _)  -> getIdentifierControls expr
-                                                | BooleanOp(left, _, right, _)
-                                                | ArithmeticOp(left, _, right, _) -> getIdentifierControls left @ getIdentifierControls right
-
-    let addConditionalEvents condition (statementList : StatementList) =
-        let identifierControls = getIdentifierControls condition
-        List.iter
-            (
-                fun (identifier : StatementControl) ->
-                    identifier.AddValueChangedEventHandler(
-                        fun _ _ -> setBlockVisibility statementList <| evalCondition condition controlMap
-                    )
-            )
-            identifierControls
-
-    let addAssigmentEvents expression (control : StatementControl) =
-        let identifierControls = getIdentifierControls expression
-        List.iter
-            (
-                fun (identifier : StatementControl) ->
-                    identifier.AddValueChangedEventHandler(
-                        fun _ _ -> setControlValue control <| evalExpression expression controlMap
-                    )
-            )
-            identifierControls
-
-    let checkStmt stmt : Control list =
-        match stmt with
-        | Assignment(id, label, expression, pos)             -> let control = assignmentGUI label expression
-                                                                controlMap.Add(id, control)
-                                                                addAssigmentEvents expression control
-                                                                [control]
-        | Question(id, label, qlType, pos)                   -> let control = questionGUI label qlType
-                                                                controlMap.Add(id, control)
-                                                                [control]
-        | IfElseConditional(cond, ifStmts, elseStmts, pos)   -> let statementListIf = new StatementList() // REFACTOR 1 extract method
-                                                                let statementListElse = new StatementList()
-                                                                statementListIf.AddControls(List.toArray <| checkStmts ifStmts controlMap)
-                                                                statementListElse.AddControls(List.toArray <| checkStmts elseStmts controlMap)
-                                                                indentBlock statementListIf
-                                                                setBlockVisibility statementListIf <| evalCondition cond controlMap
-                                                                indentBlock statementListElse
-                                                                setBlockVisibility statementListElse <| evalCondition cond controlMap
-                                                                addConditionalEvents cond statementListIf
-                                                                addConditionalEvents <| Neg(cond, pos) <| statementListElse
-                                                                [statementListIf ; statementListElse]
-        | IfConditional(cond, stmts, pos)                   ->  let statementList = new StatementList() // REFACTOR 1 extract method
-                                                                statementList.AddControls(List.toArray <| checkStmts stmts controlMap)
-                                                                indentBlock statementList
-                                                                setBlockVisibility statementList <| evalCondition cond controlMap
-                                                                addConditionalEvents cond statementList
-                                                                [statementList]
-
-    List.concat <| List.map checkStmt stmts
-
-let buildGUI ast : Control list =   let controlMap = new Dictionary<string, StatementControl>()
-                                    checkStmts ast.Statements controlMap

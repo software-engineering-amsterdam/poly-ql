@@ -36,11 +36,11 @@ namespace QL.QLClasses.Statements
 
             if (!_condition.GetResultType().IsCompatibleWith(new QBool()))
             {
-                typeErrors.ReportError(new QLTypeError
-                {
-                    Message = string.Format("Condition is not a boolean. Got QType '{0}'", _condition.GetResultType()),
-                    TokenInfo = _condition.TokenInfo
-                });
+                typeErrors.ReportError(new QLTypeError(
+                    string.Format("Condition is not a boolean. Got QType '{0}'", _condition.GetResultType()),
+                    _condition.TokenInfo
+                ));
+
                 return false;
             }
             

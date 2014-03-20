@@ -9,8 +9,9 @@ import javafx.scene.control.TextField;
 
 /**
  * Falconlabs
+ *
  * @author Santiago Carrillo
- * Date: 3/13/14
+ *         Date: 3/13/14
  */
 public class InputQuestionHBox
     extends QuestionHBox
@@ -36,6 +37,6 @@ public class InputQuestionHBox
     @Override
     public void updateValue( Value value )
     {
-        textField.setText( value.getValue() );
+        textField.setText( value.getValue().toString() );
     }
 }

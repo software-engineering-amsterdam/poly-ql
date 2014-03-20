@@ -1,9 +1,7 @@
 package problems;
-
-
 public abstract class Warning {
 
-	private String description;
+	private final String description;
 	
 	Warning(String description){
 		this.description = description;

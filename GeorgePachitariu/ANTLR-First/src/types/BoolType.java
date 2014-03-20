@@ -29,7 +29,7 @@ public class BoolType implements Type {
 	public boolean isCompatibleWithMoney() {
 		return false;
 	}
-	
+
 	@Override
 	public boolean isCompatibleWithString() {
 		return false;
@@ -60,5 +60,10 @@ public class BoolType implements Type {
 		if (!(obj instanceof BoolType))
 			return false;
 		return true;
+	}
+
+	@Override
+	public boolean isString() {
+		return false;
 	}
 }

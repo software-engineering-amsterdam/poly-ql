@@ -7,9 +7,8 @@ import org.uva.sea.ql.ast.statement.Form;
 
 public class QuestionaireView {
 
-	private JFrame frame;
+	private final JFrame frame;
 	private JPanel mainpanel;
-	//private Form form;
 	
 	public QuestionaireView(Form form){
 		this.frame =  new JFrame("Questionaire");
@@ -20,7 +19,6 @@ public class QuestionaireView {
 	public void newScreen(Form form){
 		mainpanel = Renderer.render(form, new State());
 		frame.add(mainpanel);
-		//frame.pack();
 		frame.setVisible(true);
 	}
 }

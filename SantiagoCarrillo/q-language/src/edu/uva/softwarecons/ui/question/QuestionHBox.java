@@ -8,8 +8,9 @@ import javafx.scene.layout.HBox;
 
 /**
  * Falconlabs
+ *
  * @author Santiago Carrillo
- * Date: 3/13/14
+ *         Date: 3/13/14
  */
 public abstract class QuestionHBox
     extends HBox

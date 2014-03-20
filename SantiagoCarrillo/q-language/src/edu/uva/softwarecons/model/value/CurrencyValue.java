@@ -5,8 +5,9 @@ import java.math.BigDecimal;
 
 /**
  * Falconlabs
+ *
  * @author Santiago Carrillo
- * Date: 3/13/14
+ *         Date: 3/13/14
  */
 public class CurrencyValue
     implements ArithmeticValue
@@ -21,65 +22,72 @@ public class CurrencyValue
 
 
     @Override
-    public String getValue()
+    public BigDecimal getValue()
     {
-        return value.toString();
+        return value;
     }
 
     @Override
     public boolean equals( Object obj )
     {
-        return ( (CurrencyValue) obj ).value.equals( value );
+        return ( (CurrencyValue) obj ).getValue().equals( value );
     }
 
     @Override
     public Value add( Value value )
     {
-        return new CurrencyValue( this.value.add( new BigDecimal( value.getValue() ) ) );
+
+        return new CurrencyValue( this.value.add( ( (CurrencyValue) value ).getValue() ) );
     }
 
     @Override
     public Value subtract( Value value )
     {
-        return new CurrencyValue( this.value.subtract( new BigDecimal( value.getValue() ) ) );
+        return new CurrencyValue( this.value.subtract( ( (CurrencyValue) value ).getValue() ) );
     }
 
     @Override
     public Value divide( Value value )
     {
-        return new CurrencyValue( this.value.divide( new BigDecimal( value.getValue() ) ) );
+        return new CurrencyValue( this.value.divide( ( (CurrencyValue) value ).getValue() ) );
     }
 
     @Override
     public Value multiply( Value value )
     {
-        return new CurrencyValue( this.value.multiply( new BigDecimal( value.getValue() ) ) );
+        return new CurrencyValue( this.value.multiply( ( (CurrencyValue) value ).getValue() ) );
     }
 
     @Override
     public boolean greater( Value value )
     {
-        return this.value.compareTo( new BigDecimal( value.getValue() ) ) == 1;
+        return this.value.compareTo( ( (CurrencyValue) value ).getValue() ) == 1;
     }
 
     @Override
     public boolean greaterEqual( Value value )
     {
-        return this.value.compareTo( new BigDecimal( value.getValue() ) ) == 1
-            || this.value.compareTo( new BigDecimal( value.getValue() ) ) == 0;
+        return this.value.compareTo( ( (CurrencyValue) value ).getValue() ) == 1
+            || this.value.compareTo( ( (CurrencyValue) value ).getValue() ) == 0;
     }
 
     @Override
     public boolean less( Value value )
     {
-        return this.value.compareTo( new BigDecimal( value.getValue() ) ) == -1;
+        return this.value.compareTo( ( (CurrencyValue) value ).getValue() ) == -1;
     }
 
     @Override
     public boolean lessEqual( Value value )
     {
-        return this.value.compareTo( new BigDecimal( value.getValue() ) ) == -1
-            || this.value.compareTo( new BigDecimal( value.getValue() ) ) == 0;
+        return this.value.compareTo( ( (CurrencyValue) value ).getValue() ) == -1
+            || this.value.compareTo( ( (CurrencyValue) value ).getValue() ) == 0;
+    }
+
+    @Override
+    public String toString()
+    {
+        return String.valueOf( value );
     }
 
 

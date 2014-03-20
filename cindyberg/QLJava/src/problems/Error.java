@@ -1,9 +1,8 @@
 package problems;
 
-
 public abstract class Error{
 
-	private String description;
+	private final String description;
 	
 	Error(String description){
 		this.description = description;

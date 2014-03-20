@@ -6,18 +6,17 @@ import org.uva.sea.ql.ast.Identifier;
 
 public class VariableEnvironment {
 
-	private HashMap<Identifier,Value> variables = new HashMap<Identifier,Value>();
+	private final HashMap<Identifier,Value> variables = new HashMap<Identifier,Value>();
 	
 	public Boolean isDeclared(Identifier id){
 		return variables.containsKey(id);
 	}
 	
-	public Value getValue(Identifier id){
-		
-		if(isDeclared(id))
-		{
+	public Value getValue(Identifier id){	
+		if(isDeclared(id)){
 			return variables.get(id);
 		}
+		
 		return new UndefinedValue();
 	}
 	

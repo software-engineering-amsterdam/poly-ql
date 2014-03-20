@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace QL.Interpreter.Controls.Input
 {
@@ -16,8 +17,10 @@ namespace QL.Interpreter.Controls.Input
             IdName = idName;
             IsComputed = isComputed;
 
-            Width = 200;
+            //ui properties
+            Width = 325;
             Height = 20;
+            Margin = new Thickness(25, 0, 0, 0);
         }
 
         public abstract void Render();

@@ -4,8 +4,9 @@ import edu.uva.softwarecons.model.type.Type;
 
 /**
  * Falconlabs
+ *
  * @author Santiago Carrillo
- * Date: 3/3/14
+ *         Date: 3/3/14
  */
 public class InvalidTypeError
     extends QuestionnaireError
@@ -28,5 +29,11 @@ public class InvalidTypeError
     public InvalidTypeError( String operand, Type type )
     {
         super( "InvalidType: " + type + " for operand: " + operand );
+    }
+
+    @Override
+    public boolean equals( Object obj )
+    {
+        return obj instanceof InvalidTypeError;
     }
 }

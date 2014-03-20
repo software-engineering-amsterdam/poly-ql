@@ -9,8 +9,9 @@ import javafx.scene.control.CheckBox;
 
 /**
  * Falconlabs
+ *
  * @author Santiago Carrillo
- * Date: 3/13/14
+ *         Date: 3/13/14
  */
 public class BooleanQuestionHBox
     extends QuestionHBox
@@ -35,7 +36,7 @@ public class BooleanQuestionHBox
     @Override
     public void updateValue( Value value )
     {
-        checkBox.setSelected( Boolean.valueOf( value.getValue() ) );
+        checkBox.setSelected( ( (BooleanValue) value ).getValue() );
     }
 
 

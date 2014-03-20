@@ -4,8 +4,6 @@ import org.uva.sea.ql.ast.TypeVisitor;
 
 public class MissingType extends Type {
 	
-
-
 	@Override
 	public String toString() {
 		return "Missing Type";

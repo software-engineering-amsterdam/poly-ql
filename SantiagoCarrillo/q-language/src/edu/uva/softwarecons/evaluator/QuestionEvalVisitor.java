@@ -6,6 +6,7 @@ import edu.uva.softwarecons.model.question.ComputedQuestion;
 import edu.uva.softwarecons.model.question.ElseQuestion;
 import edu.uva.softwarecons.model.question.IfQuestion;
 import edu.uva.softwarecons.model.question.Question;
+import edu.uva.softwarecons.model.value.BooleanValue;
 import edu.uva.softwarecons.ui.question.QuestionHBox;
 import edu.uva.softwarecons.visitor.form.IFormElementVisitor;
 
@@ -13,8 +14,9 @@ import java.util.HashMap;
 
 /**
  * Falconlabs
+ *
  * @author Santiago Carrillo
- * Date: 3/16/14
+ *         Date: 3/16/14
  */
 public class QuestionEvalVisitor
     implements IFormElementVisitor
@@ -56,7 +58,7 @@ public class QuestionEvalVisitor
     @Override
     public void visitIfQuestion( IfQuestion question )
     {
-        boolean display = Boolean.valueOf( question.getExpression().accept( expressionEvaluator ).getValue() );
+        boolean display = ( (BooleanValue) question.getExpression().accept( expressionEvaluator ) ).getValue();
         for ( Question q : question.getQuestions() )
         {
             q.accept( new QuestionEvalVisitor( displayQuestion && display, questions, expressionEvaluator ) );

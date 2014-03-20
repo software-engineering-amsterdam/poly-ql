@@ -1,6 +1,6 @@
 form IfStatement {
     num: "Give a number" number
     if (num) {
-    	numtrue: "Number is more than 5" (num)
+    	numtrue: "Number is more than 5" number(num)
     }
 }

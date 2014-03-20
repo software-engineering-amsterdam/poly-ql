@@ -8,8 +8,9 @@ import javafx.scene.text.Text;
 
 /**
  * Falconlabs
+ *
  * @author Santiago Carrillo
- * Date: 3/13/14
+ *         Date: 3/13/14
  */
 public class ComputedQuestionHBox
     extends QuestionHBox
@@ -33,7 +34,7 @@ public class ComputedQuestionHBox
     @Override
     public void updateValue( Value value )
     {
-        this.result.setText( value.getValue() );
+        this.result.setText( value.getValue().toString() );
     }
 
 }

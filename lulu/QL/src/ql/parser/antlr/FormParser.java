@@ -33,7 +33,7 @@ public class FormParser{
 	}
 	
 	public Form parseForm(String src) throws ParseError, IOException {
-		QLParser parser = createFileParser(src);
+		QLParser parser = createStringParser(src);
 		try {
 			return parser.form().result;
 		} catch (RecognitionException e) {

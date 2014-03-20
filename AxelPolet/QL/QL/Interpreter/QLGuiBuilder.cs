@@ -9,7 +9,7 @@ namespace QL.Interpreter
         private readonly GUIQuestionnaire _guiQuestionnaire;
         
         private ExpressionBase _currentShowCondition;
-        private List<ExpressionBase> _currentHideConditions;
+        private readonly List<ExpressionBase> _currentHideConditions;
 
         public QLGuiBuilder()
         {
@@ -19,10 +19,9 @@ namespace QL.Interpreter
 
         public void BuildQuestion(QLMemory memory, string name, string label, bool isComputed = false)
         {
-            //callback for refreshing entire questionnaire on input change
-            GUIQuestion guiQuestion = new GUIQuestion(memory, name, label, isComputed, _currentShowCondition, _guiQuestionnaire.Refresh);
+             GUIQuestion guiQuestion = new GUIQuestion(memory, name, label, isComputed, _currentShowCondition, _guiQuestionnaire.Refresh);
              
-            //set show/hide conditions            
+            //set hide conditions            
             _currentHideConditions.ForEach(guiQuestion.AppendHideCondition);
 
             _guiQuestionnaire.AddQuestion(guiQuestion);

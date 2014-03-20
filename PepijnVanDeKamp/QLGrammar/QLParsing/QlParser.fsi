@@ -18,6 +18,7 @@ type token =
   | BRACKET_CLOSE
   | BRACKET_OPEN
   | ASS
+  | ELSE
   | IF
   | BOOL_FALSE
   | BOOL_TRUE
@@ -48,6 +49,7 @@ type tokenId =
     | TOKEN_BRACKET_CLOSE
     | TOKEN_BRACKET_OPEN
     | TOKEN_ASS
+    | TOKEN_ELSE
     | TOKEN_IF
     | TOKEN_BOOL_FALSE
     | TOKEN_BOOL_TRUE

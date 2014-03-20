@@ -2,8 +2,9 @@ package edu.uva.softwarecons.checker.warning;
 
 /**
  * Falconlabs
+ *
  * @author Santiago Carrillo
- * Date: 2/27/14
+ *         Date: 2/27/14
  */
 public class QuestionnaireWarning
 {
