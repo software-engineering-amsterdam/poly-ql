@@ -1,7 +1,8 @@
-package org.uva.sea.ql.checker.warning;
+package org.uva.sea.ql.checker.exception.warning;
 
 public class DuplicateLabel extends DuplicateWarning {
 	
+	private static final long serialVersionUID = 1L;
 	
 	private String ident;
 	

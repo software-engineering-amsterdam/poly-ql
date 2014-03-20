@@ -1,8 +1,10 @@
-package org.uva.sea.ql.checker.error;
+package org.uva.sea.ql.checker.exception.error;
 
 import org.uva.sea.ql.checker.helper.Dependency;
 
 public class CyclicDependencyError extends DependencyError {
+	
+	private static final long serialVersionUID = 1L;
 	
 	private Dependency pair;
 	

@@ -1,6 +1,8 @@
-package org.uva.sea.ql.checker.error;
+package org.uva.sea.ql.checker.exception.error;
 
 public class DuplicateQuestion extends Error {
+	
+	private static final long serialVersionUID = 1L;
 	
 	private String ident;
 	

@@ -1,8 +1,10 @@
-package org.uva.sea.ql.checker.error;
+package org.uva.sea.ql.checker.exception.error;
 
 import org.uva.sea.ql.ast.expr.Ident;
 
 public class UndefinedQuestion extends Error {
+	
+	private static final long serialVersionUID = 1L;
 	
 	private Ident ident;
 	
