@@ -1,7 +1,7 @@
 package maintest;
 
 import static org.junit.Assert.assertEquals;
-import gui.Evaluator;
+import gui.render.Evaluator;
 
 import java.util.Map;
 

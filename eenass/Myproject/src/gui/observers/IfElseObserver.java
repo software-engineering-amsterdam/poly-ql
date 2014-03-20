@@ -1,6 +1,6 @@
 package gui.observers;
 
-import gui.Evaluator;
+import gui.render.Evaluator;
 import gui.render.State;
 
 import javax.swing.JComponent;
