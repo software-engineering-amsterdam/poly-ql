@@ -23,8 +23,8 @@ public class VariableAtom extends Expression {
     public ASTValidation validate(final Scope scope) {
         ASTValidation valid = new ASTValidation();
 
-        if (scope.containsVariable(_variableName)) {
-            _linkedValue = scope.getVariableFromScope(_variableName).getValue();
+        if (scope.variableAlreadyDefined(_variableName)) {
+            _linkedValue = scope.getVariable(_variableName).getValue();
         } else {
             valid.addError(new VariableNotFoundError(_variableName, getLineInfo()));
         }

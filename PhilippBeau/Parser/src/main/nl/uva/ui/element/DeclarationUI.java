@@ -1,6 +1,5 @@
 package main.nl.uva.ui.element;
 
-import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -24,18 +23,20 @@ public class DeclarationUI extends UIElement implements UIValueChangeListener, E
 
     protected ValueUI _valueUI;
 
+    private final JPanel _panel;
+
     public DeclarationUI(final Variable variable, final String function, final UI parentUI) {
         super(parentUI);
+
         _function = function;
         _variable = variable;
-
         _variable.registerListener(this);
+
+        _panel = generateDeclarationPanel();
     }
 
-    @Override
-    public JPanel getPanel() {
-        JPanel layout = new JPanel();
-        layout.setLayout(new BoxLayout(layout, BoxLayout.X_AXIS));
+    private JPanel generateDeclarationPanel() {
+        JPanel layout = generateXAxisPanel();
         JLabel label = new JLabel(_function);
         layout.add(label);
 
@@ -43,6 +44,11 @@ public class DeclarationUI extends UIElement implements UIValueChangeListener, E
         layout.add(_valueUI.getComponent());
 
         return layout;
+    }
+
+    @Override
+    public JPanel getPanel() {
+        return _panel;
     }
 
     @Override

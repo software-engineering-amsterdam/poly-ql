@@ -2,7 +2,6 @@ package main.nl.uva.ui.element;
 
 import java.util.List;
 
-import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import main.nl.uva.parser.expression.Expression;
@@ -22,19 +21,8 @@ public class IfThenUI extends UIElement implements ExpressionChangeListener {
         _expression = expression;
         _expression.registerListener(this);
 
-        _ifPanel = generateBlockPanel(_expression, children, _parentUI);
+        _ifPanel = generateBlockPanel(children, _parentUI);
         _ifPanel.setVisible(((Bool) expression.getValue()).getValue());
-    }
-
-    protected static JPanel generateBlockPanel(final Expression expression, final List<Statement> statements, final UI parent) {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-
-        for (Statement child : statements) {
-            panel.add(child.getLayout(parent).getPanel());
-        }
-
-        return panel;
     }
 
     @Override
