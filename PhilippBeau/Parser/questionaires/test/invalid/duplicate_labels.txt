@@ -1,0 +1,5 @@
+form duplicateLabels
+{
+	q1: "Dit is een testvraag! 1" boolean (true)
+	q2: "Dit is een testvraag! 1" money (1000)
+}

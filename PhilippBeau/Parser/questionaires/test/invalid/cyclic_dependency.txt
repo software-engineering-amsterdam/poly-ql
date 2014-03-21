@@ -1,0 +1,5 @@
+form cyclicDependency
+{
+	q2: "Dit is een testvraag! 2" money (q3)
+	q3: "Dit is een testvraag! 1" money (q2)
+}

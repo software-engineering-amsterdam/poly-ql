@@ -1,0 +1,15 @@
+form ifElse
+{
+	q1a: "Dit is een testvraag! 1" boolean
+	q1b: "Dit is een testvraag! 2" boolean
+	q2: "Dit is een testvraag! 3" money
+	if(q1a) {
+		q3: "testvraag 1 is true" money(q2 + 100)
+	} else {
+		if(q1b) {
+			q5: "testvraag 2 is true" money (q2 / 2)
+		} else {
+			q4: "testvraag 1 en 2 false" text
+		}
+	}
+}

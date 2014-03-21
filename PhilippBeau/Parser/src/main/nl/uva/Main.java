@@ -16,7 +16,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 public class Main {
     public static void main(final String[] args) throws Exception {
         // Get sample file input stream
-        File file = new File("questionaire.txt");
+        File file = new File("main.txt");
         FileInputStream fis = new FileInputStream(file);
 
         // create a CharStream that reads from file input stream

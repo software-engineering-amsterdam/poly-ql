@@ -1,0 +1,15 @@
+form nestedIf
+{
+	q1: "Dit is een testvraag! 1" boolean (true)
+	q2: "Dit is een testvraag! 2" money
+	q3: "Dit is een testvraag! 3" money (-500)
+	q4: "Dit is een testvraag! (q2 + q3)" money (q2 + q3)
+	if(q2 + q3 > 500)
+	{
+		q5: "Dit is een testvraag! 5" money
+		if(q5 > 50)
+		{
+			q6: "Dit is een testvraag! 6" text
+		}
+	}
+}

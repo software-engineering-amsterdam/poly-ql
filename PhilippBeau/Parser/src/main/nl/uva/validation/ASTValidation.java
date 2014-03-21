@@ -45,4 +45,12 @@ public class ASTValidation {
     public boolean hasWarnings() {
         return !_validationWarnings.isEmpty();
     }
+
+    public List<ValidationError> getValidationErrors() {
+        return _validationErrors;
+    }
+
+    public List<ValidationWarning> getValidationWarnings() {
+        return _validationWarnings;
+    }
 }
