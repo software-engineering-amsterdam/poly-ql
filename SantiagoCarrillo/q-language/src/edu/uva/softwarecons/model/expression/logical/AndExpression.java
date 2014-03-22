@@ -40,4 +40,10 @@ public class AndExpression
     {
         return visitor.visitAndExpression( this );
     }
+
+    @Override
+    public boolean equals( Object obj )
+    {
+        return obj instanceof AndExpression;
+    }
 }
