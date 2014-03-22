@@ -16,13 +16,14 @@ namespace Algebra.QL.TypeCheck.Stmnt
 
         }
 
-        public void TypeCheck(TypeEnvironment env, ErrorReporter errRep)
+        public void TypeCheck(TypeEnvironment env)
         {
-            Expression.TypeCheck(env, errRep);
+            Expression.TypeCheck(env);
 
             if (String.IsNullOrWhiteSpace(Text))
             {
-                errRep.ReportWarning(this, "Empty question detected. Are you sure you want to leave this question blank?");
+                env.ReportWarning("Empty question detected. Are you sure you want to leave this question blank?",
+                    SourceStartPosition, SourceEndPosition);
             }
         }
     }

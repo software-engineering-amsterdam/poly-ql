@@ -12,15 +12,15 @@ namespace Algebra.QL.TypeCheck.Expr
 
 		}
 
-        public override ITypeCheckType TypeCheck(TypeEnvironment env, ErrorReporter errRep)
+        public override ITypeCheckType TypeCheck(TypeEnvironment env)
         {
-            ITypeCheckType a = Expr1.TypeCheck(env, errRep);
-            ITypeCheckType b = Expr2.TypeCheck(env, errRep);
+            ITypeCheckType a = Expr1.TypeCheck(env);
+            ITypeCheckType b = Expr2.TypeCheck(env);
 
             if (!a.CompatibleWith(b))
             {
-                errRep.ReportError(this, String.Format("Comparison using '==' not possible. Incompatible types: '{0}', '{1}'.",
-                    a, b));
+                env.ReportError(String.Format("Comparison using '==' not possible. Incompatible types: '{0}', '{1}'.",
+                    a, b), SourceStartPosition, SourceEndPosition);
             }
 
             return new BoolType();

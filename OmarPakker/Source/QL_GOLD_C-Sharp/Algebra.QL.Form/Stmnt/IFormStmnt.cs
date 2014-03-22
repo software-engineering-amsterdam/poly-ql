@@ -1,12 +1,10 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
+using Algebra.QL.Form.Helpers;
 
 namespace Algebra.QL.Form.Stmnt
 {
-    public interface IFormStmnt : IForm, IDisposable
+    public interface IFormStmnt : IForm
     {
-        FrameworkElement BuildForm();
-
-        IFormStmnt Clone();
+        FrameworkElement BuildForm(VarEnvironment env);
     }
 }

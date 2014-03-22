@@ -16,8 +16,8 @@
  * Output File      : 
  * Output File Base : 
  *
- * Symbol Count : 70
- * Rule Count   : 57
+ * Symbol Count : 72
+ * Rule Count   : 59
  */
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -26,8 +26,8 @@ namespace Grammar.Generated.v2
 {
 	public static class GrammarData
     {
-        public const int SymbolCount = 70;
-        public const int RuleCount = 57;
+        public const int SymbolCount = 72;
+        public const int RuleCount = 59;
 
         public static readonly ReadOnlyDictionary<string, short> Rules = new ReadOnlyDictionary<string, short>(
 	        new Dictionary<string, short>()
@@ -47,7 +47,7 @@ namespace Grammar.Generated.v2
                 { "Statement", 12 },                                        // <Statement> ::= <Block>
                 { "Statement2", 13 },                                       // <Statement> ::= <Question>
                 { "Statement_Gotonextform_Semi", 14 },                      // <Statement> ::= gotoNextForm ';'
-                { "Statement_Loop_Lparen_Rparen", 15 },                     // <Statement> ::= loop '(' <Expression> ')' <Statement>
+                { "Statement_Repeat_Lparen_Rparen", 15 },                   // <Statement> ::= repeat '(' <Expression> ')' <Statement>
                 { "Optelse_Else", 16 },                                     // <OptElse> ::= else <Statement>
                 { "Optelse", 17 },                                          // <OptElse> ::= 
                 { "Vardecl_Identifier_Colon", 18 },                         // <VarDecl> ::= Identifier ':' <Type>
@@ -56,39 +56,41 @@ namespace Grammar.Generated.v2
                 { "Question_Stringlit_Ltlt_Semi", 21 },                     // <Question> ::= StringLit '<<' <VarAssign> ';'
                 { "Question_Stringlit_Ltlt_Semi2", 22 },                    // <Question> ::= StringLit '<<' <Expression> ';'
                 { "Expression_Question_Colon", 23 },                        // <Expression> ::= <OrExpr> '?' <OrExpr> ':' <Expression>
-                { "Expression", 24 },                                       // <Expression> ::= <OrExpr>
-                { "Orexpr_Pipepipe", 25 },                                  // <OrExpr> ::= <OrExpr> '||' <AndExpr>
-                { "Orexpr", 26 },                                           // <OrExpr> ::= <AndExpr>
-                { "Andexpr_Ampamp", 27 },                                   // <AndExpr> ::= <AndExpr> '&&' <EqExpr>
-                { "Andexpr", 28 },                                          // <AndExpr> ::= <EqExpr>
-                { "Eqexpr_Eqeq", 29 },                                      // <EqExpr> ::= <EqExpr> '==' <CompExpr>
-                { "Eqexpr_Exclameq", 30 },                                  // <EqExpr> ::= <EqExpr> '!=' <CompExpr>
-                { "Eqexpr", 31 },                                           // <EqExpr> ::= <CompExpr>
-                { "Compexpr_Lt", 32 },                                      // <CompExpr> ::= <CompExpr> '<' <AddExpr>
-                { "Compexpr_Gt", 33 },                                      // <CompExpr> ::= <CompExpr> '>' <AddExpr>
-                { "Compexpr_Lteq", 34 },                                    // <CompExpr> ::= <CompExpr> '<=' <AddExpr>
-                { "Compexpr_Gteq", 35 },                                    // <CompExpr> ::= <CompExpr> '>=' <AddExpr>
-                { "Compexpr", 36 },                                         // <CompExpr> ::= <AddExpr>
-                { "Addexpr_Plus", 37 },                                     // <AddExpr> ::= <AddExpr> '+' <MultExpr>
-                { "Addexpr_Minus", 38 },                                    // <AddExpr> ::= <AddExpr> '-' <MultExpr>
-                { "Addexpr", 39 },                                          // <AddExpr> ::= <MultExpr>
-                { "Multexpr_Times", 40 },                                   // <MultExpr> ::= <MultExpr> '*' <PowerExpr>
-                { "Multexpr_Div", 41 },                                     // <MultExpr> ::= <MultExpr> '/' <PowerExpr>
-                { "Multexpr_Percent", 42 },                                 // <MultExpr> ::= <MultExpr> '%' <PowerExpr>
-                { "Multexpr", 43 },                                         // <MultExpr> ::= <PowerExpr>
-                { "Powerexpr_Caret", 44 },                                  // <PowerExpr> ::= <PowerExpr> '^' <NegateExpr>
-                { "Powerexpr", 45 },                                        // <PowerExpr> ::= <NegateExpr>
-                { "Negateexpr_Minus", 46 },                                 // <NegateExpr> ::= '-' <Value>
-                { "Negateexpr_Exclam", 47 },                                // <NegateExpr> ::= '!' <Value>
-                { "Negateexpr", 48 },                                       // <NegateExpr> ::= <Value>
-                { "Value_Identifier", 49 },                                 // <Value> ::= Identifier
-                { "Value", 50 },                                            // <Value> ::= <Literal>
-                { "Value_Lparen_Rparen", 51 },                              // <Value> ::= '(' <Expression> ')'
-                { "Literal_Stringlit", 52 },                                // <Literal> ::= StringLit
-                { "Literal_Intlit", 53 },                                   // <Literal> ::= IntLit
-                { "Literal_Reallit", 54 },                                  // <Literal> ::= RealLit
-                { "Literal_Boollit", 55 },                                  // <Literal> ::= BoolLit
-                { "Literal_Datelit", 56 }                                   // <Literal> ::= DateLit
+                { "Expression_Sum_Lparen_Identifier_Rparen", 24 },          // <Expression> ::= sum '(' Identifier ')'
+                { "Expression_Avg_Lparen_Identifier_Rparen", 25 },          // <Expression> ::= avg '(' Identifier ')'
+                { "Expression", 26 },                                       // <Expression> ::= <OrExpr>
+                { "Orexpr_Pipepipe", 27 },                                  // <OrExpr> ::= <OrExpr> '||' <AndExpr>
+                { "Orexpr", 28 },                                           // <OrExpr> ::= <AndExpr>
+                { "Andexpr_Ampamp", 29 },                                   // <AndExpr> ::= <AndExpr> '&&' <EqExpr>
+                { "Andexpr", 30 },                                          // <AndExpr> ::= <EqExpr>
+                { "Eqexpr_Eqeq", 31 },                                      // <EqExpr> ::= <EqExpr> '==' <CompExpr>
+                { "Eqexpr_Exclameq", 32 },                                  // <EqExpr> ::= <EqExpr> '!=' <CompExpr>
+                { "Eqexpr", 33 },                                           // <EqExpr> ::= <CompExpr>
+                { "Compexpr_Lt", 34 },                                      // <CompExpr> ::= <CompExpr> '<' <AddExpr>
+                { "Compexpr_Gt", 35 },                                      // <CompExpr> ::= <CompExpr> '>' <AddExpr>
+                { "Compexpr_Lteq", 36 },                                    // <CompExpr> ::= <CompExpr> '<=' <AddExpr>
+                { "Compexpr_Gteq", 37 },                                    // <CompExpr> ::= <CompExpr> '>=' <AddExpr>
+                { "Compexpr", 38 },                                         // <CompExpr> ::= <AddExpr>
+                { "Addexpr_Plus", 39 },                                     // <AddExpr> ::= <AddExpr> '+' <MultExpr>
+                { "Addexpr_Minus", 40 },                                    // <AddExpr> ::= <AddExpr> '-' <MultExpr>
+                { "Addexpr", 41 },                                          // <AddExpr> ::= <MultExpr>
+                { "Multexpr_Times", 42 },                                   // <MultExpr> ::= <MultExpr> '*' <PowerExpr>
+                { "Multexpr_Div", 43 },                                     // <MultExpr> ::= <MultExpr> '/' <PowerExpr>
+                { "Multexpr_Percent", 44 },                                 // <MultExpr> ::= <MultExpr> '%' <PowerExpr>
+                { "Multexpr", 45 },                                         // <MultExpr> ::= <PowerExpr>
+                { "Powerexpr_Caret", 46 },                                  // <PowerExpr> ::= <PowerExpr> '^' <NegateExpr>
+                { "Powerexpr", 47 },                                        // <PowerExpr> ::= <NegateExpr>
+                { "Negateexpr_Minus", 48 },                                 // <NegateExpr> ::= '-' <Value>
+                { "Negateexpr_Exclam", 49 },                                // <NegateExpr> ::= '!' <Value>
+                { "Negateexpr", 50 },                                       // <NegateExpr> ::= <Value>
+                { "Value_Identifier", 51 },                                 // <Value> ::= Identifier
+                { "Value", 52 },                                            // <Value> ::= <Literal>
+                { "Value_Lparen_Rparen", 53 },                              // <Value> ::= '(' <Expression> ')'
+                { "Literal_Stringlit", 54 },                                // <Literal> ::= StringLit
+                { "Literal_Intlit", 55 },                                   // <Literal> ::= IntLit
+                { "Literal_Reallit", 56 },                                  // <Literal> ::= RealLit
+                { "Literal_Boollit", 57 },                                  // <Literal> ::= BoolLit
+                { "Literal_Datelit", 58 }                                   // <Literal> ::= DateLit
             }
 		);
     };
@@ -175,8 +177,8 @@ namespace Grammar.Generated.v2
 //{
 //    return;
 //}
-////<Statement> ::= loop '(' <Expression> ')' <Statement>
-//if (r.Parent.TableIndex() == Rules["Statement_Loop_Lparen_Rparen"])
+////<Statement> ::= repeat '(' <Expression> ')' <Statement>
+//if (r.Parent.TableIndex() == Rules["Statement_Repeat_Lparen_Rparen"])
 //{
 //    return;
 //}
@@ -217,6 +219,16 @@ namespace Grammar.Generated.v2
 //}
 ////<Expression> ::= <OrExpr> '?' <OrExpr> ':' <Expression>
 //if (r.Parent.TableIndex() == Rules["Expression_Question_Colon"])
+//{
+//    return;
+//}
+////<Expression> ::= sum '(' Identifier ')'
+//if (r.Parent.TableIndex() == Rules["Expression_Sum_Lparen_Identifier_Rparen"])
+//{
+//    return;
+//}
+////<Expression> ::= avg '(' Identifier ')'
+//if (r.Parent.TableIndex() == Rules["Expression_Avg_Lparen_Identifier_Rparen"])
 //{
 //    return;
 //}
@@ -454,8 +466,8 @@ namespace Grammar.Generated.v2
 //        // <Statement> ::= gotoNextForm ';'
 //        break;
 //
-//    case RuleIndices.Statement_Loop_Lparen_Rparen:
-//        // <Statement> ::= loop '(' <Expression> ')' <Statement>
+//    case RuleIndices.Statement_Repeat_Lparen_Rparen:
+//        // <Statement> ::= repeat '(' <Expression> ')' <Statement>
 //        break;
 //
 //    case RuleIndices.Optelse_Else:
@@ -488,6 +500,14 @@ namespace Grammar.Generated.v2
 //
 //    case RuleIndices.Expression_Question_Colon:
 //        // <Expression> ::= <OrExpr> '?' <OrExpr> ':' <Expression>
+//        break;
+//
+//    case RuleIndices.Expression_Sum_Lparen_Identifier_Rparen:
+//        // <Expression> ::= sum '(' Identifier ')'
+//        break;
+//
+//    case RuleIndices.Expression_Avg_Lparen_Identifier_Rparen:
+//        // <Expression> ::= avg '(' Identifier ')'
 //        break;
 //
 //    case RuleIndices.Expression:

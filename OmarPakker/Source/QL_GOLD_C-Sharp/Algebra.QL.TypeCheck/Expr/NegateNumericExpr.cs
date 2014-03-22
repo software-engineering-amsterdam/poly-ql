@@ -17,14 +17,14 @@ namespace Algebra.QL.TypeCheck.Expr
 
 		}
 
-        public ITypeCheckType TypeCheck(TypeEnvironment env, ErrorReporter errRep)
+        public ITypeCheckType TypeCheck(TypeEnvironment env)
         {
-            ITypeCheckType a = Expr1.TypeCheck(env, errRep);
+            ITypeCheckType a = Expr1.TypeCheck(env);
 
             if (!a.CompatibleWith(NegationUpperBound))
             {
-                errRep.ReportError(this, String.Format("Negation not possible. Incompatible type: '{0}'. Only numerical types are supported.",
-                    a));
+                env.ReportError(String.Format("Negation not possible. Incompatible type: '{0}'. Only numerical types are supported.",
+                    a), SourceStartPosition, SourceEndPosition);
 
                 return NegationUpperBound;
             }

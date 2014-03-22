@@ -15,10 +15,10 @@ namespace Algebra.QL.TypeCheck.Stmnt
 
         }
 
-        public void TypeCheck(TypeEnvironment env, ErrorReporter errRep)
+        public void TypeCheck(TypeEnvironment env)
         {
-            Statement1.TypeCheck(env, errRep);
-            Statement2.TypeCheck(env, errRep);
+            Statement1.TypeCheck(env);
+            Statement2.TypeCheck(env);
         }
     }
 }

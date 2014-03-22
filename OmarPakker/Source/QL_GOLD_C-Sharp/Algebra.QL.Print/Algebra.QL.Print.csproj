@@ -37,6 +37,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Expr\SumExpr.cs" />
+    <Compile Include="Expr\AvgExpr.cs" />
     <Compile Include="Expr\AddExpr.cs" />
     <Compile Include="Expr\AndExpr.cs" />
     <Compile Include="Expr\DivideExpr.cs" />
@@ -73,7 +75,7 @@
     <Compile Include="Stmnt\IfStmnt.cs" />
     <Compile Include="Stmnt\IPrintStmnt.cs" />
     <Compile Include="Stmnt\LabelStmnt.cs" />
-    <Compile Include="Stmnt\LoopStmnt.cs" />
+    <Compile Include="Stmnt\RepeatStmnt.cs" />
     <Compile Include="Stmnt\QuestionStmnt.cs" />
     <Compile Include="StyleSettings.cs" />
     <Compile Include="Type\BaseType.cs" />

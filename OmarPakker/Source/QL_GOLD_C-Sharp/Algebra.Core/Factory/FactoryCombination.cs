@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Algebra.Core.Helpers;
 
 namespace Algebra.Core.Factory
 {
 	public abstract class FactoryCombination<E1, S1, T1, E2, S2, T2, F1, F2>
-        : IFactory<Tuple<E1, E2>, Tuple<S1, S2>, Tuple<T1, T2>>
+        : IFactory<IPair<E1, E2>, IPair<S1, S2>, IPair<T1, T2>>
 		where F1 : IFactory<E1, S1, T1>
 		where F2 : IFactory<E2, S2, T2>
 	{

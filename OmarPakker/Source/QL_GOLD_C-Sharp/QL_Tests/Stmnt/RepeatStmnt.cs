@@ -3,9 +3,9 @@ using QL_Tests.Expr;
 
 namespace QL_Tests.Stmnt
 {
-    public class LoopStmnt : LoopStmnt<ITestExpr, ITestStmnt>, ITestStmnt
+    public class RepeatStmnt : RepeatStmnt<ITestExpr, ITestStmnt>, ITestStmnt
     {
-        public LoopStmnt(ITestExpr expr, ITestStmnt body)
+        public RepeatStmnt(ITestExpr expr, ITestStmnt body)
             : base(expr, body)
         {
 
@@ -13,12 +13,12 @@ namespace QL_Tests.Stmnt
 
         public override bool Equals(object obj)
         {
-            if (!(obj is LoopStmnt))
+            if (!(obj is RepeatStmnt))
             {
                 return false;
             }
 
-            LoopStmnt other = (LoopStmnt)obj;
+            RepeatStmnt other = (RepeatStmnt)obj;
             return Expression.Equals(other.Expression)
                 && Body.Equals(other.Body);
         }

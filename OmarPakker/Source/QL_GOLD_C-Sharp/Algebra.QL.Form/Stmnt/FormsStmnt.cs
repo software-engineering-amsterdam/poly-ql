@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using Algebra.QL.Core.Stmnt;
+using Algebra.QL.Form.Helpers;
 
 namespace Algebra.QL.Form.Stmnt
 {
@@ -12,7 +13,7 @@ namespace Algebra.QL.Form.Stmnt
 
         }
 
-        public FrameworkElement BuildForm()
+        public FrameworkElement BuildForm(VarEnvironment env)
         {
             Style s = new Style();
             s.Setters.Add(new Setter(UIElement.VisibilityProperty, Visibility.Collapsed));
@@ -22,21 +23,10 @@ namespace Algebra.QL.Form.Stmnt
             t.Margin = new Thickness(0);
             t.Padding = new Thickness(0);
             t.BorderThickness = new Thickness(0);
-            t.Items.Add(Statement1.BuildForm());
-            t.Items.Add(Statement2.BuildForm());
+            t.Items.Add(Statement1.BuildForm(env));
+            t.Items.Add(Statement2.BuildForm(env));
 
             return t;
-        }
-
-        public IFormStmnt Clone()
-        {
-            return new FormsStmnt(Statement1.Clone(), Statement2.Clone());
-        }
-
-        public void Dispose()
-        {
-            Statement1.Dispose();
-            Statement2.Dispose();
         }
     }
 }

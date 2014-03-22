@@ -205,9 +205,19 @@ namespace Algebra.QL.Print.Factory
             return new PowerExpr(l, r);
         }
 
-        public IPrintStmnt Loop(IPrintExpr e, IPrintStmnt s)
+        public IPrintStmnt Repeat(IPrintExpr e, IPrintStmnt s)
         {
-            return new LoopStmnt(e, s);
+            return new RepeatStmnt(e, s);
         }
-	}
+
+        public IPrintExpr Sum(string s)
+        {
+            return new SumExpr(s);
+        }
+
+        public IPrintExpr Average(string s)
+        {
+            return new AvgExpr(s);
+        }
+    }
 }

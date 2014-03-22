@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using Algebra.QL.Form.Helpers;
 
 namespace Algebra.QL.Form.Stmnt
 {
@@ -11,11 +12,11 @@ namespace Algebra.QL.Form.Stmnt
 
 		}
 
-        public FrameworkElement BuildForm()
+        public FrameworkElement BuildForm(VarEnvironment env)
         {
             Button b = new Button() { Width = 200, Content = "Next" };
 
-            RoutedEventHandler onClick = (s, e) =>
+            b.Click += (s, e) =>
             {
                 for (FrameworkElement fe = (FrameworkElement)b.Parent; fe != null; fe = (FrameworkElement)fe.Parent)
                 {
@@ -26,20 +27,8 @@ namespace Algebra.QL.Form.Stmnt
                     }
                 }
             };
-            b.Loaded += (s, e) => b.Click += onClick;
-            b.Unloaded += (s, e) => b.Click -= onClick;
 
             return b;
-        }
-
-        public IFormStmnt Clone()
-        {
-            return new GotoStmnt();
-        }
-
-        public void Dispose()
-        {
-
         }
     }
 }

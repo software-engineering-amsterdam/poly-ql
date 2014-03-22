@@ -16,6 +16,6 @@ namespace Algebra.QL.TypeCheck.Expr
 
         }
 
-        public abstract ITypeCheckType TypeCheck(TypeEnvironment env, ErrorReporter errRep);
+        public abstract ITypeCheckType TypeCheck(TypeEnvironment env);
     }
 }

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using Algebra.QL.Extensions.Factory;
 using Algebra.QL.Form.Expr;
 using Algebra.QL.Form.Expr.Literals;
@@ -11,11 +9,9 @@ namespace Algebra.QL.Form.Factory
 {
     public class FormFactory : IExtFactory<IFormExpr, IFormStmnt, IFormType>
     {
-        private IDictionary<string, ObservableCollection<IFormExpr>> variables;
-
         public FormFactory()
         {
-            variables = new Dictionary<string, ObservableCollection<IFormExpr>>();
+            
         }
 
         public IFormType DateType()
@@ -70,7 +66,7 @@ namespace Algebra.QL.Form.Factory
 
         public IFormExpr Variable(string var)
         {
-            return new VarExpr(var, variables);
+            return new VarExpr(var);
         }
 
         public IFormExpr Or(IFormExpr l, IFormExpr r)
@@ -145,12 +141,12 @@ namespace Algebra.QL.Form.Factory
 
         public IFormExpr VarDecl(string var, IFormType t)
         {
-            return VarAssign(var, t, t.DefaultValue);
+            return new VarInitExpr(var, t);
         }
 
         public IFormExpr VarAssign(string var, IFormType t, IFormExpr e)
         {
-            return new VarInitExpr(var, t, e, variables);
+            return new VarInitCompExpr(var, t, e);
         }
 
         public IFormExpr IfElse(IFormExpr toEval, IFormExpr ifTrue, IFormExpr ifFalse)
@@ -170,7 +166,6 @@ namespace Algebra.QL.Form.Factory
 
         public IFormStmnt Form(string var, IFormStmnt s)
         {
-            variables = new Dictionary<string, ObservableCollection<IFormExpr>>();
             return new FormStmnt(var, s);
         }
 
@@ -210,9 +205,19 @@ namespace Algebra.QL.Form.Factory
             return new PowerExpr(l, r);
         }
 
-        public IFormStmnt Loop(IFormExpr e, IFormStmnt s)
+        public IFormStmnt Repeat(IFormExpr e, IFormStmnt s)
         {
-            return new LoopStmnt(e, s);
+            return new RepeatStmnt(e, s);
         }
-	}
+
+        public IFormExpr Sum(string s)
+        {
+            return new SumExpr(s);
+        }
+
+        public IFormExpr Average(string s)
+        {
+            return new AvgExpr(s);
+        }
+    }
 }

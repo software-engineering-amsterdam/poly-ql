@@ -1,54 +1,69 @@
-﻿using System.Collections.Generic;
-using Algebra.QL.TypeCheck.Expr;
+﻿using System;
+using System.Diagnostics;
+using Algebra.Core.Helpers;
+using Algebra.QL.TypeCheck.Type;
 
 namespace Algebra.QL.TypeCheck.Helpers
 {
-    public class TypeEnvironment
+    public class TypeEnvironment : VarEnvironment<ITypeCheckType>
     {
-        private readonly HashSet<string> forms;
-        private readonly Dictionary<string, VarInitExpr> variables;
-        private bool gotoDeclared;
+        public event Action<VarAccessEventArgs> VarAccess;
 
-        public TypeEnvironment()
+        private readonly ErrorManager errorManager;
+
+        public TypeEnvironment(ErrorManager errorMngr)
+            : base()
         {
-            forms = new HashSet<string>();
-            variables = new Dictionary<string, VarInitExpr>();
+            errorManager = errorMngr;
         }
 
-        public void ResetVariables()
+        protected void OnVarAccess(VarAccessEventArgs args)
         {
-            variables.Clear();
-            gotoDeclared = false;
+            if (VarAccess != null)
+            {
+                VarAccess(args);
+            }
         }
 
-        public void DeclareForm(string name)
+        public override void Declare(string name, ITypeCheckType value)
         {
-            forms.Add(name);
+            VarAccessEventArgs eventArgs = new VarAccessEventArgs(name);
+            OnVarAccess(eventArgs);
+
+            base.Declare(eventArgs.VarName, value);
         }
 
-        public void DeclareGoto()
+        public override bool IsDeclared(string name)
         {
-            gotoDeclared = true;
+            VarAccessEventArgs eventArgs = new VarAccessEventArgs(name);
+            OnVarAccess(eventArgs);
+
+            return base.IsDeclared(eventArgs.VarName);
         }
 
-        public bool IsGotoDeclared()
+        public override ITypeCheckType GetDeclared(string name)
         {
-            return gotoDeclared;
+            VarAccessEventArgs eventArgs = new VarAccessEventArgs(name);
+            OnVarAccess(eventArgs);
+
+            return base.GetDeclared(eventArgs.VarName);
         }
 
-        public void DeclareVariable(VarInitExpr variable)
+        public override void Clear()
         {
-            variables.Add(variable.Name, variable);
+            Debug.Assert(VarAccess == null, "Some events weren't unregistered!");
+
+            base.Clear();
         }
 
-        public VarInitExpr GetVariable(string varName)
+        public void ReportError(string msg, Tuple<int, int> startPos, Tuple<int, int> endPos)
         {
-            return variables[varName];
+            errorManager.ReportError(msg, startPos, endPos);
         }
 
-        public bool IsVarDeclared(string varName)
+        public void ReportWarning(string msg, Tuple<int, int> startPos, Tuple<int, int> endPos)
         {
-            return variables.ContainsKey(varName);
+            errorManager.ReportWarning(msg, startPos, endPos);
         }
     }
 }

@@ -16,37 +16,37 @@ namespace Algebra.QL.TypeCheck.Expr
 
 		}
 
-        public ITypeCheckType TypeCheck(TypeEnvironment env, ErrorReporter errRep)
+        public ITypeCheckType TypeCheck(TypeEnvironment env)
         {
-            if (env.IsVarDeclared(Name))
+            if (env.IsDeclared(Name))
 			{
-                ITypeCheckType varType = env.GetVariable(Name).Type;
+                ITypeCheckType varType = env.GetDeclared(Name);
                 if (!varType.Equals(Type))
 				{
-                    errRep.ReportError(this, String.Format("Variable '{0}' is already defined as '{1}'. Redefining as '{2}'. You cannot redefine variables.",
-                        Name, varType, Type));
+                    env.ReportError(String.Format("Variable '{0}' is already defined as '{1}'. Redefining as '{2}'. You cannot redefine variables.",
+                        Name, varType, Type), SourceStartPosition, SourceEndPosition);
 				}
 				else
 				{
-                    errRep.ReportWarning(this, String.Format("Re-using variable '{0}'. Are you sure you want to re-use this variable?",
-						Name));
+                    env.ReportWarning(String.Format("Re-using variable '{0}'. Are you sure you want to re-use this variable?",
+						Name), SourceStartPosition, SourceEndPosition);
 				}
 			}
 			else
 			{
-				env.DeclareVariable(this);
+				env.Declare(Name, Type);
 			}
 
-			ITypeCheckType a = Value.TypeCheck(env, errRep);
+			ITypeCheckType a = Value.TypeCheck(env);
 			if (!Type.CompatibleWith(a))
 			{
-                errRep.ReportError(this, String.Format("Can't assign value of {0} to variable of type {1}.",
-					a, Type));
+                env.ReportError(String.Format("Can't assign value of {0} to variable of type {1}.",
+					a, Type), SourceStartPosition, SourceEndPosition);
 			}
 			else if (!Type.GetLeastUpperBound(a).Equals(Type))
 			{
-                errRep.ReportWarning(this, String.Format("Assigning value of type {0} to a variable of type {1}. You may lose some information.",
-					a, Type));
+                env.ReportWarning(String.Format("Assigning value of type {0} to a variable of type {1}. You may lose some information.",
+					a, Type), SourceStartPosition, SourceEndPosition);
 			}
 
 			return Type;

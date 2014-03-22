@@ -6,20 +6,10 @@ namespace Algebra.QL.Form.Expr.Literals
     {
         public override IFormType Type { get { return new BoolType(); } }
 
-        public override object ExpressionValue
-        {
-            set { base.ExpressionValue = System.Convert.ToBoolean(value); }
-        }
-
         public BoolLiteral(bool value)
             : base(value)
         {
 
-        }
-
-        public override IFormExpr Clone()
-        {
-            return new BoolLiteral(Value);
         }
     }
 }

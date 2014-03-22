@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using Algebra.QL.Core.Stmnt;
 using Algebra.QL.Form.Expr;
+using Algebra.QL.Form.Helpers;
 
 namespace Algebra.QL.Form.Stmnt
 {
@@ -13,24 +14,14 @@ namespace Algebra.QL.Form.Stmnt
 
         }
 
-        public FrameworkElement BuildForm()
+        public FrameworkElement BuildForm(VarEnvironment env)
         {
             StackPanel sp = new StackPanel();
             sp.Orientation = Orientation.Horizontal;
             sp.Children.Add(new Label() { Width = 200, Content = Text });
-            sp.Children.Add(Expression.ExpressionType.BuildElement(Expression, false));
+            sp.Children.Add(Expression.BuildForm(env).BuildElement(env, false));
 
             return sp;
-        }
-
-        public IFormStmnt Clone()
-        {
-            return new LabelStmnt(Text, Expression.Clone());
-        }
-
-        public void Dispose()
-        {
-            Expression.Dispose();
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Algebra.QL.Form.Expr;
 using Algebra.QL.Form.Expr.Literals;
+using Algebra.QL.Form.Helpers;
 
 namespace Algebra.QL.Form.Type
 {
@@ -16,22 +17,32 @@ namespace Algebra.QL.Form.Type
 
 		}
 
-        public override FrameworkElement BuildElement(IFormExpr value, bool editable)
+        public override FrameworkElement BuildElement(VarEnvironment env, bool editable)
         {
             TextBox tb = new TextBox() { Width = 200, IsEnabled = editable };
             tb.TextChanged += (s, e) =>
             {
-                value.ExpressionValue = tb.Text;
+                Value.SetValue(env, tb.Text);
             };
 
             Action onValueChanged = () =>
             {
-                tb.Text = Convert.ToString(value.ExpressionValue);
+                tb.Text = Convert.ToString(Value.Eval(env));
             };
             onValueChanged();
 
-            tb.Loaded += (s, e) => value.ValueChanged += onValueChanged;
-            tb.Unloaded += (s, e) => value.ValueChanged -= onValueChanged;
+            string lastValue = Convert.ToString(Value.Eval(env));
+            tb.Loaded += (s, e) =>
+            {
+                Value.ValueChanged += onValueChanged;
+                tb.Text = lastValue;
+            };
+            tb.Unloaded += (s, e) =>
+            {
+                Value.ValueChanged -= onValueChanged;
+                lastValue = Convert.ToString(Value.Eval(env));
+                tb.Text = String.Empty;
+            };
 
             return tb;
         }

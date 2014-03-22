@@ -1,5 +1,6 @@
 ﻿using System;
 using Algebra.Core.Expr;
+using Algebra.QL.Form.Helpers;
 using Algebra.QL.Form.Type;
 
 namespace Algebra.QL.Form.Expr
@@ -12,30 +13,30 @@ namespace Algebra.QL.Form.Expr
             remove { Expr1.ValueChanged -= value; Expr2.ValueChanged -= value; Expr3.ValueChanged -= value; }
         }
 
-        public object ExpressionValue
-        {
-            get { return (bool)Expr1.ExpressionValue ? Expr2.ExpressionValue : Expr3.ExpressionValue; }
-            set { }
-        }
-
-        public IFormType ExpressionType { get { return Expr2.ExpressionType.GetLeastUpperBound(Expr3.ExpressionType); } }
-
         public IfElseExpr(IFormExpr a, IFormExpr b, IFormExpr c)
             : base(a, b, c)
         {
             
         }
 
-        public IFormExpr Clone()
+        public void SetValue(VarEnvironment env, object value)
         {
-            return new IfElseExpr(Expr1.Clone(), Expr2.Clone(), Expr3.Clone());
+
         }
 
-        public void Dispose()
+        public object Eval(VarEnvironment env)
         {
-            Expr1.Dispose();
-            Expr2.Dispose();
-            Expr3.Dispose();
+            return Convert.ToBoolean(Expr1.Eval(env)) ? Expr2.Eval(env) : Expr3.Eval(env);
+        }
+
+        public IFormType BuildForm(VarEnvironment env)
+        {
+            IFormType a = Expr2.BuildForm(env);
+            IFormType b = Expr3.BuildForm(env);
+            IFormType type = a.GetLeastUpperBound(b);
+            type.SetValue(this);
+
+            return type;
         }
     }
 }

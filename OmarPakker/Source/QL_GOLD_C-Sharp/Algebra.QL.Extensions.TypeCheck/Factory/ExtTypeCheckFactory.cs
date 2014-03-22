@@ -48,9 +48,19 @@ namespace Algebra.QL.Extensions.TypeCheck.Factory
             return new GotoStmnt();
         }
 
-		public ITypeCheckStmnt Loop(ITypeCheckExpr e, ITypeCheckStmnt s)
+		public ITypeCheckStmnt Repeat(ITypeCheckExpr e, ITypeCheckStmnt s)
 		{
-			return new LoopStmnt(e, s);
+			return new RepeatStmnt(e, s);
 		}
-	}
+
+        public ITypeCheckExpr Sum(string s)
+        {
+            return new SumExpr(s);
+        }
+
+        public ITypeCheckExpr Average(string s)
+        {
+            return new AvgExpr(s);
+        }
+    }
 }

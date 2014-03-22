@@ -17,22 +17,22 @@ namespace Algebra.QL.TypeCheck.Expr
 
         }
 
-        public ITypeCheckType TypeCheck(TypeEnvironment env, ErrorReporter errRep)
+        public ITypeCheckType TypeCheck(TypeEnvironment env)
         {
-            ITypeCheckType a = Expr1.TypeCheck(env, errRep);
-			ITypeCheckType b = Expr2.TypeCheck(env, errRep);
-			ITypeCheckType c = Expr3.TypeCheck(env, errRep);
+            ITypeCheckType a = Expr1.TypeCheck(env);
+			ITypeCheckType b = Expr2.TypeCheck(env);
+			ITypeCheckType c = Expr3.TypeCheck(env);
 
 			if (!a.CompatibleWith(ExpressionUpperBound))
 			{
-				errRep.ReportError(this, String.Format("Inline 'if/else' evaluation failed. Incompatible type: '{0}'. Only the bool type is supported.",
-					a));
+				env.ReportError(String.Format("Inline 'if/else' evaluation failed. Incompatible type: '{0}'. Only the bool type is supported.",
+                    a), SourceStartPosition, SourceEndPosition);
 			}
 
 			if (!b.CompatibleWith(c))
 			{
-				errRep.ReportError(this, String.Format("Inline 'if/else' return value conflict. Incompatible types: '{0}', '{1}'. Only similar types can be used in the true/false bodies.",
-					b, c));
+				env.ReportError(String.Format("Inline 'if/else' return value conflict. Incompatible types: '{0}', '{1}'. Only similar types can be used in the true/false bodies.",
+                    b, c), SourceStartPosition, SourceEndPosition);
 			}
 
 			return b.GetLeastUpperBound(c);

@@ -56,7 +56,7 @@ Comment End   = '*/'
                |  <Block>
                |  <Question>
                |  gotoNextForm ';'
-               |  loop '(' <Expression> ')' <Statement>
+               |  repeat '(' <Expression> ')' <Statement>
 
 ! GOLD parser will choose 'shift' over 'reduce' for this,
 ! which we want since we want the 'else' to associate with
@@ -73,6 +73,8 @@ Comment End   = '*/'
 			   |  StringLit '<<' <Expression> ';'
 
 <Expression>  ::= <OrExpr> '?' <OrExpr> ':' <Expression>
+               |  sum '(' Identifier ')'
+			   |  avg '(' Identifier ')'
                |  <OrExpr>
 
 <OrExpr>      ::= <OrExpr> '||' <AndExpr>

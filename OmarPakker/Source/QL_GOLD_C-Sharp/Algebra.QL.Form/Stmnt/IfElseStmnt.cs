@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Algebra.QL.Core.Stmnt;
 using Algebra.QL.Form.Expr;
+using Algebra.QL.Form.Helpers;
 
 namespace Algebra.QL.Form.Stmnt
 {
@@ -14,17 +15,17 @@ namespace Algebra.QL.Form.Stmnt
 
 		}
 
-        public FrameworkElement BuildForm()
+        public FrameworkElement BuildForm(VarEnvironment env)
         {
-            FrameworkElement trueElem = IfTrueBody.BuildForm();
-            FrameworkElement falseElem = IfFalseBody.BuildForm();
+            FrameworkElement trueElem = IfTrueBody.BuildForm(env);
+            FrameworkElement falseElem = IfFalseBody.BuildForm(env);
             StackPanel sp = new StackPanel();
             sp.Children.Add(trueElem);
             sp.Children.Add(falseElem);
 
             Action onValueChanged = () =>
             {
-                bool value = (bool)CheckExpression.ExpressionValue;
+                bool value = Convert.ToBoolean(CheckExpression.Eval(env));
                 trueElem.Visibility = value ? Visibility.Visible : Visibility.Collapsed;
                 falseElem.Visibility = !value ? Visibility.Visible : Visibility.Collapsed;
             };
@@ -34,18 +35,6 @@ namespace Algebra.QL.Form.Stmnt
             sp.Unloaded += (s, e) => CheckExpression.ValueChanged -= onValueChanged;
 
             return sp;
-        }
-
-        public IFormStmnt Clone()
-        {
-            return new IfElseStmnt(CheckExpression.Clone(), IfTrueBody.Clone(), IfFalseBody.Clone());
-        }
-
-        public void Dispose()
-        {
-            CheckExpression.Dispose();
-            IfTrueBody.Dispose();
-            IfFalseBody.Dispose();
         }
 	}
 }

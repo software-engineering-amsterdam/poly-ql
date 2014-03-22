@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Algebra.QL.Core.Stmnt;
 using Algebra.QL.Form.Expr;
+using Algebra.QL.Form.Helpers;
 
 namespace Algebra.QL.Form.Stmnt
 {
@@ -14,14 +15,14 @@ namespace Algebra.QL.Form.Stmnt
 
 		}
 
-        public FrameworkElement BuildForm()
+        public FrameworkElement BuildForm(VarEnvironment env)
         {
             StackPanel sp = new StackPanel();
-            sp.Children.Add(IfTrueBody.BuildForm());
+            sp.Children.Add(IfTrueBody.BuildForm(env));
 
             Action onValueChanged = () =>
             {
-                sp.Visibility = (bool)CheckExpression.ExpressionValue ? Visibility.Visible : Visibility.Collapsed;
+                sp.Visibility = Convert.ToBoolean(CheckExpression.Eval(env)) ? Visibility.Visible : Visibility.Collapsed;
             };
             onValueChanged();
 
@@ -29,17 +30,6 @@ namespace Algebra.QL.Form.Stmnt
             sp.Unloaded += (s, e) => CheckExpression.ValueChanged -= onValueChanged;
 
             return sp;
-        }
-
-        public IFormStmnt Clone()
-        {
-            return new IfStmnt(CheckExpression.Clone(), IfTrueBody.Clone());
-        }
-
-        public void Dispose()
-        {
-            CheckExpression.Dispose();
-            IfTrueBody.Dispose();
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Algebra.QL.TypeCheck.Expr.Literals
 
 		}
 
-        public ITypeCheckType TypeCheck(TypeEnvironment env, ErrorReporter errRep)
+        public ITypeCheckType TypeCheck(TypeEnvironment env)
         {
             return Type;
         }

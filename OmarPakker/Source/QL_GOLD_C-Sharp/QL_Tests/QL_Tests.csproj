@@ -49,7 +49,9 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Expr\AvgExpr.cs" />
     <Compile Include="Expr\BinaryExpr.cs" />
+    <Compile Include="Expr\SumExpr.cs" />
     <Compile Include="Expr\TernaryExpr.cs" />
     <Compile Include="Expr\ITestExpr.cs" />
     <Compile Include="Expr\LiteralExpr.cs" />
@@ -63,7 +65,7 @@
     <Compile Include="Stmnt\IfElseStmnt.cs" />
     <Compile Include="Stmnt\IfStmnt.cs" />
     <Compile Include="Stmnt\ITestStmnt.cs" />
-    <Compile Include="Stmnt\LoopStmnt.cs" />
+    <Compile Include="Stmnt\RepeatStmnt.cs" />
     <Compile Include="Stmnt\TextExprStmnt.cs" />
     <Compile Include="Tests\ParseExtensionsTests.cs" />
     <Compile Include="Tests\ParseTests.cs" />

@@ -10,10 +10,12 @@ namespace Algebra.QL.Extensions.Factory
 
         E Modulo(E l, E r);
         E Power(E l, E r);
+        E Sum(string s);
+        E Average(string s);
 
         S Forms(S l, S r);
 
         S Goto();
-		S Loop(E e, S s);
+		S Repeat(E e, S s);
     }
 }

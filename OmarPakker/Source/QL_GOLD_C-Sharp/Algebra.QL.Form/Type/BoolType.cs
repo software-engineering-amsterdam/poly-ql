@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Algebra.QL.Form.Expr;
 using Algebra.QL.Form.Expr.Literals;
+using Algebra.QL.Form.Helpers;
 
 namespace Algebra.QL.Form.Type
 {
@@ -16,26 +17,36 @@ namespace Algebra.QL.Form.Type
 
 		}
 
-        public override FrameworkElement BuildElement(IFormExpr value, bool editable)
+        public override FrameworkElement BuildElement(VarEnvironment env, bool editable)
         {
             CheckBox cb = new CheckBox() { IsEnabled = editable };
             cb.Checked += (s, e) =>
             {
-                value.ExpressionValue = true;
+                Value.SetValue(env, true);
             };
             cb.Unchecked += (s, e) =>
             {
-                value.ExpressionValue = false;
+                Value.SetValue(env, false);
             };
 
             Action onValueChanged = () =>
             {
-                cb.IsChecked = Convert.ToBoolean(value.ExpressionValue);
+                cb.IsChecked = Convert.ToBoolean(Value.Eval(env));
             };
             onValueChanged();
 
-            cb.Loaded += (s, e) => value.ValueChanged += onValueChanged;
-            cb.Unloaded += (s, e) => value.ValueChanged -= onValueChanged;
+            bool lastValue = cb.IsChecked.Value;
+            cb.Loaded += (s, e) =>
+            {
+                Value.ValueChanged += onValueChanged;
+                cb.IsChecked = lastValue;
+            };
+            cb.Unloaded += (s, e) =>
+            {
+                Value.ValueChanged -= onValueChanged;
+                lastValue = Convert.ToBoolean(Value.Eval(env));
+                cb.IsChecked = false;
+            };
 
             return cb;
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using Algebra.QL.Core.Expr;
+using Algebra.QL.Form.Helpers;
 using Algebra.QL.Form.Type;
 
 namespace Algebra.QL.Form.Expr.Literals
@@ -7,19 +8,6 @@ namespace Algebra.QL.Form.Expr.Literals
     public abstract class LiteralExpr<V> : LiteralExpr<IFormType, V>, IFormExpr
     {
         public event Action ValueChanged;
-        public virtual object ExpressionValue
-        {
-            get { return Value; }
-            set
-            {
-                Value = (V)value;
-                if (ValueChanged != null)
-                {
-                    ValueChanged();
-                }
-            }
-        }
-        public IFormType ExpressionType { get { return Type; } }
 
         protected LiteralExpr(V value)
             : base(value)
@@ -27,11 +15,26 @@ namespace Algebra.QL.Form.Expr.Literals
 
         }
 
-        public abstract IFormExpr Clone();
-
-        public void Dispose()
+        public void SetValue(VarEnvironment env, object value)
         {
-            ExpressionValue = default(V);
+            Value = (V)value;
+            if (ValueChanged != null)
+            {
+                ValueChanged();
+            }
+        }
+
+        public object Eval(VarEnvironment env)
+        {
+            return Value;
+        }
+
+        public IFormType BuildForm(VarEnvironment env)
+        {
+            IFormType type = Type;
+            type.SetValue(this);
+
+            return type;
         }
     }
 }

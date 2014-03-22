@@ -2,6 +2,7 @@
 using System.Windows;
 using Algebra.QL.Form.Expr;
 using Algebra.QL.Form.Expr.Literals;
+using Algebra.QL.Form.Helpers;
 using Xceed.Wpf.Toolkit;
 
 namespace Algebra.QL.Form.Type
@@ -16,22 +17,32 @@ namespace Algebra.QL.Form.Type
 
 		}
 
-        public override FrameworkElement BuildElement(IFormExpr value, bool editable)
+        public override FrameworkElement BuildElement(VarEnvironment env, bool editable)
         {
             IntegerUpDown iud = new IntegerUpDown() { Width = 200, IsEnabled = editable };
             iud.ValueChanged += (s, e) =>
             {
-                value.ExpressionValue = iud.Value;
+                Value.SetValue(env, iud.Value);
             };
             
             Action onValueChanged = () =>
             {
-                iud.Value = Convert.ToInt32(value.ExpressionValue);
+                iud.Value = Convert.ToInt32(Value.Eval(env));
             };
             onValueChanged();
 
-            iud.Loaded += (s, e) => value.ValueChanged += onValueChanged;
-            iud.Unloaded += (s, e) => value.ValueChanged -= onValueChanged;
+            int lastValue = Convert.ToInt32(Value.Eval(env));
+            iud.Loaded += (s, e) =>
+            {
+                Value.ValueChanged += onValueChanged;
+                iud.Value = lastValue;
+            };
+            iud.Unloaded += (s, e) =>
+            {
+                Value.ValueChanged -= onValueChanged;
+                lastValue = Convert.ToInt32(Value.Eval(env));
+                iud.Value = 0;
+            };
 
             return iud;
         }

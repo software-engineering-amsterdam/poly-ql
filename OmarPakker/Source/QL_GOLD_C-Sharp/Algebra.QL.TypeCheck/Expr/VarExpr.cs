@@ -15,17 +15,17 @@ namespace Algebra.QL.TypeCheck.Expr
 
 		}
 
-        public ITypeCheckType TypeCheck(TypeEnvironment env, ErrorReporter errRep)
+        public ITypeCheckType TypeCheck(TypeEnvironment env)
         {
-            if (!env.IsVarDeclared(Name))
+            if (!env.IsDeclared(Name))
             {
-                errRep.ReportError(this, String.Format("Undefined variable '{0}' used. Make sure the variable is defined.",
-                    Name));
+                env.ReportError(String.Format("Undefined variable '{0}' used. Make sure the variable is defined.",
+                    Name), SourceStartPosition, SourceEndPosition);
 
                 return new UnknownType();
             }
 
-            return env.GetVariable(Name).Type;
+            return env.GetDeclared(Name);
         }
     }
 }

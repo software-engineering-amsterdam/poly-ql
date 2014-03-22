@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
+using Algebra.QL.Form.Helpers;
 using Algebra.QL.Form.Type;
 
 namespace Algebra.QL.Form.Expr
@@ -10,41 +8,11 @@ namespace Algebra.QL.Form.Expr
 	{
         public event Action ValueChanged;
         
-        public object ExpressionValue
-        {
-            get { return realVariable.ExpressionValue; }
-            set { realVariable.ExpressionValue = value; }
-        }
-
-        public IFormType ExpressionType { get { return realVariable.ExpressionType; } }
-
-        private int myIndex;
-        private IFormExpr realVariable;
-        private readonly IDictionary<string, ObservableCollection<IFormExpr>> variables;
-
-        public VarExpr(string name, IDictionary<string, ObservableCollection<IFormExpr>> vars)
+        public VarExpr(string name)
 			: base(name)
 		{
-            myIndex = vars[Name].Count - 1;
-            realVariable = vars[Name][myIndex];
 
-            vars[Name].CollectionChanged += VarExpr_CollectionChanged;
-
-            variables = vars;
-
-            realVariable.ValueChanged += OnValueChanged;
 		}
-
-        private void VarExpr_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            if (e.OldStartingIndex == myIndex && e.NewStartingIndex >= 0)
-            {
-                myIndex = e.NewStartingIndex;
-                realVariable = ((ObservableCollection<IFormExpr>)sender)[myIndex];
-                realVariable.ValueChanged += OnValueChanged;
-                OnValueChanged();
-            }
-        }
 
         private void OnValueChanged()
         {
@@ -54,16 +22,34 @@ namespace Algebra.QL.Form.Expr
             }
         }
 
-        public IFormExpr Clone()
+        public void SetValue(VarEnvironment env, object value)
         {
-            return new VarExpr(Name, variables);
+            IFormExpr variable = env.GetDeclared(Name);
+
+            //TODO: Event removal
+            variable.ValueChanged -= OnValueChanged;
+            variable.ValueChanged += OnValueChanged;
+            
+            variable.SetValue(env, value);
         }
 
-        public void Dispose()
+        public object Eval(VarEnvironment env)
         {
-            myIndex = 0;
-            variables[Name].CollectionChanged -= VarExpr_CollectionChanged;
-            realVariable.ValueChanged -= OnValueChanged;
+            IFormExpr variable = env.GetDeclared(Name);
+
+            //TODO: Event removal
+            variable.ValueChanged -= OnValueChanged;
+            variable.ValueChanged += OnValueChanged;
+
+            return variable.Eval(env);
+        }
+
+        public IFormType BuildForm(VarEnvironment env)
+        {
+            IFormType type = env.GetDeclared(Name).BuildForm(env);
+            type.SetValue(this);
+
+            return type;
         }
     }
 }

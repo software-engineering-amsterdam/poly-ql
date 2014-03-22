@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Windows;
 using Algebra.QL.Form.Expr;
+using Algebra.QL.Form.Helpers;
 
 namespace Algebra.QL.Form.Type
 {
@@ -9,12 +10,19 @@ namespace Algebra.QL.Form.Type
         public virtual IFormExpr DefaultValue { get { return null; } }
         public virtual IFormType SuperType { get { return null; } }
 
-		public BaseType()
+        protected IFormExpr Value { get; private set; }
+
+		internal BaseType()
 		{
 
 		}
 
-        public virtual FrameworkElement BuildElement(IFormExpr value, bool editable)
+        public void SetValue(IFormExpr value)
+        {
+            Value = value;
+        }
+
+        public virtual FrameworkElement BuildElement(VarEnvironment env, bool editable)
         {
             return null;
         }

@@ -5,12 +5,15 @@ using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
 using Algebra.Core.GrammarParser;
+using Algebra.Core.Helpers;
 using Algebra.QL.Core.Grammar;
 using Algebra.QL.Extensions.Factory;
 using Algebra.QL.Extensions.Grammar;
+using Algebra.QL.Form;
 using Algebra.QL.Form.Expr;
 using Algebra.QL.Form.Stmnt;
 using Algebra.QL.Form.Type;
+using Algebra.QL.Print;
 using Algebra.QL.Print.Expr;
 using Algebra.QL.Print.Stmnt;
 using Algebra.QL.Print.Type;
@@ -41,9 +44,9 @@ namespace WPFParser
             //Parser = GetExtendedParser<Tuple<ITypeCheckExpr, IPrintExpr>, Tuple<ITypeCheckStmnt, IPrintStmnt>,
             //    Tuple<ITypeCheckType, IPrintType>, TypeCheckPrintFactory>(new TypeCheckPrintFactory());
 
-            Parser = GetExtendedParser<Tuple<Tuple<ITypeCheckExpr, IPrintExpr>, IFormExpr>,
-                Tuple<Tuple<ITypeCheckStmnt, IPrintStmnt>, IFormStmnt>,
-                Tuple<Tuple<ITypeCheckType, IPrintType>, IFormType>,
+            Parser = GetExtendedParser<IPair<IPair<ITypeCheckExpr, IPrintExpr>, IFormExpr>,
+                IPair<IPair<ITypeCheckStmnt, IPrintStmnt>, IFormStmnt>,
+                IPair<IPair<ITypeCheckType, IPrintType>, IFormType>,
                 TypeCheckPrintFormFactory>(new TypeCheckPrintFormFactory());
 
             Parser.OnReduction += OnReduction;
@@ -89,7 +92,7 @@ namespace WPFParser
             Parser.Parse(code);
         }
 
-        private void PrintError(Tuple<int, int> sourceStartPos, Tuple<int, int> sourceEndPos, string msg, bool error)
+        private void PrintMsg(Tuple<int, int> sourceStartPos, Tuple<int, int> sourceEndPos, string msg, Color color)
         {
             TextPointer docStart = customCodeBlock.Document.ContentStart.GetLineStartPosition(0);
 
@@ -106,16 +109,16 @@ namespace WPFParser
             }
 
             TextRange range = new TextRange(start, end);
-            range.ApplyPropertyValue(TextElement.BackgroundProperty, new SolidColorBrush(error ? Colors.Red : Colors.Yellow));
+            range.ApplyPropertyValue(TextElement.BackgroundProperty, new SolidColorBrush(color));
 
-            PrintError(msg, error);
+            PrintMsg(msg, color);
         }
 
-        private void PrintError(string msg, bool error)
+        private void PrintMsg(string msg, Color color)
         {
             errorOutputBlock.Document.Blocks.Add(new Paragraph(new Run(msg)
             {
-                Foreground = new SolidColorBrush(error ? Colors.Red : Colors.Yellow)
+                Foreground = new SolidColorBrush(color)
             }));
         }
 
@@ -127,29 +130,13 @@ namespace WPFParser
             {
                 typeCheckObj = (ITypeCheck)newObj;
             }
-            else if (newObj is Tuple<ITypeCheckType, IPrintType>)
+            else if (newObj is IPair<ITypeCheck, IPrint>)
             {
-                typeCheckObj = ((Tuple<ITypeCheckType, IPrintType>)newObj).Item1;
+                typeCheckObj = ((IPair<ITypeCheck, IPrint>)newObj).Item1;
             }
-            else if (newObj is Tuple<ITypeCheckExpr, IPrintExpr>)
+            if (newObj is IPair<IPair<ITypeCheck, IPrint>, IForm>)
             {
-                typeCheckObj = ((Tuple<ITypeCheckExpr, IPrintExpr>)newObj).Item1;
-            }
-            else if (newObj is Tuple<ITypeCheckStmnt, IPrintStmnt>)
-            {
-                typeCheckObj = ((Tuple<ITypeCheckStmnt, IPrintStmnt>)newObj).Item1;
-            }
-            else if (newObj is Tuple<Tuple<ITypeCheckType, IPrintType>, IFormType>)
-            {
-                typeCheckObj = ((Tuple<Tuple<ITypeCheckType, IPrintType>, IFormType>)newObj).Item1.Item1;
-            }
-            else if (newObj is Tuple<Tuple<ITypeCheckExpr, IPrintExpr>, IFormExpr>)
-            {
-                typeCheckObj = ((Tuple<Tuple<ITypeCheckExpr, IPrintExpr>, IFormExpr>)newObj).Item1.Item1;
-            }
-            else if (newObj is Tuple<Tuple<ITypeCheckStmnt, IPrintStmnt>, IFormStmnt>)
-            {
-                typeCheckObj = ((Tuple<Tuple<ITypeCheckStmnt, IPrintStmnt>, IFormStmnt>)newObj).Item1.Item1;
+                typeCheckObj = ((IPair<IPair<ITypeCheck, IPrint>, IForm>)newObj).Item1.Item1;
             }
 
             if (typeCheckObj != null)
@@ -161,36 +148,37 @@ namespace WPFParser
 
         private void OnCompletion(object root)
         {
-            ErrorReporter errRep = new ErrorReporter();
-            errRep.OnTypeCheckError += PrintError;
+            ErrorManager errMngr = new ErrorManager();
+            errMngr.OnError += (msg, sPos, ePos) => PrintMsg(sPos, ePos, msg, Colors.Red);
+            errMngr.OnWarning += (msg, sPos, ePos) => PrintMsg(sPos, ePos, msg, Colors.Yellow);
 
-            TypeEnvironment env = new TypeEnvironment();
+            TypeEnvironment env = new TypeEnvironment(errMngr);
 
             if (root is ITypeCheckStmnt)
             {
-                ((ITypeCheckStmnt)root).TypeCheck(env, errRep);
+                ((ITypeCheckStmnt)root).TypeCheck(env);
             }
-            else if (root is Tuple<ITypeCheckStmnt, IPrintStmnt>)
+            else if (root is IPair<ITypeCheckStmnt, IPrintStmnt>)
             {
-                Tuple<ITypeCheckStmnt, IPrintStmnt> combItem = (Tuple<ITypeCheckStmnt, IPrintStmnt>)root;
-                combItem.Item1.TypeCheck(env, errRep);
+                IPair<ITypeCheckStmnt, IPrintStmnt> combItem = (IPair<ITypeCheckStmnt, IPrintStmnt>)root;
+                combItem.Item1.TypeCheck(env);
 
                 printOutputBlock.Document = new FlowDocument(combItem.Item2.BuildDocument());
             }
-            else if (root is Tuple<Tuple<ITypeCheckStmnt, IPrintStmnt>, IFormStmnt>)
+            else if (root is IPair<IPair<ITypeCheckStmnt, IPrintStmnt>, IFormStmnt>)
             {
-                Tuple<Tuple<ITypeCheckStmnt, IPrintStmnt>, IFormStmnt> combItem = (Tuple<Tuple<ITypeCheckStmnt, IPrintStmnt>, IFormStmnt>)root;
-                combItem.Item1.Item1.TypeCheck(env, errRep);
+                IPair<IPair<ITypeCheckStmnt, IPrintStmnt>, IFormStmnt> combItem = (IPair<IPair<ITypeCheckStmnt, IPrintStmnt>, IFormStmnt>)root;
+                combItem.Item1.Item1.TypeCheck(env);
 
                 printOutputBlock.Document = new FlowDocument(combItem.Item1.Item2.BuildDocument());
 
-                if (!errRep.HasErrors)
+                if (!errMngr.HasErrors)
                 {
-                    formContainer.Content = combItem.Item2.BuildForm();
+                    formContainer.Content = combItem.Item2.BuildForm(new Algebra.QL.Form.Helpers.VarEnvironment());
                 }
             }
 
-            if (!errRep.HasErrors)
+            if (!errMngr.HasErrors)
             {
                 tabControl.SelectedIndex = 1;
             }
@@ -198,28 +186,28 @@ namespace WPFParser
 
         private void OnGroupError()
         {
-            PrintError("ERROR: Unexpected EOF. (Group Error)", true);
+            PrintMsg("Unexpected EOF. (Group Error)", Colors.Red);
         }
 
         private void OnInternalError()
         {
-            PrintError("ERROR: INTERNAL ERROR", true);
+            PrintMsg("INTERNAL ERROR", Colors.Red);
         }
 
         private void OnNotLoadedError()
         {
-            PrintError("ERROR: Grammar file was not loaded", true);
+            PrintMsg("Grammar file was not loaded", Colors.Red);
         }
 
         private void OnLexicalError(Tuple<int, int> pos, object token)
         {
-            PrintError(String.Format("ERROR: Unknown token '{0}' found on line {1} column {2}", token, pos.Item1, pos.Item2), true);
+            PrintMsg(String.Format("Unknown token '{0}' found on line {1} column {2}", token, pos.Item1, pos.Item2), Colors.Red);
         }
 
         private void OnSyntaxError(Tuple<int, int> pos, object token, string expected)
         {
-            PrintError(String.Format("ERROR: Unexpected token '{0}' on line {1} column {2}. Expected: {3}",
-                token, pos.Item1, pos.Item2, expected), true);
+            PrintMsg(String.Format("Unexpected token '{0}' on line {1} column {2}. Expected: {3}",
+                token, pos.Item1, pos.Item2, expected), Colors.Red);
         }
 
         private void LoadBtn_Click(object sender, RoutedEventArgs e)

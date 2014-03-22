@@ -55,16 +55,26 @@ namespace Algebra.QL.Extensions.Grammar
             {
                 return factory.Goto();
             }
-			// <Statement> ::= loop '(' <Expression> ')' <Statement>
-			else if (tableIndex == Rules["Statement_Loop_Lparen_Rparen"])
+			// <Statement> ::= repeat '(' <Expression> ')' <Statement>
+			else if (tableIndex == Rules["Statement_Repeat_Lparen_Rparen"])
             {
-                return factory.Loop((E)r[2].Tag, (S)r[4].Tag);
+                return factory.Repeat((E)r[2].Tag, (S)r[4].Tag);
             }
 			//<Literal> ::= DateLit
 			else if (tableIndex == Rules["Literal_Datelit"])
 			{
 				return factory.Date(DateTime.Parse((string)r[0].Tag, CultureInfo.InvariantCulture));
 			}
+            //<Expression> ::= sum '(' Identifier ')'
+            if (tableIndex == Rules["Expression_Sum_Lparen_Identifier_Rparen"])
+            {
+                return factory.Sum((string)r[2].Tag);
+            }
+            //<Expression> ::= avg '(' Identifier ')'
+            if (tableIndex == Rules["Expression_Avg_Lparen_Identifier_Rparen"])
+            {
+                return factory.Average((string)r[2].Tag);
+            }
 
             return base.CreateObjectFor(r);
         }

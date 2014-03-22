@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
 using Algebra.Core.Expr;
+using Algebra.QL.Form.Helpers;
 using Algebra.QL.Form.Type;
 
 namespace Algebra.QL.Form.Expr
@@ -15,73 +13,60 @@ namespace Algebra.QL.Form.Expr
             remove { Value.ValueChanged -= value; }
         }
 
-        public object ExpressionValue
-        {
-            get { return Value.ExpressionValue; }
-            set { Value.ExpressionValue = value; }
-        }
-
-        public IFormType ExpressionType { get { return Type; } }
-
-        private readonly IDictionary<string, ObservableCollection<IFormExpr>> variables;
-        private readonly int originalIndex;
-
-        private VarInitExpr(VarInitExpr copy)
-            : base(copy.Name, copy.Type, copy.Value.Clone())
-        {
-            variables = copy.variables;
-        }
-
-        public VarInitExpr(string name, IFormType type, IFormExpr value, IDictionary<string, ObservableCollection<IFormExpr>> vars)
-            : base(name, type, value)
+        public VarInitExpr(string name, IFormType type)
+            : base(name, type, type.DefaultValue)
 		{
-            if (!vars.ContainsKey(Name))
-            {
-                vars.Add(Name, new ObservableCollection<IFormExpr>());
-            }
-
-            originalIndex = vars[Name].Count;
-            vars[Name].Add(this);
-            vars[Name].Add(this);
-            variables = vars;
+            
 		}
 
-        public IFormExpr Clone()
+        public void SetValue(VarEnvironment env, object value)
         {
-            VarInitExpr newSelf = new VarInitExpr(Name, Type, Value.Clone(), variables);
-
-            bool isNumber = variables[Name][0].ExpressionType.GetLeastUpperBound(new RealType()).Equals(new RealType());
-
-            int changeIndex = originalIndex + 1;
-            variables[Name][changeIndex] = isNumber ? new AddExpr(variables[Name][changeIndex], newSelf)
-                : (IFormExpr)new AndExpr(variables[Name][changeIndex], newSelf);
-
-            variables[Name][1] = variables[Name][0];
-            for (int i = variables[Name].Count - 2; i > 0; i -= 2)
-            {
-                variables[Name][1] = isNumber ? new AddExpr(variables[Name][1], variables[Name][i])
-                    : (IFormExpr)new AndExpr(variables[Name][1], variables[Name][i]);
-            }
-
-            return newSelf;
+            Value.SetValue(env, value);
         }
 
-        public void Dispose()
+        public object Eval(VarEnvironment env)
         {
-            Debug.Assert(originalIndex == variables[Name].Count - 2);
+            return Value.Eval(env);
+        }
 
-            variables[Name].RemoveAt(originalIndex + 1);
-            variables[Name].RemoveAt(originalIndex);
-            variables[Name][variables[Name].Count - 1] = variables[Name][variables[Name].Count - 2];
+        public IFormType BuildForm(VarEnvironment env)
+        {
+            IFormType type = null;
 
-            bool isNumber = variables[Name][0].ExpressionType.GetLeastUpperBound(new RealType()).Equals(new RealType());
-
-            variables[Name][1] = variables[Name][0];
-            for (int i = variables[Name].Count - 2; i > 0; i -= 2)
+            if (!env.IsDeclared(Name))
             {
-                variables[Name][1] = isNumber ? new AddExpr(variables[Name][1], variables[Name][i])
-                    : (IFormExpr)new AndExpr(variables[Name][1], variables[Name][i]);
+                if (env.HasSiblings(Name))
+                {
+                    VarInitExpr repeatedInstance = new VarInitExpr(Name, Type);
+                    env.Declare(Name, repeatedInstance);
+
+                    type = repeatedInstance.BuildForm(env);
+                    type.SetValue(repeatedInstance);
+                }
+                else
+                {
+                    env.Declare(Name, this);
+
+                    type = Value.BuildForm(env);
+                    type.SetValue(this);
+                }
             }
+            else
+            {
+                IFormExpr declared = env.GetDeclared(Name);
+                if (declared != this)
+                {
+                    type = declared.BuildForm(env);
+                    type.SetValue(declared);
+                }
+                else
+                {
+                    type = Value.BuildForm(env);
+                    type.SetValue(this);
+                }
+            }
+
+            return type;
         }
     }
 }

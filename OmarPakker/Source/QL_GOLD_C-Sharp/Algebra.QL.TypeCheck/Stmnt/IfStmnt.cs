@@ -18,14 +18,15 @@ namespace Algebra.QL.TypeCheck.Stmnt
 
 		}
 
-        public void TypeCheck(TypeEnvironment env, ErrorReporter errRep)
+        public void TypeCheck(TypeEnvironment env)
         {
-            if (!CheckExpression.TypeCheck(env, errRep).CompatibleWith(ExpressionType))
+            if (!CheckExpression.TypeCheck(env).CompatibleWith(ExpressionType))
             {
-                errRep.ReportError(this, "Unable to evaluate 'if'. Expression must be of type bool!");
+                env.ReportError("Unable to evaluate 'if'. Expression must be of type bool!",
+                    SourceStartPosition, SourceEndPosition);
             }
 
-            IfTrueBody.TypeCheck(env, errRep);
+            IfTrueBody.TypeCheck(env);
         }
     }
 }

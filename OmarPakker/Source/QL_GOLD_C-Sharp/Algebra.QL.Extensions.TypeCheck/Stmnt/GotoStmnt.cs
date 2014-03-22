@@ -14,16 +14,16 @@ namespace Algebra.QL.Extensions.TypeCheck.Stmnt
             
 		}
 
-        public void TypeCheck(TypeEnvironment env, ErrorReporter errRep)
+        public void TypeCheck(TypeEnvironment env)
         {
-            if (env.IsGotoDeclared())
-            {
-                errRep.ReportError(this, "You already defined a gotoNextForm. You can only have 1 per form.");
+            //if (env.IsGotoDeclared())
+            //{
+            //    errRep.ReportError(this, "You already defined a gotoNextForm. You can only have 1 per form.");
 
-                return;
-            }
+            //    return;
+            //}
 
-            env.DeclareGoto();
+            //env.DeclareGoto();
         }
     }
 }

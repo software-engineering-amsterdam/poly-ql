@@ -203,9 +203,19 @@ namespace QL_Tests.Factory
             return new IfElseStmnt(toEval, ifTrue, ifFalse);
         }
 
-        public ITestStmnt Loop(ITestExpr e, ITestStmnt s)
+        public ITestStmnt Repeat(ITestExpr e, ITestStmnt s)
         {
-            return new LoopStmnt(e, s);
+            return new RepeatStmnt(e, s);
+        }
+
+        public ITestExpr Sum(string s)
+        {
+            return new SumExpr(s);
+        }
+
+        public ITestExpr Average(string s)
+        {
+            return new AvgExpr(s);
         }
     }
 }
