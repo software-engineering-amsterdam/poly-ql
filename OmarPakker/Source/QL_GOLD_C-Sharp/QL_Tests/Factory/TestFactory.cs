@@ -6,7 +6,7 @@ using QL_Tests.Type;
 
 namespace QL_Tests.Factory
 {
-    public class TestFactory : IExtFactory<ITestExpr, ITestStmnt, ITestType>
+    public class TestFactory : IStmntFactory<ITestStmnt, ITestExpr, ITestType>
     {
         public TestFactory()
         {

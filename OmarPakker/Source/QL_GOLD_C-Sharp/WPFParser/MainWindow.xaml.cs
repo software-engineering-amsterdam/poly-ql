@@ -44,8 +44,8 @@ namespace WPFParser
             //Parser = GetExtendedParser<Tuple<ITypeCheckExpr, IPrintExpr>, Tuple<ITypeCheckStmnt, IPrintStmnt>,
             //    Tuple<ITypeCheckType, IPrintType>, TypeCheckPrintFactory>(new TypeCheckPrintFactory());
 
-            Parser = GetExtendedParser<IPair<IPair<ITypeCheckExpr, IPrintExpr>, IFormExpr>,
-                IPair<IPair<ITypeCheckStmnt, IPrintStmnt>, IFormStmnt>,
+            Parser = GetExtendedParser<IPair<IPair<ITypeCheckStmnt, IPrintStmnt>, IFormStmnt>,
+                IPair<IPair<ITypeCheckExpr, IPrintExpr>, IFormExpr>,
                 IPair<IPair<ITypeCheckType, IPrintType>, IFormType>,
                 TypeCheckPrintFormFactory>(new TypeCheckPrintFormFactory());
 
@@ -58,10 +58,10 @@ namespace WPFParser
             Parser.OnSyntaxError += OnSyntaxError;
         }
 
-        private static Parser GetBasicParser<E, S, T, F>(F f)
-            where F : Algebra.QL.Core.Factory.IFactory<E, S, T>
+        private static Parser GetBasicParser<S, E, T, F>(F f)
+            where F : Algebra.QL.Core.Factory.IStmntFactory<S, E, T>
         {
-            var parser = new Parser<E, S, T, F>(f);
+            var parser = new Parser<S, E, T, F>(f);
 
             Assembly a = parser.GetType().Assembly;
             parser.LoadGrammar(new BinaryReader(a.GetManifestResourceStream("Algebra.QL.Core.Grammar.QL_Grammar.egt")));
@@ -69,10 +69,10 @@ namespace WPFParser
             return parser;
         }
 
-        private static Parser GetExtendedParser<E, S, T, F>(F f)
-            where F : IExtFactory<E, S, T>
+        private static Parser GetExtendedParser<S, E, T, F>(F f)
+            where F : Algebra.QL.Extensions.Factory.IStmntFactory<S, E, T>
         {
-            var parser = new ExtParser<E, S, T, F>(f);
+            var parser = new ExtParser<S, E, T, F>(f);
 
             Assembly a = parser.GetType().Assembly;
             parser.LoadGrammar(new BinaryReader(a.GetManifestResourceStream("Algebra.QL.Extensions.Grammar.QL_Grammar.egt")));

@@ -6,7 +6,7 @@ using Algebra.QL.TypeCheck.Type;
 
 namespace Algebra.QL.TypeCheck.Factory
 {
-	public class TypeCheckFactory : IFactory<ITypeCheckExpr, ITypeCheckStmnt, ITypeCheckType>
+	public class TypeCheckFactory : IStmntFactory<ITypeCheckStmnt, ITypeCheckExpr, ITypeCheckType>
     {
         public TypeCheckFactory()
         {

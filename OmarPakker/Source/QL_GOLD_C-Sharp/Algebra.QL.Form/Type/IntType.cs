@@ -22,25 +22,25 @@ namespace Algebra.QL.Form.Type
             IntegerUpDown iud = new IntegerUpDown() { Width = 200, IsEnabled = editable };
             iud.ValueChanged += (s, e) =>
             {
-                Value.SetValue(env, iud.Value);
+                ElementExpr.SetValue(env, iud.Value);
             };
             
             Action onValueChanged = () =>
             {
-                iud.Value = Convert.ToInt32(Value.Eval(env));
+                iud.Value = Convert.ToInt32(ElementExpr.Eval(env));
             };
             onValueChanged();
 
-            int lastValue = Convert.ToInt32(Value.Eval(env));
+            int lastValue = Convert.ToInt32(ElementExpr.Eval(env));
             iud.Loaded += (s, e) =>
             {
-                Value.ValueChanged += onValueChanged;
+                ElementExpr.ValueChanged += onValueChanged;
                 iud.Value = lastValue;
             };
             iud.Unloaded += (s, e) =>
             {
-                Value.ValueChanged -= onValueChanged;
-                lastValue = Convert.ToInt32(Value.Eval(env));
+                ElementExpr.ValueChanged -= onValueChanged;
+                lastValue = Convert.ToInt32(ElementExpr.Eval(env));
                 iud.Value = 0;
             };
 

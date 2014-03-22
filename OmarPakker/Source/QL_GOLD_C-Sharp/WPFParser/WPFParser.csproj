@@ -98,6 +98,14 @@
       <Project>{920a23f4-4b01-4cd2-b89c-44a59ee000e0}</Project>
       <Name>Algebra.QL.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Algebra.QL.Extensions.Form\Algebra.QL.Extensions.Form.csproj">
+      <Project>{61a25784-9862-41d1-a376-19e374d4ceb3}</Project>
+      <Name>Algebra.QL.Extensions.Form</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Algebra.QL.Extensions.Print\Algebra.QL.Extensions.Print.csproj">
+      <Project>{b24c70af-ba8b-4100-867a-c15c1a79d60f}</Project>
+      <Name>Algebra.QL.Extensions.Print</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Algebra.QL.Extensions.TypeCheck\Algebra.QL.Extensions.TypeCheck.csproj">
       <Project>{961e46c7-f25c-4811-98ef-65ba97d9fb97}</Project>
       <Name>Algebra.QL.Extensions.TypeCheck</Name>

@@ -5,8 +5,8 @@ using Grammar.Generated.v1;
 
 namespace Algebra.QL.Core.Grammar
 {
-	public class Parser<E, S, T, F> : Algebra.Core.GrammarParser.Parser
-        where F : Algebra.QL.Core.Factory.IFactory<E, S, T>
+    public class Parser<S, E, T, F> : Algebra.Core.GrammarParser.Parser
+        where F : Algebra.QL.Core.Factory.IStmntFactory<S, E, T>
 	{
 		protected override ReadOnlyDictionary<string, short> Rules { get { return GrammarData.Rules; } }
         protected readonly F factory;

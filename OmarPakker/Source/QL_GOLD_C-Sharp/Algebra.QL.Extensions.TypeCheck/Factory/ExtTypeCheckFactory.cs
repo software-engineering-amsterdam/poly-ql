@@ -11,7 +11,7 @@ using Algebra.QL.TypeCheck.Type;
 
 namespace Algebra.QL.Extensions.TypeCheck.Factory
 {
-    public class ExtTypeCheckFactory : TypeCheckFactory, IExtFactory<ITypeCheckExpr, ITypeCheckStmnt, ITypeCheckType>
+    public class ExtTypeCheckFactory : TypeCheckFactory, IStmntFactory<ITypeCheckStmnt, ITypeCheckExpr, ITypeCheckType>
     {
         public ExtTypeCheckFactory()
         {

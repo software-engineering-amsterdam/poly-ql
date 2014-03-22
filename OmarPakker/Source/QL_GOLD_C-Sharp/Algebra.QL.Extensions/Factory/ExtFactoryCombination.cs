@@ -3,11 +3,11 @@ using Algebra.Core.Helpers;
 
 namespace Algebra.QL.Extensions.Factory
 {
-    public class ExtFactoryCombination<E1, S1, T1, E2, S2, T2, F1, F2>
-		: Algebra.QL.Core.Factory.FactoryCombination<E1, S1, T1, E2, S2, T2, F1, F2>,
-          IExtFactory<IPair<E1, E2>, IPair<S1, S2>, IPair<T1, T2>>
-		where F1 : IExtFactory<E1, S1, T1>
-		where F2 : IExtFactory<E2, S2, T2>
+    public class ExtFactoryCombination<S1, E1, T1, S2, E2, T2, F1, F2>
+        : Algebra.QL.Core.Factory.FactoryCombination<S1, E1, T1, S2, E2, T2, F1, F2>,
+          IStmntFactory<IPair<S1, S2>, IPair<E1, E2>, IPair<T1, T2>>
+        where F1 : IStmntFactory<S1, E1, T1>
+        where F2 : IStmntFactory<S2, E2, T2>
     {
         public ExtFactoryCombination(F1 f1, F2 f2)
             : base(f1, f2)

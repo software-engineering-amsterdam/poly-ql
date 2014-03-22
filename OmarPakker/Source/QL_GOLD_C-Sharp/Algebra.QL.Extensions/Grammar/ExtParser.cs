@@ -8,8 +8,8 @@ using Grammar.Generated.v2;
 
 namespace Algebra.QL.Extensions.Grammar
 {
-    public class ExtParser<E, S, T, F> : Parser<E, S, T, F>
-		where F : IExtFactory<E, S, T>
+    public class ExtParser<S, E, T, F> : Parser<S, E, T, F>
+        where F : IStmntFactory<S, E, T>
     {
         protected override ReadOnlyDictionary<string, short> Rules { get { return GrammarData.Rules; } }
 

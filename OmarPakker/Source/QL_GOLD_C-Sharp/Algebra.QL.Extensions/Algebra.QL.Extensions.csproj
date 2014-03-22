@@ -33,8 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Factory\IExtFactory.cs" />
+    <Compile Include="Factory\IStmntFactory.cs" />
     <Compile Include="Factory\ExtFactoryCombination.cs" />
+    <Compile Include="Factory\IExprFactory.cs" />
+    <Compile Include="Factory\ITypeFactory.cs" />
     <Compile Include="Grammar\ExtParser.cs" />
     <Compile Include="Grammar\GrammarData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

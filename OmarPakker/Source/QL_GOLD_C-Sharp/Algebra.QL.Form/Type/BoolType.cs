@@ -22,29 +22,29 @@ namespace Algebra.QL.Form.Type
             CheckBox cb = new CheckBox() { IsEnabled = editable };
             cb.Checked += (s, e) =>
             {
-                Value.SetValue(env, true);
+                ElementExpr.SetValue(env, true);
             };
             cb.Unchecked += (s, e) =>
             {
-                Value.SetValue(env, false);
+                ElementExpr.SetValue(env, false);
             };
 
             Action onValueChanged = () =>
             {
-                cb.IsChecked = Convert.ToBoolean(Value.Eval(env));
+                cb.IsChecked = Convert.ToBoolean(ElementExpr.Eval(env));
             };
             onValueChanged();
 
             bool lastValue = cb.IsChecked.Value;
             cb.Loaded += (s, e) =>
             {
-                Value.ValueChanged += onValueChanged;
+                ElementExpr.ValueChanged += onValueChanged;
                 cb.IsChecked = lastValue;
             };
             cb.Unloaded += (s, e) =>
             {
-                Value.ValueChanged -= onValueChanged;
-                lastValue = Convert.ToBoolean(Value.Eval(env));
+                ElementExpr.ValueChanged -= onValueChanged;
+                lastValue = Convert.ToBoolean(ElementExpr.Eval(env));
                 cb.IsChecked = false;
             };
 

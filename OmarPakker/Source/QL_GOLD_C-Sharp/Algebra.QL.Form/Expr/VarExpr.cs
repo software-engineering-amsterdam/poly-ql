@@ -7,7 +7,7 @@ namespace Algebra.QL.Form.Expr
 	public class VarExpr : Algebra.Core.Expr.VarExpr, IFormExpr
 	{
         public event Action ValueChanged;
-        
+
         public VarExpr(string name)
 			: base(name)
 		{
@@ -46,8 +46,10 @@ namespace Algebra.QL.Form.Expr
 
         public IFormType BuildForm(VarEnvironment env)
         {
-            IFormType type = env.GetDeclared(Name).BuildForm(env);
-            type.SetValue(this);
+            IFormExpr variable = env.GetDeclared(Name);
+
+            IFormType type = variable.BuildForm(env);
+            type.SetElementExpression(variable);
 
             return type;
         }

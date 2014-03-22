@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B24C70AF-BA8B-4100-867A-C15C1A79D60F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Algebra.QL.Extensions.Print</RootNamespace>
+    <AssemblyName>Algebra.QL.Extensions.Print</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Expr\AvgExpr.cs" />
+    <Compile Include="Expr\Literals\DateLiteral.cs" />
+    <Compile Include="Expr\ModuloExpr.cs" />
+    <Compile Include="Expr\PowerExpr.cs" />
+    <Compile Include="Expr\SumExpr.cs" />
+    <Compile Include="Factory\ExtPrintFactory.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Stmnt\GotoStmnt.cs" />
+    <Compile Include="Stmnt\RepeatStmnt.cs" />
+    <Compile Include="Type\DateType.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Algebra.Core\Algebra.Core.csproj">
+      <Project>{66c0e1d5-1aab-4d62-8a82-bed70bd9e348}</Project>
+      <Name>Algebra.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Algebra.QL.Core\Algebra.QL.Core.csproj">
+      <Project>{920a23f4-4b01-4cd2-b89c-44a59ee000e0}</Project>
+      <Name>Algebra.QL.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Algebra.QL.Extensions\Algebra.QL.Extensions.csproj">
+      <Project>{c3cb2fb3-25c0-4fdb-b99c-7eb72927d0d1}</Project>
+      <Name>Algebra.QL.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Algebra.QL.Print\Algebra.QL.Print.csproj">
+      <Project>{39772314-1749-44c2-b22a-7fc5113892b0}</Project>
+      <Name>Algebra.QL.Print</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

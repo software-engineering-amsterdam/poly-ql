@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{61A25784-9862-41D1-A376-19E374D4CEB3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Algebra.QL.Extensions.Form</RootNamespace>
+    <AssemblyName>Algebra.QL.Extensions.Form</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="Xceed.Wpf.Toolkit">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.1.0\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Expr\AvgExpr.cs" />
+    <Compile Include="Expr\Literals\DateLiteral.cs" />
+    <Compile Include="Expr\ModuloExpr.cs" />
+    <Compile Include="Expr\PowerExpr.cs" />
+    <Compile Include="Expr\SumExpr.cs" />
+    <Compile Include="Factory\ExtFormFactory.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Stmnt\FormsStmnt.cs" />
+    <Compile Include="Stmnt\GotoStmnt.cs" />
+    <Compile Include="Stmnt\RepeatStmnt.cs" />
+    <Compile Include="Type\DateType.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Algebra.Core\Algebra.Core.csproj">
+      <Project>{66c0e1d5-1aab-4d62-8a82-bed70bd9e348}</Project>
+      <Name>Algebra.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Algebra.QL.Core\Algebra.QL.Core.csproj">
+      <Project>{920a23f4-4b01-4cd2-b89c-44a59ee000e0}</Project>
+      <Name>Algebra.QL.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Algebra.QL.Extensions\Algebra.QL.Extensions.csproj">
+      <Project>{c3cb2fb3-25c0-4fdb-b99c-7eb72927d0d1}</Project>
+      <Name>Algebra.QL.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Algebra.QL.Form\Algebra.QL.Form.csproj">
+      <Project>{2515a850-e8e8-4212-9559-54d4178fc1b0}</Project>
+      <Name>Algebra.QL.Form</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

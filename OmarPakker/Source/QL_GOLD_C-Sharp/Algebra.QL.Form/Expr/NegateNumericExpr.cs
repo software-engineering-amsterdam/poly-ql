@@ -32,7 +32,7 @@ namespace Algebra.QL.Form.Expr
         public IFormType BuildForm(VarEnvironment env)
         {
             IFormType type = Expr1.BuildForm(env);
-            type.SetValue(this);
+            type.SetElementExpression(this);
 
             return type;
         }

@@ -1,5 +1,4 @@
-﻿using System;
-using Algebra.QL.Extensions.Factory;
+﻿using Algebra.QL.Core.Factory;
 using Algebra.QL.Form.Expr;
 using Algebra.QL.Form.Expr.Literals;
 using Algebra.QL.Form.Stmnt;
@@ -7,16 +6,11 @@ using Algebra.QL.Form.Type;
 
 namespace Algebra.QL.Form.Factory
 {
-    public class FormFactory : IExtFactory<IFormExpr, IFormStmnt, IFormType>
+    public class FormFactory : IStmntFactory<IFormStmnt, IFormExpr, IFormType>
     {
         public FormFactory()
         {
             
-        }
-
-        public IFormType DateType()
-        {
-            return new DateType();
         }
 
         public IFormType StringType()
@@ -38,11 +32,6 @@ namespace Algebra.QL.Form.Factory
         {
             return new BoolType();
         }
-
-        public IFormExpr Date(DateTime date)
-		{
-			return new DateLiteral(date);
-		}
 
         public IFormExpr String(string s)
         {
@@ -154,11 +143,6 @@ namespace Algebra.QL.Form.Factory
             return new IfElseExpr(toEval, ifTrue, ifFalse);
         }
 
-        public IFormStmnt Forms(IFormStmnt l, IFormStmnt r)
-        {
-            return new FormsStmnt(l, r);
-        }
-
         public IFormStmnt Statements(IFormStmnt l, IFormStmnt r)
         {
             return new StatementsStmnt(l, r);
@@ -167,11 +151,6 @@ namespace Algebra.QL.Form.Factory
         public IFormStmnt Form(string var, IFormStmnt s)
         {
             return new FormStmnt(var, s);
-        }
-
-        public IFormStmnt Goto()
-        {
-            return new GotoStmnt();
         }
 
         public IFormStmnt Question(string s, IFormExpr e)
@@ -192,32 +171,6 @@ namespace Algebra.QL.Form.Factory
         public IFormStmnt IfElse(IFormExpr toEval, IFormStmnt ifTrue, IFormStmnt ifFalse)
         {
             return new IfElseStmnt(toEval, ifTrue, ifFalse);
-        }
-
-        //Extensions as well
-        public IFormExpr Modulo(IFormExpr l, IFormExpr r)
-        {
-            return new ModuloExpr(l, r);
-        }
-
-        public IFormExpr Power(IFormExpr l, IFormExpr r)
-        {
-            return new PowerExpr(l, r);
-        }
-
-        public IFormStmnt Repeat(IFormExpr e, IFormStmnt s)
-        {
-            return new RepeatStmnt(e, s);
-        }
-
-        public IFormExpr Sum(string s)
-        {
-            return new SumExpr(s);
-        }
-
-        public IFormExpr Average(string s)
-        {
-            return new AvgExpr(s);
         }
     }
 }

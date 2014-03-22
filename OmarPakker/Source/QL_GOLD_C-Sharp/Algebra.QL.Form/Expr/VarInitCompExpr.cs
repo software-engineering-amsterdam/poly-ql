@@ -31,15 +31,45 @@ namespace Algebra.QL.Form.Expr
 
         public IFormType BuildForm(VarEnvironment env)
         {
-            if (!env.IsDeclared(Name) && !env.IsRepeated(Name))
+            IFormType type = Value.BuildForm(env);
+            type.SetElementExpression(this);
+
+            if (!env.IsDeclared(Name))
             {
-                env.Declare(Name, this);
+                if (!env.IsRepeated(Name) && !env.HasSiblings(Name))
+                {
+                    env.Declare(Name, this);
+                }
+                else if (env.HasSiblings(Name))
+                {
+                    VarInitCompExpr repeatedInstance = new VarInitCompExpr(Name, Type, Value);
+                    env.Declare(Name, repeatedInstance);
+
+                    type = repeatedInstance.BuildForm(env);
+                    type.SetElementExpression(repeatedInstance);
+                }
+            }
+            else
+            {
+                IFormExpr declared = env.GetDeclared(Name);
+                if (declared != this)
+                {
+                    type = declared.BuildForm(env);
+                    type.SetElementExpression(declared);
+                }
             }
 
-            IFormType type = Value.BuildForm(env);
-            type.SetValue(this);
-
             return type;
+
+            //if (!env.IsDeclared(Name) && !env.IsRepeated(Name))
+            //{
+            //    env.Declare(Name, this);
+            //}
+
+            //IFormType type = Value.BuildForm(env);
+            //type.SetValue(this);
+
+            //return type;
         }
     }
 }

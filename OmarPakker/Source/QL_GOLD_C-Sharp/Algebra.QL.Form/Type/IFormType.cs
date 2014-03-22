@@ -9,7 +9,7 @@ namespace Algebra.QL.Form.Type
     {
         IFormExpr DefaultValue { get; }
 
-        void SetValue(IFormExpr value);
+        void SetElementExpression(IFormExpr value);
         FrameworkElement BuildElement(VarEnvironment env, bool editable);
     }
 }

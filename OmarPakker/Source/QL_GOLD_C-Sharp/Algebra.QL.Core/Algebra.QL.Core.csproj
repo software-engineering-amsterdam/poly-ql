@@ -34,8 +34,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Expr\LiteralExpr.cs" />
-    <Compile Include="Factory\IFactory.cs" />
+    <Compile Include="Factory\IStmntFactory.cs" />
     <Compile Include="Factory\FactoryCombination.cs" />
+    <Compile Include="Factory\IExprFactory.cs" />
+    <Compile Include="Factory\ITypeFactory.cs" />
     <Compile Include="Grammar\GrammarData.cs" />
     <Compile Include="Grammar\Parser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -22,25 +22,25 @@ namespace Algebra.QL.Form.Type
             DoubleUpDown dud = new DoubleUpDown() { Width = 200, IsEnabled = editable, Increment = 0.1 };
             dud.ValueChanged += (s, e) =>
             {
-                Value.SetValue(env, dud.Value);
+                ElementExpr.SetValue(env, dud.Value);
             };
 
             Action onValueChanged = () =>
             {
-                dud.Value = Convert.ToDouble(Value.Eval(env));
+                dud.Value = Convert.ToDouble(ElementExpr.Eval(env));
             };
             onValueChanged();
 
-            double lastValue = Convert.ToDouble(Value.Eval(env));
+            double lastValue = Convert.ToDouble(ElementExpr.Eval(env));
             dud.Loaded += (s, e) =>
             {
-                Value.ValueChanged += onValueChanged;
+                ElementExpr.ValueChanged += onValueChanged;
                 dud.Value = lastValue;
             };
             dud.Unloaded += (s, e) =>
             {
-                Value.ValueChanged -= onValueChanged;
-                lastValue = Convert.ToDouble(Value.Eval(env));
+                ElementExpr.ValueChanged -= onValueChanged;
+                lastValue = Convert.ToDouble(ElementExpr.Eval(env));
                 dud.Value = 0;
             };
 

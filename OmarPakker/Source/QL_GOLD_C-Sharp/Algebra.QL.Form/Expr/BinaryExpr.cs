@@ -31,7 +31,7 @@ namespace Algebra.QL.Form.Expr
             IFormType a = Expr1.BuildForm(env);
             IFormType b = Expr2.BuildForm(env);
             IFormType type = a.GetLeastUpperBound(b);
-            type.SetValue(this);
+            type.SetElementExpression(this);
 
             return type;
         }

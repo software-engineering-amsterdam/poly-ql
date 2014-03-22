@@ -1,9 +1,9 @@
 ﻿
 namespace Algebra.Core.Factory
 {
-	public abstract class FactoryUnion<E, S, T, F1, F2> : IFactory<E, S, T>
-		where F1 : IFactory<E, S, T>
-		where F2 : IFactory<E, S, T>
+    public abstract class FactoryUnion<S, E, T, F1, F2> : IStmntFactory<S, E, T>
+		where F1 : IStmntFactory<S, E, T>
+        where F2 : IStmntFactory<S, E, T>
 	{
 		protected F1 Factory1 { get; private set; }
 		protected F2 Factory2 { get; private set; }

@@ -40,7 +40,9 @@
     <Compile Include="Expr\VarInitExpr.cs" />
     <Compile Include="Factory\FactoryCombination.cs" />
     <Compile Include="Factory\FactoryUnion.cs" />
-    <Compile Include="Factory\IFactory.cs" />
+    <Compile Include="Factory\IExprFactory.cs" />
+    <Compile Include="Factory\IStmntFactory.cs" />
+    <Compile Include="Factory\ITypeFactory.cs" />
     <Compile Include="GrammarParser\Parser.cs" />
     <Compile Include="Helpers\ErrorManager.cs" />
     <Compile Include="Helpers\IPair.cs" />

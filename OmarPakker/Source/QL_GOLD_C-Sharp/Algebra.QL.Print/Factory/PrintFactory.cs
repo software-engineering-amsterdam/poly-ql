@@ -1,5 +1,4 @@
-﻿using System;
-using Algebra.QL.Extensions.Factory;
+﻿using Algebra.QL.Core.Factory;
 using Algebra.QL.Print.Expr;
 using Algebra.QL.Print.Expr.Literals;
 using Algebra.QL.Print.Stmnt;
@@ -7,16 +6,11 @@ using Algebra.QL.Print.Type;
 
 namespace Algebra.QL.Print.Factory
 {
-    public class PrintFactory : IExtFactory<IPrintExpr, IPrintStmnt, IPrintType>
+    public class PrintFactory : IStmntFactory<IPrintStmnt, IPrintExpr, IPrintType>
     {
         public PrintFactory()
         {
 
-        }
-
-        public IPrintType DateType()
-        {
-            return new DateType();
         }
 
         public IPrintType StringType()
@@ -38,11 +32,6 @@ namespace Algebra.QL.Print.Factory
         {
             return new BoolType();
         }
-
-        public IPrintExpr Date(DateTime date)
-		{
-			return new DateLiteral(date);
-		}
 
         public IPrintExpr String(string s)
         {
@@ -169,11 +158,6 @@ namespace Algebra.QL.Print.Factory
             return new FormStmnt(var, s);
         }
 
-        public IPrintStmnt Goto()
-        {
-            return new GotoStmnt();
-        }
-
         public IPrintStmnt Question(string s, IPrintExpr e)
         {
             return new QuestionStmnt(s, e);
@@ -192,32 +176,6 @@ namespace Algebra.QL.Print.Factory
         public IPrintStmnt IfElse(IPrintExpr toEval, IPrintStmnt ifTrue, IPrintStmnt ifFalse)
         {
             return new IfElseStmnt(toEval, ifTrue, ifFalse);
-        }
-
-        //Extensions as well
-        public IPrintExpr Modulo(IPrintExpr l, IPrintExpr r)
-        {
-            return new ModuloExpr(l, r);
-        }
-
-        public IPrintExpr Power(IPrintExpr l, IPrintExpr r)
-        {
-            return new PowerExpr(l, r);
-        }
-
-        public IPrintStmnt Repeat(IPrintExpr e, IPrintStmnt s)
-        {
-            return new RepeatStmnt(e, s);
-        }
-
-        public IPrintExpr Sum(string s)
-        {
-            return new SumExpr(s);
-        }
-
-        public IPrintExpr Average(string s)
-        {
-            return new AvgExpr(s);
         }
     }
 }

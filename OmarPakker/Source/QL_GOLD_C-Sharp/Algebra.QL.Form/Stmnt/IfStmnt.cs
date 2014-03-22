@@ -24,6 +24,7 @@ namespace Algebra.QL.Form.Stmnt
             {
                 sp.Visibility = Convert.ToBoolean(CheckExpression.Eval(env)) ? Visibility.Visible : Visibility.Collapsed;
             };
+            CheckExpression.BuildForm(env);
             onValueChanged();
 
             sp.Loaded += (s, e) => CheckExpression.ValueChanged += onValueChanged;

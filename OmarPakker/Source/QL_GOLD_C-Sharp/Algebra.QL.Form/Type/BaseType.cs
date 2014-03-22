@@ -10,16 +10,16 @@ namespace Algebra.QL.Form.Type
         public virtual IFormExpr DefaultValue { get { return null; } }
         public virtual IFormType SuperType { get { return null; } }
 
-        protected IFormExpr Value { get; private set; }
+        protected IFormExpr ElementExpr { get; private set; }
 
-		internal BaseType()
+		public BaseType()
 		{
 
 		}
 
-        public void SetValue(IFormExpr value)
+        public void SetElementExpression(IFormExpr expr)
         {
-            Value = value;
+            ElementExpr = expr;
         }
 
         public virtual FrameworkElement BuildElement(VarEnvironment env, bool editable)

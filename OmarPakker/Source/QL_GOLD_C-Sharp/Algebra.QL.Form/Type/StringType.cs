@@ -22,25 +22,25 @@ namespace Algebra.QL.Form.Type
             TextBox tb = new TextBox() { Width = 200, IsEnabled = editable };
             tb.TextChanged += (s, e) =>
             {
-                Value.SetValue(env, tb.Text);
+                ElementExpr.SetValue(env, tb.Text);
             };
 
             Action onValueChanged = () =>
             {
-                tb.Text = Convert.ToString(Value.Eval(env));
+                tb.Text = Convert.ToString(ElementExpr.Eval(env));
             };
             onValueChanged();
 
-            string lastValue = Convert.ToString(Value.Eval(env));
+            string lastValue = Convert.ToString(ElementExpr.Eval(env));
             tb.Loaded += (s, e) =>
             {
-                Value.ValueChanged += onValueChanged;
+                ElementExpr.ValueChanged += onValueChanged;
                 tb.Text = lastValue;
             };
             tb.Unloaded += (s, e) =>
             {
-                Value.ValueChanged -= onValueChanged;
-                lastValue = Convert.ToString(Value.Eval(env));
+                ElementExpr.ValueChanged -= onValueChanged;
+                lastValue = Convert.ToString(ElementExpr.Eval(env));
                 tb.Text = String.Empty;
             };
 
