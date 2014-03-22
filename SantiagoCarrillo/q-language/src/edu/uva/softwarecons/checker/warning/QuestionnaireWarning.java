@@ -9,7 +9,7 @@ package edu.uva.softwarecons.checker.warning;
 public class QuestionnaireWarning
 {
 
-    private String message;
+    private final String message;
 
     public QuestionnaireWarning( String message )
     {

@@ -22,7 +22,7 @@ import edu.uva.softwarecons.model.type.Type;
  * @author Santiago Carrillo
  *         Date: 3/5/14
  */
-public interface IExpressionElementVisitor
+public interface ExpressionElementVisitor
 {
 
     Type visitAddExpression( AddExpression expression );

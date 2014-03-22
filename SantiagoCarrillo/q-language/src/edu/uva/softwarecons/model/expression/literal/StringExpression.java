@@ -5,8 +5,8 @@ import edu.uva.softwarecons.model.type.StringType;
 import edu.uva.softwarecons.model.type.Type;
 import edu.uva.softwarecons.model.value.StringValue;
 import edu.uva.softwarecons.model.value.Value;
-import edu.uva.softwarecons.visitor.expression.IExpressionElementVisitor;
-import edu.uva.softwarecons.visitor.expression.IExpressionEvalVisitor;
+import edu.uva.softwarecons.visitor.expression.ExpressionElementVisitor;
+import edu.uva.softwarecons.visitor.expression.ExpressionEvalVisitor;
 
 /**
  * Falconlabs
@@ -18,7 +18,7 @@ public class StringExpression
     implements Expression
 {
 
-    private String value;
+    private final String value;
 
     public StringExpression( String value )
     {
@@ -31,7 +31,7 @@ public class StringExpression
     }
 
     @Override
-    public Type accept( IExpressionElementVisitor visitor )
+    public Type accept( ExpressionElementVisitor visitor )
     {
         return new StringType();
     }
@@ -43,7 +43,7 @@ public class StringExpression
     }
 
     @Override
-    public Value accept( IExpressionEvalVisitor visitor )
+    public Value accept( ExpressionEvalVisitor visitor )
     {
         return new StringValue( value );
     }

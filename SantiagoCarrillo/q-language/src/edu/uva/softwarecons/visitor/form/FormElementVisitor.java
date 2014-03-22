@@ -12,7 +12,7 @@ import edu.uva.softwarecons.model.question.IfQuestion;
  * @author Santiago Carrillo
  *         Date: 2/26/14
  */
-public interface IFormElementVisitor
+public interface FormElementVisitor
 {
 
     void visitForm( Form form );

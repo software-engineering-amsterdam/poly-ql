@@ -1,6 +1,6 @@
 package edu.uva.softwarecons.model.question;
 
-import edu.uva.softwarecons.visitor.form.IFormElement;
+import edu.uva.softwarecons.visitor.form.FormElement;
 
 /**
  * Falconlabs
@@ -9,6 +9,6 @@ import edu.uva.softwarecons.visitor.form.IFormElement;
  *         Date: 3/5/14
  */
 public interface Question
-    extends IFormElement
+    extends FormElement
 {
 }

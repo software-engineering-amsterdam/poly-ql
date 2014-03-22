@@ -50,7 +50,7 @@ public class TypeChecker
 
     private List<QuestionnaireWarning> warnings = new ArrayList<QuestionnaireWarning>();
 
-    final ExpressionTypeChecker expressionTypeChecker = new ExpressionTypeChecker();
+    private final ExpressionTypeChecker expressionTypeChecker = new ExpressionTypeChecker();
 
 
     @Override

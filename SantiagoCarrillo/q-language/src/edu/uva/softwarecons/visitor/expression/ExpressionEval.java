@@ -1,7 +1,7 @@
 package edu.uva.softwarecons.visitor.expression;
 
 import edu.uva.softwarecons.model.value.Value;
-import edu.uva.softwarecons.visitor.IQuestionnaireElement;
+import edu.uva.softwarecons.visitor.QuestionnaireElement;
 
 /**
  * Falconlabs
@@ -9,10 +9,10 @@ import edu.uva.softwarecons.visitor.IQuestionnaireElement;
  * @author Santiago Carrillo
  *         Date: 3/13/14
  */
-public interface IExpressionEval
-    extends IQuestionnaireElement
+public interface ExpressionEval
+    extends QuestionnaireElement
 {
 
-    Value accept( IExpressionEvalVisitor visitor );
+    Value accept( ExpressionEvalVisitor visitor );
 }
 

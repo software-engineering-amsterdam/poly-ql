@@ -24,7 +24,7 @@ import edu.uva.softwarecons.model.value.Value;
  * @author Santiago Carrillo
  *         Date: 3/13/14
  */
-public interface IExpressionEvalVisitor
+public interface ExpressionEvalVisitor
 {
 
     Value visitAddExpression( AddExpression expression );

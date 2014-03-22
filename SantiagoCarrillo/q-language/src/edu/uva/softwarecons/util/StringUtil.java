@@ -16,16 +16,11 @@ public class StringUtil
 
     public static String formToJson( Form form, HashMap<String, QuestionHBox> questions )
     {
-        StringBuffer formData = new StringBuffer();
+        StringBuilder formData = new StringBuilder();
         formData.append( "{\"" ).append( form.getId() ).append( "\": {" );
         for ( String questionId : questions.keySet() )
         {
             formData.append( "\"" ).append( questionId ).append( "\": " );
-//            String value = null;
-//            if ( null != questions.get( questionId ).getValue() )
-//            {
-//                value = questions.get( questionId ).getValue().toString();
-//            }
             formData.append( questions.get( questionId ).getValue().toString() );
             formData.append( "," );
         }

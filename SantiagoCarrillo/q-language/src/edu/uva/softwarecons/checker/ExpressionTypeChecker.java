@@ -20,7 +20,7 @@ import edu.uva.softwarecons.model.expression.logical.NotExpression;
 import edu.uva.softwarecons.model.expression.logical.OrExpression;
 import edu.uva.softwarecons.model.type.BooleanType;
 import edu.uva.softwarecons.model.type.Type;
-import edu.uva.softwarecons.visitor.expression.IExpressionElementVisitor;
+import edu.uva.softwarecons.visitor.expression.ExpressionElementVisitor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +35,7 @@ import java.util.Map;
 
 
 public class ExpressionTypeChecker
-    implements IExpressionElementVisitor
+    implements ExpressionElementVisitor
 {
 
     private List<QuestionnaireError> errors = new ArrayList<QuestionnaireError>();

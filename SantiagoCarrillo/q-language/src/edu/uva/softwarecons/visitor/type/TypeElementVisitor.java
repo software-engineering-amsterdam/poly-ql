@@ -13,7 +13,7 @@ import edu.uva.softwarecons.model.type.StringType;
  * @author Santiago Carrillo
  *         Date: 3/5/14
  */
-public interface ITypeElementVisitor
+public interface TypeElementVisitor
 {
 
     void visitBooleanType( BooleanType type );

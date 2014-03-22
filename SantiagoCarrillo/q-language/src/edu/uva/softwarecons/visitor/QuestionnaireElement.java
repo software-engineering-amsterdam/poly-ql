@@ -6,6 +6,6 @@ package edu.uva.softwarecons.visitor;
  * @author Santiago Carrillo
  *         Date: 3/5/14
  */
-public interface IQuestionnaireElement
+public interface QuestionnaireElement
 {
 }
