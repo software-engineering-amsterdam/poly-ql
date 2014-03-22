@@ -1,15 +1,6 @@
 // Generated from QLang.g4 by ANTLR 4.1
 package antlr;
 
-import ast.expr.Expr;
-import ast.expr.Identifier;
-import ast.expr.binExpr.*;
-import ast.expr.unExpression.*;
-import ast.expr.literal.*;
-import ast.expr.types.*;
-import ast.statement.*;
-
-
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ErrorNode;

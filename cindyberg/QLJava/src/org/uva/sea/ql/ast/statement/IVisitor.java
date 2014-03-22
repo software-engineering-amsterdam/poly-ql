@@ -9,5 +9,4 @@ public interface IVisitor {
 	void visit(IfElseStatement ifelseconditional);
 	void visit(Form form);
 	void visit(Questions questionset);
-
 }

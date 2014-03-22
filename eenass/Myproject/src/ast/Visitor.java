@@ -3,7 +3,6 @@ package ast;
 import ast.expr.Identifier;
 import ast.expr.binExpr.*;
 import ast.expr.literal.*;
-import ast.expr.types.*;
 import ast.expr.unExpression.*;
 import ast.statement.Block;
 import ast.statement.ComputedQuestion;
@@ -12,6 +11,7 @@ import ast.statement.IfStatement;
 import ast.statement.IfelseStatement;
 import ast.statement.Question;
 import ast.statement.StatementList;
+import ast.types.*;
 
 public interface Visitor<T> {
 	T visit(Pos node);

@@ -3,16 +3,18 @@ package typeChecker;
 import java.util.LinkedList;
 import java.util.List;
 
+import nodeAST.ASTNode;
+import nodeAST.Expression;
+import nodeAST.Ident;
+import nodeAST.syntactic.Form;
+import nodeAST.syntactic.Question;
+import nodeAST.syntactic.QuestionBody;
+import nodeAST.syntactic.Statement;
+
+
 import types.Type;
 import visitor.ASTVisitor;
 
-import expr.ASTNode;
-import expr.Expression;
-import expr.Ident;
-import expr.syntactic.Form;
-import expr.syntactic.Question;
-import expr.syntactic.QuestionBody;
-import expr.syntactic.Statement;
 
 public class UndefinedIdentifier extends ASTVisitor {
 
@@ -24,7 +26,17 @@ public class UndefinedIdentifier extends ASTVisitor {
 		this.expressionIdentifiers=new LinkedList<>();
 	}
 
-	public List<Ident> check(ASTNode root) {
+	public void check(ASTNode root) throws Exception {
+		List<Ident> list = createListWithUndefinedIdentifiers(root);
+		if(list.size()!=0) {
+			String message= "ERROR: The following references are not defined: ";
+			for(Ident i: list)
+				message+=i.toString()+", ";
+			throw new Exception(message);
+		}
+	}
+
+	private List<Ident> createListWithUndefinedIdentifiers(ASTNode root) {
 		root.accept(this);
 		List<Ident> undefined = new LinkedList<>();
 		for(Ident i : this.expressionIdentifiers)
@@ -37,7 +49,7 @@ public class UndefinedIdentifier extends ASTVisitor {
 	public void visit(Ident ident) {
 		expressionIdentifiers.add(ident);
 	}
-	
+
 	@Override
 	public void visit(Question question, Ident ident, 
 			QuestionBody questionBody, Type type, Expression expr) {
@@ -51,7 +63,7 @@ public class UndefinedIdentifier extends ASTVisitor {
 	@Override
 	public void visit(Form form, List<Statement> list) {
 		definedIdentifiers.add(form.getIdent());
-		
+
 		for(Statement s : list)
 			s.accept(this);
 	}

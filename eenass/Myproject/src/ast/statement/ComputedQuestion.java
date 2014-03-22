@@ -4,7 +4,7 @@ import ast.Visitor;
 import ast.expr.Expr;
 import ast.expr.Identifier;
 import ast.expr.literal.StrLiteral;
-import ast.expr.types.Type;
+import ast.types.Type;
 
 public class ComputedQuestion extends Question{
 	

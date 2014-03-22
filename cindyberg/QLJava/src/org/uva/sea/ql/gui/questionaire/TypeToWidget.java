@@ -7,33 +7,33 @@ import org.uva.sea.ql.ast.type.IntegerType;
 import org.uva.sea.ql.ast.type.MissingType;
 import org.uva.sea.ql.ast.type.StringType;
 import org.uva.sea.ql.gui.widget.BooleanWidget;
-import org.uva.sea.ql.gui.widget.Control;
+import org.uva.sea.ql.gui.widget.Widget;
 import org.uva.sea.ql.gui.widget.IntegerWidget;
 import org.uva.sea.ql.gui.widget.StringWidget;
 
-public class TypeToWidget implements TypeVisitor<Control> {
+public class TypeToWidget implements TypeVisitor<Widget> {
 
-	Identifier identifier;
-	State state;
+	private final Identifier identifier;
+	private final State state;
 	
 	public TypeToWidget(Identifier identifier, State state){
 		this.identifier = identifier;
 		this.state = state;
 	}
 	
-	public Control visit(IntegerType type) {
+	public Widget visit(IntegerType type) {
 		return new IntegerWidget(identifier, state);
 	}
 
-	public Control visit(StringType type) {
+	public Widget visit(StringType type) {
 		return new StringWidget(identifier, state);
 	}
 
-	public Control visit(BooleanType booleanType) {
+	public Widget visit(BooleanType booleanType) {
 		return new BooleanWidget(identifier,state);
 	}
 
-	public Control visit(MissingType missingType) {
+	public Widget visit(MissingType missingType) {
 		throw new UnsupportedOperationException();
 	}
 

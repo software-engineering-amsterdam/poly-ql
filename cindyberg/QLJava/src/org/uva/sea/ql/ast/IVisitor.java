@@ -49,7 +49,6 @@ public interface IVisitor {
 	
 	void visit(Identifier identifier);
 	void visit(Expression expression);
-	//void visit(ASTNode e);
 	
 	void visit(ExpressionQuestion exprquestion);
 	void visit(Question question);

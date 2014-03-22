@@ -10,6 +10,6 @@ public interface TypeVisitor<T> {
 	T visit (IntegerType type);
 	T visit (StringType type);
 	T visit (BooleanType booleanType);
-	T visit(MissingType missingType);
+	T visit (MissingType missingType);
 
 }

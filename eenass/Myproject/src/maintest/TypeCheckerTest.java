@@ -32,7 +32,8 @@ public class TypeCheckerTest {
 	}
 	
 	@Test
-	public void testSymboles(){
+	public void testForm(){
+		System.out.println("Start testing testForm");
 		test(true, "form Box1HouseOwning { hasSoldHouse: \"Did you sell a house in 2010?\" boolean"+
 				"\nif (hasSoldHouse == false) {"+
 				"\nsellingPrice: \"Price the house was sold for:\" integer"+
@@ -54,6 +55,7 @@ public class TypeCheckerTest {
 	
 	@Test
 	public void testLiterals(){
+		System.out.println("\nStart testing testLiterals");
 		test(true, "form form1 { q1 : \"a question\" integer(4) }");
 		test(false, "form form1 { q1 : \"a question\" integer(true) }");
 		test(false, "form form1 { q1 : \"a question\" integer(\"1\") }");
@@ -63,10 +65,13 @@ public class TypeCheckerTest {
 		test(true, "form form1 { id1: \"Value?\" string(\"abc\") }");
 		test(false, "form form1 { id1: \"Value?\" string(123) }");
 		test(false, "form form1 { id1: \"Value?\" string(true) }");
+		test(false, "form form1 { q1 : \"a question\" integer(1)" +
+				"\nq1 : \"a question\" boolean(true) }");
 	}
 	
 	@Test
 	public void testBinExpr(){
+		System.out.println("\nStart testing testBinExpr");
 		test(true, "form form1 { q1 : \"a question\" integer(4 + 2) }");
 		test(false, "form form1 { q1 : \"a question\" integer(4 + (3 - true) * 2) }");
 		test(false, "form form1 { q1 : \"a question\" integer(17 / false)}");
@@ -78,6 +83,7 @@ public class TypeCheckerTest {
 	
 	@Test
 	public void testUnExpr(){
+		System.out.println("\nStart testing testUnExpr");
 		test(true, "form form1 { q1 : \"a question\" boolean(!q1)}");
 		test(true, "form form1 { q1 : \"a question\" integer(+q1)}");
 		test(false, "form form1 { q1 : \"a question\" boolean(!1)}");
@@ -88,6 +94,7 @@ public class TypeCheckerTest {
 	
 	@Test
 	public void testIfstatement(){
+		System.out.println("\nStart testing testIfstatement");
 		test(true, "form form1 { x : \"a question\" boolean"+
 					"\nif(x == true) {q1 : \"a question\" boolean(true)}}");
 		test(false, "form form1 { x : \"a question\" boolean"+
@@ -100,10 +107,13 @@ public class TypeCheckerTest {
 				"\nif(!x != true) {q1 : \"a question\" boolean(true)}}");
 		test(false, "form form1 { x : \"a question\" integer"+
 			"\nif(x < bla) {q1 : \"a question\" boolean(true)}}");
+		test(false, "form form1 { x : \"a question\" integer"+
+				"\nif(x + 5) {q1 : \"a question\" boolean(true)}}");
 	}
 	
 	@Test
 	public void testIfElsestatement(){
+		System.out.println("\nStart testing testIfElseStatement");
 		test(true, "form form1 { x : \"a question\" boolean"+
 				"\nif(x == true) {q1 : \"a question\" boolean(true)}"+
 		"\nelse{q2 : \"a question2\" boolean}}");
@@ -115,15 +125,4 @@ public class TypeCheckerTest {
 		"\nelse{q2 : \"a question2\" boolean}}");		
 	}
 	
-	@Test
-	public void testBlock(){
-		test(true, "form form1 { x : \"a question\" boolean"+
-		"\nq1 : \"a question\" boolean(true)}");
-		test(false, "form form1 { q1 : \"a question\" boolean"+
-				"\nq1 : \"a question\" boolean(true)}");		
-	}
-	
-	
-	
-
 }

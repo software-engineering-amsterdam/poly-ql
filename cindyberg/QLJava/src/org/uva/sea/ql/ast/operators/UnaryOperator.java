@@ -4,12 +4,10 @@ import org.uva.sea.ql.ast.Expression;
 
 public abstract class UnaryOperator extends Expression{
 	
-	public Expression expr;
+	private final Expression expr;
 
 	public UnaryOperator(Expression expr) {
-		
-		this.expr = expr;
-		
+		this.expr = expr;	
 	}
 	
 	public Expression getExpr(){
