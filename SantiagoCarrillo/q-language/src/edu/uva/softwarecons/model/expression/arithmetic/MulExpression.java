@@ -23,6 +23,12 @@ public class MulExpression
     }
 
     @Override
+    public BinaryExpression getNewInstance( Expression leftOperand, Expression rightOperand )
+    {
+        return new MulExpression( leftOperand, rightOperand );
+    }
+
+    @Override
     public Type accept( IExpressionElementVisitor visitor )
     {
         return visitor.visitMulExpression( this );

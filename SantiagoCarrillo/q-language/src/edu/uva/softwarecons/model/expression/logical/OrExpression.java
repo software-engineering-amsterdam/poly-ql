@@ -23,6 +23,12 @@ public class OrExpression
     }
 
     @Override
+    public BinaryExpression getNewInstance( Expression leftOperand, Expression rightOperand )
+    {
+        return new OrExpression( leftOperand, rightOperand );
+    }
+
+    @Override
     public Type accept( IExpressionElementVisitor visitor )
     {
         return visitor.visitOrExpression( this );

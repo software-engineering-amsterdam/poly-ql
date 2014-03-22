@@ -23,6 +23,12 @@ public class GreaterEqualExpression
     }
 
     @Override
+    public BinaryExpression getNewInstance( Expression leftOperand, Expression rightOperand )
+    {
+        return new GreaterEqualExpression( leftOperand, rightOperand );
+    }
+
+    @Override
     public Type accept( IExpressionElementVisitor visitor )
     {
         return visitor.visitGreaterEqualExpression( this );

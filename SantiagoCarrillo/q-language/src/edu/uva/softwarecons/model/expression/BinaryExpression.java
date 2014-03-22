@@ -30,4 +30,6 @@ public abstract class BinaryExpression
     {
         return rightExpression;
     }
+
+    public abstract BinaryExpression getNewInstance( Expression leftOperand, Expression rightOperand );
 }

@@ -23,6 +23,12 @@ public class AndExpression
     }
 
     @Override
+    public BinaryExpression getNewInstance( Expression leftOperand, Expression rightOperand )
+    {
+        return new AndExpression( leftOperand, rightOperand );
+    }
+
+    @Override
     public Type accept( IExpressionElementVisitor visitor )
     {
         return visitor.visitAndExpression( this );

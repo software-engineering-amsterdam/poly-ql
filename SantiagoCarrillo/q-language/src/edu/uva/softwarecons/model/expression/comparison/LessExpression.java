@@ -23,6 +23,12 @@ public class LessExpression
     }
 
     @Override
+    public BinaryExpression getNewInstance( Expression leftOperand, Expression rightOperand )
+    {
+        return new LessExpression( leftOperand, rightOperand );
+    }
+
+    @Override
     public Type accept( IExpressionElementVisitor visitor )
     {
         return visitor.visitLessExpression( this );
@@ -33,4 +39,6 @@ public class LessExpression
     {
         return visitor.visitLessExpression( this );
     }
+
+
 }

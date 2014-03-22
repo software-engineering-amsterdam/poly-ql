@@ -2,7 +2,8 @@ package edu.uva.softwarecons.checker;
 
 import edu.uva.softwarecons.checker.error.CyclicDependencyError;
 import edu.uva.softwarecons.checker.error.DuplicateQuestionError;
-import edu.uva.softwarecons.checker.error.InvalidTypeError;
+import edu.uva.softwarecons.checker.error.InvalidComputedQuestionExpressionType;
+import edu.uva.softwarecons.checker.error.InvalidComputedQuestionType;
 import edu.uva.softwarecons.checker.error.QuestionnaireError;
 import edu.uva.softwarecons.checker.error.UndefinedReferenceError;
 import edu.uva.softwarecons.checker.warning.DuplicatedQuestionLabelWarning;
@@ -13,7 +14,12 @@ import edu.uva.softwarecons.model.question.BasicQuestion;
 import edu.uva.softwarecons.model.question.ComputedQuestion;
 import edu.uva.softwarecons.model.question.IfQuestion;
 import edu.uva.softwarecons.model.question.Question;
-import edu.uva.softwarecons.model.type.NumericType;
+import edu.uva.softwarecons.model.type.BooleanType;
+import edu.uva.softwarecons.model.type.DateType;
+import edu.uva.softwarecons.model.type.DecimalType;
+import edu.uva.softwarecons.model.type.IntegerType;
+import edu.uva.softwarecons.model.type.MoneyType;
+import edu.uva.softwarecons.model.type.StringType;
 import edu.uva.softwarecons.model.type.Type;
 import edu.uva.softwarecons.visitor.form.FormBaseVisitor;
 
@@ -44,6 +50,8 @@ public class TypeChecker
 
     private List<QuestionnaireWarning> warnings = new ArrayList<QuestionnaireWarning>();
 
+    final ExpressionTypeChecker expressionTypeChecker = new ExpressionTypeChecker();
+
 
     @Override
     public void visitForm( Form form )
@@ -59,7 +67,7 @@ public class TypeChecker
     {
         validateDuplicatedQuestion( question );
         questionTypes.put( question.getId(), question.getType() );
-        verifyDuplicatedQuestionText( question );
+        verifyIfQuestionTextIsDuplicated( question );
     }
 
 
@@ -68,23 +76,35 @@ public class TypeChecker
     {
         validateDuplicatedQuestion( question );
         questionTypes.put( question.getId(), question.getType() );
-        question.getExpression().accept( this );
-        verifyDuplicatedQuestionText( question );
+        validateComputedQuestionTypes( question );
+        verifyIfQuestionTextIsDuplicated( question );
+    }
+
+    private void validateComputedQuestionTypes( ComputedQuestion question )
+    {
+        Type type = question.getExpression().accept( this );
+        if ( !type.equals( new IntegerType() ) )
+        {
+            errors.add( new InvalidComputedQuestionExpressionType( question.getId() ) );
+        }
+        if ( !question.getType().equals( new IntegerType() ) )
+        {
+            errors.add( new InvalidComputedQuestionType( question.getId() ) );
+
+        }
     }
 
     @Override
     public void visitIfQuestion( IfQuestion question )
     {
         question.getExpression().accept( this );
+        expressionTypeChecker.validateType( question.getConditionText(), question.getExpression(), questionTypes,
+                                            getBooleanExpressionInvalidTypesList() );
         if ( null != question.getQuestions() )
         {
             for ( Question q : question.getQuestions() )
             {
                 q.accept( this );
-                if ( new BasicQuestion( null, null, null ).equals( q ) )
-                {
-                    validateDuplicatedQuestion( (BasicQuestion) q );
-                }
             }
         }
         if ( null != question.getElseQuestion() )
@@ -92,10 +112,6 @@ public class TypeChecker
             for ( Question q : question.getElseQuestion().getQuestions() )
             {
                 q.accept( this );
-                if ( new BasicQuestion( null, null, null ).equals( q ) )
-                {
-                    validateDuplicatedQuestion( (BasicQuestion) q );
-                }
             }
         }
     }
@@ -109,7 +125,7 @@ public class TypeChecker
             errors.add( new CyclicDependencyError( expression.getId() ) );
         }
         referencedQuestions.add( expression.getId() );
-        return null;
+        return questionTypes.get( expression.getId() );
     }
 
 
@@ -122,7 +138,7 @@ public class TypeChecker
         }
     }
 
-    private void verifyDuplicatedQuestionText( BasicQuestion question )
+    private void verifyIfQuestionTextIsDuplicated( BasicQuestion question )
     {
         if ( questionsText.containsKey( question.getText() ) )
         {
@@ -139,49 +155,9 @@ public class TypeChecker
     {
         form.accept( this );
         findUndefinedVariables();
-        ExpressionTypeChecker expressionTypeChecker = new ExpressionTypeChecker( questionTypes );
-        checkComputedQuestionExpressionsType( form, expressionTypeChecker );
-        checkIfStatementExpressionTypes( form, expressionTypeChecker );
         errors.addAll( expressionTypeChecker.getErrors() );
     }
 
-
-    private void checkIfStatementExpressionTypes( Form form, ExpressionTypeChecker expressionTypeChecker )
-    {
-        IfQuestion ifQuestion = new IfQuestion( null, null, null, null );
-        for ( Question q : form.getQuestions() )
-        {
-            if ( ifQuestion.equals( q ) )
-            {
-                expressionTypeChecker.validateType( ( (IfQuestion) q ).getCondition(),
-                                                    ( (IfQuestion) q ).getExpression() );
-            }
-        }
-    }
-
-    //TODO this method is wrong. you need to check for the valid types of a computations
-    //TODO you need to validate the proper types for the IfQuestions
-    //TODO create separate type of errors for the TODOS above !!
-    private void checkComputedQuestionExpressionsType( Form form, ExpressionTypeChecker expressionTypeChecker )
-    {
-        ComputedQuestion computedQuestion = new ComputedQuestion( null, null, null, null );
-        for ( Question q : form.getQuestions() )
-        {
-            if ( computedQuestion.equals( q ) )
-            {
-                ComputedQuestion question = (ComputedQuestion) q;
-                if ( question.getType() instanceof NumericType )
-                {
-                    expressionTypeChecker.validateType( question.getId(), question.getExpression() );
-                }
-                else
-                {
-                    errors.add( new InvalidTypeError( question.getId(), NumericType.class.getSimpleName(),
-                                                      question.getType().toString() ) );
-                }
-            }
-        }
-    }
 
     private void findUndefinedVariables()
     {
@@ -203,4 +179,39 @@ public class TypeChecker
     {
         return warnings;
     }
+
+
+    public static List<Type> getSingleInvalidTypeList( Type type )
+    {
+        List<Type> expectedTypes = new ArrayList<Type>();
+        expectedTypes.add( type );
+        return expectedTypes;
+    }
+
+    public static List<Type> getComparableExpressionInvalidTypesList()
+    {
+        List<Type> expectedTypes = getSingleInvalidTypeList( new BooleanType() );
+        expectedTypes.add( new StringType() );
+        return expectedTypes;
+    }
+
+    public static List<Type> getArithmeticExpressionInvalidTypesList()
+    {
+        List<Type> expectedTypes = getSingleInvalidTypeList( new StringType() );
+        expectedTypes.add( new BooleanType() );
+        expectedTypes.add( new DateType() );
+        return expectedTypes;
+    }
+
+    public static List<Type> getBooleanExpressionInvalidTypesList()
+    {
+        List<Type> expectedTypes = getSingleInvalidTypeList( new StringType() );
+        expectedTypes.add( new DateType() );
+        expectedTypes.add( new DecimalType() );
+        expectedTypes.add( new IntegerType() );
+        expectedTypes.add( new MoneyType() );
+        return expectedTypes;
+    }
+
+
 }

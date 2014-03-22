@@ -31,6 +31,11 @@ public class InvalidTypeError
         super( "InvalidType: " + type + " for operand: " + operand );
     }
 
+    public InvalidTypeError( String questionId, String type )
+    {
+        super( "InvalidType: " + type + " for question: " + questionId );
+    }
+
     @Override
     public boolean equals( Object obj )
     {

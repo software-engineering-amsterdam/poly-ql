@@ -23,6 +23,12 @@ public class AddExpression
         super( leftOperand, rightOperand );
     }
 
+    @Override
+    public BinaryExpression getNewInstance( Expression leftOperand, Expression rightOperand )
+    {
+        return new AddExpression( leftOperand, rightOperand );
+    }
+
 
     @Override
     public Type accept( IExpressionElementVisitor visitor )

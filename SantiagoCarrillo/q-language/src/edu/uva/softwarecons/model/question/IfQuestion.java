@@ -58,7 +58,7 @@ public class IfQuestion
         return o instanceof IfQuestion;
     }
 
-    public String getCondition()
+    public String getConditionText()
     {
         return condition;
     }

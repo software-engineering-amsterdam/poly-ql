@@ -19,7 +19,6 @@ import edu.uva.softwarecons.model.expression.logical.AndExpression;
 import edu.uva.softwarecons.model.expression.logical.NotExpression;
 import edu.uva.softwarecons.model.expression.logical.OrExpression;
 import edu.uva.softwarecons.model.type.BooleanType;
-import edu.uva.softwarecons.model.type.DateType;
 import edu.uva.softwarecons.model.type.Type;
 import edu.uva.softwarecons.visitor.expression.IExpressionElementVisitor;
 
@@ -34,67 +33,56 @@ import java.util.Map;
  *         Date: 3/3/14
  */
 
-//TODO Propagate types upward by returning the Type and check at operations Type.isInteger()
 
 public class ExpressionTypeChecker
     implements IExpressionElementVisitor
 {
 
-    private static final String ADD_OPERATOR = "+";
-
-    private static final String SUBTRACT_OPERATOR = "-";
-
-    private static final String MULTIPLICATION_OPERATOR = "*";
-
-    private static final String DIVIDE_OPERATOR = "/";
-
-    private static final String GREATER_OPERATOR = ">";
-
-    private static final String GREATER_EQUAL_OPERATOR = ">=";
-
-    private static final String LESS_OPERATOR = "<";
-
-    private static final String LESS_EQUAL_OPERATOR = "<=";
-
-    private static final String EQUAL_OPERATOR = "==";
-
-    private static final String NOT_EQUAL_OPERATOR = "!=";
-
-    private static final String AND_OPERATOR = "&&";
-
-    private static final String OR_OPERATOR = "||";
-
-    private static final String NOT_OPERATOR = "!";
-
     private List<QuestionnaireError> errors = new ArrayList<QuestionnaireError>();
 
-    private Map<String, Type> questionTypes;
+    private Map<String, Type> questionTypesContext;
 
     private String currentQuestionId;
 
 
-    public ExpressionTypeChecker( Map<String, Type> questionTypes )
-    {
-        this.questionTypes = questionTypes;
-    }
-
-    public void validateType( String questionId, Expression expression )
+    public void validateType( String questionId, Expression expression, Map<String, Type> questionTypesContext,
+                              List<Type> invalidTypes )
     {
         this.currentQuestionId = questionId;
-        expression.accept( this );
+        this.questionTypesContext = questionTypesContext;
+        Type type = expression.accept( this );
+        containsInvalidType( questionId, invalidTypes, type );
+
     }
+
+    private void containsInvalidType( String questionId, List<Type> invalidTypes, Type type )
+    {
+        if ( null != type && null != invalidTypes )
+        {
+            for ( Type invalidType : invalidTypes )
+            {
+                if ( type.equals( invalidType ) )
+                {
+                    errors.add( new InvalidTypeError( questionId, type ) );
+                    break;
+                }
+            }
+        }
+
+    }
+
 
     @Override
     public Type visitEqualExpression( EqualExpression expression )
     {
-        validateBinaryExpressionTypeChildTypes( expression );
+        validateBinaryExpressionTypesMatch( expression );
         return new BooleanType();
     }
 
     @Override
     public Type visitNotEqualExpression( NotEqualExpression expression )
     {
-        validateBinaryExpressionTypeChildTypes( expression );
+        validateBinaryExpressionTypesMatch( expression );
         return new BooleanType();
     }
 
@@ -102,74 +90,78 @@ public class ExpressionTypeChecker
     @Override
     public Type visitGreaterEqualExpression( GreaterEqualExpression expression )
     {
-        checkBinaryExpressionInvalidTypeError( expression, new BooleanType(), GREATER_EQUAL_OPERATOR );
-        validateBinaryExpressionTypeChildTypes( expression );
+        checkBinaryExpressionInvalidTypeError( expression, TypeChecker.getComparableExpressionInvalidTypesList(),
+                                               ">=" );
+        validateBinaryExpressionTypesMatch( expression );
         return new BooleanType();
     }
 
     @Override
     public Type visitGreaterExpression( GreaterExpression expression )
     {
-        checkBinaryExpressionInvalidTypeError( expression, new BooleanType(), GREATER_OPERATOR );
-        validateBinaryExpressionTypeChildTypes( expression );
+        checkBinaryExpressionInvalidTypeError( expression, TypeChecker.getComparableExpressionInvalidTypesList(), ">" );
+        validateBinaryExpressionTypesMatch( expression );
         return new BooleanType();
     }
 
     @Override
     public Type visitLessEqualExpression( LessEqualExpression expression )
     {
-        checkBinaryExpressionInvalidTypeError( expression, new BooleanType(), LESS_OPERATOR );
-        return validateBinaryExpressionTypeChildTypes( expression );
+        checkBinaryExpressionInvalidTypeError( expression, TypeChecker.getComparableExpressionInvalidTypesList(),
+                                               "<=" );
+        validateBinaryExpressionTypesMatch( expression );
+        return new BooleanType();
     }
 
     @Override
     public Type visitLessExpression( LessExpression expression )
     {
-        checkBinaryExpressionInvalidTypeError( expression, new BooleanType(), LESS_EQUAL_OPERATOR );
-        return validateBinaryExpressionTypeChildTypes( expression );
+        checkBinaryExpressionInvalidTypeError( expression, TypeChecker.getComparableExpressionInvalidTypesList(), "<" );
+        validateBinaryExpressionTypesMatch( expression );
+        return new BooleanType();
     }
 
     @Override
     public Type visitAndExpression( AndExpression expression )
     {
-        return validateBinaryExpressionTypes( expression, new BooleanType(), AND_OPERATOR );
+        return validateBinaryExpressionTypesForGivenType( expression, new BooleanType(), "&&" );
     }
 
     @Override
     public Type visitOrExpression( OrExpression expression )
     {
-        return validateBinaryExpressionTypes( expression, new BooleanType(), OR_OPERATOR );
+        return validateBinaryExpressionTypesForGivenType( expression, new BooleanType(), "||" );
     }
 
     @Override
     public Type visitNotExpression( NotExpression expression )
     {
-        return validateBinaryExpressionTerm( expression.getArgument(), new BooleanType(), NOT_OPERATOR );
+        return validateBinaryExpressionTerm( expression.getArgument(), new BooleanType(), "!" );
     }
 
 
     @Override
     public Type visitAddExpression( AddExpression expression )
     {
-        return validateNumericExpressionType( expression, ADD_OPERATOR );
+        return validateNumericExpressionType( expression, "+" );
     }
 
     @Override
     public Type visitMulExpression( MulExpression expression )
     {
-        return validateNumericExpressionType( expression, MULTIPLICATION_OPERATOR );
+        return validateNumericExpressionType( expression, "*" );
     }
 
     @Override
     public Type visitDivExpression( DivExpression expression )
     {
-        return validateNumericExpressionType( expression, DIVIDE_OPERATOR );
+        return validateNumericExpressionType( expression, "/" );
     }
 
     @Override
     public Type visitSubExpression( SubExpression expression )
     {
-        return validateNumericExpressionType( expression, SUBTRACT_OPERATOR );
+        return validateNumericExpressionType( expression, "-" );
     }
 
 
@@ -187,29 +179,18 @@ public class ExpressionTypeChecker
     @Override
     public Type visitIdExpression( IdExpression idExpression )
     {
-        return questionTypes.get( idExpression.getId() );
+        return questionTypesContext.get( idExpression.getId() );
     }
 
 
-    private void validateIdExpressionType( IdExpression expression, Type expectedType )
+    private void checkBinaryExpressionInvalidTypeError( BinaryExpression expression, List<Type> invalidTypes,
+                                                        String operator )
     {
-        if ( !hasValidType( expression, expectedType ) )
+        for ( Type invalidType : invalidTypes )
         {
-            errors.add( new InvalidTypeError( currentQuestionId, expression.getId(), expectedType.toString(),
-                                              questionTypes.get( expression.getId() ).toString() ) );
+            checkExpressionInvalidTypeError( expression.getLeftExpression(), invalidType, operator );
+            checkExpressionInvalidTypeError( expression.getLeftExpression(), invalidType, operator );
         }
-    }
-
-    private boolean hasValidType( IdExpression expression, Type expectedType )
-    {
-        return questionTypes.containsKey( expression.getId() ) && expectedType.equals(
-            questionTypes.get( expression.getId() ) );
-    }
-
-    private void checkBinaryExpressionInvalidTypeError( BinaryExpression expression, Type invalidType, String operator )
-    {
-        checkExpressionInvalidTypeError( expression.getLeftExpression(), invalidType, operator );
-        checkExpressionInvalidTypeError( expression.getLeftExpression(), invalidType, operator );
     }
 
     private void checkExpressionInvalidTypeError( Expression expression, Type invalidType, String operator )
@@ -220,7 +201,7 @@ public class ExpressionTypeChecker
         }
     }
 
-    private Type validateBinaryExpressionTypeChildTypes( BinaryExpression expression )
+    private Type validateBinaryExpressionTypesMatch( BinaryExpression expression )
     {
         Type leftExpressionType = expression.getLeftExpression().accept( this );
         Type rightExpressionType = expression.getRightExpression().accept( this );
@@ -232,7 +213,8 @@ public class ExpressionTypeChecker
         return leftExpressionType;
     }
 
-    private Type validateBinaryExpressionTypes( BinaryExpression expression, Type expectedType, String operand )
+    private Type validateBinaryExpressionTypesForGivenType( BinaryExpression expression, Type expectedType,
+                                                            String operand )
     {
         Type leftExpressionType = expression.getLeftExpression().accept( this );
         Type rightExpressionType = expression.getRightExpression().accept( this );
@@ -249,9 +231,11 @@ public class ExpressionTypeChecker
 
     private Type validateNumericExpressionType( BinaryExpression expression, String operator )
     {
-        checkBinaryExpressionInvalidTypeError( expression, new BooleanType(), operator );
-        checkBinaryExpressionInvalidTypeError( expression, new DateType(), operator );
-        return validateBinaryExpressionTypeChildTypes( expression );
+        checkBinaryExpressionInvalidTypeError( expression, TypeChecker.getArithmeticExpressionInvalidTypesList(),
+                                               operator );
+        checkBinaryExpressionInvalidTypeError( expression, TypeChecker.getArithmeticExpressionInvalidTypesList(),
+                                               operator );
+        return validateBinaryExpressionTypesMatch( expression );
     }
 
     public List<QuestionnaireError> getErrors()
