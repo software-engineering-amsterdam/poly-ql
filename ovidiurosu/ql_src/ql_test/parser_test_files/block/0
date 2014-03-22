@@ -1,0 +1,4 @@
+{
+    a: "a" boolean
+    b: "b" integer
+}

@@ -1,10 +1,10 @@
 package ql.ast.visitor_elements;
 
-import ql.ast.expression.value.BooleanValue;
-import ql.ast.expression.value.DecimalValue;
-import ql.ast.expression.value.IntegerValue;
-import ql.ast.expression.value.NullValue;
-import ql.ast.expression.value.StringValue;
+import ql.ast.expression_value.BooleanValue;
+import ql.ast.expression_value.DecimalValue;
+import ql.ast.expression_value.IntegerValue;
+import ql.ast.expression_value.NullValue;
+import ql.ast.expression_value.StringValue;
 
 /**
  * @author orosu

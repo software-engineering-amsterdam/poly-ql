@@ -17,4 +17,10 @@ public class Notice extends Exception implements IError
     {
         return 10;
     }
+
+    @Override
+    public boolean equals(IError error)
+    {
+        return error instanceof Notice && this.getMessage().equals(error.getMessage());
+    }
 }

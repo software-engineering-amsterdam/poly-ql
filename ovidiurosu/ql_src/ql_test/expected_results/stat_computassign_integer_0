@@ -1,1 +1,0 @@
-(init (form form test (block { (stat question : "How many times?" (type integer)) (stat question2 : "Value:" (type integer) ( (expr (expr question) - (expr (numLiteral 1))) )) })))

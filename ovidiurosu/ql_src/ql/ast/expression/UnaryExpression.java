@@ -12,7 +12,7 @@ public abstract class UnaryExpression implements IExpression
         this._expression = expression;
     }
 
-    public IExpression getExpression()
+    public IExpression getSubExpression()
     {
         return this._expression;
     }

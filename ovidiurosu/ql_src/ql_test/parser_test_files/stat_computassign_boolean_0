@@ -1,5 +1,0 @@
-// Computed Assign Statement with Boolean Type
-form test {
-    question: "Is it true?" boolean(true && false)
-    question2: "Is it false?" boolean(question || true)
-}

@@ -1,12 +1,14 @@
 package ql.type_checker;
 
+import java.util.Iterator;
 import java.util.Map.Entry;
-import java.util.Set;
 
-import ql.ast.expression.ExpressionIdsVisitor;
 import ql.ast.expression.IExpression;
 import ql.ast.expression.Id;
+import ql.ast.expression.IdSet;
+import ql.ast.expression_evaluator.ExpressionIdSetBuilderVisitor;
 import ql.ast.statement.IAssignment;
+import ql.error.ErrorList;
 import ql.error.TypeError;
 import ql.error.Warning;
 
@@ -17,9 +19,10 @@ public class AssignmentChecker extends Checker
 {
     private final IAssignment _assignment;
 
-    public AssignmentChecker(TypeEnvironment typeEnvironment, IAssignment assignment)
+    public AssignmentChecker(TypeEnvironment typeEnvironment, ErrorList errorList,
+        IAssignment assignment)
     {
-        this._typeEnvironment = typeEnvironment;
+        super(typeEnvironment, errorList);
         this._assignment = assignment;
     }
 
@@ -37,10 +40,10 @@ public class AssignmentChecker extends Checker
         }
 
         //ERROR This Id is already used by another assignment of a different type
-        this._typeEnvironment.addError(
+        this._errorList.add(
             new TypeError("The ID '" + this._assignment.getId() +
-                "' is already used by another assignment of type '" +
-                this._typeEnvironment.getType(this._assignment.getId()).toString() + "'!")
+                "' is already used by another assignment with a different type " +
+                this._typeEnvironment.getType(this._assignment.getId()).toString() + "!")
         );
     }
 
@@ -49,9 +52,11 @@ public class AssignmentChecker extends Checker
      */
     public void checkLabelForDuplicates()
     {
-        for (Entry<String, IAssignment> assign: this._typeEnvironment.getAssignments().entrySet()) {
-            if (!assign.getValue().getLabel().equals(this._assignment.getLabel()) ||
-                assign.getValue().getId().equals(this._assignment.getId()))
+        Iterator<Entry<String, IAssignment>> iterator = this._typeEnvironment.getAssignmentsIterator();
+        while (iterator.hasNext()) {
+            Entry<String, IAssignment> assignment = iterator.next();
+            if (!assignment.getValue().getLabel().equals(this._assignment.getLabel()) ||
+                assignment.getValue().getId().equals(this._assignment.getId()))
             {
                 // If the assignments have different labels -> skip
                 // If the assignments have the same id -> skip
@@ -59,10 +64,10 @@ public class AssignmentChecker extends Checker
             }
 
             //WARNING This label is already used by another assignment
-            this._typeEnvironment.addError(
+            this._errorList.add(
                 new Warning("The label '" + this._assignment.getLabel() +
                     "' is already used by assignment with ID '" +
-                    assign.getKey() + "'!")
+                    assignment.getKey() + "'!")
             );
         }
     }
@@ -74,19 +79,20 @@ public class AssignmentChecker extends Checker
      */
     public void checkCyclicDependencies(IExpression expression)
     {
-        Set<Id> ids = expression.accept(new ExpressionIdsVisitor());
-        for (Id id: ids) {
-            if (!id.getValue().equals(this._assignment.getId())) {
+        IdSet idSet = expression.accept(new ExpressionIdSetBuilderVisitor());
+        Iterator<Id> iterator = idSet.iterator();
+        while(iterator.hasNext()) {
+            if (!iterator.next().getValue().equals(this._assignment.getId())) {
                 continue;
             }
 
             //ERROR This id is also used in it's expression
-            this._typeEnvironment.addError(
+            this._errorList.add(
                 new TypeError("The id of this assignment ('" + this._assignment.getId() +
                     "') is also used in it's expression! Cyclic Dependencies!")
             );
         }
     }
 
-    //TODO Check Cyclic Dependencies like if (x) { y: "Y?" boolean } \n if (y) { x: "X?" boolean }
+    //TODO maybe Check Cyclic Dependencies like if (x) { y: "Y?" boolean } \n if (y) { x: "X?" boolean }
 }

@@ -5,4 +5,5 @@ package ql.ast.expression.literal;
  */
 public interface IEnumElement
 {
+    public String enumToString();
 }

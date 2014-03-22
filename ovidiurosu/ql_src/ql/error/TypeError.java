@@ -17,4 +17,10 @@ public class TypeError extends Exception implements IError
     {
         return 1;
     }
+
+    @Override
+    public boolean equals(IError error)
+    {
+        return error instanceof TypeError && this.getMessage().equals(error.getMessage());
+    }
 }

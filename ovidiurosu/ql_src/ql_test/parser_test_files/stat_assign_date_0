@@ -1,5 +1,0 @@
-// Assign Statement with Date Type
-form test {
-    question: "Date1: " date
-    question2: "Date2:" date
-}

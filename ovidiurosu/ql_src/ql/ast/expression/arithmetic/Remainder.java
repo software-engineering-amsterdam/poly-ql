@@ -23,6 +23,13 @@ public class Remainder extends BinaryExpression
     }
 
     @Override
+    public String toString()
+    {
+        return "(expression " + this.getLeftSubExpression().toString() +
+               " % " + this.getRightSubExpression().toString() + ")";
+    }
+
+    @Override
     public <T> T accept(IExpressionElementVisitor<T> visitor)
     {
         return visitor.visit(this);

@@ -1,5 +1,0 @@
-// Computed Assign Statement with Text Type
-form test {
-    question1: "Name: " text
-    name: "Your Name is: " text(question1) 
-}
