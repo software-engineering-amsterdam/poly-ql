@@ -16,36 +16,43 @@
  */
 package construction.Types;
 
+import construction.Values.BoolValue;
+import construction.Values.Value;
+
 public class ErrorType extends AbstractIType {
 
     boolean value;
     int line;
-    
+
     public ErrorType(int line) {
         this.line = line;
     }
 
-    public ErrorType()
-    {
-        
+    public ErrorType() {
+
     }
-    
+
     public void setValue() {
     }
 
     public String toString() {
         return "Undefined";
     }
-    
-    public boolean isCompatible(IType iType)
-    {
-        if(iType.isErrorCompatible()) return true;
+
+    public boolean isCompatible(IType iType) {
+        if (iType.isErrorCompatible()) {
+            return true;
+        }
         return false;
     }
-    
-    public boolean isErrorCompatible()
-    {
+
+    public boolean isErrorCompatible() {
         return true;
     }
-    
+
+    @Override
+    public Value getUndefinedValue() {
+        return new BoolValue(false);
+    }
+
 }

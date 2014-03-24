@@ -22,12 +22,13 @@ import construction.ErrorTypes.InvalidOperandError;
 import construction.ErrorTypes.TypeError;
 import construction.Types.BoolType;
 import construction.Types.IType;
+import construction.Values.IntValue;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class QuestionVisitor implements Visitor {
+public class QuestionTypeCheckVisitor implements Visitor {
 
     Map<String, IType> memory = new HashMap<String, IType>();
     List<TypeError> typeErrors = new ArrayList();
@@ -60,6 +61,7 @@ public class QuestionVisitor implements Visitor {
                 typeErrors.add(new InvalidOperandError(cq.getCondition().getType(memory), new BoolType(), cq.getCondition().getLine()));
             }
         }
+      
         scope++;
         for (GeneralQuestion generalQuestion : cq.getQuestions()) {
          //   System.out.println("Scope: " + scope);

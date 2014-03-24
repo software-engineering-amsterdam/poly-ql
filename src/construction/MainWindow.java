@@ -19,7 +19,7 @@ package construction;
 import construction.ErrorTypes.TypeError;
 import construction.QuestionElements.GeneralQuestion;
 import construction.QuestionElements.QuestionForm;
-import construction.QuestionElements.QuestionVisitor;
+import construction.QuestionElements.QuestionTypeCheckVisitor;
 import construction.Types.IType;
 import java.awt.Component;
 import java.io.FileInputStream;
@@ -166,7 +166,7 @@ public class MainWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void TypeChecker(List<GeneralQuestion> questionList, HashMap<String, IType> memory) {
-        QuestionVisitor v = new QuestionVisitor();
+      QuestionTypeCheckVisitor v = new QuestionTypeCheckVisitor();
         for (GeneralQuestion gq : questionList) {
             gq.accept(v);
         }

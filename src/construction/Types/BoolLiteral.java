@@ -18,6 +18,8 @@ package construction.Types;
 
 import construction.ErrorTypes.TypeError;
 import construction.Operators.Expression;
+import construction.Values.BoolValue;
+import construction.Values.Value;
 import java.util.List;
 import java.util.Map;
 
@@ -56,6 +58,11 @@ public class BoolLiteral extends BoolType implements Expression {
     @Override
     public int getLine() {
         return line;
+    }
+
+    @Override
+    public Value getValue(Map<String, Value> map) {
+       return new BoolValue(value);
     }
 
 }

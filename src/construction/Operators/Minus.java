@@ -15,8 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package construction.Operators;
+
 import construction.Types.IType;
 import construction.Types.IntType;
+import construction.Values.IntValue;
+import construction.Values.Value;
 
 import java.util.Map;
 
@@ -35,4 +38,10 @@ public class Minus extends BinaryOperator {
         return new IntType();
     }
 
+    @Override
+    public Value getValue(Map<String, Value> map) {
+        IntValue lhv = (IntValue) leftHandExpression.getValue(map);
+        IntValue rhv = (IntValue) rightHandExpression.getValue(map);
+        return new IntValue(lhv.getIntValue() - rhv.getIntValue());
+    }
 }

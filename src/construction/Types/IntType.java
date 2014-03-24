@@ -16,6 +16,9 @@
  */
 package construction.Types;
 
+import construction.Values.IntValue;
+import construction.Values.Value;
+
 public class IntType extends AbstractIType {
 
     public IntType() {
@@ -36,5 +39,10 @@ public class IntType extends AbstractIType {
 
     public String toString() {
         return "integer";
+    }
+    
+     @Override
+    public Value getUndefinedValue() {
+        return new IntValue(0);
     }
 }

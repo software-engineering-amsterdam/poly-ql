@@ -18,7 +18,7 @@ package construction.QuestionElements;
 
 import construction.Types.IType;
 
-public class Question implements GeneralQuestion,Visitable {
+public class Question implements GeneralQuestion, Visitable {
 
     private final String name;
     private final String label;
@@ -70,7 +70,17 @@ public class Question implements GeneralQuestion,Visitable {
 
     @Override
     public int getLine() {
-       return line;
+        return line;
+    }
+
+    public boolean equals(Object o) {
+        if (o instanceof Question) {
+            Question tmpQuestion = (Question) o;
+            if (tmpQuestion.getQuestionName().equals(name)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

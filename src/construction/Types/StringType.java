@@ -16,6 +16,9 @@
  */
 package construction.Types;
 
+import construction.Values.StringValue;
+import construction.Values.Value;
+
 public class StringType extends AbstractIType {
 
     public StringType() {
@@ -36,5 +39,10 @@ public class StringType extends AbstractIType {
 
     public String toString() {
         return "string";
+    }
+    
+     @Override
+    public Value getUndefinedValue() {
+        return new StringValue("");
     }
 }

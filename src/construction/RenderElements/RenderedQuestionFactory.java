@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2014 svene_000
  *
  * This program is free software: you can redistribute it and/or modify
@@ -14,15 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package construction.Types;
 
-import construction.Values.Value;
+package construction.RenderElements;
 
-public interface IType {
-    public boolean isCompatible(IType iType);
-    public boolean isBooleanCompatible();
-    public boolean isIntegerCompatible();
-    public boolean isStringCompatible();
-    public boolean isErrorCompatible();
-    public Value getUndefinedValue();
+/**
+ *
+ * @author svene_000
+ */
+public class RenderedQuestionFactory {
+ //   public RenderedQuestion render();
 }

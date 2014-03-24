@@ -20,6 +20,8 @@ import construction.ErrorTypes.InvalidOperandError;
 import construction.Types.IType;
 import construction.Types.BoolType;
 import construction.ErrorTypes.TypeError;
+import construction.Values.BoolValue;
+import construction.Values.Value;
 import java.util.List;
 import java.util.Map;
 
@@ -51,6 +53,16 @@ public class And extends BinaryOperator {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public Value getValue(Map<String, Value> map) {
+        BoolValue lhv = (BoolValue) leftHandExpression.getValue(map);
+        BoolValue rhv = (BoolValue) rightHandExpression.getValue(map);
+        if (lhv.getBoolValue() & rhv.getBoolValue()) {
+            return new BoolValue(true);
+        }
+        return new BoolValue(false);
     }
 
 }

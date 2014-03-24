@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2014 svene_000
  *
  * This program is free software: you can redistribute it and/or modify
@@ -14,15 +14,34 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package construction.Types;
 
+import construction.ErrorTypes.TypeError;
+import construction.Operators.Expression;
+import construction.Values.BoolValue;
 import construction.Values.Value;
+import java.util.List;
+import java.util.Map;
 
-public interface IType {
-    public boolean isCompatible(IType iType);
-    public boolean isBooleanCompatible();
-    public boolean isIntegerCompatible();
-    public boolean isStringCompatible();
-    public boolean isErrorCompatible();
-    public Value getUndefinedValue();
+/**
+ *
+ * @author svene_000
+ */
+public abstract class Literal implements Expression {
+    int line;
+    
+    public Literal(int line)
+    {
+        this.line = line;
+    }
+
+    public boolean checkType(Map<String, IType> map, List<TypeError> typeErrors) {
+        return true;
+    }
+
+    public int getLine() {
+        return line;
+    }
+
 }

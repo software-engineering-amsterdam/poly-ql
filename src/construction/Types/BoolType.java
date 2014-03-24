@@ -16,11 +16,13 @@
  */
 package construction.Types;
 
+import construction.Values.BoolValue;
+import construction.Values.Value;
+
 public class BoolType extends AbstractIType {
 
     public BoolType() {
     }
-
 
     @Override
     public boolean isCompatible(IType iType) {
@@ -34,5 +36,10 @@ public class BoolType extends AbstractIType {
 
     public String toString() {
         return "boolean";
+    }
+
+    @Override
+    public Value getUndefinedValue() {
+        return new BoolValue(false);
     }
 }

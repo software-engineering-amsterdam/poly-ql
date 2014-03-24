@@ -20,6 +20,9 @@ import construction.Types.IType;
 import construction.Types.BoolType;
 import construction.ErrorTypes.InvalidOperandError;
 import construction.ErrorTypes.TypeError;
+import construction.Values.BoolValue;
+import construction.Values.IntValue;
+import construction.Values.Value;
 import java.util.List;
 import java.util.Map;
 
@@ -41,15 +44,23 @@ public class Equals extends BinaryOperator {
     @Override
     public boolean checkType(Map<String, IType> map, List<TypeError> typeErrors) {
         if (!leftHandExpression.checkType(map, typeErrors) || !rightHandExpression.checkType(map, typeErrors)) {
-            
+
             return false;
         }
-        if(!leftHandExpression.getType(map).isCompatible(rightHandExpression.getType(map)))
-        {
+        if (!leftHandExpression.getType(map).isCompatible(rightHandExpression.getType(map))) {
             typeErrors.add(new InvalidOperandError(leftHandExpression.getType(map), rightHandExpression.getType(map), leftHandExpression.getType(map), line));
             return false;
         }
         return true;
+    }
+
+    public Value getValue(Map<String, Value> map) {
+        Value lhv = leftHandExpression.getValue(map);
+        Value rhv = rightHandExpression.getValue(map);
+        if (lhv.equals(rhv)) {
+            return new BoolValue(true);
+        }
+        return new BoolValue(false);
     }
 
 }

@@ -18,6 +18,7 @@ package construction.Operators;
 
 import construction.Types.IType;
 import construction.ErrorTypes.TypeError;
+import construction.Values.Value;
 import java.util.List;
 import java.util.Map;
 
@@ -25,4 +26,5 @@ public interface Expression {
     public IType getType(Map<String,IType> map);
     public boolean checkType(Map<String,IType> map,List<TypeError> typeErrors);
     public int getLine();
+    public Value getValue(Map<String, Value> map);
 }

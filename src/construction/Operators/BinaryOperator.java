@@ -20,6 +20,7 @@ import construction.Types.IType;
 import construction.Types.IntType;
 import construction.ErrorTypes.InvalidOperandError;
 import construction.ErrorTypes.TypeError;
+import construction.Values.Value;
 import java.util.List;
 import java.util.Map;
 
@@ -68,6 +69,11 @@ public abstract class BinaryOperator implements Expression {
     @Override
     public int getLine() {
         return line;
+    }
+    
+    public Value getValue(Map<String, Value> map)
+    {
+        return null;
     }
 
 }

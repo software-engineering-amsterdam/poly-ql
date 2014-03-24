@@ -18,6 +18,8 @@ package construction.Types;
 
 import construction.ErrorTypes.TypeError;
 import construction.Operators.Expression;
+import construction.Values.IntValue;
+import construction.Values.Value;
 import java.util.List;
 import java.util.Map;
 
@@ -48,6 +50,11 @@ public class IntLiteral implements Expression {
     @Override
     public int getLine() {
         return line;
+    }
+
+    @Override
+    public Value getValue(Map<String, Value> map) {
+       return new IntValue(value);
     }
 
 }

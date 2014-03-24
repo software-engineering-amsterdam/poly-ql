@@ -16,8 +16,12 @@
  */
 package construction.Types;
 
-public class AbstractIType implements IType {
+import construction.Values.Value;
 
+public abstract class AbstractIType implements IType {
+
+   
+    
     @Override
     public boolean isCompatible(IType iType) {
         return false;

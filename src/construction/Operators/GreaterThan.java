@@ -18,6 +18,9 @@ package construction.Operators;
 
 import construction.Types.BoolType;
 import construction.Types.IType;
+import construction.Values.BoolValue;
+import construction.Values.IntValue;
+import construction.Values.Value;
 import java.util.Map;
 
 public class GreaterThan extends BinaryOperator {
@@ -34,6 +37,14 @@ public class GreaterThan extends BinaryOperator {
     @Override
     public IType getType(Map<String, IType> map) {
         return new BoolType();
+    }
+    
+        @Override
+    public Value getValue(Map<String, Value> map) {
+        IntValue lhv = (IntValue) leftHandExpression.getValue(map);
+        IntValue rhv = (IntValue) rightHandExpression.getValue(map);
+        if(lhv.getIntValue() > rhv.getIntValue()) return new BoolValue(true);
+        return new BoolValue(false);
     }
 
 }

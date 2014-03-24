@@ -19,7 +19,10 @@ package construction;
 import construction.ErrorTypes.TypeError;
 import construction.QuestionElements.GeneralQuestion;
 import construction.QuestionElements.QuestionForm;
-import construction.QuestionElements.QuestionVisitor;
+import construction.QuestionElements.QuestionTypeCheckVisitor;
+import construction.RenderElements.QuestionGUI;
+import construction.RenderElements.QuestionRenderVisitor;
+import construction.RenderElements.qst;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -36,8 +39,8 @@ public class Construction {
 
     }
 
-    private void TypeChecker(List<GeneralQuestion> questionList) {
-        QuestionVisitor v = new QuestionVisitor();
+    private int TypeChecker(List<GeneralQuestion> questionList) {
+        QuestionTypeCheckVisitor v = new QuestionTypeCheckVisitor();
         for (GeneralQuestion gq : questionList) {
             gq.accept(v);
         }
@@ -47,6 +50,33 @@ public class Construction {
             System.out.println("-------------------------------");
             t.print();
         }
+        return v.getTypeErrors().size();
+    }
+
+    private void renderer(QuestionForm qf) {
+        /*
+        QuestionRenderVisitor v = new QuestionRenderVisitor();
+        for (GeneralQuestion gq : qf.getQuestions()) {
+            gq.accept(v);
+        }
+        List<qst> rq = v.getRender2();
+        */
+        QuestionGUI g = new QuestionGUI(qf.getName(),qf.getQuestions());
+        g.render();
+/*
+        JFrame frame = new JFrame(qf.getName());
+        
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(new GridLayout(rq.size(),1));
+        for (qst trq : rq) {
+            JComponent jcp = trq.render();
+            frame.add(jcp, BorderLayout.CENTER);
+
+        }
+        frame.pack();
+        frame.setSize(400, 200);
+        frame.setVisible(true);
+*/
     }
 
     public void parseIT(String inputFile) {
@@ -59,7 +89,12 @@ public class Construction {
             testParser parser = new testParser(tokens);
             QuestionForm q = parser.questionaire().form;
 
-            TypeChecker(q.getQuestions());
+            int typeErrors = TypeChecker(q.getQuestions());
+            if (typeErrors == 0) {
+                renderer(q);
+            } else {
+                System.out.println("Type Errors were found, fix these before proceeding");
+            }
 
             //        q.render();
         } catch (RecognitionException ex) {

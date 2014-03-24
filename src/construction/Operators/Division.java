@@ -18,6 +18,8 @@ package construction.Operators;
 
 import construction.Types.IType;
 import construction.Types.IntType;
+import construction.Values.IntValue;
+import construction.Values.Value;
 import java.util.Map;
 
 public class Division extends BinaryOperator {
@@ -34,16 +36,23 @@ public class Division extends BinaryOperator {
     public IType getType(Map<String, IType> map) {
         return new IntType();
     }
-/*
+
     @Override
-    public boolean checkType(Map<String, IType> map, List<TypeError> typeErrors) {
-        if (!leftHandExpression.checkType(map, typeErrors) || !rightHandExpression.checkType(map, typeErrors)) {
-            return false;
-        }
-        if (!leftHandExpression.getType(map).isCompatible(new IntType()) || !rightHandExpression.getType(map).isCompatible(new IntType())) {
-            return false;
-        }
-        return true;
+    public Value getValue(Map<String, Value> map) {
+        IntValue lhv = (IntValue) leftHandExpression.getValue(map);
+        IntValue rhv = (IntValue) rightHandExpression.getValue(map);
+        return new IntValue(lhv.getIntValue() / rhv.getIntValue());
     }
-*/
+    /*
+     @Override
+     public boolean checkType(Map<String, IType> map, List<TypeError> typeErrors) {
+     if (!leftHandExpression.checkType(map, typeErrors) || !rightHandExpression.checkType(map, typeErrors)) {
+     return false;
+     }
+     if (!leftHandExpression.getType(map).isCompatible(new IntType()) || !rightHandExpression.getType(map).isCompatible(new IntType())) {
+     return false;
+     }
+     return true;
+     }
+     */
 }
