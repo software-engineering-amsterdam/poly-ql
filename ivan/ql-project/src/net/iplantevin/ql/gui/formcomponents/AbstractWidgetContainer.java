@@ -1,6 +1,5 @@
-package net.iplantevin.ql.gui.widgets;
+package net.iplantevin.ql.gui.formcomponents;
 
-import net.iplantevin.ql.ast.statements.Questionable;
 import net.iplantevin.ql.evaluation.UndefinedVal;
 import net.iplantevin.ql.gui.main.FormFrame;
 
@@ -25,23 +24,16 @@ public abstract class AbstractWidgetContainer extends AbstractFormComponent {
     private int preferredLabelWidth;
     private Dimension preferredWidgetSize;
 
-    /**
-     *
-     */
-    public AbstractWidgetContainer(Questionable questionable, FormFrame frame) {
+    public AbstractWidgetContainer(String identifier, String labelText, FormFrame frame) {
         super(frame);
-        setupWidgetContainer(questionable, frame);
+        setupWidgetContainer(identifier, labelText, frame);
     }
 
-    private void setupWidgetContainer(Questionable questionable, FormFrame frame) {
+    private void setupWidgetContainer(String identifier, String labelText, FormFrame frame) {
         preferredLabelWidth = frame.getPreferredLabelWidth();
         preferredWidgetSize = frame.getPreferredWidgetSize();
-        setIdentifier(questionable);
-        makeLabel(questionable);
-    }
-
-    private void setIdentifier(Questionable questionable) {
-        identifier = questionable.getName().getName();
+        this.identifier = identifier;
+        makeLabel(labelText);
     }
 
     public void setWidget(JComponent widget) {
@@ -56,13 +48,11 @@ public abstract class AbstractWidgetContainer extends AbstractFormComponent {
      * Creates a label that can span multiple lines by using html with a fixed
      * width. Escapes the string for html characters.
      *
-     * @param questionable the Question or Computation for which to create a label.
+     * @param labelText the Question or Computation for which to create a label.
      */
-    private void makeLabel(Questionable questionable) {
-        String label = questionable.getLabel().getText();
-        label = escapeHtml4(label);
+    private void makeLabel(String labelText) {
         String text = String.format("<html><div style=\"width:%dpx;\">%s</div></html>",
-                preferredLabelWidth, label);
+                preferredLabelWidth, escapeHtml4(labelText));
         questionLabel = new JLabel(text);
     }
 

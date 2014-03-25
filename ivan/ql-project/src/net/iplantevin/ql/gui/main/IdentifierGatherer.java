@@ -1,4 +1,4 @@
-package net.iplantevin.ql.gui.widgets;
+package net.iplantevin.ql.gui.main;
 
 import net.iplantevin.ql.ast.expressions.Expression;
 import net.iplantevin.ql.ast.expressions.Par;

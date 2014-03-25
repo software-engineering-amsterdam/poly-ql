@@ -1,4 +1,4 @@
-package net.iplantevin.ql.gui.widgets;
+package net.iplantevin.ql.gui.formcomponents;
 
 import net.iplantevin.ql.evaluation.Value;
 import net.iplantevin.ql.gui.main.FormFrame;
@@ -51,9 +51,6 @@ public abstract class AbstractFormComponent extends JPanel {
      * @param active whether this component should be active or not.
      */
     protected void setActive(boolean active) {
-        if (this.active == active) {
-            return;
-        }
         this.active = active;
         setVisible(active);
     }

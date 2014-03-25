@@ -1,4 +1,4 @@
-package net.iplantevin.ql.ast.visitors;
+package net.iplantevin.ql.ast.typechecking;
 
 import net.iplantevin.ql.ast.expressions.Expression;
 import net.iplantevin.ql.ast.expressions.Par;
@@ -37,13 +37,13 @@ import net.iplantevin.ql.ast.types.IntegerType;
 import net.iplantevin.ql.ast.types.Type;
 import net.iplantevin.ql.ast.types.TypeEnvironment;
 import net.iplantevin.ql.ast.types.UndefinedType;
+import net.iplantevin.ql.ast.visitors.IASTVisitor;
 import net.iplantevin.ql.errors.ASTError;
-import net.iplantevin.ql.errors.DuplicateLabelError;
+import net.iplantevin.ql.errors.ASTWarning;
+import net.iplantevin.ql.errors.DuplicateLabelWarning;
 import net.iplantevin.ql.errors.TypeError;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -53,21 +53,15 @@ import java.util.Map;
  * @author Ivan
  */
 public class TypeCheckerVisitor implements IASTVisitor<Void> {
-    private final List<ASTError> errors;
     private final TypeEnvironment idTypeStore;
     private final Map<String, Questionable> labels;
     private static UndefinedType UNDEFINED = new UndefinedType();
+    private final ErrorManager errorManager;
 
     private TypeCheckerVisitor() {
-        errors = new ArrayList<ASTError>();
+        errorManager = new ErrorManager();
         idTypeStore = new TypeEnvironment();
         labels = new HashMap<String, Questionable>();
-    }
-
-    public static TypeCheckerVisitor checkFormCollection(FormCollection forms) {
-        TypeCheckerVisitor typeChecker = new TypeCheckerVisitor();
-        forms.accept(typeChecker);
-        return typeChecker;
     }
 
     public static TypeCheckerVisitor checkForm(Form form) {
@@ -76,42 +70,29 @@ public class TypeCheckerVisitor implements IASTVisitor<Void> {
         return typeChecker;
     }
 
-    public static TypeCheckerVisitor checkStatement(Statement statement) {
-        TypeCheckerVisitor typeChecker = new TypeCheckerVisitor();
-        statement.accept(typeChecker);
-        return typeChecker;
-    }
-
-    public static TypeCheckerVisitor checkExpression(Expression expression) {
-        TypeCheckerVisitor typeChecker = new TypeCheckerVisitor();
-        expression.accept(typeChecker);
-        return typeChecker;
-    }
-
     /**
-     * Only true if there are only errors of type DuplicateLabelError, or no
-     * errors at all.
+     * Only true if no errors, warnings are allowed.
      */
     public boolean isTypeSafe() {
-        for (ASTError error : errors) {
-            if (!(error instanceof DuplicateLabelError)) {
-                return false;
-            }
-        }
-        return true;
+        return errorManager.hasNoErrors();
     }
 
     /////////////////////////////////////////////
-    // Error addition and printing
+    // Error/Warning addition, printing, checking
     /////////////////////////////////////////////
     private void addError(ASTError error) {
-        errors.add(error);
+        if (error != null) {
+            errorManager.addError(error);
+        }
     }
 
-    public void printAllErrors() {
-        for (ASTError error : errors) {
-            System.out.println(error);
-        }
+    private void addWarning(ASTWarning warning) {
+        errorManager.addWarning(warning);
+    }
+
+    public void printAllMessages() {
+        errorManager.printWarnings();
+        errorManager.printErrors();
     }
 
     /////////////////////////////////////////////
@@ -122,12 +103,12 @@ public class TypeCheckerVisitor implements IASTVisitor<Void> {
         if (originalQuestion != null) {
             // Label in given question is duplicate from earlier question.
             String message = "this label was already used!";
-            DuplicateLabelError labelError = new DuplicateLabelError(
+            DuplicateLabelWarning labelWarning = new DuplicateLabelWarning(
                     message,
                     questionable,
                     originalQuestion
             );
-            addError(labelError);
+            addWarning(labelWarning);
         } else {
             labels.put(questionable.getLabel().getText(), questionable);
         }
@@ -146,10 +127,8 @@ public class TypeCheckerVisitor implements IASTVisitor<Void> {
     /////////////////////////////////////////////
     private void addIdentifier(Questionable questionable) {
         TypeError typeError = idTypeStore.
-                declareIdentifier(questionable.getName(), questionable.getType());
-        if (typeError != null) {
-            addError(typeError);
-        }
+                declareIdentifier(questionable.getIdentifier(), questionable.getType());
+        addError(typeError);
     }
 
     /////////////////////////////////////////////
@@ -230,10 +209,8 @@ public class TypeCheckerVisitor implements IASTVisitor<Void> {
     /////////////////////////////////////////////
     @Override
     public Void visit(FormCollection formCollection) {
-        // Nothing special (yet).
-        // NOTE: should only call visit on individual forms!! (Since checking
-        //   is on a per-form basis.) Otherwise, just returns.
-        // TODO: proper notice if this method is called.
+        assert false : "Type checking is a per-form operation! Not allowed on" +
+                "multiple forms at once!";
         return null;
     }
 
@@ -379,25 +356,21 @@ public class TypeCheckerVisitor implements IASTVisitor<Void> {
 
     @Override
     public Void visit(Bool bool) {
-        // Do nothing.
         return null;
     }
 
     @Override
     public Void visit(ID id) {
-        // Do nothing.
         return null;
     }
 
     @Override
     public Void visit(Int integer) {
-        // Do nothing.
         return null;
     }
 
     @Override
     public Void visit(Str str) {
-        // Do nothing.
         return null;
     }
 }

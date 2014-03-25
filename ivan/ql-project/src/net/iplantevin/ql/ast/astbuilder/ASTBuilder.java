@@ -4,7 +4,7 @@ import net.iplantevin.ql.antlr.QLLexer;
 import net.iplantevin.ql.antlr.QLParser;
 import net.iplantevin.ql.ast.form.Form;
 import net.iplantevin.ql.ast.form.FormCollection;
-import net.iplantevin.ql.ast.visitors.TypeCheckerVisitor;
+import net.iplantevin.ql.ast.typechecking.TypeCheckerVisitor;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -34,17 +34,15 @@ public class ASTBuilder {
         QLParser parser = new QLParser(tokens);
 
         ParseTree tree = parser.forms(); // parse
-        //System.out.println(tree.toStringTree(parser));
 
         ASTBuilderVisitor builder = new ASTBuilderVisitor();
         FormCollection formCollection;
         formCollection = builder.visitForms((QLParser.FormsContext) tree);
-        System.out.println(formCollection);
 
         // Type Checking:
         for (Form form : formCollection.getForms()) {
             TypeCheckerVisitor typeChecker = TypeCheckerVisitor.checkForm(form);
-            typeChecker.printAllErrors();
+            typeChecker.printAllMessages();
         }
     }
 }

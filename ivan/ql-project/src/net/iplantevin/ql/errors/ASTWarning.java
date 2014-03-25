@@ -9,11 +9,11 @@ import net.iplantevin.ql.ast.LineInfo;
  *
  * @author Ivan
  */
-public abstract class ASTError {
+public abstract class ASTWarning {
     private final String message;
     private final ASTNode node;
 
-    protected ASTError(String message, ASTNode node) {
+    protected ASTWarning(String message, ASTNode node) {
         this.message = message;
         this.node = node;
     }
@@ -24,6 +24,6 @@ public abstract class ASTError {
 
     @Override
     public String toString() {
-        return message + "\nAt location " + getLineInfo() + ":\n" + node + "\n";
+        return message;
     }
 }

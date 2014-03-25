@@ -1,10 +1,11 @@
-package net.iplantevin.ql.gui.widgets;
+package net.iplantevin.ql.gui.formcomponents;
 
 import net.iplantevin.ql.ast.expressions.Expression;
 import net.iplantevin.ql.evaluation.BoolVal;
 import net.iplantevin.ql.evaluation.UndefinedVal;
 import net.iplantevin.ql.evaluation.Value;
 import net.iplantevin.ql.gui.main.FormFrame;
+import net.iplantevin.ql.gui.main.IdentifierGatherer;
 
 import javax.swing.*;
 import java.util.Set;

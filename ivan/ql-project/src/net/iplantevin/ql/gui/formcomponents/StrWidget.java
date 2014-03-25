@@ -1,4 +1,4 @@
-package net.iplantevin.ql.gui.widgets;
+package net.iplantevin.ql.gui.formcomponents;
 
 import net.iplantevin.ql.evaluation.StrVal;
 

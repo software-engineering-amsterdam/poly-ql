@@ -5,11 +5,11 @@ import net.iplantevin.ql.ast.statements.Questionable;
 /**
  * @author Ivan
  */
-public class DuplicateLabelError extends ASTError {
+public class DuplicateLabelWarning extends ASTWarning {
     private final Questionable originalQuestionable;
     private final Questionable newQuestionable;
 
-    public DuplicateLabelError(String message, Questionable newQuestionable, Questionable originalQuestionable) {
+    public DuplicateLabelWarning(String message, Questionable newQuestionable, Questionable originalQuestionable) {
         super(message, null);
         this.originalQuestionable = originalQuestionable;
         this.newQuestionable = newQuestionable;
@@ -17,7 +17,7 @@ public class DuplicateLabelError extends ASTError {
 
     @Override
     public String toString() {
-        return "DUPLICATE LABEL warning: " + getMessage() + "\n" +
+        return "DUPLICATE LABEL warning: " + super.toString() + "\n" +
                 "Label at location " + newQuestionable.getLabel().getLineInfo() +
                 " in question:\n" +
                 newQuestionable +

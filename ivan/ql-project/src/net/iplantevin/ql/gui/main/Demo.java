@@ -10,6 +10,7 @@ public class Demo {
         String inputFile = "/Users/Ivan/Documents/Master SE/Software " +
                 "Construction/poly-ql/ivan/ql-project/src/net/iplantevin/ql/questionnaires/";
         inputFile += "guiForm1.txt";
+//        inputFile += "typeForm1.txt";
 
         try {
             GUIController controller = new GUIController(inputFile);

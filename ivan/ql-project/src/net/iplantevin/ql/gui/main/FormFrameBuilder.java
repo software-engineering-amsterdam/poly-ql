@@ -9,14 +9,16 @@ import net.iplantevin.ql.ast.statements.IfElse;
 import net.iplantevin.ql.ast.statements.Question;
 import net.iplantevin.ql.ast.statements.Statement;
 import net.iplantevin.ql.ast.visitors.IStatementVisitor;
-import net.iplantevin.ql.gui.widgets.AbstractFormComponent;
-import net.iplantevin.ql.gui.widgets.ComputationContainer;
-import net.iplantevin.ql.gui.widgets.ContainerComponent;
-import net.iplantevin.ql.gui.widgets.IfComponent;
-import net.iplantevin.ql.gui.widgets.IfElseComponent;
-import net.iplantevin.ql.gui.widgets.QuestionContainer;
+import net.iplantevin.ql.gui.formcomponents.AbstractFormComponent;
+import net.iplantevin.ql.gui.formcomponents.ComputationContainer;
+import net.iplantevin.ql.gui.formcomponents.ContainerComponent;
+import net.iplantevin.ql.gui.formcomponents.IfComponent;
+import net.iplantevin.ql.gui.formcomponents.IfElseComponent;
+import net.iplantevin.ql.gui.formcomponents.QuestionContainer;
+import net.iplantevin.ql.gui.formcomponents.TypeToWidget;
 import org.antlr.v4.runtime.misc.OrderedHashSet;
 
+import javax.swing.*;
 import java.util.Set;
 
 /**
@@ -66,28 +68,35 @@ public class FormFrameBuilder implements IStatementVisitor<AbstractFormComponent
      */
     @Override
     public AbstractFormComponent visit(Block block) {
-        ContainerComponent components = new ContainerComponent(formFrame);
+        ContainerComponent containerComponent = new ContainerComponent(formFrame);
 
         for (Statement statement : block.getStatements()) {
             AbstractFormComponent component = statement.accept(this);
             formComponents.add(component);
-            components.addOne(component);
+            containerComponent.addOne(component);
         }
-        return components;
+        return containerComponent;
     }
 
     @Override
     public AbstractFormComponent visit(Computation computation) {
-        AbstractFormComponent component = new ComputationContainer(computation, formFrame);
-        formComponents.add(component);
-        return component;
+        AbstractFormComponent computationContainer =
+                new ComputationContainer(computation.getIdentifier().getName(),
+                        computation.getLabel().getText(),
+                        computation.getExpression(), formFrame);
+        formComponents.add(computationContainer);
+
+        return computationContainer;
     }
 
     @Override
     public AbstractFormComponent visit(If ifStat) {
         AbstractFormComponent ifBody = ifStat.getBody().accept(this);
         Expression condition = ifStat.getCondition();
-        return new IfComponent(ifBody, condition, formFrame);
+        AbstractFormComponent ifComponent = new IfComponent(ifBody, condition, formFrame);
+        formComponents.add(ifComponent);
+
+        return ifComponent;
     }
 
     @Override
@@ -95,13 +104,23 @@ public class FormFrameBuilder implements IStatementVisitor<AbstractFormComponent
         AbstractFormComponent ifBody = ifElse.getBody().accept(this);
         AbstractFormComponent elseBody = ifElse.getElseBody().accept(this);
         Expression condition = ifElse.getCondition();
-        return new IfElseComponent(ifBody, elseBody, condition, formFrame);
+        AbstractFormComponent ifElseComponent =
+                new IfElseComponent(ifBody, elseBody, condition, formFrame);
+        formComponents.add(ifElseComponent);
+
+        return ifElseComponent;
     }
 
     @Override
     public AbstractFormComponent visit(Question question) {
-        AbstractFormComponent component = new QuestionContainer(question, formFrame);
+        AbstractFormComponent component =
+                new QuestionContainer(question.getIdentifier().getName(),
+                        question.getLabel().getText(), formFrame);
+        JComponent widget = TypeToWidget.makeWidget(question.getType(),
+                (QuestionContainer) component);
+        ((QuestionContainer) component).initUIWithWidget(widget);
         formComponents.add(component);
+
         return component;
     }
 }

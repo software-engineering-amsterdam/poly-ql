@@ -1,9 +1,9 @@
-package net.iplantevin.ql.gui.widgets;
+package net.iplantevin.ql.gui.formcomponents;
 
 import net.iplantevin.ql.ast.expressions.Expression;
-import net.iplantevin.ql.ast.statements.Computation;
 import net.iplantevin.ql.evaluation.Value;
 import net.iplantevin.ql.gui.main.FormFrame;
+import net.iplantevin.ql.gui.main.IdentifierGatherer;
 
 import java.util.Set;
 
@@ -13,9 +13,10 @@ import java.util.Set;
 public class ComputationContainer extends AbstractWidgetContainer {
     private final Expression expression;
 
-    public ComputationContainer(Computation computation, FormFrame frame) {
-        super(computation, frame);
-        this.expression = computation.getExpression();
+    public ComputationContainer(String identifier, String labelText,
+                                Expression expression, FormFrame frame) {
+        super(identifier, labelText, frame);
+        this.expression = expression;
         setWidget(new CompWidget(this));
         Set<String> identifiers = IdentifierGatherer.gather(expression);
         getFormFrame().subscribe(this, identifiers);

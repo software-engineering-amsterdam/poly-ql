@@ -1,15 +1,19 @@
-package net.iplantevin.ql.gui.widgets;
+package net.iplantevin.ql.gui.formcomponents;
 
-import net.iplantevin.ql.ast.statements.Question;
 import net.iplantevin.ql.gui.main.FormFrame;
+
+import javax.swing.*;
 
 /**
  * @author Ivan
  */
 public class QuestionContainer extends AbstractWidgetContainer {
-    public QuestionContainer(Question question, FormFrame formFrame) {
-        super(question, formFrame);
-        setWidget(TypeToWidget.makeWidget(question.getType(), this));
+    public QuestionContainer(String identifier, String labelText, FormFrame formFrame) {
+        super(identifier, labelText, formFrame);
+    }
+
+    public void initUIWithWidget(JComponent widget) {
+        setWidget(widget);
         initUI();
     }
 
