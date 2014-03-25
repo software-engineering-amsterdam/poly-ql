@@ -7,6 +7,11 @@ public class Undefined extends Value {
 		return null;
 	}
 	
+	@Override
+	public String toString() {
+		return "";
+	}
+	
 	public Value add(Value arg) {
 		return new Undefined();
 	}

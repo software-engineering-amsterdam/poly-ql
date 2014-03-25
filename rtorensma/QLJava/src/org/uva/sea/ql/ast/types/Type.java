@@ -1,6 +1,6 @@
 package org.uva.sea.ql.ast.types;
 
-import org.uva.sea.ql.gui.TypeVisitor;
+import org.uva.sea.ql.gui.inputs.TypeVisitor;
 
 public abstract class Type {
 	public abstract boolean isCompatibleTo(Type t);

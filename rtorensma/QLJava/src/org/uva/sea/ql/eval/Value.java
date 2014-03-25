@@ -12,6 +12,11 @@ public abstract class Value {
 		return this.getValue().equals(((Value)obj).getValue());
 	}
 	
+	@Override
+	public String toString() {
+		return getValue().toString();
+	}
+	
 	public Value add(Value arg) {
 		throw new UnsupportedOperationException();
 	}

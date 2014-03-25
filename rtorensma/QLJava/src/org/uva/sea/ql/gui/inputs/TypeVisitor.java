@@ -1,4 +1,4 @@
-package org.uva.sea.ql.gui;
+package org.uva.sea.ql.gui.inputs;
 
 import org.uva.sea.ql.ast.types.Bool;
 import org.uva.sea.ql.ast.types.Int;
