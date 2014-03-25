@@ -33,12 +33,11 @@ public class Sub extends Operation{
 		errors.addAll(getRight().checkType(environment));
 	
 		
-		if(getLeft().getType(environment).getName() != "Int")
+		if(getLeft().getType(environment) != null && getLeft().getType(environment).getName() != "Int")
 			errors.add(new Error("-: Left expression is not a integer"));
 		
-		if(getRight().getType(environment).getName() != "Int")
+		if(getRight().getType(environment) != null && getRight().getType(environment).getName() != "Int")
 			errors.add(new Error("-: Right expression is not a integer"));
-		
 		
 		return errors;
 	}
