@@ -21,7 +21,7 @@ public class Question extends FormItems{
 		this.question = question;
 		this.type = type;
 		this.answerComponent = type.getAnswer();
-		this.questionLabel = new JLabel(question);
+		this.questionLabel = new JLabel(question.substring(1, question.length()-1));
 		super.question = question;
 	}
 
@@ -61,7 +61,6 @@ public class Question extends FormItems{
 
 	@Override
 	public void buildForm(JPanel panel, Environment environment, Form form) {
-		
 		panel.add(questionLabel);
 		panel.add(answerComponent.getAnswerField(true, environment, form, ident), "span");
 	}

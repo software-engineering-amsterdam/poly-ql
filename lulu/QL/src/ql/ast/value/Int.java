@@ -23,6 +23,5 @@ public class Int extends Value{
 			return true;
 		else
 			return ((Int)obj).getValue().equals(this.getValue());
-	}
-	
+	}	
 }

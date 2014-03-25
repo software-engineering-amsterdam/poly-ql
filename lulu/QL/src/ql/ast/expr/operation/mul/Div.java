@@ -29,15 +29,13 @@ public class Div extends Operation{
 		
 		errors.addAll(getLeft().checkType(environment));
 		errors.addAll(getRight().checkType(environment));
-	
 		
 		if(getLeft().getType(environment) != null && getLeft().getType(environment).getName() != "Int")
 			errors.add(new Error("/: Left expression is not a integer"));
 		
 		if(getRight().getType(environment) != null && getRight().getType(environment).getName() != "Int")
 			errors.add(new Error("/: Right expression is not a integer"));
-		
-		
+				
 		return errors;
 	}
 	

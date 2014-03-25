@@ -28,6 +28,7 @@ public class StrComponent extends AnswerComponent{
 				submitResult(environment, form, id);				
 			}
 		});
+		
 		answer.addFocusListener(new FocusListener() {
 			@Override
 			public void focusLost(FocusEvent e) {

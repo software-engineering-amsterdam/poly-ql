@@ -31,7 +31,6 @@ public class Sub extends Operation{
 		
 		errors.addAll(getLeft().checkType(environment));
 		errors.addAll(getRight().checkType(environment));
-	
 		
 		if(getLeft().getType(environment) != null && getLeft().getType(environment).getName() != "Int")
 			errors.add(new Error("-: Left expression is not a integer"));

@@ -25,5 +25,4 @@ private final String value;
 		else
 			return ((Str)obj).getValue().equals(this.getValue());
 	}
-	
 }
