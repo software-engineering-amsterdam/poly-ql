@@ -10,20 +10,20 @@ namespace QL_Tests.Stmnt
 
         }
 
-		public override bool Equals(object obj)
-		{
-			if (!(obj is FormStmnt))
-			{
-				return false;
-			}
+        public override bool Equals(object obj)
+        {
+            if (!(obj is FormStmnt))
+            {
+                return false;
+            }
 
-			FormStmnt other = (FormStmnt)obj;
-			return Name.Equals(other.Name) && Body.Equals(other.Body);
-		}
+            FormStmnt other = (FormStmnt)obj;
+            return Name.Equals(other.Name) && Body.Equals(other.Body);
+        }
 
-		public override int GetHashCode()
-		{
-			return Name.GetHashCode() ^ Body.GetHashCode();
-		}
+        public override int GetHashCode()
+        {
+            return Name.GetHashCode() ^ Body.GetHashCode();
+        }
     }
 }

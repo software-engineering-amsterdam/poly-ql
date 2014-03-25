@@ -6,7 +6,7 @@ using Algebra.QL.TypeCheck.Type;
 
 namespace Algebra.QL.TypeCheck.Factory
 {
-	public class TypeCheckFactory : IStmntFactory<ITypeCheckStmnt, ITypeCheckExpr, ITypeCheckType>
+    public class TypeCheckFactory : IStmntFactory<ITypeCheckStmnt, ITypeCheckExpr, ITypeCheckType>
     {
         public TypeCheckFactory()
         {
@@ -33,90 +33,90 @@ namespace Algebra.QL.TypeCheck.Factory
             return new BoolType();
         }
 
-		public ITypeCheckExpr String(string s)
-		{
+        public ITypeCheckExpr String(string s)
+        {
             return new StringLiteral(s);
-		}
+        }
 
-		public ITypeCheckExpr Int(int i)
-		{
+        public ITypeCheckExpr Int(int i)
+        {
             return new IntLiteral(i);
-		}
+        }
 
-		public ITypeCheckExpr Real(double d)
-		{
+        public ITypeCheckExpr Real(double d)
+        {
             return new RealLiteral(d);
-		}
+        }
 
-		public ITypeCheckExpr Bool(bool b)
-		{
+        public ITypeCheckExpr Bool(bool b)
+        {
             return new BoolLiteral(b);
-		}
+        }
 
-		public ITypeCheckExpr Variable(string var)
-		{
-			return new VarExpr(var);
-		}
+        public ITypeCheckExpr Variable(string var)
+        {
+            return new VarExpr(var);
+        }
 
-		public ITypeCheckExpr Or(ITypeCheckExpr l, ITypeCheckExpr r)
-		{
-			return new OrExpr(l, r);
-		}
+        public ITypeCheckExpr Or(ITypeCheckExpr l, ITypeCheckExpr r)
+        {
+            return new OrExpr(l, r);
+        }
 
-		public ITypeCheckExpr And(ITypeCheckExpr l, ITypeCheckExpr r)
-		{
-			return new AndExpr(l, r);
-		}
+        public ITypeCheckExpr And(ITypeCheckExpr l, ITypeCheckExpr r)
+        {
+            return new AndExpr(l, r);
+        }
 
         public ITypeCheckExpr Eq(ITypeCheckExpr l, ITypeCheckExpr r)
-		{
-			return new EqualsExpr(l, r);
-		}
+        {
+            return new EqualsExpr(l, r);
+        }
 
         public ITypeCheckExpr NotEq(ITypeCheckExpr l, ITypeCheckExpr r)
-		{
-			return new NotEqualExpr(l, r);
-		}
+        {
+            return new NotEqualExpr(l, r);
+        }
 
         public ITypeCheckExpr LessThen(ITypeCheckExpr l, ITypeCheckExpr r)
-		{
-			return new LessThenExpr(l, r);
-		}
+        {
+            return new LessThenExpr(l, r);
+        }
 
         public ITypeCheckExpr GreaterThen(ITypeCheckExpr l, ITypeCheckExpr r)
-		{
-			return new GreaterThenExpr(l, r);
-		}
+        {
+            return new GreaterThenExpr(l, r);
+        }
 
         public ITypeCheckExpr LessOrEqualTo(ITypeCheckExpr l, ITypeCheckExpr r)
-		{
-			return new LessOrEqualToExpr(l, r);
-		}
+        {
+            return new LessOrEqualToExpr(l, r);
+        }
 
         public ITypeCheckExpr GreaterOrEqualTo(ITypeCheckExpr l, ITypeCheckExpr r)
-		{
-			return new GreaterOrEqualToExpr(l, r);
-		}
+        {
+            return new GreaterOrEqualToExpr(l, r);
+        }
 
         public ITypeCheckExpr Add(ITypeCheckExpr l, ITypeCheckExpr r)
-		{
-			return new AddExpr(l, r);
-		}
+        {
+            return new AddExpr(l, r);
+        }
 
         public ITypeCheckExpr Subtract(ITypeCheckExpr l, ITypeCheckExpr r)
-		{
-			return new SubtractExpr(l, r);
-		}
+        {
+            return new SubtractExpr(l, r);
+        }
 
         public ITypeCheckExpr Multiply(ITypeCheckExpr l, ITypeCheckExpr r)
-		{
-			return new MultiplyExpr(l, r);
-		}
+        {
+            return new MultiplyExpr(l, r);
+        }
 
         public ITypeCheckExpr Divide(ITypeCheckExpr l, ITypeCheckExpr r)
-		{
-			return new DivideExpr(l, r);
-		}
+        {
+            return new DivideExpr(l, r);
+        }
 
         public ITypeCheckExpr NegateBool(ITypeCheckExpr e)
         {
@@ -124,14 +124,14 @@ namespace Algebra.QL.TypeCheck.Factory
         }
 
         public ITypeCheckExpr NegateNumeric(ITypeCheckExpr e)
-		{
-			return new NegateNumericExpr(e);
-		}
+        {
+            return new NegateNumericExpr(e);
+        }
 
-		public ITypeCheckExpr VarDecl(string var, ITypeCheckType t)
-		{
-			return VarAssign(var, t, t.DefaultValue);
-		}
+        public ITypeCheckExpr VarDecl(string var, ITypeCheckType t)
+        {
+            return VarAssign(var, t, t.DefaultValue);
+        }
 
         public ITypeCheckExpr VarAssign(string var, ITypeCheckType t, ITypeCheckExpr e)
         {
@@ -172,5 +172,5 @@ namespace Algebra.QL.TypeCheck.Factory
         {
             return new IfElseStmnt(toEval, ifTrue, ifFalse);
         }
-	}
+    }
 }

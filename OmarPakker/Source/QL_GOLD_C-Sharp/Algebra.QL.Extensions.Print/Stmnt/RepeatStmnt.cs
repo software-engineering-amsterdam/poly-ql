@@ -5,16 +5,16 @@ using Algebra.QL.Print.Stmnt;
 
 namespace Algebra.QL.Extensions.Print.Stmnt
 {
-	public class RepeatStmnt : IPrintStmnt
-	{
-		public IPrintExpr Expression { get; private set; }
+    public class RepeatStmnt : IPrintStmnt
+    {
+        public IPrintExpr Expression { get; private set; }
         public IPrintStmnt Body { get; private set; }
 
         public RepeatStmnt(IPrintExpr expr, IPrintStmnt body)
-		{
-			Expression = expr;
-			Body = body;
-		}
+        {
+            Expression = expr;
+            Body = body;
+        }
 
         public Block BuildDocument()
         {

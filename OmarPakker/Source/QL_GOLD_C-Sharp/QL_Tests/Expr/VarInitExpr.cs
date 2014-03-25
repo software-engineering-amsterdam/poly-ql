@@ -7,9 +7,9 @@ namespace QL_Tests.Expr
     {
         public VarInitExpr(string name, ITestType type, ITestExpr value)
             : base(name, type, value)
-		{
+        {
 
-		}
+        }
 
         public override bool Equals(object obj)
         {

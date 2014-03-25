@@ -4,13 +4,13 @@ using Algebra.QL.TypeCheck.Type;
 
 namespace Algebra.QL.TypeCheck.Expr
 {
-	public class EqualsExpr : BinaryExpr, ITypeCheckExpr
-	{
-		public EqualsExpr(ITypeCheckExpr l, ITypeCheckExpr r)
+    public class EqualsExpr : BinaryExpr, ITypeCheckExpr
+    {
+        public EqualsExpr(ITypeCheckExpr l, ITypeCheckExpr r)
             : base(l, r)
-		{
+        {
 
-		}
+        }
 
         public override ITypeCheckType TypeCheck(TypeEnvironment env)
         {

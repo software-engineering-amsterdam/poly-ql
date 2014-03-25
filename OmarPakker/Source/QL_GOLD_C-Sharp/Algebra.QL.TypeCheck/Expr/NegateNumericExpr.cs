@@ -5,17 +5,17 @@ using Algebra.QL.TypeCheck.Type;
 
 namespace Algebra.QL.TypeCheck.Expr
 {
-	public class NegateNumericExpr : UnaryExpr<ITypeCheckExpr>, ITypeCheckExpr
-	{
+    public class NegateNumericExpr : UnaryExpr<ITypeCheckExpr>, ITypeCheckExpr
+    {
         private static readonly ITypeCheckType NegationUpperBound = new RealType();
         public Tuple<int, int> SourceStartPosition { get; set; }
         public Tuple<int, int> SourceEndPosition { get; set; }
 
-		public NegateNumericExpr(ITypeCheckExpr e)
+        public NegateNumericExpr(ITypeCheckExpr e)
             : base(e)
-		{
+        {
 
-		}
+        }
 
         public ITypeCheckType TypeCheck(TypeEnvironment env)
         {

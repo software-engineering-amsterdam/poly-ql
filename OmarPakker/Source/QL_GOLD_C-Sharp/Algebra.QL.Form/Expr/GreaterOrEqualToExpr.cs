@@ -1,19 +1,19 @@
 ﻿using System;
-using Algebra.QL.Form.Helpers;
+using Algebra.QL.Form.Value;
 
 namespace Algebra.QL.Form.Expr
 {
     public class GreaterOrEqualToExpr : BinaryExpr, IFormExpr
-	{
-		public GreaterOrEqualToExpr(IFormExpr l, IFormExpr r)
+    {
+        public GreaterOrEqualToExpr(IFormExpr l, IFormExpr r)
             : base(l, r)
-		{
-
-		}
-
-        public override object Eval(VarEnvironment env)
         {
-            return Convert.ToDouble(Expr1.Eval(env)) >= Convert.ToDouble(Expr2.Eval(env));
+
         }
-	}
+
+        protected override object Evaluate(ValueContainer expr1Value, ValueContainer expr2Value)
+        {
+            return Convert.ToDouble(expr1Value.Value) >= Convert.ToDouble(expr2Value.Value);
+        }
+    }
 }

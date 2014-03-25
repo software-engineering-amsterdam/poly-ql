@@ -1,18 +1,18 @@
-﻿using Algebra.QL.Form.Helpers;
+﻿using Algebra.QL.Form.Value;
 
 namespace Algebra.QL.Form.Expr
 {
     public class NotEqualExpr : BinaryExpr, IFormExpr
-	{
-		public NotEqualExpr(IFormExpr l, IFormExpr r)
+    {
+        public NotEqualExpr(IFormExpr l, IFormExpr r)
             : base(l, r)
-		{
-
-		}
-
-        public override object Eval(VarEnvironment env)
         {
-            return !Expr1.Eval(env).Equals(Expr2.Eval(env));
+
         }
-	}
+
+        protected override object Evaluate(ValueContainer expr1Value, ValueContainer expr2Value)
+        {
+            return !expr1Value.Value.Equals(expr2Value.Value);
+        }
+    }
 }

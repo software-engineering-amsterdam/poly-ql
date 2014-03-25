@@ -10,20 +10,20 @@ namespace QL_Tests.Stmnt
 
         }
 
-		public override bool Equals(object obj)
-		{
-			if (!(obj is CompStmnt))
-			{
-				return false;
-			}
+        public override bool Equals(object obj)
+        {
+            if (!(obj is CompStmnt))
+            {
+                return false;
+            }
 
-			CompStmnt other = (CompStmnt)obj;
+            CompStmnt other = (CompStmnt)obj;
             return Statement1.Equals(other.Statement1) && Statement2.Equals(other.Statement2);
-		}
+        }
 
-		public override int GetHashCode()
-		{
+        public override int GetHashCode()
+        {
             return Statement1.GetHashCode() ^ Statement2.GetHashCode();
-		}
+        }
     }
 }

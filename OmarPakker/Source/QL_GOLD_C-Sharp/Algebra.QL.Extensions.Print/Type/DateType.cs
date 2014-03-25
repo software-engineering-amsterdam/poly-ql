@@ -5,18 +5,18 @@ using Algebra.QL.Print.Type;
 
 namespace Algebra.QL.Extensions.Print.Type
 {
-	public class DateType : BaseType
-	{
+    public class DateType : BaseType
+    {
         public override IPrintExpr DefaultValue { get { return new DateLiteral(DateTime.UtcNow.Date); } }
 
-		public DateType()
-		{
+        public DateType()
+        {
 
-		}
+        }
 
-		public override string ToString()
-		{
-			return "date";
-		}
-	}
+        public override string ToString()
+        {
+            return "date";
+        }
+    }
 }

@@ -4,15 +4,15 @@ using Algebra.QL.TypeCheck.Stmnt;
 
 namespace Algebra.QL.Extensions.TypeCheck.Stmnt
 {
-	public class GotoStmnt : ITypeCheckStmnt
+    public class GotoStmnt : ITypeCheckStmnt
     {
         public Tuple<int, int> SourceStartPosition { get; set; }
         public Tuple<int, int> SourceEndPosition { get; set; }
 
         public GotoStmnt()
-		{
+        {
             
-		}
+        }
 
         public void TypeCheck(TypeEnvironment env)
         {

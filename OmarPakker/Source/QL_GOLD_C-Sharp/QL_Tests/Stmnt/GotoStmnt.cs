@@ -3,24 +3,24 @@ namespace QL_Tests.Stmnt
 {
     public class GotoStmnt : ITestStmnt
     {
-		public GotoStmnt()
-		{
+        public GotoStmnt()
+        {
 
-		}
+        }
 
-		public override bool Equals(object obj)
-		{
-			if (!(obj is GotoStmnt))
-			{
-				return false;
-			}
+        public override bool Equals(object obj)
+        {
+            if (!(obj is GotoStmnt))
+            {
+                return false;
+            }
 
-			return true;
-		}
+            return true;
+        }
 
-		public override int GetHashCode()
-		{
+        public override int GetHashCode()
+        {
             return typeof(GotoStmnt).GetHashCode();
-		}
+        }
     }
 }

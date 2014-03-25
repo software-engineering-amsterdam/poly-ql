@@ -1,13 +1,13 @@
 ﻿
 namespace Algebra.Core.Expr
 {
-	public class VarExpr
-	{
-		public string Name { get; private set; }
+    public class VarExpr
+    {
+        public string Name { get; private set; }
 
-		public VarExpr(string name)
-		{
-			Name = name;
-		}
-	}
+        public VarExpr(string name)
+        {
+            Name = name;
+        }
+    }
 }

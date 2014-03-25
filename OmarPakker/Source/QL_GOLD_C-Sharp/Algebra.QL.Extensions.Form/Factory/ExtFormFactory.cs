@@ -23,10 +23,10 @@ namespace Algebra.QL.Extensions.Form.Factory
             return new DateType();
         }
 
-		public IFormExpr Date(DateTime date)
-		{
+        public IFormExpr Date(DateTime date)
+        {
             return new DateLiteral(date);
-		}
+        }
 
         public IFormExpr Modulo(IFormExpr l, IFormExpr r)
         {
@@ -48,10 +48,10 @@ namespace Algebra.QL.Extensions.Form.Factory
             return new GotoStmnt();
         }
 
-		public IFormStmnt Repeat(IFormExpr e, IFormStmnt s)
-		{
-			return new RepeatStmnt(e, s);
-		}
+        public IFormStmnt Repeat(IFormExpr e, IFormStmnt s)
+        {
+            return new RepeatStmnt(e, s);
+        }
 
         public IFormExpr Sum(string s)
         {

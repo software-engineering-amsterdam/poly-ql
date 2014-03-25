@@ -1,19 +1,24 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Algebra.QL.Form.Helpers
 {
     public class VarAccessEventArgs : EventArgs
     {
-        public string VarName { get; private set; }
+        public IReadOnlyList<int> Instances { get { return new ReadOnlyCollection<int>(instances); } }
+        public bool IsInstanced { get { return instances.Count > 0; } }
 
-        public VarAccessEventArgs(string varName)
+        private IList<int> instances;
+
+        public VarAccessEventArgs()
         {
-            VarName = varName;
+            instances = new List<int>();
         }
 
-        public void SetVarSuffix(string suffix)
+        public void SetVarInstance(int instance)
         {
-            VarName += suffix;
+            instances.Add(instance);
         }
     }
 }

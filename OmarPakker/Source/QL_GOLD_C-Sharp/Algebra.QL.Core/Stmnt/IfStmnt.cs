@@ -7,9 +7,9 @@ namespace Algebra.QL.Core.Stmnt
         public S IfTrueBody { get; private set; }
 
         public IfStmnt(E check, S ifTrue)
-		{
-			CheckExpression = check;
+        {
+            CheckExpression = check;
             IfTrueBody = ifTrue;
-		}
+        }
     }
 }

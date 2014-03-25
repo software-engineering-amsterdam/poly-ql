@@ -12,7 +12,7 @@ using Algebra.QL.TypeCheck.Type;
 namespace WPFParser.MergedFactory
 {
     public class TypeCheckPrintFactory
-		: ExtFactoryCombination<ITypeCheckStmnt, ITypeCheckExpr, ITypeCheckType,
+        : ExtFactoryCombination<ITypeCheckStmnt, ITypeCheckExpr, ITypeCheckType,
           IPrintStmnt, IPrintExpr, IPrintType, ExtTypeCheckFactory, ExtPrintFactory>
     {
         public TypeCheckPrintFactory()

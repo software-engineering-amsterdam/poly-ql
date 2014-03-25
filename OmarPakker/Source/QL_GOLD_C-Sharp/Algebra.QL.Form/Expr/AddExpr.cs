@@ -1,5 +1,5 @@
 ﻿using System;
-using Algebra.QL.Form.Helpers;
+using Algebra.QL.Form.Value;
 
 namespace Algebra.QL.Form.Expr
 {
@@ -11,9 +11,9 @@ namespace Algebra.QL.Form.Expr
 
         }
 
-        public override object Eval(VarEnvironment env)
+        protected override object Evaluate(ValueContainer expr1Value, ValueContainer expr2Value)
         {
-            return Convert.ToDouble(Expr1.Eval(env)) + Convert.ToDouble(Expr2.Eval(env));
+            return Convert.ToDouble(expr1Value.Value) + Convert.ToDouble(expr2Value.Value);
         }
     }
 }

@@ -5,12 +5,12 @@ using Algebra.QL.Core.Stmnt;
 namespace Algebra.QL.Print.Stmnt
 {
     public class IfElseStmnt : IfElseStmnt<IPrintExpr, IPrintStmnt>, IPrintStmnt
-	{
+    {
         public IfElseStmnt(IPrintExpr check, IPrintStmnt ifTrue, IPrintStmnt ifFalse)
             : base(check, ifTrue, ifFalse)
-		{
+        {
 
-		}
+        }
 
         public Block BuildDocument()
         {
@@ -36,5 +36,5 @@ namespace Algebra.QL.Print.Stmnt
 
             return s;
         }
-	}
+    }
 }

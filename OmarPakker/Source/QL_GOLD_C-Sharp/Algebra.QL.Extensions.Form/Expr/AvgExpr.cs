@@ -1,60 +1,54 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using Algebra.QL.Form.Expr;
 using Algebra.QL.Form.Helpers;
 using Algebra.QL.Form.Type;
+using Algebra.QL.Form.Value;
 
 namespace Algebra.QL.Extensions.Form.Expr
 {
     public class AvgExpr : Algebra.Core.Expr.VarExpr, IFormExpr
     {
-        public event Action ValueChanged;
-
         public AvgExpr(string name)
             : base(name)
         {
             
         }
 
-        private void OnValueChanged()
+        public ValueContainer BuildForm(VarEnvironment env)
         {
-            if (ValueChanged != null)
+            ObservableCollection<ValueContainer> repeatVariables = env.GetRange(Name);
+            ValueContainer value = new ValueContainer(new RealType(), 0);
+
+            Action onValueChanged = () =>
             {
-                ValueChanged();
-            }
-        }
+                int count = 0;
+                double sum = 0;
 
-        public void SetValue(VarEnvironment env, object value)
-        {
+                foreach (ValueContainer item in repeatVariables)
+                {
+                    count++;
+                    sum += Convert.ToDouble(item.Value);
+                }
 
-        }
+                value.Value = count > 0 ? sum / count : 0;
+            };
+            onValueChanged();
 
-        public object Eval(VarEnvironment env)
-        {
-            IEnumerable<IFormExpr> repeatVariables = env.GetRange(Name);
-
-            int count = 0;
-            double sum = 0;
-
-            foreach (IFormExpr expr in repeatVariables)
+            NotifyCollectionChangedEventHandler onCollectionChange = (s, e) =>
             {
-                count++;
-                sum += Convert.ToDouble(expr.Eval(env));
-                
-                //TODO: Event removal
-                expr.ValueChanged -= OnValueChanged;
-                expr.ValueChanged += OnValueChanged;
-            }
+                foreach (ValueContainer item in repeatVariables)
+                {
+                    item.ValueChanged += onValueChanged;
+                }
 
-            return count > 0 ? sum / count : 0;
-        }
+                onValueChanged();
+            };
+            repeatVariables.CollectionChanged += onCollectionChange;
+            onCollectionChange(null, null);
 
-        public IFormType BuildForm(VarEnvironment env)
-        {
-            IFormType type = new RealType();
-            type.SetElementExpression(this);
-
-            return type;
+            return value;
         }
     }
 }

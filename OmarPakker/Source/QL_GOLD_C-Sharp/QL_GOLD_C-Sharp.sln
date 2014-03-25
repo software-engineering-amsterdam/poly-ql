@@ -8,7 +8,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Grammar", "Grammar", "{A69D
 		..\..\Grammar\C-Sharp - GrammarData.pgt = ..\..\Grammar\C-Sharp - GrammarData.pgt
 		..\..\Grammar\QL_Grammar.grm = ..\..\Grammar\QL_Grammar.grm
 		..\..\Grammar\QL_Grammar_Extended.grm = ..\..\Grammar\QL_Grammar_Extended.grm
-		..\..\Grammar\QL_Test.txt = ..\..\Grammar\QL_Test.txt
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QL_Tests", "QL_Tests\QL_Tests.csproj", "{4F1463CF-FBE1-49DE-9B7B-6EB32CBF12EE}"
@@ -31,8 +30,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GOLD.Engine", "GOLD.Engine\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algebra.QL.Form", "Algebra.QL.Form\Algebra.QL.Form.csproj", "{2515A850-E8E8-4212-9559-54D4178FC1B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algebra.QL.Eval", "Algebra.QL.Eval\Algebra.QL.Eval.csproj", "{2E50627C-976C-4314-8B92-9CF0BE810D64}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algebra.QL.Extensions.Print", "Algebra.QL.Extensions.Print\Algebra.QL.Extensions.Print.csproj", "{B24C70AF-BA8B-4100-867A-C15C1A79D60F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algebra.QL.Extensions.Form", "Algebra.QL.Extensions.Form\Algebra.QL.Extensions.Form.csproj", "{61A25784-9862-41D1-A376-19E374D4CEB3}"
@@ -42,6 +39,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{4C24AB
 		.nuget\NuGet.Config = .nuget\NuGet.Config
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestFiles", "TestFiles", "{AF5ED6CD-62AC-4B86-92C2-5F38E2AD9F29}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\TestFiles\QL_Test.txt = ..\..\TestFiles\QL_Test.txt
+		..\..\TestFiles\RepeatTest.txt = ..\..\TestFiles\RepeatTest.txt
 	EndProjectSection
 EndProject
 Global
@@ -90,10 +93,6 @@ Global
 		{2515A850-E8E8-4212-9559-54D4178FC1B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2515A850-E8E8-4212-9559-54D4178FC1B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2515A850-E8E8-4212-9559-54D4178FC1B0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2E50627C-976C-4314-8B92-9CF0BE810D64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2E50627C-976C-4314-8B92-9CF0BE810D64}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2E50627C-976C-4314-8B92-9CF0BE810D64}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2E50627C-976C-4314-8B92-9CF0BE810D64}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B24C70AF-BA8B-4100-867A-C15C1A79D60F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B24C70AF-BA8B-4100-867A-C15C1A79D60F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B24C70AF-BA8B-4100-867A-C15C1A79D60F}.Release|Any CPU.ActiveCfg = Release|Any CPU

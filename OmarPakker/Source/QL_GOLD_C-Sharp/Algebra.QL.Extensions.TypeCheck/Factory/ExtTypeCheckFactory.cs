@@ -23,10 +23,10 @@ namespace Algebra.QL.Extensions.TypeCheck.Factory
             return new DateType();
         }
 
-		public ITypeCheckExpr Date(DateTime date)
-		{
+        public ITypeCheckExpr Date(DateTime date)
+        {
             return new DateLiteral(date);
-		}
+        }
 
         public ITypeCheckExpr Modulo(ITypeCheckExpr l, ITypeCheckExpr r)
         {
@@ -48,10 +48,10 @@ namespace Algebra.QL.Extensions.TypeCheck.Factory
             return new GotoStmnt();
         }
 
-		public ITypeCheckStmnt Repeat(ITypeCheckExpr e, ITypeCheckStmnt s)
-		{
-			return new RepeatStmnt(e, s);
-		}
+        public ITypeCheckStmnt Repeat(ITypeCheckExpr e, ITypeCheckStmnt s)
+        {
+            return new RepeatStmnt(e, s);
+        }
 
         public ITypeCheckExpr Sum(string s)
         {

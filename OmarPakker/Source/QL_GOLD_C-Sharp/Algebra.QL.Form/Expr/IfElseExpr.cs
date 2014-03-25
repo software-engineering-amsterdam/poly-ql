@@ -2,41 +2,31 @@
 using Algebra.Core.Expr;
 using Algebra.QL.Form.Helpers;
 using Algebra.QL.Form.Type;
+using Algebra.QL.Form.Value;
 
 namespace Algebra.QL.Form.Expr
 {
     public class IfElseExpr : TernaryExpr<IFormExpr>, IFormExpr
     {
-        public event Action ValueChanged
-        {
-            add { Expr1.ValueChanged += value; Expr2.ValueChanged += value; Expr3.ValueChanged += value; }
-            remove { Expr1.ValueChanged -= value; Expr2.ValueChanged -= value; Expr3.ValueChanged -= value; }
-        }
-
         public IfElseExpr(IFormExpr a, IFormExpr b, IFormExpr c)
             : base(a, b, c)
         {
             
         }
 
-        public void SetValue(VarEnvironment env, object value)
+        public ValueContainer BuildForm(VarEnvironment env)
         {
+            ValueContainer a = Expr2.BuildForm(env);
+            ValueContainer b = Expr3.BuildForm(env);
+            IFormType type = a.ValueType.GetLeastUpperBound(b.ValueType);
 
-        }
+            ValueContainer value = new ValueContainer(type, Convert.ToBoolean(Expr1.BuildForm(env).Value) ? a.Value : b.Value);
 
-        public object Eval(VarEnvironment env)
-        {
-            return Convert.ToBoolean(Expr1.Eval(env)) ? Expr2.Eval(env) : Expr3.Eval(env);
-        }
+            Action onValueChanged = () => value.Value = Convert.ToBoolean(Expr1.BuildForm(env).Value) ? a.Value : b.Value;
+            a.ValueChanged += onValueChanged;
+            b.ValueChanged += onValueChanged;
 
-        public IFormType BuildForm(VarEnvironment env)
-        {
-            IFormType a = Expr2.BuildForm(env);
-            IFormType b = Expr3.BuildForm(env);
-            IFormType type = a.GetLeastUpperBound(b);
-            type.SetElementExpression(this);
-
-            return type;
+            return value;
         }
     }
 }

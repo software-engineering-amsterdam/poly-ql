@@ -7,7 +7,6 @@ using System.Windows.Media;
 using Algebra.Core.GrammarParser;
 using Algebra.Core.Helpers;
 using Algebra.QL.Core.Grammar;
-using Algebra.QL.Extensions.Factory;
 using Algebra.QL.Extensions.Grammar;
 using Algebra.QL.Form;
 using Algebra.QL.Form.Expr;
@@ -32,6 +31,9 @@ namespace WPFParser
     /// </summary>
     public partial class MainWindow : Window
     {
+        private static readonly string PathToTestFiles = Path.GetFullPath(@"..\..\..\..\..\TestFiles\");
+        private const string DefaultFileName = "QL_Test.txt";
+
         private readonly Parser Parser;
 
         public MainWindow()
@@ -215,7 +217,7 @@ namespace WPFParser
             OpenFileDialog dialog = new OpenFileDialog()
             {
                 DefaultExt = "txt",
-                InitialDirectory = System.IO.Path.GetFullPath(@"..\..\..\..\..\Grammar\"),
+                InitialDirectory = PathToTestFiles,
                 Multiselect = false
             };
 
@@ -240,7 +242,7 @@ namespace WPFParser
         {
             Reset();
 
-            string defaultFileContents = File.OpenText(@"..\..\..\..\..\Grammar\QL_Test.txt").ReadToEnd();
+            string defaultFileContents = File.OpenText(PathToTestFiles + DefaultFileName).ReadToEnd();
             customCodeBlock.Document.Blocks.Clear();
             customCodeBlock.AppendText(defaultFileContents);
 

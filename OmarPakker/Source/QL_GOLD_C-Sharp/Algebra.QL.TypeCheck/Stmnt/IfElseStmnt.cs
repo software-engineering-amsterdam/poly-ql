@@ -6,17 +6,17 @@ using Algebra.QL.TypeCheck.Type;
 
 namespace Algebra.QL.TypeCheck.Stmnt
 {
-	public class IfElseStmnt : IfElseStmnt<ITypeCheckExpr, ITypeCheckStmnt>, ITypeCheckStmnt
-	{
-		private static readonly ITypeCheckType ExpressionType = new BoolType();
+    public class IfElseStmnt : IfElseStmnt<ITypeCheckExpr, ITypeCheckStmnt>, ITypeCheckStmnt
+    {
+        private static readonly ITypeCheckType ExpressionType = new BoolType();
         public Tuple<int, int> SourceStartPosition { get; set; }
         public Tuple<int, int> SourceEndPosition { get; set; }
 
-		public IfElseStmnt(ITypeCheckExpr check, ITypeCheckStmnt ifTrue, ITypeCheckStmnt ifFalse)
+        public IfElseStmnt(ITypeCheckExpr check, ITypeCheckStmnt ifTrue, ITypeCheckStmnt ifFalse)
             : base(check, ifTrue, ifFalse)
-		{
+        {
 
-		}
+        }
 
         public void TypeCheck(TypeEnvironment env)
         {
@@ -27,7 +27,7 @@ namespace Algebra.QL.TypeCheck.Stmnt
             }
 
             IfTrueBody.TypeCheck(env);
-			IfFalseBody.TypeCheck(env);
+            IfFalseBody.TypeCheck(env);
         }
     }
 }

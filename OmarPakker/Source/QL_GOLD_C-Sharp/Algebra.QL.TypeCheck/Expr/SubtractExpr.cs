@@ -4,15 +4,15 @@ using Algebra.QL.TypeCheck.Type;
 
 namespace Algebra.QL.TypeCheck.Expr
 {
-	public class SubtractExpr : BinaryExpr, ITypeCheckExpr
-	{
-		private static readonly ITypeCheckType ExpressionUpperBound = new RealType();
+    public class SubtractExpr : BinaryExpr, ITypeCheckExpr
+    {
+        private static readonly ITypeCheckType ExpressionUpperBound = new RealType();
 
-		public SubtractExpr(ITypeCheckExpr l, ITypeCheckExpr r)
+        public SubtractExpr(ITypeCheckExpr l, ITypeCheckExpr r)
             : base(l, r)
-		{
+        {
 
-		}
+        }
 
         public override ITypeCheckType TypeCheck(TypeEnvironment env)
         {

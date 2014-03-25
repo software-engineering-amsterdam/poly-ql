@@ -21,19 +21,19 @@ namespace Algebra.QL.Extensions.Factory
         }
 
         public IPair<E1, E2> Date(DateTime date)
-		{
+        {
             return new Pair<E1, E2>(Factory1.Date(date), Factory2.Date(date));
-		}
+        }
 
         public IPair<E1, E2> Modulo(IPair<E1, E2> l, IPair<E1, E2> r)
-		{
+        {
             return new Pair<E1, E2>(Factory1.Modulo(l.Item1, r.Item1), Factory2.Modulo(l.Item2, r.Item2));
-		}
+        }
 
         public IPair<E1, E2> Power(IPair<E1, E2> l, IPair<E1, E2> r)
-		{
+        {
             return new Pair<E1, E2>(Factory1.Power(l.Item1, r.Item1), Factory2.Power(l.Item2, r.Item2));
-		}
+        }
 
         public IPair<E1, E2> Sum(string s)
         {
@@ -56,8 +56,8 @@ namespace Algebra.QL.Extensions.Factory
         }
 
         public IPair<S1, S2> Repeat(IPair<E1, E2> e, IPair<S1, S2> s)
-		{
+        {
             return new Pair<S1, S2>(Factory1.Repeat(e.Item1, s.Item1), Factory2.Repeat(e.Item2, s.Item2));
-		}
-	}
+        }
+    }
 }

@@ -1,40 +1,28 @@
 ﻿using System;
 using Algebra.Core.Expr;
 using Algebra.QL.Form.Helpers;
-using Algebra.QL.Form.Type;
+using Algebra.QL.Form.Value;
 
 namespace Algebra.QL.Form.Expr
 {
-	public class NegateBoolExpr : UnaryExpr<IFormExpr>, IFormExpr
-	{
-        public event Action ValueChanged
-        {
-            add { Expr1.ValueChanged += value; }
-            remove { Expr1.ValueChanged -= value; }
-        }
-
+    public class NegateBoolExpr : UnaryExpr<IFormExpr>, IFormExpr
+    {
         public NegateBoolExpr(IFormExpr expr)
             : base(expr)
-		{
+        {
             
-		}
-
-        public void SetValue(VarEnvironment env, object value)
-        {
-            Expr1.SetValue(env, !Convert.ToBoolean(value));
         }
 
-        public object Eval(VarEnvironment env)
+        public ValueContainer BuildForm(VarEnvironment env)
         {
-            return !Convert.ToBoolean(Expr1.Eval(env));
-        }
+            ValueContainer a = Expr1.BuildForm(env);
 
-        public IFormType BuildForm(VarEnvironment env)
-        {
-            IFormType type = Expr1.BuildForm(env);
-            type.SetElementExpression(this);
+            ValueContainer value = new ValueContainer(a.ValueType, !Convert.ToBoolean(a.Value));
 
-            return type;
+            Action onValueChanged = () => value.Value = !Convert.ToBoolean(a.Value);
+            a.ValueChanged += onValueChanged;
+
+            return value;
         }
     }
 }

@@ -5,7 +5,7 @@ using Algebra.QL.TypeCheck.Expr;
 namespace Algebra.QL.TypeCheck.Type
 {
     public class BaseType : ITypeCheckType
-	{
+    {
         public Tuple<int, int> SourceStartPosition { get; set; }
         public Tuple<int, int> SourceEndPosition { get; set; }
         public virtual ITypeCheckExpr DefaultValue { get { return null; } }
@@ -62,9 +62,9 @@ namespace Algebra.QL.TypeCheck.Type
             return GetType().GetHashCode();
         }
 
-		public override string ToString()
-		{
-			return "undefined";
-		}
-	}
+        public override string ToString()
+        {
+            return "undefined";
+        }
+    }
 }

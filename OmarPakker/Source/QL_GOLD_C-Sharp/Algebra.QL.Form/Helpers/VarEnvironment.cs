@@ -1,22 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using Algebra.Core.Helpers;
-using Algebra.QL.Form.Expr;
+using Algebra.QL.Form.Value;
 
 namespace Algebra.QL.Form.Helpers
 {
-    public class VarEnvironment : VarEnvironment<IFormExpr>
+    public class VarEnvironment : VarEnvironment<ValueContainer>
     {
         private const char RepeatedSuffix = '$';
 
         public event Action<VarAccessEventArgs> VarAccess;
 
+        private readonly IDictionary<string, ObservableCollection<ValueContainer>> repeatedVariables;
+
         public VarEnvironment()
             : base()
         {
-
+            repeatedVariables = new Dictionary<string, ObservableCollection<ValueContainer>>();
         }
 
         protected void OnVarAccess(VarAccessEventArgs args)
@@ -27,28 +30,66 @@ namespace Algebra.QL.Form.Helpers
             }
         }
 
-        public override void Declare(string name, IFormExpr value)
+        public string VarNameToInstancedName(string name, VarAccessEventArgs eventArgs)
         {
-            VarAccessEventArgs eventArgs = new VarAccessEventArgs(name);
+            for (int i = 0; i < eventArgs.Instances.Count - 1; i++)
+            {
+                name += RepeatedSuffix + i;
+            }
+
+            return name;
+        }
+
+        public override void Declare(string name, ValueContainer value)
+        {
+            VarAccessEventArgs eventArgs = new VarAccessEventArgs();
             OnVarAccess(eventArgs);
 
-            base.Declare(eventArgs.VarName, value);
+            if (eventArgs.IsInstanced)
+            {
+                string instancedName = VarNameToInstancedName(name, eventArgs);
+
+                if (!repeatedVariables.ContainsKey(instancedName))
+                {
+                    repeatedVariables.Add(instancedName, new ObservableCollection<ValueContainer>());
+                }
+
+                repeatedVariables[instancedName].Add(value);
+                return;
+            }
+
+            base.Declare(name, value);
         }
 
         public override bool IsDeclared(string name)
         {
-            VarAccessEventArgs eventArgs = new VarAccessEventArgs(name);
+            VarAccessEventArgs eventArgs = new VarAccessEventArgs();
             OnVarAccess(eventArgs);
 
-            return base.IsDeclared(eventArgs.VarName);
+            if (eventArgs.IsInstanced)
+            {
+                string instanceName = VarNameToInstancedName(name, eventArgs);
+                return repeatedVariables.ContainsKey(instanceName)
+                    && repeatedVariables[instanceName].Count > eventArgs.Instances.Last();
+            }
+
+            return base.IsDeclared(name);
         }
 
-        public override IFormExpr GetDeclared(string name)
+        public override ValueContainer GetDeclared(string name)
         {
-            VarAccessEventArgs eventArgs = new VarAccessEventArgs(name);
+            VarAccessEventArgs eventArgs = new VarAccessEventArgs();
             OnVarAccess(eventArgs);
 
-            return base.GetDeclared(eventArgs.VarName);
+            Debug.Assert(!eventArgs.IsInstanced || eventArgs.Instances.Count == 1,
+                "Instanced variables can't be grabbed as a single entry!");
+
+            if (eventArgs.IsInstanced)
+            {
+                return repeatedVariables[name][eventArgs.Instances[0]];
+            }
+
+            return base.GetDeclared(name);
         }
 
         public override void Clear()
@@ -60,36 +101,17 @@ namespace Algebra.QL.Form.Helpers
 
         public virtual bool IsRepeated(string name)
         {
-            VarAccessEventArgs eventArgs = new VarAccessEventArgs(name);
-            OnVarAccess(eventArgs);
-
-            return Variables.Keys.Any(k => k.StartsWith(eventArgs.VarName + RepeatedSuffix));
+            return repeatedVariables.ContainsKey(name);
         }
 
-        public virtual bool HasSiblings(string name)
+        public virtual ObservableCollection<ValueContainer> GetRange(string name)
         {
-            VarAccessEventArgs eventArgs = new VarAccessEventArgs(name);
+            VarAccessEventArgs eventArgs = new VarAccessEventArgs();
             OnVarAccess(eventArgs);
 
-            int signIndex = eventArgs.VarName.LastIndexOf(RepeatedSuffix);
-            if (signIndex < 0)
-            {
-                return false;
-            }
+            Debug.Assert(eventArgs.IsInstanced || repeatedVariables[name].Count > 0, "Non-instanced variables can't be grabbed as a range!");
 
-            string siblingsStart = eventArgs.VarName.Substring(0, signIndex + 1);
-
-            return Variables.Keys.Any(k => k.StartsWith(siblingsStart));
-        }
-
-        public virtual IEnumerable<IFormExpr> GetRange(string name)
-        {
-            VarAccessEventArgs eventArgs = new VarAccessEventArgs(name);
-            OnVarAccess(eventArgs);
-
-            string suffixedName = eventArgs.VarName + RepeatedSuffix;
-
-            return Variables.Where(kv => kv.Key.StartsWith(suffixedName)).Select(kv => kv.Value).ToList();
+            return repeatedVariables[name];
         }
     }
 }

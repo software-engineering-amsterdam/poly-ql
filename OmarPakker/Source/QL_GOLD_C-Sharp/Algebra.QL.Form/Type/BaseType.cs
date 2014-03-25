@@ -1,28 +1,21 @@
 ﻿using System.Diagnostics;
 using System.Windows;
 using Algebra.QL.Form.Expr;
-using Algebra.QL.Form.Helpers;
+using Algebra.QL.Form.Value;
 
 namespace Algebra.QL.Form.Type
 {
-	public class BaseType : IFormType
-	{
+    public class BaseType : IFormType
+    {
         public virtual IFormExpr DefaultValue { get { return null; } }
         public virtual IFormType SuperType { get { return null; } }
 
-        protected IFormExpr ElementExpr { get; private set; }
-
-		public BaseType()
-		{
-
-		}
-
-        public void SetElementExpression(IFormExpr expr)
+        public BaseType()
         {
-            ElementExpr = expr;
+
         }
 
-        public virtual FrameworkElement BuildElement(VarEnvironment env, bool editable)
+        public virtual FrameworkElement BuildElement(ValueContainer value, bool editable)
         {
             return null;
         }
@@ -62,5 +55,5 @@ namespace Algebra.QL.Form.Type
         {
             return GetType().GetHashCode();
         }
-	}
+    }
 }

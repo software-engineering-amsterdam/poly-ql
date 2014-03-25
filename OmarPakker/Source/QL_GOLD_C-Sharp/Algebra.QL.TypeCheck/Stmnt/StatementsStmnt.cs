@@ -4,7 +4,7 @@ using Algebra.QL.TypeCheck.Helpers;
 
 namespace Algebra.QL.TypeCheck.Stmnt
 {
-	public class StatementsStmnt : CompStmnt<ITypeCheckStmnt>, ITypeCheckStmnt
+    public class StatementsStmnt : CompStmnt<ITypeCheckStmnt>, ITypeCheckStmnt
     {
         public Tuple<int, int> SourceStartPosition { get; set; }
         public Tuple<int, int> SourceEndPosition { get; set; }

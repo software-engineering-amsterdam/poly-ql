@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using Algebra.Core.Type;
 using Algebra.QL.Form.Expr;
-using Algebra.QL.Form.Helpers;
+using Algebra.QL.Form.Value;
 
 namespace Algebra.QL.Form.Type
 {
@@ -9,7 +9,6 @@ namespace Algebra.QL.Form.Type
     {
         IFormExpr DefaultValue { get; }
 
-        void SetElementExpression(IFormExpr value);
-        FrameworkElement BuildElement(VarEnvironment env, bool editable);
+        FrameworkElement BuildElement(ValueContainer value, bool editable);
     }
 }

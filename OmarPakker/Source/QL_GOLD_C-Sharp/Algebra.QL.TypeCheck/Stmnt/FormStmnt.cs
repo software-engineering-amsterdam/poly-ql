@@ -4,12 +4,12 @@ using Algebra.QL.TypeCheck.Helpers;
 
 namespace Algebra.QL.TypeCheck.Stmnt
 {
-	public class FormStmnt : FormStmnt<ITypeCheckStmnt>, ITypeCheckStmnt
+    public class FormStmnt : FormStmnt<ITypeCheckStmnt>, ITypeCheckStmnt
     {
         public Tuple<int, int> SourceStartPosition { get; set; }
         public Tuple<int, int> SourceEndPosition { get; set; }
 
-		public FormStmnt(string name, ITypeCheckStmnt body)
+        public FormStmnt(string name, ITypeCheckStmnt body)
             : base(name, body)
         {
 

@@ -4,7 +4,7 @@ using Algebra.QL.TypeCheck.Expr.Literals;
 namespace Algebra.QL.TypeCheck.Type
 {
     public class RealType : BaseType
-	{
+    {
         public override ITypeCheckExpr DefaultValue { get { return new RealLiteral(0); } }
         public override ITypeCheckType SuperType { get { return new BaseType(); } }
 
@@ -13,9 +13,9 @@ namespace Algebra.QL.TypeCheck.Type
 
         }
 
-		public override string ToString()
-		{
-			return "real";
-		}
-	}
+        public override string ToString()
+        {
+            return "real";
+        }
+    }
 }

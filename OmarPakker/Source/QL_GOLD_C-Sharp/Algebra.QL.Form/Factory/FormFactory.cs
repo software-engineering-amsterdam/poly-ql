@@ -135,7 +135,7 @@ namespace Algebra.QL.Form.Factory
 
         public IFormExpr VarAssign(string var, IFormType t, IFormExpr e)
         {
-            return new VarInitCompExpr(var, t, e);
+            return new VarInitExpr(var, t, e);
         }
 
         public IFormExpr IfElse(IFormExpr toEval, IFormExpr ifTrue, IFormExpr ifFalse)

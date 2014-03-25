@@ -10,68 +10,68 @@ using Xunit;
 
 namespace QL_Tests.Tests
 {
-	public class ParseTests
-	{
+    public class ParseTests
+    {
         private Parser<ITestStmnt, ITestExpr, ITestType, TestFactory> parser;
 
-		public ParseTests()
-		{
+        public ParseTests()
+        {
             parser = new Parser<ITestStmnt, ITestExpr, ITestType, TestFactory>(new TestFactory());
 
             Assembly a = parser.GetType().Assembly;
             parser.LoadGrammar(new BinaryReader(a.GetManifestResourceStream("Algebra.QL.Core.Grammar.QL_Grammar.egt")));
-		}
+        }
 
-		[Fact]
-		public void AddAssociation()
-		{
-			parser.OnCompletion += (root) =>
-			{
-				FormStmnt tree = new FormStmnt("Form1",
+        [Fact]
+        public void AddAssociation()
+        {
+            parser.OnCompletion += (root) =>
+            {
+                FormStmnt tree = new FormStmnt("Form1",
                     new TextExprStmnt("\"Question 1:\"",
-						new BinaryExpr(
-							new BinaryExpr(
-								new LiteralExpr<int>(5),
-								new LiteralExpr<int>(2)
+                        new BinaryExpr(
+                            new BinaryExpr(
+                                new LiteralExpr<int>(5),
+                                new LiteralExpr<int>(2)
                             ),
-							new LiteralExpr<int>(4)
-						)
-					)
-				);
-				Assert.NotNull(root);
-				Assert.Equal(root, tree);
-			};
-			
-			bool parseOk = parser.Parse("form Form1 { \"Question 1:\" << 5 + 2 + 4; }");
-			Assert.True(parseOk);
-		}
+                            new LiteralExpr<int>(4)
+                        )
+                    )
+                );
+                Assert.NotNull(root);
+                Assert.Equal(root, tree);
+            };
+            
+            bool parseOk = parser.Parse("form Form1 { \"Question 1:\" << 5 + 2 + 4; }");
+            Assert.True(parseOk);
+        }
 
-		[Fact]
-		public void MultiplicationPrecedence()
-		{
-			parser.OnCompletion += (root) =>
-			{
-				FormStmnt tree = new FormStmnt("Form1",
-					new TextExprStmnt("\"Question 1:\"",
-						new BinaryExpr(
+        [Fact]
+        public void MultiplicationPrecedence()
+        {
+            parser.OnCompletion += (root) =>
+            {
+                FormStmnt tree = new FormStmnt("Form1",
+                    new TextExprStmnt("\"Question 1:\"",
+                        new BinaryExpr(
                             new BinaryExpr(
                                 new LiteralExpr<int>(2),
-							    new LiteralExpr<int>(5)
+                                new LiteralExpr<int>(5)
                             ),
-							new BinaryExpr(
-								new LiteralExpr<int>(2),
-								new LiteralExpr<int>(4)
-							)
-						)
-					)
-				);
-				Assert.NotNull(root);
-				Assert.Equal(root, tree);
-			};
+                            new BinaryExpr(
+                                new LiteralExpr<int>(2),
+                                new LiteralExpr<int>(4)
+                            )
+                        )
+                    )
+                );
+                Assert.NotNull(root);
+                Assert.Equal(root, tree);
+            };
 
-			bool parseOk = parser.Parse("form Form1 { \"Question 1:\" << 2 * 5 + 2 * 4; }");
-			Assert.True(parseOk);
-		}
+            bool parseOk = parser.Parse("form Form1 { \"Question 1:\" << 2 * 5 + 2 * 4; }");
+            Assert.True(parseOk);
+        }
 
         [Fact]
         public void CompStmntNestingRightHand()
@@ -180,5 +180,5 @@ namespace QL_Tests.Tests
 
             Assert.True(parseOk);
         }
-	}
+    }
 }

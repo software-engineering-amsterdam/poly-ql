@@ -9,9 +9,9 @@ namespace Algebra.QL.Extensions.Form.Stmnt
     public class GotoStmnt : IFormStmnt
     {
         public GotoStmnt()
-		{
+        {
 
-		}
+        }
 
         public FrameworkElement BuildForm(VarEnvironment env)
         {

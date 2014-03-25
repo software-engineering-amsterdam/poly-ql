@@ -4,15 +4,15 @@ using Algebra.QL.TypeCheck.Type;
 
 namespace Algebra.QL.TypeCheck.Expr
 {
-	public class MultiplyExpr : BinaryExpr, ITypeCheckExpr
-	{
-		private static readonly ITypeCheckType ExpressionUpperBound = new RealType();
+    public class MultiplyExpr : BinaryExpr, ITypeCheckExpr
+    {
+        private static readonly ITypeCheckType ExpressionUpperBound = new RealType();
 
-		public MultiplyExpr(ITypeCheckExpr l, ITypeCheckExpr r)
+        public MultiplyExpr(ITypeCheckExpr l, ITypeCheckExpr r)
             : base(l, r)
-		{
+        {
 
-		}
+        }
 
         public override ITypeCheckType TypeCheck(TypeEnvironment env)
         {
@@ -29,5 +29,5 @@ namespace Algebra.QL.TypeCheck.Expr
 
             return a.GetLeastUpperBound(b);
         }
-	}
+    }
 }

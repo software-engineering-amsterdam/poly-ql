@@ -9,9 +9,9 @@ namespace Algebra.QL.Print.Expr
     {
         public VarInitExpr(string name, IPrintType type, IPrintExpr value)
             : base(name, type, value)
-		{
+        {
 
-		}
+        }
 
         public IEnumerable<Inline> BuildDocument()
         {

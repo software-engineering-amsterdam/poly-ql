@@ -4,15 +4,15 @@ using Algebra.QL.TypeCheck.Type;
 
 namespace Algebra.QL.TypeCheck.Expr
 {
-	public class OrExpr : BinaryExpr, ITypeCheckExpr
-	{
-		private static readonly ITypeCheckType ExpressionUpperBound = new BoolType();
+    public class OrExpr : BinaryExpr, ITypeCheckExpr
+    {
+        private static readonly ITypeCheckType ExpressionUpperBound = new BoolType();
 
-		public OrExpr(ITypeCheckExpr l, ITypeCheckExpr r)
+        public OrExpr(ITypeCheckExpr l, ITypeCheckExpr r)
             : base(l, r)
-		{
+        {
 
-		}
+        }
 
         public override ITypeCheckType TypeCheck(TypeEnvironment env)
         {
@@ -24,7 +24,7 @@ namespace Algebra.QL.TypeCheck.Expr
                 env.ReportError(String.Format("'||' not possible. Incompatible types: '{0}', '{1}'. Only the bool type is supported.",
                     a, b), SourceStartPosition, SourceEndPosition);
 
-				return ExpressionUpperBound;
+                return ExpressionUpperBound;
             }
 
             return a.GetLeastUpperBound(b);

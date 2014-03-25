@@ -8,9 +8,9 @@ namespace Algebra.QL.Print.Stmnt
     {
         public IfStmnt(IPrintExpr check, IPrintStmnt ifTrue)
             : base(check, ifTrue)
-		{
+        {
 
-		}
+        }
 
         public Block BuildDocument()
         {

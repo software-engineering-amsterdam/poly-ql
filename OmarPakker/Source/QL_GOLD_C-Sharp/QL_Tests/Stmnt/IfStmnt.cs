@@ -7,24 +7,24 @@ namespace QL_Tests.Stmnt
     {
         public IfStmnt(ITestExpr check, ITestStmnt ifTrue)
             : base(check, ifTrue)
-		{
+        {
 
-		}
+        }
 
-		public override bool Equals(object obj)
-		{
-			if (!(obj is IfStmnt))
-			{
-				return false;
-			}
+        public override bool Equals(object obj)
+        {
+            if (!(obj is IfStmnt))
+            {
+                return false;
+            }
 
-			IfStmnt other = (IfStmnt)obj;
-			return CheckExpression.Equals(other.CheckExpression) && IfTrueBody.Equals(other.IfTrueBody);
-		}
+            IfStmnt other = (IfStmnt)obj;
+            return CheckExpression.Equals(other.CheckExpression) && IfTrueBody.Equals(other.IfTrueBody);
+        }
 
-		public override int GetHashCode()
-		{
-			return CheckExpression.GetHashCode() ^ IfTrueBody.GetHashCode();
-		}
+        public override int GetHashCode()
+        {
+            return CheckExpression.GetHashCode() ^ IfTrueBody.GetHashCode();
+        }
     }
 }

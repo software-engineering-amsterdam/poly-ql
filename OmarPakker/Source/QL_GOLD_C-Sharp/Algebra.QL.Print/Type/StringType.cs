@@ -4,18 +4,18 @@ using Algebra.QL.Print.Expr.Literals;
 
 namespace Algebra.QL.Print.Type
 {
-	public class StringType : BaseType
-	{
+    public class StringType : BaseType
+    {
         public override IPrintExpr DefaultValue { get { return new StringLiteral(String.Empty); } }
 
-		public StringType()
-		{
+        public StringType()
+        {
 
-		}
+        }
 
-		public override string ToString()
-		{
-			return "string";
-		}
-	}
+        public override string ToString()
+        {
+            return "string";
+        }
+    }
 }

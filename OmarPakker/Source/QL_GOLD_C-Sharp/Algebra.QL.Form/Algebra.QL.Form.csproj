@@ -65,7 +65,6 @@
     <Compile Include="Expr\OrExpr.cs" />
     <Compile Include="Expr\SubtractExpr.cs" />
     <Compile Include="Expr\VarExpr.cs" />
-    <Compile Include="Expr\VarInitCompExpr.cs" />
     <Compile Include="Expr\VarInitExpr.cs" />
     <Compile Include="Factory\FormFactory.cs" />
     <Compile Include="Helpers\VarAccessEventArgs.cs" />
@@ -85,6 +84,7 @@
     <Compile Include="Type\IFormType.cs" />
     <Compile Include="Type\RealType.cs" />
     <Compile Include="Type\StringType.cs" />
+    <Compile Include="Value\ValueContainer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Algebra.Core\Algebra.Core.csproj">

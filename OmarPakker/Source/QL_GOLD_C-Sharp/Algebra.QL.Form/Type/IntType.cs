@@ -2,49 +2,48 @@
 using System.Windows;
 using Algebra.QL.Form.Expr;
 using Algebra.QL.Form.Expr.Literals;
-using Algebra.QL.Form.Helpers;
+using Algebra.QL.Form.Value;
 using Xceed.Wpf.Toolkit;
 
 namespace Algebra.QL.Form.Type
 {
-	public class IntType : RealType
-	{
+    public class IntType : BaseType
+    {
         public override IFormExpr DefaultValue { get { return new IntLiteral(0); } }
         public override IFormType SuperType { get { return new RealType(); } }
 
-		public IntType()
-		{
+        public IntType()
+        {
 
-		}
+        }
 
-        public override FrameworkElement BuildElement(VarEnvironment env, bool editable)
+        public override FrameworkElement BuildElement(ValueContainer value, bool editable)
         {
             IntegerUpDown iud = new IntegerUpDown() { Width = 200, IsEnabled = editable };
             iud.ValueChanged += (s, e) =>
             {
-                ElementExpr.SetValue(env, iud.Value);
+                value.Value = iud.Value;
             };
             
             Action onValueChanged = () =>
             {
-                iud.Value = Convert.ToInt32(ElementExpr.Eval(env));
+                iud.Value = Convert.ToInt32(value.Value);
             };
+            value.ValueChanged += onValueChanged;
             onValueChanged();
 
-            int lastValue = Convert.ToInt32(ElementExpr.Eval(env));
+            int lastValue = Convert.ToInt32(value.Value);
             iud.Loaded += (s, e) =>
             {
-                ElementExpr.ValueChanged += onValueChanged;
                 iud.Value = lastValue;
             };
             iud.Unloaded += (s, e) =>
             {
-                ElementExpr.ValueChanged -= onValueChanged;
-                lastValue = Convert.ToInt32(ElementExpr.Eval(env));
+                lastValue = Convert.ToInt32(value.Value);
                 iud.Value = 0;
             };
 
             return iud;
         }
-	}
+    }
 }

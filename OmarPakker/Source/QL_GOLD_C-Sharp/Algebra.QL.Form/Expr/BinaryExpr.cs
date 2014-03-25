@@ -2,38 +2,33 @@
 using Algebra.Core.Expr;
 using Algebra.QL.Form.Helpers;
 using Algebra.QL.Form.Type;
+using Algebra.QL.Form.Value;
 
 namespace Algebra.QL.Form.Expr
 {
     public abstract class BinaryExpr : BinaryExpr<IFormExpr>, IFormExpr
     {
-        public event Action ValueChanged
-        {
-            add { Expr1.ValueChanged += value; Expr2.ValueChanged += value; }
-            remove { Expr1.ValueChanged -= value; Expr2.ValueChanged -= value; }
-        }
-
         public BinaryExpr(IFormExpr l, IFormExpr r)
             : base(l, r)
         {
             
         }
 
-        public void SetValue(VarEnvironment env, object value)
+        protected abstract object Evaluate(ValueContainer expr1Value, ValueContainer expr2Value);
+
+        public ValueContainer BuildForm(VarEnvironment env)
         {
+            ValueContainer a = Expr1.BuildForm(env);
+            ValueContainer b = Expr2.BuildForm(env);
+            IFormType type = a.ValueType.GetLeastUpperBound(b.ValueType);
 
-        }
+            ValueContainer value = new ValueContainer(type, Evaluate(a, b));
 
-        public abstract object Eval(VarEnvironment env);
+            Action onValueChanged = () => value.Value = Evaluate(a, b);
+            a.ValueChanged += onValueChanged;
+            b.ValueChanged += onValueChanged;
 
-        public IFormType BuildForm(VarEnvironment env)
-        {
-            IFormType a = Expr1.BuildForm(env);
-            IFormType b = Expr2.BuildForm(env);
-            IFormType type = a.GetLeastUpperBound(b);
-            type.SetElementExpression(this);
-
-            return type;
+            return value;
         }
     }
 }

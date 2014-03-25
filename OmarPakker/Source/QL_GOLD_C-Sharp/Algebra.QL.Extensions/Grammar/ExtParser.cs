@@ -16,18 +16,18 @@ namespace Algebra.QL.Extensions.Grammar
         public ExtParser(F f)
             : base(f)
         {
-			
+            
         }
 
         protected override object CreateObjectFor(Reduction r)
         {
             ushort tableIndex = r.Production.TableIndex;
 
-			//<Type> ::= date
-			if (tableIndex == Rules["Type_Date"])
-			{
-				return factory.DateType();
-			}
+            //<Type> ::= date
+            if (tableIndex == Rules["Type_Date"])
+            {
+                return factory.DateType();
+            }
             //<MultExpr> ::= <MultExpr> '%' <NegateExpr>
             else if (tableIndex == Rules["Multexpr_Percent"])
             {
@@ -55,16 +55,16 @@ namespace Algebra.QL.Extensions.Grammar
             {
                 return factory.Goto();
             }
-			// <Statement> ::= repeat '(' <Expression> ')' <Statement>
-			else if (tableIndex == Rules["Statement_Repeat_Lparen_Rparen"])
+            // <Statement> ::= repeat '(' <Expression> ')' <Statement>
+            else if (tableIndex == Rules["Statement_Repeat_Lparen_Rparen"])
             {
                 return factory.Repeat((E)r[2].Tag, (S)r[4].Tag);
             }
-			//<Literal> ::= DateLit
-			else if (tableIndex == Rules["Literal_Datelit"])
-			{
-				return factory.Date(DateTime.Parse((string)r[0].Tag, CultureInfo.InvariantCulture));
-			}
+            //<Literal> ::= DateLit
+            else if (tableIndex == Rules["Literal_Datelit"])
+            {
+                return factory.Date(DateTime.Parse((string)r[0].Tag, CultureInfo.InvariantCulture));
+            }
             //<Expression> ::= sum '(' Identifier ')'
             if (tableIndex == Rules["Expression_Sum_Lparen_Identifier_Rparen"])
             {

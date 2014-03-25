@@ -2,13 +2,13 @@
 
 namespace QL_Tests.Expr
 {
-	public class UnaryExpr : UnaryExpr<ITestExpr>, ITestExpr
-	{
+    public class UnaryExpr : UnaryExpr<ITestExpr>, ITestExpr
+    {
         public UnaryExpr(ITestExpr e)
             : base(e)
-		{
+        {
 
-		}
+        }
 
         public override bool Equals(object obj)
         {
@@ -24,5 +24,5 @@ namespace QL_Tests.Expr
         {
             return Expr1.GetHashCode();
         }
-	}
+    }
 }

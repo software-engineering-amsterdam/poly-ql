@@ -5,12 +5,12 @@ using Algebra.Core.Expr;
 namespace Algebra.QL.Print.Expr
 {
     public class MultiplyExpr : BinaryExpr<IPrintExpr>, IPrintExpr
-	{
-		public MultiplyExpr(IPrintExpr l, IPrintExpr r)
+    {
+        public MultiplyExpr(IPrintExpr l, IPrintExpr r)
             : base(l, r)
-		{
+        {
 
-		}
+        }
 
         public IEnumerable<Inline> BuildDocument()
         {
@@ -20,5 +20,5 @@ namespace Algebra.QL.Print.Expr
             inlines.AddRange(Expr2.BuildDocument());
             return inlines;
         }
-	}
+    }
 }

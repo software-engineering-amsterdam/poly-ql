@@ -1,59 +1,51 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using Algebra.QL.Form.Expr;
 using Algebra.QL.Form.Helpers;
-using Algebra.QL.Form.Type;
+using Algebra.QL.Form.Value;
 
 namespace Algebra.QL.Extensions.Form.Expr
 {
     public class SumExpr : Algebra.Core.Expr.VarExpr, IFormExpr
     {
-        public event Action ValueChanged;
-
         public SumExpr(string name)
             : base(name)
         {
             
         }
 
-        private void OnValueChanged()
+        public ValueContainer BuildForm(VarEnvironment env)
         {
-            if (ValueChanged != null)
+            ObservableCollection<ValueContainer> repeatVariables = env.GetRange(Name);
+            ValueContainer value = new ValueContainer(repeatVariables[0].ValueType, 0);
+
+            Action onValueChanged = () =>
             {
-                ValueChanged();
-            }
-        }
+                double sum = 0;
 
-        public void SetValue(VarEnvironment env, object value)
-        {
+                foreach (ValueContainer item in repeatVariables)
+                {
+                    sum += Convert.ToDouble(item.Value);
+                }
 
-        }
+                value.Value = sum;
+            };
+            onValueChanged();
 
-        public object Eval(VarEnvironment env)
-        {
-            IEnumerable<IFormExpr> repeatVariables = env.GetRange(Name);
-
-            double sum = 0;
-
-            foreach (IFormExpr expr in repeatVariables)
+            NotifyCollectionChangedEventHandler onCollectionChange = (s, e) =>
             {
-                sum += Convert.ToDouble(expr.Eval(env));
+                foreach (ValueContainer item in repeatVariables)
+                {
+                    item.ValueChanged += onValueChanged;
+                }
 
-                //TODO: Event removal
-                expr.ValueChanged -= OnValueChanged;
-                expr.ValueChanged += OnValueChanged;
-            }
+                onValueChanged();
+            };
+            repeatVariables.CollectionChanged += onCollectionChange;
+            onCollectionChange(null, null);
 
-            return sum;
-        }
-
-        public IFormType BuildForm(VarEnvironment env)
-        {
-            IFormType type = env.GetRange(Name).First().BuildForm(env);
-            type.SetElementExpression(this);
-
-            return type;
+            return value;
         }
     }
 }

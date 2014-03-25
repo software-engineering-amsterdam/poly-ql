@@ -5,33 +5,30 @@ using Algebra.QL.Extensions.Stmnt;
 using Algebra.QL.Form.Expr;
 using Algebra.QL.Form.Helpers;
 using Algebra.QL.Form.Stmnt;
+using Algebra.QL.Form.Value;
 
 namespace Algebra.QL.Extensions.Form.Stmnt
 {
-	public class RepeatStmnt : RepeatStmnt<IFormExpr, IFormStmnt>, IFormStmnt
-	{
+    public class RepeatStmnt : RepeatStmnt<IFormExpr, IFormStmnt>, IFormStmnt
+    {
         public RepeatStmnt(IFormExpr expr, IFormStmnt body)
             : base(expr, body)
-		{
+        {
             
-		}
+        }
 
         public FrameworkElement BuildForm(VarEnvironment env)
         {
-            Action<VarAccessEventArgs> onVarAccess = (args) => args.SetVarSuffix("$0");
+            Action<VarAccessEventArgs> onVarAccess = (args) => args.SetVarInstance(0);
             env.VarAccess += onVarAccess;
             Body.BuildForm(env);
             env.VarAccess -= onVarAccess;
 
             StackPanel sp = new StackPanel();
 
-            Action onValueChanged = () => FillChildren(sp, Convert.ToInt32(Expression.Eval(env)), env);
-            Expression.BuildForm(env);
-            onValueChanged();
+            ValueContainer value = Expression.BuildForm(env);
+            value.ValueChanged += () => FillChildren(sp, Convert.ToInt32(value.Value), env);
 
-            sp.Loaded += (s, e) => Expression.ValueChanged += onValueChanged;
-            sp.Unloaded += (s, e) => Expression.ValueChanged -= onValueChanged;
-            
             return sp;
         }
 
@@ -45,7 +42,7 @@ namespace Algebra.QL.Extensions.Form.Stmnt
             {
                 for (int i = sp.Children.Count; i < count; i++)
                 {
-                    Action<VarAccessEventArgs> onVarAccess = (args) => args.SetVarSuffix("$" + i);
+                    Action<VarAccessEventArgs> onVarAccess = (args) => args.SetVarInstance(i);
                     env.VarAccess += onVarAccess;
                     sp.Children.Add(Body.BuildForm(env));
                     env.VarAccess -= onVarAccess;

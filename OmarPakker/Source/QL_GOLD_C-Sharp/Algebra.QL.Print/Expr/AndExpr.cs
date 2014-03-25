@@ -5,7 +5,7 @@ using Algebra.Core.Expr;
 namespace Algebra.QL.Print.Expr
 {
     public class AndExpr : BinaryExpr<IPrintExpr>, IPrintExpr
-	{
+    {
         public AndExpr(IPrintExpr l, IPrintExpr r)
             : base(l, r)
         {
@@ -20,5 +20,5 @@ namespace Algebra.QL.Print.Expr
             inlines.AddRange(Expr2.BuildDocument());
             return inlines;
         }
-	}
+    }
 }

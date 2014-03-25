@@ -25,10 +25,10 @@ namespace Algebra.QL.Extensions.TypeCheck.Expr
                 env.ReportError(String.Format("Power not possible. Incompatible types: '{0}', '{1}'. Only numeric types are supported.",
                     a, b), SourceStartPosition, SourceEndPosition);
 
-				return ExpressionUpperBound;
+                return ExpressionUpperBound;
             }
 
             return a.GetLeastUpperBound(b);
         }
-	}
+    }
 }

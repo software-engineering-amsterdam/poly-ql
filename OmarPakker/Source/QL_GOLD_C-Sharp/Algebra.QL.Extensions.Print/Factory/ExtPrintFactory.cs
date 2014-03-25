@@ -23,10 +23,10 @@ namespace Algebra.QL.Extensions.Print.Factory
             return new DateType();
         }
 
-		public IPrintExpr Date(DateTime date)
-		{
+        public IPrintExpr Date(DateTime date)
+        {
             return new DateLiteral(date);
-		}
+        }
 
         public IPrintExpr Modulo(IPrintExpr l, IPrintExpr r)
         {
@@ -48,10 +48,10 @@ namespace Algebra.QL.Extensions.Print.Factory
             return new GotoStmnt();
         }
 
-		public IPrintStmnt Repeat(IPrintExpr e, IPrintStmnt s)
-		{
-			return new RepeatStmnt(e, s);
-		}
+        public IPrintStmnt Repeat(IPrintExpr e, IPrintStmnt s)
+        {
+            return new RepeatStmnt(e, s);
+        }
 
         public IPrintExpr Sum(string s)
         {

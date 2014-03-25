@@ -4,11 +4,11 @@ using Algebra.QL.TypeCheck.Type;
 
 namespace Algebra.QL.TypeCheck.Expr
 {
-	public class AndExpr : BinaryExpr, ITypeCheckExpr
-	{
-		private static readonly ITypeCheckType ExpressionUpperBound = new BoolType();
+    public class AndExpr : BinaryExpr, ITypeCheckExpr
+    {
+        private static readonly ITypeCheckType ExpressionUpperBound = new BoolType();
 
-		public AndExpr(ITypeCheckExpr l, ITypeCheckExpr r)
+        public AndExpr(ITypeCheckExpr l, ITypeCheckExpr r)
             : base(l, r)
         {
 
@@ -24,10 +24,10 @@ namespace Algebra.QL.TypeCheck.Expr
                 env.ReportError(String.Format("'&&' not possible. Incompatible types: '{0}', '{1}'. Only the bool type is supported.",
                     a, b), SourceStartPosition, SourceEndPosition);
 
-				return ExpressionUpperBound;
+                return ExpressionUpperBound;
             }
 
-			return a.GetLeastUpperBound(b);
+            return a.GetLeastUpperBound(b);
         }
     }
 }

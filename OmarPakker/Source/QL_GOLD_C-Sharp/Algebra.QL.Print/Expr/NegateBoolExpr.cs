@@ -4,13 +4,13 @@ using Algebra.Core.Expr;
 
 namespace Algebra.QL.Print.Expr
 {
-	public class NegateBoolExpr : UnaryExpr<IPrintExpr>, IPrintExpr
-	{
+    public class NegateBoolExpr : UnaryExpr<IPrintExpr>, IPrintExpr
+    {
         public NegateBoolExpr(IPrintExpr e)
             : base(e)
-		{
+        {
 
-		}
+        }
 
         public IEnumerable<Inline> BuildDocument()
         {
@@ -21,5 +21,5 @@ namespace Algebra.QL.Print.Expr
             inlines.AddRange(Expr1.BuildDocument());
             return inlines;
         }
-	}
+    }
 }

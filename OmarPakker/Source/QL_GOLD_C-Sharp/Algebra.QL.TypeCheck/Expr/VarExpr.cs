@@ -4,16 +4,16 @@ using Algebra.QL.TypeCheck.Type;
 
 namespace Algebra.QL.TypeCheck.Expr
 {
-	public class VarExpr : Algebra.Core.Expr.VarExpr, ITypeCheckExpr
-	{
+    public class VarExpr : Algebra.Core.Expr.VarExpr, ITypeCheckExpr
+    {
         public Tuple<int, int> SourceStartPosition { get; set; }
         public Tuple<int, int> SourceEndPosition { get; set; }
 
-		public VarExpr(string name)
-			: base(name)
-		{
+        public VarExpr(string name)
+            : base(name)
+        {
 
-		}
+        }
 
         public ITypeCheckType TypeCheck(TypeEnvironment env)
         {

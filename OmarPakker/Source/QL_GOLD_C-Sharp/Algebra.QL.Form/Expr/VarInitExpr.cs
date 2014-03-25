@@ -2,64 +2,40 @@
 using Algebra.Core.Expr;
 using Algebra.QL.Form.Helpers;
 using Algebra.QL.Form.Type;
+using Algebra.QL.Form.Value;
 
 namespace Algebra.QL.Form.Expr
 {
     public class VarInitExpr : VarInitExpr<IFormExpr, IFormType>, IFormExpr
     {
-        public event Action ValueChanged
-        {
-            add { Value.ValueChanged += value; }
-            remove { Value.ValueChanged -= value; }
-        }
-
         public VarInitExpr(string name, IFormType type)
             : base(name, type, type.DefaultValue)
-		{
+        {
             
-		}
-
-        public void SetValue(VarEnvironment env, object value)
-        {
-            Value.SetValue(env, value);
         }
 
-        public object Eval(VarEnvironment env)
+        public VarInitExpr(string name, IFormType type, IFormExpr value)
+            : base(name, type, value)
         {
-            return Value.Eval(env);
+
         }
 
-        public IFormType BuildForm(VarEnvironment env)
+        public ValueContainer BuildForm(VarEnvironment env)
         {
-            IFormType type = Value.BuildForm(env);
-            type.SetElementExpression(this);
-
-            if (!env.IsDeclared(Name))
+            if (!env.IsDeclared(Name) || !env.IsRepeated(Name))
             {
-                if (!env.IsRepeated(Name) && !env.HasSiblings(Name))
-                {
-                    env.Declare(Name, this);
-                }
-                else if (env.HasSiblings(Name))
-                {
-                    VarInitExpr repeatedInstance = new VarInitExpr(Name, Type);
-                    env.Declare(Name, repeatedInstance);
+                ValueContainer a = Value.BuildForm(env);
+                ValueContainer value = new ValueContainer(Type, a.Value);
 
-                    type = repeatedInstance.BuildForm(env);
-                    type.SetElementExpression(repeatedInstance);
-                }
-            }
-            else
-            {
-                IFormExpr declared = env.GetDeclared(Name);
-                if (declared != this)
-                {
-                    type = declared.BuildForm(env);
-                    type.SetElementExpression(declared);
-                }
+                Action onValueChanged = () => value.Value = a.Value;
+                a.ValueChanged += onValueChanged;
+
+                env.Declare(Name, value);
+
+                return value;
             }
 
-            return type;
+            return env.GetDeclared(Name);
         }
     }
 }

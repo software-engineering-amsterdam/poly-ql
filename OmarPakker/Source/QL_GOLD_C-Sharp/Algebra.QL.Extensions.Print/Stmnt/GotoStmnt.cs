@@ -7,9 +7,9 @@ namespace Algebra.QL.Extensions.Print.Stmnt
     public class GotoStmnt : IPrintStmnt
     {
         public GotoStmnt()
-		{
+        {
 
-		}
+        }
 
         public Block BuildDocument()
         {

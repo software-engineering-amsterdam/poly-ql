@@ -1,13 +1,13 @@
 ﻿
 namespace QL_Tests.Expr
 {
-	public class VarExpr : Algebra.Core.Expr.VarExpr, ITestExpr
-	{
-		public VarExpr(string name)
-			: base(name)
-		{
+    public class VarExpr : Algebra.Core.Expr.VarExpr, ITestExpr
+    {
+        public VarExpr(string name)
+            : base(name)
+        {
 
-		}
+        }
 
         public override bool Equals(object obj)
         {
