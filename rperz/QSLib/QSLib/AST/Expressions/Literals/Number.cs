@@ -7,7 +7,7 @@ namespace QSLib.AST.Expressions.Literals
 
         public QSNumber(int value, int lineNr)
         {
-            base._type = new NumberType();
+            base._type = new IntegerType();
             this._value = new IntegerValue(value);
             this._lineNr = lineNr;
         }
