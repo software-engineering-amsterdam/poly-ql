@@ -1,12 +1,14 @@
 package org.uva.sea.ql.gui;
 
+import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
+import javax.swing.JTextArea;
 
 import org.apache.commons.io.FileUtils;
 import org.uva.sea.ql.ast.form.Form;
@@ -32,7 +34,16 @@ public class Main {
 			frame.getContentPane().add(Renderer.render(form.getBody(), new ValueEnvironment()));
 		}
 		else {
-			frame.getContentPane().add(new JLabel(errors.toString()));
+			String printErrors = errors.size() + " error(s) gevonden";
+			for (String error : errors) {
+				printErrors += "\n-\t" + error + "";
+			}
+			JTextArea errorstextarea = new JTextArea(printErrors);
+			errorstextarea.setTabSize(2);
+			errorstextarea.setForeground(Color.RED);
+			errorstextarea.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+			
+			frame.getContentPane().add(errorstextarea);
 		}
 		
 		frame.pack();
