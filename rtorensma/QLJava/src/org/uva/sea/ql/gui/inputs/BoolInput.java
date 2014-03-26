@@ -21,7 +21,6 @@ public class BoolInput extends Input {
 		this.component.addItemListener(new ItemListener() {
 			@Override
 		    public void itemStateChanged(ItemEvent e) {
-				System.out.println("State changed in " + question.getName());
 				valueEnv.setValueOfIdent(question.getName(), getValue());
 		        setChanged();
 		        notifyObservers(valueEnv);

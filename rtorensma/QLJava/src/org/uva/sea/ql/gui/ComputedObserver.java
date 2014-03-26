@@ -20,9 +20,7 @@ public class ComputedObserver implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		System.out.println("Update of computed question " + question.getName());
 		ValueEnvironment valueEnv = (ValueEnvironment)arg;
-		
 		Value value = this.question.getExpr().accept(new Evaluator(valueEnv));
 		valueEnv.setValueOfIdent(this.question.getName(), value);
 		this.input.notifyObservers(valueEnv);

@@ -24,7 +24,6 @@ public class ConditionalObserver implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		System.out.println("Update of condition " + condition);
 		ValueEnvironment valueEnv = (ValueEnvironment)arg;
 		
 		Value value = this.condition.accept(new Evaluator(valueEnv));

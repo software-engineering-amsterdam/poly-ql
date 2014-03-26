@@ -23,7 +23,6 @@ public class IntInput extends Input {
 		this.component.addFocusListener(new FocusListener() {
 			@Override
 			public void focusLost(FocusEvent e) {
-				System.out.println("State changed in " + question.getName());
 				valueEnv.setValueOfIdent(question.getName(), getValue());
 		        setChanged();
 		        notifyObservers(valueEnv);
@@ -36,7 +35,6 @@ public class IntInput extends Input {
 		this.component.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("State changed in " + question.getName());
 				valueEnv.setValueOfIdent(question.getName(), getValue());
 		        setChanged();
 		        notifyObservers(valueEnv);

@@ -1,6 +1,7 @@
 package org.uva.sea.ql.ast.expr;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.collections4.ListUtils;
@@ -14,12 +15,12 @@ public class UsedVariables implements ExprVisitor<List<Ident>> {
 	
 	@Override
 	public List<Ident> visit(Add expr) {
-		return ListUtils.union(expr.getLhs().accept(this), expr.getRhs().accept(this));
+		return visitBinaryExpr(expr);
 	}
 
 	@Override
 	public List<Ident> visit(And expr) {
-		return ListUtils.union(expr.getLhs().accept(this), expr.getRhs().accept(this));
+		return visitBinaryExpr(expr);
 	}
 
 	@Override
@@ -29,29 +30,27 @@ public class UsedVariables implements ExprVisitor<List<Ident>> {
 
 	@Override
 	public List<Ident> visit(Div expr) {
-		return ListUtils.union(expr.getLhs().accept(this), expr.getRhs().accept(this));
+		return visitBinaryExpr(expr);
 	}
 
 	@Override
 	public List<Ident> visit(Eq expr) {
-		return ListUtils.union(expr.getLhs().accept(this), expr.getRhs().accept(this));
+		return visitBinaryExpr(expr);
 	}
 
 	@Override
 	public List<Ident> visit(GEq expr) {
-		return ListUtils.union(expr.getLhs().accept(this), expr.getRhs().accept(this));
+		return visitBinaryExpr(expr);
 	}
 
 	@Override
 	public List<Ident> visit(GT expr) {
-		return ListUtils.union(expr.getLhs().accept(this), expr.getRhs().accept(this));
+		return visitBinaryExpr(expr);
 	}
 
 	@Override
 	public List<Ident> visit(Ident expr) {
-		List<Ident> result = new ArrayList<Ident>();
-		result.add(expr);
-		return result;
+		return Arrays.asList(new Ident[] {expr});
 	}
 
 	@Override
@@ -61,17 +60,17 @@ public class UsedVariables implements ExprVisitor<List<Ident>> {
 
 	@Override
 	public List<Ident> visit(LEq expr) {
-		return ListUtils.union(expr.getLhs().accept(this), expr.getRhs().accept(this));
+		return visitBinaryExpr(expr);
 	}
 
 	@Override
 	public List<Ident> visit(LT expr) {
-		return ListUtils.union(expr.getLhs().accept(this), expr.getRhs().accept(this));
+		return visitBinaryExpr(expr);
 	}
 
 	@Override
 	public List<Ident> visit(Mul expr) {
-		return ListUtils.union(expr.getLhs().accept(this), expr.getRhs().accept(this));
+		return visitBinaryExpr(expr);
 	}
 
 	@Override
@@ -81,7 +80,7 @@ public class UsedVariables implements ExprVisitor<List<Ident>> {
 
 	@Override
 	public List<Ident> visit(NEq expr) {
-		return ListUtils.union(expr.getLhs().accept(this), expr.getRhs().accept(this));
+		return visitBinaryExpr(expr);
 	}
 
 	@Override
@@ -91,7 +90,7 @@ public class UsedVariables implements ExprVisitor<List<Ident>> {
 
 	@Override
 	public List<Ident> visit(Or expr) {
-		return ListUtils.union(expr.getLhs().accept(this), expr.getRhs().accept(this));
+		return visitBinaryExpr(expr);
 	}
 
 	@Override
@@ -101,11 +100,15 @@ public class UsedVariables implements ExprVisitor<List<Ident>> {
 
 	@Override
 	public List<Ident> visit(Sub expr) {
-		return ListUtils.union(expr.getLhs().accept(this), expr.getRhs().accept(this));
+		return visitBinaryExpr(expr);
 	}
 
 	@Override
 	public List<Ident> visit(Str expr) {
 		return new ArrayList<Ident>();
+	}
+	
+	private List<Ident> visitBinaryExpr(BinaryExpr expr) {
+		return ListUtils.union(expr.getLhs().accept(this), expr.getRhs().accept(this));
 	}
 }
