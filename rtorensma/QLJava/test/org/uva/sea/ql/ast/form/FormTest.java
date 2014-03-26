@@ -12,7 +12,7 @@ import org.uva.sea.ql.parser.antlr.IParse;
 import org.uva.sea.ql.parser.antlr.ParseError;
 
 public class FormTest {
-	private IParse parser = new ANTLRParser();
+	private final IParse parser = new ANTLRParser();
 
 	@Test
 	public void testForms() throws ParseError, IOException {

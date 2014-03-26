@@ -14,7 +14,7 @@ import org.uva.sea.ql.parser.antlr.IParse;
 import org.uva.sea.ql.parser.antlr.ParseError;
 
 public class FormCheckerTest {
-	private IParse parser = new ANTLRParser();
+	private final IParse parser = new ANTLRParser();
 
 	@Test
 	public void testFormChecker() throws ParseError, IOException

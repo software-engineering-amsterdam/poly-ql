@@ -3,105 +3,84 @@ package org.uva.sea.ql.checker;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+
 import org.junit.Test;
-import org.uva.sea.ql.ast.expr.Expr;
-import org.uva.sea.ql.parser.antlr.ANTLRParser;
-import org.uva.sea.ql.parser.antlr.IParse;
-import org.uva.sea.ql.parser.antlr.ParseError;
+import org.uva.sea.ql.ast.expr.Add;
+import org.uva.sea.ql.ast.expr.And;
+import org.uva.sea.ql.ast.expr.Bool;
+import org.uva.sea.ql.ast.expr.Ident;
+import org.uva.sea.ql.ast.expr.Int;
+import org.uva.sea.ql.ast.expr.LT;
+import org.uva.sea.ql.ast.expr.Not;
+import org.uva.sea.ql.ast.expr.Str;
 
 public class ExprCheckerTest {
-	
-	private IParse parser = new ANTLRParser();
+	private final Int intOne = new Int(1);
+	private final Int intTwo = new Int(2);
+	private final Str strOne = new Str("one");
+	private final Str strTwo = new Str("two");
+	private final Bool boolTrue = new Bool(true);
+	private final Bool boolFalse = new Bool(false);
 
 	@Test
-	public void testExprChecker() throws ParseError {
-		Expr ast;
+	public void testAdds() {
+		Add addExpr = new Add(intOne, intTwo);
+		assertTrue(ExprChecker.check(addExpr));
 		
-		for (String binaryOperator : new String[]{"+", "-", "*", "/", "<", ">", "<=", ">="}) {
-			ast = parser.parseExpr("1 " + binaryOperator + " 2");
-			ast = (ast.getClass().cast(ast));
-			assertTrue(ExprChecker.check(ast));
-			
-			ast = parser.parseExpr("1 " + binaryOperator + " Ident");
-			ast = (ast.getClass().cast(ast));
-			assertFalse(ExprChecker.check(ast));
-			
-			ast = parser.parseExpr("true " + binaryOperator + " 1");
-			ast = (ast.getClass().cast(ast));
-			assertFalse(ExprChecker.check(ast));
-		}
+		addExpr = new Add(intOne, strOne);
+		assertFalse(ExprChecker.check(addExpr));
 		
-		for (String unaryOperator : new String[]{"+", "-"}) {
-			ast = parser.parseExpr(unaryOperator + " 2");
-			ast = (ast.getClass().cast(ast));
-			assertTrue(ExprChecker.check(ast));
-			
-			ast = parser.parseExpr(unaryOperator + " true");
-			ast = (ast.getClass().cast(ast));
-			assertFalse(ExprChecker.check(ast));
-			
-			ast = parser.parseExpr(unaryOperator + " Ident");
-			ast = (ast.getClass().cast(ast));
-			assertFalse(ExprChecker.check(ast));
-		}
+		addExpr = new Add(intOne, boolTrue);
+		assertFalse(ExprChecker.check(addExpr));
+	}
+	
+	@Test
+	public void testRels() {
+		LT ltExpr = new LT(intOne, intTwo);
+		assertTrue(ExprChecker.check(ltExpr));
 		
-		for (String binaryOperator : new String[]{"==", "!=",}) {
-			ast = parser.parseExpr("1 " + binaryOperator + " 2");
-			ast = (ast.getClass().cast(ast));
-			assertTrue(ExprChecker.check(ast));
-			
-			ast = parser.parseExpr("true " + binaryOperator + " false");
-			ast = (ast.getClass().cast(ast));
-			assertTrue(ExprChecker.check(ast));
-			
-//			TODO: add Idents to env and check expressions including those Idents..
-//			ast = parser.parseExpr("Ident " + binaryOperator + " Ident");
-//			ast = (ast.getClass().cast(ast));
-//			assertTrue(checker.check(ast));
-			
-			ast = parser.parseExpr("1 " + binaryOperator + " Ident");
-			ast = (ast.getClass().cast(ast));
-			assertFalse(ExprChecker.check(ast));
-			
-			ast = parser.parseExpr("true " + binaryOperator + " 1");
-			ast = (ast.getClass().cast(ast));
-			assertFalse(ExprChecker.check(ast));
-			
-			ast = parser.parseExpr("true " + binaryOperator + " Ident");
-			ast = (ast.getClass().cast(ast));
-			assertFalse(ExprChecker.check(ast));
-		}
+		ltExpr = new LT(intOne, strTwo);
+		assertFalse(ExprChecker.check(ltExpr));
 		
-		for (String binaryOperator : new String[]{"&&", "||"}) {
-			ast = parser.parseExpr("true " + binaryOperator + " false");
-			ast = (ast.getClass().cast(ast));
-			assertTrue(ExprChecker.check(ast));
-			
-			ast = parser.parseExpr("1 " + binaryOperator + " Ident");
-			ast = (ast.getClass().cast(ast));
-			assertFalse(ExprChecker.check(ast));
-			
-			ast = parser.parseExpr("true " + binaryOperator + " 1");
-			ast = (ast.getClass().cast(ast));
-			assertFalse(ExprChecker.check(ast));
-			
-			ast = parser.parseExpr("Ident " + binaryOperator + " 1");
-			ast = (ast.getClass().cast(ast));
-			assertFalse(ExprChecker.check(ast));
-		}
+		ltExpr = new LT(intOne, boolTrue);
+		assertFalse(ExprChecker.check(ltExpr));
+	}
+	
+	@Test
+	public void testBools() {
+		And andExpr = new And(boolTrue, boolFalse);
+		assertTrue(ExprChecker.check(andExpr));
 		
-		for (String unaryOperator : new String[]{"!"}) {
-			ast = parser.parseExpr(unaryOperator + " true");
-			ast = (ast.getClass().cast(ast));
-			assertTrue(ExprChecker.check(ast));
-			
-			ast = parser.parseExpr(unaryOperator + " 1");
-			ast = (ast.getClass().cast(ast));
-			assertFalse(ExprChecker.check(ast));
-			
-			ast = parser.parseExpr(unaryOperator + " Ident");
-			ast = (ast.getClass().cast(ast));
-			assertFalse(ExprChecker.check(ast));
-		}
+		andExpr = new And(boolTrue, strOne);
+		assertFalse(ExprChecker.check(andExpr));
+		
+		andExpr = new And(boolTrue, intOne);
+		assertFalse(ExprChecker.check(andExpr));
+		
+		Not notExpr = new Not(boolFalse);
+		assertTrue(ExprChecker.check(notExpr));
+	}
+	
+	@Test
+	public void testIndents() {
+		Ident identOne = new Ident("1");
+		Ident identTwo = new Ident("2");
+		Ident identThree = new Ident("3");
+		
+		TypeEnvironment typeEnv = new TypeEnvironment();
+		typeEnv.setTypeOfIdent(identOne, new org.uva.sea.ql.ast.types.Int());
+		typeEnv.setTypeOfIdent(identTwo, new org.uva.sea.ql.ast.types.Str());
+		typeEnv.setTypeOfIdent(identThree, new org.uva.sea.ql.ast.types.Bool());
+		
+		assertTrue(ExprChecker.check(new Add(identOne, identOne), typeEnv, new ArrayList<String>()));
+		assertFalse(ExprChecker.check(new Add(identOne, identTwo), typeEnv, new ArrayList<String>()));
+		assertFalse(ExprChecker.check(new Add(identThree, identTwo), typeEnv, new ArrayList<String>()));
+		
+		assertTrue(ExprChecker.check(new And(identThree, identThree), typeEnv, new ArrayList<String>()));
+		assertFalse(ExprChecker.check(new And(identOne, identThree), typeEnv, new ArrayList<String>()));
+		
+		assertTrue(ExprChecker.check(new LT(identOne, identOne), typeEnv, new ArrayList<String>()));
+		assertFalse(ExprChecker.check(new LT(identThree, identThree), typeEnv, new ArrayList<String>()));
 	}
 }
