@@ -2,6 +2,7 @@ package net.iplantevin.ql.gui.main;
 
 import net.iplantevin.ql.antlr.QLLexer;
 import net.iplantevin.ql.antlr.QLParser;
+import net.iplantevin.ql.ast.astbuilder.ASTBuilder;
 import net.iplantevin.ql.ast.astbuilder.ASTBuilderVisitor;
 import net.iplantevin.ql.ast.form.Form;
 import net.iplantevin.ql.ast.form.FormCollection;
@@ -35,18 +36,8 @@ public class GUIController {
     }
 
     private FormCollection buildForms(String inputFile) throws IOException {
-        InputStream is = System.in;
-        if (inputFile != null) is = new FileInputStream(inputFile);
-
-        ANTLRInputStream input = new ANTLRInputStream(is);
-        QLLexer lexer = new QLLexer(input);
-        CommonTokenStream tokens = new CommonTokenStream(lexer);
-        QLParser parser = new QLParser(tokens);
-
-        ParseTree tree = parser.forms();
-
-        ASTBuilderVisitor builder = new ASTBuilderVisitor();
-        return builder.visitForms((QLParser.FormsContext) tree);
+        ASTBuilder builder = new ASTBuilder(inputFile);
+        return builder.buildForms();
     }
 
     public boolean typeCheck() {

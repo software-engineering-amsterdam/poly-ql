@@ -10,7 +10,7 @@ public class DuplicateLabelWarning extends ASTWarning {
     private final Questionable newQuestionable;
 
     public DuplicateLabelWarning(String message, Questionable newQuestionable, Questionable originalQuestionable) {
-        super(message, null);
+        super(message);
         this.originalQuestionable = originalQuestionable;
         this.newQuestionable = newQuestionable;
     }
