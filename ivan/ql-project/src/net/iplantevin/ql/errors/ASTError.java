@@ -22,6 +22,10 @@ public abstract class ASTError {
         return node.getLineInfo();
     }
 
+    public ASTNode getNode() {
+        return node;
+    }
+
     @Override
     public String toString() {
         return message + "\nAt location " + getLineInfo() + ":\n" + node + "\n";

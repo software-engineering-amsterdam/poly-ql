@@ -25,4 +25,24 @@ public abstract class Binary extends Expression {
     public Expression getRightHS() {
         return rightHS;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Binary binary = (Binary) o;
+
+        if (!leftHS.equals(binary.getRightHS())) return false;
+        if (!rightHS.equals(binary.getRightHS())) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = leftHS.hashCode();
+        result = 31 * result + rightHS.hashCode();
+        return result;
+    }
 }

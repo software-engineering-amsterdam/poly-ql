@@ -30,6 +30,23 @@ public class Int extends Expression {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Int anInt = (Int) o;
+
+        if (!value.equals(anInt.value)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return value.hashCode();
+    }
+
+    @Override
     public String toString() {
         return value.toString();
     }

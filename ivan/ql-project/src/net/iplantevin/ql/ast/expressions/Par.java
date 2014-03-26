@@ -28,6 +28,23 @@ public class Par extends Expression {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Par par = (Par) o;
+
+        if (!expression.equals(par.expression)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return expression.hashCode();
+    }
+
+    @Override
     public String toString() {
         return "(" + expression.toString() + ")";
     }
