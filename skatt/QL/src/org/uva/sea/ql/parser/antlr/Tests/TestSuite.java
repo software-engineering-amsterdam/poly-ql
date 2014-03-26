@@ -4,6 +4,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.uva.sea.ql.parser.antlr.Tests.sideTests.EqualityTest;
+import org.uva.sea.ql.parser.antlr.Tests.sideTests.ExpressionEqualityTest;
 import org.uva.sea.ql.parser.antlr.Tests.sideTests.TypeEqualityTest;
 
 @RunWith(Suite.class)
@@ -15,6 +16,7 @@ import org.uva.sea.ql.parser.antlr.Tests.sideTests.TypeEqualityTest;
 				CyclicDependencyTest.class,
 				InvalidTypeTest.class,
 				TypeEqualityTest.class,
+				ExpressionEqualityTest.class,
 				})
 public class TestSuite {
 
