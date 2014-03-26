@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using Algebra.QL.Form.Expr;
 using Algebra.QL.Form.Helpers;
+using Algebra.QL.Form.Type;
 using Algebra.QL.Form.Value;
 
 namespace Algebra.QL.Extensions.Form.Expr
@@ -15,10 +16,10 @@ namespace Algebra.QL.Extensions.Form.Expr
             
         }
 
-        public ValueContainer BuildForm(VarEnvironment env)
+        public ValueContainer Evaluate(ValueEnvironment env)
         {
             ObservableCollection<ValueContainer> repeatVariables = env.GetRange(Name);
-            ValueContainer value = new ValueContainer(repeatVariables[0].ValueType, 0);
+            ValueContainer value = new ValueContainer(0);
 
             Action onValueChanged = () =>
             {
@@ -46,6 +47,11 @@ namespace Algebra.QL.Extensions.Form.Expr
             onCollectionChange(null, null);
 
             return value;
+        }
+
+        public IFormType BuildForm(TypeEnvironment env)
+        {
+            return env.GetRange(Name)[0];
         }
     }
 }

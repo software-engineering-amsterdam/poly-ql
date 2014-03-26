@@ -14,7 +14,7 @@ namespace Algebra.QL.Extensions.Form.Stmnt
 
         }
 
-        public FrameworkElement BuildForm(VarEnvironment env)
+        public FrameworkElement BuildForm(ValueEnvironment vEnv, TypeEnvironment tEnv)
         {
             Style s = new Style();
             s.Setters.Add(new Setter(UIElement.VisibilityProperty, Visibility.Collapsed));
@@ -24,8 +24,8 @@ namespace Algebra.QL.Extensions.Form.Stmnt
             t.Margin = new Thickness(0);
             t.Padding = new Thickness(0);
             t.BorderThickness = new Thickness(0);
-            t.Items.Add(Statement1.BuildForm(env));
-            t.Items.Add(Statement2.BuildForm(env));
+            t.Items.Add(Statement1.BuildForm(vEnv, tEnv));
+            t.Items.Add(Statement2.BuildForm(vEnv, tEnv));
 
             return t;
         }

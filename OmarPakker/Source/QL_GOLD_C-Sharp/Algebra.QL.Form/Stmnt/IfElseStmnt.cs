@@ -16,12 +16,12 @@ namespace Algebra.QL.Form.Stmnt
 
         }
 
-        public FrameworkElement BuildForm(VarEnvironment env)
+        public FrameworkElement BuildForm(ValueEnvironment vEnv, TypeEnvironment tEnv)
         {
-            ValueContainer value = CheckExpression.BuildForm(env);
+            ValueContainer value = CheckExpression.Evaluate(vEnv);
 
-            FrameworkElement trueElem = IfTrueBody.BuildForm(env);
-            FrameworkElement falseElem = IfFalseBody.BuildForm(env);
+            FrameworkElement trueElem = IfTrueBody.BuildForm(vEnv, tEnv);
+            FrameworkElement falseElem = IfFalseBody.BuildForm(vEnv, tEnv);
 
             Action onValueChanged = () =>
             {

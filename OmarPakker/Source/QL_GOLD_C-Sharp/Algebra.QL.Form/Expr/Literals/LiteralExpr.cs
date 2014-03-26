@@ -13,9 +13,14 @@ namespace Algebra.QL.Form.Expr.Literals
 
         }
 
-        public ValueContainer BuildForm(VarEnvironment env)
+        public ValueContainer Evaluate(ValueEnvironment env)
         {
-            return new ValueContainer(Type, Value);
+            return new ValueContainer(Value);
+        }
+
+        public IFormType BuildForm(TypeEnvironment env)
+        {
+            return Type;
         }
     }
 }

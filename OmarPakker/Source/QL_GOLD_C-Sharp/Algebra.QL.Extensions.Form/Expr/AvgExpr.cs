@@ -16,10 +16,10 @@ namespace Algebra.QL.Extensions.Form.Expr
             
         }
 
-        public ValueContainer BuildForm(VarEnvironment env)
+        public ValueContainer Evaluate(ValueEnvironment env)
         {
             ObservableCollection<ValueContainer> repeatVariables = env.GetRange(Name);
-            ValueContainer value = new ValueContainer(new RealType(), 0);
+            ValueContainer value = new ValueContainer(0);
 
             Action onValueChanged = () =>
             {
@@ -49,6 +49,11 @@ namespace Algebra.QL.Extensions.Form.Expr
             onCollectionChange(null, null);
 
             return value;
+        }
+
+        public IFormType BuildForm(TypeEnvironment env)
+        {
+            return new RealType();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using Algebra.Core.Expr;
 using Algebra.QL.Form.Helpers;
+using Algebra.QL.Form.Type;
 using Algebra.QL.Form.Value;
 
 namespace Algebra.QL.Form.Expr
@@ -13,16 +14,20 @@ namespace Algebra.QL.Form.Expr
             
         }
 
-        public ValueContainer BuildForm(VarEnvironment env)
+        public ValueContainer Evaluate(ValueEnvironment env)
         {
-            ValueContainer a = Expr1.BuildForm(env);
-
-            ValueContainer value = new ValueContainer(a.ValueType, !Convert.ToBoolean(a.Value));
+            ValueContainer a = Expr1.Evaluate(env);
+            ValueContainer value = new ValueContainer(!Convert.ToBoolean(a.Value));
 
             Action onValueChanged = () => value.Value = !Convert.ToBoolean(a.Value);
             a.ValueChanged += onValueChanged;
 
             return value;
+        }
+
+        public IFormType BuildForm(TypeEnvironment env)
+        {
+            return Expr1.BuildForm(env);
         }
     }
 }

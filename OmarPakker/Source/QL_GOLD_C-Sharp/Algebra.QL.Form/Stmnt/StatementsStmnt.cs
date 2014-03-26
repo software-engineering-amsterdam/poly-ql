@@ -13,11 +13,11 @@ namespace Algebra.QL.Form.Stmnt
 
         }
 
-        public FrameworkElement BuildForm(VarEnvironment env)
+        public FrameworkElement BuildForm(ValueEnvironment vEnv, TypeEnvironment tEnv)
         {
             StackPanel sp = new StackPanel();
-            sp.Children.Add(Statement1.BuildForm(env));
-            sp.Children.Add(Statement2.BuildForm(env));
+            sp.Children.Add(Statement1.BuildForm(vEnv, tEnv));
+            sp.Children.Add(Statement2.BuildForm(vEnv, tEnv));
 
             return sp;
         }

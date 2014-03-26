@@ -16,9 +16,9 @@ namespace Algebra.QL.Form.Stmnt
 
         }
 
-        public FrameworkElement BuildForm(VarEnvironment env)
+        public FrameworkElement BuildForm(ValueEnvironment vEnv, TypeEnvironment tEnv)
         {
-            ValueContainer value = CheckExpression.BuildForm(env);
+            ValueContainer value = CheckExpression.Evaluate(vEnv);
 
             StackPanel sp = new StackPanel();
             Action onValueChanged = () =>
@@ -28,7 +28,7 @@ namespace Algebra.QL.Form.Stmnt
             value.ValueChanged += onValueChanged;
             onValueChanged();
 
-            sp.Children.Add(IfTrueBody.BuildForm(env));
+            sp.Children.Add(IfTrueBody.BuildForm(vEnv, tEnv));
             
             return sp;
         }

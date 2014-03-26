@@ -1,4 +1,5 @@
 ﻿using Algebra.QL.Form.Helpers;
+using Algebra.QL.Form.Type;
 using Algebra.QL.Form.Value;
 
 namespace Algebra.QL.Form.Expr
@@ -11,7 +12,12 @@ namespace Algebra.QL.Form.Expr
 
         }
 
-        public ValueContainer BuildForm(VarEnvironment env)
+        public ValueContainer Evaluate(ValueEnvironment env)
+        {
+            return env.GetDeclared(Name);
+        }
+
+        public IFormType BuildForm(TypeEnvironment env)
         {
             return env.GetDeclared(Name);
         }

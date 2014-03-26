@@ -20,12 +20,12 @@ namespace Algebra.QL.Form.Expr
 
         }
 
-        public ValueContainer BuildForm(VarEnvironment env)
+        public ValueContainer Evaluate(ValueEnvironment env)
         {
             if (!env.IsDeclared(Name) || !env.IsRepeated(Name))
             {
-                ValueContainer a = Value.BuildForm(env);
-                ValueContainer value = new ValueContainer(Type, a.Value);
+                ValueContainer a = Value.Evaluate(env);
+                ValueContainer value = new ValueContainer(a.Value);
 
                 Action onValueChanged = () => value.Value = a.Value;
                 a.ValueChanged += onValueChanged;
@@ -36,6 +36,16 @@ namespace Algebra.QL.Form.Expr
             }
 
             return env.GetDeclared(Name);
+        }
+
+        public IFormType BuildForm(TypeEnvironment env)
+        {
+            if (!env.IsDeclared(Name) || !env.IsRepeated(Name))
+            {
+                env.Declare(Name, Type);
+            }
+
+            return Type;
         }
     }
 }

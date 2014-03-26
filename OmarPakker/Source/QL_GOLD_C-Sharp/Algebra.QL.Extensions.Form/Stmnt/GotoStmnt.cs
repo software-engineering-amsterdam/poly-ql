@@ -13,7 +13,7 @@ namespace Algebra.QL.Extensions.Form.Stmnt
 
         }
 
-        public FrameworkElement BuildForm(VarEnvironment env)
+        public FrameworkElement BuildForm(ValueEnvironment vEnv, TypeEnvironment tEnv)
         {
             Button b = new Button() { Width = 200, Content = "Next" };
 

@@ -3,23 +3,21 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
-using Algebra.Core.Helpers;
-using Algebra.QL.Form.Value;
 
 namespace Algebra.QL.Form.Helpers
 {
-    public class VarEnvironment : VarEnvironment<ValueContainer>
+    public class VarEnvironment<T> : Algebra.Core.Helpers.VarEnvironment<T>
     {
         private const char RepeatedSuffix = '$';
 
         public event Action<VarAccessEventArgs> VarAccess;
 
-        private readonly IDictionary<string, ObservableCollection<ValueContainer>> repeatedVariables;
+        private readonly IDictionary<string, ObservableCollection<T>> repeatedVariables;
 
         public VarEnvironment()
             : base()
         {
-            repeatedVariables = new Dictionary<string, ObservableCollection<ValueContainer>>();
+            repeatedVariables = new Dictionary<string, ObservableCollection<T>>();
         }
 
         protected void OnVarAccess(VarAccessEventArgs args)
@@ -40,7 +38,7 @@ namespace Algebra.QL.Form.Helpers
             return name;
         }
 
-        public override void Declare(string name, ValueContainer value)
+        public override void Declare(string name, T value)
         {
             VarAccessEventArgs eventArgs = new VarAccessEventArgs();
             OnVarAccess(eventArgs);
@@ -51,7 +49,7 @@ namespace Algebra.QL.Form.Helpers
 
                 if (!repeatedVariables.ContainsKey(instancedName))
                 {
-                    repeatedVariables.Add(instancedName, new ObservableCollection<ValueContainer>());
+                    repeatedVariables.Add(instancedName, new ObservableCollection<T>());
                 }
 
                 repeatedVariables[instancedName].Add(value);
@@ -76,7 +74,7 @@ namespace Algebra.QL.Form.Helpers
             return base.IsDeclared(name);
         }
 
-        public override ValueContainer GetDeclared(string name)
+        public override T GetDeclared(string name)
         {
             VarAccessEventArgs eventArgs = new VarAccessEventArgs();
             OnVarAccess(eventArgs);
@@ -104,7 +102,7 @@ namespace Algebra.QL.Form.Helpers
             return repeatedVariables.ContainsKey(name);
         }
 
-        public virtual ObservableCollection<ValueContainer> GetRange(string name)
+        public virtual ObservableCollection<T> GetRange(string name)
         {
             VarAccessEventArgs eventArgs = new VarAccessEventArgs();
             OnVarAccess(eventArgs);

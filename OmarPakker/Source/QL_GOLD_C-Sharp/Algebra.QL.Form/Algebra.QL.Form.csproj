@@ -67,6 +67,8 @@
     <Compile Include="Expr\VarExpr.cs" />
     <Compile Include="Expr\VarInitExpr.cs" />
     <Compile Include="Factory\FormFactory.cs" />
+    <Compile Include="Helpers\TypeEnvironment.cs" />
+    <Compile Include="Helpers\ValueEnvironment.cs" />
     <Compile Include="Helpers\VarAccessEventArgs.cs" />
     <Compile Include="Helpers\VarEnvironment.cs" />
     <Compile Include="IForm.cs" />

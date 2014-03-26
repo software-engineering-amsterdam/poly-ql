@@ -13,14 +13,15 @@ namespace Algebra.QL.Form.Stmnt
 
         }
 
-        public FrameworkElement BuildForm(VarEnvironment env)
+        public FrameworkElement BuildForm(ValueEnvironment vEnv, TypeEnvironment tEnv)
         {
-            env.Clear();
+            vEnv.Clear();
+            tEnv.Clear();
 
             StackPanel sPanel = new StackPanel();
             sPanel.CanVerticallyScroll = true;
             sPanel.CanHorizontallyScroll = false;
-            sPanel.Children.Add(Body.BuildForm(env));
+            sPanel.Children.Add(Body.BuildForm(vEnv, tEnv));
 
             return new ScrollViewer() { Content = sPanel };
         }

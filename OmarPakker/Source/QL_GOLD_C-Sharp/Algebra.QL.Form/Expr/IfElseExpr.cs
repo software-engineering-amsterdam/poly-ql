@@ -14,19 +14,26 @@ namespace Algebra.QL.Form.Expr
             
         }
 
-        public ValueContainer BuildForm(VarEnvironment env)
+        public ValueContainer Evaluate(ValueEnvironment env)
         {
-            ValueContainer a = Expr2.BuildForm(env);
-            ValueContainer b = Expr3.BuildForm(env);
-            IFormType type = a.ValueType.GetLeastUpperBound(b.ValueType);
+            ValueContainer a = Expr2.Evaluate(env);
+            ValueContainer b = Expr3.Evaluate(env);
+            ValueContainer value = new ValueContainer(Convert.ToBoolean(Expr1.Evaluate(env).Value) ? a.Value : b.Value);
 
-            ValueContainer value = new ValueContainer(type, Convert.ToBoolean(Expr1.BuildForm(env).Value) ? a.Value : b.Value);
-
-            Action onValueChanged = () => value.Value = Convert.ToBoolean(Expr1.BuildForm(env).Value) ? a.Value : b.Value;
+            Action onValueChanged = () => value.Value = Convert.ToBoolean(Expr1.Evaluate(env).Value) ? a.Value : b.Value;
             a.ValueChanged += onValueChanged;
             b.ValueChanged += onValueChanged;
 
             return value;
+        }
+
+        public IFormType BuildForm(TypeEnvironment env)
+        {
+            IFormType a = Expr2.BuildForm(env);
+            IFormType b = Expr3.BuildForm(env);
+            IFormType type = a.GetLeastUpperBound(b);
+
+            return type;
         }
     }
 }

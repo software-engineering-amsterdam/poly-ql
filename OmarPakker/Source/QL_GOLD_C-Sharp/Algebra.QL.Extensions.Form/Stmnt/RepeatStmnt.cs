@@ -17,22 +17,24 @@ namespace Algebra.QL.Extensions.Form.Stmnt
             
         }
 
-        public FrameworkElement BuildForm(VarEnvironment env)
+        public FrameworkElement BuildForm(ValueEnvironment vEnv, TypeEnvironment tEnv)
         {
             Action<VarAccessEventArgs> onVarAccess = (args) => args.SetVarInstance(0);
-            env.VarAccess += onVarAccess;
-            Body.BuildForm(env);
-            env.VarAccess -= onVarAccess;
+            vEnv.VarAccess += onVarAccess;
+            tEnv.VarAccess += onVarAccess;
+            Body.BuildForm(vEnv, tEnv);
+            vEnv.VarAccess -= onVarAccess;
+            tEnv.VarAccess -= onVarAccess;
 
             StackPanel sp = new StackPanel();
 
-            ValueContainer value = Expression.BuildForm(env);
-            value.ValueChanged += () => FillChildren(sp, Convert.ToInt32(value.Value), env);
+            ValueContainer value = Expression.Evaluate(vEnv);
+            value.ValueChanged += () => FillChildren(sp, Convert.ToInt32(value.Value), vEnv, tEnv);
 
             return sp;
         }
 
-        private void FillChildren(StackPanel sp, int count, VarEnvironment env)
+        private void FillChildren(StackPanel sp, int count, ValueEnvironment vEnv, TypeEnvironment tEnv)
         {
             if (count >= 0 && count < sp.Children.Count)
             {
@@ -43,9 +45,11 @@ namespace Algebra.QL.Extensions.Form.Stmnt
                 for (int i = sp.Children.Count; i < count; i++)
                 {
                     Action<VarAccessEventArgs> onVarAccess = (args) => args.SetVarInstance(i);
-                    env.VarAccess += onVarAccess;
-                    sp.Children.Add(Body.BuildForm(env));
-                    env.VarAccess -= onVarAccess;
+                    vEnv.VarAccess += onVarAccess;
+                    tEnv.VarAccess += onVarAccess;
+                    sp.Children.Add(Body.BuildForm(vEnv, tEnv));
+                    vEnv.VarAccess -= onVarAccess;
+                    tEnv.VarAccess -= onVarAccess;
                 }
             }
         }

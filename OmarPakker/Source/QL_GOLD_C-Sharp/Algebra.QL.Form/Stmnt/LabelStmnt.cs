@@ -3,7 +3,6 @@ using System.Windows.Controls;
 using Algebra.QL.Core.Stmnt;
 using Algebra.QL.Form.Expr;
 using Algebra.QL.Form.Helpers;
-using Algebra.QL.Form.Value;
 
 namespace Algebra.QL.Form.Stmnt
 {
@@ -15,14 +14,12 @@ namespace Algebra.QL.Form.Stmnt
 
         }
 
-        public FrameworkElement BuildForm(VarEnvironment env)
+        public FrameworkElement BuildForm(ValueEnvironment vEnv, TypeEnvironment tEnv)
         {
             StackPanel sp = new StackPanel();
             sp.Orientation = Orientation.Horizontal;
             sp.Children.Add(new Label() { Width = 200, Content = Text });
-
-            ValueContainer value = Expression.BuildForm(env);
-            sp.Children.Add(value.ValueType.BuildElement(value, false));
+            sp.Children.Add(Expression.BuildForm(tEnv).BuildElement(Expression.Evaluate(vEnv), false));
 
             return sp;
         }
