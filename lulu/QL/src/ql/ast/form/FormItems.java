@@ -13,8 +13,13 @@ public abstract class FormItems {
 	public abstract void buildForm(JPanel panel, Environment environment, Form form);
 	public abstract void setVisible(Boolean visible);
 	public abstract void eval(Environment environment);
+	public String question;
 	
 	protected List<Error> getErrors(){
 		return errors;
+	}
+	
+	protected String getQuestion(){
+		return question;
 	}
 }

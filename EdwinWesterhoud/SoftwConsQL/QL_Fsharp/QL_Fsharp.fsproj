@@ -135,7 +135,7 @@
     </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>if $(ConfigurationName) == Debug1 (
+    <PreBuildEvent>if $(ConfigurationName) == Debug (
 "Z:\UvA\Software Construction\SoftwConsQl\packages\FSPowerPack.Community.3.0.0.0\Tools\fslex.exe" "$(ProjectDir)QL_Lexer.fsl" --unicode
 "Z:\UvA\Software Construction\SoftwConsQl\packages\FSPowerPack.Community.3.0.0.0\Tools\fsyacc.exe" "$(ProjectDir)QL_Parser.fsp" -v --module QL_Parser
 )</PreBuildEvent>

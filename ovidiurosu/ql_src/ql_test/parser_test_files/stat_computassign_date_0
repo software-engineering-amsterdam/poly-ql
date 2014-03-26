@@ -1,5 +1,0 @@
-// Computed Assign Statement with Date Type
-form test {
-    question: "When?" date
-    question2: "Is it false?" date(question)
-}

@@ -20,6 +20,12 @@ public class Assignment implements IStatement, IAssignment
     }
 
     @Override
+    public String getId()
+    {
+        return _id;
+    }
+
+    @Override
     public String getLabel()
     {
         return _label;
@@ -32,9 +38,10 @@ public class Assignment implements IStatement, IAssignment
     }
 
     @Override
-    public String getId()
+    public String toString()
     {
-        return _id;
+        return "(statement " + this._id + " : \"" + this._label + "\" " +
+               this._type.toString() + ")";
     }
 
     @Override

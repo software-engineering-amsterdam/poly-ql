@@ -8,7 +8,7 @@ import edu.uva.softwarecons.model.question.IfQuestion;
 import edu.uva.softwarecons.model.question.Question;
 import edu.uva.softwarecons.model.value.BooleanValue;
 import edu.uva.softwarecons.ui.question.QuestionHBox;
-import edu.uva.softwarecons.visitor.form.IFormElementVisitor;
+import edu.uva.softwarecons.visitor.form.FormElementVisitor;
 
 import java.util.HashMap;
 
@@ -19,7 +19,7 @@ import java.util.HashMap;
  *         Date: 3/16/14
  */
 public class QuestionEvalVisitor
-    implements IFormElementVisitor
+    implements FormElementVisitor
 {
 
     private boolean displayQuestion;

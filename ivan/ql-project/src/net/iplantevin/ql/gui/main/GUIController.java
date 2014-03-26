@@ -5,14 +5,13 @@ import net.iplantevin.ql.antlr.QLParser;
 import net.iplantevin.ql.ast.astbuilder.ASTBuilderVisitor;
 import net.iplantevin.ql.ast.form.Form;
 import net.iplantevin.ql.ast.form.FormCollection;
-import net.iplantevin.ql.ast.visitors.TypeCheckerVisitor;
+import net.iplantevin.ql.ast.typechecking.TypeCheckerVisitor;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 import javax.swing.*;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -51,10 +50,11 @@ public class GUIController {
         boolean typeSafe = true;
         for (Form form : forms.getForms()) {
             TypeCheckerVisitor typeChecker = TypeCheckerVisitor.checkForm(form);
-            typeChecker.printAllErrors();
+
             if (!typeChecker.isTypeSafe()) {
                 typeSafe = false;
             }
+            typeChecker.printAllMessages();
         }
         return typeSafe;
     }

@@ -1,8 +1,0 @@
-// Binary Equality expressions
-form test {
-    qInteger: "How many times integer?" integer
-    qDecimal: "How many times decimal?" decimal
-    if (qInteger == 3 && qDecimal != 3 || 1 == 1) {
-        reason: "Reason: " text
-    }
-}

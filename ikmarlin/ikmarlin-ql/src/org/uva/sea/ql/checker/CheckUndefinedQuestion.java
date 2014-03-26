@@ -15,8 +15,8 @@ import org.uva.sea.ql.ast.stmt.IfThenElseStatement;
 import org.uva.sea.ql.ast.stmt.IfThenStatement;
 import org.uva.sea.ql.ast.stmt.Stmt;
 import org.uva.sea.ql.ast.type.Type;
-import org.uva.sea.ql.checker.error.Error;
-import org.uva.sea.ql.checker.error.UndefinedQuestion;
+import org.uva.sea.ql.checker.exception.error.Error;
+import org.uva.sea.ql.checker.exception.error.UndefinedQuestion;
 import org.uva.sea.ql.checker.visitor.ExprVisitorIdentifiers;
 import org.uva.sea.ql.checker.visitor.IStmtVisitor;
 
@@ -41,9 +41,11 @@ public class CheckUndefinedQuestion implements IStmtVisitor {
 
 	private void checkExpr(Expr ex) {
 		Set<Ident> identifiers = ex.accept(new ExprVisitorIdentifiers());
-		for(Ident ident :  identifiers){
-			if(!symbolTable.containsKey(ident.getName())){
-				errors.add(new UndefinedQuestion(ident));
+		if(identifiers != null){
+			for(Ident ident :  identifiers){
+				if(!symbolTable.containsKey(ident.getName())){
+					errors.add(new UndefinedQuestion(ident));
+				}
 			}
 		}
 	}

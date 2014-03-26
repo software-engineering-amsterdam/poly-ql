@@ -15,7 +15,7 @@ public class DecimalType extends NumberType
     @Override
     public String toString()
     {
-        return "decimal";
+        return "(type decimal)";
     }
 
     @Override

@@ -2,7 +2,6 @@ package main.nl.uva.ui.element;
 
 import java.util.List;
 
-import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import main.nl.uva.parser.expression.Expression;
@@ -20,15 +19,15 @@ public class IfThenElseUI extends IfThenUI {
             final UI parentUI) {
         super(expression, ifStatements, parentUI);
 
-        _elsePanel = generateBlockPanel(expression, elseStatements, _parentUI);
+        _elsePanel = generateBlockPanel(elseStatements, _parentUI);
         _elsePanel.setVisible(!((Bool) expression.getValue()).getValue());
 
         _ifThenElsePanel = generateIfThenElsePanel(_ifPanel, _elsePanel);
     }
 
-    private static JPanel generateIfThenElsePanel(final JPanel ifPanel, final JPanel elsePanel) {
-        JPanel parent = new JPanel();
-        parent.setLayout(new BoxLayout(parent, BoxLayout.Y_AXIS));
+    private JPanel generateIfThenElsePanel(final JPanel ifPanel, final JPanel elsePanel) {
+        JPanel parent = generateYAxisPanel();
+
         parent.add(ifPanel);
         parent.add(elsePanel);
 

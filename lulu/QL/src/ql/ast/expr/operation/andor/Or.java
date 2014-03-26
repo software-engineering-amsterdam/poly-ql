@@ -30,13 +30,11 @@ public class Or extends Operation{
 		errors.addAll(getLeft().checkType(environment));
 		errors.addAll(getRight().checkType(environment));
 	
-		
-		if(getLeft().getType(environment).getName() != "Bool")
+		if(getLeft().getType(environment) != null && getLeft().getType(environment).getName() != "Bool")
 			errors.add(new Error("||: Left expression is not a boolean"));
 		
-		if(getRight().getType(environment).getName() != "Bool")
-			errors.add(new Error("||: Right expression is not a boolean"));
-		
+		if(getRight().getType(environment) != null && getRight().getType(environment).getName() != "Bool")
+			errors.add(new Error("||: Right expression is not a boolean"));	
 		
 		return errors;
 	}

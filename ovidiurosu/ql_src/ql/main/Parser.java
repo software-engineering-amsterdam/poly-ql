@@ -33,10 +33,33 @@ public class Parser
         return this._qlParser;
     }
 
-    public ParseTree buildParseTree()
+    public ParseTree forms()
     {
-        // begin parsing at initialize rule
-        this._parseTree = this._qlParser.initialize();
+        this._parseTree = this._qlParser.forms();
+        return this._parseTree;
+    }
+
+    public ParseTree block()
+    {
+        this._parseTree = this._qlParser.block();
+        return this._parseTree;
+    }
+
+    public ParseTree statement()
+    {
+        this._parseTree = this._qlParser.statement();
+        return this._parseTree;
+    }
+
+    public ParseTree expression()
+    {
+        this._parseTree = this._qlParser.expression(0);
+        return this._parseTree;
+    }
+
+    public ParseTree type()
+    {
+        this._parseTree = this._qlParser.type();
         return this._parseTree;
     }
 }

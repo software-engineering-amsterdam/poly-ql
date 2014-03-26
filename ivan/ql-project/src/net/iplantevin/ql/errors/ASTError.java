@@ -18,10 +18,6 @@ public abstract class ASTError {
         this.node = node;
     }
 
-    public String getMessage() {
-        return message;
-    }
-
     public LineInfo getLineInfo() {
         return node.getLineInfo();
     }

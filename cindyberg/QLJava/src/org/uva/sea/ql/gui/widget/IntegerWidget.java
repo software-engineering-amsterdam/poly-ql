@@ -14,7 +14,7 @@ import org.uva.sea.ql.gui.questionaire.State;
 
 public class IntegerWidget extends Widget{
 
-	private JTextField textfield;
+	private final JTextField textfield;
 	
 	public IntegerWidget(Identifier identifier, State state) {
 		super(identifier, state);

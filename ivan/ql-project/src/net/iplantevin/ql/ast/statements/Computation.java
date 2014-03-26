@@ -15,8 +15,8 @@ import net.iplantevin.ql.ast.visitors.IStatementVisitor;
 public class Computation extends Questionable {
     private final Expression expression;
 
-    public Computation(ID name, Str label, Type type, Expression expression, LineInfo lineInfo) {
-        super(name, label, type, lineInfo);
+    public Computation(ID identifier, Str label, Type type, Expression expression, LineInfo lineInfo) {
+        super(identifier, label, type, lineInfo);
 
         this.expression = expression;
     }

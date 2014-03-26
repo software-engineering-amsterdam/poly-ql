@@ -1,9 +1,9 @@
 package ql.type_checker;
 
-import java.util.List;
-import java.util.Set;
+import java.util.Iterator;
 
 import ql.ast.Questionnaire;
+import ql.ast.QuestionnaireList;
 import ql.ast.expression.BinaryExpression;
 import ql.ast.expression.Id;
 import ql.ast.expression.ParenthesesExpression;
@@ -34,38 +34,33 @@ import ql.ast.statement.IStatement;
 import ql.ast.statement.IfStatement;
 import ql.ast.type.IntegerType;
 import ql.ast.visitor_elements.IElementVisitor;
-import ql.error.IError;
+import ql.error.ErrorList;
 
 /**
  * @author orosu
  */
 public class TypeCheckerVisitor extends Checker implements IElementVisitor<Void>
 {
-    public TypeCheckerVisitor()
-    {
-        super();
-    }
+    private final QuestionnaireList _checkedQuestionnaires;
 
-    public TypeCheckerVisitor(List<Questionnaire> checkedQuestionnaires)
+    public TypeCheckerVisitor(QuestionnaireList checkedQuestionnaires)
     {
-        super(checkedQuestionnaires);
-    }
-
-    public Set<IError> getErrors()
-    {
-        return this._typeEnvironment.getErrors();
+        super(new TypeEnvironment(), new ErrorList());
+        this._checkedQuestionnaires = checkedQuestionnaires;
     }
 
     @Override
     public Void visit(Questionnaire questionnaire)
     {
         // Check if the ID of this questionnaire is unique
-        new QuestionnaireListChecker(this._typeEnvironment, questionnaire)
-            .checkIdForDuplicates();
+        new QuestionnaireListChecker(this._typeEnvironment, this._errorList,
+            questionnaire, this._checkedQuestionnaires).checkIdForDuplicates();
 
-        for(IStatement statement: questionnaire.getStatements()) {
-            statement.accept(this);
+        Iterator<IStatement> statementListIterator = questionnaire.getStatementList().iterator();
+        while (statementListIterator.hasNext()) {
+            statementListIterator.next().accept(this);
         }
+
         return null;
     }
 
@@ -83,14 +78,14 @@ public class TypeCheckerVisitor extends Checker implements IElementVisitor<Void>
     {
         this._checkAssignment(computedAssignment);
 
-        new AssignmentChecker(this._typeEnvironment, computedAssignment)
+        new AssignmentChecker(this._typeEnvironment, this._errorList, computedAssignment)
             .checkCyclicDependencies(computedAssignment.getExpression());
 
         // Visit Expression
         computedAssignment.getExpression().accept(this);
 
         // Check if the statement's type is compatible with the expression's type
-        new ExpressionChecker(this._typeEnvironment, computedAssignment.getExpression())
+        new ExpressionChecker(this._typeEnvironment, this._errorList, computedAssignment.getExpression())
             .checkTypeCompatibility(computedAssignment.getType());
 
         this._typeEnvironment.addAssign(computedAssignment.getId(), computedAssignment);
@@ -104,17 +99,19 @@ public class TypeCheckerVisitor extends Checker implements IElementVisitor<Void>
         ifStatement.getExpression().accept(this);
 
         // Check if the statement's type is compatible with the expression's type
-        new ExpressionChecker(this._typeEnvironment, ifStatement.getExpression())
+        new ExpressionChecker(this._typeEnvironment, this._errorList, ifStatement.getExpression())
             .checkTypeCompatibility(ifStatement.getType());
 
         // Visit if statements
-        for (IStatement statement: ifStatement.getIfStatements()) {
-            statement.accept(this);
+        Iterator<IStatement> ifStatementsIterator = ifStatement.getIfStatementList().iterator();
+        while(ifStatementsIterator.hasNext()) {
+            ifStatementsIterator.next().accept(this);
         }
 
         // Visit else statements
-        for (IStatement statement: ifStatement.getElseStatements()) {
-            statement.accept(this);
+        Iterator<IStatement> elseStatementsIterator = ifStatement.getElseStatementList().iterator();
+        while(elseStatementsIterator.hasNext()) {
+            elseStatementsIterator.next().accept(this);
         }
         return null;
     }
@@ -124,8 +121,8 @@ public class TypeCheckerVisitor extends Checker implements IElementVisitor<Void>
     {
         id.setTypeEnvironment(this._typeEnvironment);
 
-        new ExpressionChecker(this._typeEnvironment, id)
-            .checkIdHasType();
+        new ExpressionChecker(this._typeEnvironment, this._errorList, id)
+            .checkIdDefined();
         return null;
     }
 
@@ -256,7 +253,7 @@ public class TypeCheckerVisitor extends Checker implements IElementVisitor<Void>
     private Void _checkAssignment(IAssignment assignment)
     {
         // Check if the ID or the label of this assignment is unique
-        AssignmentChecker checker = new AssignmentChecker(this._typeEnvironment, assignment);
+        AssignmentChecker checker = new AssignmentChecker(this._typeEnvironment, this._errorList, assignment);
         checker.checkIdForDuplicates();
         checker.checkLabelForDuplicates();
         return null;
@@ -265,11 +262,12 @@ public class TypeCheckerVisitor extends Checker implements IElementVisitor<Void>
     private Void _checkUnaryExpression(UnaryExpression unaryExpression)
     {
         // Visit Expression
-        unaryExpression.getExpression().accept(this);
+        unaryExpression.getSubExpression().accept(this);
 
         // Check if the child expression's type is compatible with the expression's type
-        new ExpressionChecker(this._typeEnvironment, unaryExpression.getExpression())
+        new ExpressionChecker(this._typeEnvironment, this._errorList, unaryExpression.getSubExpression())
             .checkTypeCompatibility(unaryExpression.getType());
+
         return null;
     }
 
@@ -280,12 +278,13 @@ public class TypeCheckerVisitor extends Checker implements IElementVisitor<Void>
         binaryExpression.getRightSubExpression().accept(this);
 
         // Check if the left subexpression's type is compatible with the parent expression's type
-        new ExpressionChecker(this._typeEnvironment, binaryExpression.getLeftSubExpression())
+        new ExpressionChecker(this._typeEnvironment, this._errorList, binaryExpression.getLeftSubExpression())
             .checkTypeCompatibility(binaryExpression.getType());
 
         // Check if the right subexpression's type is compatible with the parent expression's type
-        new ExpressionChecker(this._typeEnvironment, binaryExpression.getRightSubExpression())
+        new ExpressionChecker(this._typeEnvironment, this._errorList, binaryExpression.getRightSubExpression())
             .checkTypeCompatibility(binaryExpression.getType());
+
         return null;
     }
 
@@ -296,8 +295,9 @@ public class TypeCheckerVisitor extends Checker implements IElementVisitor<Void>
         equalityExpression.getRightSubExpression().accept(this);
 
         // Check if the left subexpression's type is compatible with the right expression's type
-        new ExpressionChecker(this._typeEnvironment, equalityExpression.getLeftSubExpression())
+        new ExpressionChecker(this._typeEnvironment, this._errorList, equalityExpression.getLeftSubExpression())
             .checkTypeCompatibility(equalityExpression.getRightSubExpression().getType());
+
         return null;
     }
 
@@ -308,12 +308,13 @@ public class TypeCheckerVisitor extends Checker implements IElementVisitor<Void>
         relationalExpression.getRightSubExpression().accept(this);
 
         // Check if the left subexpression's type is compatible with the parent expression's type
-        new ExpressionChecker(this._typeEnvironment, relationalExpression.getLeftSubExpression())
+        new ExpressionChecker(this._typeEnvironment, this._errorList, relationalExpression.getLeftSubExpression())
             .checkTypeCompatibility(new IntegerType());
 
         // Check if the right subexpression's type is compatible with the parent expression's type
-        new ExpressionChecker(this._typeEnvironment, relationalExpression.getRightSubExpression())
+        new ExpressionChecker(this._typeEnvironment, this._errorList, relationalExpression.getRightSubExpression())
             .checkTypeCompatibility(new IntegerType());
+
         return null;
     }
 }

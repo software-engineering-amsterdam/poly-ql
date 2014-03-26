@@ -13,7 +13,7 @@ public class FixedDeclaration extends Declaration {
 
     @Override
     public UIElement getLayout(final UI parentUI) {
-        return new ExpressionUI(_variable, _function, parentUI);
+        return new ExpressionUI(_variable, _label, parentUI);
     }
 
 }

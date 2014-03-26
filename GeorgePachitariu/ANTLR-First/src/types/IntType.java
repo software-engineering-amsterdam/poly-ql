@@ -12,7 +12,7 @@ public class IntType implements Type {
 
 	@Override
 	public String toString() {
-		return "int";
+		return "integer";
 	}
 
 	@Override
@@ -60,5 +60,10 @@ public class IntType implements Type {
 		if (!(obj instanceof IntType))
 			return false;
 		return true;
+	}
+
+	@Override
+	public boolean isString() {
+		return false;
 	}
 }

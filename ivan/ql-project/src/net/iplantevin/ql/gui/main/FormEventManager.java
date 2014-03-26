@@ -2,8 +2,8 @@ package net.iplantevin.ql.gui.main;
 
 import net.iplantevin.ql.evaluation.EvaluationVisitor;
 import net.iplantevin.ql.evaluation.Value;
-import net.iplantevin.ql.gui.widgets.AbstractFormComponent;
-import net.iplantevin.ql.gui.widgets.AbstractWidgetContainer;
+import net.iplantevin.ql.gui.formcomponents.AbstractFormComponent;
+import net.iplantevin.ql.gui.formcomponents.AbstractWidgetContainer;
 import org.antlr.v4.runtime.misc.OrderedHashSet;
 
 import java.util.HashMap;

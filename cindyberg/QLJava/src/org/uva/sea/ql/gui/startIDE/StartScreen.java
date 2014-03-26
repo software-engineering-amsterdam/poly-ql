@@ -5,7 +5,7 @@ import javax.swing.JPanel;
 
 public class StartScreen {
 
-	private JFrame frame;
+	private final JFrame frame;
 	private JPanel mainpanel;
 	
 	public StartScreen(){

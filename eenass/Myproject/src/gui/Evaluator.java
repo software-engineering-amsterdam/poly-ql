@@ -1,6 +1,5 @@
 package gui;
 
-import java.util.Collections;
 import java.util.Map;
 
 import ast.Visitor;
@@ -25,9 +24,6 @@ import ast.expr.evaluate.Value;
 import ast.expr.literal.BoolLiteral;
 import ast.expr.literal.IntLiteral;
 import ast.expr.literal.StrLiteral;
-import ast.expr.types.BoolType;
-import ast.expr.types.IntType;
-import ast.expr.types.StrType;
 import ast.expr.unExpression.Neg;
 import ast.expr.unExpression.Not;
 import ast.expr.unExpression.Pos;
@@ -38,6 +34,9 @@ import ast.statement.IfStatement;
 import ast.statement.IfelseStatement;
 import ast.statement.Question;
 import ast.statement.StatementList;
+import ast.types.BoolType;
+import ast.types.IntType;
+import ast.types.StrType;
 
 
 public class Evaluator implements Visitor<Value> {
@@ -93,7 +92,6 @@ public class Evaluator implements Visitor<Value> {
 	public Value visit(Eq node) {
 		Value l = node.get_lhs().accept(this);
 		Value r = node.get_rhs().accept(this);
-		System.out.println("l " + l + " r " + r);
 		return l.eq(r);
 	}
 
@@ -160,9 +158,7 @@ public class Evaluator implements Visitor<Value> {
 
 	@Override
 	public Value visit(Identifier node) {
-		System.out.println("Identifier visit " + environment.size());
 		if (environment.containsKey(node)){
-			System.out.println("true " + node.getIdentName() + " value " + environment.get(node));
 			return environment.get(node);
 		}
 		return null;

@@ -7,24 +7,23 @@ import java.util.Map;
 import java.util.Set;
 
 import org.uva.sea.ql.ast.type.Type;
-import org.uva.sea.ql.checker.error.DuplicateQuestion;
-import org.uva.sea.ql.checker.error.Error;
-import org.uva.sea.ql.checker.warning.DuplicateLabel;
-import org.uva.sea.ql.checker.warning.Warning;
+import org.uva.sea.ql.checker.exception.QLException;
+import org.uva.sea.ql.checker.exception.error.DuplicateQuestion;
+import org.uva.sea.ql.checker.exception.warning.DuplicateLabel;
 
 public class CheckDuplicateQuestion {
 
 	private Map<String, List<Type>> symbolTable;
-	private List<Error> errors;
-	private List<Warning> warnings;
+	private List<QLException> errors;
+	private List<QLException> warnings;
 
 	public CheckDuplicateQuestion(Map<String, List<Type>> symbolTable) {
 		this.symbolTable = symbolTable;
-		errors = new ArrayList<Error>();
-		warnings = new ArrayList<Warning>();
+		errors = new ArrayList<QLException>();
+		warnings = new ArrayList<QLException>();
 	}
 
-	public List<Error> getDuplicates() {
+	public List<QLException> getDuplicates() {
 		for (Map.Entry<String, List<Type>> entry : symbolTable.entrySet()) {
 			String ident = entry.getKey();
 			if (entry.getValue().size() > 1) {
@@ -46,7 +45,7 @@ public class CheckDuplicateQuestion {
 		return !errors.isEmpty();
 	}
 
-	public List<Error> getErrors() {
+	public List<QLException> getErrors() {
 		return errors;
 	}
 
@@ -54,7 +53,7 @@ public class CheckDuplicateQuestion {
 		return !warnings.isEmpty();
 	}
 
-	public List<Warning> getWarnings() {
+	public List<QLException> getWarnings() {
 		return warnings;
 	}
 

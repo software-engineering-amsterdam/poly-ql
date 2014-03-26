@@ -1,8 +1,0 @@
-// Unary expressions
-form test {
-    qInteger: "How many times integer?" integer
-    qDecimal: "How many times decimal?" decimal
-    if (-qInteger < +qInteger && !(-1 >= 2) || (+qDecimal == -qDecimal && -1.3 >= +3.0)) {
-        reason: "Reason: " text
-    }
-}

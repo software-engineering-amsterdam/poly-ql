@@ -5,9 +5,9 @@ import java.util.Iterator;
 
 public class Problems{
 	
+	//Public because they need to be Iterable
 	public Iterable<Warning> warnings;
 	public Iterable<Error> errors; 
-
 
 	public Problems() {
 		warnings = new ArrayList<Warning>();

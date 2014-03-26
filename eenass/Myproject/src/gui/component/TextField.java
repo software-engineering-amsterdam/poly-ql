@@ -7,6 +7,7 @@ import javax.swing.JComponent;
 import javax.swing.JTextField;
 
 import ast.expr.evaluate.Int;
+import ast.expr.evaluate.Undefined;
 import ast.expr.evaluate.Value;
 
 public class TextField extends Control implements KeyListener{
@@ -27,15 +28,15 @@ public class TextField extends Control implements KeyListener{
 	@Override
 	public Value getValue() {
 		if(!textField.getText().equals("")){
+			System.out.println("getvalue of textfield " + textField.getText());
 			return new Int(Integer.parseInt(textField.getText()));
 		}
-		return new Int(0);
+		return new Undefined();
 	}
 	
 	@Override
 	public void keyReleased(KeyEvent arg0) {
-		publishEventChange();
-		
+		publishEventChange();		
 	}
 
 	@Override

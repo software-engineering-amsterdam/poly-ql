@@ -3,7 +3,7 @@ package ast.statement;
 import ast.Visitor;
 import ast.expr.Identifier;
 import ast.expr.literal.StrLiteral;
-import ast.expr.types.Type;
+import ast.types.Type;
 
 public class Question extends Statement {
 	

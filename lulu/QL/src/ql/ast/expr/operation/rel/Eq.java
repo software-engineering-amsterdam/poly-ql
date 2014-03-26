@@ -27,12 +27,10 @@ public class Eq extends Operation{
 		
 		errors.addAll(getLeft().checkType(environment));
 		errors.addAll(getRight().checkType(environment));
-	
 		
-		if(getLeft().getType(environment).getName() != getRight().getType(environment).getName())
+		if(getLeft().getType(environment) != null && getRight().getType(environment) != null && getLeft().getType(environment).getName() != getRight().getType(environment).getName())
 			errors.add(new Error("==: Types of left expression and right expression are not the same"));
-		
-		
+			
 		return errors;
 	}
 	

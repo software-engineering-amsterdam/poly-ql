@@ -1,6 +1,7 @@
 package edu.uva.softwarecons.test;
 
 import edu.uva.softwarecons.checker.ExpressionTypeChecker;
+import edu.uva.softwarecons.checker.TypeChecker;
 import edu.uva.softwarecons.model.expression.Expression;
 import edu.uva.softwarecons.model.expression.arithmetic.AddExpression;
 import edu.uva.softwarecons.model.expression.arithmetic.DivExpression;
@@ -28,6 +29,7 @@ import edu.uva.softwarecons.model.type.Type;
 import org.junit.Test;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.assertFalse;
@@ -47,22 +49,23 @@ public class ExpressionTypeCheckerTest
     public void andExpressionInvalidTypeErrorTest()
     {
         assertTrue(
-            expressionContainsTypeError( new AndExpression( new BoolExpression( false ), new IntExpression( 0 ) ),
-                                         null ) );
+            expressionContainsTypeError( new AndExpression( new BoolExpression( false ), new IntExpression( 0 ) ), null,
+                                         TypeChecker.getSingleInvalidTypeList( new BooleanType() ) ) );
     }
 
     @Test
     public void orExpressionInvalidTypeErrorTest()
     {
         assertTrue(
-            expressionContainsTypeError( new OrExpression( new BoolExpression( false ), new IntExpression( 0 ) ),
-                                         null ) );
+            expressionContainsTypeError( new OrExpression( new BoolExpression( false ), new IntExpression( 0 ) ), null,
+                                         TypeChecker.getSingleInvalidTypeList( new BooleanType() ) ) );
     }
 
     @Test
     public void notExpressionInvalidTypeErrorTest()
     {
-        assertTrue( expressionContainsTypeError( new NotExpression( new IntExpression( 0 ) ), null ) );
+        assertTrue( expressionContainsTypeError( new NotExpression( new IntExpression( 0 ) ), null,
+                                                 TypeChecker.getSingleInvalidTypeList( new BooleanType() ) ) );
     }
 
     @Test
@@ -70,7 +73,7 @@ public class ExpressionTypeCheckerTest
     {
         assertTrue(
             expressionContainsTypeError( new EqualExpression( new BoolExpression( false ), new IntExpression( 0 ) ),
-                                         null ) );
+                                         null, null ) );
     }
 
     @Test
@@ -78,7 +81,7 @@ public class ExpressionTypeCheckerTest
     {
         assertTrue(
             expressionContainsTypeError( new NotEqualExpression( new BoolExpression( false ), new IntExpression( 0 ) ),
-                                         null ) );
+                                         null, null ) );
     }
 
     @Test
@@ -86,14 +89,15 @@ public class ExpressionTypeCheckerTest
     {
         assertTrue(
             expressionContainsTypeError( new GreaterExpression( new BoolExpression( false ), new IntExpression( 0 ) ),
-                                         null ) );
+                                         null, TypeChecker.getComparableExpressionInvalidTypesList() ) );
     }
 
     @Test
     public void greaterEqualExpressionInvalidTypeErrorTest()
     {
         assertTrue( expressionContainsTypeError(
-            new GreaterEqualExpression( new BoolExpression( false ), new IntExpression( 0 ) ), null ) );
+            new GreaterEqualExpression( new BoolExpression( false ), new IntExpression( 0 ) ), null,
+            TypeChecker.getComparableExpressionInvalidTypesList() ) );
     }
 
     @Test
@@ -101,39 +105,40 @@ public class ExpressionTypeCheckerTest
     {
         assertTrue(
             expressionContainsTypeError( new LessExpression( new BoolExpression( false ), new IntExpression( 0 ) ),
-                                         null ) );
+                                         null, TypeChecker.getComparableExpressionInvalidTypesList() ) );
     }
 
     @Test
     public void lessEqualExpressionInvalidTypeErrorTest()
     {
+
         assertTrue(
             expressionContainsTypeError( new LessEqualExpression( new BoolExpression( false ), new IntExpression( 0 ) ),
-                                         null ) );
+                                         null, TypeChecker.getComparableExpressionInvalidTypesList() ) );
     }
 
     @Test
     public void addExpressionInvalidTypeErrorTest()
     {
         assertTrue(
-            expressionContainsTypeError( new AddExpression( new BoolExpression( false ), new IntExpression( 0 ) ),
-                                         null ) );
+            expressionContainsTypeError( new AddExpression( new BoolExpression( false ), new IntExpression( 0 ) ), null,
+                                         TypeChecker.getSingleInvalidTypeList( new IntegerType() ) ) );
     }
 
     @Test
     public void subExpressionInvalidTypeErrorTest()
     {
         assertTrue(
-            expressionContainsTypeError( new SubExpression( new BoolExpression( false ), new IntExpression( 0 ) ),
-                                         null ) );
+            expressionContainsTypeError( new SubExpression( new BoolExpression( false ), new IntExpression( 0 ) ), null,
+                                         TypeChecker.getSingleInvalidTypeList( new IntegerType() ) ) );
     }
 
     @Test
     public void mulExpressionInvalidTypeErrorTest()
     {
         assertTrue(
-            expressionContainsTypeError( new MulExpression( new BoolExpression( false ), new IntExpression( 0 ) ),
-                                         null ) );
+            expressionContainsTypeError( new MulExpression( new BoolExpression( false ), new IntExpression( 0 ) ), null,
+                                         TypeChecker.getSingleInvalidTypeList( new IntegerType() ) ) );
     }
 
     @Test
@@ -141,7 +146,7 @@ public class ExpressionTypeCheckerTest
     {
         assertTrue(
             expressionContainsTypeError( new DivExpression( new BoolExpression( false ), new BoolExpression( false ) ),
-                                         null ) );
+                                         null, TypeChecker.getSingleInvalidTypeList( new IntegerType() ) ) );
     }
 
     @Test
@@ -169,15 +174,15 @@ public class ExpressionTypeCheckerTest
         types.put( rightQuestionId, rightType );
         IdExpression idExpression1 = new IdExpression( leftQuestionId );
         IdExpression idExpression2 = new IdExpression( rightQuestionId );
-         AndExpression andExpression = new AndExpression( idExpression1, idExpression2 );
-        return expressionContainsTypeError( andExpression, types );
+        AndExpression andExpression = new AndExpression( idExpression1, idExpression2 );
+        return expressionContainsTypeError( andExpression, types, TypeChecker.getBooleanExpressionInvalidTypesList() );
     }
 
-
-    private boolean expressionContainsTypeError( Expression expression, Map<String, Type> questionsTypes )
+    private boolean expressionContainsTypeError( Expression expression, Map<String, Type> questionsTypes,
+                                                 List<Type> expectedTypes )
     {
-        ExpressionTypeChecker expressionTypeChecker = new ExpressionTypeChecker( questionsTypes );
-        expressionTypeChecker.validateType( "", expression );
+        ExpressionTypeChecker expressionTypeChecker = new ExpressionTypeChecker();
+        expressionTypeChecker.validateType( "", expression, questionsTypes, expectedTypes );
         return !expressionTypeChecker.getErrors().isEmpty();
     }
 

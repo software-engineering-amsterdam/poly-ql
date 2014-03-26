@@ -1,5 +1,6 @@
 package main.nl.uva.ui.types;
 
+import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -42,9 +43,11 @@ public class MoneyUI extends ValueUI implements KeyListener {
         try {
             value = Double.parseDouble(_textField.getText());
         } catch (NumberFormatException numberExceptino) {
+            _textField.setBackground(Color.RED);
             return;
         }
 
+        _textField.setBackground(Color.WHITE);
         _parent.onChange(value);
     }
 

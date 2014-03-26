@@ -3,8 +3,8 @@ package ast.expr.binExpr;
 import typecheck.SymbolTable;
 import ast.Visitor;
 import ast.expr.Expr;
-import ast.expr.types.BoolType;
-import ast.expr.types.Type;
+import ast.types.BoolType;
+import ast.types.Type;
 
 public class Or extends BinExpr{
 

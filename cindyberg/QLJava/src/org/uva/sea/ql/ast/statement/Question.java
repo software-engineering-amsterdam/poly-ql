@@ -10,8 +10,7 @@ public class Question extends Statement  {
 	private final Identifier name;
 	private final StringLiteral label;
 	private final Type type;
-	
-	
+		
 	public Question(Identifier questionname, StringLiteral label,
 			Type type) {	
 		this.name = questionname;

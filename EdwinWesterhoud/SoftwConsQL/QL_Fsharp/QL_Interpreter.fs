@@ -23,11 +23,11 @@ let getControlValue (control : StatementControl) =
 
 let setControlValue (control : StatementControl) newValue =
     match newValue with
-    | Bool(value) ->    let bcontrol = control :?> BooleanControl
+    | Bool(value)    -> let bcontrol = control :?> BooleanControl
                         bcontrol.SetValue(value)
-    | String(value) ->  let scontrol = control :?> StringControl
+    | String(value)  -> let scontrol = control :?> StringControl
                         scontrol.SetValue(value)
-    | Int(value) ->     let icontrol = control :?> IntegerControl
+    | Int(value)     -> let icontrol = control :?> IntegerControl
                         icontrol.SetValue(value)
     | Decimal(value) -> let dcontrol = control :?> DecimalControl
                         dcontrol.SetValue(value)

@@ -33,6 +33,7 @@ public class BoolComponent extends AnswerComponent{
 				form.eval();
 			}
 		});
+		
 		buttonFalse.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -40,6 +41,7 @@ public class BoolComponent extends AnswerComponent{
 				form.eval();
 			}
 		});
+		
 		buttonTrue.setEnabled(enabled);
 		buttonFalse.setEnabled(enabled);
 		buttons.add(buttonTrue);
@@ -76,8 +78,7 @@ public class BoolComponent extends AnswerComponent{
 
 	@Override
 	public void setVisible(boolean visible) {
-		panel.setVisible(visible);
-		
+		panel.setVisible(visible);	
 	}
 
 }

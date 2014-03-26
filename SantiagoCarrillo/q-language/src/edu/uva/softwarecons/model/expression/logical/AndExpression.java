@@ -4,8 +4,8 @@ import edu.uva.softwarecons.model.expression.BinaryExpression;
 import edu.uva.softwarecons.model.expression.Expression;
 import edu.uva.softwarecons.model.type.Type;
 import edu.uva.softwarecons.model.value.Value;
-import edu.uva.softwarecons.visitor.expression.IExpressionElementVisitor;
-import edu.uva.softwarecons.visitor.expression.IExpressionEvalVisitor;
+import edu.uva.softwarecons.visitor.expression.ExpressionElementVisitor;
+import edu.uva.softwarecons.visitor.expression.ExpressionEvalVisitor;
 
 /**
  * Falconlabs
@@ -23,15 +23,27 @@ public class AndExpression
     }
 
     @Override
-    public Type accept( IExpressionElementVisitor visitor )
+    public BinaryExpression getNewInstance( Expression leftOperand, Expression rightOperand )
+    {
+        return new AndExpression( leftOperand, rightOperand );
+    }
+
+    @Override
+    public Type accept( ExpressionElementVisitor visitor )
     {
         return visitor.visitAndExpression( this );
 
     }
 
     @Override
-    public Value accept( IExpressionEvalVisitor visitor )
+    public Value accept( ExpressionEvalVisitor visitor )
     {
         return visitor.visitAndExpression( this );
+    }
+
+    @Override
+    public boolean equals( Object obj )
+    {
+        return obj instanceof AndExpression;
     }
 }

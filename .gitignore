@@ -207,3 +207,5 @@ $RECYCLE.BIN/
 ikmarlin/reading/.classpath
 ikmarlin/reading/.project
 ikmarlin/reading/.settings/org.eclipse.jdt.core.prefs
+*.classpath
+*.xml

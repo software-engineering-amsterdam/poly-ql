@@ -42,6 +42,12 @@ public class Id implements IExpression
     }
 
     @Override
+    public String toString()
+    {
+        return "(expression " + this._value + ")";
+    }
+
+    @Override
     public <T> T accept(IExpressionElementVisitor<T> visitor)
     {
         return visitor.visit(this);

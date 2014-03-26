@@ -87,8 +87,7 @@ public class EvaluatorTest {
 	}
 	
 	@Test
-	public void testIdentifiers(){
-		Identifier i = new Identifier("x");
+	public void testExpressions(){
 		IntLiteral a = new IntLiteral(5);
 		IntLiteral b = new IntLiteral(4);
 		assertEqual(new Bool(true), new GT(a, b));

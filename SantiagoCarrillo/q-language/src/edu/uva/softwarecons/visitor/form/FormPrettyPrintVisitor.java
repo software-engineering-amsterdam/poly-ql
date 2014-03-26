@@ -27,8 +27,8 @@ import edu.uva.softwarecons.model.type.IntegerType;
 import edu.uva.softwarecons.model.type.MoneyType;
 import edu.uva.softwarecons.model.type.StringType;
 import edu.uva.softwarecons.model.type.Type;
-import edu.uva.softwarecons.visitor.expression.IExpressionElementVisitor;
-import edu.uva.softwarecons.visitor.type.ITypeElementVisitor;
+import edu.uva.softwarecons.visitor.expression.ExpressionElementVisitor;
+import edu.uva.softwarecons.visitor.type.TypeElementVisitor;
 
 /**
  * Falconlabs
@@ -37,7 +37,7 @@ import edu.uva.softwarecons.visitor.type.ITypeElementVisitor;
  *         Date: 2/26/14
  */
 public class FormPrettyPrintVisitor
-    implements IFormElementVisitor, IExpressionElementVisitor, ITypeElementVisitor
+    implements FormElementVisitor, ExpressionElementVisitor, TypeElementVisitor
 {
 
 
@@ -93,7 +93,6 @@ public class FormPrettyPrintVisitor
     @Override
     public void visitElseQuestion( ElseQuestion question )
     {
-//        System.out.print("\t");
         System.out.print( "else{\n" );
         for ( Question q : question.getQuestions() )
         {

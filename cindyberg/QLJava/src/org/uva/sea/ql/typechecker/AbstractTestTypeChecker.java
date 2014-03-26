@@ -4,14 +4,14 @@ import problems.Problems;
 
 public abstract class AbstractTestTypeChecker {
 	
-	public TypeEnvironment env;
-	public StatementChecker stat;
-	public Problems problems;
+	protected final TypeEnvironment env;
+	protected final StatementChecker statementChecker;
+	protected final Problems problems;
 	
 	public AbstractTestTypeChecker(){
 		env = new TypeEnvironment();
 		problems = new Problems();
-		stat = new StatementChecker(env, problems);
+		statementChecker = new StatementChecker(env, problems);
 	}
 
 }

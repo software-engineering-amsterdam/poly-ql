@@ -3,8 +3,8 @@ package net.iplantevin.ql.gui.main;
 import net.iplantevin.ql.ast.expressions.Expression;
 import net.iplantevin.ql.evaluation.EvaluationVisitor;
 import net.iplantevin.ql.evaluation.Value;
-import net.iplantevin.ql.gui.widgets.AbstractFormComponent;
-import net.iplantevin.ql.gui.widgets.AbstractWidgetContainer;
+import net.iplantevin.ql.gui.formcomponents.AbstractFormComponent;
+import net.iplantevin.ql.gui.formcomponents.AbstractWidgetContainer;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

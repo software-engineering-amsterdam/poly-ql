@@ -1,5 +1,0 @@
-// Assign Statement with Decimal Type
-form test {
-    question: "Amount1: " decimal
-    question2: "Amount 2:" decimal
-}

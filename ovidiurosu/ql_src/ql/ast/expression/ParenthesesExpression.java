@@ -20,6 +20,12 @@ public class ParenthesesExpression extends UnaryExpression implements IExpressio
     }
 
     @Override
+    public String toString()
+    {
+        return "(expression ( " + this.getSubExpression().toString() + " ))";
+    }
+
+    @Override
     public <T> T accept(IExpressionElementVisitor<T> visitor)
     {
         return visitor.visit(this);

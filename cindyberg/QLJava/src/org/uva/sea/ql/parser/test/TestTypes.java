@@ -13,7 +13,6 @@ public class TestTypes extends TestParser{
 	
 		assertEquals(parser.parser("var : \"label\" integer").getClass(), Question.class);
 		assertEquals(parser.parser("var : \"label\" string").getClass(), Question.class);
-		assertEquals(parser.parser("var : \"label\" money").getClass(), Question.class);
 		assertEquals(parser.parser("var : \"label\" boolean").getClass(), Question.class);
 	}
 }

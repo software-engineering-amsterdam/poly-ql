@@ -1,0 +1,1 @@
+(type ( (enumTypeP "a" , (enumTypeP (numberLiteralP 1) , (enumTypeP (numberLiteralP 4.5) , (enumTypeP "b00")))) ))

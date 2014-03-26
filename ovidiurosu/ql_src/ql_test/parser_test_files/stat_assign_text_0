@@ -1,5 +1,0 @@
-// Assign Statement with Text Type
-form test {
-    question: "First Name: " text
-    question2: "Last Name:" text
-}

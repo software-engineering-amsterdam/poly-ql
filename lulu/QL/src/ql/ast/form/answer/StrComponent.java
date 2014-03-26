@@ -6,13 +6,11 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
 import javax.swing.JComponent;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import ql.ast.environment.Environment;
 import ql.ast.expr.exprType.Ident;
 import ql.ast.form.Form;
-import ql.ast.value.Int;
 import ql.ast.value.Str;
 import ql.ast.value.Value;
 
@@ -30,6 +28,7 @@ public class StrComponent extends AnswerComponent{
 				submitResult(environment, form, id);				
 			}
 		});
+		
 		answer.addFocusListener(new FocusListener() {
 			@Override
 			public void focusLost(FocusEvent e) {

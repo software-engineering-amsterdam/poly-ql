@@ -34,6 +34,7 @@ public class IntComponent extends AnswerComponent{
 				form.eval();
 			}
 		});
+		
 		answer.addFocusListener(new FocusListener() {
 			@Override
 			public void focusLost(FocusEvent e) {

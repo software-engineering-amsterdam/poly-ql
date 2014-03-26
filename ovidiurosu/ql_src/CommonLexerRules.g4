@@ -16,7 +16,7 @@ INTEGER: 'integer';
 DECIMAL: 'decimal';
 MONEY:   'money';
 DATE:    'date';
-TEXT:    'text';
+STRINGT: 'string';
 
 // Boolean Values
 TRUE: 'true';
