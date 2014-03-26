@@ -9,6 +9,7 @@ import net.iplantevin.ql.ast.statements.IfElse;
 import net.iplantevin.ql.ast.statements.Question;
 import net.iplantevin.ql.ast.statements.Statement;
 import net.iplantevin.ql.ast.visitors.IStatementVisitor;
+import net.iplantevin.ql.evaluation.EvaluationVisitor;
 import net.iplantevin.ql.gui.formcomponents.AbstractFormComponent;
 import net.iplantevin.ql.gui.formcomponents.ComputationContainer;
 import net.iplantevin.ql.gui.formcomponents.ContainerComponent;
@@ -30,7 +31,9 @@ public class FormFrameBuilder implements IStatementVisitor<AbstractFormComponent
 
     private FormFrameBuilder(Form form, GUIController controller) {
         formComponents = new OrderedHashSet<AbstractFormComponent>();
-        formFrame = new FormFrame(form.getName());
+        EvaluationVisitor evaluator = new EvaluationVisitor();
+        FormEventManager eventManager = new FormEventManager(evaluator);
+        formFrame = new FormFrame(form.getName(), evaluator, eventManager);
         AbstractFormComponent topComponent = form.getBody().accept(this);
         initValues();
         formFrame.initUI(topComponent, controller);

@@ -1,7 +1,9 @@
-package net.iplantevin.ql.ast.types;
+package net.iplantevin.ql.ast.typechecking;
 
 import net.iplantevin.ql.ast.LineInfo;
 import net.iplantevin.ql.ast.expressions.literals.ID;
+import net.iplantevin.ql.ast.types.Type;
+import net.iplantevin.ql.ast.types.UndefinedType;
 import net.iplantevin.ql.errors.TypeError;
 
 import java.util.HashMap;

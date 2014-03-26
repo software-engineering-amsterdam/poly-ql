@@ -4,7 +4,7 @@ import net.iplantevin.ql.ast.LineInfo;
 import net.iplantevin.ql.ast.expressions.Expression;
 import net.iplantevin.ql.ast.types.StringType;
 import net.iplantevin.ql.ast.types.Type;
-import net.iplantevin.ql.ast.types.TypeEnvironment;
+import net.iplantevin.ql.ast.typechecking.TypeEnvironment;
 import net.iplantevin.ql.ast.visitors.IExpressionVisitor;
 
 /**

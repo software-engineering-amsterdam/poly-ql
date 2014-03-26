@@ -1,6 +1,6 @@
 form Box1HouseOwning {
  hasSoldHouse: "Did you sell a house in 2010?" boolean
- //hasSoldHouse: "Did you sell a house in 2010? #2" boolean
+ //hasSoldHouse: "Did you sell a house in 2010? #2" integer
  hasBoughtHouse: "Did you buy a house in 2010?" boolean
  hasMaintLoan: "Did you enter a loan for maintenance/reconstruction?" boolean
  hasSoldHouseComp: "You sold a house in 2010:" boolean(hasSoldHouse)

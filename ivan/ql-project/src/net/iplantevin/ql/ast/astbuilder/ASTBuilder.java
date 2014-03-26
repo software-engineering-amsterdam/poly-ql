@@ -4,7 +4,9 @@ import net.iplantevin.ql.antlr.QLLexer;
 import net.iplantevin.ql.antlr.QLParser;
 import net.iplantevin.ql.ast.form.Form;
 import net.iplantevin.ql.ast.form.FormCollection;
+import net.iplantevin.ql.ast.typechecking.ErrorManager;
 import net.iplantevin.ql.ast.typechecking.TypeCheckerVisitor;
+import net.iplantevin.ql.ast.typechecking.TypeEnvironment;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -41,8 +43,10 @@ public class ASTBuilder {
 
         // Type Checking:
         for (Form form : formCollection.getForms()) {
-            TypeCheckerVisitor typeChecker = TypeCheckerVisitor.checkForm(form);
-            typeChecker.printAllMessages();
+            TypeEnvironment idTypeStore = new TypeEnvironment();
+            ErrorManager errorManager = new ErrorManager();
+            TypeCheckerVisitor.checkForm(form, idTypeStore, errorManager);
+            errorManager.printAllMessages();
         }
     }
 }

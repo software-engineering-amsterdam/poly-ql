@@ -35,7 +35,6 @@ import net.iplantevin.ql.ast.statements.Statement;
 import net.iplantevin.ql.ast.types.BooleanType;
 import net.iplantevin.ql.ast.types.IntegerType;
 import net.iplantevin.ql.ast.types.Type;
-import net.iplantevin.ql.ast.types.TypeEnvironment;
 import net.iplantevin.ql.ast.types.UndefinedType;
 import net.iplantevin.ql.ast.visitors.IASTVisitor;
 import net.iplantevin.ql.errors.ASTError;
@@ -54,45 +53,32 @@ import java.util.Map;
  */
 public class TypeCheckerVisitor implements IASTVisitor<Void> {
     private final TypeEnvironment idTypeStore;
+    private final ErrorManager errorManager;
     private final Map<String, Questionable> labels;
     private static UndefinedType UNDEFINED = new UndefinedType();
-    private final ErrorManager errorManager;
 
-    private TypeCheckerVisitor() {
-        errorManager = new ErrorManager();
-        idTypeStore = new TypeEnvironment();
+    private TypeCheckerVisitor(TypeEnvironment idTypeStore, ErrorManager errorManager) {
+        this.errorManager = errorManager;
+        this.idTypeStore = idTypeStore;
         labels = new HashMap<String, Questionable>();
     }
 
-    public static TypeCheckerVisitor checkForm(Form form) {
-        TypeCheckerVisitor typeChecker = new TypeCheckerVisitor();
+    public static void checkForm(Form form, TypeEnvironment idTypeStore,
+                                 ErrorManager errorManager) {
+        TypeCheckerVisitor typeChecker =
+                new TypeCheckerVisitor(idTypeStore, errorManager);
         form.accept(typeChecker);
-        return typeChecker;
-    }
-
-    /**
-     * Only true if no errors, warnings are allowed.
-     */
-    public boolean isTypeSafe() {
-        return errorManager.hasNoErrors();
     }
 
     /////////////////////////////////////////////
     // Error/Warning addition, printing, checking
     /////////////////////////////////////////////
     private void addError(ASTError error) {
-        if (error != null) {
-            errorManager.addError(error);
-        }
+        errorManager.addError(error);
     }
 
     private void addWarning(ASTWarning warning) {
         errorManager.addWarning(warning);
-    }
-
-    public void printAllMessages() {
-        errorManager.printWarnings();
-        errorManager.printErrors();
     }
 
     /////////////////////////////////////////////
@@ -128,7 +114,9 @@ public class TypeCheckerVisitor implements IASTVisitor<Void> {
     private void addIdentifier(Questionable questionable) {
         TypeError typeError = idTypeStore.
                 declareIdentifier(questionable.getIdentifier(), questionable.getType());
-        addError(typeError);
+        if (typeError != null) {
+            addError(typeError);
+        }
     }
 
     /////////////////////////////////////////////
