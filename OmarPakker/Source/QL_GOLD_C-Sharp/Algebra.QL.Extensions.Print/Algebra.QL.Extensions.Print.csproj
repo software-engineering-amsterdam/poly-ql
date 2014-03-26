@@ -42,7 +42,7 @@
     <Compile Include="Expr\ModuloExpr.cs" />
     <Compile Include="Expr\PowerExpr.cs" />
     <Compile Include="Expr\SumExpr.cs" />
-    <Compile Include="Factory\ExtPrintFactory.cs" />
+    <Compile Include="Factory\PrintFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Stmnt\GotoStmnt.cs" />
     <Compile Include="Stmnt\RepeatStmnt.cs" />

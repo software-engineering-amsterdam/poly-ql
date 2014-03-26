@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using Algebra.QL.Extensions.Stmnt;
+using Algebra.QL.Form.Environment;
 using Algebra.QL.Form.Expr;
-using Algebra.QL.Form.Helpers;
 using Algebra.QL.Form.Stmnt;
 using Algebra.QL.Form.Value;
 
@@ -19,7 +20,14 @@ namespace Algebra.QL.Extensions.Form.Stmnt
 
         public FrameworkElement BuildForm(ValueEnvironment vEnv, TypeEnvironment tEnv)
         {
-            Action<VarAccessEventArgs> onVarAccess = (args) => args.SetVarInstance(0);
+            IReadOnlyList<int> baseInstances = null;
+
+            //Need to execute the body atleast once to bring the variable into existance.
+            Action<VarAccessEventArgs> onVarAccess = (args) =>
+            {
+                baseInstances = args.Instances;
+                args.SetVarInstance(0);
+            };
             vEnv.VarAccess += onVarAccess;
             tEnv.VarAccess += onVarAccess;
             Body.BuildForm(vEnv, tEnv);
@@ -29,7 +37,16 @@ namespace Algebra.QL.Extensions.Form.Stmnt
             StackPanel sp = new StackPanel();
 
             ValueContainer value = Expression.Evaluate(vEnv);
-            value.ValueChanged += () => FillChildren(sp, Convert.ToInt32(value.Value), vEnv, tEnv);
+            value.ValueChanged += () =>
+            {
+                Action<VarAccessEventArgs> baseInstancesEvent = (args) => args.SetVarBaseInstances(baseInstances);
+                vEnv.VarAccess += baseInstancesEvent;
+                tEnv.VarAccess += baseInstancesEvent;
+                FillChildren(sp, Convert.ToInt32(value.Value), vEnv, tEnv);
+                vEnv.VarAccess -= baseInstancesEvent;
+                tEnv.VarAccess -= baseInstancesEvent;
+            };
+            FillChildren(sp, Convert.ToInt32(value.Value), vEnv, tEnv);
 
             return sp;
         }

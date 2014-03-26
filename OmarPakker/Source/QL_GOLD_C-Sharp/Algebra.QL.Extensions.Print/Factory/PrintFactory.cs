@@ -5,15 +5,14 @@ using Algebra.QL.Extensions.Print.Expr.Literals;
 using Algebra.QL.Extensions.Print.Stmnt;
 using Algebra.QL.Extensions.Print.Type;
 using Algebra.QL.Print.Expr;
-using Algebra.QL.Print.Factory;
 using Algebra.QL.Print.Stmnt;
 using Algebra.QL.Print.Type;
 
 namespace Algebra.QL.Extensions.Print.Factory
 {
-    public class ExtPrintFactory : PrintFactory, IStmntFactory<IPrintStmnt, IPrintExpr, IPrintType>
+    public class PrintFactory : QL.Print.Factory.PrintFactory, IStmntFactory<IPrintStmnt, IPrintExpr, IPrintType>
     {
-        public ExtPrintFactory()
+        public PrintFactory()
         {
 
         }

@@ -1,6 +1,6 @@
 ﻿using System;
 using Algebra.Core.Expr;
-using Algebra.QL.Form.Helpers;
+using Algebra.QL.Form.Environment;
 using Algebra.QL.Form.Type;
 using Algebra.QL.Form.Value;
 
@@ -22,7 +22,7 @@ namespace Algebra.QL.Form.Expr
 
         public ValueContainer Evaluate(ValueEnvironment env)
         {
-            if (!env.IsDeclared(Name) || !env.IsRepeated(Name))
+            if (!env.IsDeclared(Name) || !env.IsInstanced(Name))
             {
                 ValueContainer a = Value.Evaluate(env);
                 ValueContainer value = new ValueContainer(a.Value);
@@ -40,7 +40,7 @@ namespace Algebra.QL.Form.Expr
 
         public IFormType BuildForm(TypeEnvironment env)
         {
-            if (!env.IsDeclared(Name) || !env.IsRepeated(Name))
+            if (!env.IsDeclared(Name) || !env.IsInstanced(Name))
             {
                 env.Declare(Name, Type);
             }

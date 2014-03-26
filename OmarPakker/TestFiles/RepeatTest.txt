@@ -1,18 +1,21 @@
 form Form1
 {
-    "Power:" >> answer1:int;
-    "Power:" << answer1:int = answer1 ^ 2;
-    "Power:" << answer1;
-    "Modulo:" << 10 % 5;
-    "Modulo2:" << 10 % 3;
-    "Date Type:" >> dateVar:date;
-    "Date:" << 2014-02-20T16:22:00+01:00;
-    "My Value:" >> myValue:int;
-    repeat (myValue)
+    "Outer Repeat amount:" >> outerAmount:int;
+    "Inner Repeat amount:" >> innerAmount:int;
+    repeat (outerAmount)
     {
-        "In the repeat:" >> loopAnswer:int;
-        "In the repeat * 2:" << inLoopMath:real = loopAnswer * 2;
+        "Outer input:" >> outerInput:int;
+        "Outer input * 2:" << outerMultiply:int = outerInput * 2;
+
+        repeat (innerAmount)
+        {
+            "Inner input:" >> innerInput:int;
+            "Inner input * 4:" << innerMultiply:int = innerInput * 4;
+            "Inner input + Outer Input" << innerPlusOuter:int = outerInput + innerInput;
+        }
+        "Inner input Sum:" << sum(innerInput);
+        "Inner input Avg:" << avg(innerInput);
     }
-    "Sum:" << sum(loopAnswer);
-    "Avg:" << avg(loopAnswer);
+    "Outer input Sum:" << sum(outerInput);
+    "Outer input Avg:" << avg(outerInput);
 }

@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
+using Algebra.Core.Collections;
 
-namespace Algebra.Core.Helpers
+namespace Algebra.Core.Environment
 {
     public class VarEnvironment<T>
     {
-        protected IDictionary<string, T> Variables { get; private set; }
+        protected ObservableDictionary<string, T> Variables { get; private set; }
 
         public VarEnvironment()
         {
-            Variables = new Dictionary<string, T>();
+            Variables = new ObservableDictionary<string, T>();
         }
 
         public virtual void Declare(string name, T value)

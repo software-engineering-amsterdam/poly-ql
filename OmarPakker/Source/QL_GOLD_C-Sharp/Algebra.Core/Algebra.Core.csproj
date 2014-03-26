@@ -43,12 +43,15 @@
     <Compile Include="Factory\IExprFactory.cs" />
     <Compile Include="Factory\IStmntFactory.cs" />
     <Compile Include="Factory\ITypeFactory.cs" />
-    <Compile Include="GrammarParser\Parser.cs" />
-    <Compile Include="Helpers\ErrorManager.cs" />
-    <Compile Include="Helpers\IPair.cs" />
-    <Compile Include="Helpers\ManagerMsg.cs" />
-    <Compile Include="Helpers\Pair.cs" />
-    <Compile Include="Helpers\VarEnvironment.cs" />
+    <Compile Include="Grammar\Parser.cs" />
+    <Compile Include="Collections\DictionaryChangedEventArgs.cs" />
+    <Compile Include="Environment\ErrorManager.cs" />
+    <Compile Include="Collections\IPair.cs" />
+    <Compile Include="Environment\ManagerMsg.cs" />
+    <Compile Include="Collections\DictionaryKeyValueObserver.cs" />
+    <Compile Include="Collections\ObservableDictionary.cs" />
+    <Compile Include="Collections\Pair.cs" />
+    <Compile Include="Environment\VarEnvironment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Type\ITypeBase.cs" />
   </ItemGroup>

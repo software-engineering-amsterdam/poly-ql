@@ -1,7 +1,7 @@
-﻿using Algebra.Core.Helpers;
+﻿using Algebra.Core.Environment;
+using Algebra.QL.TypeCheck.Environment;
 using Algebra.QL.TypeCheck.Expr;
 using Algebra.QL.TypeCheck.Factory;
-using Algebra.QL.TypeCheck.Helpers;
 using Algebra.QL.TypeCheck.Stmnt;
 using Algebra.QL.TypeCheck.Type;
 using Xunit;

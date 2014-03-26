@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
-using Algebra.QL.Core.Grammar;
 using Algebra.QL.Extensions.Factory;
 using GOLD.Engine;
 using Grammar.Generated.v2;
 
 namespace Algebra.QL.Extensions.Grammar
 {
-    public class ExtParser<S, E, T, F> : Parser<S, E, T, F>
+    public class Parser<S, E, T, F> : Core.Grammar.Parser<S, E, T, F>
         where F : IStmntFactory<S, E, T>
     {
         protected override ReadOnlyDictionary<string, short> Rules { get { return GrammarData.Rules; } }
 
-        public ExtParser(F f)
+        public Parser(F f)
             : base(f)
         {
             

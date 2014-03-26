@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Algebra.Core.Helpers
+namespace Algebra.Core.Environment
 {
     internal class ManagerMsg
     {

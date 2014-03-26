@@ -1,4 +1,4 @@
-﻿using Algebra.QL.TypeCheck.Helpers;
+﻿using Algebra.QL.TypeCheck.Environment;
 
 namespace Algebra.QL.TypeCheck.Stmnt
 {

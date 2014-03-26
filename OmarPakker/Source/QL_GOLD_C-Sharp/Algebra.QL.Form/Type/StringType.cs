@@ -17,9 +17,9 @@ namespace Algebra.QL.Form.Type
 
         }
 
-        public override FrameworkElement BuildElement(ValueContainer value, bool editable)
+        protected override FrameworkElement BuildElement(ValueContainer value)
         {
-            TextBox tb = new TextBox() { Width = 200, IsEnabled = editable };
+            TextBox tb = new TextBox() { Width = 200 };
             tb.TextChanged += (s, e) =>
             {
                 value.Value = tb.Text;
@@ -31,17 +31,6 @@ namespace Algebra.QL.Form.Type
             };
             value.ValueChanged += onValueChanged;
             onValueChanged();
-
-            string lastValue = Convert.ToString(value.Value);
-            tb.Loaded += (s, e) =>
-            {
-                tb.Text = lastValue;
-            };
-            tb.Unloaded += (s, e) =>
-            {
-                lastValue = Convert.ToString(value.Value);
-                tb.Text = String.Empty;
-            };
 
             return tb;
         }

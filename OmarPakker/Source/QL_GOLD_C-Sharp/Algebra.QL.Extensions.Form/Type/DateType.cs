@@ -18,9 +18,9 @@ namespace Algebra.QL.Extensions.Form.Type
 
         }
 
-        public override FrameworkElement BuildElement(ValueContainer value, bool editable)
+        protected override FrameworkElement BuildElement(ValueContainer value)
         {
-            DatePicker dp = new DatePicker() { Width = 200, IsEnabled = editable };
+            DatePicker dp = new DatePicker() { Width = 200 };
             dp.SelectedDateChanged += (s, e) =>
             {
                 value.Value = dp.SelectedDate;
@@ -32,17 +32,6 @@ namespace Algebra.QL.Extensions.Form.Type
             };
             value.ValueChanged += onValueChanged;
             onValueChanged();
-
-            DateTime lastValue = Convert.ToDateTime(value.Value);
-            dp.Loaded += (s, e) =>
-            {
-                dp.SelectedDate = lastValue;
-            };
-            dp.Unloaded += (s, e) =>
-            {
-                lastValue = Convert.ToDateTime(value.Value);
-                dp.SelectedDate = DateTime.UtcNow.Date;
-            };
 
             return dp;
         }

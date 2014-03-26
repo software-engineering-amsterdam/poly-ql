@@ -43,8 +43,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{4C24AB
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestFiles", "TestFiles", "{AF5ED6CD-62AC-4B86-92C2-5F38E2AD9F29}"
 	ProjectSection(SolutionItems) = preProject
+		..\..\TestFiles\ExtTest.txt = ..\..\TestFiles\ExtTest.txt
 		..\..\TestFiles\QL_Test.txt = ..\..\TestFiles\QL_Test.txt
 		..\..\TestFiles\RepeatTest.txt = ..\..\TestFiles\RepeatTest.txt
+		..\..\TestFiles\VarReuseTest.txt = ..\..\TestFiles\VarReuseTest.txt
 	EndProjectSection
 EndProject
 Global

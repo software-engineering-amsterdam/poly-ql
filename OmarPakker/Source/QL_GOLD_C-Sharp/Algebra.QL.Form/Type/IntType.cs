@@ -17,9 +17,9 @@ namespace Algebra.QL.Form.Type
 
         }
 
-        public override FrameworkElement BuildElement(ValueContainer value, bool editable)
+        protected override FrameworkElement BuildElement(ValueContainer value)
         {
-            IntegerUpDown iud = new IntegerUpDown() { Width = 200, IsEnabled = editable };
+            IntegerUpDown iud = new IntegerUpDown() { Width = 200 };
             iud.ValueChanged += (s, e) =>
             {
                 value.Value = iud.Value;
@@ -31,17 +31,6 @@ namespace Algebra.QL.Form.Type
             };
             value.ValueChanged += onValueChanged;
             onValueChanged();
-
-            int lastValue = Convert.ToInt32(value.Value);
-            iud.Loaded += (s, e) =>
-            {
-                iud.Value = lastValue;
-            };
-            iud.Unloaded += (s, e) =>
-            {
-                lastValue = Convert.ToInt32(value.Value);
-                iud.Value = 0;
-            };
 
             return iud;
         }

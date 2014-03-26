@@ -1,0 +1,6 @@
+form Form1
+{
+    "Var = Input:" >> answer1:int;
+    "Var = Input ^ 2:" << answer1:int = answer1 ^ 2;
+    "Var Value:" << answer1;
+}

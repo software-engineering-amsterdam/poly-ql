@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace Algebra.QL.Form.Helpers
+namespace Algebra.QL.Form.Environment
 {
     public class VarAccessEventArgs : EventArgs
     {
@@ -14,6 +14,14 @@ namespace Algebra.QL.Form.Helpers
         public VarAccessEventArgs()
         {
             instances = new List<int>();
+        }
+
+        public void SetVarBaseInstances(IEnumerable<int> baseInstances)
+        {
+            foreach (int instance in baseInstances)
+            {
+                instances.Add(instance);
+            }
         }
 
         public void SetVarInstance(int instance)

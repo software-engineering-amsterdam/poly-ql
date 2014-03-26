@@ -17,9 +17,9 @@ namespace Algebra.QL.Form.Type
 
         }
 
-        public override FrameworkElement BuildElement(ValueContainer value, bool editable)
+        protected override FrameworkElement BuildElement(ValueContainer value)
         {
-            CheckBox cb = new CheckBox() { IsEnabled = editable };
+            CheckBox cb = new CheckBox();
             cb.Checked += (s, e) =>
             {
                 value.Value = true;
@@ -35,17 +35,6 @@ namespace Algebra.QL.Form.Type
             };
             value.ValueChanged += onValueChanged;
             onValueChanged();
-
-            bool lastValue = cb.IsChecked.Value;
-            cb.Loaded += (s, e) =>
-            {
-                cb.IsChecked = lastValue;
-            };
-            cb.Unloaded += (s, e) =>
-            {
-                lastValue = Convert.ToBoolean(value.Value);
-                cb.IsChecked = false;
-            };
 
             return cb;
         }

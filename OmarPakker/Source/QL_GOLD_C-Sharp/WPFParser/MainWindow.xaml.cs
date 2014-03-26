@@ -4,10 +4,9 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
-using Algebra.Core.GrammarParser;
-using Algebra.Core.Helpers;
-using Algebra.QL.Core.Grammar;
-using Algebra.QL.Extensions.Grammar;
+using Algebra.Core.Collections;
+using Algebra.Core.Environment;
+using Algebra.Core.Grammar;
 using Algebra.QL.Form;
 using Algebra.QL.Form.Expr;
 using Algebra.QL.Form.Stmnt;
@@ -17,8 +16,8 @@ using Algebra.QL.Print.Expr;
 using Algebra.QL.Print.Stmnt;
 using Algebra.QL.Print.Type;
 using Algebra.QL.TypeCheck;
+using Algebra.QL.TypeCheck.Environment;
 using Algebra.QL.TypeCheck.Expr;
-using Algebra.QL.TypeCheck.Helpers;
 using Algebra.QL.TypeCheck.Stmnt;
 using Algebra.QL.TypeCheck.Type;
 using Microsoft.Win32;
@@ -63,7 +62,7 @@ namespace WPFParser
         private static Parser GetBasicParser<S, E, T, F>(F f)
             where F : Algebra.QL.Core.Factory.IStmntFactory<S, E, T>
         {
-            var parser = new Parser<S, E, T, F>(f);
+            var parser = new Algebra.QL.Core.Grammar.Parser<S, E, T, F>(f);
 
             Assembly a = parser.GetType().Assembly;
             parser.LoadGrammar(new BinaryReader(a.GetManifestResourceStream("Algebra.QL.Core.Grammar.QL_Grammar.egt")));
@@ -74,7 +73,7 @@ namespace WPFParser
         private static Parser GetExtendedParser<S, E, T, F>(F f)
             where F : Algebra.QL.Extensions.Factory.IStmntFactory<S, E, T>
         {
-            var parser = new ExtParser<S, E, T, F>(f);
+            var parser = new Algebra.QL.Extensions.Grammar.Parser<S, E, T, F>(f);
 
             Assembly a = parser.GetType().Assembly;
             parser.LoadGrammar(new BinaryReader(a.GetManifestResourceStream("Algebra.QL.Extensions.Grammar.QL_Grammar.egt")));
@@ -176,7 +175,7 @@ namespace WPFParser
 
                 if (!errMngr.HasErrors)
                 {
-                    formContainer.Content = combItem.Item2.BuildForm(new Algebra.QL.Form.Helpers.ValueEnvironment(), new Algebra.QL.Form.Helpers.TypeEnvironment());
+                    formContainer.Content = combItem.Item2.BuildForm(new Algebra.QL.Form.Environment.ValueEnvironment(), new Algebra.QL.Form.Environment.TypeEnvironment());
                 }
             }
 

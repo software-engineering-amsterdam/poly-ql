@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using GOLD.Engine;
 
-namespace Algebra.Core.GrammarParser
+namespace Algebra.Core.Grammar
 {
     public abstract class Parser
     {

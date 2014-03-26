@@ -17,9 +17,9 @@ namespace Algebra.QL.Form.Type
 
         }
 
-        public override FrameworkElement BuildElement(ValueContainer value, bool editable)
+        protected override FrameworkElement BuildElement(ValueContainer value)
         {
-            DoubleUpDown dud = new DoubleUpDown() { Width = 200, IsEnabled = editable, Increment = 0.1 };
+            DoubleUpDown dud = new DoubleUpDown() { Width = 200, Increment = 0.1 };
             dud.ValueChanged += (s, e) =>
             {
                 value.Value = dud.Value;
@@ -31,17 +31,6 @@ namespace Algebra.QL.Form.Type
             };
             value.ValueChanged += onValueChanged;
             onValueChanged();
-
-            double lastValue = Convert.ToDouble(value.Value);
-            dud.Loaded += (s, e) =>
-            {
-                dud.Value = lastValue;
-            };
-            dud.Unloaded += (s, e) =>
-            {
-                lastValue = Convert.ToDouble(value.Value);
-                dud.Value = 0;
-            };
 
             return dud;
         }

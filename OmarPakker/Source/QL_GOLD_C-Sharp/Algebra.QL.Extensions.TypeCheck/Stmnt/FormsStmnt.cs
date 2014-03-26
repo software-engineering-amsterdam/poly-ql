@@ -1,6 +1,6 @@
 ﻿using System;
 using Algebra.QL.Core.Stmnt;
-using Algebra.QL.TypeCheck.Helpers;
+using Algebra.QL.TypeCheck.Environment;
 using Algebra.QL.TypeCheck.Stmnt;
 
 namespace Algebra.QL.Extensions.TypeCheck.Stmnt

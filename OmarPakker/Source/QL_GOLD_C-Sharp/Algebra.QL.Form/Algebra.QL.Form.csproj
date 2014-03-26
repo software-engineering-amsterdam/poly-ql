@@ -67,10 +67,10 @@
     <Compile Include="Expr\VarExpr.cs" />
     <Compile Include="Expr\VarInitExpr.cs" />
     <Compile Include="Factory\FormFactory.cs" />
-    <Compile Include="Helpers\TypeEnvironment.cs" />
-    <Compile Include="Helpers\ValueEnvironment.cs" />
-    <Compile Include="Helpers\VarAccessEventArgs.cs" />
-    <Compile Include="Helpers\VarEnvironment.cs" />
+    <Compile Include="Environment\TypeEnvironment.cs" />
+    <Compile Include="Environment\ValueEnvironment.cs" />
+    <Compile Include="Environment\VarAccessEventArgs.cs" />
+    <Compile Include="Environment\VarEnvironment.cs" />
     <Compile Include="IForm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Stmnt\StatementsStmnt.cs" />

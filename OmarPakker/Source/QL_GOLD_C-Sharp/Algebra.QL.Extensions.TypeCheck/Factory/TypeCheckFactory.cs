@@ -5,15 +5,14 @@ using Algebra.QL.Extensions.TypeCheck.Expr.Literals;
 using Algebra.QL.Extensions.TypeCheck.Stmnt;
 using Algebra.QL.Extensions.TypeCheck.Type;
 using Algebra.QL.TypeCheck.Expr;
-using Algebra.QL.TypeCheck.Factory;
 using Algebra.QL.TypeCheck.Stmnt;
 using Algebra.QL.TypeCheck.Type;
 
 namespace Algebra.QL.Extensions.TypeCheck.Factory
 {
-    public class ExtTypeCheckFactory : TypeCheckFactory, IStmntFactory<ITypeCheckStmnt, ITypeCheckExpr, ITypeCheckType>
+    public class TypeCheckFactory : QL.TypeCheck.Factory.TypeCheckFactory, IStmntFactory<ITypeCheckStmnt, ITypeCheckExpr, ITypeCheckType>
     {
-        public ExtTypeCheckFactory()
+        public TypeCheckFactory()
         {
 
         }

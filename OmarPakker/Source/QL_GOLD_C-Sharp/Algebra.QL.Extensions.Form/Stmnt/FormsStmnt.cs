@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using Algebra.QL.Core.Stmnt;
-using Algebra.QL.Form.Helpers;
+using Algebra.QL.Form.Environment;
 using Algebra.QL.Form.Stmnt;
 
 namespace Algebra.QL.Extensions.Form.Stmnt

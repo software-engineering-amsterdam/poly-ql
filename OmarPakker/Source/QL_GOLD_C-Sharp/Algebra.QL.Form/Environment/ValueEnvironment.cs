@@ -1,6 +1,6 @@
 ﻿using Algebra.QL.Form.Value;
 
-namespace Algebra.QL.Form.Helpers
+namespace Algebra.QL.Form.Environment
 {
     public class ValueEnvironment : VarEnvironment<ValueContainer>
     {

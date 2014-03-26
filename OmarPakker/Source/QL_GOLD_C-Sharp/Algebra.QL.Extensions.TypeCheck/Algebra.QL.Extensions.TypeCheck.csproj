@@ -38,7 +38,7 @@
     <Compile Include="Expr\ModuloExpr.cs" />
     <Compile Include="Expr\PowerExpr.cs" />
     <Compile Include="Expr\SumExpr.cs" />
-    <Compile Include="Factory\ExtTypeCheckFactory.cs" />
+    <Compile Include="Factory\TypeCheckFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Stmnt\FormsStmnt.cs" />
     <Compile Include="Stmnt\GotoStmnt.cs" />

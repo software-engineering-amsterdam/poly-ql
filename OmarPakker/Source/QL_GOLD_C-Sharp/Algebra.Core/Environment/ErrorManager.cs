@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Algebra.Core.Helpers
+namespace Algebra.Core.Environment
 {
     public class ErrorManager
     {

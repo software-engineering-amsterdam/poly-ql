@@ -1,4 +1,4 @@
-﻿using Algebra.QL.TypeCheck.Helpers;
+﻿using Algebra.QL.TypeCheck.Environment;
 using Algebra.QL.TypeCheck.Type;
 
 namespace Algebra.QL.TypeCheck.Expr

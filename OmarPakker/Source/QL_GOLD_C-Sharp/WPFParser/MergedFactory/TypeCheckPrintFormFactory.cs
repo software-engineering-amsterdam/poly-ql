@@ -1,4 +1,4 @@
-﻿using Algebra.Core.Helpers;
+﻿using Algebra.Core.Collections;
 using Algebra.QL.Extensions.Factory;
 using Algebra.QL.Extensions.Form.Factory;
 using Algebra.QL.Form.Expr;
@@ -14,11 +14,11 @@ using Algebra.QL.TypeCheck.Type;
 namespace WPFParser.MergedFactory
 {
     public class TypeCheckPrintFormFactory
-        : ExtFactoryCombination<IPair<ITypeCheckStmnt, IPrintStmnt>, IPair<ITypeCheckExpr, IPrintExpr>,
-          IPair<ITypeCheckType, IPrintType>, IFormStmnt, IFormExpr, IFormType, TypeCheckPrintFactory, ExtFormFactory>
+        : FactoryCombination<IPair<ITypeCheckStmnt, IPrintStmnt>, IPair<ITypeCheckExpr, IPrintExpr>,
+          IPair<ITypeCheckType, IPrintType>, IFormStmnt, IFormExpr, IFormType, TypeCheckPrintFactory, FormFactory>
     {
         public TypeCheckPrintFormFactory()
-            : base(new TypeCheckPrintFactory(), new ExtFormFactory())
+            : base(new TypeCheckPrintFactory(), new FormFactory())
         {
 
         }

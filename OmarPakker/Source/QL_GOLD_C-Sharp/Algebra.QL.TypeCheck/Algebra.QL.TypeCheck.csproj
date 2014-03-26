@@ -58,7 +58,7 @@
     <Compile Include="Expr\VarExpr.cs" />
     <Compile Include="Expr\VarInitExpr.cs" />
     <Compile Include="Factory\TypeCheckFactory.cs" />
-    <Compile Include="Helpers\VarAccessEventArgs.cs" />
+    <Compile Include="Environment\VarAccessEventArgs.cs" />
     <Compile Include="ITypeCheck.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Stmnt\StatementsStmnt.cs" />
@@ -68,7 +68,7 @@
     <Compile Include="Stmnt\ITypeCheckStmnt.cs" />
     <Compile Include="Stmnt\LabelStmnt.cs" />
     <Compile Include="Stmnt\QuestionStmnt.cs" />
-    <Compile Include="Helpers\TypeEnvironment.cs" />
+    <Compile Include="Environment\TypeEnvironment.cs" />
     <Compile Include="Type\BaseType.cs" />
     <Compile Include="Type\BoolType.cs" />
     <Compile Include="Type\IntType.cs" />

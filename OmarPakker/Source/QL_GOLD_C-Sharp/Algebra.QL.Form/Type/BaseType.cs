@@ -15,9 +15,22 @@ namespace Algebra.QL.Form.Type
 
         }
 
-        public virtual FrameworkElement BuildElement(ValueContainer value, bool editable)
+        protected virtual FrameworkElement BuildElement(ValueContainer value)
         {
             return null;
+        }
+
+        public FrameworkElement BuildElement(ValueContainer value, bool editable)
+        {
+            FrameworkElement elem = BuildElement(value);
+            elem.IsEnabled = editable;
+
+            elem.IsVisibleChanged += (s, e) =>
+            {
+                value.Inactive = !elem.IsVisible;
+            };
+
+            return elem;
         }
 
         public bool IsChildOf(IFormType other)

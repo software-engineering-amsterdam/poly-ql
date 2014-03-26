@@ -5,15 +5,14 @@ using Algebra.QL.Extensions.Form.Expr.Literals;
 using Algebra.QL.Extensions.Form.Stmnt;
 using Algebra.QL.Extensions.Form.Type;
 using Algebra.QL.Form.Expr;
-using Algebra.QL.Form.Factory;
 using Algebra.QL.Form.Stmnt;
 using Algebra.QL.Form.Type;
 
 namespace Algebra.QL.Extensions.Form.Factory
 {
-    public class ExtFormFactory : FormFactory, IStmntFactory<IFormStmnt, IFormExpr, IFormType>
+    public class FormFactory : QL.Form.Factory.FormFactory, IStmntFactory<IFormStmnt, IFormExpr, IFormType>
     {
-        public ExtFormFactory()
+        public FormFactory()
         {
 
         }
