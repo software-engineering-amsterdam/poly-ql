@@ -1,7 +1,9 @@
-if (true) {
-    question : "This is a question label" : boolean;
-} elseif (false) {
-    elseifquestion : "This is a question label of the elseif question" : boolean;
-} else {
-    elsequestion : "This is a question label of the else question" : boolean;
+question : "Non-boolean question" : string;
+
+if question {
+    question2 : "Boolean question" : boolean;
+}
+
+if (question2) {
+    question3 : "Number question" : int;
 }

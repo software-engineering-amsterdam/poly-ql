@@ -1,4 +1,4 @@
-package org.uva.sea.ql.parser.antlr.QL4.Visitors;
+package org.uva.sea.ql.parser.antlr.QL4.Visitors.Errors;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,7 +13,10 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Question;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Structures;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Expression;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Identifier;
+import org.uva.sea.ql.parser.antlr.QL4.Messages.CyclicDependencyError;
 import org.uva.sea.ql.parser.antlr.QL4.Messages.QLErrorMsg;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.QLErrorVisitor;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.Helpers.IdentifierExtractor;
 
 /**
  * This QLTree visitor will check for cyclic dependencies and return
@@ -137,7 +140,7 @@ public class CyclicDependencyChecker extends QLErrorVisitor {
 			for (Identifier valueID : dependencies.get(keyID)) {
 				// if a valueID of keyID is dependent on keyID, we have a cyclic dependency (ignore if valueID == keyID)
 				if (dependencies.get(valueID).contains(keyID) && !(valueID.equals(keyID))) {
-					msgs.add(new QLErrorMsg("Question " + keyID + " and question " + valueID + " are cyclic dependent"));
+					msgs.add(new CyclicDependencyError(keyID, valueID));
 				}
 			}
 		}

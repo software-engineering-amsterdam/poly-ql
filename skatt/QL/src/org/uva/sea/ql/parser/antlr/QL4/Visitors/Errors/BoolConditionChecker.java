@@ -1,4 +1,4 @@
-package org.uva.sea.ql.parser.antlr.QL4.Visitors;
+package org.uva.sea.ql.parser.antlr.QL4.Visitors.Errors;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,9 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Structures;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Expression;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Identifier;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Types.BoolType;
+import org.uva.sea.ql.parser.antlr.QL4.Messages.ConditionError;
 import org.uva.sea.ql.parser.antlr.QL4.Messages.QLErrorMsg;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.QLErrorVisitor;
 
 /**
  * Visitor for checking whether all conditions are of type
@@ -65,7 +67,7 @@ public class BoolConditionChecker extends QLErrorVisitor {
 		List<QLErrorMsg> msgs = new ArrayList<QLErrorMsg>();
 		
 		if (! expr.getType(questions).equals(new BoolType())) {
-			msgs.add(new QLErrorMsg("Expression " + expr + " does not return a boolean"));
+			msgs.add(new ConditionError(expr));
 		} 
 		
 		return msgs;

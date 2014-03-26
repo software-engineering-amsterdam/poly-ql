@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.JFileChooser;
-
 import org.antlr.v4.runtime.ANTLRFileStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -15,14 +13,14 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Question;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Identifier;
 import org.uva.sea.ql.parser.antlr.QL4.Messages.QLErrorMsg;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.AntlrVisitor;
-import org.uva.sea.ql.parser.antlr.QL4.Visitors.BoolConditionChecker;
-import org.uva.sea.ql.parser.antlr.QL4.Visitors.CyclicDependencyChecker;
-import org.uva.sea.ql.parser.antlr.QL4.Visitors.DuplicateLabelChecker;
-import org.uva.sea.ql.parser.antlr.QL4.Visitors.DuplicateQuestionChecker;
-import org.uva.sea.ql.parser.antlr.QL4.Visitors.InvalidTypeChecker;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.QLErrorVisitor;
-import org.uva.sea.ql.parser.antlr.QL4.Visitors.QuestionExtractor;
-import org.uva.sea.ql.parser.antlr.QL4.Visitors.UndefQuestionChecker;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.Errors.BoolConditionChecker;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.Errors.CyclicDependencyChecker;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.Errors.DuplicateLabelChecker;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.Errors.DuplicateQuestionChecker;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.Errors.InvalidTypeChecker;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.Errors.UndefQuestionChecker;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.Helpers.QuestionExtractor;
 
 import QL4.QL4Lexer;
 import QL4.QL4Parser;
@@ -46,10 +44,8 @@ public class QL4 {
 	 * @throws IOException
 	 *             if ANTLRFileStream fails to find file
 	 */
-	public static void main(String[] args) throws IOException {
-
-		// get questionary
-		String fileToParse = chooseFile();
+	
+	public Form parseQuestionair(String fileToParse) throws IOException {
 
 		// process file into tokens
 		ANTLRFileStream fStream = new ANTLRFileStream(fileToParse);
@@ -64,37 +60,9 @@ public class QL4 {
 		AntlrVisitor ASTParser = new AntlrVisitor();
 		Form ast = (Form) tree.accept(ASTParser);
 		
-		System.out.println(ast);
-		
-		// perform checks on extracted AST
-		List<QLErrorMsg> checks = checkErrors(ast);
-		
-		System.err.println(checks);
+		return ast;
 	}
 
-	/**
-	 * Uses JFileChooser to let the user browse and pick a file and returns the
-	 * path
-	 * 
-	 * @return the path of the file the user has chosen
-	 */
-	private static String chooseFile() {
-		// initiate JFileChooser and set settings
-		JFileChooser chooser = new JFileChooser();
-		chooser.setCurrentDirectory(new java.io.File("."));
-		chooser.setDialogTitle("Please choose the file to parse");
-		chooser.setAcceptAllFileFilterUsed(false);
-
-		// request file
-		if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-			return chooser.getSelectedFile().getAbsolutePath();
-		}
-
-		// exit if no file was chosen
-		System.err.println("Error at choosing file");
-		System.exit(0);
-		return null;
-	}
 	
 	/**
 	 * Checks a form for errors and warnings by visiting
@@ -102,7 +70,7 @@ public class QL4 {
 	 * @param ast
 	 * @return
 	 */
-	private static List<QLErrorMsg> checkErrors(Form ast) {
+	public List<QLErrorMsg> checkErrors(Form ast) {
 		// holds all errors and warning msgs generated
 		List<QLErrorMsg> msgs = new ArrayList<QLErrorMsg>();
 		// the checker that will perform several checks on our ast input 
@@ -136,4 +104,5 @@ public class QL4 {
 		
 		return msgs;
 	}
+
 }

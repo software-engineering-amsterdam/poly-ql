@@ -1,4 +1,4 @@
-package org.uva.sea.ql.parser.antlr.QL4.Visitors;
+package org.uva.sea.ql.parser.antlr.QL4.Visitors.Errors;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +7,8 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Question;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Identifier;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Value;
 import org.uva.sea.ql.parser.antlr.QL4.Messages.QLErrorMsg;
+import org.uva.sea.ql.parser.antlr.QL4.Messages.UndefinedQuestionError;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.QLErrorVisitor;
 
 
 /**
@@ -38,7 +40,7 @@ public class UndefQuestionChecker extends QLErrorVisitor {
 		List<QLErrorMsg> msgs = new ArrayList<QLErrorMsg>();
 		
 		if (!definedQuestions.contains(id)) {
-			msgs.add(new QLErrorMsg("Identifier " + id + " has not been defined before being used"));
+			msgs.add(new UndefinedQuestionError(id));
 		}
 		
 		return msgs;
