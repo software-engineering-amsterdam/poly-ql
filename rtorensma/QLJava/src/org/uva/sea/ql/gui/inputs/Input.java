@@ -20,11 +20,11 @@ public abstract class Input extends Observable {
 	}
 	
 	@Override
-	public void notifyObservers() {
+	public void notifyObservers(Object arg) {
 		if (this.isComputed) {
 			setChanged();
 		}
-		super.notifyObservers();
+		super.notifyObservers(arg);
 	}
 	
 	public abstract Value getValue();

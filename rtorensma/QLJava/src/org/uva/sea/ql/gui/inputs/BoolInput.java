@@ -24,7 +24,7 @@ public class BoolInput extends Input {
 				System.out.println("State changed in " + question.getName());
 				valueEnv.setValueOfIdent(question.getName(), getValue());
 		        setChanged();
-		        notifyObservers();
+		        notifyObservers(valueEnv);
 		    }
 		});
 	}

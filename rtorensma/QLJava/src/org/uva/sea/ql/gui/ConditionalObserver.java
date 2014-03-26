@@ -13,13 +13,11 @@ import org.uva.sea.ql.eval.ValueEnvironment;
 
 public class ConditionalObserver implements Observer {
 	private final Expr condition;
-	private final ValueEnvironment valueEnv;
 	private final JPanel trueQuestions;
 	private final JPanel falseQuestions;
 	
 	public ConditionalObserver(Expr condition, ValueEnvironment valueEnv, JPanel trueQuestions, JPanel falseQuestions) {
 		this.condition = condition;
-		this.valueEnv = valueEnv;
 		this.trueQuestions = trueQuestions;
 		this.falseQuestions = falseQuestions;
 	}
@@ -27,9 +25,9 @@ public class ConditionalObserver implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		System.out.println("Update of condition " + condition);
+		ValueEnvironment valueEnv = (ValueEnvironment)arg;
 		
 		Value value = this.condition.accept(new Evaluator(valueEnv));
-		System.out.println(value);
 		boolean conditionValue;
 		if (value.getClass() == Bool.class) {
 			conditionValue = ((Bool)value).getValue();

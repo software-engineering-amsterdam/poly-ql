@@ -30,7 +30,6 @@ public class InputFactory implements TypeVisitor<Input, InputFactoryArgumentObje
 
 	@Override
 	public Input visit(Undefined type, InputFactoryArgumentObject arg) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }
