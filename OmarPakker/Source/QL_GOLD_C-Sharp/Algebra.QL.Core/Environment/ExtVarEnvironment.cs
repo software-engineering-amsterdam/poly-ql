@@ -1,22 +1,25 @@
 ﻿using System;
 using System.Diagnostics;
 using Algebra.Core.Collections;
+using Algebra.Core.Environment;
 
-namespace Algebra.QL.Eval.Environment
+namespace Algebra.QL.Core.Environment
 {
-    public class VarEnvironment<T> : Algebra.Core.Environment.VarEnvironment<T>
+    //TODO: Move to extensions once environment is independent
+    public class ExtVarEnvironment<T> : IVarEnvironment<T>
     {
         private const char RepeatedSuffix = '$';
 
         public event Action<VarAccessEventArgs> VarAccess;
 
-        public VarEnvironment()
-            : base()
-        {
+        private readonly ObservableDictionary<string, T> variables;
 
+        public ExtVarEnvironment()
+        {
+            variables = new ObservableDictionary<string, T>();
         }
 
-        protected void OnVarAccess(VarAccessEventArgs args)
+        private void OnVarAccess(VarAccessEventArgs args)
         {
             if (VarAccess != null)
             {
@@ -24,7 +27,7 @@ namespace Algebra.QL.Eval.Environment
             }
         }
 
-        protected string VarNameToInstancedName(string name, VarAccessEventArgs args)
+        private string VarNameToInstancedName(string name, VarAccessEventArgs args)
         {
             for (int i = 0; i < args.Instances.Count; i++)
             {
@@ -34,15 +37,15 @@ namespace Algebra.QL.Eval.Environment
             return name;
         }
 
-        public override void Declare(string name, T value)
+        public void Declare(string name, T value)
         {
             VarAccessEventArgs eventArgs = new VarAccessEventArgs();
             OnVarAccess(eventArgs);
 
-            base.Declare(VarNameToInstancedName(name, eventArgs), value);
+            variables[VarNameToInstancedName(name, eventArgs)] = value;
         }
 
-        public override bool IsDeclared(string name)
+        public bool IsDeclared(string name)
         {
             VarAccessEventArgs eventArgs = new VarAccessEventArgs();
             OnVarAccess(eventArgs);
@@ -53,17 +56,17 @@ namespace Algebra.QL.Eval.Environment
 
                 for (string stepName = instancedName; stepName.IndexOf(RepeatedSuffix) >= 0; stepName = stepName.Substring(0, stepName.LastIndexOf(RepeatedSuffix)))
                 {
-                    if (base.IsDeclared(stepName))
+                    if (variables.ContainsKey(stepName))
                     {
                         return true;
                     }
                 }
             }
 
-            return base.IsDeclared(name);
+            return variables.ContainsKey(name);
         }
 
-        public override T GetDeclared(string name)
+        public T GetDeclared(string name)
         {
             VarAccessEventArgs eventArgs = new VarAccessEventArgs();
             OnVarAccess(eventArgs);
@@ -74,31 +77,31 @@ namespace Algebra.QL.Eval.Environment
 
                 for (string stepName = instancedName; stepName.IndexOf(RepeatedSuffix) >= 0; stepName = stepName.Substring(0, stepName.LastIndexOf(RepeatedSuffix)))
                 {
-                    if (base.IsDeclared(stepName))
+                    if (variables.ContainsKey(stepName))
                     {
-                        return base.GetDeclared(stepName);
+                        return variables[stepName];
                     }
                 }
             }
 
-            return base.GetDeclared(name);
+            return variables[name];
         }
 
-        public override void Clear()
+        public void Clear()
         {
             Debug.Assert(VarAccess == null, "Some events weren't unregistered!");
 
-            base.Clear();
+            variables.Clear();
         }
 
-        public virtual DictionaryKeyValueObserver<string, T> GetRange(string name)
+        public DictionaryKeyValueObserver<string, T> GetRange(string name)
         {
             VarAccessEventArgs eventArgs = new VarAccessEventArgs();
             OnVarAccess(eventArgs);
 
             string instancedName = VarNameToInstancedName(name, eventArgs) + RepeatedSuffix;
 
-            return new DictionaryKeyValueObserver<string,T>(Variables, (kv) => kv.Key.StartsWith(instancedName));
+            return new DictionaryKeyValueObserver<string,T>(variables, (kv) => kv.Key.StartsWith(instancedName));
         }
     }
 }

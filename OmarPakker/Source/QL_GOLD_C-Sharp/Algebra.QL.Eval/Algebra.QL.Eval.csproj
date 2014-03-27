@@ -45,8 +45,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Environment\ValueEnvironment.cs" />
-    <Compile Include="Environment\VarAccessEventArgs.cs" />
-    <Compile Include="Environment\VarEnvironment.cs" />
     <Compile Include="Expr\AddExpr.cs" />
     <Compile Include="Expr\AndExpr.cs" />
     <Compile Include="Expr\BinaryExpr.cs" />

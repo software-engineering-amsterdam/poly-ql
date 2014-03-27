@@ -58,7 +58,6 @@
     <Compile Include="Expr\VarExpr.cs" />
     <Compile Include="Expr\VarInitExpr.cs" />
     <Compile Include="Factory\TypeCheckFactory.cs" />
-    <Compile Include="Environment\VarAccessEventArgs.cs" />
     <Compile Include="ITypeCheck.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Stmnt\StatementsStmnt.cs" />

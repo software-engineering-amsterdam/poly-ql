@@ -1,4 +1,5 @@
 ﻿using System;
+using Algebra.QL.Core.Environment;
 using Algebra.QL.Extensions.Stmnt;
 using Algebra.QL.TypeCheck.Environment;
 using Algebra.QL.TypeCheck.Expr;
@@ -27,7 +28,7 @@ namespace Algebra.QL.Extensions.TypeCheck.Stmnt
                     SourceStartPosition, SourceEndPosition);
             }
 
-            Action<VarAccessEventArgs> onVarAccess = (args) => args.MarkRepeated();
+            Action<VarAccessEventArgs> onVarAccess = (args) => args.SetVarInstance(0);
             env.VarAccess += onVarAccess;
 
             Body.TypeCheck(env);

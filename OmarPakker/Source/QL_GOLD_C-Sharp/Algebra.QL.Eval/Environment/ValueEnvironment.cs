@@ -1,8 +1,9 @@
-﻿using Algebra.QL.Eval.Value;
+﻿using Algebra.QL.Core.Environment;
+using Algebra.QL.Eval.Value;
 
 namespace Algebra.QL.Eval.Environment
 {
-    public class ValueEnvironment : VarEnvironment<ValueContainer>
+    public class ValueEnvironment : ExtVarEnvironment<ValueContainer>
     {
         public ValueEnvironment()
         {

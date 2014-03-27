@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using Algebra.QL.Core.Environment;
 using Algebra.QL.Eval.Environment;
 using Algebra.QL.Eval.Value;
 using Algebra.QL.Extensions.Stmnt;
