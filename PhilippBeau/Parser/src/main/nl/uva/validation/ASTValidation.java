@@ -26,18 +26,6 @@ public class ASTValidation {
         return validError && validWarning;
     }
 
-    public void printErrors() {
-        for (ValidationError error : _validationErrors) {
-            System.err.println(error);
-        }
-    }
-
-    public void printWarnings() {
-        for (ValidationWarning warning : _validationWarnings) {
-            System.out.println(warning);
-        }
-    }
-
     public boolean hasErrors() {
         return !_validationErrors.isEmpty();
     }
@@ -52,5 +40,17 @@ public class ASTValidation {
 
     public List<ValidationWarning> getValidationWarnings() {
         return _validationWarnings;
+    }
+
+    public void printErrors() {
+        for (ValidationError error : _validationErrors) {
+            System.err.println(error);
+        }
+    }
+
+    public void printWarnings() {
+        for (ValidationWarning warning : _validationWarnings) {
+            System.out.println(warning);
+        }
     }
 }
