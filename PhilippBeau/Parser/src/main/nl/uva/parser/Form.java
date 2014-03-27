@@ -32,12 +32,6 @@ public class Form extends ASTNode {
 
     @Override
     public String toString() {
-        String erg = _id + "\n";
-
-        for (Statement child : _children) {
-            erg += child + "\n";
-        }
-
-        return erg;
+        return "Form " + _id;
     }
 }
