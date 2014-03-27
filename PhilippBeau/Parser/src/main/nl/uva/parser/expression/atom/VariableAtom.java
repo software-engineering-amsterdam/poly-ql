@@ -29,7 +29,7 @@ public class VariableAtom extends Expression {
             valid.addError(new VariableNotFoundError(_variableName, getLineInfo()));
         }
 
-        notifyListeners();
+        notifyListenersAboutValueChange();
         return valid;
     }
 

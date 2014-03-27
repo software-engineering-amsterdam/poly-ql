@@ -36,7 +36,7 @@ public class Minus extends Expression {
             valid.addError(new InvalidTypeError(this.toString(), getLineInfo()));
         }
 
-        notifyListeners();
+        notifyListenersAboutValueChange();
 
         return valid;
     }

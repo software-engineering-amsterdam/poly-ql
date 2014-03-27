@@ -19,7 +19,7 @@ public abstract class Expression extends ASTNode {
         return _listener.add(listener);
     }
 
-    protected void notifyListeners() {
+    protected void notifyListenersAboutValueChange() {
         for (ExpressionChangeListener listener : _listener) {
             listener.onChange();
         }

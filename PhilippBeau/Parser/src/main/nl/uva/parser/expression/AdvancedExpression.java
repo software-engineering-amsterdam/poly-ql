@@ -28,7 +28,7 @@ public abstract class AdvancedExpression extends Expression {
         valid.combine(_right.validate(scope));
 
         _value = _left.getValue().calculateValueWith(_right, this);
-        notifyListeners();
+        notifyListenersAboutValueChange();
 
         if (_value.isInvalid()) {
             valid.addError(new InvalidTypeError(this.toString(), getLineInfo()));
