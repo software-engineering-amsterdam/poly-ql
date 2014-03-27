@@ -12,11 +12,11 @@ import softwareconstruction.types.SuperType;
  *
  * @author Sinan
  */
-public class BoolLiteral implements Expression {
+public class StringLiteral implements Expression{
 
-    boolean value;
+    String value;
     
-    public BoolLiteral (Boolean value){
+    public StringLiteral(String value){
         this.value = value;
     }
     

@@ -4,15 +4,15 @@
  * and open the template in the editor.
  */
 
-package softwareconstruction.literals;
+package softwareconstruction.operators;
 
+import softwareconstruction.literals.Expression;
 import softwareconstruction.types.SuperType;
 
 /**
  *
  * @author Sinan
  */
-public interface Expression {
-    boolean checkType(SuperType Supertype);
-    SuperType getType();
+public interface Operator extends Expression{
+    public boolean isTypeCompatible(SuperType SuperType);
 }

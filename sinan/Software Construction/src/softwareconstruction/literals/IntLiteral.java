@@ -6,17 +6,18 @@
 
 package softwareconstruction.literals;
 
+import softwareconstruction.types.IntType;
 import softwareconstruction.types.SuperType;
 
 /**
  *
  * @author Sinan
  */
-public class BoolLiteral implements Expression {
-
-    boolean value;
+public class IntLiteral implements Expression{
     
-    public BoolLiteral (Boolean value){
+    int value;
+    
+    public IntLiteral(Integer value){
         this.value = value;
     }
     
@@ -27,7 +28,7 @@ public class BoolLiteral implements Expression {
 
     @Override
     public SuperType getType() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new IntType();
     }
     
 }

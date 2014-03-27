@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.ParseTree;
+import softwareconstruction.literals.Expression;
 
 /**
  *
@@ -46,8 +47,9 @@ public class SoftwareConstruction {
             SinansGrammerLexer lexer = new SinansGrammerLexer(input);
             CommonTokenStream tokens = new CommonTokenStream(lexer);
             SinansGrammerParser parser = new SinansGrammerParser(tokens);
-            ParseTree tree = parser.form();
-//            Form form = parser.form().fo;
+//            ParseTree tree = parser.form();
+            Form form = parser.form().fo;
+            form.visitForm(form);
 //            for(Object o : form.getItems()){
 //                if(o instanceof Question){
 //                    System.out.println(o.toString());
