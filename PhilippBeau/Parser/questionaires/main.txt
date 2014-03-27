@@ -11,6 +11,11 @@ form Box1HouseOwning {
     seperator: "" text("--------------------------------------------")
     if( nInput1 == 3) {
     	numEquals3: "" text("Numberinput 1 is equals 3!!")
+    	if( nInput2 == 3) {
+    		numEquals4: "" text("Numberinput 2 is equals 3!!")
+    	} else {
+    		numEquals4: "" text("Numberinput 2 is unequals 3!!")
+    	}
     } else {
     	numEquals3: "" text("Numberinput 1 is unequals 3!!")
     }
