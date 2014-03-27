@@ -63,6 +63,14 @@
       <Project>{920a23f4-4b01-4cd2-b89c-44a59ee000e0}</Project>
       <Name>Algebra.QL.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Algebra.QL.Eval\Algebra.QL.Eval.csproj">
+      <Project>{b2711fd8-6b63-4cb3-8987-d24402ae3046}</Project>
+      <Name>Algebra.QL.Eval</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Algebra.QL.Extensions.Eval\Algebra.QL.Extensions.Eval.csproj">
+      <Project>{69826ff6-79c4-4c74-8be2-9ed6cde709ea}</Project>
+      <Name>Algebra.QL.Extensions.Eval</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Algebra.QL.Extensions\Algebra.QL.Extensions.csproj">
       <Project>{c3cb2fb3-25c0-4fdb-b99c-7eb72927d0d1}</Project>
       <Name>Algebra.QL.Extensions</Name>

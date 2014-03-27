@@ -44,7 +44,6 @@
   <ItemGroup>
     <Compile Include="Expr\AddExpr.cs" />
     <Compile Include="Expr\AndExpr.cs" />
-    <Compile Include="Expr\BinaryExpr.cs" />
     <Compile Include="Expr\DivideExpr.cs" />
     <Compile Include="Expr\EqualsExpr.cs" />
     <Compile Include="Expr\GreaterOrEqualToExpr.cs" />
@@ -68,9 +67,6 @@
     <Compile Include="Expr\VarInitExpr.cs" />
     <Compile Include="Factory\FormFactory.cs" />
     <Compile Include="Environment\TypeEnvironment.cs" />
-    <Compile Include="Environment\ValueEnvironment.cs" />
-    <Compile Include="Environment\VarAccessEventArgs.cs" />
-    <Compile Include="Environment\VarEnvironment.cs" />
     <Compile Include="IForm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Stmnt\StatementsStmnt.cs" />
@@ -86,7 +82,6 @@
     <Compile Include="Type\IFormType.cs" />
     <Compile Include="Type\RealType.cs" />
     <Compile Include="Type\StringType.cs" />
-    <Compile Include="Value\ValueContainer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Algebra.Core\Algebra.Core.csproj">
@@ -96,6 +91,10 @@
     <ProjectReference Include="..\Algebra.QL.Core\Algebra.QL.Core.csproj">
       <Project>{920a23f4-4b01-4cd2-b89c-44a59ee000e0}</Project>
       <Name>Algebra.QL.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Algebra.QL.Eval\Algebra.QL.Eval.csproj">
+      <Project>{b2711fd8-6b63-4cb3-8987-d24402ae3046}</Project>
+      <Name>Algebra.QL.Eval</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -1,14 +1,13 @@
 ﻿using System;
-using Algebra.Core.Expr;
-using Algebra.QL.Form.Environment;
-using Algebra.QL.Form.Type;
-using Algebra.QL.Form.Value;
+using Algebra.QL.Eval.Environment;
+using Algebra.QL.Eval.Value;
 
-namespace Algebra.QL.Form.Expr
+namespace Algebra.QL.Eval.Expr
 {
-    public abstract class BinaryExpr : BinaryExpr<IFormExpr>, IFormExpr
+    public abstract class BinaryExpr<E> : Algebra.Core.Expr.BinaryExpr<E>, IEvalExpr
+        where E : IEvalExpr
     {
-        public BinaryExpr(IFormExpr l, IFormExpr r)
+        public BinaryExpr(E l, E r)
             : base(l, r)
         {
             
@@ -27,15 +26,6 @@ namespace Algebra.QL.Form.Expr
             b.ValueChanged += onValueChanged;
 
             return value;
-        }
-
-        public IFormType BuildForm(TypeEnvironment env)
-        {
-            IFormType a = Expr1.BuildForm(env);
-            IFormType b = Expr2.BuildForm(env);
-            IFormType type = a.GetLeastUpperBound(b);
-
-            return type;
         }
     }
 }

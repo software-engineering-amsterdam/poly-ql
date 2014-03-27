@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Linq;
 using Algebra.Core.Collections;
 
-namespace Algebra.QL.Form.Environment
+namespace Algebra.QL.Eval.Environment
 {
     public class VarEnvironment<T> : Algebra.Core.Environment.VarEnvironment<T>
     {
@@ -52,7 +51,7 @@ namespace Algebra.QL.Form.Environment
             {
                 string instancedName = VarNameToInstancedName(name, eventArgs);
 
-                for (string stepName = instancedName; stepName.Contains(RepeatedSuffix); stepName = stepName.Substring(0, stepName.LastIndexOf(RepeatedSuffix)))
+                for (string stepName = instancedName; stepName.IndexOf(RepeatedSuffix) >= 0; stepName = stepName.Substring(0, stepName.LastIndexOf(RepeatedSuffix)))
                 {
                     if (base.IsDeclared(stepName))
                     {
@@ -73,7 +72,7 @@ namespace Algebra.QL.Form.Environment
             {
                 string instancedName = VarNameToInstancedName(name, eventArgs);
 
-                for (string stepName = instancedName; stepName.Contains(RepeatedSuffix); stepName = stepName.Substring(0, stepName.LastIndexOf(RepeatedSuffix)))
+                for (string stepName = instancedName; stepName.IndexOf(RepeatedSuffix) >= 0; stepName = stepName.Substring(0, stepName.LastIndexOf(RepeatedSuffix)))
                 {
                     if (base.IsDeclared(stepName))
                     {
@@ -90,16 +89,6 @@ namespace Algebra.QL.Form.Environment
             Debug.Assert(VarAccess == null, "Some events weren't unregistered!");
 
             base.Clear();
-        }
-
-        public virtual bool IsInstanced(string name)
-        {
-            VarAccessEventArgs eventArgs = new VarAccessEventArgs();
-            OnVarAccess(eventArgs);
-
-            string instancedName = VarNameToInstancedName(name, eventArgs);
-
-            return base.IsDeclared(instancedName) && instancedName.Contains(RepeatedSuffix);
         }
 
         public virtual DictionaryKeyValueObserver<string, T> GetRange(string name)

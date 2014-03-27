@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Algebra.QL.Extensions.Eval.Expr;
+using Algebra.QL.Form.Environment;
 using Algebra.QL.Form.Expr;
-using Algebra.QL.Form.Value;
+using Algebra.QL.Form.Type;
 
 namespace Algebra.QL.Extensions.Form.Expr
 {
-    public class ModuloExpr : BinaryExpr, IFormExpr
+    public class ModuloExpr : ModuloExpr<IFormExpr>, IFormExpr
     {
         public ModuloExpr(IFormExpr l, IFormExpr r)
             : base(l, r)
@@ -12,9 +13,13 @@ namespace Algebra.QL.Extensions.Form.Expr
 
         }
 
-        protected override object Evaluate(ValueContainer expr1Value, ValueContainer expr2Value)
+        public IFormType BuildForm(TypeEnvironment env)
         {
-            return Convert.ToDouble(expr1Value.Value) % Convert.ToDouble(expr2Value.Value);
+            IFormType a = Expr1.BuildForm(env);
+            IFormType b = Expr2.BuildForm(env);
+            IFormType type = a.GetLeastUpperBound(b);
+
+            return type;
         }
     }
 }

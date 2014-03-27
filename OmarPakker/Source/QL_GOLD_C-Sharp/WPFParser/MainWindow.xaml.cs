@@ -175,7 +175,7 @@ namespace WPFParser
 
                 if (!errMngr.HasErrors)
                 {
-                    formContainer.Content = combItem.Item2.BuildForm(new Algebra.QL.Form.Environment.ValueEnvironment(), new Algebra.QL.Form.Environment.TypeEnvironment());
+                    formContainer.Content = combItem.Item2.BuildForm(new Algebra.QL.Eval.Environment.ValueEnvironment(), new Algebra.QL.Form.Environment.TypeEnvironment());
                 }
             }
 

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using Algebra.QL.Eval.Value;
 using Algebra.QL.Extensions.Form.Expr.Literals;
 using Algebra.QL.Form.Expr;
 using Algebra.QL.Form.Type;
-using Algebra.QL.Form.Value;
 
 namespace Algebra.QL.Extensions.Form.Type
 {

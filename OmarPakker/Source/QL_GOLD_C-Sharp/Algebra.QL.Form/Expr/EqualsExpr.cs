@@ -1,8 +1,10 @@
-﻿using Algebra.QL.Form.Value;
+﻿using Algebra.QL.Eval.Expr;
+using Algebra.QL.Form.Environment;
+using Algebra.QL.Form.Type;
 
 namespace Algebra.QL.Form.Expr
 {
-    public class EqualsExpr : BinaryExpr, IFormExpr
+    public class EqualsExpr : EqualsExpr<IFormExpr>, IFormExpr
     {
         public EqualsExpr(IFormExpr l, IFormExpr r)
             : base(l, r)
@@ -10,9 +12,13 @@ namespace Algebra.QL.Form.Expr
 
         }
 
-        protected override object Evaluate(ValueContainer expr1Value, ValueContainer expr2Value)
+        public IFormType BuildForm(TypeEnvironment env)
         {
-            return expr1Value.Value.Equals(expr2Value.Value);
+            IFormType a = Expr1.BuildForm(env);
+            IFormType b = Expr2.BuildForm(env);
+            IFormType type = a.GetLeastUpperBound(b);
+
+            return type;
         }
     }
 }

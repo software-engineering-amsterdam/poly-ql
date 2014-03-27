@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows;
+using Algebra.QL.Eval.Value;
 using Algebra.QL.Form.Expr;
 using Algebra.QL.Form.Expr.Literals;
-using Algebra.QL.Form.Value;
 using Xceed.Wpf.Toolkit;
 
 namespace Algebra.QL.Form.Type

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Algebra.QL.Form.Environment
+namespace Algebra.QL.Eval.Environment
 {
     public class VarAccessEventArgs : EventArgs
     {

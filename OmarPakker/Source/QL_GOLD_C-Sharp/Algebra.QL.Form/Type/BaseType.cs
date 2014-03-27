@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Windows;
+using Algebra.QL.Eval.Value;
 using Algebra.QL.Form.Expr;
-using Algebra.QL.Form.Value;
 
 namespace Algebra.QL.Form.Type
 {
