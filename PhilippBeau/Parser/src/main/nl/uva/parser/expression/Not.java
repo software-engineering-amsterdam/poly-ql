@@ -36,6 +36,8 @@ public class Not extends Expression {
             valid.addError(new InvalidTypeError(this.toString(), getLineInfo()));
         }
 
+        notifyListeners();
+
         return valid;
     }
 

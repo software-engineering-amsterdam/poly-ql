@@ -24,7 +24,7 @@ public class UnEqual extends AdvancedExpression {
 
     @Override
     public Value calculateType(final Text left, final Text right) {
-        return new Bool(left.getValue() != right.getValue());
+        return new Bool(!left.getValue().equals(right.getValue()));
     }
 
     @Override
