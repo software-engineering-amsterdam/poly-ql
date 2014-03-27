@@ -1,4 +1,4 @@
-package main.nl.uva.parser.expression.atom;
+package main.nl.uva.parser.expression.unary;
 
 import main.nl.uva.parser.Line;
 import main.nl.uva.validation.ASTValidation;
@@ -6,7 +6,7 @@ import main.nl.uva.validation.Scope;
 import main.nl.uva.validation.type.Money;
 import main.nl.uva.validation.type.Value;
 
-public class MoneyAtom extends AtomExpression {
+public class MoneyAtom extends UnaryExpression {
 
     public MoneyAtom() {
         this(new Money(0.0d), Line.NO_LINE_NUMBER);

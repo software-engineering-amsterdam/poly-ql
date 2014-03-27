@@ -10,13 +10,13 @@ import main.nl.uva.validation.type.Money;
 import main.nl.uva.validation.type.Text;
 import main.nl.uva.validation.type.Value;
 
-public abstract class AdvancedExpression extends Expression {
+public abstract class BinaryExpression extends Expression {
     protected Value _value = null;
 
     protected Expression _left;
     protected Expression _right;
 
-    public AdvancedExpression(final Expression left, final Expression right, final Line lineInfo) {
+    public BinaryExpression(final Expression left, final Expression right, final Line lineInfo) {
         super(lineInfo);
         _left = left;
         _right = right;

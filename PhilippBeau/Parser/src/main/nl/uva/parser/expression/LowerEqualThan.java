@@ -5,7 +5,7 @@ import main.nl.uva.validation.type.Bool;
 import main.nl.uva.validation.type.Money;
 import main.nl.uva.validation.type.Value;
 
-public class LowerEqualThan extends AdvancedExpression {
+public class LowerEqualThan extends BinaryExpression {
 
     public LowerEqualThan(final Expression left, final Expression right, final Line lineInfo) {
         super(left, right, lineInfo);

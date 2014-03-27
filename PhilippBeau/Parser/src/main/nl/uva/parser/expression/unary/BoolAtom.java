@@ -1,4 +1,4 @@
-package main.nl.uva.parser.expression.atom;
+package main.nl.uva.parser.expression.unary;
 
 import main.nl.uva.parser.Line;
 import main.nl.uva.validation.ASTValidation;
@@ -6,7 +6,7 @@ import main.nl.uva.validation.Scope;
 import main.nl.uva.validation.type.Bool;
 import main.nl.uva.validation.type.Value;
 
-public class BoolAtom extends AtomExpression {
+public class BoolAtom extends UnaryExpression {
 
     public BoolAtom() {
         this(new Bool(false), Line.NO_LINE_NUMBER);

@@ -4,7 +4,7 @@ import main.nl.uva.parser.Line;
 import main.nl.uva.validation.type.Money;
 import main.nl.uva.validation.type.Value;
 
-public class Substraction extends AdvancedExpression {
+public class Substraction extends BinaryExpression {
 
     public Substraction(final Expression left, final Expression right, final Line lineInfo) {
         super(left, right, lineInfo);

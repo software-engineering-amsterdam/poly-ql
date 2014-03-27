@@ -1,4 +1,4 @@
-package main.nl.uva.parser.expression.atom;
+package main.nl.uva.parser.expression.unary;
 
 import main.nl.uva.parser.Line;
 import main.nl.uva.parser.expression.Expression;

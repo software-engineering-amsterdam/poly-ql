@@ -6,7 +6,7 @@ import main.nl.uva.validation.type.Money;
 import main.nl.uva.validation.type.Text;
 import main.nl.uva.validation.type.Value;
 
-public class UnEqual extends AdvancedExpression {
+public class UnEqual extends BinaryExpression {
 
     public UnEqual(final Expression left, final Expression right, final Line lineInfo) {
         super(left, right, lineInfo);

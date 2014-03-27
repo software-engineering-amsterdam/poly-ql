@@ -1,12 +1,12 @@
-package main.nl.uva.parser.expression.atom;
+package main.nl.uva.parser.expression.unary;
 
 import main.nl.uva.parser.Line;
 import main.nl.uva.parser.expression.Expression;
 import main.nl.uva.validation.type.Value;
 
-public abstract class AtomExpression extends Expression {
+public abstract class UnaryExpression extends Expression {
 
-    public AtomExpression(final Line lineInfo) {
+    public UnaryExpression(final Line lineInfo) {
         super(lineInfo);
     }
 

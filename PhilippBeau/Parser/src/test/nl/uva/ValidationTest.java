@@ -7,7 +7,7 @@ import main.nl.uva.parser.Form;
 import main.nl.uva.parser.Line;
 import main.nl.uva.parser.expression.And;
 import main.nl.uva.parser.expression.Variable;
-import main.nl.uva.parser.expression.atom.VariableAtom;
+import main.nl.uva.parser.expression.unary.VariableAtom;
 import main.nl.uva.parser.statement.Declaration;
 import main.nl.uva.parser.statement.IfThenElse;
 import main.nl.uva.parser.statement.Statement;

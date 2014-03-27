@@ -1,10 +1,10 @@
 package main.nl.uva.validation.type;
 
-import main.nl.uva.parser.expression.AdvancedExpression;
+import main.nl.uva.parser.expression.BinaryExpression;
 import main.nl.uva.parser.expression.Expression;
-import main.nl.uva.parser.expression.atom.BoolAtom;
-import main.nl.uva.parser.expression.atom.MoneyAtom;
-import main.nl.uva.parser.expression.atom.TextAtom;
+import main.nl.uva.parser.expression.unary.BoolAtom;
+import main.nl.uva.parser.expression.unary.MoneyAtom;
+import main.nl.uva.parser.expression.unary.TextAtom;
 import main.nl.uva.parser.statement.Statement;
 import main.nl.uva.ui.element.DeclarationUI;
 import main.nl.uva.ui.types.ValueUI;
@@ -55,13 +55,13 @@ public abstract class Value {
         return _typeOf.equals(other._typeOf);
     }
 
-    public abstract Value calculateValueWith(Expression right, AdvancedExpression expression);
+    public abstract Value calculateValueWith(Expression right, BinaryExpression expression);
 
-    public abstract Value calculateValueWith(Bool left, AdvancedExpression expression);
+    public abstract Value calculateValueWith(Bool left, BinaryExpression expression);
 
-    public abstract Value calculateValueWith(Money left, AdvancedExpression expression);
+    public abstract Value calculateValueWith(Money left, BinaryExpression expression);
 
-    public abstract Value calculateValueWith(Text left, AdvancedExpression expression);
+    public abstract Value calculateValueWith(Text left, BinaryExpression expression);
 
     public abstract ValueUI getLayout(DeclarationUI parent);
 

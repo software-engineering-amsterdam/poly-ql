@@ -5,7 +5,7 @@ import main.nl.uva.validation.type.Bool;
 import main.nl.uva.validation.type.Money;
 import main.nl.uva.validation.type.Value;
 
-public class GraterEqualThan extends AdvancedExpression {
+public class GraterEqualThan extends BinaryExpression {
 
     public GraterEqualThan(final Expression left, final Expression right, final Line lineInfo) {
         super(left, right, lineInfo);

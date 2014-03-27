@@ -5,9 +5,9 @@ import javax.swing.JPanel;
 
 import main.nl.uva.parser.expression.ExpressionChangeListener;
 import main.nl.uva.parser.expression.Variable;
-import main.nl.uva.parser.expression.atom.BoolAtom;
-import main.nl.uva.parser.expression.atom.MoneyAtom;
-import main.nl.uva.parser.expression.atom.TextAtom;
+import main.nl.uva.parser.expression.unary.BoolAtom;
+import main.nl.uva.parser.expression.unary.MoneyAtom;
+import main.nl.uva.parser.expression.unary.TextAtom;
 import main.nl.uva.ui.UI;
 import main.nl.uva.ui.UIValueChangeListener;
 import main.nl.uva.ui.types.ValueUI;
