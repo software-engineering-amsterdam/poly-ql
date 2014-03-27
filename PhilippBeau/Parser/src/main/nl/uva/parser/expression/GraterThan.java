@@ -18,6 +18,6 @@ public class GraterThan extends AdvancedExpression {
 
     @Override
     public String toString() {
-        return _left + " + " + _right;
+        return _left + " > " + _right;
     }
 }
