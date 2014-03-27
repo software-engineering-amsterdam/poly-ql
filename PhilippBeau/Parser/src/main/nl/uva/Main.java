@@ -27,7 +27,7 @@ public class Main {
         FormGrammarParser parser = new FormGrammarParser(tokens);
         Form pf = parser.form().parsedForm;
 
-        ASTValidation validation = pf.validate(new Scope());
+        ASTValidation validation = pf.validateAndCalculate(new Scope());
         if (!validation.hasErrors()) {
             UI ui = new UI(pf);
             ui.setVisible(true);

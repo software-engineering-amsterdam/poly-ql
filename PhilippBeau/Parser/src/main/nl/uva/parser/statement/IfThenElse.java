@@ -22,8 +22,8 @@ public class IfThenElse extends IfThen {
     }
 
     @Override
-    public ASTValidation validate(final Scope scope) {
-        ASTValidation valid = super.validate(scope);
+    public ASTValidation validateAndCalculate(final Scope scope) {
+        ASTValidation valid = super.validateAndCalculate(scope);
 
         valid = validateChildren(valid, _elseStatements, scope);
         removeChildrenFromScope(_elseStatements, scope);

@@ -26,7 +26,7 @@ public class TextAtom extends UnaryExpression {
     }
 
     @Override
-    public ASTValidation validate(final Scope scope) {
+    public ASTValidation validateAndCalculate(final Scope scope) {
         return new ASTValidation();
     }
 

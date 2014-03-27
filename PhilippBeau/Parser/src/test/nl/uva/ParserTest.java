@@ -51,7 +51,7 @@ public class ParserTest {
     public void validExample() throws FileNotFoundException, IOException {
         Form form = getFormForFile(VALID_QUESTIONAIRE + "/example.txt");
 
-        ASTValidation validation = form.validate(new Scope());
+        ASTValidation validation = form.validateAndCalculate(new Scope());
         validation.printErrors();
         Assert.assertFalse(validation.hasErrors());
     }
@@ -60,7 +60,7 @@ public class ParserTest {
     public void validIfElse() throws FileNotFoundException, IOException {
         Form form = getFormForFile(VALID_QUESTIONAIRE + "/if_else.txt");
 
-        ASTValidation validation = form.validate(new Scope());
+        ASTValidation validation = form.validateAndCalculate(new Scope());
         validation.printErrors();
         Assert.assertFalse(validation.hasErrors());
     }
@@ -69,7 +69,7 @@ public class ParserTest {
     public void validNestedIf() throws FileNotFoundException, IOException {
         Form form = getFormForFile(VALID_QUESTIONAIRE + "/nested_if.txt");
 
-        ASTValidation validation = form.validate(new Scope());
+        ASTValidation validation = form.validateAndCalculate(new Scope());
         validation.printErrors();
         Assert.assertFalse(validation.hasErrors());
     }
@@ -78,7 +78,7 @@ public class ParserTest {
     public void booleanToMoneyTest() throws FileNotFoundException, IOException {
         Form form = getFormForFile(INVALID_QUESTIONAIRE + "/bool_to_int.txt");
 
-        ASTValidation validation = form.validate(new Scope());
+        ASTValidation validation = form.validateAndCalculate(new Scope());
         Assert.assertTrue(validation.hasErrors());
 
         Assert.assertTrue(("[3 1] Invalid type of \"question1\"").equals(validation.getValidationErrors().get(0).toString()));
@@ -88,7 +88,7 @@ public class ParserTest {
     public void conditionNotBooleanTest() throws FileNotFoundException, IOException {
         Form form = getFormForFile(INVALID_QUESTIONAIRE + "/condition_not_boolean.txt");
 
-        ASTValidation validation = form.validate(new Scope());
+        ASTValidation validation = form.validateAndCalculate(new Scope());
         Assert.assertTrue(validation.hasErrors());
 
         Assert.assertTrue(("[7 1] Invalid type of \"if ( q2 + q3 )\"").equals(validation.getValidationErrors().get(0).toString()));
@@ -98,7 +98,7 @@ public class ParserTest {
     public void cyclicDependencyTest() throws FileNotFoundException, IOException {
         Form form = getFormForFile(INVALID_QUESTIONAIRE + "/cyclic_dependency.txt");
 
-        ASTValidation validation = form.validate(new Scope());
+        ASTValidation validation = form.validateAndCalculate(new Scope());
         Assert.assertTrue(validation.hasErrors());
 
         Assert.assertTrue(("[3 38] Variable \"q3\" not found").equals(validation.getValidationErrors().get(0).toString()));
@@ -110,7 +110,7 @@ public class ParserTest {
     public void mathMistakeTest() throws FileNotFoundException, IOException {
         Form form = getFormForFile(INVALID_QUESTIONAIRE + "/math_mistake.txt");
 
-        ASTValidation validation = form.validate(new Scope());
+        ASTValidation validation = form.validateAndCalculate(new Scope());
         Assert.assertTrue(validation.hasErrors());
 
         Assert.assertTrue(("[6 41] Invalid type of \"q1 + q3\"").equals(validation.getValidationErrors().get(0).toString()));
@@ -121,7 +121,7 @@ public class ParserTest {
     public void undefinedQuestionTest() throws FileNotFoundException, IOException {
         Form form = getFormForFile(INVALID_QUESTIONAIRE + "/undefined_question.txt");
 
-        ASTValidation validation = form.validate(new Scope());
+        ASTValidation validation = form.validateAndCalculate(new Scope());
         Assert.assertTrue(validation.hasErrors());
 
         Assert.assertTrue(("[4 43] Variable \"q1\" not found").equals(validation.getValidationErrors().get(0).toString()));

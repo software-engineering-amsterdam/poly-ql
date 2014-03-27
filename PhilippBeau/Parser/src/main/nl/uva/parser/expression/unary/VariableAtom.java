@@ -20,7 +20,7 @@ public class VariableAtom extends Expression {
     }
 
     @Override
-    public ASTValidation validate(final Scope scope) {
+    public ASTValidation validateAndCalculate(final Scope scope) {
         ASTValidation valid = new ASTValidation();
 
         if (scope.variableAlreadyDefined(_variableName)) {

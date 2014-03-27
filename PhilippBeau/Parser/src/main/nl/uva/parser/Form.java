@@ -22,7 +22,7 @@ public class Form extends ASTNode {
     }
 
     @Override
-    public ASTValidation validate(final Scope scope) {
+    public ASTValidation validateAndCalculate(final Scope scope) {
         return validateChildren(new ASTValidation(), _children, scope);
     }
 

@@ -1,8 +1,5 @@
 package main.nl.uva.parser.expression;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import main.nl.uva.parser.Line;
 import main.nl.uva.ui.element.DeclarationUI;
 import main.nl.uva.ui.types.ValueUI;
@@ -19,8 +16,6 @@ public class Variable extends Expression implements ExpressionChangeListener {
 
     private Expression _expression;
 
-    private final List<ExpressionChangeListener> _listener = new ArrayList<>();
-
     public Variable(final Value.Type type, final String name, final Expression expression, final Line lineInfo) {
         super(lineInfo);
         _value = type;
@@ -32,11 +27,6 @@ public class Variable extends Expression implements ExpressionChangeListener {
 
     public Variable(final Value.Type type, final String name, final Line lineInfo) {
         this(type, name, type.getAtom(), lineInfo);
-    }
-
-    @Override
-    public boolean registerListener(final ExpressionChangeListener listener) {
-        return _listener.add(listener);
     }
 
     public boolean setExpression(final Expression newExpression) {
@@ -52,8 +42,8 @@ public class Variable extends Expression implements ExpressionChangeListener {
     }
 
     @Override
-    public ASTValidation validate(final Scope scope) {
-        ASTValidation valid = _expression.validate(scope);
+    public ASTValidation validateAndCalculate(final Scope scope) {
+        ASTValidation valid = _expression.validateAndCalculate(scope);
 
         if (!_expression.getValue().isTypeOf(_value)) {
             valid.addError(new InvalidTypeError(this.toString(), getLineInfo()));
@@ -82,9 +72,6 @@ public class Variable extends Expression implements ExpressionChangeListener {
 
     @Override
     public void onChange() {
-
-        for (ExpressionChangeListener listener : _listener) {
-            listener.onChange();
-        }
+        notifyListenersAboutValueChange();
     }
 }

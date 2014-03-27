@@ -23,9 +23,9 @@ public abstract class BinaryExpression extends Expression {
     }
 
     @Override
-    public final ASTValidation validate(final Scope scope) {
-        ASTValidation valid = _left.validate(scope);
-        valid.combine(_right.validate(scope));
+    public final ASTValidation validateAndCalculate(final Scope scope) {
+        ASTValidation valid = _left.validateAndCalculate(scope);
+        valid.combine(_right.validateAndCalculate(scope));
 
         _value = _left.getValue().calculateValueWith(_right, this);
         notifyListenersAboutValueChange();

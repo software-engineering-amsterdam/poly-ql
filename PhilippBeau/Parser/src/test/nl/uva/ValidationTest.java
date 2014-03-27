@@ -41,8 +41,8 @@ public class ValidationTest {
         children.add(decStatement2);
         Form form = new Form("testForm", children, Line.NO_LINE_NUMBER);
 
-        form.validate(new Scope()).printErrors();
-        Assert.assertTrue("Valid statement was marked invalid", !form.validate(new Scope()).hasErrors());
+        form.validateAndCalculate(new Scope()).printErrors();
+        Assert.assertTrue("Valid statement was marked invalid", !form.validateAndCalculate(new Scope()).hasErrors());
     }
 
     @Test
@@ -59,7 +59,7 @@ public class ValidationTest {
         children.add(decStatement1);
         Form form = new Form("testForm", children, Line.NO_LINE_NUMBER);
 
-        Assert.assertTrue("Invalid statement was not marked invalid", form.validate(new Scope()).hasErrors());
+        Assert.assertTrue("Invalid statement was not marked invalid", form.validateAndCalculate(new Scope()).hasErrors());
     }
 
     @Test
@@ -70,7 +70,7 @@ public class ValidationTest {
 
         And andExpression = new And(v1, v2, Line.NO_LINE_NUMBER);
 
-        Assert.assertFalse("Valid statement was marked invalid", andExpression.validate(new Scope()).hasErrors());
+        Assert.assertFalse("Valid statement was marked invalid", andExpression.validateAndCalculate(new Scope()).hasErrors());
     }
 
     @Test
@@ -81,7 +81,7 @@ public class ValidationTest {
 
         And andExpression = new And(v1, v2, Line.NO_LINE_NUMBER);
 
-        Assert.assertTrue("Invalid statement was not marked invalid", andExpression.validate(new Scope()).hasErrors());
+        Assert.assertTrue("Invalid statement was not marked invalid", andExpression.validateAndCalculate(new Scope()).hasErrors());
     }
 
     @Test
@@ -109,7 +109,7 @@ public class ValidationTest {
         children.add(ifElse);
         Form form = new Form("testForm", children, Line.NO_LINE_NUMBER);
 
-        Assert.assertFalse("Valid statement was marked invalid", form.validate(new Scope()).hasErrors());
+        Assert.assertFalse("Valid statement was marked invalid", form.validateAndCalculate(new Scope()).hasErrors());
     }
 
     @Test
@@ -134,6 +134,6 @@ public class ValidationTest {
         children.add(ifElse);
         Form form = new Form("testForm", children, Line.NO_LINE_NUMBER);
 
-        Assert.assertTrue("Invalid statement was not marked invalid", form.validate(new Scope()).hasErrors());
+        Assert.assertTrue("Invalid statement was not marked invalid", form.validateAndCalculate(new Scope()).hasErrors());
     }
 }

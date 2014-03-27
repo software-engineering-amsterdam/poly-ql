@@ -18,11 +18,11 @@ public abstract class ASTNode {
         return _lineInfo;
     }
 
-    public abstract ASTValidation validate(final Scope scope);
+    public abstract ASTValidation validateAndCalculate(final Scope scope);
 
     protected static ASTValidation validateChildren(final ASTValidation valid, final List<Statement> statements, final Scope scope) {
         for (Statement child : statements) {
-            valid.combine(child.validate(scope));
+            valid.combine(child.validateAndCalculate(scope));
         }
 
         return valid;
