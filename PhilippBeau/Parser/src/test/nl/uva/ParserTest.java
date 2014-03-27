@@ -35,17 +35,13 @@ public class ParserTest {
     }
 
     private static Form getFormForFile(final String fileName) throws FileNotFoundException, IOException {
-        // create a CharStream that reads from file input stream
         File file = new File(fileName);
         ANTLRInputStream input = new ANTLRInputStream(new FileInputStream(file));
 
-        // create a lexer that feeds off of input CharStream
         FormGrammarLexer lexer = new FormGrammarLexer(input);
 
-        // create a buffer of tokens pulled from the lexer
         CommonTokenStream tokens = new CommonTokenStream(lexer);
 
-        // create a parser that feeds off the tokens buffer
         FormGrammarParser parser = new FormGrammarParser(tokens);
 
         return parser.form().parsedForm;
