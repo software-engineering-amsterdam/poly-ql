@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace Algebra.QL.Form.Environment
 {
     public class VarAccessEventArgs : EventArgs
     {
-        public IReadOnlyList<int> Instances { get { return new ReadOnlyCollection<int>(instances); } }
+        public IList<int> Instances { get { return new List<int>(instances); } }
         public bool IsInstanced { get { return instances.Count > 0; } }
 
         private IList<int> instances;

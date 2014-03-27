@@ -20,7 +20,7 @@ namespace Algebra.QL.Extensions.Form.Stmnt
 
         public FrameworkElement BuildForm(ValueEnvironment vEnv, TypeEnvironment tEnv)
         {
-            IReadOnlyList<int> baseInstances = null;
+            IList<int> baseInstances = null;
 
             //Need to execute the body atleast once to bring the variable into existance.
             Action<VarAccessEventArgs> onVarAccess = (args) =>
