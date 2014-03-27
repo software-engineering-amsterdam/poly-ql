@@ -14,5 +14,6 @@ form Box1HouseOwning {
     } else {
     	numEquals3: "" text("Numberinput 1 is unequals 3!!")
     }
-    negNumber: "------- Numberinput1 is:" money(-------nInput1)
+    negNumber: "--- Numberinput1 is:" money(---nInput1)
+    notBool: "!!! Boolinput1 is:" boolean(!!!bInput1)
 }

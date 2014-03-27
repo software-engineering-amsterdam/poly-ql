@@ -29,22 +29,22 @@ public class Text extends Value {
     }
 
     @Override
-    public Value visit(final Expression right, final AdvancedExpression expression) {
-        return right.getValue().accept(this, expression);
+    public Value applyTo(final Expression right, final AdvancedExpression expression) {
+        return right.getValue().applyTo(this, expression);
     }
 
     @Override
-    public Value accept(final Bool left, final AdvancedExpression expression) {
+    public Value applyTo(final Bool left, final AdvancedExpression expression) {
         return expression.calculateType(left, this);
     }
 
     @Override
-    public Value accept(final Money left, final AdvancedExpression expression) {
+    public Value applyTo(final Money left, final AdvancedExpression expression) {
         return expression.calculateType(left, this);
     }
 
     @Override
-    public Value accept(final Text left, final AdvancedExpression expression) {
+    public Value applyTo(final Text left, final AdvancedExpression expression) {
         return expression.calculateType(left, this);
     }
 

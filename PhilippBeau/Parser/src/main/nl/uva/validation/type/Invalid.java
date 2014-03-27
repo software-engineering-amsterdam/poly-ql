@@ -17,22 +17,22 @@ public class Invalid extends Value {
     }
 
     @Override
-    public Value visit(final Expression right, final AdvancedExpression expression) {
+    public Value applyTo(final Expression right, final AdvancedExpression expression) {
         return new Invalid();
     }
 
     @Override
-    public Value accept(final Bool left, final AdvancedExpression expression) {
+    public Value applyTo(final Bool left, final AdvancedExpression expression) {
         return new Invalid();
     }
 
     @Override
-    public Value accept(final Money left, final AdvancedExpression expression) {
+    public Value applyTo(final Money left, final AdvancedExpression expression) {
         return new Invalid();
     }
 
     @Override
-    public Value accept(final Text left, final AdvancedExpression expression) {
+    public Value applyTo(final Text left, final AdvancedExpression expression) {
         return new Invalid();
     }
 

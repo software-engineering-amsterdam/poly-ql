@@ -27,7 +27,7 @@ public abstract class AdvancedExpression extends Expression {
         ASTValidation valid = _left.validate(scope);
         valid.combine(_right.validate(scope));
 
-        _value = _left.getValue().visit(_right, this);
+        _value = _left.getValue().applyTo(_right, this);
         notifyListeners();
 
         if (_value.isInvalid()) {
