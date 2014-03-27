@@ -8,22 +8,12 @@ import main.nl.uva.validation.type.Value;
 
 public class BoolAtom extends AtomExpression {
 
-    private final static String TRUE = "true";
-    private final static String FALSE = "false";
-
     public BoolAtom() {
-        this("false", Line.NO_LINE_NUMBER);
+        this(new Bool(false), Line.NO_LINE_NUMBER);
     }
 
     public BoolAtom(final Line lineInfo) {
-        this("false", lineInfo);
-    }
-
-    public BoolAtom(final String value, final Line lineInfo) {
-        super(lineInfo);
-
-        assert isBoolean(value);
-        _value = new Bool(parseBoolean(value));
+        this(new Bool(false), lineInfo);
     }
 
     public BoolAtom(final Bool value, final Line lineInfo) {
@@ -33,18 +23,6 @@ public class BoolAtom extends AtomExpression {
 
     public BoolAtom(final Bool bool) {
         this(bool, Line.NO_LINE_NUMBER);
-    }
-
-    public BoolAtom(final String value) {
-        this(value, Line.NO_LINE_NUMBER);
-    }
-
-    private static boolean isBoolean(final String value) {
-        return value.toLowerCase().equals(TRUE) || value.toLowerCase().equals(FALSE);
-    }
-
-    private static boolean parseBoolean(final String value) {
-        return value.toLowerCase().equals(TRUE);
     }
 
     @Override

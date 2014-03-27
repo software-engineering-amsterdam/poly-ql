@@ -13,17 +13,17 @@ public class UnEqual extends AdvancedExpression {
     }
 
     @Override
-    public Value calculateType(final Bool left, final Bool right) {
+    public Value calculateValue(final Bool left, final Bool right) {
         return new Bool(left.getValue() != right.getValue());
     }
 
     @Override
-    public Value calculateType(final Money left, final Money right) {
+    public Value calculateValue(final Money left, final Money right) {
         return new Bool(left.getValue() != right.getValue());
     }
 
     @Override
-    public Value calculateType(final Text left, final Text right) {
+    public Value calculateValue(final Text left, final Text right) {
         return new Bool(!left.getValue().equals(right.getValue()));
     }
 

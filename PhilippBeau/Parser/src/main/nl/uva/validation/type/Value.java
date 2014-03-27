@@ -55,13 +55,13 @@ public abstract class Value {
         return _typeOf.equals(other._typeOf);
     }
 
-    public abstract Value applyTo(Expression right, AdvancedExpression expression);
+    public abstract Value calculateValueWith(Expression right, AdvancedExpression expression);
 
-    public abstract Value applyTo(Bool left, AdvancedExpression expression);
+    public abstract Value calculateValueWith(Bool left, AdvancedExpression expression);
 
-    public abstract Value applyTo(Money left, AdvancedExpression expression);
+    public abstract Value calculateValueWith(Money left, AdvancedExpression expression);
 
-    public abstract Value applyTo(Text left, AdvancedExpression expression);
+    public abstract Value calculateValueWith(Text left, AdvancedExpression expression);
 
     public abstract ValueUI getLayout(DeclarationUI parent);
 

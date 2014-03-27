@@ -12,10 +12,6 @@ public class TextAtom extends AtomExpression {
         this("", Line.NO_LINE_NUMBER);
     }
 
-    public TextAtom(final Line lineInfo) {
-        this("", lineInfo);
-    }
-
     public TextAtom(final String value, final Line lineInfo) {
         this(new Text(value), lineInfo);
     }

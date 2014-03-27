@@ -28,23 +28,23 @@ public class Money extends Value {
     }
 
     @Override
-    public Value applyTo(final Expression right, final AdvancedExpression expression) {
-        return right.getValue().applyTo(this, expression);
+    public Value calculateValueWith(final Expression right, final AdvancedExpression expression) {
+        return right.getValue().calculateValueWith(this, expression);
     }
 
     @Override
-    public Value applyTo(final Bool left, final AdvancedExpression expression) {
-        return expression.calculateType(left, this);
+    public Value calculateValueWith(final Bool left, final AdvancedExpression expression) {
+        return expression.calculateValue(left, this);
     }
 
     @Override
-    public Value applyTo(final Money left, final AdvancedExpression expression) {
-        return expression.calculateType(left, this);
+    public Value calculateValueWith(final Money left, final AdvancedExpression expression) {
+        return expression.calculateValue(left, this);
     }
 
     @Override
-    public Value applyTo(final Text left, final AdvancedExpression expression) {
-        return expression.calculateType(left, this);
+    public Value calculateValueWith(final Text left, final AdvancedExpression expression) {
+        return expression.calculateValue(left, this);
     }
 
     @Override

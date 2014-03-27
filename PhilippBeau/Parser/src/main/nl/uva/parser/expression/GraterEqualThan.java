@@ -12,7 +12,7 @@ public class GraterEqualThan extends AdvancedExpression {
     }
 
     @Override
-    public Value calculateType(final Money left, final Money right) {
+    public Value calculateValue(final Money left, final Money right) {
         return new Bool(left.getValue() >= right.getValue());
     }
 

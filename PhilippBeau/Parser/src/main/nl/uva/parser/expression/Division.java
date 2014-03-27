@@ -11,7 +11,7 @@ public class Division extends AdvancedExpression {
     }
 
     @Override
-    public Value calculateType(final Money left, final Money right) {
+    public Value calculateValue(final Money left, final Money right) {
         return new Money(left.getValue() / right.getValue());
     }
 

@@ -11,7 +11,7 @@ public class And extends AdvancedExpression {
     }
 
     @Override
-    public Value calculateType(final Bool left, final Bool right) {
+    public Value calculateValue(final Bool left, final Bool right) {
         return new Bool(left.getValue() && right.getValue());
     }
 

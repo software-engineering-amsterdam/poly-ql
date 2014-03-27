@@ -27,7 +27,7 @@ public abstract class AdvancedExpression extends Expression {
         ASTValidation valid = _left.validate(scope);
         valid.combine(_right.validate(scope));
 
-        _value = _left.getValue().applyTo(_right, this);
+        _value = _left.getValue().calculateValueWith(_right, this);
         notifyListeners();
 
         if (_value.isInvalid()) {
@@ -42,39 +42,39 @@ public abstract class AdvancedExpression extends Expression {
         return _value;
     }
 
-    public Value calculateType(final Bool left, final Bool right) {
+    public Value calculateValue(final Bool left, final Bool right) {
         return new Invalid();
     }
 
-    public Value calculateType(final Money left, final Money right) {
+    public Value calculateValue(final Money left, final Money right) {
         return new Invalid();
     }
 
-    public Value calculateType(final Text left, final Text right) {
+    public Value calculateValue(final Text left, final Text right) {
         return new Invalid();
     }
 
-    public final Value calculateType(final Bool left, final Money right) {
+    public Value calculateValue(final Bool left, final Money right) {
         return new Invalid();
     }
 
-    public final Value calculateType(final Bool left, final Text right) {
+    public Value calculateValue(final Bool left, final Text right) {
         return new Invalid();
     }
 
-    public final Value calculateType(final Money left, final Bool right) {
+    public Value calculateValue(final Money left, final Bool right) {
         return new Invalid();
     }
 
-    public final Value calculateType(final Money left, final Text right) {
+    public Value calculateValue(final Money left, final Text right) {
         return new Invalid();
     }
 
-    public final Value calculateType(final Text left, final Bool right) {
+    public Value calculateValue(final Text left, final Bool right) {
         return new Invalid();
     }
 
-    public final Value calculateType(final Text left, final Money right) {
+    public Value calculateValue(final Text left, final Money right) {
         return new Invalid();
     }
 }

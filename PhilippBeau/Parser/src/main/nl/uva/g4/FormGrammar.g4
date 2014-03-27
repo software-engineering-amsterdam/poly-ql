@@ -90,21 +90,11 @@ prefix returns [Expression cEx]
 	| token='!' bEN=prefix {$cEx = new Not($bEN.cEx, new Line($token));}
 	| token='-' bEM=prefix {$cEx = new Minus($bEM.cEx, new Line($token));}
 	;
-	
-notPrefix returns [Expression cEx]
-	: bE=atom {$cEx = $bE.cEx;}
-	| token='!' bEA=notPrefix {$cEx = new Not($bEA.cEx, new Line($token));}
-	;
-
-minusPrefix returns [Expression cEx]
-	: bE=atom {$cEx = $bE.cEx;}
-	| token='-' bEM=minusPrefix {$cEx = new Minus($bEM.cEx, new Line($token));}
-	;
 
 atom returns [Expression cEx]
 	: ID {$cEx = new VariableAtom($ID.text, new Line($ID)); }
-	| nL=numLiteral {$cEx = new MoneyAtom($nL.text, new Line($nL.start));}
-	| bL=boolLiteral {$cEx = new BoolAtom($bL.text, new Line($bL.start));}
+	| nL=moneyLiteral {$cEx = new MoneyAtom($nL.money, new Line($nL.start));}
+	| bL=boolLiteral {$cEx = new BoolAtom($bL.bool, new Line($bL.start));}
 	| tL=stringLiteral {$cEx = new TextAtom($tL.string, new Line($tL.start));}
 	| '(' bE=expression ')' {$cEx = $bE.cEx;}
 	;
@@ -115,18 +105,18 @@ simpleType returns [Value.Type type]
     | TEXT {$type = Value.Type.TEXT;}
     ;
 
-boolLiteral
-	: TRUE  
-    | FALSE 
-    ;
-
-numLiteral
-	: INTEGER
-    | DOUBLE
+boolLiteral returns [Bool bool]
+	: TRUE {$bool = new Bool(true);}
+    | FALSE {$bool = new Bool(false);} 
     ;
       
 stringLiteral returns [String string]
 	: STRING {$string = new String($STRING.text.substring(1, $STRING.text.length()-1));}
+	;
+	
+moneyLiteral returns [Money money]
+	: INTEGER {$money = new Money(Double.parseDouble($INTEGER.text));}
+	| DOUBLE {$money = new Money(Double.parseDouble($DOUBLE.text));}
 	;
 
 /** Primitives */
