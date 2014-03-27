@@ -21,12 +21,6 @@ public class IfThenElse extends IfThen {
         _elseStatements = elseStatements;
     }
 
-    public IfThenElse(final Expression expression, final List<Statement> ifStatements, final List<Statement> elseStatements) {
-        super(expression, ifStatements, Line.NO_LINE_NUMBER);
-
-        _elseStatements = elseStatements;
-    }
-
     @Override
     public ASTValidation validate(final Scope scope) {
         ASTValidation valid = super.validate(scope);
