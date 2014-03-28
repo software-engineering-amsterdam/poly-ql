@@ -10,7 +10,7 @@ import main.nl.uva.validation.type.Value;
 
 public class Variable extends Expression implements ExpressionChangeListener {
 
-    private final Value.Type _value;
+    private final Value.Type _type;
 
     private final String _name;
 
@@ -18,7 +18,7 @@ public class Variable extends Expression implements ExpressionChangeListener {
 
     public Variable(final Value.Type type, final String name, final Expression expression, final Line lineInfo) {
         super(lineInfo);
-        _value = type;
+        _type = type;
         _name = name;
         _expression = expression;
 
@@ -30,7 +30,7 @@ public class Variable extends Expression implements ExpressionChangeListener {
     }
 
     public boolean setExpression(final Expression newExpression) {
-        if (!newExpression.getValue().isTypeOf(_value)) {
+        if (!newExpression.getValue().isTypeOf(_type)) {
             // Type is not acceptable
             return false;
         }
@@ -45,7 +45,7 @@ public class Variable extends Expression implements ExpressionChangeListener {
     public ASTValidation validateAndCalculate(final Scope scope) {
         ASTValidation valid = _expression.validateAndCalculate(scope);
 
-        if (!_expression.getValue().isTypeOf(_value)) {
+        if (!_expression.getValue().isTypeOf(_type)) {
             valid.addError(new InvalidTypeError(this.toString(), getLineInfo()));
         }
 
