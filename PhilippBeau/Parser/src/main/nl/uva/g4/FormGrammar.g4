@@ -4,7 +4,7 @@ grammar FormGrammar;
 	import main.nl.uva.parser.expression.*;
 	import main.nl.uva.parser.statement.*;
 	import main.nl.uva.parser.expression.*;
-	import main.nl.uva.parser.expression.atom.*;
+	import main.nl.uva.parser.expression.unary.*;
 	import main.nl.uva.validation.type.*;
 	import main.nl.uva.parser.*;
 }
@@ -18,12 +18,12 @@ block returns [List<Statement> data]
 	: (LINEEND)*? '{' LINEEND (child=statement { $data.add($child.current);})* '}' (LINEEND)*?;
 
 statement returns [Statement current]
-	: ID ':' sLit=stringLiteral sType=simpleType 
-	{$current = new Declaration(new Variable($sType.type, $ID.text, new Line($ID)), $sLit.string);}
+	: ID ':' sLit=STRING sType=simpleType 
+	{$current = new Declaration(new Variable($sType.type, $ID.text, new Line($ID)), $sLit.text);}
 	LINEEND 
 	
-    | ID ':' sLit=stringLiteral sType=simpleType '(' ex=expression')'  	
-    { $current = new FixedDeclaration(new Variable($sType.type, $ID.text, $ex.cEx, new Line($ID)), $sLit.string);} 
+    | ID ':' sLit=STRING sType=simpleType '(' ex=expression')'  	
+    { $current = new FixedDeclaration(new Variable($sType.type, $ID.text, $ex.cEx, new Line($ID)), $sLit.text);} 
     LINEEND
     
     | ifToken='if' '(' ex=expression ')' ifBlock=block 
@@ -93,9 +93,9 @@ prefix returns [Expression cEx]
 
 atom returns [Expression cEx]
 	: ID {$cEx = new VariableAtom($ID.text, new Line($ID)); }
-	| nL=moneyLiteral {$cEx = new MoneyAtom($nL.money, new Line($nL.start));}
-	| bL=boolLiteral {$cEx = new BoolAtom($bL.bool, new Line($bL.start));}
-	| tL=stringLiteral {$cEx = new TextAtom($tL.string, new Line($tL.start));}
+	| nL=moneyLiteral {$cEx = new UnaryExpression($nL.money, new Line($nL.start));}
+	| bL=boolLiteral {$cEx = new UnaryExpression($bL.bool, new Line($bL.start));}
+	| tL=textLiteral {$cEx = new UnaryExpression($tL.string, new Line($tL.start));}
 	| '(' bE=expression ')' {$cEx = $bE.cEx;}
 	;
 
@@ -110,8 +110,8 @@ boolLiteral returns [Bool bool]
     | FALSE {$bool = new Bool(false);} 
     ;
       
-stringLiteral returns [String string]
-	: STRING {$string = new String($STRING.text.substring(1, $STRING.text.length()-1));}
+textLiteral returns [Text string]
+	: STRING {$string = new Text($STRING.text.substring(1, $STRING.text.length()-1));}
 	;
 	
 moneyLiteral returns [Money money]

@@ -2,9 +2,7 @@ package main.nl.uva.validation.type;
 
 import main.nl.uva.parser.expression.BinaryExpression;
 import main.nl.uva.parser.expression.Expression;
-import main.nl.uva.parser.expression.unary.BoolAtom;
-import main.nl.uva.parser.expression.unary.MoneyAtom;
-import main.nl.uva.parser.expression.unary.TextAtom;
+import main.nl.uva.parser.expression.unary.UnaryExpression;
 import main.nl.uva.parser.statement.Statement;
 import main.nl.uva.ui.element.DeclarationUI;
 import main.nl.uva.ui.types.ValueUI;
@@ -20,13 +18,13 @@ public abstract class Value {
         public Expression getAtom() {
             switch (this) {
             case MONEY:
-                return new MoneyAtom();
+                return new UnaryExpression(new Money());
 
             case BOOLEAN:
-                return new BoolAtom();
+                return new UnaryExpression(new Bool());
 
             case TEXT:
-                return new TextAtom();
+                return new UnaryExpression(new Text());
 
             default:
                 return null;
