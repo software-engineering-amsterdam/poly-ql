@@ -6,10 +6,9 @@ namespace GOLD.Engine
 {
     public class Reduction : Token
     {
-        public int Count { get { return tokenList.Count; } }
-        private IList<Token> tokenList;
-
         public Production Production { get; private set; }
+        public int Count { get { return tokenList.Count; } }
+        
         public override Tuple<int, int> StartPosition
         {
             get { return Count > 0 ? this[0].StartPosition : base.StartPosition; }
@@ -22,6 +21,8 @@ namespace GOLD.Engine
         }
         public override object Tag { get; set; }
 
+        private IList<Token> tokenList;
+
         internal Reduction(int size, Production prod)
             : base(prod.Head, null)
         {
@@ -31,15 +32,8 @@ namespace GOLD.Engine
 
         public Token this[int index]
         {
-            get
-            {
-                return tokenList[index];
-            }
-
-            internal set
-            {
-                tokenList[index] = value;
-            }
+            get { return tokenList[index]; }
+            internal set { tokenList[index] = value; }
         }
     }
 }

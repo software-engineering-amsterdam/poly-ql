@@ -20,11 +20,13 @@ namespace GOLD.Engine
 
 
         public bool TrimReductions { get; set; }
+        public bool SkipEmptyProductions { get; set; }
         private EGTDataManager egtDataManager;
 
         public Parser()
         {
             TrimReductions = false;
+            SkipEmptyProductions = false;
         }
 
         public bool LoadEGT(BinaryReader reader)
@@ -64,14 +66,12 @@ namespace GOLD.Engine
 
                 if (!String.IsNullOrEmpty(ch))
                 {
-                    for (int i = 0; i < egtDataManager.GetFAState(currentDFA).Edges.Count; i++)
+                    foreach (FAEdge edge in egtDataManager.GetFAState(currentDFA).Edges)
                     {
-                        FAEdge Edge = egtDataManager.GetFAState(currentDFA).Edges[i];
-
                         //Look for character in the Character Set Table
-                        if (Edge.Characters.Contains(ch[0]))
+                        if (edge.Characters.Contains(ch[0]))
                         {
-                            int target = Edge.Target;
+                            int target = edge.Target;
 
                             if (egtDataManager.GetFAState(target).Accept != null)
                             {
@@ -171,15 +171,15 @@ namespace GOLD.Engine
                         // Append all text
                         top.Data += read.Data;
                         lookAheadBuffer.Consume(read.Data.Length);
-                        read.EndPosition = lookAheadBuffer.Position;
                     }
                     else
                     {
                         // Append one character
                         top.Data += read.Data[0].ToString();
                         lookAheadBuffer.Consume(1);
-                        read.EndPosition = lookAheadBuffer.Position;
                     }
+
+                    read.EndPosition = lookAheadBuffer.Position;
                 }
             }
         }
@@ -290,7 +290,8 @@ namespace GOLD.Engine
             bool reductionSkipped = false;
 
             //Skip reduction?
-            if (TrimReductions && prod.ConsistsOfOneNonTerminal())
+            if ((TrimReductions && prod.ConsistsOfOneNonTerminal())
+                || (SkipEmptyProductions && prod.Handle.Count == 0))
             {
                 head = tokenStack.Pop();
                 head.Symbol = prod.Head;
@@ -301,18 +302,20 @@ namespace GOLD.Engine
             {
                 Reduction reduction = new Reduction(prod.Handle.Count, prod);
 
-                for (int i = prod.Handle.Count - 1; i >= 0; i--)
-                {
-                    reduction[i] = tokenStack.Pop();
-                }
-
                 //If a production has no handles, it has no location.
                 //Set a would-be location instead.
                 if (prod.Handle.Count == 0)
                 {
                     reduction.StartPosition = reduction.EndPosition = lookAheadBuffer.Position;
                 }
-
+                else
+                {
+                    for (int i = prod.Handle.Count - 1; i >= 0; i--)
+                    {
+                        reduction[i] = tokenStack.Pop();
+                    }
+                }
+                
                 head = reduction;
             }
 
@@ -348,7 +351,7 @@ namespace GOLD.Engine
             List<Symbol> expectedSymbols = new List<Symbol>();
             for (int i = 0; i < actionList.Count; i++)
             {
-                Symbol actionSymbol = actionList[i].Symbol;
+                Symbol actionSymbol = actionList[i];
                 switch (actionSymbol.Type)
                 {
                     case SymbolType.Content:

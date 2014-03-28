@@ -25,9 +25,6 @@ using WPFParser.MergedFactory;
 
 namespace WPFParser
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         private static readonly string PathToTestFiles = Path.GetFullPath(@"..\..\..\..\..\TestFiles\");
@@ -38,12 +35,6 @@ namespace WPFParser
         public MainWindow()
         {
             InitializeComponent();
-
-            //Parser = GetBasicParser<ITypeCheckExpr, ITypeCheckStmnt, ITypeCheckType, TypeCheckFactory>(new TypeCheckFactory());
-            //Parser = GetExtendedParser<ITypeCheckExpr, ITypeCheckStmnt, ITypeCheckType, ExtTypeCheckFactory>(new ExtTypeCheckFactory());
-
-            //Parser = GetExtendedParser<Tuple<ITypeCheckExpr, IPrintExpr>, Tuple<ITypeCheckStmnt, IPrintStmnt>,
-            //    Tuple<ITypeCheckType, IPrintType>, TypeCheckPrintFactory>(new TypeCheckPrintFactory());
 
             Parser = GetExtendedParser<IPair<IPair<ITypeCheckStmnt, IPrintStmnt>, IFormStmnt>,
                 IPair<IPair<ITypeCheckExpr, IPrintExpr>, IFormExpr>,

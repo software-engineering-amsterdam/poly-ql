@@ -142,21 +142,15 @@ namespace GOLD.Engine.EGT
                 ReadEntry();
             }
 
-            if (IsAtEOF)
+            if (IsAtEOF || ReadEntryType() != EGTEntryType.Record)
             {
                 return false;
             }
 
             //Start next record
-            if (ReadEntryType() == EGTEntryType.Record)
-            {
-                recordEntriesCount = ReadRawUInt16();
-                recordEntriesRead = 0;
-
-                return true;
-            }
-
-            return false;
+            recordEntriesCount = ReadRawUInt16();
+            recordEntriesRead = 0;
+            return true;
         }
 
         private EGTEntryType ReadEntryType()
@@ -295,12 +289,10 @@ namespace GOLD.Engine.EGT
             ReadEntry();
 
             FAState faState = accept ? new FAState(index, grammarTables.Symbols[acceptIndex]) : new FAState(index);
-
             while (!IsRecordComplete())
             {
                 faState.Edges.Add(ReadFAEdge());
             }
-
             return faState;
         }
 
@@ -322,12 +314,10 @@ namespace GOLD.Engine.EGT
             ReadEntry();
 
             LRActionList actionList = new LRActionList(index);
-
             while (!IsRecordComplete())
             {
                 actionList.Add(ReadLRAction());
             }
-
             return actionList;
         }
 

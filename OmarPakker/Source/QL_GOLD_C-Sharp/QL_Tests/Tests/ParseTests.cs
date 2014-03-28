@@ -112,40 +112,44 @@ namespace QL_Tests.Tests
             Assert.True(parseOk);
         }
 
-        //[Fact]
-        //public void CompStmntFlattened()
-        //{
-        //    parser.OnCompletion += (root) =>
-        //    {
-        //        FormStmnt tree = new FormStmnt("Form1",
-        //            new CompStmnt(
-        //                new TextExprStmnt("\"Question 1:\"",
-        //                    new LiteralExpr<int>(5)
-        //                ),
-        //                new TextExprStmnt("\"Question 1:\"",
-        //                    new LiteralExpr<int>(5)
-        //                ),
-        //                new TextExprStmnt("\"Question 1:\"",
-        //                    new LiteralExpr<int>(5)
-        //                ),
-        //                new TextExprStmnt("\"Question 1:\"",
-        //                    new LiteralExpr<int>(5)
-        //                )
-        //            )
-        //        );
-        //        Assert.NotNull(root);
-        //        Assert.Equal(root, tree);
-        //    };
+        [Fact(Skip="Composition/List grammar statements aren't ever flattened at the moment.")]
+        public void CompStmntFlattened()
+        {
+            parser.OnCompletion += (root) =>
+            {
+                FormStmnt tree = new FormStmnt("Form1",
+                    new CompStmnt(
+                        new TextExprStmnt("\"Question 1:\"",
+                            new LiteralExpr<int>(5)
+                        ),
+                        new CompStmnt(
+                            new TextExprStmnt("\"Question 1:\"",
+                                new LiteralExpr<int>(5)
+                            ),
+                            new CompStmnt(
+                                new TextExprStmnt("\"Question 1:\"",
+                                    new LiteralExpr<int>(5)
+                                ),
+                                new TextExprStmnt("\"Question 1:\"",
+                                    new LiteralExpr<int>(5)
+                                )
+                            )
+                        )
+                    )
+                );
+                Assert.NotNull(root);
+                Assert.Equal(root, tree);
+            };
 
-        //    bool parseOk = parser.Parse(new StringBuilder().AppendLine("form Form1 {")
-        //        .AppendLine("\"Question 1:\" << 5;")
-        //        .AppendLine("\"Question 1:\" << 5;")
-        //        .AppendLine("\"Question 1:\" << 5;")
-        //        .AppendLine("\"Question 1:\" << 5;")
-        //        .AppendLine("}").ToString());
+            bool parseOk = parser.Parse(new StringBuilder().AppendLine("form Form1 {")
+                .AppendLine("\"Question 1:\" << 5;")
+                .AppendLine("\"Question 1:\" << 5;")
+                .AppendLine("\"Question 1:\" << 5;")
+                .AppendLine("\"Question 1:\" << 5;")
+                .AppendLine("}").ToString());
 
-        //    Assert.True(parseOk);
-        //}
+            Assert.True(parseOk);
+        }
 
         [Fact]
         public void AssociatesElseCorrectly()

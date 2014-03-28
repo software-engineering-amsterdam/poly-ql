@@ -24,12 +24,7 @@ namespace GOLD.Engine
 
         internal bool ConsistsOfOneNonTerminal()
         {
-            if (Handle.Count == 1 && Handle[0].Type == SymbolType.Nonterminal)
-            {
-                return true;
-            }
-
-            return false;
+            return Handle.Count == 1 && Handle[0].Type == SymbolType.Nonterminal;
         }
 
         public override string ToString()

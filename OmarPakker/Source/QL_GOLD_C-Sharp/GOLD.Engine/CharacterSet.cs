@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace GOLD.Engine
 {
@@ -22,15 +23,7 @@ namespace GOLD.Engine
 
         internal bool Contains(ushort charCode)
         {
-            foreach (CharacterRange range in characterList)
-            {
-                if (range.Start <= charCode && charCode <= range.End)
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return characterList.Any(range => range.Start <= charCode && charCode <= range.End);
         }
     }
 }

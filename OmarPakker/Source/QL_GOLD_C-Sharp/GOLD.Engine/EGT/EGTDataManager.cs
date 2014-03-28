@@ -12,6 +12,8 @@ namespace GOLD.Engine.EGT
 
         internal EGTDataManager(BinaryReader reader)
         {
+            GrammarProperties = new GrammarProperties();
+
             LoadEGT(reader);
         }
 
@@ -24,7 +26,6 @@ namespace GOLD.Engine.EGT
                     switch (egtReader.ReadRecordType())
                     {
                         case EGTRecord.Property:
-                            GrammarProperties = new GrammarProperties();
                             GrammarProperties.SetProperty(egtReader.ReadGrammarProperty());
                             break;
 

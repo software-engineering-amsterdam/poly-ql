@@ -26,16 +26,11 @@ namespace GOLD.Engine
             actionList.Clear();
         }
 
-        internal LRAction this[int index]
+        internal Symbol this[int index]
         {
             get
             {
-                return actionList[index];
-            }
-
-            set
-            {
-                actionList[index] = value;
+                return actionList[index].Symbol;
             }
         }
 
