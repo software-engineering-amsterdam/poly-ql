@@ -43,7 +43,7 @@ namespace Algebra.Core.Grammar
 
         private GOLD.Engine.Parser parser;
 
-        protected abstract ReadOnlyDictionary<string, short> Rules { get; }
+        protected abstract ReadOnlyDictionary<ushort, string> Rules { get; }
 
         public Parser(bool trimReductions)
         {

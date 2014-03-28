@@ -24,623 +24,322 @@ using System.Collections.ObjectModel;
 
 namespace Grammar.Generated.v2
 {
-	public static class GrammarData
+    public static class GrammarData
     {
         public const int SymbolCount = 72;
         public const int RuleCount = 59;
 
-        public static readonly ReadOnlyDictionary<string, short> Rules = new ReadOnlyDictionary<string, short>(
-	        new Dictionary<string, short>()
+        public static readonly ReadOnlyDictionary<ushort, string> Rules = new ReadOnlyDictionary<ushort, string>(
+            new Dictionary<ushort, string>()
             {
-                { "Type_String", 0 },                                       // <Type> ::= string
-                { "Type_Int", 1 },                                          // <Type> ::= int
-                { "Type_Real", 2 },                                         // <Type> ::= real
-                { "Type_Bool", 3 },                                         // <Type> ::= bool
-                { "Type_Date", 4 },                                         // <Type> ::= date
-                { "Forms", 5 },                                             // <Forms> ::= <Form> <Forms>
-                { "Forms2", 6 },                                            // <Forms> ::= <Form>
-                { "Form_Form_Identifier", 7 },                              // <Form> ::= form Identifier <Block>
-                { "Block_Lbrace_Rbrace", 8 },                               // <Block> ::= '{' <Statements> '}'
-                { "Statements", 9 },                                        // <Statements> ::= <Statement> <Statements>
-                { "Statements2", 10 },                                      // <Statements> ::= <Statement>
-                { "Statement_If_Lparen_Rparen", 11 },                       // <Statement> ::= if '(' <Expression> ')' <Statement> <OptElse>
-                { "Statement", 12 },                                        // <Statement> ::= <Block>
-                { "Statement2", 13 },                                       // <Statement> ::= <Question>
-                { "Statement_Gotonextform_Semi", 14 },                      // <Statement> ::= gotoNextForm ';'
-                { "Statement_Repeat_Lparen_Rparen", 15 },                   // <Statement> ::= repeat '(' <Expression> ')' <Statement>
-                { "Optelse_Else", 16 },                                     // <OptElse> ::= else <Statement>
-                { "Optelse", 17 },                                          // <OptElse> ::= 
-                { "Vardecl_Identifier_Colon", 18 },                         // <VarDecl> ::= Identifier ':' <Type>
-                { "Varassign_Identifier_Colon_Eq", 19 },                    // <VarAssign> ::= Identifier ':' <Type> '=' <Expression>
-                { "Question_Stringlit_Gtgt_Semi", 20 },                     // <Question> ::= StringLit '>>' <VarDecl> ';'
-                { "Question_Stringlit_Ltlt_Semi", 21 },                     // <Question> ::= StringLit '<<' <VarAssign> ';'
-                { "Question_Stringlit_Ltlt_Semi2", 22 },                    // <Question> ::= StringLit '<<' <Expression> ';'
-                { "Expression_Question_Colon", 23 },                        // <Expression> ::= <OrExpr> '?' <OrExpr> ':' <Expression>
-                { "Expression_Sum_Lparen_Identifier_Rparen", 24 },          // <Expression> ::= sum '(' Identifier ')'
-                { "Expression_Avg_Lparen_Identifier_Rparen", 25 },          // <Expression> ::= avg '(' Identifier ')'
-                { "Expression", 26 },                                       // <Expression> ::= <OrExpr>
-                { "Orexpr_Pipepipe", 27 },                                  // <OrExpr> ::= <OrExpr> '||' <AndExpr>
-                { "Orexpr", 28 },                                           // <OrExpr> ::= <AndExpr>
-                { "Andexpr_Ampamp", 29 },                                   // <AndExpr> ::= <AndExpr> '&&' <EqExpr>
-                { "Andexpr", 30 },                                          // <AndExpr> ::= <EqExpr>
-                { "Eqexpr_Eqeq", 31 },                                      // <EqExpr> ::= <EqExpr> '==' <CompExpr>
-                { "Eqexpr_Exclameq", 32 },                                  // <EqExpr> ::= <EqExpr> '!=' <CompExpr>
-                { "Eqexpr", 33 },                                           // <EqExpr> ::= <CompExpr>
-                { "Compexpr_Lt", 34 },                                      // <CompExpr> ::= <CompExpr> '<' <AddExpr>
-                { "Compexpr_Gt", 35 },                                      // <CompExpr> ::= <CompExpr> '>' <AddExpr>
-                { "Compexpr_Lteq", 36 },                                    // <CompExpr> ::= <CompExpr> '<=' <AddExpr>
-                { "Compexpr_Gteq", 37 },                                    // <CompExpr> ::= <CompExpr> '>=' <AddExpr>
-                { "Compexpr", 38 },                                         // <CompExpr> ::= <AddExpr>
-                { "Addexpr_Plus", 39 },                                     // <AddExpr> ::= <AddExpr> '+' <MultExpr>
-                { "Addexpr_Minus", 40 },                                    // <AddExpr> ::= <AddExpr> '-' <MultExpr>
-                { "Addexpr", 41 },                                          // <AddExpr> ::= <MultExpr>
-                { "Multexpr_Times", 42 },                                   // <MultExpr> ::= <MultExpr> '*' <PowerExpr>
-                { "Multexpr_Div", 43 },                                     // <MultExpr> ::= <MultExpr> '/' <PowerExpr>
-                { "Multexpr_Percent", 44 },                                 // <MultExpr> ::= <MultExpr> '%' <PowerExpr>
-                { "Multexpr", 45 },                                         // <MultExpr> ::= <PowerExpr>
-                { "Powerexpr_Caret", 46 },                                  // <PowerExpr> ::= <PowerExpr> '^' <NegateExpr>
-                { "Powerexpr", 47 },                                        // <PowerExpr> ::= <NegateExpr>
-                { "Negateexpr_Minus", 48 },                                 // <NegateExpr> ::= '-' <Value>
-                { "Negateexpr_Exclam", 49 },                                // <NegateExpr> ::= '!' <Value>
-                { "Negateexpr", 50 },                                       // <NegateExpr> ::= <Value>
-                { "Value_Identifier", 51 },                                 // <Value> ::= Identifier
-                { "Value", 52 },                                            // <Value> ::= <Literal>
-                { "Value_Lparen_Rparen", 53 },                              // <Value> ::= '(' <Expression> ')'
-                { "Literal_Stringlit", 54 },                                // <Literal> ::= StringLit
-                { "Literal_Intlit", 55 },                                   // <Literal> ::= IntLit
-                { "Literal_Reallit", 56 },                                  // <Literal> ::= RealLit
-                { "Literal_Boollit", 57 },                                  // <Literal> ::= BoolLit
-                { "Literal_Datelit", 58 }                                   // <Literal> ::= DateLit
+                { 0, "Type_String" },                                       // <Type> ::= string
+                { 1, "Type_Int" },                                          // <Type> ::= int
+                { 2, "Type_Real" },                                         // <Type> ::= real
+                { 3, "Type_Bool" },                                         // <Type> ::= bool
+                { 4, "Type_Date" },                                         // <Type> ::= date
+                { 5, "Forms" },                                             // <Forms> ::= <Form> <Forms>
+                { 6, "Forms2" },                                            // <Forms> ::= <Form>
+                { 7, "Form_Form_Identifier" },                              // <Form> ::= form Identifier <Block>
+                { 8, "Block_Lbrace_Rbrace" },                               // <Block> ::= '{' <Statements> '}'
+                { 9, "Statements" },                                        // <Statements> ::= <Statement> <Statements>
+                { 10, "Statements2" },                                      // <Statements> ::= <Statement>
+                { 11, "Statement_If_Lparen_Rparen" },                       // <Statement> ::= if '(' <Expression> ')' <Statement> <OptElse>
+                { 12, "Statement" },                                        // <Statement> ::= <Block>
+                { 13, "Statement2" },                                       // <Statement> ::= <Question>
+                { 14, "Statement_Gotonextform_Semi" },                      // <Statement> ::= gotoNextForm ';'
+                { 15, "Statement_Repeat_Lparen_Rparen" },                   // <Statement> ::= repeat '(' <Expression> ')' <Statement>
+                { 16, "Optelse_Else" },                                     // <OptElse> ::= else <Statement>
+                { 17, "Optelse" },                                          // <OptElse> ::= 
+                { 18, "Vardecl_Identifier_Colon" },                         // <VarDecl> ::= Identifier ':' <Type>
+                { 19, "Varassign_Identifier_Colon_Eq" },                    // <VarAssign> ::= Identifier ':' <Type> '=' <Expression>
+                { 20, "Question_Stringlit_Gtgt_Semi" },                     // <Question> ::= StringLit '>>' <VarDecl> ';'
+                { 21, "Question_Stringlit_Ltlt_Semi" },                     // <Question> ::= StringLit '<<' <VarAssign> ';'
+                { 22, "Question_Stringlit_Ltlt_Semi2" },                    // <Question> ::= StringLit '<<' <Expression> ';'
+                { 23, "Expression_Question_Colon" },                        // <Expression> ::= <OrExpr> '?' <OrExpr> ':' <Expression>
+                { 24, "Expression_Sum_Lparen_Identifier_Rparen" },          // <Expression> ::= sum '(' Identifier ')'
+                { 25, "Expression_Avg_Lparen_Identifier_Rparen" },          // <Expression> ::= avg '(' Identifier ')'
+                { 26, "Expression" },                                       // <Expression> ::= <OrExpr>
+                { 27, "Orexpr_Pipepipe" },                                  // <OrExpr> ::= <OrExpr> '||' <AndExpr>
+                { 28, "Orexpr" },                                           // <OrExpr> ::= <AndExpr>
+                { 29, "Andexpr_Ampamp" },                                   // <AndExpr> ::= <AndExpr> '&&' <EqExpr>
+                { 30, "Andexpr" },                                          // <AndExpr> ::= <EqExpr>
+                { 31, "Eqexpr_Eqeq" },                                      // <EqExpr> ::= <EqExpr> '==' <CompExpr>
+                { 32, "Eqexpr_Exclameq" },                                  // <EqExpr> ::= <EqExpr> '!=' <CompExpr>
+                { 33, "Eqexpr" },                                           // <EqExpr> ::= <CompExpr>
+                { 34, "Compexpr_Lt" },                                      // <CompExpr> ::= <CompExpr> '<' <AddExpr>
+                { 35, "Compexpr_Gt" },                                      // <CompExpr> ::= <CompExpr> '>' <AddExpr>
+                { 36, "Compexpr_Lteq" },                                    // <CompExpr> ::= <CompExpr> '<=' <AddExpr>
+                { 37, "Compexpr_Gteq" },                                    // <CompExpr> ::= <CompExpr> '>=' <AddExpr>
+                { 38, "Compexpr" },                                         // <CompExpr> ::= <AddExpr>
+                { 39, "Addexpr_Plus" },                                     // <AddExpr> ::= <AddExpr> '+' <MultExpr>
+                { 40, "Addexpr_Minus" },                                    // <AddExpr> ::= <AddExpr> '-' <MultExpr>
+                { 41, "Addexpr" },                                          // <AddExpr> ::= <MultExpr>
+                { 42, "Multexpr_Times" },                                   // <MultExpr> ::= <MultExpr> '*' <PowerExpr>
+                { 43, "Multexpr_Div" },                                     // <MultExpr> ::= <MultExpr> '/' <PowerExpr>
+                { 44, "Multexpr_Percent" },                                 // <MultExpr> ::= <MultExpr> '%' <PowerExpr>
+                { 45, "Multexpr" },                                         // <MultExpr> ::= <PowerExpr>
+                { 46, "Powerexpr_Caret" },                                  // <PowerExpr> ::= <PowerExpr> '^' <NegateExpr>
+                { 47, "Powerexpr" },                                        // <PowerExpr> ::= <NegateExpr>
+                { 48, "Negateexpr_Minus" },                                 // <NegateExpr> ::= '-' <Value>
+                { 49, "Negateexpr_Exclam" },                                // <NegateExpr> ::= '!' <Value>
+                { 50, "Negateexpr" },                                       // <NegateExpr> ::= <Value>
+                { 51, "Value_Identifier" },                                 // <Value> ::= Identifier
+                { 52, "Value" },                                            // <Value> ::= <Literal>
+                { 53, "Value_Lparen_Rparen" },                              // <Value> ::= '(' <Expression> ')'
+                { 54, "Literal_Stringlit" },                                // <Literal> ::= StringLit
+                { 55, "Literal_Intlit" },                                   // <Literal> ::= IntLit
+                { 56, "Literal_Reallit" },                                  // <Literal> ::= RealLit
+                { 57, "Literal_Boollit" },                                  // <Literal> ::= BoolLit
+                { 58, "Literal_Datelit" }                                   // <Literal> ::= DateLit
             }
-		);
+        );
     };
 }
-
-
-
-/*
- * Pre-build if's covering all the rules
- */
-#region Rules If
-////<Type> ::= string
-//if (r.Parent.TableIndex() == Rules["Type_String"])
-//{
-//    return;
-//}
-////<Type> ::= int
-//if (r.Parent.TableIndex() == Rules["Type_Int"])
-//{
-//    return;
-//}
-////<Type> ::= real
-//if (r.Parent.TableIndex() == Rules["Type_Real"])
-//{
-//    return;
-//}
-////<Type> ::= bool
-//if (r.Parent.TableIndex() == Rules["Type_Bool"])
-//{
-//    return;
-//}
-////<Type> ::= date
-//if (r.Parent.TableIndex() == Rules["Type_Date"])
-//{
-//    return;
-//}
-////<Forms> ::= <Form> <Forms>
-//if (r.Parent.TableIndex() == Rules["Forms"])
-//{
-//    return;
-//}
-////<Forms> ::= <Form>
-//if (r.Parent.TableIndex() == Rules["Forms2"])
-//{
-//    return;
-//}
-////<Form> ::= form Identifier <Block>
-//if (r.Parent.TableIndex() == Rules["Form_Form_Identifier"])
-//{
-//    return;
-//}
-////<Block> ::= '{' <Statements> '}'
-//if (r.Parent.TableIndex() == Rules["Block_Lbrace_Rbrace"])
-//{
-//    return;
-//}
-////<Statements> ::= <Statement> <Statements>
-//if (r.Parent.TableIndex() == Rules["Statements"])
-//{
-//    return;
-//}
-////<Statements> ::= <Statement>
-//if (r.Parent.TableIndex() == Rules["Statements2"])
-//{
-//    return;
-//}
-////<Statement> ::= if '(' <Expression> ')' <Statement> <OptElse>
-//if (r.Parent.TableIndex() == Rules["Statement_If_Lparen_Rparen"])
-//{
-//    return;
-//}
-////<Statement> ::= <Block>
-//if (r.Parent.TableIndex() == Rules["Statement"])
-//{
-//    return;
-//}
-////<Statement> ::= <Question>
-//if (r.Parent.TableIndex() == Rules["Statement2"])
-//{
-//    return;
-//}
-////<Statement> ::= gotoNextForm ';'
-//if (r.Parent.TableIndex() == Rules["Statement_Gotonextform_Semi"])
-//{
-//    return;
-//}
-////<Statement> ::= repeat '(' <Expression> ')' <Statement>
-//if (r.Parent.TableIndex() == Rules["Statement_Repeat_Lparen_Rparen"])
-//{
-//    return;
-//}
-////<OptElse> ::= else <Statement>
-//if (r.Parent.TableIndex() == Rules["Optelse_Else"])
-//{
-//    return;
-//}
-////<OptElse> ::= 
-//if (r.Parent.TableIndex() == Rules["Optelse"])
-//{
-//    return;
-//}
-////<VarDecl> ::= Identifier ':' <Type>
-//if (r.Parent.TableIndex() == Rules["Vardecl_Identifier_Colon"])
-//{
-//    return;
-//}
-////<VarAssign> ::= Identifier ':' <Type> '=' <Expression>
-//if (r.Parent.TableIndex() == Rules["Varassign_Identifier_Colon_Eq"])
-//{
-//    return;
-//}
-////<Question> ::= StringLit '>>' <VarDecl> ';'
-//if (r.Parent.TableIndex() == Rules["Question_Stringlit_Gtgt_Semi"])
-//{
-//    return;
-//}
-////<Question> ::= StringLit '<<' <VarAssign> ';'
-//if (r.Parent.TableIndex() == Rules["Question_Stringlit_Ltlt_Semi"])
-//{
-//    return;
-//}
-////<Question> ::= StringLit '<<' <Expression> ';'
-//if (r.Parent.TableIndex() == Rules["Question_Stringlit_Ltlt_Semi2"])
-//{
-//    return;
-//}
-////<Expression> ::= <OrExpr> '?' <OrExpr> ':' <Expression>
-//if (r.Parent.TableIndex() == Rules["Expression_Question_Colon"])
-//{
-//    return;
-//}
-////<Expression> ::= sum '(' Identifier ')'
-//if (r.Parent.TableIndex() == Rules["Expression_Sum_Lparen_Identifier_Rparen"])
-//{
-//    return;
-//}
-////<Expression> ::= avg '(' Identifier ')'
-//if (r.Parent.TableIndex() == Rules["Expression_Avg_Lparen_Identifier_Rparen"])
-//{
-//    return;
-//}
-////<Expression> ::= <OrExpr>
-//if (r.Parent.TableIndex() == Rules["Expression"])
-//{
-//    return;
-//}
-////<OrExpr> ::= <OrExpr> '||' <AndExpr>
-//if (r.Parent.TableIndex() == Rules["Orexpr_Pipepipe"])
-//{
-//    return;
-//}
-////<OrExpr> ::= <AndExpr>
-//if (r.Parent.TableIndex() == Rules["Orexpr"])
-//{
-//    return;
-//}
-////<AndExpr> ::= <AndExpr> '&&' <EqExpr>
-//if (r.Parent.TableIndex() == Rules["Andexpr_Ampamp"])
-//{
-//    return;
-//}
-////<AndExpr> ::= <EqExpr>
-//if (r.Parent.TableIndex() == Rules["Andexpr"])
-//{
-//    return;
-//}
-////<EqExpr> ::= <EqExpr> '==' <CompExpr>
-//if (r.Parent.TableIndex() == Rules["Eqexpr_Eqeq"])
-//{
-//    return;
-//}
-////<EqExpr> ::= <EqExpr> '!=' <CompExpr>
-//if (r.Parent.TableIndex() == Rules["Eqexpr_Exclameq"])
-//{
-//    return;
-//}
-////<EqExpr> ::= <CompExpr>
-//if (r.Parent.TableIndex() == Rules["Eqexpr"])
-//{
-//    return;
-//}
-////<CompExpr> ::= <CompExpr> '<' <AddExpr>
-//if (r.Parent.TableIndex() == Rules["Compexpr_Lt"])
-//{
-//    return;
-//}
-////<CompExpr> ::= <CompExpr> '>' <AddExpr>
-//if (r.Parent.TableIndex() == Rules["Compexpr_Gt"])
-//{
-//    return;
-//}
-////<CompExpr> ::= <CompExpr> '<=' <AddExpr>
-//if (r.Parent.TableIndex() == Rules["Compexpr_Lteq"])
-//{
-//    return;
-//}
-////<CompExpr> ::= <CompExpr> '>=' <AddExpr>
-//if (r.Parent.TableIndex() == Rules["Compexpr_Gteq"])
-//{
-//    return;
-//}
-////<CompExpr> ::= <AddExpr>
-//if (r.Parent.TableIndex() == Rules["Compexpr"])
-//{
-//    return;
-//}
-////<AddExpr> ::= <AddExpr> '+' <MultExpr>
-//if (r.Parent.TableIndex() == Rules["Addexpr_Plus"])
-//{
-//    return;
-//}
-////<AddExpr> ::= <AddExpr> '-' <MultExpr>
-//if (r.Parent.TableIndex() == Rules["Addexpr_Minus"])
-//{
-//    return;
-//}
-////<AddExpr> ::= <MultExpr>
-//if (r.Parent.TableIndex() == Rules["Addexpr"])
-//{
-//    return;
-//}
-////<MultExpr> ::= <MultExpr> '*' <PowerExpr>
-//if (r.Parent.TableIndex() == Rules["Multexpr_Times"])
-//{
-//    return;
-//}
-////<MultExpr> ::= <MultExpr> '/' <PowerExpr>
-//if (r.Parent.TableIndex() == Rules["Multexpr_Div"])
-//{
-//    return;
-//}
-////<MultExpr> ::= <MultExpr> '%' <PowerExpr>
-//if (r.Parent.TableIndex() == Rules["Multexpr_Percent"])
-//{
-//    return;
-//}
-////<MultExpr> ::= <PowerExpr>
-//if (r.Parent.TableIndex() == Rules["Multexpr"])
-//{
-//    return;
-//}
-////<PowerExpr> ::= <PowerExpr> '^' <NegateExpr>
-//if (r.Parent.TableIndex() == Rules["Powerexpr_Caret"])
-//{
-//    return;
-//}
-////<PowerExpr> ::= <NegateExpr>
-//if (r.Parent.TableIndex() == Rules["Powerexpr"])
-//{
-//    return;
-//}
-////<NegateExpr> ::= '-' <Value>
-//if (r.Parent.TableIndex() == Rules["Negateexpr_Minus"])
-//{
-//    return;
-//}
-////<NegateExpr> ::= '!' <Value>
-//if (r.Parent.TableIndex() == Rules["Negateexpr_Exclam"])
-//{
-//    return;
-//}
-////<NegateExpr> ::= <Value>
-//if (r.Parent.TableIndex() == Rules["Negateexpr"])
-//{
-//    return;
-//}
-////<Value> ::= Identifier
-//if (r.Parent.TableIndex() == Rules["Value_Identifier"])
-//{
-//    return;
-//}
-////<Value> ::= <Literal>
-//if (r.Parent.TableIndex() == Rules["Value"])
-//{
-//    return;
-//}
-////<Value> ::= '(' <Expression> ')'
-//if (r.Parent.TableIndex() == Rules["Value_Lparen_Rparen"])
-//{
-//    return;
-//}
-////<Literal> ::= StringLit
-//if (r.Parent.TableIndex() == Rules["Literal_Stringlit"])
-//{
-//    return;
-//}
-////<Literal> ::= IntLit
-//if (r.Parent.TableIndex() == Rules["Literal_Intlit"])
-//{
-//    return;
-//}
-////<Literal> ::= RealLit
-//if (r.Parent.TableIndex() == Rules["Literal_Reallit"])
-//{
-//    return;
-//}
-////<Literal> ::= BoolLit
-//if (r.Parent.TableIndex() == Rules["Literal_Boollit"])
-//{
-//    return;
-//}
-////<Literal> ::= DateLit
-//if (r.Parent.TableIndex() == Rules["Literal_Datelit"])
-//{
-//    return;
-//}
-#endregion
 
 
 /*
  * Pre-build switch covering all the rules
  */
 #region Rules Switch
-//switch(r.Parent.TableIndex())
+//switch (Rules[r.Production.TableIndex])
 //{
-//    case RuleIndices.Type_String:
-//        // <Type> ::= string
-//        break;
-//
-//    case RuleIndices.Type_Int:
-//        // <Type> ::= int
-//        break;
-//
-//    case RuleIndices.Type_Real:
-//        // <Type> ::= real
-//        break;
-//
-//    case RuleIndices.Type_Bool:
-//        // <Type> ::= bool
-//        break;
-//
-//    case RuleIndices.Type_Date:
-//        // <Type> ::= date
-//        break;
-//
-//    case RuleIndices.Forms:
-//        // <Forms> ::= <Form> <Forms>
-//        break;
-//
-//    case RuleIndices.Forms2:
-//        // <Forms> ::= <Form>
-//        break;
-//
-//    case RuleIndices.Form_Form_Identifier:
-//        // <Form> ::= form Identifier <Block>
-//        break;
-//
-//    case RuleIndices.Block_Lbrace_Rbrace:
-//        // <Block> ::= '{' <Statements> '}'
-//        break;
-//
-//    case RuleIndices.Statements:
-//        // <Statements> ::= <Statement> <Statements>
-//        break;
-//
-//    case RuleIndices.Statements2:
-//        // <Statements> ::= <Statement>
-//        break;
-//
-//    case RuleIndices.Statement_If_Lparen_Rparen:
-//        // <Statement> ::= if '(' <Expression> ')' <Statement> <OptElse>
-//        break;
-//
-//    case RuleIndices.Statement:
-//        // <Statement> ::= <Block>
-//        break;
-//
-//    case RuleIndices.Statement2:
-//        // <Statement> ::= <Question>
-//        break;
-//
-//    case RuleIndices.Statement_Gotonextform_Semi:
-//        // <Statement> ::= gotoNextForm ';'
-//        break;
-//
-//    case RuleIndices.Statement_Repeat_Lparen_Rparen:
-//        // <Statement> ::= repeat '(' <Expression> ')' <Statement>
-//        break;
-//
-//    case RuleIndices.Optelse_Else:
-//        // <OptElse> ::= else <Statement>
-//        break;
-//
-//    case RuleIndices.Optelse:
-//        // <OptElse> ::= 
-//        break;
-//
-//    case RuleIndices.Vardecl_Identifier_Colon:
-//        // <VarDecl> ::= Identifier ':' <Type>
-//        break;
-//
-//    case RuleIndices.Varassign_Identifier_Colon_Eq:
-//        // <VarAssign> ::= Identifier ':' <Type> '=' <Expression>
-//        break;
-//
-//    case RuleIndices.Question_Stringlit_Gtgt_Semi:
-//        // <Question> ::= StringLit '>>' <VarDecl> ';'
-//        break;
-//
-//    case RuleIndices.Question_Stringlit_Ltlt_Semi:
-//        // <Question> ::= StringLit '<<' <VarAssign> ';'
-//        break;
-//
-//    case RuleIndices.Question_Stringlit_Ltlt_Semi2:
-//        // <Question> ::= StringLit '<<' <Expression> ';'
-//        break;
-//
-//    case RuleIndices.Expression_Question_Colon:
-//        // <Expression> ::= <OrExpr> '?' <OrExpr> ':' <Expression>
-//        break;
-//
-//    case RuleIndices.Expression_Sum_Lparen_Identifier_Rparen:
-//        // <Expression> ::= sum '(' Identifier ')'
-//        break;
-//
-//    case RuleIndices.Expression_Avg_Lparen_Identifier_Rparen:
-//        // <Expression> ::= avg '(' Identifier ')'
-//        break;
-//
-//    case RuleIndices.Expression:
-//        // <Expression> ::= <OrExpr>
-//        break;
-//
-//    case RuleIndices.Orexpr_Pipepipe:
-//        // <OrExpr> ::= <OrExpr> '||' <AndExpr>
-//        break;
-//
-//    case RuleIndices.Orexpr:
-//        // <OrExpr> ::= <AndExpr>
-//        break;
-//
-//    case RuleIndices.Andexpr_Ampamp:
-//        // <AndExpr> ::= <AndExpr> '&&' <EqExpr>
-//        break;
-//
-//    case RuleIndices.Andexpr:
-//        // <AndExpr> ::= <EqExpr>
-//        break;
-//
-//    case RuleIndices.Eqexpr_Eqeq:
-//        // <EqExpr> ::= <EqExpr> '==' <CompExpr>
-//        break;
-//
-//    case RuleIndices.Eqexpr_Exclameq:
-//        // <EqExpr> ::= <EqExpr> '!=' <CompExpr>
-//        break;
-//
-//    case RuleIndices.Eqexpr:
-//        // <EqExpr> ::= <CompExpr>
-//        break;
-//
-//    case RuleIndices.Compexpr_Lt:
-//        // <CompExpr> ::= <CompExpr> '<' <AddExpr>
-//        break;
-//
-//    case RuleIndices.Compexpr_Gt:
-//        // <CompExpr> ::= <CompExpr> '>' <AddExpr>
-//        break;
-//
-//    case RuleIndices.Compexpr_Lteq:
-//        // <CompExpr> ::= <CompExpr> '<=' <AddExpr>
-//        break;
-//
-//    case RuleIndices.Compexpr_Gteq:
-//        // <CompExpr> ::= <CompExpr> '>=' <AddExpr>
-//        break;
-//
-//    case RuleIndices.Compexpr:
-//        // <CompExpr> ::= <AddExpr>
-//        break;
-//
-//    case RuleIndices.Addexpr_Plus:
-//        // <AddExpr> ::= <AddExpr> '+' <MultExpr>
-//        break;
-//
-//    case RuleIndices.Addexpr_Minus:
-//        // <AddExpr> ::= <AddExpr> '-' <MultExpr>
-//        break;
-//
-//    case RuleIndices.Addexpr:
-//        // <AddExpr> ::= <MultExpr>
-//        break;
-//
-//    case RuleIndices.Multexpr_Times:
-//        // <MultExpr> ::= <MultExpr> '*' <PowerExpr>
-//        break;
-//
-//    case RuleIndices.Multexpr_Div:
-//        // <MultExpr> ::= <MultExpr> '/' <PowerExpr>
-//        break;
-//
-//    case RuleIndices.Multexpr_Percent:
-//        // <MultExpr> ::= <MultExpr> '%' <PowerExpr>
-//        break;
-//
-//    case RuleIndices.Multexpr:
-//        // <MultExpr> ::= <PowerExpr>
-//        break;
-//
-//    case RuleIndices.Powerexpr_Caret:
-//        // <PowerExpr> ::= <PowerExpr> '^' <NegateExpr>
-//        break;
-//
-//    case RuleIndices.Powerexpr:
-//        // <PowerExpr> ::= <NegateExpr>
-//        break;
-//
-//    case RuleIndices.Negateexpr_Minus:
-//        // <NegateExpr> ::= '-' <Value>
-//        break;
-//
-//    case RuleIndices.Negateexpr_Exclam:
-//        // <NegateExpr> ::= '!' <Value>
-//        break;
-//
-//    case RuleIndices.Negateexpr:
-//        // <NegateExpr> ::= <Value>
-//        break;
-//
-//    case RuleIndices.Value_Identifier:
-//        // <Value> ::= Identifier
-//        break;
-//
-//    case RuleIndices.Value:
-//        // <Value> ::= <Literal>
-//        break;
-//
-//    case RuleIndices.Value_Lparen_Rparen:
-//        // <Value> ::= '(' <Expression> ')'
-//        break;
-//
-//    case RuleIndices.Literal_Stringlit:
-//        // <Literal> ::= StringLit
-//        break;
-//
-//    case RuleIndices.Literal_Intlit:
-//        // <Literal> ::= IntLit
-//        break;
-//
-//    case RuleIndices.Literal_Reallit:
-//        // <Literal> ::= RealLit
-//        break;
-//
-//    case RuleIndices.Literal_Boollit:
-//        // <Literal> ::= BoolLit
-//        break;
-//
-//    case RuleIndices.Literal_Datelit:
-//        // <Literal> ::= DateLit
-//        break;
-//
+//    //<Type> ::= string
+//    case "Type_String":
+//        return;
+
+//    //<Type> ::= int
+//    case "Type_Int":
+//        return;
+
+//    //<Type> ::= real
+//    case "Type_Real":
+//        return;
+
+//    //<Type> ::= bool
+//    case "Type_Bool":
+//        return;
+
+//    //<Type> ::= date
+//    case "Type_Date":
+//        return;
+
+//    //<Forms> ::= <Form> <Forms>
+//    case "Forms":
+//        return;
+
+//    //<Forms> ::= <Form>
+//    case "Forms2":
+//        return;
+
+//    //<Form> ::= form Identifier <Block>
+//    case "Form_Form_Identifier":
+//        return;
+
+//    //<Block> ::= '{' <Statements> '}'
+//    case "Block_Lbrace_Rbrace":
+//        return;
+
+//    //<Statements> ::= <Statement> <Statements>
+//    case "Statements":
+//        return;
+
+//    //<Statements> ::= <Statement>
+//    case "Statements2":
+//        return;
+
+//    //<Statement> ::= if '(' <Expression> ')' <Statement> <OptElse>
+//    case "Statement_If_Lparen_Rparen":
+//        return;
+
+//    //<Statement> ::= <Block>
+//    case "Statement":
+//        return;
+
+//    //<Statement> ::= <Question>
+//    case "Statement2":
+//        return;
+
+//    //<Statement> ::= gotoNextForm ';'
+//    case "Statement_Gotonextform_Semi":
+//        return;
+
+//    //<Statement> ::= repeat '(' <Expression> ')' <Statement>
+//    case "Statement_Repeat_Lparen_Rparen":
+//        return;
+
+//    //<OptElse> ::= else <Statement>
+//    case "Optelse_Else":
+//        return;
+
+//    //<OptElse> ::= 
+//    case "Optelse":
+//        return;
+
+//    //<VarDecl> ::= Identifier ':' <Type>
+//    case "Vardecl_Identifier_Colon":
+//        return;
+
+//    //<VarAssign> ::= Identifier ':' <Type> '=' <Expression>
+//    case "Varassign_Identifier_Colon_Eq":
+//        return;
+
+//    //<Question> ::= StringLit '>>' <VarDecl> ';'
+//    case "Question_Stringlit_Gtgt_Semi":
+//        return;
+
+//    //<Question> ::= StringLit '<<' <VarAssign> ';'
+//    case "Question_Stringlit_Ltlt_Semi":
+//        return;
+
+//    //<Question> ::= StringLit '<<' <Expression> ';'
+//    case "Question_Stringlit_Ltlt_Semi2":
+//        return;
+
+//    //<Expression> ::= <OrExpr> '?' <OrExpr> ':' <Expression>
+//    case "Expression_Question_Colon":
+//        return;
+
+//    //<Expression> ::= sum '(' Identifier ')'
+//    case "Expression_Sum_Lparen_Identifier_Rparen":
+//        return;
+
+//    //<Expression> ::= avg '(' Identifier ')'
+//    case "Expression_Avg_Lparen_Identifier_Rparen":
+//        return;
+
+//    //<Expression> ::= <OrExpr>
+//    case "Expression":
+//        return;
+
+//    //<OrExpr> ::= <OrExpr> '||' <AndExpr>
+//    case "Orexpr_Pipepipe":
+//        return;
+
+//    //<OrExpr> ::= <AndExpr>
+//    case "Orexpr":
+//        return;
+
+//    //<AndExpr> ::= <AndExpr> '&&' <EqExpr>
+//    case "Andexpr_Ampamp":
+//        return;
+
+//    //<AndExpr> ::= <EqExpr>
+//    case "Andexpr":
+//        return;
+
+//    //<EqExpr> ::= <EqExpr> '==' <CompExpr>
+//    case "Eqexpr_Eqeq":
+//        return;
+
+//    //<EqExpr> ::= <EqExpr> '!=' <CompExpr>
+//    case "Eqexpr_Exclameq":
+//        return;
+
+//    //<EqExpr> ::= <CompExpr>
+//    case "Eqexpr":
+//        return;
+
+//    //<CompExpr> ::= <CompExpr> '<' <AddExpr>
+//    case "Compexpr_Lt":
+//        return;
+
+//    //<CompExpr> ::= <CompExpr> '>' <AddExpr>
+//    case "Compexpr_Gt":
+//        return;
+
+//    //<CompExpr> ::= <CompExpr> '<=' <AddExpr>
+//    case "Compexpr_Lteq":
+//        return;
+
+//    //<CompExpr> ::= <CompExpr> '>=' <AddExpr>
+//    case "Compexpr_Gteq":
+//        return;
+
+//    //<CompExpr> ::= <AddExpr>
+//    case "Compexpr":
+//        return;
+
+//    //<AddExpr> ::= <AddExpr> '+' <MultExpr>
+//    case "Addexpr_Plus":
+//        return;
+
+//    //<AddExpr> ::= <AddExpr> '-' <MultExpr>
+//    case "Addexpr_Minus":
+//        return;
+
+//    //<AddExpr> ::= <MultExpr>
+//    case "Addexpr":
+//        return;
+
+//    //<MultExpr> ::= <MultExpr> '*' <PowerExpr>
+//    case "Multexpr_Times":
+//        return;
+
+//    //<MultExpr> ::= <MultExpr> '/' <PowerExpr>
+//    case "Multexpr_Div":
+//        return;
+
+//    //<MultExpr> ::= <MultExpr> '%' <PowerExpr>
+//    case "Multexpr_Percent":
+//        return;
+
+//    //<MultExpr> ::= <PowerExpr>
+//    case "Multexpr":
+//        return;
+
+//    //<PowerExpr> ::= <PowerExpr> '^' <NegateExpr>
+//    case "Powerexpr_Caret":
+//        return;
+
+//    //<PowerExpr> ::= <NegateExpr>
+//    case "Powerexpr":
+//        return;
+
+//    //<NegateExpr> ::= '-' <Value>
+//    case "Negateexpr_Minus":
+//        return;
+
+//    //<NegateExpr> ::= '!' <Value>
+//    case "Negateexpr_Exclam":
+//        return;
+
+//    //<NegateExpr> ::= <Value>
+//    case "Negateexpr":
+//        return;
+
+//    //<Value> ::= Identifier
+//    case "Value_Identifier":
+//        return;
+
+//    //<Value> ::= <Literal>
+//    case "Value":
+//        return;
+
+//    //<Value> ::= '(' <Expression> ')'
+//    case "Value_Lparen_Rparen":
+//        return;
+
+//    //<Literal> ::= StringLit
+//    case "Literal_Stringlit":
+//        return;
+
+//    //<Literal> ::= IntLit
+//    case "Literal_Intlit":
+//        return;
+
+//    //<Literal> ::= RealLit
+//    case "Literal_Reallit":
+//        return;
+
+//    //<Literal> ::= BoolLit
+//    case "Literal_Boollit":
+//        return;
+
+//    //<Literal> ::= DateLit
+//    case "Literal_Datelit":
+//        return;
+
+//    default:
+//        return;
 //}
 #endregion
