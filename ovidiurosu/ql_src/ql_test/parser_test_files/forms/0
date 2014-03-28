@@ -1,0 +1,13 @@
+// Multiple Forms in different ways
+form form1 {
+    /* multiline comment */
+}
+
+/**
+ * multiline comment
+ */
+form form2 {}
+form form3
+{
+    // single line comment
+}

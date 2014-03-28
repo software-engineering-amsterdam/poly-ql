@@ -7,6 +7,7 @@ package softwareconstruction.form;
 
 import java.util.ArrayList;
 import java.util.List;
+import softwareconstruction.questions.Question;
 
 /**
  *
@@ -57,5 +58,7 @@ public class Form {
         this.formName = formName;
     }
     
-    
+    public void visitForm(Form form){
+        
+    }
 }

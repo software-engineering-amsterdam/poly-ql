@@ -28,7 +28,7 @@ public class FunctionalTestsSyntacticExpr {
 		return "hasSoldHouse: \"Did you sell a house in 2010?\" boolean";
 	}
 
-	private Question getQuestionObject1() {
+	private Question getQuestion1() {
 		return new Question(new Ident("hasSoldHouse"),
 				new QuestionBody("\"Did you sell a house in 2010?\""),
 				new BoolType());
@@ -41,7 +41,7 @@ public class FunctionalTestsSyntacticExpr {
 
 		Question actual=parser.question().result;
 
-		Question expected=getQuestionObject1();
+		Question expected=getQuestion1();
 		Assert.assertEquals(expected, actual);
 	}
 
@@ -60,24 +60,14 @@ public class FunctionalTestsSyntacticExpr {
 
 	@Test
 	public void testIfBlockSimple() throws RecognitionException  {
-		String str="if (hasSoldHouse) { " +
-				" sellingPrice: \"Price the house was sold for:\" integer " +
-				" privateDebt: \"Private debts for the sold house:\" integer }" ;
+		String str="if (hasSoldHouse) { " + getQuestionString1() + "}";
 		QLParser parser=ASTNodes.getParser(str);
 
 		IfBlock actual=parser.if_block().result;
 
-
-		Question q1=new Question(new Ident("sellingPrice"),
-				new QuestionBody("\"Price the house was sold for:\""),
-				new IntType());
-		Question q2=new Question(new Ident("privateDebt"),
-				new QuestionBody("\"Private debts for the sold house:\""),
-				new IntType());
-
+		Question q=getQuestion1();
 		List<Statement> list=new LinkedList<>();
-		list.add(q1);
-		list.add(q2);
+		list.add(q);
 		IfBlock expected=new IfBlock(new Ident("hasSoldHouse"),list);
 
 		Assert.assertEquals(expected, actual);
@@ -85,25 +75,15 @@ public class FunctionalTestsSyntacticExpr {
 
 	@Test
 	public void testIfBlockWithElse() throws RecognitionException  {
-		String str="if (hasSoldHouse) { " +
-				" sellingPrice: \"Price the house was sold for:\" integer " +
-				" else { " +
-				" privateDebt: \"Private debts for the sold house:\" integer } }";
+		String str="if (hasSoldHouse) { " + getQuestionString1() +
+				" else { " + getQuestionString1() + " } }";
 		QLParser parser=ASTNodes.getParser(str);
 		IfBlock actual=parser.if_block().result;
 
-
-		Question q1=new Question(new Ident("sellingPrice"),
-				new QuestionBody("\"Price the house was sold for:\""),
-				new IntType());
-		Question q2=new Question(new Ident("privateDebt"),
-				new QuestionBody("\"Private debts for the sold house:\""),
-				new IntType());
-
 		List<Statement> list=new LinkedList<>();
-		list.add(q1);
+		list.add(getQuestion1());
 		List<Statement> list2=new LinkedList<>();
-		list2.add(q2);
+		list2.add(getQuestion1());
 
 		IfElseBlock expected=new IfElseBlock(new Ident("hasSoldHouse"),list,list2);
 
@@ -112,14 +92,13 @@ public class FunctionalTestsSyntacticExpr {
 
 	@Test
 	public void testForm() throws RecognitionException  {
-		String str="	form Box1HouseOwning { " +
-						"hasSoldHouse: \"Did you sell a house in 2010?\" boolean }";
+		String str="	form Box1HouseOwning { " + getQuestionString1() + "}";
 
 		QLParser parser=ASTNodes.getParser(str);
 		Form actual=parser.form().result;
 
 		List<Statement> list=new LinkedList<>();
-		list.add(getQuestionObject1());
+		list.add(getQuestion1());
 		Form expected=new Form(new Ident("Box1HouseOwning"),list);
 
 		Assert.assertEquals(expected, actual);

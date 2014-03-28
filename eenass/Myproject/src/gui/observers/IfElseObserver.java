@@ -4,7 +4,6 @@ import gui.Evaluator;
 import gui.render.State;
 
 import javax.swing.JComponent;
-import javax.swing.JPanel;
 
 import ast.expr.evaluate.Bool;
 import ast.expr.evaluate.Value;

@@ -20,6 +20,18 @@ public class StringLiteral extends Literal<String> implements IEnumElement
     }
 
     @Override
+    public String toString()
+    {
+        return "(expression \"" + super.getLiteral() + "\")";
+    }
+
+    @Override
+    public String enumToString()
+    {
+        return "\"" + this.getLiteral() + "\"";
+    }
+
+    @Override
     public <T> T accept(IExpressionElementVisitor<T> visitor)
     {
         return visitor.visit(this);

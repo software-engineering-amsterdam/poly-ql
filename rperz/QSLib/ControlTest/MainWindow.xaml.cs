@@ -12,6 +12,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using QSLib;
+using QSLib.AST.Expressions.Literals;
+using QSLib.AST.Statements;
+using QSLib.AST.Expressions.Unary.Identifiers;
 namespace ControlTest
 {
     /// <summary>
@@ -22,7 +25,7 @@ namespace ControlTest
         public MainWindow()
         {
             InitializeComponent();
-            Question q = new Question(new QSLib.Expressions.Literals.QSString("Dit is een testvraag?", 1), new QSLib.Expressions.Unary.Identifier("TestNaam", 1), 1);
+            Question q = new Question(new QSString("Dit is een testvraag?", 1), new Identifier("TestNaam", 1), 1);
             this.userControl.Children.Add(new QuestionControl());
         }
     }

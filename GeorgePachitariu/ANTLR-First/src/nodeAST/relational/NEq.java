@@ -5,8 +5,6 @@ import java.util.Map;
 import nodeAST.BinaryExpr;
 import nodeAST.Expression;
 import nodeAST.Ident;
-import nodeAST.literals.Bool;
-import nodeAST.literals.Int;
 import nodeAST.literals.Literal;
 
 
@@ -43,11 +41,11 @@ public class NEq extends BinaryExpr {
 		return t1.isCompatibleWith(t2) &&
 				(t1.isArithmetic() || t1.isBoolean() || t1.isRelational() || t1.isString()  );
 	}
-	
+
 	@Override
 	public Literal compute(Map<Ident, Expression> identifiers) {
 		return this.leftHandOperand.compute(identifiers).neq(
-					this.rightHandOperand.compute(identifiers)
+				this.rightHandOperand.compute(identifiers)
 				);
 	}
 }

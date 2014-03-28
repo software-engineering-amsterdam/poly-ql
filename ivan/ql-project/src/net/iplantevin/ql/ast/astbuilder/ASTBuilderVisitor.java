@@ -2,6 +2,7 @@ package net.iplantevin.ql.ast.astbuilder;
 
 import net.iplantevin.ql.antlr.QLBaseVisitor;
 import net.iplantevin.ql.antlr.QLParser;
+import net.iplantevin.ql.ast.ASTNode;
 import net.iplantevin.ql.ast.LineInfo;
 import net.iplantevin.ql.ast.expressions.Expression;
 import net.iplantevin.ql.ast.expressions.Par;
@@ -47,7 +48,7 @@ import java.util.ArrayList;
  *
  * @author Ivan
  */
-public class ASTBuilderVisitor<Object> extends QLBaseVisitor {
+public class ASTBuilderVisitor extends QLBaseVisitor<ASTNode> {
     /**
      *
      */
@@ -124,7 +125,7 @@ public class ASTBuilderVisitor<Object> extends QLBaseVisitor {
      */
     @Override
     public Computation visitComputation(@NotNull QLParser.ComputationContext ctx) {
-        Type type = (Type) ctx.type().accept(this);
+        Type type = ((Expression) ctx.type().accept(this)).getType(null);
 
         LineInfo lineInfo = new LineInfo(ctx.ID().getSymbol().getLine(),
                 ctx.ID().getSymbol().getCharPositionInLine());
@@ -143,7 +144,7 @@ public class ASTBuilderVisitor<Object> extends QLBaseVisitor {
      */
     @Override
     public Question visitQuestion(@NotNull QLParser.QuestionContext ctx) {
-        Type type = (Type) ctx.type().accept(this);
+        Type type = ((Expression) ctx.type().accept(this)).getType(null);
 
         LineInfo lineInfo = new LineInfo(ctx.ID().getSymbol().getLine(),
                 ctx.ID().getSymbol().getCharPositionInLine());
@@ -159,24 +160,24 @@ public class ASTBuilderVisitor<Object> extends QLBaseVisitor {
      *
      */
     @Override
-    public BooleanType visitBoolType(@NotNull QLParser.BoolTypeContext ctx) {
-        return new BooleanType();
+    public Bool visitBoolType(@NotNull QLParser.BoolTypeContext ctx) {
+        return new Bool(true, null);
     }
 
     /**
      *
      */
     @Override
-    public IntegerType visitIntType(@NotNull QLParser.IntTypeContext ctx) {
-        return new IntegerType();
+    public Int visitIntType(@NotNull QLParser.IntTypeContext ctx) {
+        return new Int(0, null);
     }
 
     /**
      *
      */
     @Override
-    public StringType visitStrType(@NotNull QLParser.StrTypeContext ctx) {
-        return new StringType();
+    public Str visitStrType(@NotNull QLParser.StrTypeContext ctx) {
+        return new Str("  ", null);
     }
 
     /**

@@ -7,12 +7,14 @@ using Antlr4.Runtime;
 using QSLib;
 using Antlr4.Runtime.Tree;
 using QSLib.Types;
-using QSLib.Expressions;
-using QSLib.Expressions.Literals;
-using QSLib.Expressions.Binary;
-using QSLib.Expressions.Unary;
-using QSLib.Statements;
-
+using QSLib.AST;
+using QSLib.AST.Expressions;
+using QSLib.AST.Expressions.Literals;
+using QSLib.AST.Expressions.Binary;
+using QSLib.AST.Expressions.Unary;
+using QSLib.AST.Expressions.Unary.Identifiers;
+using QSLib.AST.Statements;
+using QSLib.Visitors;
 namespace ParserTest
 {
     /// <summary>
@@ -104,8 +106,8 @@ namespace ParserTest
             ilist2.Add(ifstat);
             CodeBlock cb2 = new CodeBlock(ilist2);
             Form construct = new Form(cb2, 1);
-            TypeChecker.CheckTypes(parse);
-            TypeChecker.CheckTypes(construct);
+            TypeChecker.StartVisit(parse);
+            TypeChecker.StartVisit(construct);
             Assert.AreEqual(construct, parse);
         }
 
@@ -146,8 +148,8 @@ namespace ParserTest
             CodeBlock cb2 = new CodeBlock(ilist2);
             
             Form construct = new Form(cb2, 1);
-            TypeChecker.CheckTypes(construct);
-            TypeChecker.CheckTypes(parse);
+            TypeChecker.StartVisit(construct);
+            TypeChecker.StartVisit(parse);
             Assert.AreEqual(construct, parse);
         }
 
@@ -170,7 +172,7 @@ namespace ParserTest
             string q1 = "\"Whats the question?\"";
             string code = "form \r\n{ \r\n" + q1 + " bAnswer \r\n}";
             Form parse = init_parse(code);
-            Assert.AreEqual(false, TypeChecker.CheckTypes(parse).Result);
+            Assert.AreEqual(false, TypeChecker.StartVisit(parse).Result);
         }
 
         [TestMethod]
@@ -227,19 +229,19 @@ namespace ParserTest
             string q1 = "\"Whats the question?\"";
             string q2 = "\"Oh is that it?\"";
             string code = "form \r\n{ \r\n" + q1 + " iAnswer : Integer  " + q2 + " iDivAnswer = iAnswer + iAnswer / 2 : Integer \r\n}";
-            Identifier iAnswer = new InputIdentifier("iAnswer", new NumberType(), 1);
+            Identifier iAnswer = new InputIdentifier("iAnswer", new IntegerType(), 1);
             Question q1o = new Question(new QSString(q1, 1), iAnswer, 1);
             Identifier iAnswer2 = new Identifier("iAnswer", 1);
             Identifier iAnswer3 = new Identifier("iAnswer", 1);
-            Identifier iAnswerDiv = new Identifier("iDivAnswer", new NumberType(), new Add(iAnswer2, new Divide(iAnswer3, new QSNumber(2, 1), 1), 1), 1);
+            Identifier iAnswerDiv = new Identifier("iDivAnswer", new IntegerType(), new Add(iAnswer2, new Divide(iAnswer3, new QSNumber(2, 1), 1), 1), 1);
             Question q2o = new Question(new QSString(q2, 1), iAnswerDiv, 1);
             List<IStatement> ilist = new List<IStatement>();
             ilist.Add(q1o);
             ilist.Add(q2o);
             Form f = new Form(new CodeBlock(ilist), 1);
             Form parse = init_parse(code);
-            TypeChecker.CheckTypes(f);
-            TypeChecker.CheckTypes(parse);
+            TypeChecker.StartVisit(f);
+            TypeChecker.StartVisit(parse);
             Assert.AreEqual(f, parse);
         }
 
@@ -249,11 +251,11 @@ namespace ParserTest
             string q1 = "\"Whats the question?\"";
             string q2 = "\"Oh is that it?\"";
             string code = "form \r\n{ \r\n" + q1 + " iAnswer : Integer  " + q2 + " iDivAnswer = iAnswer + iAnswer * 2 : Integer \r\n}";
-            Identifier iAnswer = new InputIdentifier("iAnswer", new NumberType(), 1);
+            Identifier iAnswer = new InputIdentifier("iAnswer", new IntegerType(), 1);
             Question q1o = new Question(new QSString(q1, 1), iAnswer, 1);
             Identifier iAnswer2 = new Identifier("iAnswer", 1);
             Identifier iAnswer3 = new Identifier("iAnswer", 1);
-            Identifier iAnswerDiv = new Identifier("iDivAnswer", new NumberType(), new Add(iAnswer2, new Multiply(iAnswer3, new QSNumber(2, 1), 1), 1), 1);
+            Identifier iAnswerDiv = new Identifier("iDivAnswer", new IntegerType(), new Add(iAnswer2, new Multiply(iAnswer3, new QSNumber(2, 1), 1), 1), 1);
 
             Question q2o = new Question(new QSString(q2, 1), iAnswerDiv, 1);
             List<IStatement> ilist = new List<IStatement>();
@@ -261,8 +263,8 @@ namespace ParserTest
             ilist.Add(q2o);
             Form f = new Form(new CodeBlock(ilist), 1);
             Form parse = init_parse(code);
-            TypeChecker.CheckTypes(f);
-            TypeChecker.CheckTypes(parse);
+            TypeChecker.StartVisit(f);
+            TypeChecker.StartVisit(parse);
             Assert.AreEqual(f, parse);
         }
 
@@ -272,7 +274,7 @@ namespace ParserTest
             string q2 = "\"Oh is that it?\"";
             string code = "form \r\n{ \r\n" + q1 + " bAnswer : " + typeOperand + "  " + q2 + " bIntAnswer = bAnswer " + op + " bAnswer : "+ typeAssign + " \r\n}";
             Form parse = init_parse(code);
-            Assert.AreEqual(expected, TypeChecker.CheckTypes(parse).Result);
+            Assert.AreEqual(expected, TypeChecker.StartVisit(parse).Result);
         }
 
         private void CheckCondition(String type)
@@ -281,7 +283,7 @@ namespace ParserTest
             string q2 = "\"Oh is that it?\"";
             string code = "form \r\n{ \r\n" + q1 + " bAnswer : " + type + "\r\nif(bAnswer)\r\n { \r\n" + q2 + " bYesNo : Boolean \r\n} \r\n}";
             Form parse = init_parse(code);
-            Assert.AreEqual(false, TypeChecker.CheckTypes(parse).Result);
+            Assert.AreEqual(false, TypeChecker.StartVisit(parse).Result);
         }
 
 

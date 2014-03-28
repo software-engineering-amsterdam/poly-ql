@@ -61,7 +61,7 @@ public class DatePicker
 
     private Timer timer;
 
-    private EventHandler<ActionEvent> eventHandler;
+    private final EventHandler<ActionEvent> eventHandler;
 
     /**
      * Initializes the date picker with the given locale.

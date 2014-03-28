@@ -1,6 +1,6 @@
 package edu.uva.softwarecons.model.type;
 
-import edu.uva.softwarecons.visitor.type.ITypeElement;
+import edu.uva.softwarecons.visitor.type.TypeElement;
 
 /**
  * Falconlabs
@@ -9,7 +9,7 @@ import edu.uva.softwarecons.visitor.type.ITypeElement;
  *         Date: 2/19/14
  */
 public interface Type
-    extends ITypeElement
+    extends TypeElement
 {
 
 }

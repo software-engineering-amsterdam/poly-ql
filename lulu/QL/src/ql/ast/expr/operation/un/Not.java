@@ -26,7 +26,7 @@ public class Not extends Operation{
 		List<Error> errors = new ArrayList<Error>();	
 		errors.addAll(getExpr().checkType(environment));	
 		
-		if(getExpr().getType(environment).getName() != "Bool")
+		if(getExpr().getType(environment) != null && getExpr().getType(environment).getName() != "Bool")
 			errors.add(new Error("!: Expression is not a boolean"));
 		
 		return errors;

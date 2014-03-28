@@ -61,7 +61,7 @@ public class IntType implements Type {
 			return false;
 		return true;
 	}
-	
+
 	@Override
 	public boolean isString() {
 		return false;

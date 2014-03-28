@@ -5,7 +5,6 @@ import java.util.Map;
 import nodeAST.BinaryExpr;
 import nodeAST.Expression;
 import nodeAST.Ident;
-import nodeAST.literals.Bool;
 import nodeAST.literals.Literal;
 
 
@@ -42,11 +41,11 @@ public class Or extends BinaryExpr {
 		return (t1.isCompatibleWith(t2) &&
 				t1.isBoolean());
 	}
-	
+
 	@Override
 	public Literal compute(Map<Ident, Expression> identifiers) {
 		return this.leftHandOperand.compute(identifiers).or(
-					this.rightHandOperand.compute(identifiers)
+				this.rightHandOperand.compute(identifiers)
 				);
 	}
 }

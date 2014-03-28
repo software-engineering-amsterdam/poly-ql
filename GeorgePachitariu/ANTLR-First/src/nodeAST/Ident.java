@@ -2,7 +2,6 @@ package nodeAST;
 
 import java.util.Map;
 
-import nodeAST.literals.Int;
 import nodeAST.literals.Literal;
 import nodeAST.literals.LiteralWithoutValue;
 
@@ -52,12 +51,12 @@ public class Ident extends Expression {
 	public boolean areOperandsTypeValid(IdentifiersTypeMatcher typeMatcher) {
 		return true;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return this.identifier.hashCode();
 	}
-	
+
 	@Override
 	public Literal compute(Map<Ident, Expression> identifiers) {
 		Expression e = identifiers.get(this);

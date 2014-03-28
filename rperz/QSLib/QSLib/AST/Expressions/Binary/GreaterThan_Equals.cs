@@ -23,5 +23,10 @@ namespace QSLib.AST.Expressions.Binary
         {
             get { return new BoolType(); }
         }
+
+        public override bool IsCompatible(QSType type)
+        {
+            return type.IsInteger();
+        }
     }
 }

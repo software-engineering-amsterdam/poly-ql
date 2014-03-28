@@ -1,0 +1,4 @@
+{
+    x: "X?" boolean
+    x: "X second?" boolean(x)
+}

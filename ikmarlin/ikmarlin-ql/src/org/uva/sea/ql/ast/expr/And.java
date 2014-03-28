@@ -16,13 +16,13 @@ public class And extends Binary {
 	}
 
 	@Override
-	public Type hasType() {
-		return new Bool();
+	public String toString(){
+		return this.getLhs().toString()+" && "+this.getRhs().toString();
 	}
 
 	@Override
-	public String toString(){
-		return this.getLhs().toString()+" && "+this.getRhs().toString();
+	public Type hasType() {
+		return new Bool();
 	}
 
 }

@@ -1,21 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using QSLib.Expressions;
-using QSLib;
+﻿using System.Windows;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
-
+using QSLib;
+using QSLib.Visitors;
 namespace QSForm
 {
     /// <summary>
@@ -39,14 +26,18 @@ namespace QSForm
             MyListener listener = new MyListener(parser);
             ParseTreeWalker walker = new ParseTreeWalker();
             walker.Walk(listener, tree);
-            TypeChecker check = TypeChecker.CheckTypes(listener.Root);
-            tbOutput.Text = check.GetCheckerOutput();
+            IVisitor check = TypeChecker.StartVisit(listener.Root);
 
-            GUIBuilder builder = GUIBuilder.BuildGUI(listener.Root);
-            System.Windows.Window wind = new Window();
-            wind.Width = 500;
-            wind.Content = builder.GetResult();
-            wind.Show();
+            if (check.Result)
+            {
+                GUIBuilder builder = GUIBuilder.BuildGUI(listener.Root);
+                System.Windows.Window wind = new Window();
+                wind.Width = 500;
+                wind.Content = builder.GetResult();
+                wind.Show();
+            }
+            else
+                tbOutput.Text = check.Output.ToString();
         }
 
     }

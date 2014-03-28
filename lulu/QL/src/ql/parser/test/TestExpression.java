@@ -14,7 +14,6 @@ import ql.ast.expr.operation.add.*;
 import ql.ast.expr.operation.andor.*;
 import ql.ast.expr.operation.mul.*;
 import ql.ast.expr.operation.rel.*;
-import ql.ast.expr.operation.un.*;
 import ql.ast.value.Bool;
 import ql.ast.value.Int;
 import ql.parser.antlr.FormParser;
@@ -55,6 +54,15 @@ public class TestExpression {
 		assertEquals(Div.class, parser.parseExpr("(a + b) / c").getClass());
 		assertEquals(Div.class, parser.parseExpr("a / (b + c)").getClass());
 	}
+	
+	@Test
+	public void testAndOr() throws ParseError, IOException {
+		assertEquals(And.class, parser.parseExpr("a && b").getClass());
+		assertEquals(Or.class, parser.parseExpr("a && b || c").getClass());
+		assertEquals(Or.class, parser.parseExpr("a || c").getClass());
+		assertEquals(Or.class, parser.parseExpr("a || b && c").getClass());
+	}
+	
 	@Test
 	public void testRel() throws ParseError, IOException {
 		assertEquals(LT.class, parser.parseExpr("a < b").getClass());

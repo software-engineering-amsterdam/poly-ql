@@ -12,12 +12,6 @@ public class DateType extends Type
     }
 
     @Override
-    public String toString()
-    {
-        return "date";
-    }
-
-    @Override
     public boolean compatibleWith(DateType type)
     {
         return true;
@@ -33,6 +27,12 @@ public class DateType extends Type
     public boolean equals(Object type)
     {
         return type instanceof DateType;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "(type date)";
     }
 
     @Override

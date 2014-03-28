@@ -9,7 +9,7 @@ package edu.uva.softwarecons.checker.error;
 public class QuestionnaireError
 {
 
-    private String message;
+    private final String message;
 
     public QuestionnaireError( String message )
     {

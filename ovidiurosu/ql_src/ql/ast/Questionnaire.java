@@ -1,9 +1,7 @@
 package ql.ast;
 
-import java.util.List;
-
 import ql.ast.statement.Block;
-import ql.ast.statement.IStatement;
+import ql.ast.statement.StatementList;
 import ql.ast.visitor_elements.IElement;
 
 /**
@@ -25,8 +23,14 @@ public class Questionnaire implements IElement
         return this._id;
     }
 
-    public List<IStatement> getStatements()
+    public StatementList getStatementList()
     {
-        return this._block.statements;
+        return this._block.getStatementList();
+    }
+
+    @Override
+    public String toString()
+    {
+        return "(form form " + this._id + " " + this._block.toString() + ")";
     }
 }

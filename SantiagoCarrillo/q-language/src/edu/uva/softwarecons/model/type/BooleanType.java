@@ -1,6 +1,6 @@
 package edu.uva.softwarecons.model.type;
 
-import edu.uva.softwarecons.visitor.type.ITypeElementVisitor;
+import edu.uva.softwarecons.visitor.type.TypeElementVisitor;
 
 /**
  * Falconlabs
@@ -26,7 +26,7 @@ public class BooleanType
     }
 
     @Override
-    public void accept( ITypeElementVisitor visitor )
+    public void accept( TypeElementVisitor visitor )
     {
         visitor.visitBooleanType( this );
     }

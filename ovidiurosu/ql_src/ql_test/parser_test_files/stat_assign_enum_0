@@ -1,5 +1,0 @@
-// Assign Statement with Enum Type
-form test {
-    question1: "How bad?" ("bad", "very bad", "awful")
-    question2: "How good?" ("good", "very good", "perfect")
-}

@@ -28,7 +28,7 @@ public class BooleanConditions extends ASTVisitor{
 	public void check(ASTNode root) throws Exception {
 		this.typeMatcher.search(root);
 		root.accept(this);
-		
+
 		if(badConditions.size()!=0) {
 			String message= "ERROR: The following conditions contained in 'if' structures" +
 					" should be of type boolean but are not: \n";
@@ -37,22 +37,22 @@ public class BooleanConditions extends ASTVisitor{
 			throw new Exception(message);
 		}
 	}
-	
+
 	@Override
 	public void visit(IfBlock ifBlock, Expression condition, List<Statement> thenStatements) {
 		if (! ifBlock.isExpressionBoolean(typeMatcher))
 			this.badConditions.add(ifBlock.getCondition().toString());
-		
+
 		for(Statement s : thenStatements)
 			s.accept(this);
 	}
 
 	@Override
 	public void visit(IfElseBlock ifElseBlock, Expression condition, 
-				List<Statement> thenStatements, List<Statement> elseStatements) {
+			List<Statement> thenStatements, List<Statement> elseStatements) {
 		if (! ifElseBlock.isExpressionBoolean(typeMatcher))
 			this.badConditions.add(ifElseBlock.getCondition().toString());
-		
+
 		for(Statement s : thenStatements)
 			s.accept(this);
 		for(Statement s : elseStatements)

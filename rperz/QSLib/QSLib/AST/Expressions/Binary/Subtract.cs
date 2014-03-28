@@ -20,10 +20,14 @@ namespace QSLib.AST.Expressions.Binary
             return this._value;
         }
 
-
         public override QSType Type
         {
-            get { return new NumberType(); }
+            get { return new IntegerType(); }
+        }
+
+        public override bool IsCompatible(QSType type)
+        {
+            return type.IsInteger();
         }
     }
 }

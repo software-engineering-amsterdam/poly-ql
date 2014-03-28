@@ -21,7 +21,7 @@ import edu.uva.softwarecons.model.value.BooleanValue;
 import edu.uva.softwarecons.model.value.ComparableValue;
 import edu.uva.softwarecons.model.value.IntegerValue;
 import edu.uva.softwarecons.model.value.Value;
-import edu.uva.softwarecons.visitor.expression.IExpressionEvalVisitor;
+import edu.uva.softwarecons.visitor.expression.ExpressionEvalVisitor;
 
 import java.util.HashMap;
 
@@ -32,7 +32,7 @@ import java.util.HashMap;
  *         Date: 3/13/14
  */
 public class ExpressionEvaluator
-    implements IExpressionEvalVisitor
+    implements ExpressionEvalVisitor
 {
 
 

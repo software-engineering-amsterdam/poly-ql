@@ -6,39 +6,50 @@ import java.util.Map;
 
 import org.uva.sea.ql.ast.form.Form;
 import org.uva.sea.ql.ast.type.Type;
-import org.uva.sea.ql.checker.error.Error;
-import org.uva.sea.ql.checker.warning.Warning;
+import org.uva.sea.ql.checker.exception.QLException;
 
 public class SemanticChecker {
 	
 	private Form form;
-	private List<Error> errors;
-	private List<Warning> warnings;
+	private List<QLException> errors;
+	private List<QLException> warnings;
 	private SymbolCollector symbolCollector;
+	private Map<String, Type> symbolTable;
 	
 	public SemanticChecker(Form form){
 		this.form = form;
-		this.errors = new ArrayList<Error>();
-		this.warnings = new ArrayList<Warning>();
+		this.errors = new ArrayList<QLException>();
+		this.warnings = new ArrayList<QLException>();
 		this.symbolCollector = new SymbolCollector();
 	}
 	
-	public boolean hasSemanticErrors(){
+	public void check(){
 		if(!hasDuplicateQuestion()){
-			Map<String, Type> symbolTable = symbolCollector.getSingleTypeSymbolsTable();
+			symbolTable = symbolCollector.getSingleTypeSymbolsTable();
 			checkUndefinedQuestion(symbolTable);
 			checkType(symbolTable);
 			checkCyclicDependency();
 		}
+	}
+	
+	public boolean hasErrors(){
 		return !errors.isEmpty();
 	}
 	
-	public List<Error> getErrors(){
+	public List<QLException> getErrors(){
 		return errors;
 	}
 	
-	public List<Warning> getWarnings(){
+	public boolean hasWarnings(){
+		return !warnings.isEmpty();
+	}
+	
+	public List<QLException> getWarnings(){
 		return warnings;
+	}
+	
+	public Map<String, Type> getSymbolTable(){
+		return symbolTable;
 	}
 	
 	private boolean hasDuplicateQuestion() {

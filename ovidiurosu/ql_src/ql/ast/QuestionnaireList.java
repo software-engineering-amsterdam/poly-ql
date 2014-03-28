@@ -1,6 +1,7 @@
 package ql.ast;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import ql.ast.visitor_elements.IElement;
@@ -10,20 +11,40 @@ import ql.ast.visitor_elements.IElement;
  */
 public class QuestionnaireList implements IElement
 {
-    private final List<Questionnaire> _questionnaires;
+    private final List<Questionnaire> _value;
 
     public QuestionnaireList()
     {
-        this._questionnaires = new ArrayList<Questionnaire>();
+        this._value = new ArrayList<Questionnaire>();
     }
 
-    public void addQuestionnaire(Questionnaire questionnaire)
+    public Iterator<Questionnaire> iterator()
     {
-        this._questionnaires.add(questionnaire);
+        return this._value.iterator();
     }
 
-    public List<Questionnaire> getQuestionnaires()
+    public void add(Questionnaire questionnaire)
     {
-        return this._questionnaires;
+        this._value.add(questionnaire);
+    }
+
+    public void remove(Questionnaire questionnaire)
+    {
+        this._value.remove(questionnaire);
+    }
+
+    public int size()
+    {
+        return this._value.size();
+    }
+
+    @Override
+    public String toString()
+    {
+        String string = "(forms";
+        for (Questionnaire questionnaire: this._value) {
+            string += " " + questionnaire.toString();
+        }
+        return string + ")";
     }
 }

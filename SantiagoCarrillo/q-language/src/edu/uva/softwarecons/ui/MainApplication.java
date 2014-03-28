@@ -73,8 +73,6 @@ public class MainApplication
 
     private final VBox mainVBox = new VBox();
 
-    private HBox infoHBox;
-
     private final ExpressionEvaluator expressionEvaluator = new ExpressionEvaluator();
 
     private Form form;
@@ -188,10 +186,10 @@ public class MainApplication
 
     private ScrollPane getWarningsPanel( TypeChecker typeChecker )
     {
-        infoHBox = new HBox( 10 );
+        HBox infoHBox = new HBox( 10 );
         infoHBox.setPadding( new Insets( 12, 12, 12, 12 ) );
         infoHBox.setAlignment( Pos.CENTER );
-        StringBuffer warnings = new StringBuffer();
+        StringBuilder warnings = new StringBuilder();
         for ( QuestionnaireWarning warning : typeChecker.getWarnings() )
         {
             warnings.append( warning.toString() ).append( "\n" );

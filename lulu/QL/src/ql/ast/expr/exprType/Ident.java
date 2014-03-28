@@ -40,13 +40,8 @@ public class Ident extends Expr{
 	@Override
 	public List<Error> checkType(Environment environment) {
 		List<Error> errors = new ArrayList<Error>();
-		
 		if (!environment.containsType(this)) {
 			errors.add(new Error("Ident " + id + " does not exist"));
-		}
-		
-		if (environment.getType(this) == null || !environment.getType(this).isDefined()) {
-			errors.add(new Error("Ident " + id + " is not defined yet"));
 		}
 		
 		return errors;
@@ -59,7 +54,6 @@ public class Ident extends Expr{
 		else return id.equals(((Ident)obj).id);
 	}
 	
-	//when rewrite "equals", "hashCode" has to be rewritten too
 	@Override
 	public int hashCode() {
 		return id.hashCode();

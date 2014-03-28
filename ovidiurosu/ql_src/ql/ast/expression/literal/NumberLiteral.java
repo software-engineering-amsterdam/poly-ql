@@ -9,4 +9,16 @@ public abstract class NumberLiteral extends Literal<Number> implements IEnumElem
     {
         super(value);
     }
+
+    @Override
+    public String toString()
+    {
+        return "(expression (numberLiteralP " + this.getLiteral().toString() + "))";
+    }
+
+    @Override
+    public String enumToString()
+    {
+        return "(numberLiteralP " + this.getLiteral().toString() + ")";
+    }
 }

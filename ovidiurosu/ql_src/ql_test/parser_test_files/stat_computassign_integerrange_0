@@ -1,5 +1,0 @@
-// Computed Assign Statement with Integer Range Type
-form test {
-    question1: "Range 1:" 1..5
-    question2: "Value:" 0..0(question1)
-}

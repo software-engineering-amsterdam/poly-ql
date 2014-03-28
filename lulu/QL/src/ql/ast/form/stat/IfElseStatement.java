@@ -8,8 +8,6 @@ import ql.ast.environment.Environment;
 import ql.ast.expr.exprType.Expr;
 import ql.ast.form.Form;
 import ql.ast.form.FormItems;
-import ql.ast.message.Error;
-import ql.ast.type.BoolType;
 
 public class IfElseStatement extends IfStatement{
 	private final List<FormItems> elseBody;

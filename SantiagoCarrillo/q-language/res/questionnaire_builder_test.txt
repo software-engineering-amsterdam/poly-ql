@@ -1,0 +1,14 @@
+//QuestionnaireBuilderTest File
+form TestFormId {
+     booleanQuestion: "booleanQuestion label" boolean
+     dateQuestion: "dateQuestion label" date
+     decimalQuestion: "decimalQuestion label" decimal
+     integerQuestion: "integerQuestion label" integer
+     moneyQuestion: "moneyQuestion label" money
+     stringQuestion: "stringQuestion label" string
+     if(booleanQuestion && booleanQuestion){
+        ifQuestion: "ifQuestion label" string
+     }else{
+        elseQuestion: "elseQuestion label" string
+     }
+ }

@@ -1,4 +1,5 @@
 package org.uva.sea.ql.ast.expr;
 
-public abstract class NumberLiteral<T> extends Literal<T> {
+public abstract class NumberLiteral extends Literal {
+
 }

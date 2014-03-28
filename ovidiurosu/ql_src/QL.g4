@@ -10,7 +10,7 @@ grammar QL;
 import CommonLexerRules;
 
 // The start rule -> begin parsing here
-initialize: form* ;
+forms: form* ;
 
 form: 'form' ID block;
 
@@ -22,6 +22,9 @@ statement
     | 'if' '(' expression ')' block              #IfStatement
     | 'if' '(' expression ')' block 'else' block #IfElseStatement
     ;
+
+// Rule for testing -> to be able to call expression from outside
+expression_test: expression;
 
 // The precedence is given by the order
 expression
@@ -67,7 +70,7 @@ type: BOOLEAN #BooleanType // becomes JCheckBox
     | DECIMAL #DecimalType // becomes JTextField
     | MONEY   #MoneyType   // becomes JTextField
     | DATE    #DateType    // becomes JCalendar
-    | TEXT    #TextType    // becomes JTextField
+    | STRINGT #StringType  // becomes JTextField
 
     // Optional: Computed
     | '(' enumTypeP ')' #EnumType         // becomes JList

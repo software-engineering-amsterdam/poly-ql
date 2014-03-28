@@ -29,34 +29,22 @@ public interface IExpressionElementVisitor<T>
 {
     public T visit(Id id);
     public T visit(ParenthesesExpression parenthesesExpression);
-
-    // Arithmetic Binary Expressions
     public T visit(Add add);
     public T visit(Divide divide);
     public T visit(Multiply multiply);
     public T visit(Remainder remainder);
     public T visit(Subtract subtract);
-
-    // Conditional Binary Expressions
     public T visit(LogicalAnd logicalAnd);
     public T visit(LogicalOr logicalOr);
-
-    // Equality Binary Expressions
     public T visit(Equal equal);
     public T visit(NotEqual notEqual);
-
-    // Relational Binary Expressions
     public T visit(GreaterThan greaterThan);
     public T visit(GreaterThanEqual greaterThanEqual);
     public T visit(LessThan lessThan);
     public T visit(LessThanEqual lessThanEqual);
-
-    // Unary Expressions
     public T visit(Not not);
     public T visit(UnaryMinus unaryMinus);
     public T visit(UnaryPlus unaryPlus);
-
-    // Literals
     public T visit(BooleanLiteral booleanLiteral);
     public T visit(NumberLiteral numberLiteral);
     public T visit(StringLiteral stringLiteral);

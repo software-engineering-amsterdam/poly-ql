@@ -1,6 +1,6 @@
 form Box1HouseOwning {
  hasSoldHouse: "Did you sell a house in 2010?" boolean
- //hasSoldHouse: "Did you sell a house in 2010? #2" boolean
+ //hasSoldHouse: "Did you sell a house in 2010? #2" integer
  hasBoughtHouse: "Did you buy a house in 2010?" boolean
  hasMaintLoan: "Did you enter a loan for maintenance/reconstruction?" boolean
  hasSoldHouseComp: "You sold a house in 2010:" boolean(hasSoldHouse)
@@ -43,15 +43,6 @@ form Box1HouseOwning {
  if (soldAndBought) {
    notice3: "You sold and bought a house in 2010!" string("You moved!")
  }
-
- // Cyclic dependencies stuff.
- /*
- if (hasSoldHouse) { hasBoughtHouse: "hasBoughtHouse input" boolean}
- if (hasBoughtHouse) {hasSoldHouse: "hasSoldHouse input" boolean}
-
- hasBoughtHouse: "invert hasSoldHouse" boolean(!hasSoldHouse)
- hasSoldHouse: "invert hasBoughtHouse" boolean(!hasBoughtHouse)
- hasBoughtHouse: "invert hasBoughtHouse" boolean(!hasBoughtHouse)*/
 }
 
 form aSecondForm {
@@ -59,6 +50,6 @@ form aSecondForm {
  if (happy) {
    showGlad: "I am glad you're happy :D" string("")
  } else {
-   showCheerUp: "Let me cheer you up ^^" string("")
+   showCheerUp: "Aww.. Let me cheer you up ^^" string("")
  }
 }

@@ -11,7 +11,7 @@ public abstract class Question extends Stmt {
 	
 	public Question(Ident ident, String label, Type type){
 		this.setIdent(ident);
-		this.label = label;
+		this.label = label.replaceAll("\\"+"\"", "");
 		this.type = type;
 	}
 

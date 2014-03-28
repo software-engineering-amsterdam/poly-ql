@@ -1,8 +1,8 @@
 package edu.uva.softwarecons.model;
 
 import edu.uva.softwarecons.model.question.Question;
-import edu.uva.softwarecons.visitor.form.IFormElement;
-import edu.uva.softwarecons.visitor.form.IFormElementVisitor;
+import edu.uva.softwarecons.visitor.form.FormElement;
+import edu.uva.softwarecons.visitor.form.FormElementVisitor;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import java.util.List;
  *         Date: 2/25/14
  */
 public class Form
-    implements IFormElement
+    implements FormElement
 {
 
     private final String id;
@@ -37,7 +37,7 @@ public class Form
     }
 
     @Override
-    public void accept( IFormElementVisitor visitor )
+    public void accept( FormElementVisitor visitor )
     {
         visitor.visitForm( this );
     }

@@ -1,5 +1,6 @@
 package ql.ast.form;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -16,11 +17,13 @@ public class Form {
 	private List<FormItems> formItems;
 	private final Environment environment;
 	private JFrame frame;
+	private String warning;
 	
 	public Form(Ident id, List<FormItems> formItems){
 		this.id = id;
 		this.formItems = formItems;
 		this.environment = new Environment();
+		this.warning = "";
 	}
 	
 	public List<FormItems> getFormItems() {
@@ -35,9 +38,17 @@ public class Form {
 		return environment;
 	}
 	
+	public String getWarning(){
+		return warning;
+	}
+	
 	public boolean validate() {
 		boolean valid = true;
+		List<String> questions = new ArrayList<String>();
 		for (FormItems f : formItems) {
+			if (questions.contains(f.getQuestion()))
+				warning += "Warning: Duplicate labels! " + f.getQuestion() + "\n";
+			questions.add(f.getQuestion());
 			valid &= f.validate(environment);
 		}
 		return valid;

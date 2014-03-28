@@ -3,8 +3,8 @@ package net.iplantevin.ql.gui.main;
 import net.iplantevin.ql.ast.expressions.Expression;
 import net.iplantevin.ql.evaluation.EvaluationVisitor;
 import net.iplantevin.ql.evaluation.Value;
-import net.iplantevin.ql.gui.widgets.AbstractFormComponent;
-import net.iplantevin.ql.gui.widgets.AbstractWidgetContainer;
+import net.iplantevin.ql.gui.formcomponents.AbstractFormComponent;
+import net.iplantevin.ql.gui.formcomponents.AbstractWidgetContainer;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -26,10 +26,11 @@ public class FormFrame extends JFrame {
     private final int preferredLabelWidth = 500;
     private final Dimension preferredWidgetSize = new Dimension(150, 25);
 
-    public FormFrame(String title) {
+    public FormFrame(String title, EvaluationVisitor evaluator,
+                     FormEventManager eventManager) {
         setTitle(title);
-        evaluator = new EvaluationVisitor();
-        eventManager = new FormEventManager(evaluator);
+        this.evaluator = evaluator;
+        this.eventManager = eventManager;
     }
 
     /**

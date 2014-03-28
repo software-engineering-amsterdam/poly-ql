@@ -50,13 +50,13 @@ namespace QSLib.Visitors
 
         public void Visit(Binary_Expression expression)
         {
-            if (!(expression.GetLeftType().IsCompatible(expression.GetLeftType())))
+            if (!(expression.GetLeftType().IsCompatible(expression.GetRightType())))
             {
                 this._result = false;
                 this._errorList.Add(new OperatorTypeMismatch(expression.GetLeftType(), expression.GetRightType(), expression.Operator, expression.Line));
             }
 
-            if (!expression.GetLeftType().IsCompatible(expression.Type))
+            if (!expression.IsCompatible(expression.GetLeftType()))
             {
                 this._errorList.Add(new UnaryOperatorTypeMismatch(expression.GetLeftType(), expression.Operator, expression.Line));
                 this._result = false;
@@ -77,6 +77,7 @@ namespace QSLib.Visitors
                 id.Parent = this.TryGetValue(id, id.Line);
             else
                 this.TryDeclare(id, id.Line);
+
 
             if (!id.Type.IsCompatible(id.GetInternalType()))
             {

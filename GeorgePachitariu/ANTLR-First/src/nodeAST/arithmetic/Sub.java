@@ -5,7 +5,6 @@ import java.util.Map;
 import nodeAST.BinaryExpr;
 import nodeAST.Expression;
 import nodeAST.Ident;
-import nodeAST.literals.Int;
 import nodeAST.literals.Literal;
 
 
@@ -42,11 +41,11 @@ public class Sub extends BinaryExpr {
 		return (t1.isCompatibleWith(t2) &&
 				t1.isArithmetic());
 	}
-	
+
 	@Override
 	public Literal compute(Map<Ident, Expression> identifiers) {
 		return this.leftHandOperand.compute(identifiers).sub(
-					this.rightHandOperand.compute(identifiers)
+				this.rightHandOperand.compute(identifiers)
 				);
 	}
 }

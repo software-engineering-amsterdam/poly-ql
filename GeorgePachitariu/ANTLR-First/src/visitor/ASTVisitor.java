@@ -41,60 +41,60 @@ public abstract class ASTVisitor {
 	private void visitOne(Expression operand) {
 		operand.accept(this);
 	}
-	
+
 	private void visitBoth( Expression leftHandOperand, Expression rightHandOperand) {
 		leftHandOperand.accept(this);
 		rightHandOperand.accept(this);
 	}
-	
+
 	public void visit(Add add, Expression leftHandOperand, Expression rightHandOperand)  {
 		this.visitBoth(leftHandOperand, rightHandOperand);
 	}
-	
+
 	public void visit(Div div, Expression leftHandOperand, Expression rightHandOperand)  {
 		this.visitBoth(leftHandOperand, rightHandOperand);
 	}
-	
+
 	public void visit(Mul mul, Expression leftHandOperand, Expression rightHandOperand)  {
 		this.visitBoth(leftHandOperand, rightHandOperand);
 	}
-	
+
 	public void visit(Sub sub, Expression leftHandOperand, Expression rightHandOperand)  {
 		this.visitBoth(leftHandOperand, rightHandOperand);
 	}
-	
+
 	public void visit(And and, Expression leftHandOperand, Expression rightHandOperand)  {
 		this.visitBoth(leftHandOperand, rightHandOperand);
 	}
-	
+
 	public void visit(Or or, Expression leftHandOperand, Expression rightHandOperand)  {
 		this.visitBoth(leftHandOperand, rightHandOperand);
 	}
-	
+
 	public void visit(Eq eq, Expression leftHandOperand, Expression rightHandOperand)  {
 		this.visitBoth(leftHandOperand, rightHandOperand);
 	}
-	
+
 	public void visit(GEq gEq, Expression leftHandOperand, Expression rightHandOperand)  {
 		this.visitBoth(leftHandOperand, rightHandOperand);
 	}
-	
+
 	public void visit(GT gt, Expression leftHandOperand, Expression rightHandOperand)  {
 		this.visitBoth(leftHandOperand, rightHandOperand);
 	}
-	
+
 	public void visit(LEq lEq, Expression leftHandOperand, Expression rightHandOperand)  {
 		this.visitBoth(leftHandOperand, rightHandOperand);
 	}
-	
+
 	public void visit(LT lt, Expression leftHandOperand, Expression rightHandOperand)  {
 		this.visitBoth(leftHandOperand, rightHandOperand);
 	}
-	
+
 	public void visit(NEq nEq, Expression leftHandOperand, Expression rightHandOperand)  {
 		this.visitBoth(leftHandOperand, rightHandOperand);
 	}
-	
+
 	public void visit(Neg neg, Expression operand)  {
 		this.visitOne(operand);
 	}
@@ -102,18 +102,18 @@ public abstract class ASTVisitor {
 	public void visit(Not not, Expression operand)  {
 		this.visitOne(operand);
 	}
-	
+
 	public void visit(Pos pos, Expression operand)  {
 		this.visitOne(operand);
 	}
-	
+
 	public void visit(Bool bool) {}
 	public void visit(Int int1) {}
 
 	public void visit(BoolType bool) {}
 	public void visit(IntType intType) {}
 
-	
+
 	public void visit(Form form, List<Statement> list) {
 		for(Statement s : list)
 			s.accept(this);
@@ -127,8 +127,8 @@ public abstract class ASTVisitor {
 
 	public void visit(IfElseBlock ifElseBlock,
 			Expression condition, 
-				List<Statement> thenStatements,
-				List<Statement> elseStatements) {
+			List<Statement> thenStatements,
+			List<Statement> elseStatements) {
 		condition.accept(this);
 		for(Statement s : thenStatements)
 			s.accept(this);
@@ -144,10 +144,10 @@ public abstract class ASTVisitor {
 		if(expr!=null)
 			expr.accept(this);
 	}
-	
-	
+
+
 	public void visit(QuestionBody questionBody) {}
-	
+
 	public void visit(StringType stringType) {	}
 
 	public void visit(Str str) {}

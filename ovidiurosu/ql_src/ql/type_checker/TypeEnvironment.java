@@ -1,24 +1,18 @@
 package ql.type_checker;
 
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
+import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
+import java.util.Map.Entry;
 
-import ql.ast.Questionnaire;
 import ql.ast.statement.IAssignment;
 import ql.ast.type.Type;
-import ql.error.IError;
 
 /**
  * @author orosu
  */
 public class TypeEnvironment
 {
-    private final List<Questionnaire> _checkedQuestionnaires;
-    private final Set<IError> _errors;
-
     /*
      * AST Assignments Map (id: assignment)
      *     We don't store only the types because we also need the labels
@@ -26,16 +20,9 @@ public class TypeEnvironment
      */
     private final Map<String, IAssignment> _assignments;
 
-    public TypeEnvironment(List<Questionnaire> checkedQuestionnaires)
+    public TypeEnvironment()
     {
-        this._checkedQuestionnaires = checkedQuestionnaires;
         this._assignments = new HashMap<String, IAssignment>();
-        this._errors = new HashSet<IError>();
-    }
-
-    public List<Questionnaire> getCheckedQuestionnaires()
-    {
-        return _checkedQuestionnaires;
     }
 
     public void addAssign(String id, IAssignment assignment)
@@ -43,9 +30,9 @@ public class TypeEnvironment
         this._assignments.put(id, assignment);
     }
 
-    public Map<String, IAssignment> getAssignments()
+    public Iterator<Entry<String, IAssignment>> getAssignmentsIterator()
     {
-        return this._assignments;
+        return this._assignments.entrySet().iterator();
     }
 
     public boolean hasType(String id)
@@ -60,15 +47,5 @@ public class TypeEnvironment
         }
 
         return this._assignments.get(id).getType();
-    }
-
-    public Set<IError> getErrors()
-    {
-        return _errors;
-    }
-
-    public void addError(IError error)
-    {
-        this._errors.add(error);
     }
 }

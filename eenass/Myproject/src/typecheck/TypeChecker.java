@@ -6,7 +6,6 @@ import ast.expr.Expr;
 import ast.expr.Identifier;
 import ast.expr.binExpr.*;
 import ast.expr.literal.*;
-import ast.expr.types.*;
 import ast.expr.unExpression.*;
 import ast.statement.Block;
 import ast.statement.ComputedQuestion;
@@ -16,6 +15,7 @@ import ast.statement.IfelseStatement;
 import ast.statement.Question;
 import ast.statement.Statement;
 import ast.statement.StatementList;
+import ast.types.*;
 
 public class TypeChecker implements Visitor<Boolean>{
 	
@@ -46,7 +46,7 @@ public class TypeChecker implements Visitor<Boolean>{
 				return true;
 			}
 			else{
-				errors.addError("Invalid Type at " + side + " " + token);
+				errors.addError("Invalid/Incompatible Type at " + side + " " + token);
 			}
 		}
 		return false;
@@ -65,7 +65,7 @@ public class TypeChecker implements Visitor<Boolean>{
 				return true;
 			}
 			else{
-				errors.addError("Invalid Type at " + side + "  " + token);
+				errors.addError("Invalid/Incompatible Type at " + side + "  " + token);
 			}
 		}
 		return false;
@@ -197,11 +197,11 @@ public class TypeChecker implements Visitor<Boolean>{
 
 	@Override
 	public Boolean visit(Identifier node) {
-		if(symb_map.containsSymb(node.getIdentName())){
+		if(symb_map.containsSymb(node)){
 			return true;
 		}
 		else{
-			errors.addError("Invalid identifier at " + node.getIdentName());
+			errors.addError("Undefined identifier at " + node.getIdentName());
 		}
 		return false;
 	}
@@ -248,11 +248,15 @@ public class TypeChecker implements Visitor<Boolean>{
 	}
 	
 	private boolean putIdentifier(Identifier id, Type type){
-		if(symb_map.containsSymb(id.getIdentName())){
+		if(symb_map.containsSymb(id) && (symb_map.getType(id)).isCompatibleTo(type)){
 			errors.addError("Invalid identifier (already used) " + id.getIdentName());
 			return false;
 		}
-		symb_map.put(id.getIdentName(), type);
+		else if(symb_map.containsSymb(id) && !(symb_map.getType(id).isCompatibleTo(type))){
+			errors.addError("Identifier already used with another type " + id.getIdentName());
+			return false;
+		}
+		symb_map.put(id, type);
 		return true;		
 	}
 

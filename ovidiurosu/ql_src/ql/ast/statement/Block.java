@@ -1,6 +1,6 @@
 package ql.ast.statement;
 
-import java.util.List;
+import java.util.Iterator;
 
 import ql.ast.visitor_elements.IElement;
 
@@ -9,9 +9,26 @@ import ql.ast.visitor_elements.IElement;
  */
 public class Block implements IElement
 {
-    public List<IStatement> statements;
-    public Block(List<IStatement> statements)
+    private final StatementList _statementList;
+
+    public Block(StatementList statementList)
     {
-        this.statements = statements;
+        this._statementList = statementList;
+    }
+
+    public StatementList getStatementList()
+    {
+        return this._statementList;
+    }
+
+    @Override
+    public String toString()
+    {
+        String string = "(block {";
+        Iterator<IStatement> statementListIterator = this.getStatementList().iterator();
+        while (statementListIterator.hasNext()) {
+            string += " " + statementListIterator.next().toString();
+        }
+        return string + " })";
     }
 }
