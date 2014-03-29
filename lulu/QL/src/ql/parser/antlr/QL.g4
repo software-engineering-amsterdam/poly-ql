@@ -29,20 +29,20 @@ form returns[Form result]
 
 formItems returns [List<FormItems> result]
 @init { List<FormItems> formItems = new ArrayList(); }
-: '{' NEWLINE
+: '{'
 	(q=question {formItems.add($q.result);}
 	| s=stat {formItems.add($s.result);}
 	)* 
-	'}' NEWLINE
+	'}'
 	
 { $result = formItems; } 
 ;
 		
 
 question returns [Question result]
-: Ident ':' Str t=type NEWLINE
+: Ident ':' Str t=type
 { $result = new Question(new Ident($Ident.text), $Str.text, $t.result); }
-| Ident ':' Str t=type '(' x=orExpr ')' NEWLINE
+| Ident ':' Str t=type '(' x=orExpr ')'
 { $result = new ComputedQuestion(new Ident($Ident.text), $Str.text, $t.result, $x.result); }
 ;
 
@@ -139,11 +139,11 @@ orExpr returns [Expr result]
 //;
 
 Str: '"' .*? '"' ;
-NEWLINE : '\r'? '\n';
+
 WS  :	(' ' | '\t' | '\n' | '\r') -> channel(HIDDEN)
     ;
 
-COMMENT : '\r' ('/*' .*? '*/' | '//' .*?) -> channel(HIDDEN)
+COMMENT : ('/*' .*? '*/' | '//'.*? '\n') -> channel(HIDDEN)
     ;
 
 Int: ('0'..'9')+;

@@ -1,6 +1,10 @@
 package ql.type_checker;
 
+import java.util.Iterator;
+
 import ql.ast.Questionnaire;
+import ql.ast.QuestionnaireList;
+import ql.error.ErrorList;
 import ql.error.Notice;
 
 /**
@@ -9,12 +13,14 @@ import ql.error.Notice;
 public class QuestionnaireListChecker extends Checker
 {
     private final Questionnaire _questionnaire;
+    private final QuestionnaireList _checkedQuestionnaires;
 
-    public QuestionnaireListChecker(TypeEnvironment typeEnvironment,
-        Questionnaire questionnaire)
+    public QuestionnaireListChecker(TypeEnvironment typeEnvironment, ErrorList errorList,
+        Questionnaire questionnaire, QuestionnaireList checkedQuestionnaires)
     {
-        this._typeEnvironment = typeEnvironment;
+        super(typeEnvironment, errorList);
         this._questionnaire = questionnaire;
+        this._checkedQuestionnaires = checkedQuestionnaires;
     }
 
     /**
@@ -22,16 +28,20 @@ public class QuestionnaireListChecker extends Checker
      */
     public void checkIdForDuplicates()
     {
-        for (Questionnaire questionnaireL: this._typeEnvironment.getCheckedQuestionnaires()) {
-            if (questionnaireL.getId().equals(this._questionnaire.getId()) &&
-                questionnaireL != this._questionnaire) {
-
-                //NOTICE This questionnaire ID is not unique
-                this._typeEnvironment.addError(
-                    new Notice("This Questionnaire ID ('" +
-                        this._questionnaire.getId() + "') is not unique!")
-                );
+        Iterator<Questionnaire> iterator = this._checkedQuestionnaires.iterator();
+        while (iterator.hasNext()) {
+            Questionnaire questionnaire = iterator.next();
+            if (!questionnaire.getId().equals(this._questionnaire.getId()) ||
+                questionnaire == this._questionnaire)
+            {
+                continue;
             }
+
+            //NOTICE This questionnaire ID is not unique
+            this._errorList.add(
+                new Notice("This Questionnaire ID ('" +
+                    this._questionnaire.getId() + "') is not unique!")
+            );
         }
     }
 }

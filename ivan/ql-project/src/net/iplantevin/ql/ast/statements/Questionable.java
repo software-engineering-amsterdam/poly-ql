@@ -11,19 +11,19 @@ import net.iplantevin.ql.ast.types.Type;
  * @author Ivan
  */
 public abstract class Questionable extends Statement {
-    private final ID name;
+    private final ID identifier;
     private final Str label;
     private final Type type;
 
-    protected Questionable(ID name, Str label, Type type, LineInfo lineInfo) {
+    protected Questionable(ID identifier, Str label, Type type, LineInfo lineInfo) {
         super(lineInfo);
-        this.name = name;
+        this.identifier = identifier;
         this.label = label;
         this.type = type;
     }
 
-    public ID getName() {
-        return name;
+    public ID getIdentifier() {
+        return identifier;
     }
 
     public Str getLabel() {
@@ -35,7 +35,29 @@ public abstract class Questionable extends Statement {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Questionable that = (Questionable) o;
+
+        if (!identifier.equals(that.identifier)) return false;
+        if (!label.equals(that.label)) return false;
+        if (!type.equals(that.type)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = identifier.hashCode();
+        result = 31 * result + label.hashCode();
+        result = 31 * result + type.hashCode();
+        return result;
+    }
+
+    @Override
     public String toString() {
-        return name + ": " + label + " " + type;
+        return identifier + ": " + label + " " + type;
     }
 }

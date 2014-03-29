@@ -2,6 +2,7 @@ package net.iplantevin.ql.tests;
 
 import net.iplantevin.ql.antlr.QLLexer;
 import net.iplantevin.ql.antlr.QLParser;
+import net.iplantevin.ql.ast.astbuilder.ASTBuilder;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.junit.Assert;
@@ -19,19 +20,14 @@ import java.nio.file.Paths;
  * @author Ivan
  */
 public class GrammarTest {
-    private static String basePath = "/Users/Ivan/Documents/Master SE/Software Construction/poly-ql/ivan/ql-project/src/net/iplantevin/tests/inputs/";
+    private static String basePath = "/Users/Ivan/Documents/Master SE/Software Construction/poly-ql/ivan/ql-project/src/net/iplantevin/ql/tests/inputs/";
     private static String ext = ".txt";
     private static String outExt = "_out.txt";
 
     private QLParser getParser(String fileName) throws IOException {
-        InputStream is = new FileInputStream(basePath + fileName + ext);
-
-        ANTLRInputStream input = new ANTLRInputStream(is);
-        QLLexer lexer = new QLLexer(input);
-        CommonTokenStream tokens = new CommonTokenStream(lexer);
-
-        QLParser parser = new QLParser(tokens);
-        return parser;
+        String filePath = basePath + fileName + ext;
+        ASTBuilder builder = new ASTBuilder(filePath);
+        return builder.getParser();
     }
 
     private String getExpectedTree(String fileName) throws IOException {

@@ -1,6 +1,7 @@
 package ql.ast.type;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import ql.ast.expression.literal.IEnumElement;
@@ -18,20 +19,14 @@ public class EnumType extends Type
         this._elements = new ArrayList<IEnumElement>();
     }
 
+    public Iterator<IEnumElement> getElementsIterator()
+    {
+        return this._elements.iterator();
+    }
+
     public void addElement(IEnumElement element)
     {
         this._elements.add(element);
-    }
-
-    public List<IEnumElement> getElements()
-    {
-        return this._elements;
-    }
-
-    @Override
-    public String toString()
-    {
-        return "enum";
     }
 
     @Override
@@ -53,8 +48,25 @@ public class EnumType extends Type
     }
 
     @Override
+    public String toString()
+    {
+        return "(type ( " + this._enumElementsToString(0) + " ))";
+    }
+
+    @Override
     public <T> T accept(ITypeElementVisitor<T> visitor)
     {
         return visitor.visit(this);
+    }
+
+    private String _enumElementsToString(int index)
+    {
+        if (index > this._elements.size() - 1) {
+            return "";
+        }
+
+        String result = this._enumElementsToString(index + 1);
+        return "(enumTypeP " + this._elements.get(index).enumToString() +
+               (!result.equals("")? " , " + result: "") + ")";
     }
 }

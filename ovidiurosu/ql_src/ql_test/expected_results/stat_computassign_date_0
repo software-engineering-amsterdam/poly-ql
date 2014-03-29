@@ -1,1 +1,0 @@
-(init (form form test (block { (stat question : "When?" (type date)) (stat question2 : "Is it false?" (type date) ( (expr question) )) })))

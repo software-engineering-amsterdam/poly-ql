@@ -1,7 +1,7 @@
 package edu.uva.softwarecons.model.expression;
 
-import edu.uva.softwarecons.visitor.expression.IExpressionElement;
-import edu.uva.softwarecons.visitor.expression.IExpressionEval;
+import edu.uva.softwarecons.visitor.expression.ExpressionElement;
+import edu.uva.softwarecons.visitor.expression.ExpressionEval;
 
 /**
  * Falconlabs
@@ -10,7 +10,7 @@ import edu.uva.softwarecons.visitor.expression.IExpressionEval;
  *         Date: 2/19/14
  */
 public interface Expression
-    extends IExpressionElement, IExpressionEval
+    extends ExpressionElement, ExpressionEval
 {
 
 }

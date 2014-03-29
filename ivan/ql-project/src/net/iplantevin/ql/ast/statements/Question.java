@@ -12,8 +12,8 @@ import net.iplantevin.ql.ast.visitors.IStatementVisitor;
  * @author Ivan
  */
 public class Question extends Questionable {
-    public Question(ID name, Str label, Type type, LineInfo lineInfo) {
-        super(name, label, type, lineInfo);
+    public Question(ID identifier, Str label, Type type, LineInfo lineInfo) {
+        super(identifier, label, type, lineInfo);
     }
 
     @Override

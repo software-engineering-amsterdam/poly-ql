@@ -20,7 +20,6 @@ public abstract class Type {
 		return (obj.getClass().equals(this.getClass()));
 	}
 	
-	//together with "equals"
 	public int hashCode() {
 		return this.getClass().hashCode();
 	}

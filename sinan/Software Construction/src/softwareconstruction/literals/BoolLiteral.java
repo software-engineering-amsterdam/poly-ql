@@ -24,5 +24,10 @@ public class BoolLiteral implements Expression {
     public boolean checkType(SuperType S) {
         return true;
     }
+
+    @Override
+    public SuperType getType() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

@@ -31,8 +31,8 @@ import edu.uva.softwarecons.model.type.IntegerType;
 import edu.uva.softwarecons.model.type.MoneyType;
 import edu.uva.softwarecons.model.type.StringType;
 import edu.uva.softwarecons.model.type.Type;
-import edu.uva.softwarecons.visitor.IQuestionnaireElement;
-import edu.uva.softwarecons.visitor.form.IFormElement;
+import edu.uva.softwarecons.visitor.QuestionnaireElement;
+import edu.uva.softwarecons.visitor.form.FormElement;
 import org.antlr.v4.runtime.misc.NotNull;
 
 import java.util.ArrayList;
@@ -45,11 +45,11 @@ import java.util.List;
  *         Date: 2/26/14
  */
 public class QuestionnaireBuilderVisitor
-    extends QuestionnaireBaseVisitor<IQuestionnaireElement>
+    extends QuestionnaireBaseVisitor<QuestionnaireElement>
 {
 
     @Override
-    public IFormElement visitQuestionnaire( @NotNull QuestionnaireParser.QuestionnaireContext ctx )
+    public FormElement visitQuestionnaire( @NotNull QuestionnaireParser.QuestionnaireContext ctx )
     {
         List<Question> questions = new ArrayList<Question>();
         for ( QuestionnaireParser.QuestionContext question : ctx.question() )

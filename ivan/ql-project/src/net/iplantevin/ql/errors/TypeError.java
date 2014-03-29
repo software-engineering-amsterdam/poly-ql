@@ -18,6 +18,28 @@ public class TypeError extends ASTError {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        TypeError typeError = (TypeError) o;
+
+        if (!actualType.equals(typeError.actualType)) return false;
+        if (!expectedType.equals(typeError.expectedType)) return false;
+        if (!getNode().equals(((TypeError) o).getNode())) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = expectedType.hashCode();
+        result = 31 * result + actualType.hashCode();
+        result = 31 * result + getNode().hashCode();
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "TYPE ERROR: " + super.toString() +
                 "Expected '" + expectedType + "' but got '" + actualType + "'\n";

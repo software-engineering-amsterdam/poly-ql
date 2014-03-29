@@ -23,6 +23,13 @@ public class ComputedAssignment extends Assignment implements IStatement, IAssig
     }
 
     @Override
+    public String toString()
+    {
+        return "(statement " + this._id + " : \"" + this._label + "\" " +
+               this._type.toString() + " ( " + this._expression.toString() + " ))";
+    }
+
+    @Override
     public <T> T accept(IStatementElementVisitor<T> visitor)
     {
         return visitor.visit(this);

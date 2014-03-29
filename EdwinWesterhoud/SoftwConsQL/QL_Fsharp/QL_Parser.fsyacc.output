@@ -1,0 +1,3461 @@
+Output file describing compiled parser placed in C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fs and C:\Users\Edwin\Documents\UvA\Software Construction\Git\EdwinWesterhoud\SoftwConsQL\QL_Fsharp\QL_Parser.fsi
+------------------------
+states = 
+state 0:
+  items:
+    _startstart ->  . start
+
+  actions:
+    action 'END' (noprec):   error
+    action 'EQ' (noprec):   error
+    action 'NE' (noprec):   error
+    action 'LT' (noprec):   error
+    action 'LE' (noprec):   error
+    action 'GT' (noprec):   error
+    action 'GE' (noprec):   error
+    action 'AND' (noprec):   error
+    action 'OR' (noprec):   error
+    action 'PLUS' (noprec):   error
+    action 'MINUS' (noprec):   error
+    action 'MULT' (noprec):   error
+    action 'DIV' (noprec):   error
+    action 'NOT' (noprec):   error
+    action 'QLBOOL' (noprec):   error
+    action 'QLSTRING' (noprec):   error
+    action 'QLINT' (noprec):   error
+    action 'QLDECIMAL' (noprec):   error
+    action 'DECIMAL' (noprec):   error
+    action 'INT' (noprec):   error
+    action 'STRING' (noprec):   error
+    action 'BOOL' (noprec):   error
+    action 'LABEL' (noprec):   error
+    action 'IDENTIFIER' (noprec):   error
+    action 'ASSIGN' (noprec):   error
+    action 'COLON' (noprec):   error
+    action 'B_OPEN' (noprec):   error
+    action 'B_CLOSE' (noprec):   error
+    action 'CB_OPEN' (noprec):   error
+    action 'CB_CLOSE' (noprec):   error
+    action 'IF' (noprec):   error
+    action 'ELSE' (noprec):   error
+    action 'FORM' (noprec):   shift 2
+    action 'error' (noprec):   error
+    action '#' (noprec):   error
+    action '$$' (noprec):   error
+
+  immediate action: <none>
+ gotos:
+    goto start: 1
+
+state 1:
+  items:
+    _startstart -> start . 
+
+  actions:
+    action 'END' (noprec):   accept
+    action 'EQ' (noprec):   accept
+    action 'NE' (noprec):   accept
+    action 'LT' (noprec):   accept
+    action 'LE' (noprec):   accept
+    action 'GT' (noprec):   accept
+    action 'GE' (noprec):   accept
+    action 'AND' (noprec):   accept
+    action 'OR' (noprec):   accept
+    action 'PLUS' (noprec):   accept
+    action 'MINUS' (noprec):   accept
+    action 'MULT' (noprec):   accept
+    action 'DIV' (noprec):   accept
+    action 'NOT' (noprec):   accept
+    action 'QLBOOL' (noprec):   accept
+    action 'QLSTRING' (noprec):   accept
+    action 'QLINT' (noprec):   accept
+    action 'QLDECIMAL' (noprec):   accept
+    action 'DECIMAL' (noprec):   accept
+    action 'INT' (noprec):   accept
+    action 'STRING' (noprec):   accept
+    action 'BOOL' (noprec):   accept
+    action 'LABEL' (noprec):   accept
+    action 'IDENTIFIER' (noprec):   accept
+    action 'ASSIGN' (noprec):   accept
+    action 'COLON' (noprec):   accept
+    action 'B_OPEN' (noprec):   accept
+    action 'B_CLOSE' (noprec):   accept
+    action 'CB_OPEN' (noprec):   accept
+    action 'CB_CLOSE' (noprec):   accept
+    action 'IF' (noprec):   accept
+    action 'ELSE' (noprec):   accept
+    action 'FORM' (noprec):   accept
+    action 'error' (noprec):   accept
+    action '#' (noprec):   accept
+    action '$$' (noprec):   accept
+
+  immediate action:   accept
+ gotos:
+
+state 2:
+  items:
+    start -> 'FORM' . 'IDENTIFIER' 'CB_OPEN' stmtList 'CB_CLOSE' 'END'
+
+  actions:
+    action 'END' (noprec):   error
+    action 'EQ' (noprec):   error
+    action 'NE' (noprec):   error
+    action 'LT' (noprec):   error
+    action 'LE' (noprec):   error
+    action 'GT' (noprec):   error
+    action 'GE' (noprec):   error
+    action 'AND' (noprec):   error
+    action 'OR' (noprec):   error
+    action 'PLUS' (noprec):   error
+    action 'MINUS' (noprec):   error
+    action 'MULT' (noprec):   error
+    action 'DIV' (noprec):   error
+    action 'NOT' (noprec):   error
+    action 'QLBOOL' (noprec):   error
+    action 'QLSTRING' (noprec):   error
+    action 'QLINT' (noprec):   error
+    action 'QLDECIMAL' (noprec):   error
+    action 'DECIMAL' (noprec):   error
+    action 'INT' (noprec):   error
+    action 'STRING' (noprec):   error
+    action 'BOOL' (noprec):   error
+    action 'LABEL' (noprec):   error
+    action 'IDENTIFIER' (noprec):   shift 3
+    action 'ASSIGN' (noprec):   error
+    action 'COLON' (noprec):   error
+    action 'B_OPEN' (noprec):   error
+    action 'B_CLOSE' (noprec):   error
+    action 'CB_OPEN' (noprec):   error
+    action 'CB_CLOSE' (noprec):   error
+    action 'IF' (noprec):   error
+    action 'ELSE' (noprec):   error
+    action 'FORM' (noprec):   error
+    action 'error' (noprec):   error
+    action '#' (noprec):   error
+    action '$$' (noprec):   error
+
+  immediate action: <none>
+ gotos:
+
+state 3:
+  items:
+    start -> 'FORM' 'IDENTIFIER' . 'CB_OPEN' stmtList 'CB_CLOSE' 'END'
+
+  actions:
+    action 'END' (noprec):   error
+    action 'EQ' (noprec):   error
+    action 'NE' (noprec):   error
+    action 'LT' (noprec):   error
+    action 'LE' (noprec):   error
+    action 'GT' (noprec):   error
+    action 'GE' (noprec):   error
+    action 'AND' (noprec):   error
+    action 'OR' (noprec):   error
+    action 'PLUS' (noprec):   error
+    action 'MINUS' (noprec):   error
+    action 'MULT' (noprec):   error
+    action 'DIV' (noprec):   error
+    action 'NOT' (noprec):   error
+    action 'QLBOOL' (noprec):   error
+    action 'QLSTRING' (noprec):   error
+    action 'QLINT' (noprec):   error
+    action 'QLDECIMAL' (noprec):   error
+    action 'DECIMAL' (noprec):   error
+    action 'INT' (noprec):   error
+    action 'STRING' (noprec):   error
+    action 'BOOL' (noprec):   error
+    action 'LABEL' (noprec):   error
+    action 'IDENTIFIER' (noprec):   error
+    action 'ASSIGN' (noprec):   error
+    action 'COLON' (noprec):   error
+    action 'B_OPEN' (noprec):   error
+    action 'B_CLOSE' (noprec):   error
+    action 'CB_OPEN' (noprec):   shift 4
+    action 'CB_CLOSE' (noprec):   error
+    action 'IF' (noprec):   error
+    action 'ELSE' (noprec):   error
+    action 'FORM' (noprec):   error
+    action 'error' (noprec):   error
+    action '#' (noprec):   error
+    action '$$' (noprec):   error
+
+  immediate action: <none>
+ gotos:
+
+state 4:
+  items:
+    start -> 'FORM' 'IDENTIFIER' 'CB_OPEN' . stmtList 'CB_CLOSE' 'END'
+
+  actions:
+    action 'END' (noprec):   reduce stmtList --> 
+    action 'EQ' (noprec):   reduce stmtList --> 
+    action 'NE' (noprec):   reduce stmtList --> 
+    action 'LT' (noprec):   reduce stmtList --> 
+    action 'LE' (noprec):   reduce stmtList --> 
+    action 'GT' (noprec):   reduce stmtList --> 
+    action 'GE' (noprec):   reduce stmtList --> 
+    action 'AND' (noprec):   reduce stmtList --> 
+    action 'OR' (noprec):   reduce stmtList --> 
+    action 'PLUS' (noprec):   reduce stmtList --> 
+    action 'MINUS' (noprec):   reduce stmtList --> 
+    action 'MULT' (noprec):   reduce stmtList --> 
+    action 'DIV' (noprec):   reduce stmtList --> 
+    action 'NOT' (noprec):   reduce stmtList --> 
+    action 'QLBOOL' (noprec):   reduce stmtList --> 
+    action 'QLSTRING' (noprec):   reduce stmtList --> 
+    action 'QLINT' (noprec):   reduce stmtList --> 
+    action 'QLDECIMAL' (noprec):   reduce stmtList --> 
+    action 'DECIMAL' (noprec):   reduce stmtList --> 
+    action 'INT' (noprec):   reduce stmtList --> 
+    action 'STRING' (noprec):   reduce stmtList --> 
+    action 'BOOL' (noprec):   reduce stmtList --> 
+    action 'LABEL' (noprec):   shift 14
+    action 'IDENTIFIER' (noprec):   reduce stmtList --> 
+    action 'ASSIGN' (noprec):   reduce stmtList --> 
+    action 'COLON' (noprec):   reduce stmtList --> 
+    action 'B_OPEN' (noprec):   reduce stmtList --> 
+    action 'B_CLOSE' (noprec):   reduce stmtList --> 
+    action 'CB_OPEN' (noprec):   reduce stmtList --> 
+    action 'CB_CLOSE' (noprec):   reduce stmtList --> 
+    action 'IF' (noprec):   shift 20
+    action 'ELSE' (noprec):   reduce stmtList --> 
+    action 'FORM' (noprec):   reduce stmtList --> 
+    action 'error' (noprec):   reduce stmtList --> 
+    action '#' (noprec):   reduce stmtList --> 
+    action '$$' (noprec):   reduce stmtList --> 
+
+  immediate action: <none>
+ gotos:
+    goto stmtList: 5
+    goto stmt: 8
+    goto assignment: 10
+    goto question: 11
+    goto ifElseConditional: 12
+    goto ifConditional: 13
+
+state 5:
+  items:
+    start -> 'FORM' 'IDENTIFIER' 'CB_OPEN' stmtList . 'CB_CLOSE' 'END'
+
+  actions:
+    action 'END' (noprec):   error
+    action 'EQ' (noprec):   error
+    action 'NE' (noprec):   error
+    action 'LT' (noprec):   error
+    action 'LE' (noprec):   error
+    action 'GT' (noprec):   error
+    action 'GE' (noprec):   error
+    action 'AND' (noprec):   error
+    action 'OR' (noprec):   error
+    action 'PLUS' (noprec):   error
+    action 'MINUS' (noprec):   error
+    action 'MULT' (noprec):   error
+    action 'DIV' (noprec):   error
+    action 'NOT' (noprec):   error
+    action 'QLBOOL' (noprec):   error
+    action 'QLSTRING' (noprec):   error
+    action 'QLINT' (noprec):   error
+    action 'QLDECIMAL' (noprec):   error
+    action 'DECIMAL' (noprec):   error
+    action 'INT' (noprec):   error
+    action 'STRING' (noprec):   error
+    action 'BOOL' (noprec):   error
+    action 'LABEL' (noprec):   error
+    action 'IDENTIFIER' (noprec):   error
+    action 'ASSIGN' (noprec):   error
+    action 'COLON' (noprec):   error
+    action 'B_OPEN' (noprec):   error
+    action 'B_CLOSE' (noprec):   error
+    action 'CB_OPEN' (noprec):   error
+    action 'CB_CLOSE' (noprec):   shift 6
+    action 'IF' (noprec):   error
+    action 'ELSE' (noprec):   error
+    action 'FORM' (noprec):   error
+    action 'error' (noprec):   error
+    action '#' (noprec):   error
+    action '$$' (noprec):   error
+
+  immediate action: <none>
+ gotos:
+
+state 6:
+  items:
+    start -> 'FORM' 'IDENTIFIER' 'CB_OPEN' stmtList 'CB_CLOSE' . 'END'
+
+  actions:
+    action 'END' (noprec):   shift 7
+    action 'EQ' (noprec):   error
+    action 'NE' (noprec):   error
+    action 'LT' (noprec):   error
+    action 'LE' (noprec):   error
+    action 'GT' (noprec):   error
+    action 'GE' (noprec):   error
+    action 'AND' (noprec):   error
+    action 'OR' (noprec):   error
+    action 'PLUS' (noprec):   error
+    action 'MINUS' (noprec):   error
+    action 'MULT' (noprec):   error
+    action 'DIV' (noprec):   error
+    action 'NOT' (noprec):   error
+    action 'QLBOOL' (noprec):   error
+    action 'QLSTRING' (noprec):   error
+    action 'QLINT' (noprec):   error
+    action 'QLDECIMAL' (noprec):   error
+    action 'DECIMAL' (noprec):   error
+    action 'INT' (noprec):   error
+    action 'STRING' (noprec):   error
+    action 'BOOL' (noprec):   error
+    action 'LABEL' (noprec):   error
+    action 'IDENTIFIER' (noprec):   error
+    action 'ASSIGN' (noprec):   error
+    action 'COLON' (noprec):   error
+    action 'B_OPEN' (noprec):   error
+    action 'B_CLOSE' (noprec):   error
+    action 'CB_OPEN' (noprec):   error
+    action 'CB_CLOSE' (noprec):   error
+    action 'IF' (noprec):   error
+    action 'ELSE' (noprec):   error
+    action 'FORM' (noprec):   error
+    action 'error' (noprec):   error
+    action '#' (noprec):   error
+    action '$$' (noprec):   error
+
+  immediate action: <none>
+ gotos:
+
+state 7:
+  items:
+    start -> 'FORM' 'IDENTIFIER' 'CB_OPEN' stmtList 'CB_CLOSE' 'END' . 
+
+  actions:
+    action 'END' (noprec):   reduce start --> 'FORM' 'IDENTIFIER' 'CB_OPEN' stmtList 'CB_CLOSE' 'END'
+    action 'EQ' (noprec):   reduce start --> 'FORM' 'IDENTIFIER' 'CB_OPEN' stmtList 'CB_CLOSE' 'END'
+    action 'NE' (noprec):   reduce start --> 'FORM' 'IDENTIFIER' 'CB_OPEN' stmtList 'CB_CLOSE' 'END'
+    action 'LT' (noprec):   reduce start --> 'FORM' 'IDENTIFIER' 'CB_OPEN' stmtList 'CB_CLOSE' 'END'
+    action 'LE' (noprec):   reduce start --> 'FORM' 'IDENTIFIER' 'CB_OPEN' stmtList 'CB_CLOSE' 'END'
+    action 'GT' (noprec):   reduce start --> 'FORM' 'IDENTIFIER' 'CB_OPEN' stmtList 'CB_CLOSE' 'END'
+    action 'GE' (noprec):   reduce start --> 'FORM' 'IDENTIFIER' 'CB_OPEN' stmtList 'CB_CLOSE' 'END'
+    action 'AND' (noprec):   reduce start --> 'FORM' 'IDENTIFIER' 'CB_OPEN' stmtList 'CB_CLOSE' 'END'
+    action 'OR' (noprec):   reduce start --> 'FORM' 'IDENTIFIER' 'CB_OPEN' stmtList 'CB_CLOSE' 'END'
+    action 'PLUS' (noprec):   reduce start --> 'FORM' 'IDENTIFIER' 'CB_OPEN' stmtList 'CB_CLOSE' 'END'
+    action 'MINUS' (noprec):   reduce start --> 'FORM' 'IDENTIFIER' 'CB_OPEN' stmtList 'CB_CLOSE' 'END'
+    action 'MULT' (noprec):   reduce start --> 'FORM' 'IDENTIFIER' 'CB_OPEN' stmtList 'CB_CLOSE' 'END'
+    action 'DIV' (noprec):   reduce start --> 'FORM' 'IDENTIFIER' 'CB_OPEN' stmtList 'CB_CLOSE' 'END'
+    action 'NOT' (noprec):   reduce start --> 'FORM' 'IDENTIFIER' 'CB_OPEN' stmtList 'CB_CLOSE' 'END'
+    action 'QLBOOL' (noprec):   reduce start --> 'FORM' 'IDENTIFIER' 'CB_OPEN' stmtList 'CB_CLOSE' 'END'
+    action 'QLSTRING' (noprec):   reduce start --> 'FORM' 'IDENTIFIER' 'CB_OPEN' stmtList 'CB_CLOSE' 'END'
+    action 'QLINT' (noprec):   reduce start --> 'FORM' 'IDENTIFIER' 'CB_OPEN' stmtList 'CB_CLOSE' 'END'
+    action 'QLDECIMAL' (noprec):   reduce start --> 'FORM' 'IDENTIFIER' 'CB_OPEN' stmtList 'CB_CLOSE' 'END'
+    action 'DECIMAL' (noprec):   reduce start --> 'FORM' 'IDENTIFIER' 'CB_OPEN' stmtList 'CB_CLOSE' 'END'
+    action 'INT' (noprec):   reduce start --> 'FORM' 'IDENTIFIER' 'CB_OPEN' stmtList 'CB_CLOSE' 'END'
+    action 'STRING' (noprec):   reduce start --> 'FORM' 'IDENTIFIER' 'CB_OPEN' stmtList 'CB_CLOSE' 'END'
+    action 'BOOL' (noprec):   reduce start --> 'FORM' 'IDENTIFIER' 'CB_OPEN' stmtList 'CB_CLOSE' 'END'
+    action 'LABEL' (noprec):   reduce start --> 'FORM' 'IDENTIFIER' 'CB_OPEN' stmtList 'CB_CLOSE' 'END'
+    action 'IDENTIFIER' (noprec):   reduce start --> 'FORM' 'IDENTIFIER' 'CB_OPEN' stmtList 'CB_CLOSE' 'END'
+    action 'ASSIGN' (noprec):   reduce start --> 'FORM' 'IDENTIFIER' 'CB_OPEN' stmtList 'CB_CLOSE' 'END'
+    action 'COLON' (noprec):   reduce start --> 'FORM' 'IDENTIFIER' 'CB_OPEN' stmtList 'CB_CLOSE' 'END'
+    action 'B_OPEN' (noprec):   reduce start --> 'FORM' 'IDENTIFIER' 'CB_OPEN' stmtList 'CB_CLOSE' 'END'
+    action 'B_CLOSE' (noprec):   reduce start --> 'FORM' 'IDENTIFIER' 'CB_OPEN' stmtList 'CB_CLOSE' 'END'
+    action 'CB_OPEN' (noprec):   reduce start --> 'FORM' 'IDENTIFIER' 'CB_OPEN' stmtList 'CB_CLOSE' 'END'
+    action 'CB_CLOSE' (noprec):   reduce start --> 'FORM' 'IDENTIFIER' 'CB_OPEN' stmtList 'CB_CLOSE' 'END'
+    action 'IF' (noprec):   reduce start --> 'FORM' 'IDENTIFIER' 'CB_OPEN' stmtList 'CB_CLOSE' 'END'
+    action 'ELSE' (noprec):   reduce start --> 'FORM' 'IDENTIFIER' 'CB_OPEN' stmtList 'CB_CLOSE' 'END'
+    action 'FORM' (noprec):   reduce start --> 'FORM' 'IDENTIFIER' 'CB_OPEN' stmtList 'CB_CLOSE' 'END'
+    action 'error' (noprec):   reduce start --> 'FORM' 'IDENTIFIER' 'CB_OPEN' stmtList 'CB_CLOSE' 'END'
+    action '#' (noprec):   reduce start --> 'FORM' 'IDENTIFIER' 'CB_OPEN' stmtList 'CB_CLOSE' 'END'
+    action '$$' (noprec):   reduce start --> 'FORM' 'IDENTIFIER' 'CB_OPEN' stmtList 'CB_CLOSE' 'END'
+
+  immediate action:   reduce start --> 'FORM' 'IDENTIFIER' 'CB_OPEN' stmtList 'CB_CLOSE' 'END'
+ gotos:
+
+state 8:
+  items:
+    stmtList -> stmt . 
+    stmtList -> stmt . stmtList
+
+  actions:
+    action 'END' (noprec):   reduce stmtList --> 
+    action 'EQ' (noprec):   reduce stmtList --> 
+    action 'NE' (noprec):   reduce stmtList --> 
+    action 'LT' (noprec):   reduce stmtList --> 
+    action 'LE' (noprec):   reduce stmtList --> 
+    action 'GT' (noprec):   reduce stmtList --> 
+    action 'GE' (noprec):   reduce stmtList --> 
+    action 'AND' (noprec):   reduce stmtList --> 
+    action 'OR' (noprec):   reduce stmtList --> 
+    action 'PLUS' (noprec):   reduce stmtList --> 
+    action 'MINUS' (noprec):   reduce stmtList --> 
+    action 'MULT' (noprec):   reduce stmtList --> 
+    action 'DIV' (noprec):   reduce stmtList --> 
+    action 'NOT' (noprec):   reduce stmtList --> 
+    action 'QLBOOL' (noprec):   reduce stmtList --> 
+    action 'QLSTRING' (noprec):   reduce stmtList --> 
+    action 'QLINT' (noprec):   reduce stmtList --> 
+    action 'QLDECIMAL' (noprec):   reduce stmtList --> 
+    action 'DECIMAL' (noprec):   reduce stmtList --> 
+    action 'INT' (noprec):   reduce stmtList --> 
+    action 'STRING' (noprec):   reduce stmtList --> 
+    action 'BOOL' (noprec):   reduce stmtList --> 
+    action 'LABEL' (noprec):   shift 14
+    action 'IDENTIFIER' (noprec):   reduce stmtList --> 
+    action 'ASSIGN' (noprec):   reduce stmtList --> 
+    action 'COLON' (noprec):   reduce stmtList --> 
+    action 'B_OPEN' (noprec):   reduce stmtList --> 
+    action 'B_CLOSE' (noprec):   reduce stmtList --> 
+    action 'CB_OPEN' (noprec):   reduce stmtList --> 
+    action 'CB_CLOSE' (noprec):   reduce stmtList --> 
+    action 'IF' (noprec):   shift 20
+    action 'ELSE' (noprec):   reduce stmtList --> 
+    action 'FORM' (noprec):   reduce stmtList --> 
+    action 'error' (noprec):   reduce stmtList --> 
+    action '#' (noprec):   reduce stmtList --> 
+    action '$$' (noprec):   reduce stmtList --> 
+
+  immediate action: <none>
+ gotos:
+    goto stmtList: 9
+    goto stmt: 8
+    goto assignment: 10
+    goto question: 11
+    goto ifElseConditional: 12
+    goto ifConditional: 13
+
+state 9:
+  items:
+    stmtList -> stmt stmtList . 
+
+  actions:
+    action 'END' (noprec):   reduce stmtList --> stmt stmtList
+    action 'EQ' (noprec):   reduce stmtList --> stmt stmtList
+    action 'NE' (noprec):   reduce stmtList --> stmt stmtList
+    action 'LT' (noprec):   reduce stmtList --> stmt stmtList
+    action 'LE' (noprec):   reduce stmtList --> stmt stmtList
+    action 'GT' (noprec):   reduce stmtList --> stmt stmtList
+    action 'GE' (noprec):   reduce stmtList --> stmt stmtList
+    action 'AND' (noprec):   reduce stmtList --> stmt stmtList
+    action 'OR' (noprec):   reduce stmtList --> stmt stmtList
+    action 'PLUS' (noprec):   reduce stmtList --> stmt stmtList
+    action 'MINUS' (noprec):   reduce stmtList --> stmt stmtList
+    action 'MULT' (noprec):   reduce stmtList --> stmt stmtList
+    action 'DIV' (noprec):   reduce stmtList --> stmt stmtList
+    action 'NOT' (noprec):   reduce stmtList --> stmt stmtList
+    action 'QLBOOL' (noprec):   reduce stmtList --> stmt stmtList
+    action 'QLSTRING' (noprec):   reduce stmtList --> stmt stmtList
+    action 'QLINT' (noprec):   reduce stmtList --> stmt stmtList
+    action 'QLDECIMAL' (noprec):   reduce stmtList --> stmt stmtList
+    action 'DECIMAL' (noprec):   reduce stmtList --> stmt stmtList
+    action 'INT' (noprec):   reduce stmtList --> stmt stmtList
+    action 'STRING' (noprec):   reduce stmtList --> stmt stmtList
+    action 'BOOL' (noprec):   reduce stmtList --> stmt stmtList
+    action 'LABEL' (noprec):   reduce stmtList --> stmt stmtList
+    action 'IDENTIFIER' (noprec):   reduce stmtList --> stmt stmtList
+    action 'ASSIGN' (noprec):   reduce stmtList --> stmt stmtList
+    action 'COLON' (noprec):   reduce stmtList --> stmt stmtList
+    action 'B_OPEN' (noprec):   reduce stmtList --> stmt stmtList
+    action 'B_CLOSE' (noprec):   reduce stmtList --> stmt stmtList
+    action 'CB_OPEN' (noprec):   reduce stmtList --> stmt stmtList
+    action 'CB_CLOSE' (noprec):   reduce stmtList --> stmt stmtList
+    action 'IF' (noprec):   reduce stmtList --> stmt stmtList
+    action 'ELSE' (noprec):   reduce stmtList --> stmt stmtList
+    action 'FORM' (noprec):   reduce stmtList --> stmt stmtList
+    action 'error' (noprec):   reduce stmtList --> stmt stmtList
+    action '#' (noprec):   reduce stmtList --> stmt stmtList
+    action '$$' (noprec):   reduce stmtList --> stmt stmtList
+
+  immediate action:   reduce stmtList --> stmt stmtList
+ gotos:
+
+state 10:
+  items:
+    stmt -> assignment . 
+
+  actions:
+    action 'END' (noprec):   reduce stmt --> assignment
+    action 'EQ' (noprec):   reduce stmt --> assignment
+    action 'NE' (noprec):   reduce stmt --> assignment
+    action 'LT' (noprec):   reduce stmt --> assignment
+    action 'LE' (noprec):   reduce stmt --> assignment
+    action 'GT' (noprec):   reduce stmt --> assignment
+    action 'GE' (noprec):   reduce stmt --> assignment
+    action 'AND' (noprec):   reduce stmt --> assignment
+    action 'OR' (noprec):   reduce stmt --> assignment
+    action 'PLUS' (noprec):   reduce stmt --> assignment
+    action 'MINUS' (noprec):   reduce stmt --> assignment
+    action 'MULT' (noprec):   reduce stmt --> assignment
+    action 'DIV' (noprec):   reduce stmt --> assignment
+    action 'NOT' (noprec):   reduce stmt --> assignment
+    action 'QLBOOL' (noprec):   reduce stmt --> assignment
+    action 'QLSTRING' (noprec):   reduce stmt --> assignment
+    action 'QLINT' (noprec):   reduce stmt --> assignment
+    action 'QLDECIMAL' (noprec):   reduce stmt --> assignment
+    action 'DECIMAL' (noprec):   reduce stmt --> assignment
+    action 'INT' (noprec):   reduce stmt --> assignment
+    action 'STRING' (noprec):   reduce stmt --> assignment
+    action 'BOOL' (noprec):   reduce stmt --> assignment
+    action 'LABEL' (noprec):   reduce stmt --> assignment
+    action 'IDENTIFIER' (noprec):   reduce stmt --> assignment
+    action 'ASSIGN' (noprec):   reduce stmt --> assignment
+    action 'COLON' (noprec):   reduce stmt --> assignment
+    action 'B_OPEN' (noprec):   reduce stmt --> assignment
+    action 'B_CLOSE' (noprec):   reduce stmt --> assignment
+    action 'CB_OPEN' (noprec):   reduce stmt --> assignment
+    action 'CB_CLOSE' (noprec):   reduce stmt --> assignment
+    action 'IF' (noprec):   reduce stmt --> assignment
+    action 'ELSE' (noprec):   reduce stmt --> assignment
+    action 'FORM' (noprec):   reduce stmt --> assignment
+    action 'error' (noprec):   reduce stmt --> assignment
+    action '#' (noprec):   reduce stmt --> assignment
+    action '$$' (noprec):   reduce stmt --> assignment
+
+  immediate action:   reduce stmt --> assignment
+ gotos:
+
+state 11:
+  items:
+    stmt -> question . 
+
+  actions:
+    action 'END' (noprec):   reduce stmt --> question
+    action 'EQ' (noprec):   reduce stmt --> question
+    action 'NE' (noprec):   reduce stmt --> question
+    action 'LT' (noprec):   reduce stmt --> question
+    action 'LE' (noprec):   reduce stmt --> question
+    action 'GT' (noprec):   reduce stmt --> question
+    action 'GE' (noprec):   reduce stmt --> question
+    action 'AND' (noprec):   reduce stmt --> question
+    action 'OR' (noprec):   reduce stmt --> question
+    action 'PLUS' (noprec):   reduce stmt --> question
+    action 'MINUS' (noprec):   reduce stmt --> question
+    action 'MULT' (noprec):   reduce stmt --> question
+    action 'DIV' (noprec):   reduce stmt --> question
+    action 'NOT' (noprec):   reduce stmt --> question
+    action 'QLBOOL' (noprec):   reduce stmt --> question
+    action 'QLSTRING' (noprec):   reduce stmt --> question
+    action 'QLINT' (noprec):   reduce stmt --> question
+    action 'QLDECIMAL' (noprec):   reduce stmt --> question
+    action 'DECIMAL' (noprec):   reduce stmt --> question
+    action 'INT' (noprec):   reduce stmt --> question
+    action 'STRING' (noprec):   reduce stmt --> question
+    action 'BOOL' (noprec):   reduce stmt --> question
+    action 'LABEL' (noprec):   reduce stmt --> question
+    action 'IDENTIFIER' (noprec):   reduce stmt --> question
+    action 'ASSIGN' (noprec):   reduce stmt --> question
+    action 'COLON' (noprec):   reduce stmt --> question
+    action 'B_OPEN' (noprec):   reduce stmt --> question
+    action 'B_CLOSE' (noprec):   reduce stmt --> question
+    action 'CB_OPEN' (noprec):   reduce stmt --> question
+    action 'CB_CLOSE' (noprec):   reduce stmt --> question
+    action 'IF' (noprec):   reduce stmt --> question
+    action 'ELSE' (noprec):   reduce stmt --> question
+    action 'FORM' (noprec):   reduce stmt --> question
+    action 'error' (noprec):   reduce stmt --> question
+    action '#' (noprec):   reduce stmt --> question
+    action '$$' (noprec):   reduce stmt --> question
+
+  immediate action:   reduce stmt --> question
+ gotos:
+
+state 12:
+  items:
+    stmt -> ifElseConditional . 
+
+  actions:
+    action 'END' (noprec):   reduce stmt --> ifElseConditional
+    action 'EQ' (noprec):   reduce stmt --> ifElseConditional
+    action 'NE' (noprec):   reduce stmt --> ifElseConditional
+    action 'LT' (noprec):   reduce stmt --> ifElseConditional
+    action 'LE' (noprec):   reduce stmt --> ifElseConditional
+    action 'GT' (noprec):   reduce stmt --> ifElseConditional
+    action 'GE' (noprec):   reduce stmt --> ifElseConditional
+    action 'AND' (noprec):   reduce stmt --> ifElseConditional
+    action 'OR' (noprec):   reduce stmt --> ifElseConditional
+    action 'PLUS' (noprec):   reduce stmt --> ifElseConditional
+    action 'MINUS' (noprec):   reduce stmt --> ifElseConditional
+    action 'MULT' (noprec):   reduce stmt --> ifElseConditional
+    action 'DIV' (noprec):   reduce stmt --> ifElseConditional
+    action 'NOT' (noprec):   reduce stmt --> ifElseConditional
+    action 'QLBOOL' (noprec):   reduce stmt --> ifElseConditional
+    action 'QLSTRING' (noprec):   reduce stmt --> ifElseConditional
+    action 'QLINT' (noprec):   reduce stmt --> ifElseConditional
+    action 'QLDECIMAL' (noprec):   reduce stmt --> ifElseConditional
+    action 'DECIMAL' (noprec):   reduce stmt --> ifElseConditional
+    action 'INT' (noprec):   reduce stmt --> ifElseConditional
+    action 'STRING' (noprec):   reduce stmt --> ifElseConditional
+    action 'BOOL' (noprec):   reduce stmt --> ifElseConditional
+    action 'LABEL' (noprec):   reduce stmt --> ifElseConditional
+    action 'IDENTIFIER' (noprec):   reduce stmt --> ifElseConditional
+    action 'ASSIGN' (noprec):   reduce stmt --> ifElseConditional
+    action 'COLON' (noprec):   reduce stmt --> ifElseConditional
+    action 'B_OPEN' (noprec):   reduce stmt --> ifElseConditional
+    action 'B_CLOSE' (noprec):   reduce stmt --> ifElseConditional
+    action 'CB_OPEN' (noprec):   reduce stmt --> ifElseConditional
+    action 'CB_CLOSE' (noprec):   reduce stmt --> ifElseConditional
+    action 'IF' (noprec):   reduce stmt --> ifElseConditional
+    action 'ELSE' (noprec):   reduce stmt --> ifElseConditional
+    action 'FORM' (noprec):   reduce stmt --> ifElseConditional
+    action 'error' (noprec):   reduce stmt --> ifElseConditional
+    action '#' (noprec):   reduce stmt --> ifElseConditional
+    action '$$' (noprec):   reduce stmt --> ifElseConditional
+
+  immediate action:   reduce stmt --> ifElseConditional
+ gotos:
+
+state 13:
+  items:
+    stmt -> ifConditional . 
+
+  actions:
+    action 'END' (noprec):   reduce stmt --> ifConditional
+    action 'EQ' (noprec):   reduce stmt --> ifConditional
+    action 'NE' (noprec):   reduce stmt --> ifConditional
+    action 'LT' (noprec):   reduce stmt --> ifConditional
+    action 'LE' (noprec):   reduce stmt --> ifConditional
+    action 'GT' (noprec):   reduce stmt --> ifConditional
+    action 'GE' (noprec):   reduce stmt --> ifConditional
+    action 'AND' (noprec):   reduce stmt --> ifConditional
+    action 'OR' (noprec):   reduce stmt --> ifConditional
+    action 'PLUS' (noprec):   reduce stmt --> ifConditional
+    action 'MINUS' (noprec):   reduce stmt --> ifConditional
+    action 'MULT' (noprec):   reduce stmt --> ifConditional
+    action 'DIV' (noprec):   reduce stmt --> ifConditional
+    action 'NOT' (noprec):   reduce stmt --> ifConditional
+    action 'QLBOOL' (noprec):   reduce stmt --> ifConditional
+    action 'QLSTRING' (noprec):   reduce stmt --> ifConditional
+    action 'QLINT' (noprec):   reduce stmt --> ifConditional
+    action 'QLDECIMAL' (noprec):   reduce stmt --> ifConditional
+    action 'DECIMAL' (noprec):   reduce stmt --> ifConditional
+    action 'INT' (noprec):   reduce stmt --> ifConditional
+    action 'STRING' (noprec):   reduce stmt --> ifConditional
+    action 'BOOL' (noprec):   reduce stmt --> ifConditional
+    action 'LABEL' (noprec):   reduce stmt --> ifConditional
+    action 'IDENTIFIER' (noprec):   reduce stmt --> ifConditional
+    action 'ASSIGN' (noprec):   reduce stmt --> ifConditional
+    action 'COLON' (noprec):   reduce stmt --> ifConditional
+    action 'B_OPEN' (noprec):   reduce stmt --> ifConditional
+    action 'B_CLOSE' (noprec):   reduce stmt --> ifConditional
+    action 'CB_OPEN' (noprec):   reduce stmt --> ifConditional
+    action 'CB_CLOSE' (noprec):   reduce stmt --> ifConditional
+    action 'IF' (noprec):   reduce stmt --> ifConditional
+    action 'ELSE' (noprec):   reduce stmt --> ifConditional
+    action 'FORM' (noprec):   reduce stmt --> ifConditional
+    action 'error' (noprec):   reduce stmt --> ifConditional
+    action '#' (noprec):   reduce stmt --> ifConditional
+    action '$$' (noprec):   reduce stmt --> ifConditional
+
+  immediate action:   reduce stmt --> ifConditional
+ gotos:
+
+state 14:
+  items:
+    assignment -> 'LABEL' . 'IDENTIFIER' 'ASSIGN' expression
+    question -> 'LABEL' . 'IDENTIFIER' 'COLON' qlType
+
+  actions:
+    action 'END' (noprec):   error
+    action 'EQ' (noprec):   error
+    action 'NE' (noprec):   error
+    action 'LT' (noprec):   error
+    action 'LE' (noprec):   error
+    action 'GT' (noprec):   error
+    action 'GE' (noprec):   error
+    action 'AND' (noprec):   error
+    action 'OR' (noprec):   error
+    action 'PLUS' (noprec):   error
+    action 'MINUS' (noprec):   error
+    action 'MULT' (noprec):   error
+    action 'DIV' (noprec):   error
+    action 'NOT' (noprec):   error
+    action 'QLBOOL' (noprec):   error
+    action 'QLSTRING' (noprec):   error
+    action 'QLINT' (noprec):   error
+    action 'QLDECIMAL' (noprec):   error
+    action 'DECIMAL' (noprec):   error
+    action 'INT' (noprec):   error
+    action 'STRING' (noprec):   error
+    action 'BOOL' (noprec):   error
+    action 'LABEL' (noprec):   error
+    action 'IDENTIFIER' (noprec):   shift 15
+    action 'ASSIGN' (noprec):   error
+    action 'COLON' (noprec):   error
+    action 'B_OPEN' (noprec):   error
+    action 'B_CLOSE' (noprec):   error
+    action 'CB_OPEN' (noprec):   error
+    action 'CB_CLOSE' (noprec):   error
+    action 'IF' (noprec):   error
+    action 'ELSE' (noprec):   error
+    action 'FORM' (noprec):   error
+    action 'error' (noprec):   error
+    action '#' (noprec):   error
+    action '$$' (noprec):   error
+
+  immediate action: <none>
+ gotos:
+
+state 15:
+  items:
+    assignment -> 'LABEL' 'IDENTIFIER' . 'ASSIGN' expression
+    question -> 'LABEL' 'IDENTIFIER' . 'COLON' qlType
+
+  actions:
+    action 'END' (noprec):   error
+    action 'EQ' (noprec):   error
+    action 'NE' (noprec):   error
+    action 'LT' (noprec):   error
+    action 'LE' (noprec):   error
+    action 'GT' (noprec):   error
+    action 'GE' (noprec):   error
+    action 'AND' (noprec):   error
+    action 'OR' (noprec):   error
+    action 'PLUS' (noprec):   error
+    action 'MINUS' (noprec):   error
+    action 'MULT' (noprec):   error
+    action 'DIV' (noprec):   error
+    action 'NOT' (noprec):   error
+    action 'QLBOOL' (noprec):   error
+    action 'QLSTRING' (noprec):   error
+    action 'QLINT' (noprec):   error
+    action 'QLDECIMAL' (noprec):   error
+    action 'DECIMAL' (noprec):   error
+    action 'INT' (noprec):   error
+    action 'STRING' (noprec):   error
+    action 'BOOL' (noprec):   error
+    action 'LABEL' (noprec):   error
+    action 'IDENTIFIER' (noprec):   error
+    action 'ASSIGN' (noprec):   shift 16
+    action 'COLON' (noprec):   shift 18
+    action 'B_OPEN' (noprec):   error
+    action 'B_CLOSE' (noprec):   error
+    action 'CB_OPEN' (noprec):   error
+    action 'CB_CLOSE' (noprec):   error
+    action 'IF' (noprec):   error
+    action 'ELSE' (noprec):   error
+    action 'FORM' (noprec):   error
+    action 'error' (noprec):   error
+    action '#' (noprec):   error
+    action '$$' (noprec):   error
+
+  immediate action: <none>
+ gotos:
+
+state 16:
+  items:
+    assignment -> 'LABEL' 'IDENTIFIER' 'ASSIGN' . expression
+
+  actions:
+    action 'END' (noprec):   error
+    action 'EQ' (noprec):   error
+    action 'NE' (noprec):   error
+    action 'LT' (noprec):   error
+    action 'LE' (noprec):   error
+    action 'GT' (noprec):   error
+    action 'GE' (noprec):   error
+    action 'AND' (noprec):   error
+    action 'OR' (noprec):   error
+    action 'PLUS' (noprec):   error
+    action 'MINUS' (noprec):   error
+    action 'MULT' (noprec):   error
+    action 'DIV' (noprec):   error
+    action 'NOT' (explicit right 10000):   shift 45
+    action 'QLBOOL' (noprec):   error
+    action 'QLSTRING' (noprec):   error
+    action 'QLINT' (noprec):   error
+    action 'QLDECIMAL' (noprec):   error
+    action 'DECIMAL' (noprec):   shift 39
+    action 'INT' (noprec):   shift 38
+    action 'STRING' (noprec):   shift 35
+    action 'BOOL' (noprec):   shift 37
+    action 'LABEL' (noprec):   shift 36
+    action 'IDENTIFIER' (noprec):   shift 43
+    action 'ASSIGN' (noprec):   error
+    action 'COLON' (noprec):   error
+    action 'B_OPEN' (noprec):   shift 40
+    action 'B_CLOSE' (noprec):   error
+    action 'CB_OPEN' (noprec):   error
+    action 'CB_CLOSE' (noprec):   error
+    action 'IF' (noprec):   error
+    action 'ELSE' (noprec):   error
+    action 'FORM' (noprec):   error
+    action 'error' (noprec):   error
+    action '#' (noprec):   error
+    action '$$' (noprec):   error
+
+  immediate action: <none>
+ gotos:
+    goto literal: 44
+    goto expression: 17
+
+state 17:
+  items:
+    assignment -> 'LABEL' 'IDENTIFIER' 'ASSIGN' expression . 
+    expression -> expression . 'AND' expression
+    expression -> expression . 'OR' expression
+    expression -> expression . 'LT' expression
+    expression -> expression . 'GT' expression
+    expression -> expression . 'LE' expression
+    expression -> expression . 'GE' expression
+    expression -> expression . 'EQ' expression
+    expression -> expression . 'NE' expression
+    expression -> expression . 'PLUS' expression
+    expression -> expression . 'MINUS' expression
+    expression -> expression . 'MULT' expression
+    expression -> expression . 'DIV' expression
+
+  actions:
+    action 'END' (noprec):   reduce assignment --> 'LABEL' 'IDENTIFIER' 'ASSIGN' expression
+    action 'EQ' (explicit left 9997):   shift 65
+    action 'NE' (explicit left 9997):   shift 66
+    action 'LT' (explicit left 9997):   shift 61
+    action 'LE' (explicit left 9997):   shift 63
+    action 'GT' (explicit left 9997):   shift 62
+    action 'GE' (explicit left 9997):   shift 64
+    action 'AND' (explicit left 9996):   shift 59
+    action 'OR' (explicit left 9996):   shift 60
+    action 'PLUS' (explicit left 9998):   shift 67
+    action 'MINUS' (explicit left 9998):   shift 68
+    action 'MULT' (explicit left 9999):   shift 69
+    action 'DIV' (explicit left 9999):   shift 70
+    action 'NOT' (noprec):   reduce assignment --> 'LABEL' 'IDENTIFIER' 'ASSIGN' expression
+    action 'QLBOOL' (noprec):   reduce assignment --> 'LABEL' 'IDENTIFIER' 'ASSIGN' expression
+    action 'QLSTRING' (noprec):   reduce assignment --> 'LABEL' 'IDENTIFIER' 'ASSIGN' expression
+    action 'QLINT' (noprec):   reduce assignment --> 'LABEL' 'IDENTIFIER' 'ASSIGN' expression
+    action 'QLDECIMAL' (noprec):   reduce assignment --> 'LABEL' 'IDENTIFIER' 'ASSIGN' expression
+    action 'DECIMAL' (noprec):   reduce assignment --> 'LABEL' 'IDENTIFIER' 'ASSIGN' expression
+    action 'INT' (noprec):   reduce assignment --> 'LABEL' 'IDENTIFIER' 'ASSIGN' expression
+    action 'STRING' (noprec):   reduce assignment --> 'LABEL' 'IDENTIFIER' 'ASSIGN' expression
+    action 'BOOL' (noprec):   reduce assignment --> 'LABEL' 'IDENTIFIER' 'ASSIGN' expression
+    action 'LABEL' (noprec):   reduce assignment --> 'LABEL' 'IDENTIFIER' 'ASSIGN' expression
+    action 'IDENTIFIER' (noprec):   reduce assignment --> 'LABEL' 'IDENTIFIER' 'ASSIGN' expression
+    action 'ASSIGN' (noprec):   reduce assignment --> 'LABEL' 'IDENTIFIER' 'ASSIGN' expression
+    action 'COLON' (noprec):   reduce assignment --> 'LABEL' 'IDENTIFIER' 'ASSIGN' expression
+    action 'B_OPEN' (noprec):   reduce assignment --> 'LABEL' 'IDENTIFIER' 'ASSIGN' expression
+    action 'B_CLOSE' (noprec):   reduce assignment --> 'LABEL' 'IDENTIFIER' 'ASSIGN' expression
+    action 'CB_OPEN' (noprec):   reduce assignment --> 'LABEL' 'IDENTIFIER' 'ASSIGN' expression
+    action 'CB_CLOSE' (noprec):   reduce assignment --> 'LABEL' 'IDENTIFIER' 'ASSIGN' expression
+    action 'IF' (noprec):   reduce assignment --> 'LABEL' 'IDENTIFIER' 'ASSIGN' expression
+    action 'ELSE' (noprec):   reduce assignment --> 'LABEL' 'IDENTIFIER' 'ASSIGN' expression
+    action 'FORM' (noprec):   reduce assignment --> 'LABEL' 'IDENTIFIER' 'ASSIGN' expression
+    action 'error' (noprec):   reduce assignment --> 'LABEL' 'IDENTIFIER' 'ASSIGN' expression
+    action '#' (noprec):   reduce assignment --> 'LABEL' 'IDENTIFIER' 'ASSIGN' expression
+    action '$$' (noprec):   reduce assignment --> 'LABEL' 'IDENTIFIER' 'ASSIGN' expression
+
+  immediate action: <none>
+ gotos:
+
+state 18:
+  items:
+    question -> 'LABEL' 'IDENTIFIER' 'COLON' . qlType
+
+  actions:
+    action 'END' (noprec):   error
+    action 'EQ' (noprec):   error
+    action 'NE' (noprec):   error
+    action 'LT' (noprec):   error
+    action 'LE' (noprec):   error
+    action 'GT' (noprec):   error
+    action 'GE' (noprec):   error
+    action 'AND' (noprec):   error
+    action 'OR' (noprec):   error
+    action 'PLUS' (noprec):   error
+    action 'MINUS' (noprec):   error
+    action 'MULT' (noprec):   error
+    action 'DIV' (noprec):   error
+    action 'NOT' (noprec):   error
+    action 'QLBOOL' (noprec):   shift 31
+    action 'QLSTRING' (noprec):   shift 32
+    action 'QLINT' (noprec):   shift 33
+    action 'QLDECIMAL' (noprec):   shift 34
+    action 'DECIMAL' (noprec):   error
+    action 'INT' (noprec):   error
+    action 'STRING' (noprec):   error
+    action 'BOOL' (noprec):   error
+    action 'LABEL' (noprec):   error
+    action 'IDENTIFIER' (noprec):   error
+    action 'ASSIGN' (noprec):   error
+    action 'COLON' (noprec):   error
+    action 'B_OPEN' (noprec):   error
+    action 'B_CLOSE' (noprec):   error
+    action 'CB_OPEN' (noprec):   error
+    action 'CB_CLOSE' (noprec):   error
+    action 'IF' (noprec):   error
+    action 'ELSE' (noprec):   error
+    action 'FORM' (noprec):   error
+    action 'error' (noprec):   error
+    action '#' (noprec):   error
+    action '$$' (noprec):   error
+
+  immediate action: <none>
+ gotos:
+    goto qlType: 19
+
+state 19:
+  items:
+    question -> 'LABEL' 'IDENTIFIER' 'COLON' qlType . 
+
+  actions:
+    action 'END' (noprec):   reduce question --> 'LABEL' 'IDENTIFIER' 'COLON' qlType
+    action 'EQ' (noprec):   reduce question --> 'LABEL' 'IDENTIFIER' 'COLON' qlType
+    action 'NE' (noprec):   reduce question --> 'LABEL' 'IDENTIFIER' 'COLON' qlType
+    action 'LT' (noprec):   reduce question --> 'LABEL' 'IDENTIFIER' 'COLON' qlType
+    action 'LE' (noprec):   reduce question --> 'LABEL' 'IDENTIFIER' 'COLON' qlType
+    action 'GT' (noprec):   reduce question --> 'LABEL' 'IDENTIFIER' 'COLON' qlType
+    action 'GE' (noprec):   reduce question --> 'LABEL' 'IDENTIFIER' 'COLON' qlType
+    action 'AND' (noprec):   reduce question --> 'LABEL' 'IDENTIFIER' 'COLON' qlType
+    action 'OR' (noprec):   reduce question --> 'LABEL' 'IDENTIFIER' 'COLON' qlType
+    action 'PLUS' (noprec):   reduce question --> 'LABEL' 'IDENTIFIER' 'COLON' qlType
+    action 'MINUS' (noprec):   reduce question --> 'LABEL' 'IDENTIFIER' 'COLON' qlType
+    action 'MULT' (noprec):   reduce question --> 'LABEL' 'IDENTIFIER' 'COLON' qlType
+    action 'DIV' (noprec):   reduce question --> 'LABEL' 'IDENTIFIER' 'COLON' qlType
+    action 'NOT' (noprec):   reduce question --> 'LABEL' 'IDENTIFIER' 'COLON' qlType
+    action 'QLBOOL' (noprec):   reduce question --> 'LABEL' 'IDENTIFIER' 'COLON' qlType
+    action 'QLSTRING' (noprec):   reduce question --> 'LABEL' 'IDENTIFIER' 'COLON' qlType
+    action 'QLINT' (noprec):   reduce question --> 'LABEL' 'IDENTIFIER' 'COLON' qlType
+    action 'QLDECIMAL' (noprec):   reduce question --> 'LABEL' 'IDENTIFIER' 'COLON' qlType
+    action 'DECIMAL' (noprec):   reduce question --> 'LABEL' 'IDENTIFIER' 'COLON' qlType
+    action 'INT' (noprec):   reduce question --> 'LABEL' 'IDENTIFIER' 'COLON' qlType
+    action 'STRING' (noprec):   reduce question --> 'LABEL' 'IDENTIFIER' 'COLON' qlType
+    action 'BOOL' (noprec):   reduce question --> 'LABEL' 'IDENTIFIER' 'COLON' qlType
+    action 'LABEL' (noprec):   reduce question --> 'LABEL' 'IDENTIFIER' 'COLON' qlType
+    action 'IDENTIFIER' (noprec):   reduce question --> 'LABEL' 'IDENTIFIER' 'COLON' qlType
+    action 'ASSIGN' (noprec):   reduce question --> 'LABEL' 'IDENTIFIER' 'COLON' qlType
+    action 'COLON' (noprec):   reduce question --> 'LABEL' 'IDENTIFIER' 'COLON' qlType
+    action 'B_OPEN' (noprec):   reduce question --> 'LABEL' 'IDENTIFIER' 'COLON' qlType
+    action 'B_CLOSE' (noprec):   reduce question --> 'LABEL' 'IDENTIFIER' 'COLON' qlType
+    action 'CB_OPEN' (noprec):   reduce question --> 'LABEL' 'IDENTIFIER' 'COLON' qlType
+    action 'CB_CLOSE' (noprec):   reduce question --> 'LABEL' 'IDENTIFIER' 'COLON' qlType
+    action 'IF' (noprec):   reduce question --> 'LABEL' 'IDENTIFIER' 'COLON' qlType
+    action 'ELSE' (noprec):   reduce question --> 'LABEL' 'IDENTIFIER' 'COLON' qlType
+    action 'FORM' (noprec):   reduce question --> 'LABEL' 'IDENTIFIER' 'COLON' qlType
+    action 'error' (noprec):   reduce question --> 'LABEL' 'IDENTIFIER' 'COLON' qlType
+    action '#' (noprec):   reduce question --> 'LABEL' 'IDENTIFIER' 'COLON' qlType
+    action '$$' (noprec):   reduce question --> 'LABEL' 'IDENTIFIER' 'COLON' qlType
+
+  immediate action:   reduce question --> 'LABEL' 'IDENTIFIER' 'COLON' qlType
+ gotos:
+
+state 20:
+  items:
+    ifElseConditional -> 'IF' . 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE' 'ELSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    ifConditional -> 'IF' . 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+
+  actions:
+    action 'END' (noprec):   error
+    action 'EQ' (noprec):   error
+    action 'NE' (noprec):   error
+    action 'LT' (noprec):   error
+    action 'LE' (noprec):   error
+    action 'GT' (noprec):   error
+    action 'GE' (noprec):   error
+    action 'AND' (noprec):   error
+    action 'OR' (noprec):   error
+    action 'PLUS' (noprec):   error
+    action 'MINUS' (noprec):   error
+    action 'MULT' (noprec):   error
+    action 'DIV' (noprec):   error
+    action 'NOT' (noprec):   error
+    action 'QLBOOL' (noprec):   error
+    action 'QLSTRING' (noprec):   error
+    action 'QLINT' (noprec):   error
+    action 'QLDECIMAL' (noprec):   error
+    action 'DECIMAL' (noprec):   error
+    action 'INT' (noprec):   error
+    action 'STRING' (noprec):   error
+    action 'BOOL' (noprec):   error
+    action 'LABEL' (noprec):   error
+    action 'IDENTIFIER' (noprec):   error
+    action 'ASSIGN' (noprec):   error
+    action 'COLON' (noprec):   error
+    action 'B_OPEN' (noprec):   shift 21
+    action 'B_CLOSE' (noprec):   error
+    action 'CB_OPEN' (noprec):   error
+    action 'CB_CLOSE' (noprec):   error
+    action 'IF' (noprec):   error
+    action 'ELSE' (noprec):   error
+    action 'FORM' (noprec):   error
+    action 'error' (noprec):   error
+    action '#' (noprec):   error
+    action '$$' (noprec):   error
+
+  immediate action: <none>
+ gotos:
+
+state 21:
+  items:
+    ifElseConditional -> 'IF' 'B_OPEN' . expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE' 'ELSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    ifConditional -> 'IF' 'B_OPEN' . expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+
+  actions:
+    action 'END' (noprec):   error
+    action 'EQ' (noprec):   error
+    action 'NE' (noprec):   error
+    action 'LT' (noprec):   error
+    action 'LE' (noprec):   error
+    action 'GT' (noprec):   error
+    action 'GE' (noprec):   error
+    action 'AND' (noprec):   error
+    action 'OR' (noprec):   error
+    action 'PLUS' (noprec):   error
+    action 'MINUS' (noprec):   error
+    action 'MULT' (noprec):   error
+    action 'DIV' (noprec):   error
+    action 'NOT' (explicit right 10000):   shift 45
+    action 'QLBOOL' (noprec):   error
+    action 'QLSTRING' (noprec):   error
+    action 'QLINT' (noprec):   error
+    action 'QLDECIMAL' (noprec):   error
+    action 'DECIMAL' (noprec):   shift 39
+    action 'INT' (noprec):   shift 38
+    action 'STRING' (noprec):   shift 35
+    action 'BOOL' (noprec):   shift 37
+    action 'LABEL' (noprec):   shift 36
+    action 'IDENTIFIER' (noprec):   shift 43
+    action 'ASSIGN' (noprec):   error
+    action 'COLON' (noprec):   error
+    action 'B_OPEN' (noprec):   shift 40
+    action 'B_CLOSE' (noprec):   error
+    action 'CB_OPEN' (noprec):   error
+    action 'CB_CLOSE' (noprec):   error
+    action 'IF' (noprec):   error
+    action 'ELSE' (noprec):   error
+    action 'FORM' (noprec):   error
+    action 'error' (noprec):   error
+    action '#' (noprec):   error
+    action '$$' (noprec):   error
+
+  immediate action: <none>
+ gotos:
+    goto literal: 44
+    goto expression: 22
+
+state 22:
+  items:
+    ifElseConditional -> 'IF' 'B_OPEN' expression . 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE' 'ELSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    ifConditional -> 'IF' 'B_OPEN' expression . 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    expression -> expression . 'AND' expression
+    expression -> expression . 'OR' expression
+    expression -> expression . 'LT' expression
+    expression -> expression . 'GT' expression
+    expression -> expression . 'LE' expression
+    expression -> expression . 'GE' expression
+    expression -> expression . 'EQ' expression
+    expression -> expression . 'NE' expression
+    expression -> expression . 'PLUS' expression
+    expression -> expression . 'MINUS' expression
+    expression -> expression . 'MULT' expression
+    expression -> expression . 'DIV' expression
+
+  actions:
+    action 'END' (noprec):   error
+    action 'EQ' (explicit left 9997):   shift 65
+    action 'NE' (explicit left 9997):   shift 66
+    action 'LT' (explicit left 9997):   shift 61
+    action 'LE' (explicit left 9997):   shift 63
+    action 'GT' (explicit left 9997):   shift 62
+    action 'GE' (explicit left 9997):   shift 64
+    action 'AND' (explicit left 9996):   shift 59
+    action 'OR' (explicit left 9996):   shift 60
+    action 'PLUS' (explicit left 9998):   shift 67
+    action 'MINUS' (explicit left 9998):   shift 68
+    action 'MULT' (explicit left 9999):   shift 69
+    action 'DIV' (explicit left 9999):   shift 70
+    action 'NOT' (noprec):   error
+    action 'QLBOOL' (noprec):   error
+    action 'QLSTRING' (noprec):   error
+    action 'QLINT' (noprec):   error
+    action 'QLDECIMAL' (noprec):   error
+    action 'DECIMAL' (noprec):   error
+    action 'INT' (noprec):   error
+    action 'STRING' (noprec):   error
+    action 'BOOL' (noprec):   error
+    action 'LABEL' (noprec):   error
+    action 'IDENTIFIER' (noprec):   error
+    action 'ASSIGN' (noprec):   error
+    action 'COLON' (noprec):   error
+    action 'B_OPEN' (noprec):   error
+    action 'B_CLOSE' (noprec):   shift 23
+    action 'CB_OPEN' (noprec):   error
+    action 'CB_CLOSE' (noprec):   error
+    action 'IF' (noprec):   error
+    action 'ELSE' (noprec):   error
+    action 'FORM' (noprec):   error
+    action 'error' (noprec):   error
+    action '#' (noprec):   error
+    action '$$' (noprec):   error
+
+  immediate action: <none>
+ gotos:
+
+state 23:
+  items:
+    ifElseConditional -> 'IF' 'B_OPEN' expression 'B_CLOSE' . 'CB_OPEN' stmtList 'CB_CLOSE' 'ELSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    ifConditional -> 'IF' 'B_OPEN' expression 'B_CLOSE' . 'CB_OPEN' stmtList 'CB_CLOSE'
+
+  actions:
+    action 'END' (noprec):   error
+    action 'EQ' (noprec):   error
+    action 'NE' (noprec):   error
+    action 'LT' (noprec):   error
+    action 'LE' (noprec):   error
+    action 'GT' (noprec):   error
+    action 'GE' (noprec):   error
+    action 'AND' (noprec):   error
+    action 'OR' (noprec):   error
+    action 'PLUS' (noprec):   error
+    action 'MINUS' (noprec):   error
+    action 'MULT' (noprec):   error
+    action 'DIV' (noprec):   error
+    action 'NOT' (noprec):   error
+    action 'QLBOOL' (noprec):   error
+    action 'QLSTRING' (noprec):   error
+    action 'QLINT' (noprec):   error
+    action 'QLDECIMAL' (noprec):   error
+    action 'DECIMAL' (noprec):   error
+    action 'INT' (noprec):   error
+    action 'STRING' (noprec):   error
+    action 'BOOL' (noprec):   error
+    action 'LABEL' (noprec):   error
+    action 'IDENTIFIER' (noprec):   error
+    action 'ASSIGN' (noprec):   error
+    action 'COLON' (noprec):   error
+    action 'B_OPEN' (noprec):   error
+    action 'B_CLOSE' (noprec):   error
+    action 'CB_OPEN' (noprec):   shift 24
+    action 'CB_CLOSE' (noprec):   error
+    action 'IF' (noprec):   error
+    action 'ELSE' (noprec):   error
+    action 'FORM' (noprec):   error
+    action 'error' (noprec):   error
+    action '#' (noprec):   error
+    action '$$' (noprec):   error
+
+  immediate action: <none>
+ gotos:
+
+state 24:
+  items:
+    ifElseConditional -> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' . stmtList 'CB_CLOSE' 'ELSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    ifConditional -> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' . stmtList 'CB_CLOSE'
+
+  actions:
+    action 'END' (noprec):   reduce stmtList --> 
+    action 'EQ' (noprec):   reduce stmtList --> 
+    action 'NE' (noprec):   reduce stmtList --> 
+    action 'LT' (noprec):   reduce stmtList --> 
+    action 'LE' (noprec):   reduce stmtList --> 
+    action 'GT' (noprec):   reduce stmtList --> 
+    action 'GE' (noprec):   reduce stmtList --> 
+    action 'AND' (noprec):   reduce stmtList --> 
+    action 'OR' (noprec):   reduce stmtList --> 
+    action 'PLUS' (noprec):   reduce stmtList --> 
+    action 'MINUS' (noprec):   reduce stmtList --> 
+    action 'MULT' (noprec):   reduce stmtList --> 
+    action 'DIV' (noprec):   reduce stmtList --> 
+    action 'NOT' (noprec):   reduce stmtList --> 
+    action 'QLBOOL' (noprec):   reduce stmtList --> 
+    action 'QLSTRING' (noprec):   reduce stmtList --> 
+    action 'QLINT' (noprec):   reduce stmtList --> 
+    action 'QLDECIMAL' (noprec):   reduce stmtList --> 
+    action 'DECIMAL' (noprec):   reduce stmtList --> 
+    action 'INT' (noprec):   reduce stmtList --> 
+    action 'STRING' (noprec):   reduce stmtList --> 
+    action 'BOOL' (noprec):   reduce stmtList --> 
+    action 'LABEL' (noprec):   shift 14
+    action 'IDENTIFIER' (noprec):   reduce stmtList --> 
+    action 'ASSIGN' (noprec):   reduce stmtList --> 
+    action 'COLON' (noprec):   reduce stmtList --> 
+    action 'B_OPEN' (noprec):   reduce stmtList --> 
+    action 'B_CLOSE' (noprec):   reduce stmtList --> 
+    action 'CB_OPEN' (noprec):   reduce stmtList --> 
+    action 'CB_CLOSE' (noprec):   reduce stmtList --> 
+    action 'IF' (noprec):   shift 20
+    action 'ELSE' (noprec):   reduce stmtList --> 
+    action 'FORM' (noprec):   reduce stmtList --> 
+    action 'error' (noprec):   reduce stmtList --> 
+    action '#' (noprec):   reduce stmtList --> 
+    action '$$' (noprec):   reduce stmtList --> 
+
+  immediate action: <none>
+ gotos:
+    goto stmtList: 25
+    goto stmt: 8
+    goto assignment: 10
+    goto question: 11
+    goto ifElseConditional: 12
+    goto ifConditional: 13
+
+state 25:
+  items:
+    ifElseConditional -> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList . 'CB_CLOSE' 'ELSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    ifConditional -> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList . 'CB_CLOSE'
+
+  actions:
+    action 'END' (noprec):   error
+    action 'EQ' (noprec):   error
+    action 'NE' (noprec):   error
+    action 'LT' (noprec):   error
+    action 'LE' (noprec):   error
+    action 'GT' (noprec):   error
+    action 'GE' (noprec):   error
+    action 'AND' (noprec):   error
+    action 'OR' (noprec):   error
+    action 'PLUS' (noprec):   error
+    action 'MINUS' (noprec):   error
+    action 'MULT' (noprec):   error
+    action 'DIV' (noprec):   error
+    action 'NOT' (noprec):   error
+    action 'QLBOOL' (noprec):   error
+    action 'QLSTRING' (noprec):   error
+    action 'QLINT' (noprec):   error
+    action 'QLDECIMAL' (noprec):   error
+    action 'DECIMAL' (noprec):   error
+    action 'INT' (noprec):   error
+    action 'STRING' (noprec):   error
+    action 'BOOL' (noprec):   error
+    action 'LABEL' (noprec):   error
+    action 'IDENTIFIER' (noprec):   error
+    action 'ASSIGN' (noprec):   error
+    action 'COLON' (noprec):   error
+    action 'B_OPEN' (noprec):   error
+    action 'B_CLOSE' (noprec):   error
+    action 'CB_OPEN' (noprec):   error
+    action 'CB_CLOSE' (noprec):   shift 26
+    action 'IF' (noprec):   error
+    action 'ELSE' (noprec):   error
+    action 'FORM' (noprec):   error
+    action 'error' (noprec):   error
+    action '#' (noprec):   error
+    action '$$' (noprec):   error
+
+  immediate action: <none>
+ gotos:
+
+state 26:
+  items:
+    ifElseConditional -> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE' . 'ELSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    ifConditional -> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE' . 
+
+  actions:
+    action 'END' (noprec):   reduce ifConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'EQ' (noprec):   reduce ifConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'NE' (noprec):   reduce ifConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'LT' (noprec):   reduce ifConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'LE' (noprec):   reduce ifConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'GT' (noprec):   reduce ifConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'GE' (noprec):   reduce ifConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'AND' (noprec):   reduce ifConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'OR' (noprec):   reduce ifConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'PLUS' (noprec):   reduce ifConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'MINUS' (noprec):   reduce ifConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'MULT' (noprec):   reduce ifConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'DIV' (noprec):   reduce ifConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'NOT' (noprec):   reduce ifConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'QLBOOL' (noprec):   reduce ifConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'QLSTRING' (noprec):   reduce ifConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'QLINT' (noprec):   reduce ifConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'QLDECIMAL' (noprec):   reduce ifConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'DECIMAL' (noprec):   reduce ifConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'INT' (noprec):   reduce ifConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'STRING' (noprec):   reduce ifConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'BOOL' (noprec):   reduce ifConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'LABEL' (noprec):   reduce ifConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'IDENTIFIER' (noprec):   reduce ifConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'ASSIGN' (noprec):   reduce ifConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'COLON' (noprec):   reduce ifConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'B_OPEN' (noprec):   reduce ifConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'B_CLOSE' (noprec):   reduce ifConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'CB_OPEN' (noprec):   reduce ifConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'CB_CLOSE' (noprec):   reduce ifConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'IF' (noprec):   reduce ifConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'ELSE' (noprec):   shift 27
+    action 'FORM' (noprec):   reduce ifConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'error' (noprec):   reduce ifConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action '#' (noprec):   reduce ifConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action '$$' (noprec):   reduce ifConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+
+  immediate action: <none>
+ gotos:
+
+state 27:
+  items:
+    ifElseConditional -> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE' 'ELSE' . 'CB_OPEN' stmtList 'CB_CLOSE'
+
+  actions:
+    action 'END' (noprec):   error
+    action 'EQ' (noprec):   error
+    action 'NE' (noprec):   error
+    action 'LT' (noprec):   error
+    action 'LE' (noprec):   error
+    action 'GT' (noprec):   error
+    action 'GE' (noprec):   error
+    action 'AND' (noprec):   error
+    action 'OR' (noprec):   error
+    action 'PLUS' (noprec):   error
+    action 'MINUS' (noprec):   error
+    action 'MULT' (noprec):   error
+    action 'DIV' (noprec):   error
+    action 'NOT' (noprec):   error
+    action 'QLBOOL' (noprec):   error
+    action 'QLSTRING' (noprec):   error
+    action 'QLINT' (noprec):   error
+    action 'QLDECIMAL' (noprec):   error
+    action 'DECIMAL' (noprec):   error
+    action 'INT' (noprec):   error
+    action 'STRING' (noprec):   error
+    action 'BOOL' (noprec):   error
+    action 'LABEL' (noprec):   error
+    action 'IDENTIFIER' (noprec):   error
+    action 'ASSIGN' (noprec):   error
+    action 'COLON' (noprec):   error
+    action 'B_OPEN' (noprec):   error
+    action 'B_CLOSE' (noprec):   error
+    action 'CB_OPEN' (noprec):   shift 28
+    action 'CB_CLOSE' (noprec):   error
+    action 'IF' (noprec):   error
+    action 'ELSE' (noprec):   error
+    action 'FORM' (noprec):   error
+    action 'error' (noprec):   error
+    action '#' (noprec):   error
+    action '$$' (noprec):   error
+
+  immediate action: <none>
+ gotos:
+
+state 28:
+  items:
+    ifElseConditional -> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE' 'ELSE' 'CB_OPEN' . stmtList 'CB_CLOSE'
+
+  actions:
+    action 'END' (noprec):   reduce stmtList --> 
+    action 'EQ' (noprec):   reduce stmtList --> 
+    action 'NE' (noprec):   reduce stmtList --> 
+    action 'LT' (noprec):   reduce stmtList --> 
+    action 'LE' (noprec):   reduce stmtList --> 
+    action 'GT' (noprec):   reduce stmtList --> 
+    action 'GE' (noprec):   reduce stmtList --> 
+    action 'AND' (noprec):   reduce stmtList --> 
+    action 'OR' (noprec):   reduce stmtList --> 
+    action 'PLUS' (noprec):   reduce stmtList --> 
+    action 'MINUS' (noprec):   reduce stmtList --> 
+    action 'MULT' (noprec):   reduce stmtList --> 
+    action 'DIV' (noprec):   reduce stmtList --> 
+    action 'NOT' (noprec):   reduce stmtList --> 
+    action 'QLBOOL' (noprec):   reduce stmtList --> 
+    action 'QLSTRING' (noprec):   reduce stmtList --> 
+    action 'QLINT' (noprec):   reduce stmtList --> 
+    action 'QLDECIMAL' (noprec):   reduce stmtList --> 
+    action 'DECIMAL' (noprec):   reduce stmtList --> 
+    action 'INT' (noprec):   reduce stmtList --> 
+    action 'STRING' (noprec):   reduce stmtList --> 
+    action 'BOOL' (noprec):   reduce stmtList --> 
+    action 'LABEL' (noprec):   shift 14
+    action 'IDENTIFIER' (noprec):   reduce stmtList --> 
+    action 'ASSIGN' (noprec):   reduce stmtList --> 
+    action 'COLON' (noprec):   reduce stmtList --> 
+    action 'B_OPEN' (noprec):   reduce stmtList --> 
+    action 'B_CLOSE' (noprec):   reduce stmtList --> 
+    action 'CB_OPEN' (noprec):   reduce stmtList --> 
+    action 'CB_CLOSE' (noprec):   reduce stmtList --> 
+    action 'IF' (noprec):   shift 20
+    action 'ELSE' (noprec):   reduce stmtList --> 
+    action 'FORM' (noprec):   reduce stmtList --> 
+    action 'error' (noprec):   reduce stmtList --> 
+    action '#' (noprec):   reduce stmtList --> 
+    action '$$' (noprec):   reduce stmtList --> 
+
+  immediate action: <none>
+ gotos:
+    goto stmtList: 29
+    goto stmt: 8
+    goto assignment: 10
+    goto question: 11
+    goto ifElseConditional: 12
+    goto ifConditional: 13
+
+state 29:
+  items:
+    ifElseConditional -> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE' 'ELSE' 'CB_OPEN' stmtList . 'CB_CLOSE'
+
+  actions:
+    action 'END' (noprec):   error
+    action 'EQ' (noprec):   error
+    action 'NE' (noprec):   error
+    action 'LT' (noprec):   error
+    action 'LE' (noprec):   error
+    action 'GT' (noprec):   error
+    action 'GE' (noprec):   error
+    action 'AND' (noprec):   error
+    action 'OR' (noprec):   error
+    action 'PLUS' (noprec):   error
+    action 'MINUS' (noprec):   error
+    action 'MULT' (noprec):   error
+    action 'DIV' (noprec):   error
+    action 'NOT' (noprec):   error
+    action 'QLBOOL' (noprec):   error
+    action 'QLSTRING' (noprec):   error
+    action 'QLINT' (noprec):   error
+    action 'QLDECIMAL' (noprec):   error
+    action 'DECIMAL' (noprec):   error
+    action 'INT' (noprec):   error
+    action 'STRING' (noprec):   error
+    action 'BOOL' (noprec):   error
+    action 'LABEL' (noprec):   error
+    action 'IDENTIFIER' (noprec):   error
+    action 'ASSIGN' (noprec):   error
+    action 'COLON' (noprec):   error
+    action 'B_OPEN' (noprec):   error
+    action 'B_CLOSE' (noprec):   error
+    action 'CB_OPEN' (noprec):   error
+    action 'CB_CLOSE' (noprec):   shift 30
+    action 'IF' (noprec):   error
+    action 'ELSE' (noprec):   error
+    action 'FORM' (noprec):   error
+    action 'error' (noprec):   error
+    action '#' (noprec):   error
+    action '$$' (noprec):   error
+
+  immediate action: <none>
+ gotos:
+
+state 30:
+  items:
+    ifElseConditional -> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE' 'ELSE' 'CB_OPEN' stmtList 'CB_CLOSE' . 
+
+  actions:
+    action 'END' (noprec):   reduce ifElseConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE' 'ELSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'EQ' (noprec):   reduce ifElseConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE' 'ELSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'NE' (noprec):   reduce ifElseConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE' 'ELSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'LT' (noprec):   reduce ifElseConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE' 'ELSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'LE' (noprec):   reduce ifElseConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE' 'ELSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'GT' (noprec):   reduce ifElseConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE' 'ELSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'GE' (noprec):   reduce ifElseConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE' 'ELSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'AND' (noprec):   reduce ifElseConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE' 'ELSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'OR' (noprec):   reduce ifElseConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE' 'ELSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'PLUS' (noprec):   reduce ifElseConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE' 'ELSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'MINUS' (noprec):   reduce ifElseConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE' 'ELSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'MULT' (noprec):   reduce ifElseConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE' 'ELSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'DIV' (noprec):   reduce ifElseConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE' 'ELSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'NOT' (noprec):   reduce ifElseConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE' 'ELSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'QLBOOL' (noprec):   reduce ifElseConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE' 'ELSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'QLSTRING' (noprec):   reduce ifElseConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE' 'ELSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'QLINT' (noprec):   reduce ifElseConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE' 'ELSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'QLDECIMAL' (noprec):   reduce ifElseConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE' 'ELSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'DECIMAL' (noprec):   reduce ifElseConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE' 'ELSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'INT' (noprec):   reduce ifElseConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE' 'ELSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'STRING' (noprec):   reduce ifElseConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE' 'ELSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'BOOL' (noprec):   reduce ifElseConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE' 'ELSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'LABEL' (noprec):   reduce ifElseConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE' 'ELSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'IDENTIFIER' (noprec):   reduce ifElseConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE' 'ELSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'ASSIGN' (noprec):   reduce ifElseConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE' 'ELSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'COLON' (noprec):   reduce ifElseConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE' 'ELSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'B_OPEN' (noprec):   reduce ifElseConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE' 'ELSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'B_CLOSE' (noprec):   reduce ifElseConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE' 'ELSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'CB_OPEN' (noprec):   reduce ifElseConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE' 'ELSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'CB_CLOSE' (noprec):   reduce ifElseConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE' 'ELSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'IF' (noprec):   reduce ifElseConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE' 'ELSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'ELSE' (noprec):   reduce ifElseConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE' 'ELSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'FORM' (noprec):   reduce ifElseConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE' 'ELSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action 'error' (noprec):   reduce ifElseConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE' 'ELSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action '#' (noprec):   reduce ifElseConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE' 'ELSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+    action '$$' (noprec):   reduce ifElseConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE' 'ELSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+
+  immediate action:   reduce ifElseConditional --> 'IF' 'B_OPEN' expression 'B_CLOSE' 'CB_OPEN' stmtList 'CB_CLOSE' 'ELSE' 'CB_OPEN' stmtList 'CB_CLOSE'
+ gotos:
+
+state 31:
+  items:
+    qlType -> 'QLBOOL' . 
+
+  actions:
+    action 'END' (noprec):   reduce qlType --> 'QLBOOL'
+    action 'EQ' (noprec):   reduce qlType --> 'QLBOOL'
+    action 'NE' (noprec):   reduce qlType --> 'QLBOOL'
+    action 'LT' (noprec):   reduce qlType --> 'QLBOOL'
+    action 'LE' (noprec):   reduce qlType --> 'QLBOOL'
+    action 'GT' (noprec):   reduce qlType --> 'QLBOOL'
+    action 'GE' (noprec):   reduce qlType --> 'QLBOOL'
+    action 'AND' (noprec):   reduce qlType --> 'QLBOOL'
+    action 'OR' (noprec):   reduce qlType --> 'QLBOOL'
+    action 'PLUS' (noprec):   reduce qlType --> 'QLBOOL'
+    action 'MINUS' (noprec):   reduce qlType --> 'QLBOOL'
+    action 'MULT' (noprec):   reduce qlType --> 'QLBOOL'
+    action 'DIV' (noprec):   reduce qlType --> 'QLBOOL'
+    action 'NOT' (noprec):   reduce qlType --> 'QLBOOL'
+    action 'QLBOOL' (noprec):   reduce qlType --> 'QLBOOL'
+    action 'QLSTRING' (noprec):   reduce qlType --> 'QLBOOL'
+    action 'QLINT' (noprec):   reduce qlType --> 'QLBOOL'
+    action 'QLDECIMAL' (noprec):   reduce qlType --> 'QLBOOL'
+    action 'DECIMAL' (noprec):   reduce qlType --> 'QLBOOL'
+    action 'INT' (noprec):   reduce qlType --> 'QLBOOL'
+    action 'STRING' (noprec):   reduce qlType --> 'QLBOOL'
+    action 'BOOL' (noprec):   reduce qlType --> 'QLBOOL'
+    action 'LABEL' (noprec):   reduce qlType --> 'QLBOOL'
+    action 'IDENTIFIER' (noprec):   reduce qlType --> 'QLBOOL'
+    action 'ASSIGN' (noprec):   reduce qlType --> 'QLBOOL'
+    action 'COLON' (noprec):   reduce qlType --> 'QLBOOL'
+    action 'B_OPEN' (noprec):   reduce qlType --> 'QLBOOL'
+    action 'B_CLOSE' (noprec):   reduce qlType --> 'QLBOOL'
+    action 'CB_OPEN' (noprec):   reduce qlType --> 'QLBOOL'
+    action 'CB_CLOSE' (noprec):   reduce qlType --> 'QLBOOL'
+    action 'IF' (noprec):   reduce qlType --> 'QLBOOL'
+    action 'ELSE' (noprec):   reduce qlType --> 'QLBOOL'
+    action 'FORM' (noprec):   reduce qlType --> 'QLBOOL'
+    action 'error' (noprec):   reduce qlType --> 'QLBOOL'
+    action '#' (noprec):   reduce qlType --> 'QLBOOL'
+    action '$$' (noprec):   reduce qlType --> 'QLBOOL'
+
+  immediate action:   reduce qlType --> 'QLBOOL'
+ gotos:
+
+state 32:
+  items:
+    qlType -> 'QLSTRING' . 
+
+  actions:
+    action 'END' (noprec):   reduce qlType --> 'QLSTRING'
+    action 'EQ' (noprec):   reduce qlType --> 'QLSTRING'
+    action 'NE' (noprec):   reduce qlType --> 'QLSTRING'
+    action 'LT' (noprec):   reduce qlType --> 'QLSTRING'
+    action 'LE' (noprec):   reduce qlType --> 'QLSTRING'
+    action 'GT' (noprec):   reduce qlType --> 'QLSTRING'
+    action 'GE' (noprec):   reduce qlType --> 'QLSTRING'
+    action 'AND' (noprec):   reduce qlType --> 'QLSTRING'
+    action 'OR' (noprec):   reduce qlType --> 'QLSTRING'
+    action 'PLUS' (noprec):   reduce qlType --> 'QLSTRING'
+    action 'MINUS' (noprec):   reduce qlType --> 'QLSTRING'
+    action 'MULT' (noprec):   reduce qlType --> 'QLSTRING'
+    action 'DIV' (noprec):   reduce qlType --> 'QLSTRING'
+    action 'NOT' (noprec):   reduce qlType --> 'QLSTRING'
+    action 'QLBOOL' (noprec):   reduce qlType --> 'QLSTRING'
+    action 'QLSTRING' (noprec):   reduce qlType --> 'QLSTRING'
+    action 'QLINT' (noprec):   reduce qlType --> 'QLSTRING'
+    action 'QLDECIMAL' (noprec):   reduce qlType --> 'QLSTRING'
+    action 'DECIMAL' (noprec):   reduce qlType --> 'QLSTRING'
+    action 'INT' (noprec):   reduce qlType --> 'QLSTRING'
+    action 'STRING' (noprec):   reduce qlType --> 'QLSTRING'
+    action 'BOOL' (noprec):   reduce qlType --> 'QLSTRING'
+    action 'LABEL' (noprec):   reduce qlType --> 'QLSTRING'
+    action 'IDENTIFIER' (noprec):   reduce qlType --> 'QLSTRING'
+    action 'ASSIGN' (noprec):   reduce qlType --> 'QLSTRING'
+    action 'COLON' (noprec):   reduce qlType --> 'QLSTRING'
+    action 'B_OPEN' (noprec):   reduce qlType --> 'QLSTRING'
+    action 'B_CLOSE' (noprec):   reduce qlType --> 'QLSTRING'
+    action 'CB_OPEN' (noprec):   reduce qlType --> 'QLSTRING'
+    action 'CB_CLOSE' (noprec):   reduce qlType --> 'QLSTRING'
+    action 'IF' (noprec):   reduce qlType --> 'QLSTRING'
+    action 'ELSE' (noprec):   reduce qlType --> 'QLSTRING'
+    action 'FORM' (noprec):   reduce qlType --> 'QLSTRING'
+    action 'error' (noprec):   reduce qlType --> 'QLSTRING'
+    action '#' (noprec):   reduce qlType --> 'QLSTRING'
+    action '$$' (noprec):   reduce qlType --> 'QLSTRING'
+
+  immediate action:   reduce qlType --> 'QLSTRING'
+ gotos:
+
+state 33:
+  items:
+    qlType -> 'QLINT' . 
+
+  actions:
+    action 'END' (noprec):   reduce qlType --> 'QLINT'
+    action 'EQ' (noprec):   reduce qlType --> 'QLINT'
+    action 'NE' (noprec):   reduce qlType --> 'QLINT'
+    action 'LT' (noprec):   reduce qlType --> 'QLINT'
+    action 'LE' (noprec):   reduce qlType --> 'QLINT'
+    action 'GT' (noprec):   reduce qlType --> 'QLINT'
+    action 'GE' (noprec):   reduce qlType --> 'QLINT'
+    action 'AND' (noprec):   reduce qlType --> 'QLINT'
+    action 'OR' (noprec):   reduce qlType --> 'QLINT'
+    action 'PLUS' (noprec):   reduce qlType --> 'QLINT'
+    action 'MINUS' (noprec):   reduce qlType --> 'QLINT'
+    action 'MULT' (noprec):   reduce qlType --> 'QLINT'
+    action 'DIV' (noprec):   reduce qlType --> 'QLINT'
+    action 'NOT' (noprec):   reduce qlType --> 'QLINT'
+    action 'QLBOOL' (noprec):   reduce qlType --> 'QLINT'
+    action 'QLSTRING' (noprec):   reduce qlType --> 'QLINT'
+    action 'QLINT' (noprec):   reduce qlType --> 'QLINT'
+    action 'QLDECIMAL' (noprec):   reduce qlType --> 'QLINT'
+    action 'DECIMAL' (noprec):   reduce qlType --> 'QLINT'
+    action 'INT' (noprec):   reduce qlType --> 'QLINT'
+    action 'STRING' (noprec):   reduce qlType --> 'QLINT'
+    action 'BOOL' (noprec):   reduce qlType --> 'QLINT'
+    action 'LABEL' (noprec):   reduce qlType --> 'QLINT'
+    action 'IDENTIFIER' (noprec):   reduce qlType --> 'QLINT'
+    action 'ASSIGN' (noprec):   reduce qlType --> 'QLINT'
+    action 'COLON' (noprec):   reduce qlType --> 'QLINT'
+    action 'B_OPEN' (noprec):   reduce qlType --> 'QLINT'
+    action 'B_CLOSE' (noprec):   reduce qlType --> 'QLINT'
+    action 'CB_OPEN' (noprec):   reduce qlType --> 'QLINT'
+    action 'CB_CLOSE' (noprec):   reduce qlType --> 'QLINT'
+    action 'IF' (noprec):   reduce qlType --> 'QLINT'
+    action 'ELSE' (noprec):   reduce qlType --> 'QLINT'
+    action 'FORM' (noprec):   reduce qlType --> 'QLINT'
+    action 'error' (noprec):   reduce qlType --> 'QLINT'
+    action '#' (noprec):   reduce qlType --> 'QLINT'
+    action '$$' (noprec):   reduce qlType --> 'QLINT'
+
+  immediate action:   reduce qlType --> 'QLINT'
+ gotos:
+
+state 34:
+  items:
+    qlType -> 'QLDECIMAL' . 
+
+  actions:
+    action 'END' (noprec):   reduce qlType --> 'QLDECIMAL'
+    action 'EQ' (noprec):   reduce qlType --> 'QLDECIMAL'
+    action 'NE' (noprec):   reduce qlType --> 'QLDECIMAL'
+    action 'LT' (noprec):   reduce qlType --> 'QLDECIMAL'
+    action 'LE' (noprec):   reduce qlType --> 'QLDECIMAL'
+    action 'GT' (noprec):   reduce qlType --> 'QLDECIMAL'
+    action 'GE' (noprec):   reduce qlType --> 'QLDECIMAL'
+    action 'AND' (noprec):   reduce qlType --> 'QLDECIMAL'
+    action 'OR' (noprec):   reduce qlType --> 'QLDECIMAL'
+    action 'PLUS' (noprec):   reduce qlType --> 'QLDECIMAL'
+    action 'MINUS' (noprec):   reduce qlType --> 'QLDECIMAL'
+    action 'MULT' (noprec):   reduce qlType --> 'QLDECIMAL'
+    action 'DIV' (noprec):   reduce qlType --> 'QLDECIMAL'
+    action 'NOT' (noprec):   reduce qlType --> 'QLDECIMAL'
+    action 'QLBOOL' (noprec):   reduce qlType --> 'QLDECIMAL'
+    action 'QLSTRING' (noprec):   reduce qlType --> 'QLDECIMAL'
+    action 'QLINT' (noprec):   reduce qlType --> 'QLDECIMAL'
+    action 'QLDECIMAL' (noprec):   reduce qlType --> 'QLDECIMAL'
+    action 'DECIMAL' (noprec):   reduce qlType --> 'QLDECIMAL'
+    action 'INT' (noprec):   reduce qlType --> 'QLDECIMAL'
+    action 'STRING' (noprec):   reduce qlType --> 'QLDECIMAL'
+    action 'BOOL' (noprec):   reduce qlType --> 'QLDECIMAL'
+    action 'LABEL' (noprec):   reduce qlType --> 'QLDECIMAL'
+    action 'IDENTIFIER' (noprec):   reduce qlType --> 'QLDECIMAL'
+    action 'ASSIGN' (noprec):   reduce qlType --> 'QLDECIMAL'
+    action 'COLON' (noprec):   reduce qlType --> 'QLDECIMAL'
+    action 'B_OPEN' (noprec):   reduce qlType --> 'QLDECIMAL'
+    action 'B_CLOSE' (noprec):   reduce qlType --> 'QLDECIMAL'
+    action 'CB_OPEN' (noprec):   reduce qlType --> 'QLDECIMAL'
+    action 'CB_CLOSE' (noprec):   reduce qlType --> 'QLDECIMAL'
+    action 'IF' (noprec):   reduce qlType --> 'QLDECIMAL'
+    action 'ELSE' (noprec):   reduce qlType --> 'QLDECIMAL'
+    action 'FORM' (noprec):   reduce qlType --> 'QLDECIMAL'
+    action 'error' (noprec):   reduce qlType --> 'QLDECIMAL'
+    action '#' (noprec):   reduce qlType --> 'QLDECIMAL'
+    action '$$' (noprec):   reduce qlType --> 'QLDECIMAL'
+
+  immediate action:   reduce qlType --> 'QLDECIMAL'
+ gotos:
+
+state 35:
+  items:
+    literal -> 'STRING' . 
+
+  actions:
+    action 'END' (noprec):   reduce literal --> 'STRING'
+    action 'EQ' (noprec):   reduce literal --> 'STRING'
+    action 'NE' (noprec):   reduce literal --> 'STRING'
+    action 'LT' (noprec):   reduce literal --> 'STRING'
+    action 'LE' (noprec):   reduce literal --> 'STRING'
+    action 'GT' (noprec):   reduce literal --> 'STRING'
+    action 'GE' (noprec):   reduce literal --> 'STRING'
+    action 'AND' (noprec):   reduce literal --> 'STRING'
+    action 'OR' (noprec):   reduce literal --> 'STRING'
+    action 'PLUS' (noprec):   reduce literal --> 'STRING'
+    action 'MINUS' (noprec):   reduce literal --> 'STRING'
+    action 'MULT' (noprec):   reduce literal --> 'STRING'
+    action 'DIV' (noprec):   reduce literal --> 'STRING'
+    action 'NOT' (noprec):   reduce literal --> 'STRING'
+    action 'QLBOOL' (noprec):   reduce literal --> 'STRING'
+    action 'QLSTRING' (noprec):   reduce literal --> 'STRING'
+    action 'QLINT' (noprec):   reduce literal --> 'STRING'
+    action 'QLDECIMAL' (noprec):   reduce literal --> 'STRING'
+    action 'DECIMAL' (noprec):   reduce literal --> 'STRING'
+    action 'INT' (noprec):   reduce literal --> 'STRING'
+    action 'STRING' (noprec):   reduce literal --> 'STRING'
+    action 'BOOL' (noprec):   reduce literal --> 'STRING'
+    action 'LABEL' (noprec):   reduce literal --> 'STRING'
+    action 'IDENTIFIER' (noprec):   reduce literal --> 'STRING'
+    action 'ASSIGN' (noprec):   reduce literal --> 'STRING'
+    action 'COLON' (noprec):   reduce literal --> 'STRING'
+    action 'B_OPEN' (noprec):   reduce literal --> 'STRING'
+    action 'B_CLOSE' (noprec):   reduce literal --> 'STRING'
+    action 'CB_OPEN' (noprec):   reduce literal --> 'STRING'
+    action 'CB_CLOSE' (noprec):   reduce literal --> 'STRING'
+    action 'IF' (noprec):   reduce literal --> 'STRING'
+    action 'ELSE' (noprec):   reduce literal --> 'STRING'
+    action 'FORM' (noprec):   reduce literal --> 'STRING'
+    action 'error' (noprec):   reduce literal --> 'STRING'
+    action '#' (noprec):   reduce literal --> 'STRING'
+    action '$$' (noprec):   reduce literal --> 'STRING'
+
+  immediate action:   reduce literal --> 'STRING'
+ gotos:
+
+state 36:
+  items:
+    literal -> 'LABEL' . 
+
+  actions:
+    action 'END' (noprec):   reduce literal --> 'LABEL'
+    action 'EQ' (noprec):   reduce literal --> 'LABEL'
+    action 'NE' (noprec):   reduce literal --> 'LABEL'
+    action 'LT' (noprec):   reduce literal --> 'LABEL'
+    action 'LE' (noprec):   reduce literal --> 'LABEL'
+    action 'GT' (noprec):   reduce literal --> 'LABEL'
+    action 'GE' (noprec):   reduce literal --> 'LABEL'
+    action 'AND' (noprec):   reduce literal --> 'LABEL'
+    action 'OR' (noprec):   reduce literal --> 'LABEL'
+    action 'PLUS' (noprec):   reduce literal --> 'LABEL'
+    action 'MINUS' (noprec):   reduce literal --> 'LABEL'
+    action 'MULT' (noprec):   reduce literal --> 'LABEL'
+    action 'DIV' (noprec):   reduce literal --> 'LABEL'
+    action 'NOT' (noprec):   reduce literal --> 'LABEL'
+    action 'QLBOOL' (noprec):   reduce literal --> 'LABEL'
+    action 'QLSTRING' (noprec):   reduce literal --> 'LABEL'
+    action 'QLINT' (noprec):   reduce literal --> 'LABEL'
+    action 'QLDECIMAL' (noprec):   reduce literal --> 'LABEL'
+    action 'DECIMAL' (noprec):   reduce literal --> 'LABEL'
+    action 'INT' (noprec):   reduce literal --> 'LABEL'
+    action 'STRING' (noprec):   reduce literal --> 'LABEL'
+    action 'BOOL' (noprec):   reduce literal --> 'LABEL'
+    action 'LABEL' (noprec):   reduce literal --> 'LABEL'
+    action 'IDENTIFIER' (noprec):   reduce literal --> 'LABEL'
+    action 'ASSIGN' (noprec):   reduce literal --> 'LABEL'
+    action 'COLON' (noprec):   reduce literal --> 'LABEL'
+    action 'B_OPEN' (noprec):   reduce literal --> 'LABEL'
+    action 'B_CLOSE' (noprec):   reduce literal --> 'LABEL'
+    action 'CB_OPEN' (noprec):   reduce literal --> 'LABEL'
+    action 'CB_CLOSE' (noprec):   reduce literal --> 'LABEL'
+    action 'IF' (noprec):   reduce literal --> 'LABEL'
+    action 'ELSE' (noprec):   reduce literal --> 'LABEL'
+    action 'FORM' (noprec):   reduce literal --> 'LABEL'
+    action 'error' (noprec):   reduce literal --> 'LABEL'
+    action '#' (noprec):   reduce literal --> 'LABEL'
+    action '$$' (noprec):   reduce literal --> 'LABEL'
+
+  immediate action:   reduce literal --> 'LABEL'
+ gotos:
+
+state 37:
+  items:
+    literal -> 'BOOL' . 
+
+  actions:
+    action 'END' (noprec):   reduce literal --> 'BOOL'
+    action 'EQ' (noprec):   reduce literal --> 'BOOL'
+    action 'NE' (noprec):   reduce literal --> 'BOOL'
+    action 'LT' (noprec):   reduce literal --> 'BOOL'
+    action 'LE' (noprec):   reduce literal --> 'BOOL'
+    action 'GT' (noprec):   reduce literal --> 'BOOL'
+    action 'GE' (noprec):   reduce literal --> 'BOOL'
+    action 'AND' (noprec):   reduce literal --> 'BOOL'
+    action 'OR' (noprec):   reduce literal --> 'BOOL'
+    action 'PLUS' (noprec):   reduce literal --> 'BOOL'
+    action 'MINUS' (noprec):   reduce literal --> 'BOOL'
+    action 'MULT' (noprec):   reduce literal --> 'BOOL'
+    action 'DIV' (noprec):   reduce literal --> 'BOOL'
+    action 'NOT' (noprec):   reduce literal --> 'BOOL'
+    action 'QLBOOL' (noprec):   reduce literal --> 'BOOL'
+    action 'QLSTRING' (noprec):   reduce literal --> 'BOOL'
+    action 'QLINT' (noprec):   reduce literal --> 'BOOL'
+    action 'QLDECIMAL' (noprec):   reduce literal --> 'BOOL'
+    action 'DECIMAL' (noprec):   reduce literal --> 'BOOL'
+    action 'INT' (noprec):   reduce literal --> 'BOOL'
+    action 'STRING' (noprec):   reduce literal --> 'BOOL'
+    action 'BOOL' (noprec):   reduce literal --> 'BOOL'
+    action 'LABEL' (noprec):   reduce literal --> 'BOOL'
+    action 'IDENTIFIER' (noprec):   reduce literal --> 'BOOL'
+    action 'ASSIGN' (noprec):   reduce literal --> 'BOOL'
+    action 'COLON' (noprec):   reduce literal --> 'BOOL'
+    action 'B_OPEN' (noprec):   reduce literal --> 'BOOL'
+    action 'B_CLOSE' (noprec):   reduce literal --> 'BOOL'
+    action 'CB_OPEN' (noprec):   reduce literal --> 'BOOL'
+    action 'CB_CLOSE' (noprec):   reduce literal --> 'BOOL'
+    action 'IF' (noprec):   reduce literal --> 'BOOL'
+    action 'ELSE' (noprec):   reduce literal --> 'BOOL'
+    action 'FORM' (noprec):   reduce literal --> 'BOOL'
+    action 'error' (noprec):   reduce literal --> 'BOOL'
+    action '#' (noprec):   reduce literal --> 'BOOL'
+    action '$$' (noprec):   reduce literal --> 'BOOL'
+
+  immediate action:   reduce literal --> 'BOOL'
+ gotos:
+
+state 38:
+  items:
+    literal -> 'INT' . 
+
+  actions:
+    action 'END' (noprec):   reduce literal --> 'INT'
+    action 'EQ' (noprec):   reduce literal --> 'INT'
+    action 'NE' (noprec):   reduce literal --> 'INT'
+    action 'LT' (noprec):   reduce literal --> 'INT'
+    action 'LE' (noprec):   reduce literal --> 'INT'
+    action 'GT' (noprec):   reduce literal --> 'INT'
+    action 'GE' (noprec):   reduce literal --> 'INT'
+    action 'AND' (noprec):   reduce literal --> 'INT'
+    action 'OR' (noprec):   reduce literal --> 'INT'
+    action 'PLUS' (noprec):   reduce literal --> 'INT'
+    action 'MINUS' (noprec):   reduce literal --> 'INT'
+    action 'MULT' (noprec):   reduce literal --> 'INT'
+    action 'DIV' (noprec):   reduce literal --> 'INT'
+    action 'NOT' (noprec):   reduce literal --> 'INT'
+    action 'QLBOOL' (noprec):   reduce literal --> 'INT'
+    action 'QLSTRING' (noprec):   reduce literal --> 'INT'
+    action 'QLINT' (noprec):   reduce literal --> 'INT'
+    action 'QLDECIMAL' (noprec):   reduce literal --> 'INT'
+    action 'DECIMAL' (noprec):   reduce literal --> 'INT'
+    action 'INT' (noprec):   reduce literal --> 'INT'
+    action 'STRING' (noprec):   reduce literal --> 'INT'
+    action 'BOOL' (noprec):   reduce literal --> 'INT'
+    action 'LABEL' (noprec):   reduce literal --> 'INT'
+    action 'IDENTIFIER' (noprec):   reduce literal --> 'INT'
+    action 'ASSIGN' (noprec):   reduce literal --> 'INT'
+    action 'COLON' (noprec):   reduce literal --> 'INT'
+    action 'B_OPEN' (noprec):   reduce literal --> 'INT'
+    action 'B_CLOSE' (noprec):   reduce literal --> 'INT'
+    action 'CB_OPEN' (noprec):   reduce literal --> 'INT'
+    action 'CB_CLOSE' (noprec):   reduce literal --> 'INT'
+    action 'IF' (noprec):   reduce literal --> 'INT'
+    action 'ELSE' (noprec):   reduce literal --> 'INT'
+    action 'FORM' (noprec):   reduce literal --> 'INT'
+    action 'error' (noprec):   reduce literal --> 'INT'
+    action '#' (noprec):   reduce literal --> 'INT'
+    action '$$' (noprec):   reduce literal --> 'INT'
+
+  immediate action:   reduce literal --> 'INT'
+ gotos:
+
+state 39:
+  items:
+    literal -> 'DECIMAL' . 
+
+  actions:
+    action 'END' (noprec):   reduce literal --> 'DECIMAL'
+    action 'EQ' (noprec):   reduce literal --> 'DECIMAL'
+    action 'NE' (noprec):   reduce literal --> 'DECIMAL'
+    action 'LT' (noprec):   reduce literal --> 'DECIMAL'
+    action 'LE' (noprec):   reduce literal --> 'DECIMAL'
+    action 'GT' (noprec):   reduce literal --> 'DECIMAL'
+    action 'GE' (noprec):   reduce literal --> 'DECIMAL'
+    action 'AND' (noprec):   reduce literal --> 'DECIMAL'
+    action 'OR' (noprec):   reduce literal --> 'DECIMAL'
+    action 'PLUS' (noprec):   reduce literal --> 'DECIMAL'
+    action 'MINUS' (noprec):   reduce literal --> 'DECIMAL'
+    action 'MULT' (noprec):   reduce literal --> 'DECIMAL'
+    action 'DIV' (noprec):   reduce literal --> 'DECIMAL'
+    action 'NOT' (noprec):   reduce literal --> 'DECIMAL'
+    action 'QLBOOL' (noprec):   reduce literal --> 'DECIMAL'
+    action 'QLSTRING' (noprec):   reduce literal --> 'DECIMAL'
+    action 'QLINT' (noprec):   reduce literal --> 'DECIMAL'
+    action 'QLDECIMAL' (noprec):   reduce literal --> 'DECIMAL'
+    action 'DECIMAL' (noprec):   reduce literal --> 'DECIMAL'
+    action 'INT' (noprec):   reduce literal --> 'DECIMAL'
+    action 'STRING' (noprec):   reduce literal --> 'DECIMAL'
+    action 'BOOL' (noprec):   reduce literal --> 'DECIMAL'
+    action 'LABEL' (noprec):   reduce literal --> 'DECIMAL'
+    action 'IDENTIFIER' (noprec):   reduce literal --> 'DECIMAL'
+    action 'ASSIGN' (noprec):   reduce literal --> 'DECIMAL'
+    action 'COLON' (noprec):   reduce literal --> 'DECIMAL'
+    action 'B_OPEN' (noprec):   reduce literal --> 'DECIMAL'
+    action 'B_CLOSE' (noprec):   reduce literal --> 'DECIMAL'
+    action 'CB_OPEN' (noprec):   reduce literal --> 'DECIMAL'
+    action 'CB_CLOSE' (noprec):   reduce literal --> 'DECIMAL'
+    action 'IF' (noprec):   reduce literal --> 'DECIMAL'
+    action 'ELSE' (noprec):   reduce literal --> 'DECIMAL'
+    action 'FORM' (noprec):   reduce literal --> 'DECIMAL'
+    action 'error' (noprec):   reduce literal --> 'DECIMAL'
+    action '#' (noprec):   reduce literal --> 'DECIMAL'
+    action '$$' (noprec):   reduce literal --> 'DECIMAL'
+
+  immediate action:   reduce literal --> 'DECIMAL'
+ gotos:
+
+state 40:
+  items:
+    expression -> 'B_OPEN' . expression 'B_CLOSE'
+
+  actions:
+    action 'END' (noprec):   error
+    action 'EQ' (noprec):   error
+    action 'NE' (noprec):   error
+    action 'LT' (noprec):   error
+    action 'LE' (noprec):   error
+    action 'GT' (noprec):   error
+    action 'GE' (noprec):   error
+    action 'AND' (noprec):   error
+    action 'OR' (noprec):   error
+    action 'PLUS' (noprec):   error
+    action 'MINUS' (noprec):   error
+    action 'MULT' (noprec):   error
+    action 'DIV' (noprec):   error
+    action 'NOT' (explicit right 10000):   shift 45
+    action 'QLBOOL' (noprec):   error
+    action 'QLSTRING' (noprec):   error
+    action 'QLINT' (noprec):   error
+    action 'QLDECIMAL' (noprec):   error
+    action 'DECIMAL' (noprec):   shift 39
+    action 'INT' (noprec):   shift 38
+    action 'STRING' (noprec):   shift 35
+    action 'BOOL' (noprec):   shift 37
+    action 'LABEL' (noprec):   shift 36
+    action 'IDENTIFIER' (noprec):   shift 43
+    action 'ASSIGN' (noprec):   error
+    action 'COLON' (noprec):   error
+    action 'B_OPEN' (noprec):   shift 40
+    action 'B_CLOSE' (noprec):   error
+    action 'CB_OPEN' (noprec):   error
+    action 'CB_CLOSE' (noprec):   error
+    action 'IF' (noprec):   error
+    action 'ELSE' (noprec):   error
+    action 'FORM' (noprec):   error
+    action 'error' (noprec):   error
+    action '#' (noprec):   error
+    action '$$' (noprec):   error
+
+  immediate action: <none>
+ gotos:
+    goto literal: 44
+    goto expression: 41
+
+state 41:
+  items:
+    expression -> 'B_OPEN' expression . 'B_CLOSE'
+    expression -> expression . 'AND' expression
+    expression -> expression . 'OR' expression
+    expression -> expression . 'LT' expression
+    expression -> expression . 'GT' expression
+    expression -> expression . 'LE' expression
+    expression -> expression . 'GE' expression
+    expression -> expression . 'EQ' expression
+    expression -> expression . 'NE' expression
+    expression -> expression . 'PLUS' expression
+    expression -> expression . 'MINUS' expression
+    expression -> expression . 'MULT' expression
+    expression -> expression . 'DIV' expression
+
+  actions:
+    action 'END' (noprec):   error
+    action 'EQ' (explicit left 9997):   shift 65
+    action 'NE' (explicit left 9997):   shift 66
+    action 'LT' (explicit left 9997):   shift 61
+    action 'LE' (explicit left 9997):   shift 63
+    action 'GT' (explicit left 9997):   shift 62
+    action 'GE' (explicit left 9997):   shift 64
+    action 'AND' (explicit left 9996):   shift 59
+    action 'OR' (explicit left 9996):   shift 60
+    action 'PLUS' (explicit left 9998):   shift 67
+    action 'MINUS' (explicit left 9998):   shift 68
+    action 'MULT' (explicit left 9999):   shift 69
+    action 'DIV' (explicit left 9999):   shift 70
+    action 'NOT' (noprec):   error
+    action 'QLBOOL' (noprec):   error
+    action 'QLSTRING' (noprec):   error
+    action 'QLINT' (noprec):   error
+    action 'QLDECIMAL' (noprec):   error
+    action 'DECIMAL' (noprec):   error
+    action 'INT' (noprec):   error
+    action 'STRING' (noprec):   error
+    action 'BOOL' (noprec):   error
+    action 'LABEL' (noprec):   error
+    action 'IDENTIFIER' (noprec):   error
+    action 'ASSIGN' (noprec):   error
+    action 'COLON' (noprec):   error
+    action 'B_OPEN' (noprec):   error
+    action 'B_CLOSE' (noprec):   shift 42
+    action 'CB_OPEN' (noprec):   error
+    action 'CB_CLOSE' (noprec):   error
+    action 'IF' (noprec):   error
+    action 'ELSE' (noprec):   error
+    action 'FORM' (noprec):   error
+    action 'error' (noprec):   error
+    action '#' (noprec):   error
+    action '$$' (noprec):   error
+
+  immediate action: <none>
+ gotos:
+
+state 42:
+  items:
+    expression -> 'B_OPEN' expression 'B_CLOSE' . 
+
+  actions:
+    action 'END' (noprec):   reduce expression --> 'B_OPEN' expression 'B_CLOSE'
+    action 'EQ' (noprec):   reduce expression --> 'B_OPEN' expression 'B_CLOSE'
+    action 'NE' (noprec):   reduce expression --> 'B_OPEN' expression 'B_CLOSE'
+    action 'LT' (noprec):   reduce expression --> 'B_OPEN' expression 'B_CLOSE'
+    action 'LE' (noprec):   reduce expression --> 'B_OPEN' expression 'B_CLOSE'
+    action 'GT' (noprec):   reduce expression --> 'B_OPEN' expression 'B_CLOSE'
+    action 'GE' (noprec):   reduce expression --> 'B_OPEN' expression 'B_CLOSE'
+    action 'AND' (noprec):   reduce expression --> 'B_OPEN' expression 'B_CLOSE'
+    action 'OR' (noprec):   reduce expression --> 'B_OPEN' expression 'B_CLOSE'
+    action 'PLUS' (noprec):   reduce expression --> 'B_OPEN' expression 'B_CLOSE'
+    action 'MINUS' (noprec):   reduce expression --> 'B_OPEN' expression 'B_CLOSE'
+    action 'MULT' (noprec):   reduce expression --> 'B_OPEN' expression 'B_CLOSE'
+    action 'DIV' (noprec):   reduce expression --> 'B_OPEN' expression 'B_CLOSE'
+    action 'NOT' (noprec):   reduce expression --> 'B_OPEN' expression 'B_CLOSE'
+    action 'QLBOOL' (noprec):   reduce expression --> 'B_OPEN' expression 'B_CLOSE'
+    action 'QLSTRING' (noprec):   reduce expression --> 'B_OPEN' expression 'B_CLOSE'
+    action 'QLINT' (noprec):   reduce expression --> 'B_OPEN' expression 'B_CLOSE'
+    action 'QLDECIMAL' (noprec):   reduce expression --> 'B_OPEN' expression 'B_CLOSE'
+    action 'DECIMAL' (noprec):   reduce expression --> 'B_OPEN' expression 'B_CLOSE'
+    action 'INT' (noprec):   reduce expression --> 'B_OPEN' expression 'B_CLOSE'
+    action 'STRING' (noprec):   reduce expression --> 'B_OPEN' expression 'B_CLOSE'
+    action 'BOOL' (noprec):   reduce expression --> 'B_OPEN' expression 'B_CLOSE'
+    action 'LABEL' (noprec):   reduce expression --> 'B_OPEN' expression 'B_CLOSE'
+    action 'IDENTIFIER' (noprec):   reduce expression --> 'B_OPEN' expression 'B_CLOSE'
+    action 'ASSIGN' (noprec):   reduce expression --> 'B_OPEN' expression 'B_CLOSE'
+    action 'COLON' (noprec):   reduce expression --> 'B_OPEN' expression 'B_CLOSE'
+    action 'B_OPEN' (noprec):   reduce expression --> 'B_OPEN' expression 'B_CLOSE'
+    action 'B_CLOSE' (noprec):   reduce expression --> 'B_OPEN' expression 'B_CLOSE'
+    action 'CB_OPEN' (noprec):   reduce expression --> 'B_OPEN' expression 'B_CLOSE'
+    action 'CB_CLOSE' (noprec):   reduce expression --> 'B_OPEN' expression 'B_CLOSE'
+    action 'IF' (noprec):   reduce expression --> 'B_OPEN' expression 'B_CLOSE'
+    action 'ELSE' (noprec):   reduce expression --> 'B_OPEN' expression 'B_CLOSE'
+    action 'FORM' (noprec):   reduce expression --> 'B_OPEN' expression 'B_CLOSE'
+    action 'error' (noprec):   reduce expression --> 'B_OPEN' expression 'B_CLOSE'
+    action '#' (noprec):   reduce expression --> 'B_OPEN' expression 'B_CLOSE'
+    action '$$' (noprec):   reduce expression --> 'B_OPEN' expression 'B_CLOSE'
+
+  immediate action:   reduce expression --> 'B_OPEN' expression 'B_CLOSE'
+ gotos:
+
+state 43:
+  items:
+    expression -> 'IDENTIFIER' . 
+
+  actions:
+    action 'END' (noprec):   reduce expression --> 'IDENTIFIER'
+    action 'EQ' (noprec):   reduce expression --> 'IDENTIFIER'
+    action 'NE' (noprec):   reduce expression --> 'IDENTIFIER'
+    action 'LT' (noprec):   reduce expression --> 'IDENTIFIER'
+    action 'LE' (noprec):   reduce expression --> 'IDENTIFIER'
+    action 'GT' (noprec):   reduce expression --> 'IDENTIFIER'
+    action 'GE' (noprec):   reduce expression --> 'IDENTIFIER'
+    action 'AND' (noprec):   reduce expression --> 'IDENTIFIER'
+    action 'OR' (noprec):   reduce expression --> 'IDENTIFIER'
+    action 'PLUS' (noprec):   reduce expression --> 'IDENTIFIER'
+    action 'MINUS' (noprec):   reduce expression --> 'IDENTIFIER'
+    action 'MULT' (noprec):   reduce expression --> 'IDENTIFIER'
+    action 'DIV' (noprec):   reduce expression --> 'IDENTIFIER'
+    action 'NOT' (noprec):   reduce expression --> 'IDENTIFIER'
+    action 'QLBOOL' (noprec):   reduce expression --> 'IDENTIFIER'
+    action 'QLSTRING' (noprec):   reduce expression --> 'IDENTIFIER'
+    action 'QLINT' (noprec):   reduce expression --> 'IDENTIFIER'
+    action 'QLDECIMAL' (noprec):   reduce expression --> 'IDENTIFIER'
+    action 'DECIMAL' (noprec):   reduce expression --> 'IDENTIFIER'
+    action 'INT' (noprec):   reduce expression --> 'IDENTIFIER'
+    action 'STRING' (noprec):   reduce expression --> 'IDENTIFIER'
+    action 'BOOL' (noprec):   reduce expression --> 'IDENTIFIER'
+    action 'LABEL' (noprec):   reduce expression --> 'IDENTIFIER'
+    action 'IDENTIFIER' (noprec):   reduce expression --> 'IDENTIFIER'
+    action 'ASSIGN' (noprec):   reduce expression --> 'IDENTIFIER'
+    action 'COLON' (noprec):   reduce expression --> 'IDENTIFIER'
+    action 'B_OPEN' (noprec):   reduce expression --> 'IDENTIFIER'
+    action 'B_CLOSE' (noprec):   reduce expression --> 'IDENTIFIER'
+    action 'CB_OPEN' (noprec):   reduce expression --> 'IDENTIFIER'
+    action 'CB_CLOSE' (noprec):   reduce expression --> 'IDENTIFIER'
+    action 'IF' (noprec):   reduce expression --> 'IDENTIFIER'
+    action 'ELSE' (noprec):   reduce expression --> 'IDENTIFIER'
+    action 'FORM' (noprec):   reduce expression --> 'IDENTIFIER'
+    action 'error' (noprec):   reduce expression --> 'IDENTIFIER'
+    action '#' (noprec):   reduce expression --> 'IDENTIFIER'
+    action '$$' (noprec):   reduce expression --> 'IDENTIFIER'
+
+  immediate action:   reduce expression --> 'IDENTIFIER'
+ gotos:
+
+state 44:
+  items:
+    expression -> literal . 
+
+  actions:
+    action 'END' (noprec):   reduce expression --> literal
+    action 'EQ' (noprec):   reduce expression --> literal
+    action 'NE' (noprec):   reduce expression --> literal
+    action 'LT' (noprec):   reduce expression --> literal
+    action 'LE' (noprec):   reduce expression --> literal
+    action 'GT' (noprec):   reduce expression --> literal
+    action 'GE' (noprec):   reduce expression --> literal
+    action 'AND' (noprec):   reduce expression --> literal
+    action 'OR' (noprec):   reduce expression --> literal
+    action 'PLUS' (noprec):   reduce expression --> literal
+    action 'MINUS' (noprec):   reduce expression --> literal
+    action 'MULT' (noprec):   reduce expression --> literal
+    action 'DIV' (noprec):   reduce expression --> literal
+    action 'NOT' (noprec):   reduce expression --> literal
+    action 'QLBOOL' (noprec):   reduce expression --> literal
+    action 'QLSTRING' (noprec):   reduce expression --> literal
+    action 'QLINT' (noprec):   reduce expression --> literal
+    action 'QLDECIMAL' (noprec):   reduce expression --> literal
+    action 'DECIMAL' (noprec):   reduce expression --> literal
+    action 'INT' (noprec):   reduce expression --> literal
+    action 'STRING' (noprec):   reduce expression --> literal
+    action 'BOOL' (noprec):   reduce expression --> literal
+    action 'LABEL' (noprec):   reduce expression --> literal
+    action 'IDENTIFIER' (noprec):   reduce expression --> literal
+    action 'ASSIGN' (noprec):   reduce expression --> literal
+    action 'COLON' (noprec):   reduce expression --> literal
+    action 'B_OPEN' (noprec):   reduce expression --> literal
+    action 'B_CLOSE' (noprec):   reduce expression --> literal
+    action 'CB_OPEN' (noprec):   reduce expression --> literal
+    action 'CB_CLOSE' (noprec):   reduce expression --> literal
+    action 'IF' (noprec):   reduce expression --> literal
+    action 'ELSE' (noprec):   reduce expression --> literal
+    action 'FORM' (noprec):   reduce expression --> literal
+    action 'error' (noprec):   reduce expression --> literal
+    action '#' (noprec):   reduce expression --> literal
+    action '$$' (noprec):   reduce expression --> literal
+
+  immediate action:   reduce expression --> literal
+ gotos:
+
+state 45:
+  items:
+    expression -> 'NOT' . expression
+
+  actions:
+    action 'END' (noprec):   error
+    action 'EQ' (noprec):   error
+    action 'NE' (noprec):   error
+    action 'LT' (noprec):   error
+    action 'LE' (noprec):   error
+    action 'GT' (noprec):   error
+    action 'GE' (noprec):   error
+    action 'AND' (noprec):   error
+    action 'OR' (noprec):   error
+    action 'PLUS' (noprec):   error
+    action 'MINUS' (noprec):   error
+    action 'MULT' (noprec):   error
+    action 'DIV' (noprec):   error
+    action 'NOT' (explicit right 10000):   shift 45
+    action 'QLBOOL' (noprec):   error
+    action 'QLSTRING' (noprec):   error
+    action 'QLINT' (noprec):   error
+    action 'QLDECIMAL' (noprec):   error
+    action 'DECIMAL' (noprec):   shift 39
+    action 'INT' (noprec):   shift 38
+    action 'STRING' (noprec):   shift 35
+    action 'BOOL' (noprec):   shift 37
+    action 'LABEL' (noprec):   shift 36
+    action 'IDENTIFIER' (noprec):   shift 43
+    action 'ASSIGN' (noprec):   error
+    action 'COLON' (noprec):   error
+    action 'B_OPEN' (noprec):   shift 40
+    action 'B_CLOSE' (noprec):   error
+    action 'CB_OPEN' (noprec):   error
+    action 'CB_CLOSE' (noprec):   error
+    action 'IF' (noprec):   error
+    action 'ELSE' (noprec):   error
+    action 'FORM' (noprec):   error
+    action 'error' (noprec):   error
+    action '#' (noprec):   error
+    action '$$' (noprec):   error
+
+  immediate action: <none>
+ gotos:
+    goto literal: 44
+    goto expression: 46
+
+state 46:
+  items:
+    expression -> 'NOT' expression . 
+    expression -> expression . 'AND' expression
+    expression -> expression . 'OR' expression
+    expression -> expression . 'LT' expression
+    expression -> expression . 'GT' expression
+    expression -> expression . 'LE' expression
+    expression -> expression . 'GE' expression
+    expression -> expression . 'EQ' expression
+    expression -> expression . 'NE' expression
+    expression -> expression . 'PLUS' expression
+    expression -> expression . 'MINUS' expression
+    expression -> expression . 'MULT' expression
+    expression -> expression . 'DIV' expression
+
+  actions:
+    action 'END' (explicit right 10000):   reduce expression --> 'NOT' expression
+    action 'EQ' (explicit right 10000):   reduce expression --> 'NOT' expression
+    action 'NE' (explicit right 10000):   reduce expression --> 'NOT' expression
+    action 'LT' (explicit right 10000):   reduce expression --> 'NOT' expression
+    action 'LE' (explicit right 10000):   reduce expression --> 'NOT' expression
+    action 'GT' (explicit right 10000):   reduce expression --> 'NOT' expression
+    action 'GE' (explicit right 10000):   reduce expression --> 'NOT' expression
+    action 'AND' (explicit right 10000):   reduce expression --> 'NOT' expression
+    action 'OR' (explicit right 10000):   reduce expression --> 'NOT' expression
+    action 'PLUS' (explicit right 10000):   reduce expression --> 'NOT' expression
+    action 'MINUS' (explicit right 10000):   reduce expression --> 'NOT' expression
+    action 'MULT' (explicit right 10000):   reduce expression --> 'NOT' expression
+    action 'DIV' (explicit right 10000):   reduce expression --> 'NOT' expression
+    action 'NOT' (explicit right 10000):   reduce expression --> 'NOT' expression
+    action 'QLBOOL' (explicit right 10000):   reduce expression --> 'NOT' expression
+    action 'QLSTRING' (explicit right 10000):   reduce expression --> 'NOT' expression
+    action 'QLINT' (explicit right 10000):   reduce expression --> 'NOT' expression
+    action 'QLDECIMAL' (explicit right 10000):   reduce expression --> 'NOT' expression
+    action 'DECIMAL' (explicit right 10000):   reduce expression --> 'NOT' expression
+    action 'INT' (explicit right 10000):   reduce expression --> 'NOT' expression
+    action 'STRING' (explicit right 10000):   reduce expression --> 'NOT' expression
+    action 'BOOL' (explicit right 10000):   reduce expression --> 'NOT' expression
+    action 'LABEL' (explicit right 10000):   reduce expression --> 'NOT' expression
+    action 'IDENTIFIER' (explicit right 10000):   reduce expression --> 'NOT' expression
+    action 'ASSIGN' (explicit right 10000):   reduce expression --> 'NOT' expression
+    action 'COLON' (explicit right 10000):   reduce expression --> 'NOT' expression
+    action 'B_OPEN' (explicit right 10000):   reduce expression --> 'NOT' expression
+    action 'B_CLOSE' (explicit right 10000):   reduce expression --> 'NOT' expression
+    action 'CB_OPEN' (explicit right 10000):   reduce expression --> 'NOT' expression
+    action 'CB_CLOSE' (explicit right 10000):   reduce expression --> 'NOT' expression
+    action 'IF' (explicit right 10000):   reduce expression --> 'NOT' expression
+    action 'ELSE' (explicit right 10000):   reduce expression --> 'NOT' expression
+    action 'FORM' (explicit right 10000):   reduce expression --> 'NOT' expression
+    action 'error' (explicit right 10000):   reduce expression --> 'NOT' expression
+    action '#' (explicit right 10000):   reduce expression --> 'NOT' expression
+    action '$$' (explicit right 10000):   reduce expression --> 'NOT' expression
+
+  immediate action: <none>
+ gotos:
+
+state 47:
+  items:
+    expression -> expression . 'AND' expression
+    expression -> expression 'AND' expression . 
+    expression -> expression . 'OR' expression
+    expression -> expression . 'LT' expression
+    expression -> expression . 'GT' expression
+    expression -> expression . 'LE' expression
+    expression -> expression . 'GE' expression
+    expression -> expression . 'EQ' expression
+    expression -> expression . 'NE' expression
+    expression -> expression . 'PLUS' expression
+    expression -> expression . 'MINUS' expression
+    expression -> expression . 'MULT' expression
+    expression -> expression . 'DIV' expression
+
+  actions:
+    action 'END' (explicit left 9996):   reduce expression --> expression 'AND' expression
+    action 'EQ' (explicit left 9997):   shift 65
+    action 'NE' (explicit left 9997):   shift 66
+    action 'LT' (explicit left 9997):   shift 61
+    action 'LE' (explicit left 9997):   shift 63
+    action 'GT' (explicit left 9997):   shift 62
+    action 'GE' (explicit left 9997):   shift 64
+    action 'AND' (explicit left 9996):   reduce expression --> expression 'AND' expression
+    action 'OR' (explicit left 9996):   reduce expression --> expression 'AND' expression
+    action 'PLUS' (explicit left 9998):   shift 67
+    action 'MINUS' (explicit left 9998):   shift 68
+    action 'MULT' (explicit left 9999):   shift 69
+    action 'DIV' (explicit left 9999):   shift 70
+    action 'NOT' (explicit left 9996):   reduce expression --> expression 'AND' expression
+    action 'QLBOOL' (explicit left 9996):   reduce expression --> expression 'AND' expression
+    action 'QLSTRING' (explicit left 9996):   reduce expression --> expression 'AND' expression
+    action 'QLINT' (explicit left 9996):   reduce expression --> expression 'AND' expression
+    action 'QLDECIMAL' (explicit left 9996):   reduce expression --> expression 'AND' expression
+    action 'DECIMAL' (explicit left 9996):   reduce expression --> expression 'AND' expression
+    action 'INT' (explicit left 9996):   reduce expression --> expression 'AND' expression
+    action 'STRING' (explicit left 9996):   reduce expression --> expression 'AND' expression
+    action 'BOOL' (explicit left 9996):   reduce expression --> expression 'AND' expression
+    action 'LABEL' (explicit left 9996):   reduce expression --> expression 'AND' expression
+    action 'IDENTIFIER' (explicit left 9996):   reduce expression --> expression 'AND' expression
+    action 'ASSIGN' (explicit left 9996):   reduce expression --> expression 'AND' expression
+    action 'COLON' (explicit left 9996):   reduce expression --> expression 'AND' expression
+    action 'B_OPEN' (explicit left 9996):   reduce expression --> expression 'AND' expression
+    action 'B_CLOSE' (explicit left 9996):   reduce expression --> expression 'AND' expression
+    action 'CB_OPEN' (explicit left 9996):   reduce expression --> expression 'AND' expression
+    action 'CB_CLOSE' (explicit left 9996):   reduce expression --> expression 'AND' expression
+    action 'IF' (explicit left 9996):   reduce expression --> expression 'AND' expression
+    action 'ELSE' (explicit left 9996):   reduce expression --> expression 'AND' expression
+    action 'FORM' (explicit left 9996):   reduce expression --> expression 'AND' expression
+    action 'error' (explicit left 9996):   reduce expression --> expression 'AND' expression
+    action '#' (explicit left 9996):   reduce expression --> expression 'AND' expression
+    action '$$' (explicit left 9996):   reduce expression --> expression 'AND' expression
+
+  immediate action: <none>
+ gotos:
+
+state 48:
+  items:
+    expression -> expression . 'AND' expression
+    expression -> expression . 'OR' expression
+    expression -> expression 'OR' expression . 
+    expression -> expression . 'LT' expression
+    expression -> expression . 'GT' expression
+    expression -> expression . 'LE' expression
+    expression -> expression . 'GE' expression
+    expression -> expression . 'EQ' expression
+    expression -> expression . 'NE' expression
+    expression -> expression . 'PLUS' expression
+    expression -> expression . 'MINUS' expression
+    expression -> expression . 'MULT' expression
+    expression -> expression . 'DIV' expression
+
+  actions:
+    action 'END' (explicit left 9996):   reduce expression --> expression 'OR' expression
+    action 'EQ' (explicit left 9997):   shift 65
+    action 'NE' (explicit left 9997):   shift 66
+    action 'LT' (explicit left 9997):   shift 61
+    action 'LE' (explicit left 9997):   shift 63
+    action 'GT' (explicit left 9997):   shift 62
+    action 'GE' (explicit left 9997):   shift 64
+    action 'AND' (explicit left 9996):   reduce expression --> expression 'OR' expression
+    action 'OR' (explicit left 9996):   reduce expression --> expression 'OR' expression
+    action 'PLUS' (explicit left 9998):   shift 67
+    action 'MINUS' (explicit left 9998):   shift 68
+    action 'MULT' (explicit left 9999):   shift 69
+    action 'DIV' (explicit left 9999):   shift 70
+    action 'NOT' (explicit left 9996):   reduce expression --> expression 'OR' expression
+    action 'QLBOOL' (explicit left 9996):   reduce expression --> expression 'OR' expression
+    action 'QLSTRING' (explicit left 9996):   reduce expression --> expression 'OR' expression
+    action 'QLINT' (explicit left 9996):   reduce expression --> expression 'OR' expression
+    action 'QLDECIMAL' (explicit left 9996):   reduce expression --> expression 'OR' expression
+    action 'DECIMAL' (explicit left 9996):   reduce expression --> expression 'OR' expression
+    action 'INT' (explicit left 9996):   reduce expression --> expression 'OR' expression
+    action 'STRING' (explicit left 9996):   reduce expression --> expression 'OR' expression
+    action 'BOOL' (explicit left 9996):   reduce expression --> expression 'OR' expression
+    action 'LABEL' (explicit left 9996):   reduce expression --> expression 'OR' expression
+    action 'IDENTIFIER' (explicit left 9996):   reduce expression --> expression 'OR' expression
+    action 'ASSIGN' (explicit left 9996):   reduce expression --> expression 'OR' expression
+    action 'COLON' (explicit left 9996):   reduce expression --> expression 'OR' expression
+    action 'B_OPEN' (explicit left 9996):   reduce expression --> expression 'OR' expression
+    action 'B_CLOSE' (explicit left 9996):   reduce expression --> expression 'OR' expression
+    action 'CB_OPEN' (explicit left 9996):   reduce expression --> expression 'OR' expression
+    action 'CB_CLOSE' (explicit left 9996):   reduce expression --> expression 'OR' expression
+    action 'IF' (explicit left 9996):   reduce expression --> expression 'OR' expression
+    action 'ELSE' (explicit left 9996):   reduce expression --> expression 'OR' expression
+    action 'FORM' (explicit left 9996):   reduce expression --> expression 'OR' expression
+    action 'error' (explicit left 9996):   reduce expression --> expression 'OR' expression
+    action '#' (explicit left 9996):   reduce expression --> expression 'OR' expression
+    action '$$' (explicit left 9996):   reduce expression --> expression 'OR' expression
+
+  immediate action: <none>
+ gotos:
+
+state 49:
+  items:
+    expression -> expression . 'AND' expression
+    expression -> expression . 'OR' expression
+    expression -> expression . 'LT' expression
+    expression -> expression 'LT' expression . 
+    expression -> expression . 'GT' expression
+    expression -> expression . 'LE' expression
+    expression -> expression . 'GE' expression
+    expression -> expression . 'EQ' expression
+    expression -> expression . 'NE' expression
+    expression -> expression . 'PLUS' expression
+    expression -> expression . 'MINUS' expression
+    expression -> expression . 'MULT' expression
+    expression -> expression . 'DIV' expression
+
+  actions:
+    action 'END' (explicit left 9997):   reduce expression --> expression 'LT' expression
+    action 'EQ' (explicit left 9997):   reduce expression --> expression 'LT' expression
+    action 'NE' (explicit left 9997):   reduce expression --> expression 'LT' expression
+    action 'LT' (explicit left 9997):   reduce expression --> expression 'LT' expression
+    action 'LE' (explicit left 9997):   reduce expression --> expression 'LT' expression
+    action 'GT' (explicit left 9997):   reduce expression --> expression 'LT' expression
+    action 'GE' (explicit left 9997):   reduce expression --> expression 'LT' expression
+    action 'AND' (explicit left 9997):   reduce expression --> expression 'LT' expression
+    action 'OR' (explicit left 9997):   reduce expression --> expression 'LT' expression
+    action 'PLUS' (explicit left 9998):   shift 67
+    action 'MINUS' (explicit left 9998):   shift 68
+    action 'MULT' (explicit left 9999):   shift 69
+    action 'DIV' (explicit left 9999):   shift 70
+    action 'NOT' (explicit left 9997):   reduce expression --> expression 'LT' expression
+    action 'QLBOOL' (explicit left 9997):   reduce expression --> expression 'LT' expression
+    action 'QLSTRING' (explicit left 9997):   reduce expression --> expression 'LT' expression
+    action 'QLINT' (explicit left 9997):   reduce expression --> expression 'LT' expression
+    action 'QLDECIMAL' (explicit left 9997):   reduce expression --> expression 'LT' expression
+    action 'DECIMAL' (explicit left 9997):   reduce expression --> expression 'LT' expression
+    action 'INT' (explicit left 9997):   reduce expression --> expression 'LT' expression
+    action 'STRING' (explicit left 9997):   reduce expression --> expression 'LT' expression
+    action 'BOOL' (explicit left 9997):   reduce expression --> expression 'LT' expression
+    action 'LABEL' (explicit left 9997):   reduce expression --> expression 'LT' expression
+    action 'IDENTIFIER' (explicit left 9997):   reduce expression --> expression 'LT' expression
+    action 'ASSIGN' (explicit left 9997):   reduce expression --> expression 'LT' expression
+    action 'COLON' (explicit left 9997):   reduce expression --> expression 'LT' expression
+    action 'B_OPEN' (explicit left 9997):   reduce expression --> expression 'LT' expression
+    action 'B_CLOSE' (explicit left 9997):   reduce expression --> expression 'LT' expression
+    action 'CB_OPEN' (explicit left 9997):   reduce expression --> expression 'LT' expression
+    action 'CB_CLOSE' (explicit left 9997):   reduce expression --> expression 'LT' expression
+    action 'IF' (explicit left 9997):   reduce expression --> expression 'LT' expression
+    action 'ELSE' (explicit left 9997):   reduce expression --> expression 'LT' expression
+    action 'FORM' (explicit left 9997):   reduce expression --> expression 'LT' expression
+    action 'error' (explicit left 9997):   reduce expression --> expression 'LT' expression
+    action '#' (explicit left 9997):   reduce expression --> expression 'LT' expression
+    action '$$' (explicit left 9997):   reduce expression --> expression 'LT' expression
+
+  immediate action: <none>
+ gotos:
+
+state 50:
+  items:
+    expression -> expression . 'AND' expression
+    expression -> expression . 'OR' expression
+    expression -> expression . 'LT' expression
+    expression -> expression . 'GT' expression
+    expression -> expression 'GT' expression . 
+    expression -> expression . 'LE' expression
+    expression -> expression . 'GE' expression
+    expression -> expression . 'EQ' expression
+    expression -> expression . 'NE' expression
+    expression -> expression . 'PLUS' expression
+    expression -> expression . 'MINUS' expression
+    expression -> expression . 'MULT' expression
+    expression -> expression . 'DIV' expression
+
+  actions:
+    action 'END' (explicit left 9997):   reduce expression --> expression 'GT' expression
+    action 'EQ' (explicit left 9997):   reduce expression --> expression 'GT' expression
+    action 'NE' (explicit left 9997):   reduce expression --> expression 'GT' expression
+    action 'LT' (explicit left 9997):   reduce expression --> expression 'GT' expression
+    action 'LE' (explicit left 9997):   reduce expression --> expression 'GT' expression
+    action 'GT' (explicit left 9997):   reduce expression --> expression 'GT' expression
+    action 'GE' (explicit left 9997):   reduce expression --> expression 'GT' expression
+    action 'AND' (explicit left 9997):   reduce expression --> expression 'GT' expression
+    action 'OR' (explicit left 9997):   reduce expression --> expression 'GT' expression
+    action 'PLUS' (explicit left 9998):   shift 67
+    action 'MINUS' (explicit left 9998):   shift 68
+    action 'MULT' (explicit left 9999):   shift 69
+    action 'DIV' (explicit left 9999):   shift 70
+    action 'NOT' (explicit left 9997):   reduce expression --> expression 'GT' expression
+    action 'QLBOOL' (explicit left 9997):   reduce expression --> expression 'GT' expression
+    action 'QLSTRING' (explicit left 9997):   reduce expression --> expression 'GT' expression
+    action 'QLINT' (explicit left 9997):   reduce expression --> expression 'GT' expression
+    action 'QLDECIMAL' (explicit left 9997):   reduce expression --> expression 'GT' expression
+    action 'DECIMAL' (explicit left 9997):   reduce expression --> expression 'GT' expression
+    action 'INT' (explicit left 9997):   reduce expression --> expression 'GT' expression
+    action 'STRING' (explicit left 9997):   reduce expression --> expression 'GT' expression
+    action 'BOOL' (explicit left 9997):   reduce expression --> expression 'GT' expression
+    action 'LABEL' (explicit left 9997):   reduce expression --> expression 'GT' expression
+    action 'IDENTIFIER' (explicit left 9997):   reduce expression --> expression 'GT' expression
+    action 'ASSIGN' (explicit left 9997):   reduce expression --> expression 'GT' expression
+    action 'COLON' (explicit left 9997):   reduce expression --> expression 'GT' expression
+    action 'B_OPEN' (explicit left 9997):   reduce expression --> expression 'GT' expression
+    action 'B_CLOSE' (explicit left 9997):   reduce expression --> expression 'GT' expression
+    action 'CB_OPEN' (explicit left 9997):   reduce expression --> expression 'GT' expression
+    action 'CB_CLOSE' (explicit left 9997):   reduce expression --> expression 'GT' expression
+    action 'IF' (explicit left 9997):   reduce expression --> expression 'GT' expression
+    action 'ELSE' (explicit left 9997):   reduce expression --> expression 'GT' expression
+    action 'FORM' (explicit left 9997):   reduce expression --> expression 'GT' expression
+    action 'error' (explicit left 9997):   reduce expression --> expression 'GT' expression
+    action '#' (explicit left 9997):   reduce expression --> expression 'GT' expression
+    action '$$' (explicit left 9997):   reduce expression --> expression 'GT' expression
+
+  immediate action: <none>
+ gotos:
+
+state 51:
+  items:
+    expression -> expression . 'AND' expression
+    expression -> expression . 'OR' expression
+    expression -> expression . 'LT' expression
+    expression -> expression . 'GT' expression
+    expression -> expression . 'LE' expression
+    expression -> expression 'LE' expression . 
+    expression -> expression . 'GE' expression
+    expression -> expression . 'EQ' expression
+    expression -> expression . 'NE' expression
+    expression -> expression . 'PLUS' expression
+    expression -> expression . 'MINUS' expression
+    expression -> expression . 'MULT' expression
+    expression -> expression . 'DIV' expression
+
+  actions:
+    action 'END' (explicit left 9997):   reduce expression --> expression 'LE' expression
+    action 'EQ' (explicit left 9997):   reduce expression --> expression 'LE' expression
+    action 'NE' (explicit left 9997):   reduce expression --> expression 'LE' expression
+    action 'LT' (explicit left 9997):   reduce expression --> expression 'LE' expression
+    action 'LE' (explicit left 9997):   reduce expression --> expression 'LE' expression
+    action 'GT' (explicit left 9997):   reduce expression --> expression 'LE' expression
+    action 'GE' (explicit left 9997):   reduce expression --> expression 'LE' expression
+    action 'AND' (explicit left 9997):   reduce expression --> expression 'LE' expression
+    action 'OR' (explicit left 9997):   reduce expression --> expression 'LE' expression
+    action 'PLUS' (explicit left 9998):   shift 67
+    action 'MINUS' (explicit left 9998):   shift 68
+    action 'MULT' (explicit left 9999):   shift 69
+    action 'DIV' (explicit left 9999):   shift 70
+    action 'NOT' (explicit left 9997):   reduce expression --> expression 'LE' expression
+    action 'QLBOOL' (explicit left 9997):   reduce expression --> expression 'LE' expression
+    action 'QLSTRING' (explicit left 9997):   reduce expression --> expression 'LE' expression
+    action 'QLINT' (explicit left 9997):   reduce expression --> expression 'LE' expression
+    action 'QLDECIMAL' (explicit left 9997):   reduce expression --> expression 'LE' expression
+    action 'DECIMAL' (explicit left 9997):   reduce expression --> expression 'LE' expression
+    action 'INT' (explicit left 9997):   reduce expression --> expression 'LE' expression
+    action 'STRING' (explicit left 9997):   reduce expression --> expression 'LE' expression
+    action 'BOOL' (explicit left 9997):   reduce expression --> expression 'LE' expression
+    action 'LABEL' (explicit left 9997):   reduce expression --> expression 'LE' expression
+    action 'IDENTIFIER' (explicit left 9997):   reduce expression --> expression 'LE' expression
+    action 'ASSIGN' (explicit left 9997):   reduce expression --> expression 'LE' expression
+    action 'COLON' (explicit left 9997):   reduce expression --> expression 'LE' expression
+    action 'B_OPEN' (explicit left 9997):   reduce expression --> expression 'LE' expression
+    action 'B_CLOSE' (explicit left 9997):   reduce expression --> expression 'LE' expression
+    action 'CB_OPEN' (explicit left 9997):   reduce expression --> expression 'LE' expression
+    action 'CB_CLOSE' (explicit left 9997):   reduce expression --> expression 'LE' expression
+    action 'IF' (explicit left 9997):   reduce expression --> expression 'LE' expression
+    action 'ELSE' (explicit left 9997):   reduce expression --> expression 'LE' expression
+    action 'FORM' (explicit left 9997):   reduce expression --> expression 'LE' expression
+    action 'error' (explicit left 9997):   reduce expression --> expression 'LE' expression
+    action '#' (explicit left 9997):   reduce expression --> expression 'LE' expression
+    action '$$' (explicit left 9997):   reduce expression --> expression 'LE' expression
+
+  immediate action: <none>
+ gotos:
+
+state 52:
+  items:
+    expression -> expression . 'AND' expression
+    expression -> expression . 'OR' expression
+    expression -> expression . 'LT' expression
+    expression -> expression . 'GT' expression
+    expression -> expression . 'LE' expression
+    expression -> expression . 'GE' expression
+    expression -> expression 'GE' expression . 
+    expression -> expression . 'EQ' expression
+    expression -> expression . 'NE' expression
+    expression -> expression . 'PLUS' expression
+    expression -> expression . 'MINUS' expression
+    expression -> expression . 'MULT' expression
+    expression -> expression . 'DIV' expression
+
+  actions:
+    action 'END' (explicit left 9997):   reduce expression --> expression 'GE' expression
+    action 'EQ' (explicit left 9997):   reduce expression --> expression 'GE' expression
+    action 'NE' (explicit left 9997):   reduce expression --> expression 'GE' expression
+    action 'LT' (explicit left 9997):   reduce expression --> expression 'GE' expression
+    action 'LE' (explicit left 9997):   reduce expression --> expression 'GE' expression
+    action 'GT' (explicit left 9997):   reduce expression --> expression 'GE' expression
+    action 'GE' (explicit left 9997):   reduce expression --> expression 'GE' expression
+    action 'AND' (explicit left 9997):   reduce expression --> expression 'GE' expression
+    action 'OR' (explicit left 9997):   reduce expression --> expression 'GE' expression
+    action 'PLUS' (explicit left 9998):   shift 67
+    action 'MINUS' (explicit left 9998):   shift 68
+    action 'MULT' (explicit left 9999):   shift 69
+    action 'DIV' (explicit left 9999):   shift 70
+    action 'NOT' (explicit left 9997):   reduce expression --> expression 'GE' expression
+    action 'QLBOOL' (explicit left 9997):   reduce expression --> expression 'GE' expression
+    action 'QLSTRING' (explicit left 9997):   reduce expression --> expression 'GE' expression
+    action 'QLINT' (explicit left 9997):   reduce expression --> expression 'GE' expression
+    action 'QLDECIMAL' (explicit left 9997):   reduce expression --> expression 'GE' expression
+    action 'DECIMAL' (explicit left 9997):   reduce expression --> expression 'GE' expression
+    action 'INT' (explicit left 9997):   reduce expression --> expression 'GE' expression
+    action 'STRING' (explicit left 9997):   reduce expression --> expression 'GE' expression
+    action 'BOOL' (explicit left 9997):   reduce expression --> expression 'GE' expression
+    action 'LABEL' (explicit left 9997):   reduce expression --> expression 'GE' expression
+    action 'IDENTIFIER' (explicit left 9997):   reduce expression --> expression 'GE' expression
+    action 'ASSIGN' (explicit left 9997):   reduce expression --> expression 'GE' expression
+    action 'COLON' (explicit left 9997):   reduce expression --> expression 'GE' expression
+    action 'B_OPEN' (explicit left 9997):   reduce expression --> expression 'GE' expression
+    action 'B_CLOSE' (explicit left 9997):   reduce expression --> expression 'GE' expression
+    action 'CB_OPEN' (explicit left 9997):   reduce expression --> expression 'GE' expression
+    action 'CB_CLOSE' (explicit left 9997):   reduce expression --> expression 'GE' expression
+    action 'IF' (explicit left 9997):   reduce expression --> expression 'GE' expression
+    action 'ELSE' (explicit left 9997):   reduce expression --> expression 'GE' expression
+    action 'FORM' (explicit left 9997):   reduce expression --> expression 'GE' expression
+    action 'error' (explicit left 9997):   reduce expression --> expression 'GE' expression
+    action '#' (explicit left 9997):   reduce expression --> expression 'GE' expression
+    action '$$' (explicit left 9997):   reduce expression --> expression 'GE' expression
+
+  immediate action: <none>
+ gotos:
+
+state 53:
+  items:
+    expression -> expression . 'AND' expression
+    expression -> expression . 'OR' expression
+    expression -> expression . 'LT' expression
+    expression -> expression . 'GT' expression
+    expression -> expression . 'LE' expression
+    expression -> expression . 'GE' expression
+    expression -> expression . 'EQ' expression
+    expression -> expression 'EQ' expression . 
+    expression -> expression . 'NE' expression
+    expression -> expression . 'PLUS' expression
+    expression -> expression . 'MINUS' expression
+    expression -> expression . 'MULT' expression
+    expression -> expression . 'DIV' expression
+
+  actions:
+    action 'END' (explicit left 9997):   reduce expression --> expression 'EQ' expression
+    action 'EQ' (explicit left 9997):   reduce expression --> expression 'EQ' expression
+    action 'NE' (explicit left 9997):   reduce expression --> expression 'EQ' expression
+    action 'LT' (explicit left 9997):   reduce expression --> expression 'EQ' expression
+    action 'LE' (explicit left 9997):   reduce expression --> expression 'EQ' expression
+    action 'GT' (explicit left 9997):   reduce expression --> expression 'EQ' expression
+    action 'GE' (explicit left 9997):   reduce expression --> expression 'EQ' expression
+    action 'AND' (explicit left 9997):   reduce expression --> expression 'EQ' expression
+    action 'OR' (explicit left 9997):   reduce expression --> expression 'EQ' expression
+    action 'PLUS' (explicit left 9998):   shift 67
+    action 'MINUS' (explicit left 9998):   shift 68
+    action 'MULT' (explicit left 9999):   shift 69
+    action 'DIV' (explicit left 9999):   shift 70
+    action 'NOT' (explicit left 9997):   reduce expression --> expression 'EQ' expression
+    action 'QLBOOL' (explicit left 9997):   reduce expression --> expression 'EQ' expression
+    action 'QLSTRING' (explicit left 9997):   reduce expression --> expression 'EQ' expression
+    action 'QLINT' (explicit left 9997):   reduce expression --> expression 'EQ' expression
+    action 'QLDECIMAL' (explicit left 9997):   reduce expression --> expression 'EQ' expression
+    action 'DECIMAL' (explicit left 9997):   reduce expression --> expression 'EQ' expression
+    action 'INT' (explicit left 9997):   reduce expression --> expression 'EQ' expression
+    action 'STRING' (explicit left 9997):   reduce expression --> expression 'EQ' expression
+    action 'BOOL' (explicit left 9997):   reduce expression --> expression 'EQ' expression
+    action 'LABEL' (explicit left 9997):   reduce expression --> expression 'EQ' expression
+    action 'IDENTIFIER' (explicit left 9997):   reduce expression --> expression 'EQ' expression
+    action 'ASSIGN' (explicit left 9997):   reduce expression --> expression 'EQ' expression
+    action 'COLON' (explicit left 9997):   reduce expression --> expression 'EQ' expression
+    action 'B_OPEN' (explicit left 9997):   reduce expression --> expression 'EQ' expression
+    action 'B_CLOSE' (explicit left 9997):   reduce expression --> expression 'EQ' expression
+    action 'CB_OPEN' (explicit left 9997):   reduce expression --> expression 'EQ' expression
+    action 'CB_CLOSE' (explicit left 9997):   reduce expression --> expression 'EQ' expression
+    action 'IF' (explicit left 9997):   reduce expression --> expression 'EQ' expression
+    action 'ELSE' (explicit left 9997):   reduce expression --> expression 'EQ' expression
+    action 'FORM' (explicit left 9997):   reduce expression --> expression 'EQ' expression
+    action 'error' (explicit left 9997):   reduce expression --> expression 'EQ' expression
+    action '#' (explicit left 9997):   reduce expression --> expression 'EQ' expression
+    action '$$' (explicit left 9997):   reduce expression --> expression 'EQ' expression
+
+  immediate action: <none>
+ gotos:
+
+state 54:
+  items:
+    expression -> expression . 'AND' expression
+    expression -> expression . 'OR' expression
+    expression -> expression . 'LT' expression
+    expression -> expression . 'GT' expression
+    expression -> expression . 'LE' expression
+    expression -> expression . 'GE' expression
+    expression -> expression . 'EQ' expression
+    expression -> expression . 'NE' expression
+    expression -> expression 'NE' expression . 
+    expression -> expression . 'PLUS' expression
+    expression -> expression . 'MINUS' expression
+    expression -> expression . 'MULT' expression
+    expression -> expression . 'DIV' expression
+
+  actions:
+    action 'END' (explicit left 9997):   reduce expression --> expression 'NE' expression
+    action 'EQ' (explicit left 9997):   reduce expression --> expression 'NE' expression
+    action 'NE' (explicit left 9997):   reduce expression --> expression 'NE' expression
+    action 'LT' (explicit left 9997):   reduce expression --> expression 'NE' expression
+    action 'LE' (explicit left 9997):   reduce expression --> expression 'NE' expression
+    action 'GT' (explicit left 9997):   reduce expression --> expression 'NE' expression
+    action 'GE' (explicit left 9997):   reduce expression --> expression 'NE' expression
+    action 'AND' (explicit left 9997):   reduce expression --> expression 'NE' expression
+    action 'OR' (explicit left 9997):   reduce expression --> expression 'NE' expression
+    action 'PLUS' (explicit left 9998):   shift 67
+    action 'MINUS' (explicit left 9998):   shift 68
+    action 'MULT' (explicit left 9999):   shift 69
+    action 'DIV' (explicit left 9999):   shift 70
+    action 'NOT' (explicit left 9997):   reduce expression --> expression 'NE' expression
+    action 'QLBOOL' (explicit left 9997):   reduce expression --> expression 'NE' expression
+    action 'QLSTRING' (explicit left 9997):   reduce expression --> expression 'NE' expression
+    action 'QLINT' (explicit left 9997):   reduce expression --> expression 'NE' expression
+    action 'QLDECIMAL' (explicit left 9997):   reduce expression --> expression 'NE' expression
+    action 'DECIMAL' (explicit left 9997):   reduce expression --> expression 'NE' expression
+    action 'INT' (explicit left 9997):   reduce expression --> expression 'NE' expression
+    action 'STRING' (explicit left 9997):   reduce expression --> expression 'NE' expression
+    action 'BOOL' (explicit left 9997):   reduce expression --> expression 'NE' expression
+    action 'LABEL' (explicit left 9997):   reduce expression --> expression 'NE' expression
+    action 'IDENTIFIER' (explicit left 9997):   reduce expression --> expression 'NE' expression
+    action 'ASSIGN' (explicit left 9997):   reduce expression --> expression 'NE' expression
+    action 'COLON' (explicit left 9997):   reduce expression --> expression 'NE' expression
+    action 'B_OPEN' (explicit left 9997):   reduce expression --> expression 'NE' expression
+    action 'B_CLOSE' (explicit left 9997):   reduce expression --> expression 'NE' expression
+    action 'CB_OPEN' (explicit left 9997):   reduce expression --> expression 'NE' expression
+    action 'CB_CLOSE' (explicit left 9997):   reduce expression --> expression 'NE' expression
+    action 'IF' (explicit left 9997):   reduce expression --> expression 'NE' expression
+    action 'ELSE' (explicit left 9997):   reduce expression --> expression 'NE' expression
+    action 'FORM' (explicit left 9997):   reduce expression --> expression 'NE' expression
+    action 'error' (explicit left 9997):   reduce expression --> expression 'NE' expression
+    action '#' (explicit left 9997):   reduce expression --> expression 'NE' expression
+    action '$$' (explicit left 9997):   reduce expression --> expression 'NE' expression
+
+  immediate action: <none>
+ gotos:
+
+state 55:
+  items:
+    expression -> expression . 'AND' expression
+    expression -> expression . 'OR' expression
+    expression -> expression . 'LT' expression
+    expression -> expression . 'GT' expression
+    expression -> expression . 'LE' expression
+    expression -> expression . 'GE' expression
+    expression -> expression . 'EQ' expression
+    expression -> expression . 'NE' expression
+    expression -> expression . 'PLUS' expression
+    expression -> expression 'PLUS' expression . 
+    expression -> expression . 'MINUS' expression
+    expression -> expression . 'MULT' expression
+    expression -> expression . 'DIV' expression
+
+  actions:
+    action 'END' (explicit left 9998):   reduce expression --> expression 'PLUS' expression
+    action 'EQ' (explicit left 9998):   reduce expression --> expression 'PLUS' expression
+    action 'NE' (explicit left 9998):   reduce expression --> expression 'PLUS' expression
+    action 'LT' (explicit left 9998):   reduce expression --> expression 'PLUS' expression
+    action 'LE' (explicit left 9998):   reduce expression --> expression 'PLUS' expression
+    action 'GT' (explicit left 9998):   reduce expression --> expression 'PLUS' expression
+    action 'GE' (explicit left 9998):   reduce expression --> expression 'PLUS' expression
+    action 'AND' (explicit left 9998):   reduce expression --> expression 'PLUS' expression
+    action 'OR' (explicit left 9998):   reduce expression --> expression 'PLUS' expression
+    action 'PLUS' (explicit left 9998):   reduce expression --> expression 'PLUS' expression
+    action 'MINUS' (explicit left 9998):   reduce expression --> expression 'PLUS' expression
+    action 'MULT' (explicit left 9999):   shift 69
+    action 'DIV' (explicit left 9999):   shift 70
+    action 'NOT' (explicit left 9998):   reduce expression --> expression 'PLUS' expression
+    action 'QLBOOL' (explicit left 9998):   reduce expression --> expression 'PLUS' expression
+    action 'QLSTRING' (explicit left 9998):   reduce expression --> expression 'PLUS' expression
+    action 'QLINT' (explicit left 9998):   reduce expression --> expression 'PLUS' expression
+    action 'QLDECIMAL' (explicit left 9998):   reduce expression --> expression 'PLUS' expression
+    action 'DECIMAL' (explicit left 9998):   reduce expression --> expression 'PLUS' expression
+    action 'INT' (explicit left 9998):   reduce expression --> expression 'PLUS' expression
+    action 'STRING' (explicit left 9998):   reduce expression --> expression 'PLUS' expression
+    action 'BOOL' (explicit left 9998):   reduce expression --> expression 'PLUS' expression
+    action 'LABEL' (explicit left 9998):   reduce expression --> expression 'PLUS' expression
+    action 'IDENTIFIER' (explicit left 9998):   reduce expression --> expression 'PLUS' expression
+    action 'ASSIGN' (explicit left 9998):   reduce expression --> expression 'PLUS' expression
+    action 'COLON' (explicit left 9998):   reduce expression --> expression 'PLUS' expression
+    action 'B_OPEN' (explicit left 9998):   reduce expression --> expression 'PLUS' expression
+    action 'B_CLOSE' (explicit left 9998):   reduce expression --> expression 'PLUS' expression
+    action 'CB_OPEN' (explicit left 9998):   reduce expression --> expression 'PLUS' expression
+    action 'CB_CLOSE' (explicit left 9998):   reduce expression --> expression 'PLUS' expression
+    action 'IF' (explicit left 9998):   reduce expression --> expression 'PLUS' expression
+    action 'ELSE' (explicit left 9998):   reduce expression --> expression 'PLUS' expression
+    action 'FORM' (explicit left 9998):   reduce expression --> expression 'PLUS' expression
+    action 'error' (explicit left 9998):   reduce expression --> expression 'PLUS' expression
+    action '#' (explicit left 9998):   reduce expression --> expression 'PLUS' expression
+    action '$$' (explicit left 9998):   reduce expression --> expression 'PLUS' expression
+
+  immediate action: <none>
+ gotos:
+
+state 56:
+  items:
+    expression -> expression . 'AND' expression
+    expression -> expression . 'OR' expression
+    expression -> expression . 'LT' expression
+    expression -> expression . 'GT' expression
+    expression -> expression . 'LE' expression
+    expression -> expression . 'GE' expression
+    expression -> expression . 'EQ' expression
+    expression -> expression . 'NE' expression
+    expression -> expression . 'PLUS' expression
+    expression -> expression . 'MINUS' expression
+    expression -> expression 'MINUS' expression . 
+    expression -> expression . 'MULT' expression
+    expression -> expression . 'DIV' expression
+
+  actions:
+    action 'END' (explicit left 9998):   reduce expression --> expression 'MINUS' expression
+    action 'EQ' (explicit left 9998):   reduce expression --> expression 'MINUS' expression
+    action 'NE' (explicit left 9998):   reduce expression --> expression 'MINUS' expression
+    action 'LT' (explicit left 9998):   reduce expression --> expression 'MINUS' expression
+    action 'LE' (explicit left 9998):   reduce expression --> expression 'MINUS' expression
+    action 'GT' (explicit left 9998):   reduce expression --> expression 'MINUS' expression
+    action 'GE' (explicit left 9998):   reduce expression --> expression 'MINUS' expression
+    action 'AND' (explicit left 9998):   reduce expression --> expression 'MINUS' expression
+    action 'OR' (explicit left 9998):   reduce expression --> expression 'MINUS' expression
+    action 'PLUS' (explicit left 9998):   reduce expression --> expression 'MINUS' expression
+    action 'MINUS' (explicit left 9998):   reduce expression --> expression 'MINUS' expression
+    action 'MULT' (explicit left 9999):   shift 69
+    action 'DIV' (explicit left 9999):   shift 70
+    action 'NOT' (explicit left 9998):   reduce expression --> expression 'MINUS' expression
+    action 'QLBOOL' (explicit left 9998):   reduce expression --> expression 'MINUS' expression
+    action 'QLSTRING' (explicit left 9998):   reduce expression --> expression 'MINUS' expression
+    action 'QLINT' (explicit left 9998):   reduce expression --> expression 'MINUS' expression
+    action 'QLDECIMAL' (explicit left 9998):   reduce expression --> expression 'MINUS' expression
+    action 'DECIMAL' (explicit left 9998):   reduce expression --> expression 'MINUS' expression
+    action 'INT' (explicit left 9998):   reduce expression --> expression 'MINUS' expression
+    action 'STRING' (explicit left 9998):   reduce expression --> expression 'MINUS' expression
+    action 'BOOL' (explicit left 9998):   reduce expression --> expression 'MINUS' expression
+    action 'LABEL' (explicit left 9998):   reduce expression --> expression 'MINUS' expression
+    action 'IDENTIFIER' (explicit left 9998):   reduce expression --> expression 'MINUS' expression
+    action 'ASSIGN' (explicit left 9998):   reduce expression --> expression 'MINUS' expression
+    action 'COLON' (explicit left 9998):   reduce expression --> expression 'MINUS' expression
+    action 'B_OPEN' (explicit left 9998):   reduce expression --> expression 'MINUS' expression
+    action 'B_CLOSE' (explicit left 9998):   reduce expression --> expression 'MINUS' expression
+    action 'CB_OPEN' (explicit left 9998):   reduce expression --> expression 'MINUS' expression
+    action 'CB_CLOSE' (explicit left 9998):   reduce expression --> expression 'MINUS' expression
+    action 'IF' (explicit left 9998):   reduce expression --> expression 'MINUS' expression
+    action 'ELSE' (explicit left 9998):   reduce expression --> expression 'MINUS' expression
+    action 'FORM' (explicit left 9998):   reduce expression --> expression 'MINUS' expression
+    action 'error' (explicit left 9998):   reduce expression --> expression 'MINUS' expression
+    action '#' (explicit left 9998):   reduce expression --> expression 'MINUS' expression
+    action '$$' (explicit left 9998):   reduce expression --> expression 'MINUS' expression
+
+  immediate action: <none>
+ gotos:
+
+state 57:
+  items:
+    expression -> expression . 'AND' expression
+    expression -> expression . 'OR' expression
+    expression -> expression . 'LT' expression
+    expression -> expression . 'GT' expression
+    expression -> expression . 'LE' expression
+    expression -> expression . 'GE' expression
+    expression -> expression . 'EQ' expression
+    expression -> expression . 'NE' expression
+    expression -> expression . 'PLUS' expression
+    expression -> expression . 'MINUS' expression
+    expression -> expression . 'MULT' expression
+    expression -> expression 'MULT' expression . 
+    expression -> expression . 'DIV' expression
+
+  actions:
+    action 'END' (explicit left 9999):   reduce expression --> expression 'MULT' expression
+    action 'EQ' (explicit left 9999):   reduce expression --> expression 'MULT' expression
+    action 'NE' (explicit left 9999):   reduce expression --> expression 'MULT' expression
+    action 'LT' (explicit left 9999):   reduce expression --> expression 'MULT' expression
+    action 'LE' (explicit left 9999):   reduce expression --> expression 'MULT' expression
+    action 'GT' (explicit left 9999):   reduce expression --> expression 'MULT' expression
+    action 'GE' (explicit left 9999):   reduce expression --> expression 'MULT' expression
+    action 'AND' (explicit left 9999):   reduce expression --> expression 'MULT' expression
+    action 'OR' (explicit left 9999):   reduce expression --> expression 'MULT' expression
+    action 'PLUS' (explicit left 9999):   reduce expression --> expression 'MULT' expression
+    action 'MINUS' (explicit left 9999):   reduce expression --> expression 'MULT' expression
+    action 'MULT' (explicit left 9999):   reduce expression --> expression 'MULT' expression
+    action 'DIV' (explicit left 9999):   reduce expression --> expression 'MULT' expression
+    action 'NOT' (explicit left 9999):   reduce expression --> expression 'MULT' expression
+    action 'QLBOOL' (explicit left 9999):   reduce expression --> expression 'MULT' expression
+    action 'QLSTRING' (explicit left 9999):   reduce expression --> expression 'MULT' expression
+    action 'QLINT' (explicit left 9999):   reduce expression --> expression 'MULT' expression
+    action 'QLDECIMAL' (explicit left 9999):   reduce expression --> expression 'MULT' expression
+    action 'DECIMAL' (explicit left 9999):   reduce expression --> expression 'MULT' expression
+    action 'INT' (explicit left 9999):   reduce expression --> expression 'MULT' expression
+    action 'STRING' (explicit left 9999):   reduce expression --> expression 'MULT' expression
+    action 'BOOL' (explicit left 9999):   reduce expression --> expression 'MULT' expression
+    action 'LABEL' (explicit left 9999):   reduce expression --> expression 'MULT' expression
+    action 'IDENTIFIER' (explicit left 9999):   reduce expression --> expression 'MULT' expression
+    action 'ASSIGN' (explicit left 9999):   reduce expression --> expression 'MULT' expression
+    action 'COLON' (explicit left 9999):   reduce expression --> expression 'MULT' expression
+    action 'B_OPEN' (explicit left 9999):   reduce expression --> expression 'MULT' expression
+    action 'B_CLOSE' (explicit left 9999):   reduce expression --> expression 'MULT' expression
+    action 'CB_OPEN' (explicit left 9999):   reduce expression --> expression 'MULT' expression
+    action 'CB_CLOSE' (explicit left 9999):   reduce expression --> expression 'MULT' expression
+    action 'IF' (explicit left 9999):   reduce expression --> expression 'MULT' expression
+    action 'ELSE' (explicit left 9999):   reduce expression --> expression 'MULT' expression
+    action 'FORM' (explicit left 9999):   reduce expression --> expression 'MULT' expression
+    action 'error' (explicit left 9999):   reduce expression --> expression 'MULT' expression
+    action '#' (explicit left 9999):   reduce expression --> expression 'MULT' expression
+    action '$$' (explicit left 9999):   reduce expression --> expression 'MULT' expression
+
+  immediate action: <none>
+ gotos:
+
+state 58:
+  items:
+    expression -> expression . 'AND' expression
+    expression -> expression . 'OR' expression
+    expression -> expression . 'LT' expression
+    expression -> expression . 'GT' expression
+    expression -> expression . 'LE' expression
+    expression -> expression . 'GE' expression
+    expression -> expression . 'EQ' expression
+    expression -> expression . 'NE' expression
+    expression -> expression . 'PLUS' expression
+    expression -> expression . 'MINUS' expression
+    expression -> expression . 'MULT' expression
+    expression -> expression . 'DIV' expression
+    expression -> expression 'DIV' expression . 
+
+  actions:
+    action 'END' (explicit left 9999):   reduce expression --> expression 'DIV' expression
+    action 'EQ' (explicit left 9999):   reduce expression --> expression 'DIV' expression
+    action 'NE' (explicit left 9999):   reduce expression --> expression 'DIV' expression
+    action 'LT' (explicit left 9999):   reduce expression --> expression 'DIV' expression
+    action 'LE' (explicit left 9999):   reduce expression --> expression 'DIV' expression
+    action 'GT' (explicit left 9999):   reduce expression --> expression 'DIV' expression
+    action 'GE' (explicit left 9999):   reduce expression --> expression 'DIV' expression
+    action 'AND' (explicit left 9999):   reduce expression --> expression 'DIV' expression
+    action 'OR' (explicit left 9999):   reduce expression --> expression 'DIV' expression
+    action 'PLUS' (explicit left 9999):   reduce expression --> expression 'DIV' expression
+    action 'MINUS' (explicit left 9999):   reduce expression --> expression 'DIV' expression
+    action 'MULT' (explicit left 9999):   reduce expression --> expression 'DIV' expression
+    action 'DIV' (explicit left 9999):   reduce expression --> expression 'DIV' expression
+    action 'NOT' (explicit left 9999):   reduce expression --> expression 'DIV' expression
+    action 'QLBOOL' (explicit left 9999):   reduce expression --> expression 'DIV' expression
+    action 'QLSTRING' (explicit left 9999):   reduce expression --> expression 'DIV' expression
+    action 'QLINT' (explicit left 9999):   reduce expression --> expression 'DIV' expression
+    action 'QLDECIMAL' (explicit left 9999):   reduce expression --> expression 'DIV' expression
+    action 'DECIMAL' (explicit left 9999):   reduce expression --> expression 'DIV' expression
+    action 'INT' (explicit left 9999):   reduce expression --> expression 'DIV' expression
+    action 'STRING' (explicit left 9999):   reduce expression --> expression 'DIV' expression
+    action 'BOOL' (explicit left 9999):   reduce expression --> expression 'DIV' expression
+    action 'LABEL' (explicit left 9999):   reduce expression --> expression 'DIV' expression
+    action 'IDENTIFIER' (explicit left 9999):   reduce expression --> expression 'DIV' expression
+    action 'ASSIGN' (explicit left 9999):   reduce expression --> expression 'DIV' expression
+    action 'COLON' (explicit left 9999):   reduce expression --> expression 'DIV' expression
+    action 'B_OPEN' (explicit left 9999):   reduce expression --> expression 'DIV' expression
+    action 'B_CLOSE' (explicit left 9999):   reduce expression --> expression 'DIV' expression
+    action 'CB_OPEN' (explicit left 9999):   reduce expression --> expression 'DIV' expression
+    action 'CB_CLOSE' (explicit left 9999):   reduce expression --> expression 'DIV' expression
+    action 'IF' (explicit left 9999):   reduce expression --> expression 'DIV' expression
+    action 'ELSE' (explicit left 9999):   reduce expression --> expression 'DIV' expression
+    action 'FORM' (explicit left 9999):   reduce expression --> expression 'DIV' expression
+    action 'error' (explicit left 9999):   reduce expression --> expression 'DIV' expression
+    action '#' (explicit left 9999):   reduce expression --> expression 'DIV' expression
+    action '$$' (explicit left 9999):   reduce expression --> expression 'DIV' expression
+
+  immediate action: <none>
+ gotos:
+
+state 59:
+  items:
+    expression -> expression 'AND' . expression
+
+  actions:
+    action 'END' (noprec):   error
+    action 'EQ' (noprec):   error
+    action 'NE' (noprec):   error
+    action 'LT' (noprec):   error
+    action 'LE' (noprec):   error
+    action 'GT' (noprec):   error
+    action 'GE' (noprec):   error
+    action 'AND' (noprec):   error
+    action 'OR' (noprec):   error
+    action 'PLUS' (noprec):   error
+    action 'MINUS' (noprec):   error
+    action 'MULT' (noprec):   error
+    action 'DIV' (noprec):   error
+    action 'NOT' (explicit right 10000):   shift 45
+    action 'QLBOOL' (noprec):   error
+    action 'QLSTRING' (noprec):   error
+    action 'QLINT' (noprec):   error
+    action 'QLDECIMAL' (noprec):   error
+    action 'DECIMAL' (noprec):   shift 39
+    action 'INT' (noprec):   shift 38
+    action 'STRING' (noprec):   shift 35
+    action 'BOOL' (noprec):   shift 37
+    action 'LABEL' (noprec):   shift 36
+    action 'IDENTIFIER' (noprec):   shift 43
+    action 'ASSIGN' (noprec):   error
+    action 'COLON' (noprec):   error
+    action 'B_OPEN' (noprec):   shift 40
+    action 'B_CLOSE' (noprec):   error
+    action 'CB_OPEN' (noprec):   error
+    action 'CB_CLOSE' (noprec):   error
+    action 'IF' (noprec):   error
+    action 'ELSE' (noprec):   error
+    action 'FORM' (noprec):   error
+    action 'error' (noprec):   error
+    action '#' (noprec):   error
+    action '$$' (noprec):   error
+
+  immediate action: <none>
+ gotos:
+    goto literal: 44
+    goto expression: 47
+
+state 60:
+  items:
+    expression -> expression 'OR' . expression
+
+  actions:
+    action 'END' (noprec):   error
+    action 'EQ' (noprec):   error
+    action 'NE' (noprec):   error
+    action 'LT' (noprec):   error
+    action 'LE' (noprec):   error
+    action 'GT' (noprec):   error
+    action 'GE' (noprec):   error
+    action 'AND' (noprec):   error
+    action 'OR' (noprec):   error
+    action 'PLUS' (noprec):   error
+    action 'MINUS' (noprec):   error
+    action 'MULT' (noprec):   error
+    action 'DIV' (noprec):   error
+    action 'NOT' (explicit right 10000):   shift 45
+    action 'QLBOOL' (noprec):   error
+    action 'QLSTRING' (noprec):   error
+    action 'QLINT' (noprec):   error
+    action 'QLDECIMAL' (noprec):   error
+    action 'DECIMAL' (noprec):   shift 39
+    action 'INT' (noprec):   shift 38
+    action 'STRING' (noprec):   shift 35
+    action 'BOOL' (noprec):   shift 37
+    action 'LABEL' (noprec):   shift 36
+    action 'IDENTIFIER' (noprec):   shift 43
+    action 'ASSIGN' (noprec):   error
+    action 'COLON' (noprec):   error
+    action 'B_OPEN' (noprec):   shift 40
+    action 'B_CLOSE' (noprec):   error
+    action 'CB_OPEN' (noprec):   error
+    action 'CB_CLOSE' (noprec):   error
+    action 'IF' (noprec):   error
+    action 'ELSE' (noprec):   error
+    action 'FORM' (noprec):   error
+    action 'error' (noprec):   error
+    action '#' (noprec):   error
+    action '$$' (noprec):   error
+
+  immediate action: <none>
+ gotos:
+    goto literal: 44
+    goto expression: 48
+
+state 61:
+  items:
+    expression -> expression 'LT' . expression
+
+  actions:
+    action 'END' (noprec):   error
+    action 'EQ' (noprec):   error
+    action 'NE' (noprec):   error
+    action 'LT' (noprec):   error
+    action 'LE' (noprec):   error
+    action 'GT' (noprec):   error
+    action 'GE' (noprec):   error
+    action 'AND' (noprec):   error
+    action 'OR' (noprec):   error
+    action 'PLUS' (noprec):   error
+    action 'MINUS' (noprec):   error
+    action 'MULT' (noprec):   error
+    action 'DIV' (noprec):   error
+    action 'NOT' (explicit right 10000):   shift 45
+    action 'QLBOOL' (noprec):   error
+    action 'QLSTRING' (noprec):   error
+    action 'QLINT' (noprec):   error
+    action 'QLDECIMAL' (noprec):   error
+    action 'DECIMAL' (noprec):   shift 39
+    action 'INT' (noprec):   shift 38
+    action 'STRING' (noprec):   shift 35
+    action 'BOOL' (noprec):   shift 37
+    action 'LABEL' (noprec):   shift 36
+    action 'IDENTIFIER' (noprec):   shift 43
+    action 'ASSIGN' (noprec):   error
+    action 'COLON' (noprec):   error
+    action 'B_OPEN' (noprec):   shift 40
+    action 'B_CLOSE' (noprec):   error
+    action 'CB_OPEN' (noprec):   error
+    action 'CB_CLOSE' (noprec):   error
+    action 'IF' (noprec):   error
+    action 'ELSE' (noprec):   error
+    action 'FORM' (noprec):   error
+    action 'error' (noprec):   error
+    action '#' (noprec):   error
+    action '$$' (noprec):   error
+
+  immediate action: <none>
+ gotos:
+    goto literal: 44
+    goto expression: 49
+
+state 62:
+  items:
+    expression -> expression 'GT' . expression
+
+  actions:
+    action 'END' (noprec):   error
+    action 'EQ' (noprec):   error
+    action 'NE' (noprec):   error
+    action 'LT' (noprec):   error
+    action 'LE' (noprec):   error
+    action 'GT' (noprec):   error
+    action 'GE' (noprec):   error
+    action 'AND' (noprec):   error
+    action 'OR' (noprec):   error
+    action 'PLUS' (noprec):   error
+    action 'MINUS' (noprec):   error
+    action 'MULT' (noprec):   error
+    action 'DIV' (noprec):   error
+    action 'NOT' (explicit right 10000):   shift 45
+    action 'QLBOOL' (noprec):   error
+    action 'QLSTRING' (noprec):   error
+    action 'QLINT' (noprec):   error
+    action 'QLDECIMAL' (noprec):   error
+    action 'DECIMAL' (noprec):   shift 39
+    action 'INT' (noprec):   shift 38
+    action 'STRING' (noprec):   shift 35
+    action 'BOOL' (noprec):   shift 37
+    action 'LABEL' (noprec):   shift 36
+    action 'IDENTIFIER' (noprec):   shift 43
+    action 'ASSIGN' (noprec):   error
+    action 'COLON' (noprec):   error
+    action 'B_OPEN' (noprec):   shift 40
+    action 'B_CLOSE' (noprec):   error
+    action 'CB_OPEN' (noprec):   error
+    action 'CB_CLOSE' (noprec):   error
+    action 'IF' (noprec):   error
+    action 'ELSE' (noprec):   error
+    action 'FORM' (noprec):   error
+    action 'error' (noprec):   error
+    action '#' (noprec):   error
+    action '$$' (noprec):   error
+
+  immediate action: <none>
+ gotos:
+    goto literal: 44
+    goto expression: 50
+
+state 63:
+  items:
+    expression -> expression 'LE' . expression
+
+  actions:
+    action 'END' (noprec):   error
+    action 'EQ' (noprec):   error
+    action 'NE' (noprec):   error
+    action 'LT' (noprec):   error
+    action 'LE' (noprec):   error
+    action 'GT' (noprec):   error
+    action 'GE' (noprec):   error
+    action 'AND' (noprec):   error
+    action 'OR' (noprec):   error
+    action 'PLUS' (noprec):   error
+    action 'MINUS' (noprec):   error
+    action 'MULT' (noprec):   error
+    action 'DIV' (noprec):   error
+    action 'NOT' (explicit right 10000):   shift 45
+    action 'QLBOOL' (noprec):   error
+    action 'QLSTRING' (noprec):   error
+    action 'QLINT' (noprec):   error
+    action 'QLDECIMAL' (noprec):   error
+    action 'DECIMAL' (noprec):   shift 39
+    action 'INT' (noprec):   shift 38
+    action 'STRING' (noprec):   shift 35
+    action 'BOOL' (noprec):   shift 37
+    action 'LABEL' (noprec):   shift 36
+    action 'IDENTIFIER' (noprec):   shift 43
+    action 'ASSIGN' (noprec):   error
+    action 'COLON' (noprec):   error
+    action 'B_OPEN' (noprec):   shift 40
+    action 'B_CLOSE' (noprec):   error
+    action 'CB_OPEN' (noprec):   error
+    action 'CB_CLOSE' (noprec):   error
+    action 'IF' (noprec):   error
+    action 'ELSE' (noprec):   error
+    action 'FORM' (noprec):   error
+    action 'error' (noprec):   error
+    action '#' (noprec):   error
+    action '$$' (noprec):   error
+
+  immediate action: <none>
+ gotos:
+    goto literal: 44
+    goto expression: 51
+
+state 64:
+  items:
+    expression -> expression 'GE' . expression
+
+  actions:
+    action 'END' (noprec):   error
+    action 'EQ' (noprec):   error
+    action 'NE' (noprec):   error
+    action 'LT' (noprec):   error
+    action 'LE' (noprec):   error
+    action 'GT' (noprec):   error
+    action 'GE' (noprec):   error
+    action 'AND' (noprec):   error
+    action 'OR' (noprec):   error
+    action 'PLUS' (noprec):   error
+    action 'MINUS' (noprec):   error
+    action 'MULT' (noprec):   error
+    action 'DIV' (noprec):   error
+    action 'NOT' (explicit right 10000):   shift 45
+    action 'QLBOOL' (noprec):   error
+    action 'QLSTRING' (noprec):   error
+    action 'QLINT' (noprec):   error
+    action 'QLDECIMAL' (noprec):   error
+    action 'DECIMAL' (noprec):   shift 39
+    action 'INT' (noprec):   shift 38
+    action 'STRING' (noprec):   shift 35
+    action 'BOOL' (noprec):   shift 37
+    action 'LABEL' (noprec):   shift 36
+    action 'IDENTIFIER' (noprec):   shift 43
+    action 'ASSIGN' (noprec):   error
+    action 'COLON' (noprec):   error
+    action 'B_OPEN' (noprec):   shift 40
+    action 'B_CLOSE' (noprec):   error
+    action 'CB_OPEN' (noprec):   error
+    action 'CB_CLOSE' (noprec):   error
+    action 'IF' (noprec):   error
+    action 'ELSE' (noprec):   error
+    action 'FORM' (noprec):   error
+    action 'error' (noprec):   error
+    action '#' (noprec):   error
+    action '$$' (noprec):   error
+
+  immediate action: <none>
+ gotos:
+    goto literal: 44
+    goto expression: 52
+
+state 65:
+  items:
+    expression -> expression 'EQ' . expression
+
+  actions:
+    action 'END' (noprec):   error
+    action 'EQ' (noprec):   error
+    action 'NE' (noprec):   error
+    action 'LT' (noprec):   error
+    action 'LE' (noprec):   error
+    action 'GT' (noprec):   error
+    action 'GE' (noprec):   error
+    action 'AND' (noprec):   error
+    action 'OR' (noprec):   error
+    action 'PLUS' (noprec):   error
+    action 'MINUS' (noprec):   error
+    action 'MULT' (noprec):   error
+    action 'DIV' (noprec):   error
+    action 'NOT' (explicit right 10000):   shift 45
+    action 'QLBOOL' (noprec):   error
+    action 'QLSTRING' (noprec):   error
+    action 'QLINT' (noprec):   error
+    action 'QLDECIMAL' (noprec):   error
+    action 'DECIMAL' (noprec):   shift 39
+    action 'INT' (noprec):   shift 38
+    action 'STRING' (noprec):   shift 35
+    action 'BOOL' (noprec):   shift 37
+    action 'LABEL' (noprec):   shift 36
+    action 'IDENTIFIER' (noprec):   shift 43
+    action 'ASSIGN' (noprec):   error
+    action 'COLON' (noprec):   error
+    action 'B_OPEN' (noprec):   shift 40
+    action 'B_CLOSE' (noprec):   error
+    action 'CB_OPEN' (noprec):   error
+    action 'CB_CLOSE' (noprec):   error
+    action 'IF' (noprec):   error
+    action 'ELSE' (noprec):   error
+    action 'FORM' (noprec):   error
+    action 'error' (noprec):   error
+    action '#' (noprec):   error
+    action '$$' (noprec):   error
+
+  immediate action: <none>
+ gotos:
+    goto literal: 44
+    goto expression: 53
+
+state 66:
+  items:
+    expression -> expression 'NE' . expression
+
+  actions:
+    action 'END' (noprec):   error
+    action 'EQ' (noprec):   error
+    action 'NE' (noprec):   error
+    action 'LT' (noprec):   error
+    action 'LE' (noprec):   error
+    action 'GT' (noprec):   error
+    action 'GE' (noprec):   error
+    action 'AND' (noprec):   error
+    action 'OR' (noprec):   error
+    action 'PLUS' (noprec):   error
+    action 'MINUS' (noprec):   error
+    action 'MULT' (noprec):   error
+    action 'DIV' (noprec):   error
+    action 'NOT' (explicit right 10000):   shift 45
+    action 'QLBOOL' (noprec):   error
+    action 'QLSTRING' (noprec):   error
+    action 'QLINT' (noprec):   error
+    action 'QLDECIMAL' (noprec):   error
+    action 'DECIMAL' (noprec):   shift 39
+    action 'INT' (noprec):   shift 38
+    action 'STRING' (noprec):   shift 35
+    action 'BOOL' (noprec):   shift 37
+    action 'LABEL' (noprec):   shift 36
+    action 'IDENTIFIER' (noprec):   shift 43
+    action 'ASSIGN' (noprec):   error
+    action 'COLON' (noprec):   error
+    action 'B_OPEN' (noprec):   shift 40
+    action 'B_CLOSE' (noprec):   error
+    action 'CB_OPEN' (noprec):   error
+    action 'CB_CLOSE' (noprec):   error
+    action 'IF' (noprec):   error
+    action 'ELSE' (noprec):   error
+    action 'FORM' (noprec):   error
+    action 'error' (noprec):   error
+    action '#' (noprec):   error
+    action '$$' (noprec):   error
+
+  immediate action: <none>
+ gotos:
+    goto literal: 44
+    goto expression: 54
+
+state 67:
+  items:
+    expression -> expression 'PLUS' . expression
+
+  actions:
+    action 'END' (noprec):   error
+    action 'EQ' (noprec):   error
+    action 'NE' (noprec):   error
+    action 'LT' (noprec):   error
+    action 'LE' (noprec):   error
+    action 'GT' (noprec):   error
+    action 'GE' (noprec):   error
+    action 'AND' (noprec):   error
+    action 'OR' (noprec):   error
+    action 'PLUS' (noprec):   error
+    action 'MINUS' (noprec):   error
+    action 'MULT' (noprec):   error
+    action 'DIV' (noprec):   error
+    action 'NOT' (explicit right 10000):   shift 45
+    action 'QLBOOL' (noprec):   error
+    action 'QLSTRING' (noprec):   error
+    action 'QLINT' (noprec):   error
+    action 'QLDECIMAL' (noprec):   error
+    action 'DECIMAL' (noprec):   shift 39
+    action 'INT' (noprec):   shift 38
+    action 'STRING' (noprec):   shift 35
+    action 'BOOL' (noprec):   shift 37
+    action 'LABEL' (noprec):   shift 36
+    action 'IDENTIFIER' (noprec):   shift 43
+    action 'ASSIGN' (noprec):   error
+    action 'COLON' (noprec):   error
+    action 'B_OPEN' (noprec):   shift 40
+    action 'B_CLOSE' (noprec):   error
+    action 'CB_OPEN' (noprec):   error
+    action 'CB_CLOSE' (noprec):   error
+    action 'IF' (noprec):   error
+    action 'ELSE' (noprec):   error
+    action 'FORM' (noprec):   error
+    action 'error' (noprec):   error
+    action '#' (noprec):   error
+    action '$$' (noprec):   error
+
+  immediate action: <none>
+ gotos:
+    goto literal: 44
+    goto expression: 55
+
+state 68:
+  items:
+    expression -> expression 'MINUS' . expression
+
+  actions:
+    action 'END' (noprec):   error
+    action 'EQ' (noprec):   error
+    action 'NE' (noprec):   error
+    action 'LT' (noprec):   error
+    action 'LE' (noprec):   error
+    action 'GT' (noprec):   error
+    action 'GE' (noprec):   error
+    action 'AND' (noprec):   error
+    action 'OR' (noprec):   error
+    action 'PLUS' (noprec):   error
+    action 'MINUS' (noprec):   error
+    action 'MULT' (noprec):   error
+    action 'DIV' (noprec):   error
+    action 'NOT' (explicit right 10000):   shift 45
+    action 'QLBOOL' (noprec):   error
+    action 'QLSTRING' (noprec):   error
+    action 'QLINT' (noprec):   error
+    action 'QLDECIMAL' (noprec):   error
+    action 'DECIMAL' (noprec):   shift 39
+    action 'INT' (noprec):   shift 38
+    action 'STRING' (noprec):   shift 35
+    action 'BOOL' (noprec):   shift 37
+    action 'LABEL' (noprec):   shift 36
+    action 'IDENTIFIER' (noprec):   shift 43
+    action 'ASSIGN' (noprec):   error
+    action 'COLON' (noprec):   error
+    action 'B_OPEN' (noprec):   shift 40
+    action 'B_CLOSE' (noprec):   error
+    action 'CB_OPEN' (noprec):   error
+    action 'CB_CLOSE' (noprec):   error
+    action 'IF' (noprec):   error
+    action 'ELSE' (noprec):   error
+    action 'FORM' (noprec):   error
+    action 'error' (noprec):   error
+    action '#' (noprec):   error
+    action '$$' (noprec):   error
+
+  immediate action: <none>
+ gotos:
+    goto literal: 44
+    goto expression: 56
+
+state 69:
+  items:
+    expression -> expression 'MULT' . expression
+
+  actions:
+    action 'END' (noprec):   error
+    action 'EQ' (noprec):   error
+    action 'NE' (noprec):   error
+    action 'LT' (noprec):   error
+    action 'LE' (noprec):   error
+    action 'GT' (noprec):   error
+    action 'GE' (noprec):   error
+    action 'AND' (noprec):   error
+    action 'OR' (noprec):   error
+    action 'PLUS' (noprec):   error
+    action 'MINUS' (noprec):   error
+    action 'MULT' (noprec):   error
+    action 'DIV' (noprec):   error
+    action 'NOT' (explicit right 10000):   shift 45
+    action 'QLBOOL' (noprec):   error
+    action 'QLSTRING' (noprec):   error
+    action 'QLINT' (noprec):   error
+    action 'QLDECIMAL' (noprec):   error
+    action 'DECIMAL' (noprec):   shift 39
+    action 'INT' (noprec):   shift 38
+    action 'STRING' (noprec):   shift 35
+    action 'BOOL' (noprec):   shift 37
+    action 'LABEL' (noprec):   shift 36
+    action 'IDENTIFIER' (noprec):   shift 43
+    action 'ASSIGN' (noprec):   error
+    action 'COLON' (noprec):   error
+    action 'B_OPEN' (noprec):   shift 40
+    action 'B_CLOSE' (noprec):   error
+    action 'CB_OPEN' (noprec):   error
+    action 'CB_CLOSE' (noprec):   error
+    action 'IF' (noprec):   error
+    action 'ELSE' (noprec):   error
+    action 'FORM' (noprec):   error
+    action 'error' (noprec):   error
+    action '#' (noprec):   error
+    action '$$' (noprec):   error
+
+  immediate action: <none>
+ gotos:
+    goto literal: 44
+    goto expression: 57
+
+state 70:
+  items:
+    expression -> expression 'DIV' . expression
+
+  actions:
+    action 'END' (noprec):   error
+    action 'EQ' (noprec):   error
+    action 'NE' (noprec):   error
+    action 'LT' (noprec):   error
+    action 'LE' (noprec):   error
+    action 'GT' (noprec):   error
+    action 'GE' (noprec):   error
+    action 'AND' (noprec):   error
+    action 'OR' (noprec):   error
+    action 'PLUS' (noprec):   error
+    action 'MINUS' (noprec):   error
+    action 'MULT' (noprec):   error
+    action 'DIV' (noprec):   error
+    action 'NOT' (explicit right 10000):   shift 45
+    action 'QLBOOL' (noprec):   error
+    action 'QLSTRING' (noprec):   error
+    action 'QLINT' (noprec):   error
+    action 'QLDECIMAL' (noprec):   error
+    action 'DECIMAL' (noprec):   shift 39
+    action 'INT' (noprec):   shift 38
+    action 'STRING' (noprec):   shift 35
+    action 'BOOL' (noprec):   shift 37
+    action 'LABEL' (noprec):   shift 36
+    action 'IDENTIFIER' (noprec):   shift 43
+    action 'ASSIGN' (noprec):   error
+    action 'COLON' (noprec):   error
+    action 'B_OPEN' (noprec):   shift 40
+    action 'B_CLOSE' (noprec):   error
+    action 'CB_OPEN' (noprec):   error
+    action 'CB_CLOSE' (noprec):   error
+    action 'IF' (noprec):   error
+    action 'ELSE' (noprec):   error
+    action 'FORM' (noprec):   error
+    action 'error' (noprec):   error
+    action '#' (noprec):   error
+    action '$$' (noprec):   error
+
+  immediate action: <none>
+ gotos:
+    goto literal: 44
+    goto expression: 58
+
+
+startStates = 0
+------------------------

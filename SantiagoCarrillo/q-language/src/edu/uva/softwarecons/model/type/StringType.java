@@ -1,6 +1,6 @@
 package edu.uva.softwarecons.model.type;
 
-import edu.uva.softwarecons.visitor.type.ITypeElementVisitor;
+import edu.uva.softwarecons.visitor.type.TypeElementVisitor;
 
 /**
  * Falconlabs
@@ -30,7 +30,7 @@ public class StringType
     }
 
     @Override
-    public void accept( ITypeElementVisitor visitor )
+    public void accept( TypeElementVisitor visitor )
     {
         visitor.visitStringType( this );
     }

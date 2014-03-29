@@ -1,0 +1,1 @@
+(block { (statement a : "a" (type boolean)) (statement b : "b" (type integer)) })

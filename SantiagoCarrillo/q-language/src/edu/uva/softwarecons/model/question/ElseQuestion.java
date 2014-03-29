@@ -1,6 +1,6 @@
 package edu.uva.softwarecons.model.question;
 
-import edu.uva.softwarecons.visitor.form.IFormElementVisitor;
+import edu.uva.softwarecons.visitor.form.FormElementVisitor;
 
 import java.util.List;
 
@@ -27,7 +27,7 @@ public class ElseQuestion
     }
 
     @Override
-    public void accept( IFormElementVisitor visitor )
+    public void accept( FormElementVisitor visitor )
     {
         visitor.visitElseQuestion( this );
     }

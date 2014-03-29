@@ -4,6 +4,7 @@ import ql.ast.expression.IExpression;
 import ql.ast.expression.Id;
 import ql.ast.type.NullType;
 import ql.ast.type.Type;
+import ql.error.ErrorList;
 import ql.error.TypeError;
 
 /**
@@ -13,16 +14,17 @@ public class ExpressionChecker extends Checker
 {
     private final IExpression _expression;
 
-    public ExpressionChecker(TypeEnvironment typeEnvironment, IExpression expression)
+    public ExpressionChecker(TypeEnvironment typeEnvironment, ErrorList errorList,
+        IExpression expression)
     {
-        this._typeEnvironment = typeEnvironment;
+        super(typeEnvironment, errorList);
         this._expression = expression;
     }
 
     /**
-     * Check if this Id expression has a type
+     * Check if this Id is defined
      */
-    public void checkIdHasType()
+    public void checkIdDefined()
     {
         Id id = (Id) this._expression;
         if (!(id.getType() instanceof NullType)) {
@@ -30,7 +32,7 @@ public class ExpressionChecker extends Checker
         }
 
         //ERROR There is no assignment with this id
-        this._typeEnvironment.addError(
+        this._errorList.add(
             new TypeError("There is no assignment with id '" + id.getValue() + "'!")
         );
     }
@@ -45,9 +47,9 @@ public class ExpressionChecker extends Checker
         }
 
         //ERROR This expression's type is not compatible with provided type
-        this._typeEnvironment.addError(
-            new TypeError("An expression of type '" + this._expression.getType().toString() +
-                "' is not compatible with an expression of type '" +
+        this._errorList.add(
+            new TypeError("An expression having '" + this._expression.getType().toString() +
+                "' is not compatible with an expression having '" +
                 type.toString() + "'!")
         );
     }

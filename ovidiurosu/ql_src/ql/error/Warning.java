@@ -17,4 +17,10 @@ public class Warning extends Exception implements IError
     {
         return 5;
     }
+
+    @Override
+    public boolean equals(IError error)
+    {
+        return error instanceof Warning && this.getMessage().equals(error.getMessage());
+    }
 }

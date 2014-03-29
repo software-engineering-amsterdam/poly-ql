@@ -1,7 +1,7 @@
 package edu.uva.softwarecons.model.question;
 
 import edu.uva.softwarecons.model.expression.Expression;
-import edu.uva.softwarecons.visitor.form.IFormElementVisitor;
+import edu.uva.softwarecons.visitor.form.FormElementVisitor;
 
 import java.util.List;
 
@@ -47,7 +47,7 @@ public class IfQuestion
     }
 
     @Override
-    public void accept( IFormElementVisitor visitor )
+    public void accept( FormElementVisitor visitor )
     {
         visitor.visitIfQuestion( this );
     }
@@ -58,7 +58,7 @@ public class IfQuestion
         return o instanceof IfQuestion;
     }
 
-    public String getCondition()
+    public String getConditionText()
     {
         return condition;
     }

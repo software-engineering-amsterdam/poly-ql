@@ -15,7 +15,7 @@ public class IntegerType extends NumberType
     @Override
     public String toString()
     {
-        return "integer";
+        return "(type integer)";
     }
 
     @Override

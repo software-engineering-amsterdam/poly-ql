@@ -7,7 +7,6 @@ import org.uva.sea.ql.ast.expr.Add;
 import org.uva.sea.ql.ast.expr.And;
 import org.uva.sea.ql.ast.expr.Binary;
 import org.uva.sea.ql.ast.expr.BoolLiteral;
-import org.uva.sea.ql.ast.expr.DecimalLiteral;
 import org.uva.sea.ql.ast.expr.Div;
 import org.uva.sea.ql.ast.expr.Eq;
 import org.uva.sea.ql.ast.expr.GEq;
@@ -17,7 +16,6 @@ import org.uva.sea.ql.ast.expr.IntLiteral;
 import org.uva.sea.ql.ast.expr.LEq;
 import org.uva.sea.ql.ast.expr.LT;
 import org.uva.sea.ql.ast.expr.Literal;
-import org.uva.sea.ql.ast.expr.MoneyLiteral;
 import org.uva.sea.ql.ast.expr.Mul;
 import org.uva.sea.ql.ast.expr.NEq;
 import org.uva.sea.ql.ast.expr.Neg;
@@ -47,7 +45,7 @@ public class ExprVisitorIdentifiers implements IExprVisitor<Set<Ident>> {
 		return variables;
 	}
 
-	private Set<Ident> visitLiteral(Literal<?> ex) {
+	private Set<Ident> visitLiteral(Literal ex) {
 		return null;
 	}
 
@@ -143,17 +141,7 @@ public class ExprVisitorIdentifiers implements IExprVisitor<Set<Ident>> {
 	}
 
 	@Override
-	public Set<Ident> visit(DecimalLiteral ex) {
-		return visitLiteral(ex);
-	}
-
-	@Override
 	public Set<Ident> visit(IntLiteral ex) {
-		return visitLiteral(ex);
-	}
-
-	@Override
-	public Set<Ident> visit(MoneyLiteral ex) {
 		return visitLiteral(ex);
 	}
 

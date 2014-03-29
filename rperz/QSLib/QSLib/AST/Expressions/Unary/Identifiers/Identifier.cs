@@ -68,7 +68,8 @@ namespace QSLib.AST.Expressions.Unary.Identifiers
             set
             {
                 this._parent = value;
-                this._type = this._parent.Type;
+                if(this._parent != null)
+                    this._type = this._parent.Type;
             }
         }
 #endregion

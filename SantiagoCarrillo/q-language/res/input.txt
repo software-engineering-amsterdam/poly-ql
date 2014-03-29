@@ -16,16 +16,16 @@ form Box1HouseOwning {
         valueResidue: "Value residue:" money(sellingPrice * privateDebt)
         internalIfCondition: "label:" boolean
          if (true) {
-            alwaysShowQuestion: "Vamos !!" money(sellingPrice * privateDebt)
+            alwaysShowQuestion: "some label" money(sellingPrice * privateDebt)
             secondIdShowSubQuestion: "label" boolean
             if (secondIdShowSubQuestion) {
-                insideSubQuestion: "Vamos !!" money(sellingPrice * privateDebt)
+                insideSubQuestion: "some label" money(sellingPrice * privateDebt)
             }
         }
         if (internalIfCondition) {
-            subQuestion1: "Vamos !!" money(sellingPrice * privateDebt)
+            subQuestion1: "another label" money(sellingPrice * privateDebt)
         }else{
-            subQuestion2: "Vamos !!" money(sellingPrice * privateDebt)
+            subQuestion2: "another label" money(sellingPrice * privateDebt)
         }
    }else{
         firstElseQuestion: "Text" boolean

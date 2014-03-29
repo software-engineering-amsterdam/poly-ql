@@ -15,14 +15,34 @@ import net.iplantevin.ql.ast.visitors.IStatementVisitor;
 public class Computation extends Questionable {
     private final Expression expression;
 
-    public Computation(ID name, Str label, Type type, Expression expression, LineInfo lineInfo) {
-        super(name, label, type, lineInfo);
+    public Computation(ID identifier, Str label, Type type, Expression expression, LineInfo lineInfo) {
+        super(identifier, label, type, lineInfo);
 
         this.expression = expression;
     }
 
     public Expression getExpression() {
         return expression;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (! super.equals(o)) return false;
+
+        Computation that = (Computation) o;
+
+        if (!expression.equals(that.expression)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + expression.hashCode();
+        return result;
     }
 
     @Override

@@ -1,5 +1,0 @@
-// Computed Assign Statement with Decimal Type
-form test {
-    question: "Amount: " decimal
-    question2: "Value:" decimal(question - 3.4)
-}

@@ -19,10 +19,6 @@ public class ParserBuilder
 {
 
 
-    private QuestionnaireLexer lexer;
-
-    private CommonTokenStream tokens;
-
     private QuestionnaireParser parser;
 
 
@@ -39,8 +35,8 @@ public class ParserBuilder
 
     private ParseTree getParseTree( ANTLRInputStream input )
     {
-        lexer = new QuestionnaireLexer( input );
-        tokens = new CommonTokenStream( lexer );
+        QuestionnaireLexer lexer = new QuestionnaireLexer( input );
+        CommonTokenStream tokens = new CommonTokenStream( lexer );
         parser = new QuestionnaireParser( tokens );
         return parser.questionnaire();
     }

@@ -1,11 +1,10 @@
 package ql.main;
 
 import java.io.File;
-import java.io.PrintStream;
 
 import org.antlr.v4.runtime.tree.ParseTree;
 
-import ql.ast.BuildASTVisitor;
+import ql.ast.AstBuilderVisitor;
 import ql.ast.QuestionnaireList;
 import ql.gui.renderer.GuiRenderer;
 import ql.type_checker.TypeChecker;
@@ -31,18 +30,15 @@ public class Main
             Parser parser = new Parser();
             parser.buildQLParser(new File(System.getProperty("user.dir") +
                 File.separator + "src" + File.separator + "QL.expr"));
-            ParseTree parseTree = parser.buildParseTree();
+            ParseTree parseTree = parser.forms();
 
-            BuildASTVisitor buildASTVisitor = new BuildASTVisitor();
-            QuestionnaireList questionnaires = (QuestionnaireList) buildASTVisitor.visit(parseTree);
+            AstBuilderVisitor astBuilderVisitor = new AstBuilderVisitor();
+            QuestionnaireList questionnaireList = (QuestionnaireList) astBuilderVisitor.visit(parseTree);
 
-            new TypeChecker(questionnaires).check();
-            new GuiRenderer(questionnaires.getQuestionnaires()).render();
+            new TypeChecker(questionnaireList).check();
+            new GuiRenderer(questionnaireList).render();
         } catch (Exception exc) {
             System.err.println(exc.getMessage());
-
-            //TODO Remove print stack trace (only for development)
-            exc.printStackTrace(new PrintStream(System.err));
         }
     }
 }

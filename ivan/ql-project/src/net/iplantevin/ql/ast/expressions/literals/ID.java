@@ -3,7 +3,7 @@ package net.iplantevin.ql.ast.expressions.literals;
 import net.iplantevin.ql.ast.LineInfo;
 import net.iplantevin.ql.ast.expressions.Expression;
 import net.iplantevin.ql.ast.types.Type;
-import net.iplantevin.ql.ast.types.TypeEnvironment;
+import net.iplantevin.ql.ast.typechecking.TypeEnvironment;
 import net.iplantevin.ql.ast.visitors.IExpressionVisitor;
 
 /**
@@ -26,6 +26,23 @@ public class ID extends Expression {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ID id = (ID) o;
+
+        if (!name.equals(id.name)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
     }
 
     @Override

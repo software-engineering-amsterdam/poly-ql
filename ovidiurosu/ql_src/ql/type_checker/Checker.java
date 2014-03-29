@@ -1,24 +1,23 @@
 package ql.type_checker;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import ql.ast.Questionnaire;
+import ql.error.ErrorList;
 
 /**
  * @author orosu
  */
 public abstract class Checker
 {
-    protected TypeEnvironment _typeEnvironment;
+    protected final TypeEnvironment _typeEnvironment;
+    protected final ErrorList _errorList;
 
-    public Checker()
+    public Checker(TypeEnvironment typeEnvironment, ErrorList errorList)
     {
-        this._typeEnvironment = new TypeEnvironment(new ArrayList<Questionnaire>());
+        this._typeEnvironment = typeEnvironment;
+        this._errorList = errorList;
     }
 
-    public Checker(List<Questionnaire> checkedQuestionnaires)
+    public ErrorList getErrorList()
     {
-        this._typeEnvironment = new TypeEnvironment(checkedQuestionnaires);
+        return this._errorList;
     }
 }

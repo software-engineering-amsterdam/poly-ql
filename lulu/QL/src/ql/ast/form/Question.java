@@ -21,7 +21,8 @@ public class Question extends FormItems{
 		this.question = question;
 		this.type = type;
 		this.answerComponent = type.getAnswer();
-		this.questionLabel = new JLabel(question);
+		this.questionLabel = new JLabel(question.substring(1, question.length()-1));
+		super.question = question;
 	}
 
 	public Ident getIdent() {
@@ -46,8 +47,10 @@ public class Question extends FormItems{
 	
 	@Override
 	public boolean validate(Environment environment) {
-		if (environment.containsType(ident)){ 
-			errors.add(new Error("Ident " + ident + "is already defined!"));
+		if (environment.containsType(ident)) {
+			if (!(environment.getType(ident).equals(type))) {
+				errors.add(new Error("Question " + ident.id + "is already defined with other type!"));
+			}
 		}
 		else{ 
 			environment.addType(ident, type);

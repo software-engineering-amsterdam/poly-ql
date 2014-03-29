@@ -19,18 +19,12 @@ public class RangeType extends Type
 
     public IRangeElement getBeginElement()
     {
-        return _beginElement;
+        return this._beginElement;
     }
 
     public IRangeElement getEndElement()
     {
-        return _endElement;
-    }
-
-    @Override
-    public String toString()
-    {
-        return "range";
+        return this._endElement;
     }
 
     @Override
@@ -49,6 +43,13 @@ public class RangeType extends Type
     public boolean equals(Object type)
     {
         return type instanceof RangeType;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "(type " + this._beginElement.getLiteral().toString() +
+               " .. " + this._endElement.getLiteral().toString() + ")";
     }
 
     @Override

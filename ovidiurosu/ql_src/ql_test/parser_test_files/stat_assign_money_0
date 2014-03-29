@@ -1,5 +1,0 @@
-// Assign Statement with Money Type
-form test {
-    question: "Money: " money
-    question2: "Money2: " money
-}

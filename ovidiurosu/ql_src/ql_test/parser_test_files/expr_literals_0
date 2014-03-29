@@ -1,8 +1,0 @@
-// Literals expressions
-form test {
-    qInteger: "How many times integer?" integer
-    qText: "Something: " text
-    if (true || false && qInteger - 3 >= 2 || ("test" == qText)) {
-        reason: "Reason: " text
-    }
-}

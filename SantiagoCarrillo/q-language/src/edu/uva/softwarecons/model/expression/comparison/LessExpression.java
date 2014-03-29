@@ -4,8 +4,8 @@ import edu.uva.softwarecons.model.expression.BinaryExpression;
 import edu.uva.softwarecons.model.expression.Expression;
 import edu.uva.softwarecons.model.type.Type;
 import edu.uva.softwarecons.model.value.Value;
-import edu.uva.softwarecons.visitor.expression.IExpressionElementVisitor;
-import edu.uva.softwarecons.visitor.expression.IExpressionEvalVisitor;
+import edu.uva.softwarecons.visitor.expression.ExpressionElementVisitor;
+import edu.uva.softwarecons.visitor.expression.ExpressionEvalVisitor;
 
 /**
  * Falconlabs
@@ -23,14 +23,22 @@ public class LessExpression
     }
 
     @Override
-    public Type accept( IExpressionElementVisitor visitor )
+    public BinaryExpression getNewInstance( Expression leftOperand, Expression rightOperand )
+    {
+        return new LessExpression( leftOperand, rightOperand );
+    }
+
+    @Override
+    public Type accept( ExpressionElementVisitor visitor )
     {
         return visitor.visitLessExpression( this );
     }
 
     @Override
-    public Value accept( IExpressionEvalVisitor visitor )
+    public Value accept( ExpressionEvalVisitor visitor )
     {
         return visitor.visitLessExpression( this );
     }
+
+
 }

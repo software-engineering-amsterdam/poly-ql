@@ -1,1 +1,0 @@
-(init (form form test (block { (stat question1 : "Range 1:" (type 1 .. 5)) (stat question2 : "Value:" (type 0 .. 0) ( (expr question1) )) })))

@@ -1,1 +1,0 @@
-(init (form form test (block { (stat question1 : "Name: " (type text)) (stat name : "Your Name is: " (type text) ( (expr question1) )) })))

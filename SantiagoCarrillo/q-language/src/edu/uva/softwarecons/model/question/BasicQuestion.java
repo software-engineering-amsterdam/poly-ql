@@ -1,7 +1,7 @@
 package edu.uva.softwarecons.model.question;
 
 import edu.uva.softwarecons.model.type.Type;
-import edu.uva.softwarecons.visitor.form.IFormElementVisitor;
+import edu.uva.softwarecons.visitor.form.FormElementVisitor;
 
 /**
  * Falconlabs
@@ -13,11 +13,11 @@ public class BasicQuestion
     implements Question
 {
 
-    protected String id;
+    protected final String id;
 
-    protected String text;
+    protected final String text;
 
-    protected Type type;
+    protected final Type type;
 
 
     public BasicQuestion( String id, String text, Type type )
@@ -28,7 +28,7 @@ public class BasicQuestion
     }
 
     @Override
-    public void accept( IFormElementVisitor visitor )
+    public void accept( FormElementVisitor visitor )
     {
         visitor.visitQuestion( this );
     }

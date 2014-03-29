@@ -20,6 +20,12 @@ public class BooleanLiteral extends Literal<Boolean>
     }
 
     @Override
+    public String toString()
+    {
+        return "(expression (booleanLiteralP " + this.getLiteral().toString() + "))";
+    }
+
+    @Override
     public <T> T accept(IExpressionElementVisitor<T> visitor)
     {
         return visitor.visit(this);

@@ -26,7 +26,7 @@ public class Pos extends Operation{
 		List<Error> errors = new ArrayList<Error>();	
 		errors.addAll(getExpr().checkType(environment));	
 		
-		if(getExpr().getType(environment).getName() != "Int")
+		if(getExpr().getType(environment) != null && getExpr().getType(environment).getName() != "Int")
 			errors.add(new Error("+: Expression is not a integer"));
 		
 		return errors;

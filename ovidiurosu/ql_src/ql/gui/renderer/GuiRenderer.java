@@ -1,39 +1,54 @@
 package ql.gui.renderer;
 
-import java.util.List;
+import java.util.Iterator;
 
 import ql.ast.Questionnaire;
+import ql.ast.QuestionnaireList;
+import ql.ast.expression_evaluator.ValueEnvironment;
+import ql.ast.statement.IStatement;
+import ql.gui.QuestionnaireFrame;
 
 /**
  * @author orosu
  */
 public class GuiRenderer
 {
-    private final List<Questionnaire> _questionnaires;
+    private final QuestionnaireList _questionnaireList;
 
-    public GuiRenderer(List<Questionnaire> questionnaires)
+    public GuiRenderer(QuestionnaireList questionnaireList)
     {
-        this._questionnaires = questionnaires;
+        this._questionnaireList = questionnaireList;
     }
 
-    public List<Questionnaire> getQuestionnaires()
+    public QuestionnaireList getQuestionnaireList()
     {
-        return this._questionnaires;
+        return this._questionnaireList;
     }
 
     public void removeQuestionnaire(Questionnaire questionnaire)
     {
-        this._questionnaires.remove(questionnaire);
+        this._questionnaireList.remove(questionnaire);
     }
 
     public void render()
     {
-        GuiRendererVisitor guiRenderrerVisitor;
-
-        for (Questionnaire questionnaire: this._questionnaires) {
-            guiRenderrerVisitor = new GuiRendererVisitor(this);
-            guiRenderrerVisitor.visit(questionnaire)
-                .setVisible(true);
+        Iterator<Questionnaire> iterator = this._questionnaireList.iterator();
+        while (iterator.hasNext()) {
+            this._renderQuestionnaire(iterator.next());
         }
+    }
+
+    private void _renderQuestionnaire(Questionnaire questionnaire)
+    {
+        QuestionnaireFrame questionnaireFrame = new QuestionnaireFrame(questionnaire, this);
+        ValueEnvironment valueEnvironment = new ValueEnvironment();
+
+        Iterator<IStatement> iterator = questionnaire.getStatementList().iterator();
+        while (iterator.hasNext()) {
+            iterator.next().accept(new GuiRendererVisitor(questionnaireFrame, valueEnvironment));
+        }
+
+        questionnaireFrame.build();
+        questionnaireFrame.setVisible(true);
     }
 }

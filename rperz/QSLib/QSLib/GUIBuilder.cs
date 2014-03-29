@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Data;
-using QSLib.Expressions;
-using QSLib.Expressions.Unary;
+using QSLib.AST;
+using QSLib.AST.Expressions;
+using QSLib.AST.Expressions.Unary;
+using QSLib.AST.Expressions.Unary.Identifiers;
 using QSLib.IO;
-
+using QSLib.Visitors;
 namespace QSLib
 {
     public class GUIBuilder
@@ -14,16 +16,18 @@ namespace QSLib
         private StackPanel _currentPanel;
         private QuestionControl _currentQuestion;
         private IList<QSExpression> _updateList = new List<QSExpression>();
+        
         private GUIBuilder()
         {
             this._control = new StackPanel();
             this._currentPanel = this._control;
         }
 
-        public static GUIBuilder BuildGUI(Form f)
+        public static GUIBuilder BuildGUI(Form questionaire)
         {
             GUIBuilder builder = new GUIBuilder();
-            f.CreateGUI(builder);
+            TypeChecker.StartVisit(questionaire);
+            questionaire.CreateGUI(builder);
             return builder;
         }
 

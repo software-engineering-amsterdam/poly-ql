@@ -15,7 +15,6 @@ import static org.junit.Assert.assertEquals;
  */
 public class QuestionnaireParserTest
 {
-    //TODO Low priority do not check
     private ParserBuilder parserBuilder;
 
     @Before

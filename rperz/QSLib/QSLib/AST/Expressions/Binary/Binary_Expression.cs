@@ -38,7 +38,7 @@ namespace QSLib.AST.Expressions
         }
 
         public override abstract Value Evaluate();
-
+        public abstract bool IsCompatible(QSType type);
 
         #region Object overrides
         public override int GetHashCode()

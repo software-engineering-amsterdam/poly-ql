@@ -4,7 +4,7 @@ import net.iplantevin.ql.ast.LineInfo;
 import net.iplantevin.ql.ast.expressions.Expression;
 import net.iplantevin.ql.ast.types.StringType;
 import net.iplantevin.ql.ast.types.Type;
-import net.iplantevin.ql.ast.types.TypeEnvironment;
+import net.iplantevin.ql.ast.typechecking.TypeEnvironment;
 import net.iplantevin.ql.ast.visitors.IExpressionVisitor;
 
 /**
@@ -27,6 +27,23 @@ public class Str extends Expression {
 
     public String getText() {
         return text;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Str str = (Str) o;
+
+        if (!text.equals(str.text)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return text.hashCode();
     }
 
     @Override

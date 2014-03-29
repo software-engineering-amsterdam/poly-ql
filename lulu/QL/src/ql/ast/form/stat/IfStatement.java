@@ -34,7 +34,7 @@ public class IfStatement extends Statement{
 	public boolean validate(Environment environment) {
 		boolean valid = true;
 		errors.addAll(expr.checkType(environment));
-		if (!(expr.getType(environment).equals(new BoolType()))) {
+		if (expr.getType(environment) != null && !(expr.getType(environment).equals(new BoolType()))) {
 			errors.add(new Error("Ifstatement: the expression should be a boolean type"));
 		}
 		for (FormItems f : ifBody) {
