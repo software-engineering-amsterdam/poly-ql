@@ -15,6 +15,7 @@ public class EqExpr extends EqualityExpr {
 		super(lhs, rhs);
 	}
 	
+	@Override
 	public String toString() {
 		return "Eq(" + super.toString() + ")";
 	}
@@ -23,4 +24,7 @@ public class EqExpr extends EqualityExpr {
 	public Object accept(IQLVisitor<?> visitor) {
 		return visitor.visit(this);
 	}
+	
+	
+	
 }

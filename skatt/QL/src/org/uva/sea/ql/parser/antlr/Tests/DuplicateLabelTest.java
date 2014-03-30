@@ -20,11 +20,13 @@ public class DuplicateLabelTest extends QL4Test {
 	
 	@Test
 	public void testDuplicateLabel() {
-		Label qlabel1 = new Label("This is an question label");
-		Label qlabel2 = new Label("This is a question label");
+		Label qlabel1 = new Label("This is a question label");
+		Label qlabel2 = new Label("This is an question label");
 		
 		expected.add(new DuplicateLabelError(qlabel1));
 		expected.add(new DuplicateLabelError(qlabel2));
 		assertEquals(expected, errors);
+		
+		
 	}
 }

@@ -140,7 +140,10 @@ public class CyclicDependencyChecker extends QLErrorVisitor {
 			for (Identifier valueID : dependencies.get(keyID)) {
 				// if a valueID of keyID is dependent on keyID, we have a cyclic dependency (ignore if valueID == keyID)
 				if (dependencies.get(valueID).contains(keyID) && !(valueID.equals(keyID))) {
-					msgs.add(new CyclicDependencyError(keyID, valueID));
+					CyclicDependencyError msg = new CyclicDependencyError(keyID, valueID); 
+					if (!msgs.contains(msg)) {
+						msgs.add(msg);
+					}
 				}
 			}
 		}

@@ -105,8 +105,8 @@ public class AntlrVisitor extends QL4BaseVisitor<QLTree> {
    */
   public Question visitRegQuestion(QL4Parser.RegQuestionContext ctx) {
 	  Identifier id = new Identifier(ctx.IDENTIFIER().getText());
-	  Label label = new Label(ctx.LABEL().getText());
-	  Type type = typeFromString(ctx.TYPE().getText());
+	  Label label = new Label(ctx.LABEL().getText().replaceAll("^\"|\"$", "")); // remove quotes if available
+	  Type type = typeFromString(ctx.TYPE().getText()); 
 	  
 	  return new Question(id, label, type); 
   }
