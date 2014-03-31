@@ -1,4 +1,4 @@
-package ast.expr.evaluate;
+package ast.value;
 
 public abstract class Value {
 	

@@ -18,8 +18,7 @@ public class Add extends BinExpr{
 
 	@Override
 	public Type typeof(SymbolTable symb) {
-		return new IntType();
-		
+		return new IntType();		
 	}
 	
 }

@@ -10,16 +10,16 @@ import java.util.List;
 
 import javax.swing.JComponent;
 
-import ast.expr.evaluate.Value;
+import ast.value.Value;
 
-public abstract class Control implements EventSource{
+public abstract class Widget implements EventSource{
 	
 	private List<EventListener> eventListeners;
 	
 	public abstract JComponent getComponent();
 	public abstract Value getValue();
 	
-	public Control() {
+	public Widget() {
 		eventListeners = new ArrayList<EventListener>();
 	}
 

@@ -3,7 +3,7 @@ package gui.observers;
 import java.util.Observable;
 import java.util.Observer;
 
-public abstract class ControlObserver implements Observer{
+public abstract class WidgetObserver implements Observer{
 
 	public abstract void evaluate();
 	@Override

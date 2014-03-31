@@ -1,4 +1,4 @@
-package ast.expr.evaluate;
+package ast.value;
 
 public class Int extends Value{
 	
@@ -89,7 +89,7 @@ public class Int extends Value{
 	
 	@Override
 	protected Value leqInt(Int val){
-		return new Bool(val.getValue() < getValue());
+		return new Bool(val.getValue() <= getValue());
 	}
 	
 	@Override

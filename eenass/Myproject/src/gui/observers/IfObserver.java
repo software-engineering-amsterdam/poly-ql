@@ -1,15 +1,15 @@
 package gui.observers;
 
-import gui.Evaluator;
+import gui.render.Evaluator;
 import gui.render.State;
 
 import javax.swing.JComponent;
 
-import ast.expr.evaluate.Bool;
-import ast.expr.evaluate.Value;
 import ast.statement.IfStatement;
+import ast.value.Bool;
+import ast.value.Value;
 
-public class IfObserver extends ControlObserver{
+public class IfObserver extends WidgetObserver{
 	
 	private final IfStatement ifStat;
 	protected JComponent ifPanel;

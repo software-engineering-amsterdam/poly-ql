@@ -1,7 +1,7 @@
 package maintest;
 
 import static org.junit.Assert.assertEquals;
-import gui.Evaluator;
+import gui.render.Evaluator;
 
 import java.util.Map;
 
@@ -19,13 +19,13 @@ import ast.expr.binExpr.GT;
 import ast.expr.binExpr.LT;
 import ast.expr.binExpr.Mul;
 import ast.expr.binExpr.Sub;
-import ast.expr.evaluate.Bool;
-import ast.expr.evaluate.Int;
-import ast.expr.evaluate.Value;
 import ast.expr.literal.BoolLiteral;
 import ast.expr.literal.IntLiteral;
 import ast.expr.unExpression.Neg;
 import ast.expr.unExpression.Not;
+import ast.value.Bool;
+import ast.value.Int;
+import ast.value.Value;
 
 public class EvaluatorTest {
 
@@ -71,6 +71,11 @@ public class EvaluatorTest {
 		test(new Bool(true), "3 > 2");
 		test(new Bool(false), "3 < 2");
 		test(new Bool(true), "3 < 5");
+		test(new Bool(true), "3 <= 3");
+		test(new Bool(true), "3 >= 3");
+		test(new Bool(false), "5 <= 3");
+		test(new Bool(true), "2 <= 3");
+		test(new Bool(false), "5 >= 6");
 		test(new Bool(false), "true && false");
 		test(new Bool(false), "false && false");
 		test(new Bool(true), "true && true");
@@ -78,6 +83,8 @@ public class EvaluatorTest {
 		test(new Bool(true), "true || false");
 		test(new Bool(true), "(true && true) || false");
 		test(new Bool(true), "(false || true) && true");
+		test(new Bool(false), "(false && true) && true");
+		test(new Bool(false), " ! (false || true) && true");
 		test(new Bool(true), "!true == false");
 		test(new Bool(true), "4 == 4");
 		test(new Bool(true), "4 != 3");
@@ -90,23 +97,25 @@ public class EvaluatorTest {
 	public void testExpressions(){
 		IntLiteral a = new IntLiteral(5);
 		IntLiteral b = new IntLiteral(4);
-		assertEqual(new Bool(true), new GT(a, b));
-		assertEqual(new Bool(false), new LT(a, b));
-		assertEqual(new Int(9), new Add(a, b));
-		assertEqual(new Int(1), new Sub(a, b));
-		assertEqual(new Int(20), new Mul(a, b));
-		assertEqual(new Int(-5), new Neg(a));
-		assertEqual(new Bool(true), new Not(new BoolLiteral(false)));
+		assertEqualValue(new Bool(true), Evaluate(new GT(a, b)));
+		assertEqualValue(new Bool(false), Evaluate(new LT(a, b)));
+		assertEqualValue(new Int(9), Evaluate(new Add(a, b)));
+		assertEqualValue(new Int(1), Evaluate(new Sub(a, b)));
+		assertEqualValue(new Int(20), Evaluate(new Mul(a, b)));
+		assertEqualValue(new Int(-5), Evaluate(new Neg(a)));
+		assertEqualValue(new Bool(true), Evaluate(new Not(new BoolLiteral(false))));
 	}
 
-	private void assertEqual(Value expected, Expr exp) {
-		Map<Identifier, Value> m = null;
-		Value result = exp.accept(new Evaluator(m));
+	private void assertEqualValue(Value expected, Value value) {
 		if (expected instanceof Int){
-			assertEqualsInt((Int) expected,(Int) result);
+			assertEqualsInt((Int) expected,(Int) value);
 		} else if(expected instanceof Bool){
-			assertEqualsBool((Bool) expected,(Bool) result);
+			assertEqualsBool((Bool) expected,(Bool) value);
 		}
+	}
+	private Value Evaluate(Expr expr){
+		Map<Identifier, Value> m = null;
+		return expr.accept(new Evaluator(m)); 
 	}
 
 }

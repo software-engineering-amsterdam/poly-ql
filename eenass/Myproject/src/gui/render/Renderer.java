@@ -1,11 +1,11 @@
 package gui.render;
 
-import gui.component.ComputedControl;
-import gui.component.Control;
+import gui.component.ComputedWidget;
+import gui.component.Widget;
 import gui.component.TypeToWidget;
 import gui.observers.ComputedQuestionObserver;
-import gui.observers.ControlChangeHandler;
-import gui.observers.ControlObserver;
+import gui.observers.WidgetChangeHandler;
+import gui.observers.WidgetObserver;
 import gui.observers.IfElseObserver;
 import gui.observers.IfObserver;
 
@@ -48,6 +48,7 @@ import ast.types.BoolType;
 import ast.types.IntType;
 import ast.types.StrType;
 import ast.types.Type;
+import ast.types.UnknownType;
 
 public class Renderer implements Visitor<JComponent>{
 	
@@ -69,13 +70,13 @@ public class Renderer implements Visitor<JComponent>{
 		return new JScrollPane(comp);
 	}
 
-	private void registerObservers(ControlObserver obs){
+	private void registerObservers(WidgetObserver obs){
 		state.addAllObservers(obs);
 		obs.evaluate();
 	}
 	
-	private void registerControlChangeHandler(Identifier ident, Control control){
-		ControlChangeHandler handler = new ControlChangeHandler(ident, control, state);
+	private void registerControlChangeHandler(Identifier ident, Widget control){
+		WidgetChangeHandler handler = new WidgetChangeHandler(ident, control, state);
 		state.putObserver(ident, handler);
 	}
 	
@@ -84,12 +85,12 @@ public class Renderer implements Visitor<JComponent>{
 		panel.add(new JLabel(str.replace("\"", "")));
 	}
 	
-	private Control typeToWidget(Type t){	
+	private Widget typeToWidget(Type t){	
 		TypeToWidget vis = new TypeToWidget();
 		return t.accept(vis);
 	}
 	
-	private void addComponent(JPanel panel, Control comp){
+	private void addComponent(JPanel panel, Widget comp){
 		panel.add(comp.getComponent(), "wrap");
 	}
 	
@@ -119,7 +120,7 @@ public class Renderer implements Visitor<JComponent>{
 	@Override
 	public JComponent visit(Question node) {
 		JPanel panel = createNewPanel();
-		Control comp = typeToWidget(node.getType());
+		Widget comp = typeToWidget(node.getType());
 		state.addValue(node.getId(), comp.getValue());
 		registerControlChangeHandler(node.getId(), comp);
 		addLabel(panel, node.getLabel().getVal());
@@ -129,7 +130,7 @@ public class Renderer implements Visitor<JComponent>{
 
 	@Override
 	public JComponent visit(ComputedQuestion node) {
-		ComputedControl comp = new ComputedControl();
+		ComputedWidget comp = new ComputedWidget();
 		JPanel panel = createNewPanel();
 		registerControlChangeHandler(node.getId(), comp);
 		ComputedQuestionObserver obs = new ComputedQuestionObserver(node, comp, state);
@@ -271,6 +272,11 @@ public class Renderer implements Visitor<JComponent>{
 
 	@Override
 	public JComponent visit(StrType node) {
+		return null;
+	}
+
+	@Override
+	public JComponent visit(UnknownType node) {
 		return null;
 	}
 

@@ -227,7 +227,7 @@ public class TypeChecker implements Visitor<Boolean>{
 	}
 
 	@Override
-	public Boolean visit(StrType nodde) {
+	public Boolean visit(StrType node) {
 		return true;
 	}
 
@@ -295,6 +295,11 @@ public class TypeChecker implements Visitor<Boolean>{
 		boolean validStatement_if = node.getStatements().accept(this);
 		boolean validStatement_else = node.getElseStatements().accept(this);
 		return (validExpr && validStatement_if && validStatement_else);
+	}
+	
+	@Override
+	public Boolean visit(UnknownType node) {
+		return false;
 	}
 
 }

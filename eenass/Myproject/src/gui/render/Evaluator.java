@@ -1,9 +1,8 @@
-package gui;
+package gui.render;
 
 import java.util.Map;
 
 import ast.Visitor;
-import ast.expr.Expr;
 import ast.expr.Identifier;
 import ast.expr.binExpr.Add;
 import ast.expr.binExpr.And;
@@ -17,10 +16,6 @@ import ast.expr.binExpr.Mul;
 import ast.expr.binExpr.NEq;
 import ast.expr.binExpr.Or;
 import ast.expr.binExpr.Sub;
-import ast.expr.evaluate.Bool;
-import ast.expr.evaluate.Int;
-import ast.expr.evaluate.Str;
-import ast.expr.evaluate.Value;
 import ast.expr.literal.BoolLiteral;
 import ast.expr.literal.IntLiteral;
 import ast.expr.literal.StrLiteral;
@@ -37,19 +32,19 @@ import ast.statement.StatementList;
 import ast.types.BoolType;
 import ast.types.IntType;
 import ast.types.StrType;
+import ast.types.UnknownType;
+import ast.value.Bool;
+import ast.value.Int;
+import ast.value.Str;
+import ast.value.Value;
 
 
 public class Evaluator implements Visitor<Value> {
 	
-	private final Map<Identifier, Value> environment;
+	private Map<Identifier, Value> environment;
  
 	public Evaluator(Map<Identifier, Value> environment) {
 		this.environment = environment ;
-	}
-	
-	public static Value Evaluate(Expr expr, Map<Identifier, Value> env){
-		Evaluator evaluator = new Evaluator(env);
-		return expr.accept(evaluator);
 	}
 
 	@Override
@@ -221,6 +216,11 @@ public class Evaluator implements Visitor<Value> {
 
 	@Override
 	public Value visit(Form node) {
+		return null;
+	}
+
+	@Override
+	public Value visit(UnknownType node) {
 		return null;
 	}
 
