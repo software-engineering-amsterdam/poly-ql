@@ -1,0 +1,69 @@
+form testQL {
+	q1: "Would you like to test Arithmetic expressions?" boolean
+	q2: "Would you like to test Unary expressions?" boolean
+	q3: "Would you like to test relational expressions" boolean
+	if (q1 == true) {
+		testAdd: "Test addition? " boolean
+		if(testAdd == true){
+			a: "Enter the first value" integer
+			b: "Enter the second value" integer
+			x1:"The result is: " integer(a + b)
+			x22:" result * 5: " integer(x1 * 5)
+		}
+		testSub: "Test subtraction? " boolean
+		if(testSub == true){
+			c: "Enter the first value" integer
+			d: "Enter the second value" integer
+			x2:"The result is: " integer(c - d)
+		}
+		testReuse: "Reusing add and sub results" boolean
+		if(testReuse == true){
+			peter: "The result of add is: " integer(x1)
+			emmy: "The result of sub is:" integer(x2)
+			x33: "The sum of add and sub is: " integer(peter + emmy)
+		}
+		testMul:"Test Multiplication?" boolean
+		if(testMul == true){
+			e: "Enter the first value" integer
+			f: "Enter the second value" integer
+			x3:"The result is: " integer(e * f)
+		}
+		testDiv:"Test Division?" boolean
+		if(testDiv == true){
+			g: "Enter the first value" integer
+			h: "Enter the second value" integer
+			x4:"The result is: " integer(g / h)
+		}
+			
+	}else{
+		if(q2 == true){
+			testPos:"Test Positive?" boolean
+			if(testPos == true){
+				s:"Enter an integer" integer
+				x10:"The result is: " integer(+s)
+			}
+			testNeg:"Test negative?" boolean
+			if(testNeg == true){
+				t:"Enter an integer" integer
+				x11:"The result is:" integer(-t)
+			}
+		}
+		
+	}
+
+	if(q3 == true){
+		testGT:"Test Greater than " boolean
+		if(testGT == true){
+			num1: "Enter a number (x)" integer
+			num2: "Enter another number(y)" integer
+			x12: "x > y ?" boolean(num1 > num2)
+		}
+		testLT:"Test Less than " boolean
+		if(testLT == true){
+			n1: "Enter a number (x)" integer
+			n2: "Enter another number(y)" integer
+			x13: "x < y ?" boolean(n1 < n2)
+		}
+	}
+	
+}
