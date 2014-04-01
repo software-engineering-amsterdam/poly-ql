@@ -1,5 +1,7 @@
 package org.uva.sea.ql.parser.antlr.QL4.Visitors;
 
+import java.util.Map;
+
 import org.uva.sea.ql.parser.antlr.QL4.AST.ConditionalStructure;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Form;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Label;
@@ -38,6 +40,13 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Value;
  */
 public class EvaluatorVisitor implements IQLVisitor<Value> {
 
+	// when visiting, the identifier and their values are necessary
+	Map<Identifier, Question> env;
+	
+	public EvaluatorVisitor(Map<Identifier, Question> env) {
+		this.env = env;
+	}
+	
 	/**
 	 * Ignore all non-expression when visiting
 	 */
@@ -72,8 +81,7 @@ public class EvaluatorVisitor implements IQLVisitor<Value> {
 	
 	@Override
 	public Value visit(BraceExpr expr) {
-		// TODO Auto-generated method stub
-		return null;
+		return expr.getExpr().accept(this);
 	}
 
 	@Override
@@ -160,17 +168,33 @@ public class EvaluatorVisitor implements IQLVisitor<Value> {
 		return null;
 	}
 
+	/**
+	 * visiting values: return whatever visited
+	 */
 	@Override
 	public Value visit(Bool bool) {
-		// TODO Auto-generated method stub
-		return null;
+		return bool;
 	}
 
 	@Override
 	public Value visit(Decimal dec) {
-		// TODO Auto-generated method stub
-		return null;
+		return dec;
 	}
+
+	@Override
+	public Value visit(Text text) {
+		return text;
+	}
+	
+	@Override
+	public Value visit(Number number) {
+		return number;
+	}
+	
+
+	/**
+	 * No evaluating label or types: return null
+	 */
 
 	@Override
 	public Value visit(Label label) {
@@ -179,51 +203,34 @@ public class EvaluatorVisitor implements IQLVisitor<Value> {
 	}
 
 	@Override
-	public Value visit(Number number) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public Value visit(BoolType boolType) {
 		// TODO Auto-generated method stub
 		return null;
-	}
 
+	}
+	
 	@Override
 	public Value visit(NumberType numberType) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Value visit(DateType dateType) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Value visit(CurrencyType currencyType) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Value visit(NullType nullType) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Value visit(StringType stringType) {
-		// TODO Auto-generated method stub
 		return null;
 	}
-
-	@Override
-	public Value visit(Text text) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

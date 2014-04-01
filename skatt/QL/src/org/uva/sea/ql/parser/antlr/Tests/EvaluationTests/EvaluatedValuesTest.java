@@ -35,14 +35,14 @@ public class EvaluatedValuesTest extends QL4EvaluationTest {
 		assertEquals(visitor.visit(falseNumber), new Number("1"));
 		assertEquals(visitor.visit(trueNumber), new Number("2"));
 		
-		assertFalse(visitor.visit(trueNumber).equals(new Number("2")));
-		assertFalse(visitor.visit(falseNumber).equals(new Number("1")));
+		assertFalse(visitor.visit(trueNumber).equals(new Number("1")));
+		assertFalse(visitor.visit(falseNumber).equals(new Number("2")));
 	}
 	
 	@Test
 	public void testText() {
 		Text falseText = new Text("A string");
-		Text trueText = new Text("Another String");
+		Text trueText = new Text("Another string");
 		
 		assertEquals(visitor.visit(falseText), new Text("A string"));
 		assertEquals(visitor.visit(trueText), new Text("Another string"));

@@ -3,9 +3,11 @@ package org.uva.sea.ql.parser.antlr.Tests;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
+import org.uva.sea.ql.parser.antlr.Tests.EvaluationTests.EvaluatedValuesTest;
 import org.uva.sea.ql.parser.antlr.Tests.equalityTests.ErrorMsgEqualityTest;
 import org.uva.sea.ql.parser.antlr.Tests.equalityTests.ExpressionEqualityTest;
 import org.uva.sea.ql.parser.antlr.Tests.equalityTests.TypeEqualityTest;
+import org.uva.sea.ql.parser.antlr.Tests.equalityTests.ValueEqualityTest;
 import org.uva.sea.ql.parser.antlr.Tests.errorMsgTests.BoolConditionTest;
 import org.uva.sea.ql.parser.antlr.Tests.errorMsgTests.CyclicDependencyTest;
 import org.uva.sea.ql.parser.antlr.Tests.errorMsgTests.DuplicateLabelTest;
@@ -23,6 +25,8 @@ import org.uva.sea.ql.parser.antlr.Tests.errorMsgTests.plainTest;
 				InvalidTypeTest.class,
 				TypeEqualityTest.class,
 				ExpressionEqualityTest.class,
+				EvaluatedValuesTest.class,
+				ValueEqualityTest.class,
 				})
 public class TestSuite {
 
