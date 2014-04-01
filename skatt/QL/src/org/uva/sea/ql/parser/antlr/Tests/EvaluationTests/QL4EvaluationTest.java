@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Before;
-import org.uva.sea.ql.parser.antlr.QL4.AST.Question;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Identifier;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Value;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.EvaluatorVisitor;
 
 /**
@@ -15,7 +15,7 @@ import org.uva.sea.ql.parser.antlr.QL4.Visitors.EvaluatorVisitor;
 public abstract class QL4EvaluationTest {
 
 	public EvaluatorVisitor visitor;
-	public Map<Identifier, Question> env = new HashMap<Identifier, Question>();
+	public Map<Identifier, Value> env = new HashMap<Identifier, Value>();
 	
 	@Before 
 	public void setUp() {

@@ -3,6 +3,7 @@ package org.uva.sea.ql.parser.antlr.Tests;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
+import org.uva.sea.ql.parser.antlr.Tests.EvaluationTests.EvaluateIdentifierTest;
 import org.uva.sea.ql.parser.antlr.Tests.EvaluationTests.EvaluatedValuesTest;
 import org.uva.sea.ql.parser.antlr.Tests.equalityTests.ErrorMsgEqualityTest;
 import org.uva.sea.ql.parser.antlr.Tests.equalityTests.ExpressionEqualityTest;
@@ -27,6 +28,7 @@ import org.uva.sea.ql.parser.antlr.Tests.errorMsgTests.plainTest;
 				ExpressionEqualityTest.class,
 				EvaluatedValuesTest.class,
 				ValueEqualityTest.class,
+				EvaluateIdentifierTest.class,
 				})
 public class TestSuite {
 

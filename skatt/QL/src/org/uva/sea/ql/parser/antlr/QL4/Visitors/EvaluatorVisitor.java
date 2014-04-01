@@ -42,9 +42,9 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Value;
 public class EvaluatorVisitor implements IQLVisitor<Value> {
 
 	// when visiting, the identifier and their values are necessary
-	Map<Identifier, Question> env;
+	Map<Identifier, Value> env;
 	
-	public EvaluatorVisitor(Map<Identifier, Question> env) {
+	public EvaluatorVisitor(Map<Identifier, Value> env) {
 		this.env = env;
 	}
 	
