@@ -20,10 +20,10 @@ public class NegExpr extends UnaryExpr {
 	}
 
 	@Override
-	public Object accept(IQLVisitor<?> visitor) {
+	public <T> T accept(IQLVisitor<T> visitor) {
 		return visitor.visit(this);
 	}
-
+	
 	@Override
 	public Type getType(Map<Identifier, Question> questions) {
 		return new BoolType();

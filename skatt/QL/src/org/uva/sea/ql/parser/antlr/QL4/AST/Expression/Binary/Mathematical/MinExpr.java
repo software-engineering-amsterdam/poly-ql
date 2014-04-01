@@ -16,7 +16,7 @@ public class MinExpr extends BiMathExpr {
 	}
 
 	@Override
-	public Object accept(IQLVisitor<?> visitor) {
+	public <T> T accept(IQLVisitor<T> visitor) {
 		return visitor.visit(this);
 	}
 	

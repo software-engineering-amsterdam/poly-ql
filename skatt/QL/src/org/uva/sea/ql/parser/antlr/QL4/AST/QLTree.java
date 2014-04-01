@@ -11,5 +11,5 @@ import org.uva.sea.ql.parser.antlr.QL4.Visitors.IQLVisitor;
  */
 public interface QLTree {
 	
-	public Object accept(IQLVisitor<?> visitor);
+	public <T> T accept(IQLVisitor<T> visitor);
 }

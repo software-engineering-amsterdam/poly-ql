@@ -38,6 +38,10 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Value;
  */
 public class EvaluatorVisitor implements IQLVisitor<Value> {
 
+	/**
+	 * Ignore all non-expression when visiting
+	 */
+	
 	@Override
 	public Value visit(Form form) {
 		// TODO Auto-generated method stub
@@ -62,6 +66,10 @@ public class EvaluatorVisitor implements IQLVisitor<Value> {
 		return null;
 	}
 
+	/**
+	 * Unary expressions 
+	 */
+	
 	@Override
 	public Value visit(BraceExpr expr) {
 		// TODO Auto-generated method stub

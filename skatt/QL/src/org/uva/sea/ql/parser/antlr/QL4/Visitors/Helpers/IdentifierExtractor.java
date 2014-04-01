@@ -240,7 +240,7 @@ public class IdentifierExtractor implements IQLVisitor<List<Identifier>> {
 		
 		// if child is not null, visit
 		if(child != null) {
-			ids = (List<Identifier>) child.accept(this);
+			ids = child.accept(this);
 		}
 		
 		// if resulting msgs are null, instantiate msgs as empty list

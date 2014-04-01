@@ -40,7 +40,8 @@ public class Structures implements QLTree {
 		return str;
 	}
 	
-	public Object accept(IQLVisitor<?> visitor) {
+	@Override
+	public <T> T accept(IQLVisitor<T> visitor) {
 		return visitor.visit(this);
 	}
 	

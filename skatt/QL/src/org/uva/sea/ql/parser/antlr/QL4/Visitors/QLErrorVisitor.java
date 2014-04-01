@@ -246,7 +246,7 @@ public class QLErrorVisitor implements IQLVisitor<List<QLErrorMsg>> {
 		
 		// if child is not null, visit
 		if(child != null) {
-			msgs = (List<QLErrorMsg>) child.accept(this);
+			msgs = child.accept(this);
 		}
 		
 		// if resulting msgs are null, instantiate msgs as empty list

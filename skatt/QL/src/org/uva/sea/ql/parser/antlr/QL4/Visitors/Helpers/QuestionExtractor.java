@@ -237,7 +237,7 @@ public class QuestionExtractor implements IQLVisitor<Map<Identifier, Question>> 
 		
 		// if child is not null, visit
 		if(child != null) {
-			questions = (Map<Identifier, Question>) child.accept(this);
+			questions = child.accept(this);
 		}
 		
 		// if resulting msgs are null, instantiate msgs as empty list
