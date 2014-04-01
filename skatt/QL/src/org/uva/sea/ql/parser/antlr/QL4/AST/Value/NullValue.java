@@ -18,7 +18,7 @@ public class NullValue extends Value {
 	
 	@Override
 	public <T> T accept(IQLVisitor<T> visitor) {
-		visitor.visit(this);
+		return visitor.visit(this);
 	}
 	
 	@Override

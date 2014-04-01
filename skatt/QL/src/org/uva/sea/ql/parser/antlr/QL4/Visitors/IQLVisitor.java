@@ -28,6 +28,7 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Types.NumberType;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Types.StringType;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Bool;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Decimal;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Value.NullValue;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Number;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Text;
 
@@ -76,6 +77,7 @@ public interface IQLVisitor<T> {
 	public T visit(Decimal dec);
 	public T visit(Label label);
 	public T visit(Number number);
+	public T visit(NullValue nullValue);
 	
 	// types
 	public T visit(BoolType boolType);

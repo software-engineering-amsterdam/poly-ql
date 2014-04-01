@@ -33,6 +33,7 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Types.NumberType;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Types.StringType;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Bool;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Decimal;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Value.NullValue;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Number;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Text;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.IQLVisitor;
@@ -194,6 +195,12 @@ public class QuestionExtractor implements IQLVisitor<Map<Identifier, Question>> 
 	public Map<Identifier, Question> visit(Text text) {
 		return null;
 	}
+	
+	@Override
+	public Map<Identifier, Question> visit(NullValue nullValue) {
+		return null;
+	}
+
 	
 
 	///////////////// ignore types

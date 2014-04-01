@@ -34,6 +34,7 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Types.NumberType;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Types.StringType;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Bool;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Decimal;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Value.NullValue;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Number;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Text;
 import org.uva.sea.ql.parser.antlr.QL4.Messages.QLErrorMsg;
@@ -203,6 +204,12 @@ public class QLErrorVisitor implements IQLVisitor<List<QLErrorMsg>> {
 		return null;
 	}
 	
+	@Override
+	public List<QLErrorMsg> visit(NullValue nullValue) {
+		return null;
+	}
+
+	
 	
 	@Override
 	public List<QLErrorMsg> visit(BoolType boolType) {
@@ -210,7 +217,7 @@ public class QLErrorVisitor implements IQLVisitor<List<QLErrorMsg>> {
 	}
 
 	@Override
-	public List<QLErrorMsg> visit(NumberType boolType) {
+	public List<QLErrorMsg> visit(NumberType numberType) {
 		return null;
 	}
 
@@ -271,5 +278,4 @@ public class QLErrorVisitor implements IQLVisitor<List<QLErrorMsg>> {
 		return msgs;
 	}
 
-	
 }

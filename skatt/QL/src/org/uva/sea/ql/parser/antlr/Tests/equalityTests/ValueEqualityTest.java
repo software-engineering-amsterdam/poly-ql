@@ -6,6 +6,7 @@ import static org.junit.Assert.assertFalse;
 import org.junit.Test;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Bool;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Decimal;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Value.NullValue;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Number;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Text;
 
@@ -50,4 +51,14 @@ public class ValueEqualityTest	{
 		assertEquals(num, numSame);
 		assertFalse(num.equals(numDiff));
 	}
+	
+	@Test
+	public void testNull() {
+		NullValue nullV = new NullValue();
+		Decimal notNull = new Decimal("1");
+		NullValue nullV2 = new NullValue();
+		
+		assertEquals(nullV, nullV2);
+		assertFalse(nullV.equals(notNull));
+		}
 }

@@ -30,6 +30,7 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Types.NumberType;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Types.StringType;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Bool;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Decimal;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Value.NullValue;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Number;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Text;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Value;
@@ -194,20 +195,22 @@ public class EvaluatorVisitor implements IQLVisitor<Value> {
 		return number;
 	}
 	
-
+	@Override
+	public Value visit(NullValue nullValue) {
+		return nullValue;
+	}
+	
 	/**
 	 * No evaluating label or types: return null
 	 */
 
 	@Override
 	public Value visit(Label label) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Value visit(BoolType boolType) {
-		// TODO Auto-generated method stub
 		return null;
 
 	}
