@@ -1,4 +1,4 @@
-package org.uva.sea.ql.parser.antlr.Tests;
+package org.uva.sea.ql.parser.antlr.Tests.errorMsgTests;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ import org.uva.sea.ql.parser.antlr.QL4.Messages.QLErrorMsg;
  * @author Sammie
  *
  */
-public abstract class QL4Test {
+public abstract class QL4ErrorTest {
 
 	public static String fileToParse = "";
 	public Form ast;

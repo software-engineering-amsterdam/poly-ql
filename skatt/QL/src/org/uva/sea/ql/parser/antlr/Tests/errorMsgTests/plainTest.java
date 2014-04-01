@@ -1,4 +1,4 @@
-package org.uva.sea.ql.parser.antlr.Tests;
+package org.uva.sea.ql.parser.antlr.Tests.errorMsgTests;
 
 import static org.junit.Assert.assertEquals;
 
@@ -8,7 +8,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.uva.sea.ql.parser.antlr.QL4.Messages.QLErrorMsg;
 
-public class plainTest extends QL4Test {
+public class plainTest extends QL4ErrorTest {
 
 	
 	@BeforeClass 
@@ -18,6 +18,7 @@ public class plainTest extends QL4Test {
 	
 	@Test
 	public void testPlainQuestionary() {
+		
 		assertEquals(new ArrayList<QLErrorMsg> (), errors);
 	}
 }

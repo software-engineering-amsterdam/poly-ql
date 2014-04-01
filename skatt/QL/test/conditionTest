@@ -7,3 +7,11 @@ if question {
 if (question2) {
     question3 : "Number question" : integer;
 }
+
+if (1-question3) {
+    question4 : "Min expr question" : boolean;
+}
+
+if (5 * 10) {
+    question5 : "Mult expr question": string;
+}

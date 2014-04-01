@@ -60,4 +60,5 @@ public class Bool extends Value {
 	@Override
 	public Object accept(IQLVisitor<?> visitor) {
 		return visitor.visit(this);
-	}}
+	}
+}

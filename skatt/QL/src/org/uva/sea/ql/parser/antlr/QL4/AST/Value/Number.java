@@ -53,6 +53,7 @@ public class Number extends Value {
 		return visitor.visit(this);
 	}
 	
+	@Override
 	public String toString() {
 		return String.valueOf(value);
 	}

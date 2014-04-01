@@ -1,4 +1,4 @@
-package org.uva.sea.ql.parser.antlr.Tests.sideTests;
+package org.uva.sea.ql.parser.antlr.Tests.equalityTests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

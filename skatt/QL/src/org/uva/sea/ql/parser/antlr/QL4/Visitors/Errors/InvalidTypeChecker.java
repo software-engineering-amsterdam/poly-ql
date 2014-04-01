@@ -52,7 +52,7 @@ public class InvalidTypeChecker extends QLErrorVisitor {
 		List<QLErrorMsg> msgs = new ArrayList<QLErrorMsg>();
 		
 		if (expr.getExpr().getType(questions) == new NumberType()) {
-			msgs.add(new InvalidTypeError(expr, new BoolType()));
+			msgs.add(new InvalidTypeError(expr));
 		}
 		
 		msgs.addAll(this.visitChild(expr.getExpr()));
@@ -127,7 +127,7 @@ public class InvalidTypeChecker extends QLErrorVisitor {
 				);
 		
 		if (!correctType) {
-			msgs.add(new InvalidTypeError(expr, type));
+			msgs.add(new InvalidTypeError(expr));
 		}
 		
 		return msgs;

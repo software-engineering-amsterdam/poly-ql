@@ -1,4 +1,4 @@
-package org.uva.sea.ql.parser.antlr.Tests;
+package org.uva.sea.ql.parser.antlr.Tests.errorMsgTests;
 
 import static org.junit.Assert.assertEquals;
 
@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Identifier;
 import org.uva.sea.ql.parser.antlr.QL4.Messages.DuplicateQuestionError;
 
-public class DuplicateQuestionTest extends QL4Test {
+public class DuplicateQuestionTest extends QL4ErrorTest {
 	
 	@BeforeClass
 	public static void init() {

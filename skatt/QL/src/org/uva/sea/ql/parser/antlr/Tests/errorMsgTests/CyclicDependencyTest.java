@@ -1,4 +1,4 @@
-package org.uva.sea.ql.parser.antlr.Tests;
+package org.uva.sea.ql.parser.antlr.Tests.errorMsgTests;
 
 import static org.junit.Assert.assertEquals;
 
@@ -13,7 +13,8 @@ import org.uva.sea.ql.parser.antlr.QL4.Messages.UndefinedQuestionError;
  * @author Sammie Katt
  *
  */
-public class CyclicDependencyTest extends QL4Test {
+public class CyclicDependencyTest extends QL4ErrorTest {
+	
 	@BeforeClass
 	public static void init() {
 		setFile("test/cyclicDependencyTest");

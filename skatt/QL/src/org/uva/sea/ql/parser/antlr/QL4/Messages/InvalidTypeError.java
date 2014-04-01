@@ -1,11 +1,6 @@
 package org.uva.sea.ql.parser.antlr.QL4.Messages;
 
-import java.util.HashMap;
-
-import org.uva.sea.ql.parser.antlr.QL4.AST.Question;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Expression;
-import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Identifier;
-import org.uva.sea.ql.parser.antlr.QL4.AST.Types.Type;
 
 /**
  * Represents the error of an invalid type in an expression
@@ -15,16 +10,14 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Types.Type;
 public class InvalidTypeError extends QLErrorMsg {
 
 	private final Expression expr;
-	private final Type type;
 
-	public InvalidTypeError(Expression expr, Type type) {
-		this.type = type;
+	public InvalidTypeError(Expression expr) {
 		this.expr = expr;
 	}
 	
 	@Override
 	public String toString() {
-		return "Expression " + expr + " does not contain expected type " + type + ", but type " + expr.getType(new HashMap<Identifier, Question>());
+		return "Expression " + expr + " does not contain expected type";
 	}
 
 	@Override
@@ -32,7 +25,6 @@ public class InvalidTypeError extends QLErrorMsg {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((expr == null) ? 0 : expr.hashCode());
-		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		return result;
 	}
 
@@ -50,13 +42,9 @@ public class InvalidTypeError extends QLErrorMsg {
 				return false;
 		} else if (!expr.equals(other.expr))
 			return false;
-		if (type == null) {
-			if (other.type != null)
-				return false;
-		} else if (!type.equals(other.type))
-			return false;
 		return true;
 	}
+
 	
 	
 }

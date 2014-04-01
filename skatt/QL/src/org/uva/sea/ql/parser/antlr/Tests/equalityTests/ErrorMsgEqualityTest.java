@@ -1,4 +1,4 @@
-package org.uva.sea.ql.parser.antlr.Tests.sideTests;
+package org.uva.sea.ql.parser.antlr.Tests.equalityTests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -7,8 +7,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Label;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Identifier;
-import org.uva.sea.ql.parser.antlr.QL4.AST.Types.BoolType;
-import org.uva.sea.ql.parser.antlr.QL4.AST.Types.NumberType;
 import org.uva.sea.ql.parser.antlr.QL4.Messages.ConditionError;
 import org.uva.sea.ql.parser.antlr.QL4.Messages.CyclicDependencyError;
 import org.uva.sea.ql.parser.antlr.QL4.Messages.DuplicateLabelError;
@@ -23,7 +21,7 @@ import org.uva.sea.ql.parser.antlr.QL4.Messages.UndefinedQuestionError;
  * @author Sammie Katt
  *
  */
-public class EqualityTest {
+public class ErrorMsgEqualityTest {
 	
 	private Identifier id1, id2, idsame;
 	private QLErrorMsg msg1, msg2, msg3, msgsame;
@@ -88,15 +86,12 @@ public class EqualityTest {
 	@Test
 	public void testInvalidTypeError() {
 		
-		msg1 = new InvalidTypeError(id1, new BoolType());
-		msgsame = new InvalidTypeError(id1, new BoolType());
-		msg2 = new InvalidTypeError(id1, new NumberType());
-		msg3 = new InvalidTypeError(id2, new BoolType());
+		msg1 = new InvalidTypeError(id1);
+		msgsame = new InvalidTypeError(id1);
+		msg2 = new InvalidTypeError(id2);
 		
 		assertEquals(msg1, msgsame);
 		assertFalse(msg1.equals(msg2));
-		assertFalse(msg1.equals(msg3));
-		assertFalse(msg2.equals(msg3));
 	}
 	@Test
 	public void testIdentifierEquality() {

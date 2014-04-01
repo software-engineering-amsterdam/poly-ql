@@ -1,4 +1,4 @@
-package org.uva.sea.ql.parser.antlr.Tests;
+package org.uva.sea.ql.parser.antlr.Tests.errorMsgTests;
 
 import static org.junit.Assert.assertEquals;
 
@@ -11,7 +11,7 @@ import org.uva.sea.ql.parser.antlr.QL4.Messages.DuplicateLabelError;
  * Tests the duplicate label handeling
  * @author Sammie Katt
  */
-public class DuplicateLabelTest extends QL4Test {
+public class DuplicateLabelTest extends QL4ErrorTest {
 
 	@BeforeClass
 	public static void init() {
