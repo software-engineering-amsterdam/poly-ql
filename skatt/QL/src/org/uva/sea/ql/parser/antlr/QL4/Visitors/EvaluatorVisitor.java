@@ -164,8 +164,11 @@ public class EvaluatorVisitor implements IQLVisitor<Value> {
 
 	@Override
 	public Value visit(Identifier id) {
-		// TODO Auto-generated method stub
-		return null;
+		if (env.containsKey(id)) {
+			return env.get(id).accept(this);
+		} else {
+			return new NullValue();
+		}
 	}
 
 	/**
