@@ -11,6 +11,19 @@ public class Text extends Value {
 	public Text(String value) {
 		this.value = value;
 	}
+
+	@Override
+	public <T> T accept(IQLVisitor<T> visitor) {
+		return visitor.visit(this);
+	}
+
+	public Type getType() {
+		return new StringType();
+	}
+	
+	public String toString() {
+		return value;
+	}
 	
 	@Override
 	public int hashCode() {
@@ -37,16 +50,4 @@ public class Text extends Value {
 		return true;
 	}
 
-	@Override
-	public <T> T accept(IQLVisitor<T> visitor) {
-		return visitor.visit(this);
-	}
-
-	public Type getType() {
-		return new StringType();
-	}
-	
-	public String toString() {
-		return value;
-	}
 }

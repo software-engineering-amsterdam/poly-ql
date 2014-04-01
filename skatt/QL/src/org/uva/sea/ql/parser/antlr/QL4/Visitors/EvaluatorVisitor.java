@@ -54,25 +54,21 @@ public class EvaluatorVisitor implements IQLVisitor<Value> {
 	
 	@Override
 	public Value visit(Form form) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Value visit(Question question) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Value visit(Structures struc) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Value visit(ConditionalStructure condition) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -87,8 +83,7 @@ public class EvaluatorVisitor implements IQLVisitor<Value> {
 
 	@Override
 	public Value visit(NegExpr expr) {
-		// TODO Auto-generated method stub
-		return null;
+		return expr.getExpr().accept(this).Negate();
 	}
 
 	@Override

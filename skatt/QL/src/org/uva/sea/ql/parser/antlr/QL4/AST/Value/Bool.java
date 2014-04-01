@@ -27,6 +27,12 @@ public class Bool extends Value {
 	}
 	
 	@Override
+	public Value Negate() {
+		Boolean returnValue = !value;
+		return new Bool(returnValue.toString());
+	}
+	
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
