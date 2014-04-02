@@ -1,30 +1,28 @@
-﻿using QSLib.Types;
-using QSLib.Values;
-
+﻿using QSLib.AST.Types;
+using QSLib.Visitors;
 namespace QSLib.AST.Expressions.Binary
 {
-    class Subtract : Binary_Expression 
+    public class Subtract : Binary_Expression 
     {
 
         public Subtract(QSExpression a, QSExpression b, int lineNr)
             : base(a, b, lineNr)
         {
-            base._operator = "-";
         }
 
-
-        public override Value Evaluate()
+        public override string GetOperator()
         {
-            this._value = this._left.Evaluate().Subtract(this._right.Evaluate());
-            this.OnPropertyChanged("GetValue");
-            return this._value;
+            return "-";
         }
-
-        public override QSType Type
+        public override QSType GetType(TypeMemory memory)
         {
-            get { return new IntegerType(); }
+            return new IntegerType();
         }
 
+        public override T Accept<T>(IExpressionVisitor<T> checker)
+        {
+            return checker.Visit(this);
+        }
         public override bool IsCompatible(QSType type)
         {
             return type.IsInteger();

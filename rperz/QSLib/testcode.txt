@@ -1,17 +1,16 @@
-
 // reference to undefined questions
 form
 {
   "Ongedefinieerde vraag" iA  = iC: Boolean
 }
-
+@
 // duplicate question declaration with different types
 form
 {
   "Dubbele vraag" iA : Boolean
   "Dubbele vraag me ander type" iA : Integer
 }
-
+@
 // condition not boolean
 form
 {
@@ -21,7 +20,7 @@ form
 		"Deze vraag doet er niet toe" bNutteloos : Boolean
 	}
 }
-
+@
 // operands of invalid types
 form
 {
@@ -30,30 +29,29 @@ form
 	"String" sString : String
 	"Som van booleans" bSom = bBool + bBool : Boolean
 	"Som van strings" sSom = sString + sString : String
-	"And van integers" iAnd = iInt && iInt : iInt
+	"And van integers" iAnd = iInt && iInt : Integer
 	"Less than van booleans" bLess = bBool < bBool : Boolean
 }
-
+@
 // reference to question with undefined value
 form
 {
 	"Referentie naar niet bestaande vraag" bBool = iInt : Boolean
 }
-
+@
 // cyclic dependencies
 form
 {
 	"Deze refereert naar zichzelf" bAntwoord = bAntwoord : Boolean
 }
-
+@
 // duplicate label
 form
 {
   "Dubbele vraag" iA : Boolean
   "Dubbele vraag" iB : Boolean
 }
-
-
+@
 // conditional statement and computed question (also check divide by zero)
 form
 {
@@ -66,7 +64,7 @@ form
 		"Nabestaandenpensioen" iNP : Integer
 	}
 }
-
+@
 // nested ifs
 form
 {
@@ -89,28 +87,3 @@ form
 		
 	}
 }
-
-// single line comment
-form
-{
-	"Wat is uw naam?" sNaam : String
-	// hier staat een comment
-	"Wilt u uw pensioengegevens invullen?" bPensioen : Boolean
-	if(bPensioen)
-	{
-		"Weet u het zeker?" bZeker : Boolean
-		if(bZeker)
-		{
-		"Ouderdomspensioen" iOP : Integer
-		"Tijdelijk ouderdomspension" iTOP : Integer
-		"Totaal (T)OP" iOPTOP = (iOP + iTOP) / iOP : Integer
-		"Nabestaandenpensioen" iNP : Integer
-		}
-		else
-		{
-			"Uw antwoord was " bAntwoord = bZeker : Boolean
-		}
-		
-	}
-}
-

@@ -1,40 +1,36 @@
-﻿using QSLib.Types;
-using QSLib.Values;
+﻿using QSLib.AST.Types;
 using QSLib.Visitors;
 namespace QSLib.AST.Expressions.Unary
 {
-    class Not : Unary_Expression
+    public class Not : Unary_Expression
     {
-        #region Constructors
+
         public Not(QSExpression left, int lineNr)
             : base(left, lineNr)
         {
-            base._operator = "!";
+
         }
-#endregion
+
 
         #region TypeChecker
-        public override void Accept(IVisitor checker)
+        public override T Accept<T>(IExpressionVisitor<T> checker)
         {
-            checker.Visit(this);
+            return checker.Visit(this);
         }
         #endregion
 
         #region Getters
-        public override QSType Type
+        public override string GetOperator()
         {
-            get
-            {
-                return new BoolType();
-            }
+            return "!";
         }
+
+        public override QSType GetType(TypeMemory memory)
+        {
+            return new BoolType();
+        }
+
         #endregion
 
-        public override Value Evaluate()
-        {
-            this._value = this._internal.Evaluate().Not();
-            this.OnPropertyChanged("GetValue");
-            return this._value;
-        }
     }
 }

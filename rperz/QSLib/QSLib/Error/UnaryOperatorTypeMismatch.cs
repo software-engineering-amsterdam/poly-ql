@@ -2,16 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using QSLib.AST.Types;
 namespace QSLib.Error
 {
     class UnaryOperatorTypeMismatch :QSError
     {
-        private string _questionText;
-        private Types.QSType _type1;
+        private QSType _type1;
         private string _operator;
 
-        public UnaryOperatorTypeMismatch(Types.QSType type1, string op, int line)
+        public UnaryOperatorTypeMismatch(QSType type1, string op, int line)
         {
             // TODO: Complete member initialization
             this._type1 = type1;

@@ -1,28 +1,28 @@
-﻿using QSLib.Types;
-using QSLib.Values;
+﻿using QSLib.AST.Types;
+using QSLib.Visitors;
 namespace QSLib.AST.Expressions.Binary
 {
-    class GreaterThan : Binary_Expression
+    public class GreaterThan : Binary_Expression
     {
 
         public GreaterThan(QSExpression a, QSExpression b, int lineNr)
             : base(a, b, lineNr)
         {
-            base._operator = ">";
         }
 
-
-        public override Value Evaluate()
+        public override string GetOperator()
         {
-            this._value = this._left.Evaluate().LargerThan(this._right.Evaluate());
-            this.OnPropertyChanged("GetValue");
-            return this._value;
+            return ">";
         }
 
-
-        public override QSType Type
+        public override T Accept<T>(IExpressionVisitor<T> checker)
         {
-            get { return new BoolType(); }
+            return checker.Visit(this);
+        }
+
+        public override QSType GetType(TypeMemory memory)
+        {
+            return new BoolType();
         }
 
         public override bool IsCompatible(QSType type)

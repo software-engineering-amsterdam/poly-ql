@@ -3,131 +3,137 @@ using System.Collections.Generic;
 using QSLib.AST.Expressions;
 using QSLib.AST;
 using QSLib.AST.Expressions.Unary;
-using QSLib.AST.Expressions.Unary.Identifiers;
-using QSLib.Types;
+using QSLib.AST.Expressions.Nullary;
+using QSLib.AST.Types;
 using QSLib.AST.Expressions.Literals;
 using QSLib.AST.Statements;
 using QSLib.Error;
 namespace QSLib.Visitors
 {
-    public class TypeChecker : IVisitor
+    public class TypeChecker : IVisitor<bool>
     {
         private ErrorCollection _errorList = new ErrorCollection();
-        private List<Identifier> _identifiers = new List<Identifier>();
+        private TypeMemory _typeMem = new TypeMemory();
         private List<string> _questionLabels = new List<string>();
         private Form _form;
         private bool _result = true;
 
         private TypeChecker(Form f)
         {
+            
             this._form = f;
         }
 
-        public static IVisitor StartVisit(Form questionaire)
+        public static IVisitor<bool> StartVisit(Form questionaire)
         {
             TypeChecker checker = new TypeChecker(questionaire);
-            checker._form.Accept(checker);
+            checker._result = checker._form.Accept<bool>(checker);
             return checker;
         }
 
-        public void CheckLabel(string questionText, int lineNr)
+        public bool CheckLabel(string questionText, int lineNr)
         {
             if (this._questionLabels.Contains(questionText))
+            {
                 this._errorList.Add(new DuplicateLabelWarning(questionText, lineNr));
+                return false;
+            }
             else
+            {
                 this._questionLabels.Add(questionText);
+                return true;
+            }
         }
 
-        public void Visit(Unary_Expression expression)
+        public bool Visit(Unary_Expression expression)
         {
-            if (!expression.Type.IsCompatible(expression.GetInternalType()))
+            bool result = expression.Internal.Accept<bool>(this);
+            QSType operatorType = expression.GetType(this._typeMem);
+            QSType internalType = expression.GetInternalType(this._typeMem);
+            if (!operatorType.IsCompatible(internalType))
             {
                 // type of unary is not compatible with it's expression
-                this._result = false;
-                this._errorList.Add(new UnaryOperatorTypeMismatch(expression.GetInternalType(), expression.Operator, expression.Line));
+                result = false;
+                this._errorList.Add(new UnaryOperatorTypeMismatch(internalType, expression.GetOperator(), expression.Line));
             }
+            return result;
         }
 
-        public void Visit(Binary_Expression expression)
+        public bool Visit(Binary_Expression expression)
         {
-            if (!(expression.GetLeftType().IsCompatible(expression.GetRightType())))
+            bool result = true;
+            result &= expression.Left.Accept<bool>(this);
+            result &= expression.Right.Accept<bool>(this);
+            QSType exprType = expression.GetType(this._typeMem);
+            QSType leftType = expression.GetLeftType(this._typeMem);
+            QSType rightType = expression.GetRightType(this._typeMem);
+            if (!leftType.IsCompatible(rightType))
             {
-                this._result = false;
-                this._errorList.Add(new OperatorTypeMismatch(expression.GetLeftType(), expression.GetRightType(), expression.Operator, expression.Line));
+                this._errorList.Add(new OperatorTypeMismatch(leftType, rightType, expression.GetOperator(),
+                                                            expression.Line));
+                result = false;
             }
 
-            if (!expression.IsCompatible(expression.GetLeftType()))
+            if (!leftType.IsCompatible(exprType))
             {
-                this._errorList.Add(new UnaryOperatorTypeMismatch(expression.GetLeftType(), expression.Operator, expression.Line));
-                this._result = false;
+                this._errorList.Add(new TypeMismatchError(leftType, rightType, expression.Line));
+                result = false;
             }
+            return result;
         }
 
-        public void Visit(Identifier id)
+        public bool Visit(Identifier id)
         {
-            if (id.Type == null)
-                id.Parent = this.TryGetValue(id, id.Line);
-            else
-                this.TryDeclare(id, id.Line);
+            return this._typeMem.IsDeclared(id.Name);
         }
 
-        public void Visit(OutputIdentifier id)
-        {
-            if (id.Type == null)
-                id.Parent = this.TryGetValue(id, id.Line);
-            else
-                this.TryDeclare(id, id.Line);
-
-
-            if (!id.Type.IsCompatible(id.GetInternalType()))
-            {
-                this._errorList.Add(new TypeMismatchError(id.Type, id.GetInternalType(), id.Line));
-                this._result = false;
-            }
-        }
-
-        public void Visit(Question question)
+        public bool Visit(Question question)
         {
             this.CheckLabel(question.Text, question.Line);
+            return this.TryDeclare(question.Id, question.Type, question.Line);        
         }
 
-        public void Visit(CodeBlock codeBlock)
+        public bool Visit(ComputedQuestion computedQuestion)
         {
-            // do nothing as codeblock has no type checking (only the internal statements)
+            bool result = true;
+            result &= this.TryDeclare(computedQuestion.Id, computedQuestion.Type, computedQuestion.Line);
+            result &= computedQuestion.Expression.Accept<bool>(this);
+            if (!computedQuestion.Type.IsCompatible(computedQuestion.Expression.GetType(this._typeMem)))
+            {
+                this._errorList.Add(new TypeMismatchError(computedQuestion.Type,
+                                    computedQuestion.Expression.GetType(this._typeMem), computedQuestion.Line));
+                result = false;
+            }
+            return result;
         }
 
-        public void Visit(Primary primary)
+        public bool Visit(CodeBlock codeBlock)
         {
-            // this type is always okay
+            bool result = true;
+            if (codeBlock.Statements.Count > 0)
+            {
+                foreach(IStatement stat in codeBlock.Statements)
+                {
+                    result &= stat.Accept<bool>(this);
+                }
+            }
+            return result;
         }
 
-        public Identifier TryGetValue(Identifier identifier, int lineNr)
+        public bool Visit(Primary primary)
         {
-            if (this._identifiers.Contains(identifier))
-            {
-                return this._identifiers.Find(id => id.Name.Equals(identifier.Name));
-            }
-            else
-            {
-                this._result = false;
-                this._errorList.Add(new UndeclaredVariableError(identifier.Name, lineNr));
-            }
-
-            return null;
+            return true;
         }
 
-        public void TryDeclare(Identifier identifier, int lineNr)
+        public bool TryDeclare(string identifier, QSType type, int lineNr)
         {
-            if (this._identifiers.Contains(identifier))
+            bool isDeclared = this._typeMem.TryDeclare(identifier, type);
+            if (!isDeclared)
             {
-                this._errorList.Add(new DuplicateDeclarationError(identifier.Name, lineNr));
-                this._result = false;
+                this._errorList.Add(new DuplicateDeclarationError(identifier, lineNr));
+                return false;
             }
-            else
-            {
-                this._identifiers.Add(identifier);
-                this._result &= true;
-            }
+            return isDeclared;
         }
 
         public object Output
@@ -151,7 +157,7 @@ namespace QSLib.Visitors
             return retVal;
         }
 
-        public bool Result 
+        public bool Result
         {
             get
             {
@@ -159,18 +165,89 @@ namespace QSLib.Visitors
             }
         }
 
-        public void Visit(Form form)
+        public bool Visit(Form form)
         {
-            // do nothing, as the codeblock check is called from the visit method
+            return form.Code.Accept<bool>(this);
         }
 
-        public void Visit(IfStatement ifStatement)
+        public bool Visit(IfStatement ifStatement)
         {
-            if (!ifStatement.IsConditionBoolean())
+            bool result = true;
+            result &= ifStatement.Condition.Accept<bool>(this);
+            if (!ifStatement.GetConditionType(this._typeMem).IsBoolean())
             {
-                this._errorList.Add(new UnaryOperatorTypeMismatch(ifStatement.GetConditionType(), "if-statement", ifStatement.Line));
-                this._result = false;
+                this._errorList.Add(new UnaryOperatorTypeMismatch(ifStatement.GetConditionType(this._typeMem), 
+                                                                    "if-statement", ifStatement.Line));
+                result = false;
             }
+            result &= ifStatement.If.Accept<bool>(this);
+            result &= ifStatement.Else.Accept<bool>(this);
+            return result;
+        }
+
+        bool IExpressionVisitor<bool>.Visit(AST.Expressions.Binary.Divide expression)
+        {
+            return this.Visit(expression as Binary_Expression);
+        }
+
+        bool IExpressionVisitor<bool>.Visit(AST.Expressions.Binary.Add expression)
+        {
+            return this.Visit(expression as Binary_Expression);
+        }
+
+        bool IExpressionVisitor<bool>.Visit(AST.Expressions.Binary.Subtract expression)
+        {
+            return this.Visit(expression as Binary_Expression);
+        }
+
+        bool IExpressionVisitor<bool>.Visit(AST.Expressions.Binary.Multiply expression)
+        {
+            return this.Visit(expression as Binary_Expression);
+        }
+
+        bool IExpressionVisitor<bool>.Visit(Not expression)
+        {
+            return this.Visit(expression as Unary_Expression);
+        }
+
+        bool IExpressionVisitor<bool>.Visit(AST.Expressions.Binary.LessThan expression)
+        {
+            return this.Visit(expression as Binary_Expression);
+        }
+
+        bool IExpressionVisitor<bool>.Visit(AST.Expressions.Binary.LessThan_Equals expression)
+        {
+            return this.Visit(expression as Binary_Expression);
+        }
+
+        bool IExpressionVisitor<bool>.Visit(AST.Expressions.Binary.GreaterThan expression)
+        {
+            return this.Visit(expression as Binary_Expression);
+        }
+
+        bool IExpressionVisitor<bool>.Visit(AST.Expressions.Binary.GreaterThan_Equals expression)
+        {
+            return this.Visit(expression as Binary_Expression);
+        }
+
+        bool IExpressionVisitor<bool>.Visit(AST.Expressions.Binary.Equals expression)
+        {
+            return this.Visit(expression as Binary_Expression);
+        }
+
+        bool IExpressionVisitor<bool>.Visit(AST.Expressions.Binary.NotEquals expression)
+        {
+            return this.Visit(expression as Binary_Expression);
+        }
+
+        bool IExpressionVisitor<bool>.Visit(AST.Expressions.Binary.Or expression)
+        {
+            return this.Visit(expression as Binary_Expression);
+        }
+
+        bool IExpressionVisitor<bool>.Visit(AST.Expressions.Binary.And expression)
+        {
+            return this.Visit(expression as Binary_Expression);
         }
     }
 }

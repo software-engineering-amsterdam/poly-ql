@@ -1,5 +1,9 @@
-﻿using QSLib.Values;
-namespace QSLib.Types
+﻿using System.Windows.Controls;
+using System.Windows;
+using System;
+using QSLib.GUI;
+using QSLib.Visitors;
+namespace QSLib.AST.Types
 {
     public abstract class QSType 
     {
@@ -24,9 +28,7 @@ namespace QSLib.Types
         {
             return false;
         }
-
-        public abstract Value GetUndefinedValue(bool isInput);
-
-        public abstract void CreateGUI(GUIBuilder guiBuilder);
+        public abstract object Accept<T>(ITypeVisitor<T> visitor);
+        public abstract object GetUndefined();
     }
 }

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using QSLib.AST.Expressions.Unary.Identifiers;
-using QSLib.IO;
+using QSLib.AST.Expressions.Nullary;
+using QSLib.AST.Types;
+using System.Windows.Input;
+using QSLib.GUI;
 
 namespace QSLib
 {
@@ -12,50 +14,58 @@ namespace QSLib
     public partial class QuestionControl : UserControl
     {
         private Control _iocontrol;
-        private ITypeIO _typeIO;
-        public QuestionControl()
+        private string _id;
+        public QuestionControl(string id)
         {
             InitializeComponent();
+            this._id = id;
         }
-
-        public void AddIOControl(ITypeIO io)
+        public Control IOControl
         {
-            this._iocontrol = io.GetControl();
+            get
+            {
+                return this._iocontrol;
+            }
+        }
+        public void AddIOControl(Control control, bool isInput)
+        {
+            this._iocontrol = control;
             this._iocontrol.VerticalAlignment = System.Windows.VerticalAlignment.Center;
             this._iocontrol.HorizontalAlignment = System.Windows.HorizontalAlignment.Right;
-            this._iocontrol.Margin = new Thickness(0,7.5,0, 7.5);
-            this._typeIO = io;
+            this._iocontrol.Margin = new Thickness(0, 7.5, 0, 7.5);
+            this._iocontrol.IsEnabled = isInput;
             this.ioControl.Children.Add(this._iocontrol);
         }
-
-        public void SetToInput(Identifier id)
+ 
+        public object MyValue
         {
-            this._typeIO.SetIdentifier(id);
-            this._typeIO.ValueChanged += new EventHandler(_typeIO_ValueChanged);
-            this._iocontrol.SetBinding(this._typeIO.GetDependencyProperty(), this._typeIO.GetBinding());
+            get { return (object)GetValue(MyValueProperty); }
+            set { SetValue(MyValueProperty, value); }
         }
-
-        void _typeIO_ValueChanged(object sender, EventArgs e)
+        public string Identifier
         {
-            OnValueChanged(null);
-        }
-
-        internal void SetToOutput(Identifier id)
-        {
-            this._typeIO.SetIdentifier(id);
-   
-            this._iocontrol.SetBinding(this._typeIO.GetDependencyProperty(), this._typeIO.GetBinding());
-        }
-
-        public event EventHandler ValueChanged;
-
-        protected virtual void OnValueChanged(EventArgs args)
-        {
-            var handler = this.ValueChanged;
-            if (handler != null)
+            get
             {
-                handler(this, args);
+                return this._id;
             }
+        }
+        // Using a DependencyProperty as the backing store for Content.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty MyValueProperty =
+            DependencyProperty.Register("MyValue", typeof(object), typeof(QuestionControl), new UIPropertyMetadata(0));
+
+        public event DependencyPropertyChangedEventHandler MyValueChanged;
+        protected void OnPropertyChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+
+            if (e.Property  == MyValueProperty)
+            {
+                var handler = MyValueChanged;
+                if (handler != null)
+                {
+                    handler(this, e);
+                }
+            }
+            base.OnPropertyChanged(e);
         }
 
         public void AddQuestionLabel(string qtext)

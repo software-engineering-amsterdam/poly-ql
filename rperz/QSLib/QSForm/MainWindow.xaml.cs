@@ -3,6 +3,7 @@ using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
 using QSLib;
 using QSLib.Visitors;
+using System.IO;
 namespace QSForm
 {
     /// <summary>
@@ -10,15 +11,18 @@ namespace QSForm
     /// </summary>
     public partial class MainWindow : Window
     {
+        private string[] _testExamples;
+        private int _exampleNumber = 0;
         public MainWindow()
         {
             InitializeComponent();
-            tbInput.Text = "form \r\n{ \r\n\"Dit is een vraag \" bAntwoord : Boolean \r\nif(bAntwoord) \r\n{ \r\n\"Deze vraag moet ook gesteld\" bTest : Boolean \r\n} \r\n}";
+            this.ReadFile(@"c:\school\poly-ql\rperz\QSLib\testcode.txt");
+            this.Paste_Click(null, null);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Parse_Click(object sender, RoutedEventArgs e)
         {
-            AntlrInputStream stream = new AntlrInputStream(tbInput.Text);
+            AntlrInputStream stream = new AntlrInputStream(this._tbInput.Text);
             QSLexer lex = new QSLexer(stream);
             CommonTokenStream tokens = new CommonTokenStream(lex);
             QSParser parser = new QSParser(tokens);
@@ -26,19 +30,35 @@ namespace QSForm
             MyListener listener = new MyListener(parser);
             ParseTreeWalker walker = new ParseTreeWalker();
             walker.Walk(listener, tree);
-            IVisitor check = TypeChecker.StartVisit(listener.Root);
+            IVisitor<bool> check = TypeChecker.StartVisit(listener.Root);
 
             if (check.Result)
             {
                 GUIBuilder builder = GUIBuilder.BuildGUI(listener.Root);
                 System.Windows.Window wind = new Window();
                 wind.Width = 500;
-                wind.Content = builder.GetResult();
+                wind.Content = builder.Result;
                 wind.Show();
             }
             else
-                tbOutput.Text = check.Output.ToString();
+                this._tbOutput.Text = ((TypeChecker)check).Output.ToString();
         }
 
+        private void Paste_Click(object sender, RoutedEventArgs e)
+        {
+            this._tbInput.Text = _testExamples[_exampleNumber];
+            this._exampleNumber +=1;
+            if (this._exampleNumber >= this._testExamples.Length)
+                this._pasteButton.IsEnabled = false;
+        }
+
+        private void ReadFile(string path)
+        {
+            using (StreamReader read = new StreamReader(path))
+            {
+                string textInFile = read.ReadToEnd();
+                this._testExamples = textInFile.Split('@');
+            }
+        }
     }
 }

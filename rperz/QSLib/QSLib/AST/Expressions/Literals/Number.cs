@@ -1,34 +1,28 @@
-﻿using QSLib.Types;
-using QSLib.Values;
+﻿using QSLib.AST.Types;
+using QSLib.Visitors;
 namespace QSLib.AST.Expressions.Literals
 {
-    public class QSNumber : Primary
+    public class QSInteger : Primary
     {
-
-        public QSNumber(int value, int lineNr)
+        private int _value;
+        public QSInteger(int value, int lineNr)
+            : base(lineNr)
         {
-            base._type = new IntegerType();
-            this._value = new IntegerValue(value);
-            this._lineNr = lineNr;
+            this._value = value;
         }
-
-        #region Object overrides
-        public override string ToString()
+        public override object Value
         {
-            return this._value.ToString();
+            get { return this._value; }
         }
-
-        public override bool Equals(object obj)
-        { 
-            var temp = obj as QSNumber;
-            return temp != null && base.Equals(obj) && this._value.Equals(temp._value);  
-        }
-
-
-        public override int GetHashCode()
+        public override QSType GetType(TypeMemory memory)
         {
-            return base.GetHashCode();
+            return new IntegerType();
         }
-        #endregion
+
+        public override T Accept<T>(IExpressionVisitor<T> checker)
+        {
+            return checker.Visit(this);
+        }
+
     }
 }

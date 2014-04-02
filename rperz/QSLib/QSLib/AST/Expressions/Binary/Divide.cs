@@ -1,5 +1,5 @@
-﻿using QSLib.Types;
-using QSLib.Values;
+﻿using QSLib.AST.Types;
+using QSLib.Visitors;
 namespace QSLib.AST.Expressions.Binary
 {
     public class Divide : Binary_Expression 
@@ -7,21 +7,21 @@ namespace QSLib.AST.Expressions.Binary
         public Divide(QSExpression a, QSExpression b, int lineNr)
             : base(a, b, lineNr)
         {
-            base._operator = "/";
         }
 
-
-        public override Value Evaluate()
+        public override T Accept<T>(IExpressionVisitor<T> checker)
         {
-            this._value = this._left.Evaluate().Divide(this._right.Evaluate());
-            this.OnPropertyChanged("GetValue");
-            return this._value;
+            return checker.Visit(this);
         }
 
-
-        public override QSType Type
+        public override string GetOperator()
         {
-            get { return new IntegerType(); }
+            return "/";
+        }
+
+        public override QSType GetType(TypeMemory memory)
+        {
+            return new IntegerType();
         }
 
         public override bool IsCompatible(QSType type)

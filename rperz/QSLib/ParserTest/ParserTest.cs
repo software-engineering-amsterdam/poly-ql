@@ -233,7 +233,7 @@ namespace ParserTest
             Question q1o = new Question(new QSString(q1, 1), iAnswer, 1);
             Identifier iAnswer2 = new Identifier("iAnswer", 1);
             Identifier iAnswer3 = new Identifier("iAnswer", 1);
-            Identifier iAnswerDiv = new Identifier("iDivAnswer", new IntegerType(), new Add(iAnswer2, new Divide(iAnswer3, new QSNumber(2, 1), 1), 1), 1);
+            Identifier iAnswerDiv = new Identifier("iDivAnswer", new IntegerType(), new Add(iAnswer2, new Divide(iAnswer3, new QSInteger(2, 1), 1), 1), 1);
             Question q2o = new Question(new QSString(q2, 1), iAnswerDiv, 1);
             List<IStatement> ilist = new List<IStatement>();
             ilist.Add(q1o);
@@ -255,7 +255,7 @@ namespace ParserTest
             Question q1o = new Question(new QSString(q1, 1), iAnswer, 1);
             Identifier iAnswer2 = new Identifier("iAnswer", 1);
             Identifier iAnswer3 = new Identifier("iAnswer", 1);
-            Identifier iAnswerDiv = new Identifier("iDivAnswer", new IntegerType(), new Add(iAnswer2, new Multiply(iAnswer3, new QSNumber(2, 1), 1), 1), 1);
+            Identifier iAnswerDiv = new Identifier("iDivAnswer", new IntegerType(), new Add(iAnswer2, new Multiply(iAnswer3, new QSInteger(2, 1), 1), 1), 1);
 
             Question q2o = new Question(new QSString(q2, 1), iAnswerDiv, 1);
             List<IStatement> ilist = new List<IStatement>();

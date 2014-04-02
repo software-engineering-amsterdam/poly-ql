@@ -1,5 +1,9 @@
-﻿using QSLib.Values;
-namespace QSLib.Types
+﻿using System.Windows;
+using System.Windows.Controls;
+using System;
+using QSLib.GUI;
+using QSLib.Visitors;
+namespace QSLib.AST.Types
 {
     public class IntegerType : QSType
     {
@@ -25,26 +29,15 @@ namespace QSLib.Types
             return "integer";
         }
 
-        public override bool Equals(object obj)
+
+        public override object Accept<T>(ITypeVisitor<T> visitor)
         {
-            var temp = obj as IntegerType;
-            if (temp != null)
-                return true;
-            return false;
-        }
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
+            return visitor.Visit(this);
         }
 
-        public override Value GetUndefinedValue(bool isInput)
+        public override object GetUndefined()
         {
-            return new IntegerValue(0, isInput);
-        }
-
-        public override void CreateGUI(GUIBuilder guiBuilder)
-        {
-            guiBuilder.CreateIntegerInput();
+            return 0;
         }
     }
 }

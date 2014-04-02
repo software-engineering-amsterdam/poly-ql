@@ -14,13 +14,13 @@
 @header
 {
 	using QSLib.AST;
-	using QSLib.AST.Expressions.Unary.Identifiers;
+	using QSLib.AST.Expressions.Nullary;
 	using QSLib.AST.Expressions;
 	using QSLib.AST.Expressions.Unary;
 	using QSLib.AST.Expressions.Binary;
 	using QSLib.AST.Expressions.Literals;
 	using QSLib.AST.Statements;
-	using QSLib.Types;
+	using QSLib.AST.Types;
 
 	using System;
 	using System.Linq;
@@ -53,43 +53,30 @@ statement returns [IStatement s]
 	| b=if_statement { $s = $b.i; } 
 	;
 
-question_statement returns [Question q]
+question_statement returns [IStatement q]
+@init
+{
+	QSType type;
+}
 	:
-	  a=STRING_LITERAL b=type_declaration { $q = new Question(new QSString($a.text.Substring(1, $a.text.Length - 2),$a.line), $b.e, $a.line); }
-	;
+	  a=STRING_LITERAL id=WORD ASSIGN v=expression COLON (TYPE_BOOL {type = new BoolType(); } |
+														  TYPE_INTEGER {type = new IntegerType(); } |
+														  TYPE_STRING {type = new StringType(); })	
+														{ 
+															$q = new ComputedQuestion($a.text.Substring(1, $a.text.Length - 2), $id.text, $v.e, type, $a.line); 
+														}
+	|  a=STRING_LITERAL id=WORD COLON (TYPE_BOOL {type = new BoolType(); } |
+									  TYPE_INTEGER {type = new IntegerType(); } |
+									  TYPE_STRING {type = new StringType(); })	
+														{ 
+															$q = new Question(type, $a.text.Substring(1, $a.text.Length - 2), $id.text, $a.line); 
+														}
 
-type_declaration returns [Identifier e]
-	:
-
-	  id=WORD ASSIGN v=expression COLON TYPE_BOOL 
-					{ 
-						$e = new OutputIdentifier($id.text, new BoolType(), $v.e, $id.line);  
-					}
-	| id=WORD ASSIGN v=expression COLON TYPE_INTEGER  
-					{ 
-						$e = new OutputIdentifier($id.text, new NumberType(), $v.e, $id.line);  
-					}
-	| id=WORD ASSIGN v=expression  COLON TYPE_STRING
-					{ 
-						$e = new OutputIdentifier($id.text, new StringType(), $v.e, $id.line);    
-					}
-	| id=WORD COLON TYPE_BOOL 
-					{ 
-						$e = new InputIdentifier($id.text, new BoolType(), $id.line);  
-					}
-	| id=WORD COLON TYPE_INTEGER  
-					{ 
-						$e = new InputIdentifier($id.text, new NumberType(), $id.line);  
-					}
-	| id=WORD COLON TYPE_STRING
-					{ 
-						$e = new InputIdentifier($id.text, new StringType(), $id.line);    
-					}
 	;
 
 num_val returns [QSExpression e]
 	:
-	  v=NUMBER { $e = new QSNumber(Int32.Parse($v.text), $v.line); }
+	  v=NUMBER { $e = new QSInteger(Int32.Parse($v.text), $v.line); }
 	;
 
 bool_val returns [QSExpression e]
@@ -106,12 +93,12 @@ expression returns [QSExpression e]
 	| o=NOT a=expression					 { $e = new Not($a.e, $o.line); } 
 	| c=expression o=AND b=expression  { $e = new And($c.e, $b.e, $o.line); } 
 	| c=expression o=OR b=expression   { $e = new Or($c.e, $b.e, $o.line); } 
-	| l=expression o=SMALLER r=expression { $e = new SmallerThan($l.e, $r.e, $o.line); }
-	| l=expression o=SMALLEREQUALS r=expression { $e = new SmallerThan_Equals($l.e, $r.e, $o.line); }
+	| l=expression o=SMALLER r=expression { $e = new LessThan($l.e, $r.e, $o.line); }
+	| l=expression o=SMALLEREQUALS r=expression { $e = new LessThan_Equals($l.e, $r.e, $o.line); }
 	| l=expression o=EQUALS r=expression { $e = new Equals($l.e, $r.e, $o.line); }
 	| l=expression o=NOTEQUALS r=expression { $e = new NotEquals($l.e, $r.e, $o.line); }
-	| l=expression o=LARGEREQUALS r=expression { $e = new LargerThan_Equals($l.e, $r.e, $o.line); }
-	| l=expression o=LARGER r=expression { $e = new LargerThan($l.e, $r.e, $o.line); }	
+	| l=expression o=LARGEREQUALS r=expression { $e = new GreaterThan_Equals($l.e, $r.e, $o.line); }
+	| l=expression o=LARGER r=expression { $e = new GreaterThan($l.e, $r.e, $o.line); }	
 	| d=num_val { $e = $d.e ; } 
 	| g=bool_val { $e = $g.e ; } 
 	| f=WORD { $e = new Identifier($f.text, $f.line) ; } 

@@ -1,25 +1,28 @@
 ﻿using QSLib.AST.Expressions.Literals;
 using QSLib.AST.Expressions.Unary;
 using QSLib;
-using QSLib.AST.Types;
 using QSLib.Visitors;
+using QSLib.AST.Expressions;
+using QSLib.AST.Types;
 using System;
 namespace QSLib.AST.Statements
 {
-    public class Question : IStatement
+    public class ComputedQuestion : IStatement
     {
         private string _id;
         private string _text;
         private int _lineNr;
         private QSType _type;
+        private QSExpression _expression;
 
         #region Constructors
-        public Question(QSType type, string text, string id, int lineNr)
+        public ComputedQuestion(string text, string id, QSExpression expr, QSType type, int lineNr)
         {
             this._type = type;
             this._text = text;
             this._id = id;
             this._lineNr = lineNr;
+            this._expression = expr;
         }
         #endregion
 
@@ -32,11 +35,11 @@ namespace QSLib.AST.Statements
             }
         }
 
-        public QSType Type
+        public QSExpression Expression
         {
             get
             {
-                return this._type;
+                return this._expression;
             }
         }
 
@@ -45,6 +48,14 @@ namespace QSLib.AST.Statements
             get
             {
                 return this._text.ToString();
+            }
+        }
+
+        public QSType Type
+        {
+            get
+            {
+                return this._type;
             }
         }
 
@@ -63,7 +74,6 @@ namespace QSLib.AST.Statements
             return (T)checker.Visit(this);
         }
         #endregion
-
     }
 
 }

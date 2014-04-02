@@ -1,6 +1,5 @@
-﻿using QSLib.Types;
-using QSLib.Values;
-
+﻿using QSLib.AST.Types;
+using QSLib.Visitors;
 namespace QSLib.AST.Expressions.Binary
 {
     public class GreaterThan_Equals : Binary_Expression
@@ -9,19 +8,20 @@ namespace QSLib.AST.Expressions.Binary
         public GreaterThan_Equals(QSExpression a, QSExpression b, int lineNr)
             : base(a, b, lineNr)
         {
-            base._operator = ">=";
         }
 
-        public override Value Evaluate()
+        public override string GetOperator()
         {
-            this._value = this._left.Evaluate().LargerThan_Equals(this._right.Evaluate());
-            this.OnPropertyChanged("GetValue");
-            return this._value;
+            return ">=";
+        }
+        public override T Accept<T>(IExpressionVisitor<T> checker)
+        {
+            return checker.Visit(this);
         }
 
-        public override QSType Type
+        public override QSType GetType(TypeMemory memory)
         {
-            get { return new BoolType(); }
+            return new BoolType();
         }
 
         public override bool IsCompatible(QSType type)

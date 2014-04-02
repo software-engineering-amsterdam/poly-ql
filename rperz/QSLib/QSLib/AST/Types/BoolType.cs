@@ -1,5 +1,9 @@
-﻿using QSLib.Values;
-namespace QSLib.Types
+﻿using System.Windows;
+using System.Windows.Controls;
+using System;
+using QSLib.GUI;
+using QSLib.Visitors;
+namespace QSLib.AST.Types
 {
     public class BoolType : QSType
     {
@@ -15,14 +19,14 @@ namespace QSLib.Types
             return other.IsBoolean();
         }
 
+        public override object Accept<T>(ITypeVisitor<T> visitor)
+        {
+            return visitor.Visit(this);
+        }
+
         public override bool IsBoolean()
         {
             return true;
-        }
-
-        public override Value GetUndefinedValue(bool isInput)
-        {
-            return new BooleanValue(false, isInput);
         }
 
         public override string ToString()
@@ -30,22 +34,10 @@ namespace QSLib.Types
             return "boolean";
         }
 
-        public override bool Equals(object obj)
+        public override object GetUndefined()
         {
-            var temp = obj as BoolType;
-            if (temp != null)
-                return true;
             return false;
         }
 
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
-
-        public override void CreateGUI(GUIBuilder guiBuilder)
-        {
-            guiBuilder.CreateBooleanInput();
-        }
     }
 }

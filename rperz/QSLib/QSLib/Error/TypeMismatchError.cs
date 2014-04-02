@@ -2,17 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using QSLib.AST.Types;
 namespace QSLib.Error
 {
     class TypeMismatchError : QSError
     {
-        private string _questionText;
-        private Types.QSType _type1;
-        private Types.QSType _type2;
-        private string _operator;
+        private QSType _type1;
+        private QSType _type2;
 
-        public TypeMismatchError(Types.QSType type1, Types.QSType type2, int line)
+        public TypeMismatchError(QSType type1, QSType type2, int line)
         {
             // TODO: Complete member initialization
             this._type1 = type1;

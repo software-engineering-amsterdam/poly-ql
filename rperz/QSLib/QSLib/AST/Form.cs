@@ -17,44 +17,22 @@ namespace QSLib.AST
         #endregion
 
         #region Getters
-        public Type Type
+
+        public CodeBlock Code
         {
             get
             {
-                return null;
+                return _code;
             }
         }
         #endregion
 
         #region TypeChecker
-        public void Accept(IVisitor checker)
+        public T Accept<T>(IStatementVisitor<T> checker)
         {
-            checker.Visit(this);
-            this._code.Accept(checker);
+            return (T)checker.Visit(this);;
         }
         #endregion
 
-        #region Object overrides
-        public override bool Equals(object obj)
-        {
-            var comp = obj as Form;
-            return comp != null && this._code.Equals(comp._code);
-        }
-
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
-
-        public override string ToString()
-        {
-            return "form \r\n { \r\n" + this._code.ToString() + "\r\n }";
-        }
-        #endregion
-
-        internal void CreateGUI(GUIBuilder guiBuilder)
-        {
-            this._code.CreateGUI(guiBuilder);
-        }
     }
 }

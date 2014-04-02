@@ -1,5 +1,10 @@
-﻿using QSLib.Values;
-namespace QSLib.Types
+﻿using System.Windows;
+using System.Windows.Controls;
+using QSLib.GUI;
+using QSLib.AST.Types;
+using QSLib.Visitors;
+
+namespace QSLib.AST.Types
 {
     public class StringType : QSType
     {
@@ -24,27 +29,17 @@ namespace QSLib.Types
         {
             return "string";
         }
-        
-        public override bool Equals(object obj)
+
+
+        public override object Accept<T>(ITypeVisitor<T> visitor)
         {
-            var temp = obj as StringType;
-            if (temp != null)
-                return true;
-            return false;
-        }
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
+            return visitor.Visit(this);
         }
 
-        public override void CreateGUI(GUIBuilder guiBuilder)
-        {
-            guiBuilder.CreateStringInput();
-        }
 
-        public override Value GetUndefinedValue(bool isInput)
+        public override object GetUndefined()
         {
-            return new StringValue("", isInput);
+            return "";
         }
     }
 }

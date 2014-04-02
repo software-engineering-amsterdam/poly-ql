@@ -50,6 +50,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AST\Statements\ComputedQuestion.cs" />
+    <Compile Include="GUI\Converters\BooleanToStringConverter.cs" />
+    <Compile Include="GUI\Converters\IntegerToStringConverter.cs" />
     <Compile Include="Error\DuplicateDeclarationError.cs" />
     <Compile Include="Error\DuplicateLabelWarning.cs" />
     <Compile Include="Error\ErrorCollection.cs" />
@@ -57,8 +60,6 @@
     <Compile Include="Error\ParseError.cs" />
     <Compile Include="Error\QSError.cs" />
     <Compile Include="Error\UnaryOperatorTypeMismatch.cs" />
-    <Compile Include="AST\Expressions\Unary\Identifiers\InputIdentifier.cs" />
-    <Compile Include="AST\Expressions\Unary\Identifiers\OutputIdentifier.cs" />
     <Compile Include="AST\CodeBlock.cs" />
     <Compile Include="AST\Expressions\Binary\Add.cs" />
     <Compile Include="AST\Expressions\Binary\And.cs" />
@@ -74,30 +75,23 @@
     <Compile Include="AST\Expressions\Binary\Subtract.cs" />
     <Compile Include="AST\Expressions\Binary\Binary_Expression.cs" />
     <Compile Include="AST\Expressions\Unary\Unary_Expression.cs" />
-    <Compile Include="GUI\Generators\Input\BooleanInput.cs" />
-    <Compile Include="GUI\Generators\Input\IntegerInput.cs" />
-    <Compile Include="GUI\Generators\ITypeIO.cs" />
-    <Compile Include="GUI\Generators\Input\StringInput.cs" />
     <Compile Include="Error\TypeMismatchError.cs" />
     <Compile Include="Error\UndeclaredVariableError.cs" />
+    <Compile Include="Visitors\DependencyPropertyVisitor.cs" />
+    <Compile Include="Visitors\Evaluator.cs" />
+    <Compile Include="Visitors\IExpressionVisitor.cs" />
+    <Compile Include="Visitors\IStatementVisitor.cs" />
+    <Compile Include="Visitors\ITypeVisitor.cs" />
+    <Compile Include="Visitors\TypeMemory.cs" />
     <Compile Include="Visitors\IVisitor.cs" />
-    <Compile Include="AST\Values\BooleanValue.cs" />
-    <Compile Include="AST\Values\IntegerValue.cs" />
-    <Compile Include="AST\Values\StringValue.cs" />
-    <Compile Include="AST\Values\UndefinedValue.cs" />
-    <Compile Include="AST\Values\Value.cs" />
-    <Compile Include="GUIBuilder.cs" />
-    <Compile Include="GUI\Generators\Ouput\BooleanOutput.cs" />
-    <Compile Include="GUI\Generators\Ouput\IntegerOutput.cs" />
-    <Compile Include="GUI\Generators\Ouput\StringOutput.cs" />
+    <Compile Include="Visitors\GUIBuilder.cs" />
     <Compile Include="GUI\Control\QuestionControl.xaml.cs">
       <DependentUpon>QuestionControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="AST\Statements\IfStatement.cs" />
     <Compile Include="ListEqualityComparer.cs" />
-    <Compile Include="GUI\Converters\NotConverter.cs" />
     <Compile Include="AST\Types\BoolType.cs" />
-    <Compile Include="AST\Expressions\Unary\Identifiers\Identifier.cs" />
+    <Compile Include="AST\Expressions\Nullary\Identifier.cs" />
     <Compile Include="AST\Types\IntegerType.cs" />
     <Compile Include="AST\Types\StringType.cs" />
     <Compile Include="AST\Types\QSType.cs" />

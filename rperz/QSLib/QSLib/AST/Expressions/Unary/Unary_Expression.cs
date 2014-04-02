@@ -1,5 +1,6 @@
-﻿using QSLib.Types;
+﻿using QSLib.AST.Types;
 using QSLib.Visitors;
+using System;
 namespace QSLib.AST.Expressions.Unary
 {
     public abstract class Unary_Expression : QSExpression 
@@ -8,44 +9,27 @@ namespace QSLib.AST.Expressions.Unary
 
         #region Constructors
         public Unary_Expression(QSExpression intern, int lineNr)
+            : base(lineNr)
         {
             this._internal = intern;
-            this._lineNr = lineNr;
         }
         #endregion
 
-        #region TypeChecker
-        public override void Accept(IVisitor checker)
-        {
-            this._internal.Accept(checker);
-            checker.Visit(this);
-        }
-        #endregion
+        public override abstract T Accept<T>(IExpressionVisitor<T> checker);
 
-        #region Object overrides
-        public override int GetHashCode()
+        public abstract string GetOperator();
+
+        public QSExpression Internal
         {
-            return base.GetHashCode();
+            get
+            {
+                return this._internal;
+            }
         }
 
-        public override bool Equals(object obj)
+        internal QSType GetInternalType(TypeMemory memory)
         {
-            var comp = obj as Unary_Expression;
-            return comp != null && (comp.Type == null || this.Type.IsCompatible(comp.Type)) && 
-                ((this._internal == null && comp._internal == null) || (this._internal != null && this._internal.Equals(comp._internal)));
-        }
-
-        public override string ToString()
-        {
-            return this._operator + this._internal.ToString();
-        }
-        #endregion
-
-        internal QSType GetInternalType()
-        {
-            if(this._internal != null)
-                return this._internal.Type;
-            return null;
+            return this._internal.GetType(memory);
         }
     }
 }

@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using QSLib.AST.Expressions;
-using QSLib.Types;
+using QSLib.AST.Types;
 using QSLib.Visitors;
 using QSLib;
+using System;
 namespace QSLib.AST.Statements
 {
     public class IfStatement : IStatement
@@ -31,33 +32,11 @@ namespace QSLib.AST.Statements
         #endregion
 
         #region TypeCheckers
-        public void Accept(IVisitor checker)
+        public T Accept<T>(IStatementVisitor<T> checker)
         {
-            this._condition.Accept(checker);
-            checker.Visit(this);
-            this._code.Accept(checker);
-            this._elseBlock.Accept(checker);
+            return (T)checker.Visit(this);;
         }
 
-        #endregion
-
-        #region Object overrides
-        public override bool Equals(object obj)
-        {
-            var comp = obj as IfStatement;
-            if (comp == null)
-                return false;
-
-            // check if all elements are equal
-            return this._condition.Equals(comp._condition) &&
-                    this._code.Equals(comp._code) &&
-                    this._elseBlock.Equals(comp._elseBlock);
-        }
-
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
         #endregion
 
         #region Getters
@@ -93,19 +72,9 @@ namespace QSLib.AST.Statements
         }
         #endregion
 
-        public void CreateGUI(GUIBuilder guiBuilder)
+        internal QSType GetConditionType(TypeMemory memory)
         {
-            guiBuilder.CreateIfStatement(this._condition, this._code, this._elseBlock);
-        }
-
-        internal bool IsConditionBoolean()
-        {
-            return this._condition.Type.IsBoolean();
-        }
-
-        internal QSType GetConditionType()
-        {
-            return this._condition.Type ;
+            return Condition.GetType(memory) ;
         }
     }
 }

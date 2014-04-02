@@ -6,7 +6,7 @@ using QSLib.Visitors;
 
 namespace QSLib.AST
 {
-    public class CodeBlock : IStatement
+    public class CodeBlock
     {
         List<IStatement> _statements = new List<IStatement>();
 
@@ -22,45 +22,19 @@ namespace QSLib.AST
         #endregion
 
         #region TypeChecker
-        public void Accept(IVisitor checker)
+        public T Accept<T>(IStatementVisitor<T> checker)
         {
-            checker.Visit(this);
-            if (this._statements.Count > 0)
-                this._statements.ForEach(i => i.Accept(checker));
+            return (T)checker.Visit(this);
         }
 
         #endregion
 
-        #region Object overrides
-        public override bool Equals(object obj)
+        public List<IStatement> Statements
         {
-            var temp = obj as CodeBlock;
-            if (temp == null)
-                return false;
-            return this._statements.SequenceEqual<IStatement>(temp._statements, new ListEqualityComparer());
-        }
-
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
-
-        public override string ToString()
-        {
-            String retVal = "";
-            foreach (IStatement s in this._statements)
+            get
             {
-                retVal += s.ToString() + "\r\n";
+                return this._statements;
             }
-
-            return retVal;
-        }
-        #endregion
-
-        public void CreateGUI(GUIBuilder guiBuilder)
-        {
-            this._statements.ForEach(x => x.CreateGUI(guiBuilder));
-            guiBuilder.EndBlock();
         }
 
     }

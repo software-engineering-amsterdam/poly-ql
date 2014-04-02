@@ -1,35 +1,29 @@
 ﻿using System;
-using QSLib.Types;
-using QSLib.Values;
-
+using QSLib.AST.Types;
+using QSLib.Visitors;
 namespace QSLib.AST.Expressions.Literals
 {
     public class QSString : Primary
     {
-
+        private string _value;
         public QSString(String value, int lineNr)
+            : base(lineNr)
         {
-            base._type = new StringType();
-            this._value = new StringValue(value);
-            this._lineNr = lineNr;
+            this._value = value;
         }
 
-        #region Object overrides
-        public override bool Equals(object obj)
+        public override T Accept<T>(IExpressionVisitor<T> checker)
         {
-            var temp = obj as QSString;
-            return temp != null && base.Equals(obj) && this._value.Equals(temp._value);
+            return checker.Visit(this);
         }
 
-        public override string ToString()
+        public override object Value
         {
-            return this._value.ToString().Replace('\"', ' ');
+            get { return this._value; }
         }
-
-        public override int GetHashCode()
+        public override QSType GetType(TypeMemory memory)
         {
-            return base.GetHashCode();
+            return new StringType();
         }
-        #endregion
     }
 }

@@ -1,42 +1,18 @@
-﻿using QSLib.Types;
-using QSLib.Values;
+﻿using QSLib.AST.Types;
 using QSLib.Visitors;
 namespace QSLib.AST.Expressions.Literals
 {
     public abstract class Primary : QSExpression
     {
-        public override void Accept(IVisitor checker)
+        public Primary(int lineNr)
+            : base(lineNr)
         {
-            checker.Visit(this);
         }
 
-        public override QSType Type
-        {
-            get 
-            {
-                return this._type;
-            }
-        }
+        public abstract object Value { get; }
 
-        public override Value Evaluate()
-        {
-            this.OnPropertyChanged("GetValue");
-            return this._value;
-        }
-
-
-        #region Object overrides
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
-
-        public override bool Equals(object obj)
-        {
-            var temp = obj as Primary;
-            return temp != null && this.Type.IsCompatible(temp.Type);
-        }
-        #endregion
+        public abstract override T Accept<T>(IExpressionVisitor<T> checker);
+        public abstract override QSType GetType(TypeMemory memory);
 
     }
 }

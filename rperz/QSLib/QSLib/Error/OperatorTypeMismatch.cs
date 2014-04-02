@@ -2,17 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using QSLib.AST.Types;
 namespace QSLib.Error
 {
     class OperatorTypeMismatch : QSError 
     {
-        private string _questionText;
-        private Types.QSType _type1;
-        private Types.QSType _type2;
+        private QSType _type1;
+        private QSType _type2;
         private string _operator;
 
-        public OperatorTypeMismatch(Types.QSType type1, Types.QSType type2, string op, int line)
+        public OperatorTypeMismatch(QSType type1, QSType type2, string op, int line)
         {
             this._type1 = type1;
             this._type2 = type2;

@@ -1,15 +1,20 @@
 ﻿<Window x:Class="QSForm.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="479" Width="595">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="130" />
-            <RowDefinition Height="130" />
+            <RowDefinition Height="200*" />
             <RowDefinition Height="40"/>
+            <RowDefinition Height="150*" />
         </Grid.RowDefinitions>
-        <TextBox Name="tbOutput" Grid.Row="1" />
-        <TextBox Name="tbInput" Grid.Row="0" AcceptsReturn="True" AcceptsTab="True" />
-        <Button Grid.Row="2" Content="Parse" Click="Button_Click"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <TextBox Name="_tbOutput" Grid.Row="1" Margin="0,40,0,12" Grid.ColumnSpan="2" Grid.RowSpan="2" />
+        <TextBox Name="_tbInput" Grid.Row="0" AcceptsReturn="True" AcceptsTab="True" Grid.ColumnSpan="2" />
+        <Button Name="_parseButton" Grid.Row="1" Content="Parse" Grid.Column="1" Click="Parse_Click"/>
+        <Button Name="_pasteButton" Grid.Row="1" Content="Paste" Grid.Column="0" Click="Paste_Click"/>
     </Grid>
 </Window>

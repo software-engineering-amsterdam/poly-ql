@@ -1,6 +1,6 @@
-﻿using QSLib.Types;
-using QSLib.Values;
+﻿using QSLib.AST.Types;
 using QSLib.Visitors;
+using System;
 namespace QSLib.AST.Expressions
 {
     public abstract class Binary_Expression : QSExpression
@@ -9,53 +9,49 @@ namespace QSLib.AST.Expressions
         protected QSExpression _right;
 
         public Binary_Expression(int lineNr)
+            : base(lineNr)
         {
-            this._lineNr = lineNr;
         }
 
         public Binary_Expression(QSExpression a, QSExpression b, int lineNr)
+            : base(lineNr)
         {
             this._left = a;
             this._right = b;
-            this._lineNr = lineNr;
         }
 
-        public override void Accept(IVisitor checker)
+        public abstract override T Accept<T>(IExpressionVisitor<T> checker);
+        public abstract override QSType GetType(TypeMemory memory);
+
+
+        public QSType GetLeftType(TypeMemory memory)
         {
-            this._left.Accept(checker);
-            this._right.Accept(checker);
-            checker.Visit(this);
+            return this._left.GetType(memory);
         }
 
-        public QSType GetLeftType()
+        public QSType GetRightType(TypeMemory memory)
         {
-            return this._left.Type;
+            return this._right.GetType(memory);
         }
 
-        public QSType GetRightType()
+        public QSExpression Left
         {
-            return this._right.Type;
+            get
+            {
+                    return this._left;
+            }
         }
 
-        public override abstract Value Evaluate();
+        public QSExpression Right
+        {
+            get
+            {
+                return this._right;
+            }
+        }
+
+        public abstract string GetOperator();
         public abstract bool IsCompatible(QSType type);
 
-        #region Object overrides
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
-
-        public override bool Equals(object obj)
-        {
-            var comp = obj as Binary_Expression;
-            return comp != null && this._left.Equals(comp._left) && this._right.Equals(comp._right);
-        }
-
-        public override string ToString()
-        {
-            return this._left.ToString() + this._operator + this._right.ToString();
-        }
-        #endregion
     }
 }
