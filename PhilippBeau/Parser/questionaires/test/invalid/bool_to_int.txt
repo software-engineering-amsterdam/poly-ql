@@ -1,0 +1,4 @@
+form asignBoolToMoney
+{
+	question1: "Dit is een testvraag! 1" money (false)
+}

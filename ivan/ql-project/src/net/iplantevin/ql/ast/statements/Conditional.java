@@ -28,6 +28,26 @@ public abstract class Conditional extends Statement {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Conditional that = (Conditional) o;
+
+        if (!body.equals(that.body)) return false;
+        if (!condition.equals(that.condition)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = condition.hashCode();
+        result = 31 * result + body.hashCode();
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "if(" + condition.toString() + ") " + body.toString();
     }

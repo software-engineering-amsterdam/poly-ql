@@ -20,4 +20,21 @@ public abstract class Unary extends Expression {
     public Expression getExpression() {
         return expression;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Unary unary = (Unary) o;
+
+        if (!expression.equals(unary.expression)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return expression.hashCode();
+    }
 }

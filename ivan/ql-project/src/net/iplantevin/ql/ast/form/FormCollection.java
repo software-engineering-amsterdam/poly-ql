@@ -24,6 +24,23 @@ public class FormCollection extends ASTNode {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        FormCollection that = (FormCollection) o;
+
+        if (!forms.equals(that.forms)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return forms.hashCode();
+    }
+
+    @Override
     public String toString() {
         String formCollection = "";
         for (Form form : forms) {

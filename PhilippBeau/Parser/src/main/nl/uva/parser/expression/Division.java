@@ -4,14 +4,14 @@ import main.nl.uva.parser.Line;
 import main.nl.uva.validation.type.Money;
 import main.nl.uva.validation.type.Value;
 
-public class Division extends AdvancedExpression {
+public class Division extends BinaryExpression {
 
     public Division(final Expression left, final Expression right, final Line lineInfo) {
         super(left, right, lineInfo);
     }
 
     @Override
-    public Value calculateType(final Money left, final Money right) {
+    public Value calculateValue(final Money left, final Money right) {
         return new Money(left.getValue() / right.getValue());
     }
 

@@ -6,25 +6,25 @@ import main.nl.uva.validation.type.Money;
 import main.nl.uva.validation.type.Text;
 import main.nl.uva.validation.type.Value;
 
-public class UnEqual extends AdvancedExpression {
+public class UnEqual extends BinaryExpression {
 
     public UnEqual(final Expression left, final Expression right, final Line lineInfo) {
         super(left, right, lineInfo);
     }
 
     @Override
-    public Value calculateType(final Bool left, final Bool right) {
+    public Value calculateValue(final Bool left, final Bool right) {
         return new Bool(left.getValue() != right.getValue());
     }
 
     @Override
-    public Value calculateType(final Money left, final Money right) {
+    public Value calculateValue(final Money left, final Money right) {
         return new Bool(left.getValue() != right.getValue());
     }
 
     @Override
-    public Value calculateType(final Text left, final Text right) {
-        return new Bool(left.getValue() != right.getValue());
+    public Value calculateValue(final Text left, final Text right) {
+        return new Bool(!left.getValue().equals(right.getValue()));
     }
 
     @Override

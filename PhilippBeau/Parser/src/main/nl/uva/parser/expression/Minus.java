@@ -29,12 +29,14 @@ public class Minus extends Expression {
     }
 
     @Override
-    public ASTValidation validate(final Scope scope) {
-        ASTValidation valid = _expression.validate(scope);
+    public ASTValidation validateAndCalculate(final Scope scope) {
+        ASTValidation valid = _expression.validateAndCalculate(scope);
 
         if (!_expression.getValue().isTypeOf(Type.MONEY)) {
             valid.addError(new InvalidTypeError(this.toString(), getLineInfo()));
         }
+
+        notifyListenersAboutValueChange();
 
         return valid;
     }

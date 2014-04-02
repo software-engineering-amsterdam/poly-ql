@@ -2,15 +2,19 @@ package net.iplantevin.ql.gui.main;
 
 import net.iplantevin.ql.antlr.QLLexer;
 import net.iplantevin.ql.antlr.QLParser;
+import net.iplantevin.ql.ast.astbuilder.ASTBuilder;
 import net.iplantevin.ql.ast.astbuilder.ASTBuilderVisitor;
 import net.iplantevin.ql.ast.form.Form;
 import net.iplantevin.ql.ast.form.FormCollection;
+import net.iplantevin.ql.ast.typechecking.ErrorManager;
 import net.iplantevin.ql.ast.typechecking.TypeCheckerVisitor;
+import net.iplantevin.ql.ast.typechecking.TypeEnvironment;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,36 +36,35 @@ public class GUIController {
     }
 
     private FormCollection buildForms(String inputFile) throws IOException {
-        InputStream is = System.in;
-        if (inputFile != null) is = new FileInputStream(inputFile);
-
-        ANTLRInputStream input = new ANTLRInputStream(is);
-        QLLexer lexer = new QLLexer(input);
-        CommonTokenStream tokens = new CommonTokenStream(lexer);
-        QLParser parser = new QLParser(tokens);
-
-        ParseTree tree = parser.forms(); // Parse.
-
-        ASTBuilderVisitor builder = new ASTBuilderVisitor();
-        return builder.visitForms((QLParser.FormsContext) tree);
+        ASTBuilder builder = new ASTBuilder(inputFile);
+        return builder.buildForms();
     }
 
     public boolean typeCheck() {
-        boolean typeSafe = true;
+        Boolean typeSafe = true;
         for (Form form : forms.getForms()) {
-            TypeCheckerVisitor typeChecker = TypeCheckerVisitor.checkForm(form);
-
-            if (!typeChecker.isTypeSafe()) {
+            if (!formIsValid(form)) {
                 typeSafe = false;
             }
-            typeChecker.printAllMessages();
         }
         return typeSafe;
     }
 
+    private boolean formIsValid(Form form) {
+        TypeEnvironment idTypeStore = new TypeEnvironment();
+        ErrorManager errorManager = new ErrorManager();
+        TypeCheckerVisitor.checkForm(form, idTypeStore, errorManager);
+        errorManager.printAllMessages();
+
+        if (errorManager.hasErrors()) {
+            return false;
+        }
+        return true;
+    }
+
     public void runForms() {
         if (!typeCheck()) {
-            // Todo: e.g. a dialog with type unsafe message.
+            showNotice("The forms are not type safe! Check your console output.");
             return;
         }
 
@@ -85,5 +88,16 @@ public class GUIController {
         if (frames.size() == 0) {
             System.exit(0);
         }
+    }
+
+    private void showNotice(String notice) {
+        JFrame noticeFrame = new JFrame("Notice");
+        noticeFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        JLabel noticeLabel = new JLabel(notice);
+        noticeLabel.setBorder(new EmptyBorder(15,15,15,15));
+        noticeFrame.add(noticeLabel);
+        noticeFrame.pack();
+        noticeFrame.setLocationRelativeTo(null);
+        noticeFrame.setVisible(true);
     }
 }

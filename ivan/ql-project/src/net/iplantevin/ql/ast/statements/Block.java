@@ -23,6 +23,23 @@ public class Block extends Statement {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Block block = (Block) o;
+
+        if (!statements.equals(block.statements)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return statements.hashCode();
+    }
+
+    @Override
     public String toString() {
         String block = "\n{\n";
         for (Statement statement : statements) {

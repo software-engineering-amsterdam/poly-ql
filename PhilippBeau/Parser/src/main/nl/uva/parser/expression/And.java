@@ -4,14 +4,14 @@ import main.nl.uva.parser.Line;
 import main.nl.uva.validation.type.Bool;
 import main.nl.uva.validation.type.Value;
 
-public class And extends AdvancedExpression {
+public class And extends BinaryExpression {
 
     public And(final Expression left, final Expression right, final Line lineInfo) {
         super(left, right, lineInfo);
     }
 
     @Override
-    public Value calculateType(final Bool left, final Bool right) {
+    public Value calculateValue(final Bool left, final Bool right) {
         return new Bool(left.getValue() && right.getValue());
     }
 

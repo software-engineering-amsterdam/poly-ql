@@ -35,6 +35,28 @@ public abstract class Questionable extends Statement {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Questionable that = (Questionable) o;
+
+        if (!identifier.equals(that.identifier)) return false;
+        if (!label.equals(that.label)) return false;
+        if (!type.equals(that.type)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = identifier.hashCode();
+        result = 31 * result + label.hashCode();
+        result = 31 * result + type.hashCode();
+        return result;
+    }
+
+    @Override
     public String toString() {
         return identifier + ": " + label + " " + type;
     }

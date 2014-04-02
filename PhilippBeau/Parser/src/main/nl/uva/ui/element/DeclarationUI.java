@@ -5,9 +5,7 @@ import javax.swing.JPanel;
 
 import main.nl.uva.parser.expression.ExpressionChangeListener;
 import main.nl.uva.parser.expression.Variable;
-import main.nl.uva.parser.expression.atom.BoolAtom;
-import main.nl.uva.parser.expression.atom.MoneyAtom;
-import main.nl.uva.parser.expression.atom.TextAtom;
+import main.nl.uva.parser.expression.unary.UnaryExpression;
 import main.nl.uva.ui.UI;
 import main.nl.uva.ui.UIValueChangeListener;
 import main.nl.uva.ui.types.ValueUI;
@@ -53,19 +51,19 @@ public class DeclarationUI extends UIElement implements UIValueChangeListener, E
 
     @Override
     public void onChange(final boolean newValue) {
-        _variable.setExpression(new BoolAtom(new Bool(newValue)));
+        _variable.setExpression(new UnaryExpression(new Bool(newValue)));
         recalculateForm();
     }
 
     @Override
     public void onChange(final double newValue) {
-        _variable.setExpression(new MoneyAtom(new Money(newValue)));
+        _variable.setExpression(new UnaryExpression(new Money(newValue)));
         recalculateForm();
     }
 
     @Override
     public void onChange(final String newValue) {
-        _variable.setExpression(new TextAtom(new Text(newValue)));
+        _variable.setExpression(new UnaryExpression(new Text(newValue)));
         recalculateForm();
     }
 

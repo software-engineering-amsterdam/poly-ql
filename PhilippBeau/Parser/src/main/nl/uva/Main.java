@@ -15,24 +15,19 @@ import org.antlr.v4.runtime.CommonTokenStream;
 
 public class Main {
     public static void main(final String[] args) throws Exception {
-        // Get sample file input stream
-        File file = new File("questionaire.txt");
+        File file = new File("questionaires/main.txt");
         FileInputStream fis = new FileInputStream(file);
 
-        // create a CharStream that reads from file input stream
         ANTLRInputStream input = new ANTLRInputStream(fis);
 
-        // create a lexer that feeds off of input CharStream
         FormGrammarLexer lexer = new FormGrammarLexer(input);
 
-        // create a buffer of tokens pulled from the lexer
         CommonTokenStream tokens = new CommonTokenStream(lexer);
 
-        // create a parser that feeds off the tokens buffer
         FormGrammarParser parser = new FormGrammarParser(tokens);
         Form pf = parser.form().parsedForm;
 
-        ASTValidation validation = pf.validate(new Scope());
+        ASTValidation validation = pf.validateAndCalculate(new Scope());
         if (!validation.hasErrors()) {
             UI ui = new UI(pf);
             ui.setVisible(true);

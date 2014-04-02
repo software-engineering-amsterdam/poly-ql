@@ -15,8 +15,8 @@ public class ErrorManager {
         warnings = new ArrayList<ASTWarning>();
     }
 
-    public boolean hasNoErrors() {
-        return errors.isEmpty();
+    public boolean hasErrors() {
+        return !errors.isEmpty();
     }
 
     public void addError(ASTError error) {
@@ -45,5 +45,10 @@ public class ErrorManager {
                 System.out.println(error);
             }
         }
+    }
+
+    public void printAllMessages() {
+        printWarnings();
+        printErrors();
     }
 }

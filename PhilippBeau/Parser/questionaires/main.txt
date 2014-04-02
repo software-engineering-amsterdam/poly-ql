@@ -1,0 +1,24 @@
+form Box1HouseOwning {
+    bInput1: "Boolinput 1" boolean
+    bInput2: "Boolinput 2" boolean
+    equalsBoolean: "Boolinput 1&2 is equals" boolean(bInput1 == bInput2)
+    tInput1: "Textinput 1" text("Test")
+    tInput2: "Textinput 2" text
+    equalsText: "Textinput 1&2 is equals" boolean(tInput1 == tInput2)
+    nInput1: "Numberinput 1" money
+    nInput2: "Numberinput 2" money
+    equalsMoney: "Numberinput 1&2 is equals" boolean(nInput1 == nInput2)
+    seperator: "" text("--------------------------------------------")
+    if( nInput1 == 3) {
+    	numEquals3: "" text("Numberinput 1 is equals 3!!")
+    	if( nInput2 == 3) {
+    		numEquals4: "" text("Numberinput 2 is equals 3!!")
+    	} else {
+    		numEquals4: "" text("Numberinput 2 is unequals 3!!")
+    	}
+    } else {
+    	numEquals3: "" text("Numberinput 1 is unequals 3!!")
+    }
+    negNumber: "--- Numberinput1 is:" money(---nInput1)
+    notBool: "!!! Boolinput1 is:" boolean(!!!bInput1)
+}

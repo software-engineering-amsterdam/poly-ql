@@ -3,7 +3,7 @@ package net.iplantevin.ql.ast.expressions;
 import net.iplantevin.ql.ast.ASTNode;
 import net.iplantevin.ql.ast.LineInfo;
 import net.iplantevin.ql.ast.types.Type;
-import net.iplantevin.ql.ast.types.TypeEnvironment;
+import net.iplantevin.ql.ast.typechecking.TypeEnvironment;
 import net.iplantevin.ql.ast.visitors.IExpressionVisitor;
 
 /**

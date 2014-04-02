@@ -1,0 +1,7 @@
+form mathError
+{
+	q1: "Dit is een testvraag! 1" boolean (true)
+	q2: "Dit is een testvraag! 2" money (1000)
+	q3: "Dit is een testvraag! 3" money (-500)
+	q4: "Dit is een testvraag! 4" money (q1 + q3)
+}

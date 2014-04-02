@@ -22,8 +22,8 @@ public class Declaration extends Statement {
     }
 
     @Override
-    public ASTValidation validate(final Scope scope) {
-        ASTValidation valid = _variable.validate(scope);
+    public ASTValidation validateAndCalculate(final Scope scope) {
+        ASTValidation valid = _variable.validateAndCalculate(scope);
 
         if (scope.labelAlreadyDefined(_label)) {
             valid.addWarning(new DuplicateLabelWarning(_label, scope.getFirstDeclarationForLabel(_label), getLineInfo()));

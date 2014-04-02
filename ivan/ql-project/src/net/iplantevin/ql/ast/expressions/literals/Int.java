@@ -4,7 +4,7 @@ import net.iplantevin.ql.ast.LineInfo;
 import net.iplantevin.ql.ast.expressions.Expression;
 import net.iplantevin.ql.ast.types.IntegerType;
 import net.iplantevin.ql.ast.types.Type;
-import net.iplantevin.ql.ast.types.TypeEnvironment;
+import net.iplantevin.ql.ast.typechecking.TypeEnvironment;
 import net.iplantevin.ql.ast.visitors.IExpressionVisitor;
 
 /**
@@ -27,6 +27,23 @@ public class Int extends Expression {
 
     public int getValue() {
         return value.intValue();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Int anInt = (Int) o;
+
+        if (!value.equals(anInt.value)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return value.hashCode();
     }
 
     @Override

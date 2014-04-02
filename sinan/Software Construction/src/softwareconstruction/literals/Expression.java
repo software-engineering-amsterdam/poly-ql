@@ -13,5 +13,6 @@ import softwareconstruction.types.SuperType;
  * @author Sinan
  */
 public interface Expression {
-    boolean checkType(SuperType S);
+    boolean checkType(SuperType Supertype);
+    SuperType getType();
 }

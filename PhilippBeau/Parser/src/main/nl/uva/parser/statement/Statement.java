@@ -14,7 +14,7 @@ public abstract class Statement extends ASTNode {
     }
 
     @Override
-    public abstract ASTValidation validate(Scope scope);
+    public abstract ASTValidation validateAndCalculate(Scope scope);
 
     public abstract UIElement getLayout(final UI parentUI);
 

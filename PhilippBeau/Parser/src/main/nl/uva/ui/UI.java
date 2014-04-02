@@ -24,11 +24,10 @@ public class UI extends JFrame {
         this.add(layout.getPanel());
 
         this.pack();
-
     }
 
     public void refreshView() {
-        _form.validate(new Scope());
+        _form.validateAndCalculate(new Scope());
         this.pack();
     }
 }

@@ -23,6 +23,28 @@ public class IfElse extends Conditional {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        IfElse that = (IfElse) o;
+
+        if (!getBody().equals(that.getBody())) return false;
+        if (!getCondition().equals(that.getCondition())) return false;
+        if (!elseBody.equals(that.getElseBody())) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + elseBody.hashCode();
+        return result;
+    }
+
+
+    @Override
     public String toString() {
         return super.toString() + "else " + elseBody.toString();
     }

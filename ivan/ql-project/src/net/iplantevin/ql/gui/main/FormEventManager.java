@@ -63,13 +63,13 @@ public class FormEventManager {
      */
     private void subscribeComponentToIdentifier(AbstractFormComponent formComponent,
                                                 String identifier) {
-        if (subscriptions.containsKey(identifier)) {
+        if (hasSubscriptionsForIdentifier(identifier)) {
             subscriptions.get(identifier).add(formComponent);
         } else {
-            HashSet<AbstractFormComponent> componentSet =
+            HashSet<AbstractFormComponent> subscribedComponents =
                     new OrderedHashSet<AbstractFormComponent>();
-            componentSet.add(formComponent);
-            subscriptions.put(identifier, componentSet);
+            subscribedComponents.add(formComponent);
+            subscriptions.put(identifier, subscribedComponents);
         }
     }
 
@@ -86,18 +86,27 @@ public class FormEventManager {
         executor.execute(new Runnable() {
             public void run() {
                 String identifier = source.getIdentifier();
-                if (subscriptions.containsKey(identifier)) {
+                if (hasSubscriptionsForIdentifier(identifier)) {
                     evaluator.storeValue(identifier, value);
 
                     for (AbstractFormComponent component : subscriptions.get(identifier)) {
-                        // Change triggered by component should not trigger itself.
-                        if (component == source) {
-                            continue;
-                        }
-                        component.reEvaluate();
+                        reEvaluateComponent(component, source);
                     }
                 }
             }
         });
+    }
+
+    private void reEvaluateComponent(AbstractFormComponent component,
+                                     AbstractWidgetContainer source) {
+        // Source must not trigger re-evaluation on itself.
+        if (component == source) {
+            return;
+        }
+        component.reEvaluate();
+    }
+
+    private boolean hasSubscriptionsForIdentifier(String identifier) {
+        return subscriptions.containsKey(identifier);
     }
 }

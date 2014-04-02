@@ -26,10 +26,11 @@ public class FormFrame extends JFrame {
     private final int preferredLabelWidth = 500;
     private final Dimension preferredWidgetSize = new Dimension(150, 25);
 
-    public FormFrame(String title) {
+    public FormFrame(String title, EvaluationVisitor evaluator,
+                     FormEventManager eventManager) {
         setTitle(title);
-        evaluator = new EvaluationVisitor();
-        eventManager = new FormEventManager(evaluator);
+        this.evaluator = evaluator;
+        this.eventManager = eventManager;
     }
 
     /**

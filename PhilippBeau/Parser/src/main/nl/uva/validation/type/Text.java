@@ -1,6 +1,6 @@
 package main.nl.uva.validation.type;
 
-import main.nl.uva.parser.expression.AdvancedExpression;
+import main.nl.uva.parser.expression.BinaryExpression;
 import main.nl.uva.parser.expression.Expression;
 import main.nl.uva.ui.element.DeclarationUI;
 import main.nl.uva.ui.types.TextUI;
@@ -29,23 +29,23 @@ public class Text extends Value {
     }
 
     @Override
-    public Value visit(final Expression right, final AdvancedExpression expression) {
-        return right.getValue().accept(this, expression);
+    public Value calculateValueWith(final Expression right, final BinaryExpression expression) {
+        return right.getValue().calculateValueWith(this, expression);
     }
 
     @Override
-    public Value accept(final Bool left, final AdvancedExpression expression) {
-        return expression.calculateType(left, this);
+    public Value calculateValueWith(final Bool left, final BinaryExpression expression) {
+        return expression.calculateValue(left, this);
     }
 
     @Override
-    public Value accept(final Money left, final AdvancedExpression expression) {
-        return expression.calculateType(left, this);
+    public Value calculateValueWith(final Money left, final BinaryExpression expression) {
+        return expression.calculateValue(left, this);
     }
 
     @Override
-    public Value accept(final Text left, final AdvancedExpression expression) {
-        return expression.calculateType(left, this);
+    public Value calculateValueWith(final Text left, final BinaryExpression expression) {
+        return expression.calculateValue(left, this);
     }
 
     @Override
