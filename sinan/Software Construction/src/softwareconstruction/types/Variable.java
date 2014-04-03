@@ -4,32 +4,38 @@
  * and open the template in the editor.
  */
 
-package softwareconstruction.literals;
+package softwareconstruction.types;
 
 import java.util.Map;
-import softwareconstruction.types.StringType;
-import softwareconstruction.types.SuperType;
+import softwareconstruction.literals.Expression;
+
 
 /**
  *
  * @author Sinan
  */
-public class StringLiteral implements Expression{
+public class Variable implements Expression {
 
-    String value;
+    String name;
     
-    public StringLiteral(String value){
-        this.value = value;
+    public Variable(String name) {
+        this.name = name;
     }
     
     @Override
     public boolean checkType(Map<String, SuperType> memory) {
-        return true;
+        if(memory.containsKey(name)){
+            return true;
+        }
+        return false;
     }
 
     @Override
     public SuperType getType(Map<String, SuperType> memory) {
-        return new StringType();
+        if(memory.containsKey(name)){
+            return memory.get(name);
+        }
+        return null;
     }
     
 }

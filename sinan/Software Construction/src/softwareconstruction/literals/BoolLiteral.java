@@ -6,6 +6,8 @@
 
 package softwareconstruction.literals;
 
+import java.util.Map;
+import softwareconstruction.types.BoolType;
 import softwareconstruction.types.SuperType;
 
 /**
@@ -21,13 +23,13 @@ public class BoolLiteral implements Expression {
     }
     
     @Override
-    public boolean checkType(SuperType S) {
+    public boolean checkType(Map<String, SuperType> memory) {
         return true;
     }
 
     @Override
-    public SuperType getType() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public SuperType getType(Map<String, SuperType> memory) {
+        return new BoolType();
     }
     
 }

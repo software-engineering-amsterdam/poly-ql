@@ -6,6 +6,7 @@
     import softwareconstruction.questions.*;
     import softwareconstruction.literals.*;
     import softwareconstruction.operators.*;
+    import softwareconstruction.types.*;
     import java.util.ArrayList;
 
 import org.antlr.v4.runtime.misc.NotNull;
@@ -17,17 +18,6 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface SinansGrammerListener extends ParseTreeListener {
 	/**
-	 * Enter a parse tree produced by {@link SinansGrammerParser#rightnode}.
-	 * @param ctx the parse tree
-	 */
-	void enterRightnode(@NotNull SinansGrammerParser.RightnodeContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link SinansGrammerParser#rightnode}.
-	 * @param ctx the parse tree
-	 */
-	void exitRightnode(@NotNull SinansGrammerParser.RightnodeContext ctx);
-
-	/**
 	 * Enter a parse tree produced by {@link SinansGrammerParser#expression}.
 	 * @param ctx the parse tree
 	 */
@@ -37,17 +27,6 @@ public interface SinansGrammerListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitExpression(@NotNull SinansGrammerParser.ExpressionContext ctx);
-
-	/**
-	 * Enter a parse tree produced by {@link SinansGrammerParser#leftnode}.
-	 * @param ctx the parse tree
-	 */
-	void enterLeftnode(@NotNull SinansGrammerParser.LeftnodeContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link SinansGrammerParser#leftnode}.
-	 * @param ctx the parse tree
-	 */
-	void exitLeftnode(@NotNull SinansGrammerParser.LeftnodeContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link SinansGrammerParser#form}.
@@ -92,4 +71,15 @@ public interface SinansGrammerListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitQuestion(@NotNull SinansGrammerParser.QuestionContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link SinansGrammerParser#type}.
+	 * @param ctx the parse tree
+	 */
+	void enterType(@NotNull SinansGrammerParser.TypeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SinansGrammerParser#type}.
+	 * @param ctx the parse tree
+	 */
+	void exitType(@NotNull SinansGrammerParser.TypeContext ctx);
 }

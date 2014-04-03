@@ -6,6 +6,7 @@
 
 package softwareconstruction.literals;
 
+import java.util.Map;
 import softwareconstruction.types.SuperType;
 
 /**
@@ -13,6 +14,6 @@ import softwareconstruction.types.SuperType;
  * @author Sinan
  */
 public interface Expression {
-    boolean checkType(SuperType Supertype);
-    SuperType getType();
+    boolean checkType(Map<String, SuperType> memory);
+    SuperType getType(Map<String, SuperType> memory);
 }

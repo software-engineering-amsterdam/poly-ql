@@ -6,6 +6,7 @@
 
 package softwareconstruction.literals;
 
+import java.util.Map;
 import softwareconstruction.types.IntType;
 import softwareconstruction.types.SuperType;
 
@@ -22,12 +23,12 @@ public class IntLiteral implements Expression{
     }
     
     @Override
-    public boolean checkType(SuperType S) {
+    public boolean checkType(Map<String, SuperType> memory) {
         return true;
     }
 
     @Override
-    public SuperType getType() {
+    public SuperType getType(Map<String, SuperType> memory) {
         return new IntType();
     }
     

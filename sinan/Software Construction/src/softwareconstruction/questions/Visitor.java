@@ -4,17 +4,14 @@
  * and open the template in the editor.
  */
 
-package softwareconstruction.types;
+package softwareconstruction.questions;
 
 /**
  *
  * @author Sinan
  */
-public class StringType extends AbstractType  {
-    
-    @Override
-    public boolean isStringCompatible() {
-        return true;
-    }
+public interface Visitor {
+    public void visit(Question question);
+    public void visit(ConditionalQuestion cq);
     
 }

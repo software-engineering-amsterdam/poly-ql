@@ -8,6 +8,7 @@ package softwareconstruction.form;
 import java.util.ArrayList;
 import java.util.List;
 import softwareconstruction.questions.Question;
+import softwareconstruction.questions.QuestionInterface;
 
 /**
  *
@@ -15,7 +16,7 @@ import softwareconstruction.questions.Question;
  */
 public class Form {
 
-    public ArrayList itemlist = new ArrayList();
+    public List<QuestionInterface> itemlist = new ArrayList();
     private String formName;
 
     public Form(ArrayList form, String formName) {
@@ -26,14 +27,14 @@ public class Form {
     public Form() {
     }
 
-    public void addQuestion(Object object) {
+    public void addQuestion(QuestionInterface object) {
         itemlist.add(object);
     }
     
     /**
      * @return the form
      */
-    public List getItems() {
+    public List<QuestionInterface> getItems() {
         return itemlist;
     }
 
@@ -56,9 +57,5 @@ public class Form {
      */
     public void setFormName(String formName) {
         this.formName = formName;
-    }
-    
-    public void visitForm(Form form){
-        
     }
 }

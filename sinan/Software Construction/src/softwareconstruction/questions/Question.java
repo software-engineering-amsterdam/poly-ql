@@ -5,17 +5,19 @@
  */
 package softwareconstruction.questions;
 
+import softwareconstruction.types.SuperType;
+
 /**
  *
  * @author Sinan
  */
-public class Question {
+public class Question implements QuestionInterface, Visitable{
 
     public String questionName;
     public String questionContent;
-    public String questionType;
+    public SuperType questionType;
 
-    public Question(String questionName, String questionContent, String questionType) {
+    public Question(String questionName, String questionContent, SuperType questionType) {
         this.questionName = questionName;
         this.questionContent = questionContent;
         this.questionType = questionType;
@@ -55,19 +57,29 @@ public class Question {
     /**
      * @return the questionType
      */
-    public String getQuestionType() {
+    public SuperType getQuestionType() {
         return questionType;
     }
 
     /**
      * @param questionType the questionType to set
      */
-    public void setQuestionType(String questionType) {
+    public void setQuestionType(SuperType questionType) {
         this.questionType = questionType;
     }
     
     public String toString(){
         return "Question name: "+questionName+" Question content: "+questionContent+" Question type: "+questionType+"";
+    }
+
+    @Override
+    public int getLine() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
     }
 
 }

@@ -12,4 +12,9 @@ package softwareconstruction.types;
  */
 public class IntType extends AbstractType {
     
+    @Override
+    public boolean isIntegerCompatible() {
+        return true;
+    }
+    
 }

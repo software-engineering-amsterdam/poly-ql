@@ -7,26 +7,28 @@ grammar SinansGrammer;
     import softwareconstruction.questions.*;
     import softwareconstruction.literals.*;
     import softwareconstruction.operators.*;
+    import softwareconstruction.types.*;
     import java.util.ArrayList;
 }
 
-form returns [Form fo] @init {$fo = new Form();}: 'form' IDENTIFIER {$fo.setFormName($IDENTIFIER.text);} '{' (item { $fo.addQuestion($item.object);})+ '}';
+form returns [Form fo] @init {$fo = new Form();}: 'form' IDENTIFIER {$fo.setFormName($IDENTIFIER.text);} '{' (item { $fo.addQuestion($item.gq);})+ '}';
 
-item returns [Object object] @init {$object = new Object();}: conditional {$object = $conditional.cqe;} | question {$object = $question.qe;};
+item returns [QuestionInterface gq] @init{}: conditional {$gq = $conditional.cqe;} | question {$gq = $question.qe;};
 
-question returns [Question qe] @init {$qe = new Question();} : IDENTIFIER { $qe.setQuestionName($IDENTIFIER.text); } ':' STRING { $qe.setQuestionContent($STRING.text); } TYPE { $qe.setQuestionType($TYPE.text);};
+question returns [Question qe] @init {$qe = new Question();} : IDENTIFIER { $qe.setQuestionName($IDENTIFIER.text); } ':' STRING { $qe.setQuestionContent($STRING.text); } type { $qe.setQuestionType($type.stype);};
 
-conditional returns [ConditionalQuestion cqe] @init {$cqe = new ConditionalQuestion();} : 'if' '(' expression {$cqe.addExpression($expression.text);}')' '{'  (item { $cqe.addQuestion($item.object); })+ '}';
+conditional returns [ConditionalQuestion cqe] @init {$cqe = new ConditionalQuestion();} : 'if' '(' expression {$cqe.addExpression($expression.exp);}')' '{'  (item { $cqe.addQuestion($item.gq); })+ '}';
 
 expression returns [Expression exp]: 
-//      INT {System.out.println("Integer Literal found! -> "+ $INT.text); $exp = new IntLiteral(Integer.parseInt($INT.text));}
-//      | BOOL {System.out.println("Boolean Literal found! -> "+$BOOL.text); $exp = new BoolLiteral(Boolean.parseBoolean($BOOL.text));}
-//      | STRING {System.out.println("String Literal found! -> "+$STRING.text); $exp = new StringLiteral($STRING.text);}
-//      | '!'? IDENTIFIER
+      INT {System.out.println("Integer Literal found! -> "+ $INT.text); $exp = new IntLiteral(Integer.parseInt($INT.text));}
+      | BOOL {System.out.println("Boolean Literal found! -> "+$BOOL.text); $exp = new BoolLiteral(Boolean.parseBoolean($BOOL.text));}
+      | STRING {System.out.println("String Literal found! -> "+$STRING.text); $exp = new StringLiteral($STRING.text);}
+      | IDENTIFIER {$exp = new Variable($IDENTIFIER.text);}
+//    | '!'? IDENTIFIER
 //    | expression '*' expression
 //    | expression '/' expression
-      | leftnode '+' rightnode {  System.out.println("Plus Operator found! -> +");}
-//    | expression '-' expression
+      | l=expression '+' r=expression { System.out.println($l.text); System.out.println($r.text); $exp = new Plus($l.exp, $r.exp); }//System.out.println("Plus Operator found! -> +");}
+//      | leftnode '-' rightnode { $exp = new Minus($leftnode.ln, $rightnode.rn); }
 //    | expression '||' expression
 //    | expression '&&' expression
 //    | expression '==' expression
@@ -35,41 +37,12 @@ expression returns [Expression exp]:
 //    | expression '>=' expression
 //    | expression '<=' expression
 ;
-
-leftnode returns [LeftNode ln]: 
-      INT {System.out.println("Integer Literal found! -> "+ $INT.text); $ln = new LeftNode(Integer.parseInt($INT.text));}
-      | BOOL {System.out.println("Boolean Literal found! -> "+$BOOL.text); $ln = new LeftNode(Boolean.parseBoolean($BOOL.text));}
-      | STRING {System.out.println("String Literal found! -> "+$STRING.text); $ln = new LeftNode($STRING.text);}
-      | '!'? IDENTIFIER
-;
-
-rightnode returns [RightNode rn]: 
-      INT {System.out.println("Integer Literal found! -> "+ $INT.text); $rn = new RightNode(Integer.parseInt($INT.text));}
-      | BOOL {System.out.println("Boolean Literal found! -> "+$BOOL.text); $rn = new RightNode(Boolean.parseBoolean($BOOL.text));}
-      | STRING {System.out.println("String Literal found! -> "+$STRING.text); $rn = new RightNode($STRING.text);}
-      | '!'? IDENTIFIER
-      | expression
-;
-
-
-
-//leftnode returns [Expression exp]: 
-//      INT {System.out.println("Integer Literal found! -> "+ $INT.text); $exp = new IntLiteral(Integer.parseInt($INT.text));}
-//      | BOOL {System.out.println("Boolean Literal found! -> "+$BOOL.text); $exp = new BoolLiteral(Boolean.parseBoolean($BOOL.text));}
-//      | STRING {System.out.println("String Literal found! -> "+$STRING.text); $exp = new StringLiteral($STRING.text);}
-//      | '!'? IDENTIFIER
-//;
-//
-//rightnode returns [Expression exp]: 
-//      INT {System.out.println("Integer Literal found! -> "+ $INT.text); $exp = new IntLiteral(Integer.parseInt($INT.text));}
-//      | BOOL {System.out.println("Boolean Literal found! -> "+$BOOL.text); $exp = new BoolLiteral(Boolean.parseBoolean($BOOL.text));}
-//      | STRING {System.out.println("String Literal found! -> "+$STRING.text); $exp = new StringLiteral($STRING.text);}
-//      | '!'? IDENTIFIER
-//      | expression
-//;
+type returns [SuperType stype] @init {}:
+    'boolean' {$stype = new BoolType();}| 
+    'int'{$stype = new IntType();} | 
+    'string' {$stype = new StringType();};
 
 BOOL : 'true' | 'false';
-TYPE : 'boolean' | 'money';
 INT : ('0'..'9')+;
 
 IDENTIFIER : LETTER( LETTER | DIGIT)*;

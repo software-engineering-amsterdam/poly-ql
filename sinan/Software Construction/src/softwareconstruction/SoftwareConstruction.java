@@ -11,31 +11,22 @@ import softwareconstruction.questions.ConditionalQuestion;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.ParseTree;
 import softwareconstruction.literals.Expression;
+import softwareconstruction.questions.QuestionInterface;
+import softwareconstruction.questions.TypeCheckVisitor;
+import softwareconstruction.types.SuperType;
 
 /**
  *
  * @author Sinan
  */
 public class SoftwareConstruction {
-
-    public static void printCondition(ConditionalQuestion q, int depth){
-        for(Object o : q.getConditionalQuestions()){
-                if(o instanceof Question){
-//                    System.out.println(depth);
-                    System.out.println(o.toString());
-                }
-                if(o instanceof ConditionalQuestion){
-                    System.out.println("IF:");
-                    printCondition((ConditionalQuestion) o, depth +1);
-                }
-            }
-    }
-    
     
     /**
      * @param args the command line arguments
@@ -49,18 +40,12 @@ public class SoftwareConstruction {
             SinansGrammerParser parser = new SinansGrammerParser(tokens);
 //            ParseTree tree = parser.form();
             Form form = parser.form().fo;
-            form.visitForm(form);
-//            for(Object o : form.getItems()){
-//                if(o instanceof Question){
-//                    System.out.println(o.toString());
-//                }
-//                if(o instanceof ConditionalQuestion){
-//                    System.out.println("IF:");
-//                    printCondition((ConditionalQuestion) o, 1);
-//                }
-//            }
-//            Form form = parser.form().fo;
-//            System.out.println(form.getQuestion());
+            TypeCheckVisitor v = new TypeCheckVisitor();
+            
+            for(QuestionInterface q: form.getItems()){
+                q.accept(v);
+            }
+
 //            System.out.println(tree.toStringTree(parser));
         } catch (RecognitionException ex) {
             Logger.getLogger(SoftwareConstruction.class.getName()).log(Level.SEVERE, null, ex);

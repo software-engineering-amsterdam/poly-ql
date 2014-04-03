@@ -6,6 +6,7 @@
     import softwareconstruction.questions.*;
     import softwareconstruction.literals.*;
     import softwareconstruction.operators.*;
+    import softwareconstruction.types.*;
     import java.util.ArrayList;
 
 
@@ -25,19 +26,6 @@ public class SinansGrammerBaseListener implements SinansGrammerListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterRightnode(@NotNull SinansGrammerParser.RightnodeContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitRightnode(@NotNull SinansGrammerParser.RightnodeContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterExpression(@NotNull SinansGrammerParser.ExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -45,19 +33,6 @@ public class SinansGrammerBaseListener implements SinansGrammerListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitExpression(@NotNull SinansGrammerParser.ExpressionContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterLeftnode(@NotNull SinansGrammerParser.LeftnodeContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitLeftnode(@NotNull SinansGrammerParser.LeftnodeContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
@@ -110,6 +85,19 @@ public class SinansGrammerBaseListener implements SinansGrammerListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitQuestion(@NotNull SinansGrammerParser.QuestionContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterType(@NotNull SinansGrammerParser.TypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitType(@NotNull SinansGrammerParser.TypeContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

@@ -4,17 +4,12 @@
  * and open the template in the editor.
  */
 
-package softwareconstruction.types;
+package softwareconstruction.questions;
 
 /**
  *
  * @author Sinan
  */
-public class StringType extends AbstractType  {
-    
-    @Override
-    public boolean isStringCompatible() {
-        return true;
-    }
-    
+public interface QuestionInterface extends Visitable {
+    int getLine();
 }

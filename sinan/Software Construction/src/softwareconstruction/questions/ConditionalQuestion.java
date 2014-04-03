@@ -6,32 +6,45 @@
 package softwareconstruction.questions;
 
 import java.util.ArrayList;
+import java.util.List;
+import softwareconstruction.literals.Expression;
 
 /**
  *
  * @author Sinan
  */
-public class ConditionalQuestion {
+public class ConditionalQuestion implements QuestionInterface, Visitable {
     
-    private ArrayList expressions = new ArrayList();
-    private ArrayList questions = new ArrayList();
+    Expression expression;
+    private List<QuestionInterface> questions = new ArrayList();
 
     public ConditionalQuestion() {
     }
 
-    public void addQuestion(Object o) {
+    public void addQuestion(QuestionInterface o) {
         questions.add(o);
     }
     
-    public void addExpression(Object o) {
-        expressions.add(o);
+    public void addExpression(Expression o) {
+        expression = o;
         System.out.println("Added expression: "+o.toString());
     }
    
-    public ArrayList getConditionalQuestions(){
+    public List<QuestionInterface> getConditionalQuestions(){
         return questions;
     }
     
-    
-    
+    public Expression getExpression(){
+        return expression;
+    }
+
+    @Override
+    public int getLine() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
+    }
 }

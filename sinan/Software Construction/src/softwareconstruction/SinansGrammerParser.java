@@ -6,6 +6,7 @@
     import softwareconstruction.questions.*;
     import softwareconstruction.literals.*;
     import softwareconstruction.operators.*;
+    import softwareconstruction.types.*;
     import java.util.ArrayList;
 
 import org.antlr.v4.runtime.atn.*;
@@ -23,19 +24,19 @@ public class SinansGrammerParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__8=1, T__7=2, T__6=3, T__5=4, T__4=5, T__3=6, T__2=7, T__1=8, T__0=9, 
-		BOOL=10, TYPE=11, INT=12, IDENTIFIER=13, STRING=14, LETTER=15, DIGIT=16, 
-		OPERATOR=17, WS=18;
+		T__10=1, T__9=2, T__8=3, T__7=4, T__6=5, T__5=6, T__4=7, T__3=8, T__2=9, 
+		T__1=10, T__0=11, BOOL=12, INT=13, IDENTIFIER=14, STRING=15, LETTER=16, 
+		DIGIT=17, OPERATOR=18, WS=19;
 	public static final String[] tokenNames = {
-		"<INVALID>", "'form'", "'{'", "')'", "'+'", "':'", "'('", "'if'", "'}'", 
-		"'!'", "BOOL", "TYPE", "INT", "IDENTIFIER", "STRING", "LETTER", "DIGIT", 
-		"OPERATOR", "WS"
+		"<INVALID>", "'form'", "'{'", "')'", "'+'", "':'", "'('", "'string'", 
+		"'if'", "'int'", "'}'", "'boolean'", "BOOL", "INT", "IDENTIFIER", "STRING", 
+		"LETTER", "DIGIT", "OPERATOR", "WS"
 	};
 	public static final int
 		RULE_form = 0, RULE_item = 1, RULE_question = 2, RULE_conditional = 3, 
-		RULE_expression = 4, RULE_leftnode = 5, RULE_rightnode = 6;
+		RULE_expression = 4, RULE_type = 5;
 	public static final String[] ruleNames = {
-		"form", "item", "question", "conditional", "expression", "leftnode", "rightnode"
+		"form", "item", "question", "conditional", "expression", "type"
 	};
 
 	@Override
@@ -90,25 +91,25 @@ public class SinansGrammerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(14); match(1);
-			setState(15); ((FormContext)_localctx).IDENTIFIER = match(IDENTIFIER);
+			setState(12); match(1);
+			setState(13); ((FormContext)_localctx).IDENTIFIER = match(IDENTIFIER);
 			_localctx.fo.setFormName((((FormContext)_localctx).IDENTIFIER!=null?((FormContext)_localctx).IDENTIFIER.getText():null));
-			setState(17); match(2);
-			setState(21); 
+			setState(15); match(2);
+			setState(19); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
 				{
 				{
-				setState(18); ((FormContext)_localctx).item = item();
-				 _localctx.fo.addQuestion(((FormContext)_localctx).item.object);
+				setState(16); ((FormContext)_localctx).item = item();
+				 _localctx.fo.addQuestion(((FormContext)_localctx).item.gq);
 				}
 				}
-				setState(23); 
+				setState(21); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-			} while ( _la==7 || _la==IDENTIFIER );
-			setState(25); match(8);
+			} while ( _la==8 || _la==IDENTIFIER );
+			setState(23); match(10);
 			}
 		}
 		catch (RecognitionException re) {
@@ -123,7 +124,7 @@ public class SinansGrammerParser extends Parser {
 	}
 
 	public static class ItemContext extends ParserRuleContext {
-		public Object object;
+		public QuestionInterface gq;
 		public ConditionalContext conditional;
 		public QuestionContext question;
 		public QuestionContext question() {
@@ -149,22 +150,21 @@ public class SinansGrammerParser extends Parser {
 	public final ItemContext item() throws RecognitionException {
 		ItemContext _localctx = new ItemContext(_ctx, getState());
 		enterRule(_localctx, 2, RULE_item);
-		((ItemContext)_localctx).object =  new Object();
 		try {
-			setState(33);
+			setState(31);
 			switch (_input.LA(1)) {
-			case 7:
+			case 8:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(27); ((ItemContext)_localctx).conditional = conditional();
-				((ItemContext)_localctx).object =  ((ItemContext)_localctx).conditional.cqe;
+				setState(25); ((ItemContext)_localctx).conditional = conditional();
+				((ItemContext)_localctx).gq =  ((ItemContext)_localctx).conditional.cqe;
 				}
 				break;
 			case IDENTIFIER:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(30); ((ItemContext)_localctx).question = question();
-				((ItemContext)_localctx).object =  ((ItemContext)_localctx).question.qe;
+				setState(28); ((ItemContext)_localctx).question = question();
+				((ItemContext)_localctx).gq =  ((ItemContext)_localctx).question.qe;
 				}
 				break;
 			default:
@@ -186,10 +186,12 @@ public class SinansGrammerParser extends Parser {
 		public Question qe;
 		public Token IDENTIFIER;
 		public Token STRING;
-		public Token TYPE;
+		public TypeContext type;
 		public TerminalNode IDENTIFIER() { return getToken(SinansGrammerParser.IDENTIFIER, 0); }
+		public TypeContext type() {
+			return getRuleContext(TypeContext.class,0);
+		}
 		public TerminalNode STRING() { return getToken(SinansGrammerParser.STRING, 0); }
-		public TerminalNode TYPE() { return getToken(SinansGrammerParser.TYPE, 0); }
 		public QuestionContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -211,13 +213,13 @@ public class SinansGrammerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(35); ((QuestionContext)_localctx).IDENTIFIER = match(IDENTIFIER);
+			setState(33); ((QuestionContext)_localctx).IDENTIFIER = match(IDENTIFIER);
 			 _localctx.qe.setQuestionName((((QuestionContext)_localctx).IDENTIFIER!=null?((QuestionContext)_localctx).IDENTIFIER.getText():null)); 
-			setState(37); match(5);
-			setState(38); ((QuestionContext)_localctx).STRING = match(STRING);
+			setState(35); match(5);
+			setState(36); ((QuestionContext)_localctx).STRING = match(STRING);
 			 _localctx.qe.setQuestionContent((((QuestionContext)_localctx).STRING!=null?((QuestionContext)_localctx).STRING.getText():null)); 
-			setState(40); ((QuestionContext)_localctx).TYPE = match(TYPE);
-			 _localctx.qe.setQuestionType((((QuestionContext)_localctx).TYPE!=null?((QuestionContext)_localctx).TYPE.getText():null));
+			setState(38); ((QuestionContext)_localctx).type = type();
+			 _localctx.qe.setQuestionType(((QuestionContext)_localctx).type.stype);
 			}
 		}
 		catch (RecognitionException re) {
@@ -266,27 +268,27 @@ public class SinansGrammerParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(43); match(7);
-			setState(44); match(6);
-			setState(45); ((ConditionalContext)_localctx).expression = expression();
-			_localctx.cqe.addExpression((((ConditionalContext)_localctx).expression!=null?_input.getText(((ConditionalContext)_localctx).expression.start,((ConditionalContext)_localctx).expression.stop):null));
-			setState(47); match(3);
-			setState(48); match(2);
-			setState(52); 
+			setState(41); match(8);
+			setState(42); match(6);
+			setState(43); ((ConditionalContext)_localctx).expression = expression(0);
+			_localctx.cqe.addExpression(((ConditionalContext)_localctx).expression.exp);
+			setState(45); match(3);
+			setState(46); match(2);
+			setState(50); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
 				{
 				{
-				setState(49); ((ConditionalContext)_localctx).item = item();
-				 _localctx.cqe.addQuestion(((ConditionalContext)_localctx).item.object); 
+				setState(47); ((ConditionalContext)_localctx).item = item();
+				 _localctx.cqe.addQuestion(((ConditionalContext)_localctx).item.gq); 
 				}
 				}
-				setState(54); 
+				setState(52); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-			} while ( _la==7 || _la==IDENTIFIER );
-			setState(56); match(8);
+			} while ( _la==8 || _la==IDENTIFIER );
+			setState(54); match(10);
 			}
 		}
 		catch (RecognitionException re) {
@@ -302,12 +304,22 @@ public class SinansGrammerParser extends Parser {
 
 	public static class ExpressionContext extends ParserRuleContext {
 		public Expression exp;
-		public RightnodeContext rightnode() {
-			return getRuleContext(RightnodeContext.class,0);
+		public ExpressionContext l;
+		public Token INT;
+		public Token BOOL;
+		public Token STRING;
+		public Token IDENTIFIER;
+		public ExpressionContext r;
+		public ExpressionContext expression(int i) {
+			return getRuleContext(ExpressionContext.class,i);
 		}
-		public LeftnodeContext leftnode() {
-			return getRuleContext(LeftnodeContext.class,0);
+		public TerminalNode BOOL() { return getToken(SinansGrammerParser.BOOL, 0); }
+		public TerminalNode INT() { return getToken(SinansGrammerParser.INT, 0); }
+		public TerminalNode IDENTIFIER() { return getToken(SinansGrammerParser.IDENTIFIER, 0); }
+		public List<ExpressionContext> expression() {
+			return getRuleContexts(ExpressionContext.class);
 		}
+		public TerminalNode STRING() { return getToken(SinansGrammerParser.STRING, 0); }
 		public ExpressionContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -323,27 +335,128 @@ public class SinansGrammerParser extends Parser {
 	}
 
 	public final ExpressionContext expression() throws RecognitionException {
-		ExpressionContext _localctx = new ExpressionContext(_ctx, getState());
-		enterRule(_localctx, 8, RULE_expression);
+		return expression(0);
+	}
+
+	private ExpressionContext expression(int _p) throws RecognitionException {
+		ParserRuleContext _parentctx = _ctx;
+		int _parentState = getState();
+		ExpressionContext _localctx = new ExpressionContext(_ctx, _parentState);
+		ExpressionContext _prevctx = _localctx;
+		int _startState = 8;
+		enterRecursionRule(_localctx, 8, RULE_expression, _p);
 		try {
-			setState(64);
+			int _alt;
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(65);
 			switch (_input.LA(1)) {
-			case 3:
+			case INT:
+				{
+				setState(57); ((ExpressionContext)_localctx).INT = match(INT);
+				System.out.println("Integer Literal found! -> "+ (((ExpressionContext)_localctx).INT!=null?((ExpressionContext)_localctx).INT.getText():null)); ((ExpressionContext)_localctx).exp =  new IntLiteral(Integer.parseInt((((ExpressionContext)_localctx).INT!=null?((ExpressionContext)_localctx).INT.getText():null)));
+				}
+				break;
+			case BOOL:
+				{
+				setState(59); ((ExpressionContext)_localctx).BOOL = match(BOOL);
+				System.out.println("Boolean Literal found! -> "+(((ExpressionContext)_localctx).BOOL!=null?((ExpressionContext)_localctx).BOOL.getText():null)); ((ExpressionContext)_localctx).exp =  new BoolLiteral(Boolean.parseBoolean((((ExpressionContext)_localctx).BOOL!=null?((ExpressionContext)_localctx).BOOL.getText():null)));
+				}
+				break;
+			case STRING:
+				{
+				setState(61); ((ExpressionContext)_localctx).STRING = match(STRING);
+				System.out.println("String Literal found! -> "+(((ExpressionContext)_localctx).STRING!=null?((ExpressionContext)_localctx).STRING.getText():null)); ((ExpressionContext)_localctx).exp =  new StringLiteral((((ExpressionContext)_localctx).STRING!=null?((ExpressionContext)_localctx).STRING.getText():null));
+				}
+				break;
+			case IDENTIFIER:
+				{
+				setState(63); ((ExpressionContext)_localctx).IDENTIFIER = match(IDENTIFIER);
+				((ExpressionContext)_localctx).exp =  new Variable((((ExpressionContext)_localctx).IDENTIFIER!=null?((ExpressionContext)_localctx).IDENTIFIER.getText():null));
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+			_ctx.stop = _input.LT(-1);
+			setState(74);
+			_errHandler.sync(this);
+			_alt = getInterpreter().adaptivePredict(_input,4,_ctx);
+			while ( _alt!=2 && _alt!=-1 ) {
+				if ( _alt==1 ) {
+					if ( _parseListeners!=null ) triggerExitRuleEvent();
+					_prevctx = _localctx;
+					{
+					{
+					_localctx = new ExpressionContext(_parentctx, _parentState);
+					_localctx.l = _prevctx;
+					pushNewRecursionContext(_localctx, _startState, RULE_expression);
+					setState(67);
+					if (!(precpred(_ctx, 1))) throw new FailedPredicateException(this, "precpred(_ctx, 1)");
+					setState(68); match(4);
+					setState(69); ((ExpressionContext)_localctx).r = expression(2);
+					 System.out.println((((ExpressionContext)_localctx).l!=null?_input.getText(((ExpressionContext)_localctx).l.start,((ExpressionContext)_localctx).l.stop):null)); System.out.println((((ExpressionContext)_localctx).r!=null?_input.getText(((ExpressionContext)_localctx).r.start,((ExpressionContext)_localctx).r.stop):null)); ((ExpressionContext)_localctx).exp =  new Plus(((ExpressionContext)_localctx).l.exp, ((ExpressionContext)_localctx).r.exp); 
+					}
+					} 
+				}
+				setState(76);
+				_errHandler.sync(this);
+				_alt = getInterpreter().adaptivePredict(_input,4,_ctx);
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			unrollRecursionContexts(_parentctx);
+		}
+		return _localctx;
+	}
+
+	public static class TypeContext extends ParserRuleContext {
+		public SuperType stype;
+		public TypeContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_type; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof SinansGrammerListener ) ((SinansGrammerListener)listener).enterType(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof SinansGrammerListener ) ((SinansGrammerListener)listener).exitType(this);
+		}
+	}
+
+	public final TypeContext type() throws RecognitionException {
+		TypeContext _localctx = new TypeContext(_ctx, getState());
+		enterRule(_localctx, 10, RULE_type);
+		try {
+			setState(83);
+			switch (_input.LA(1)) {
+			case 11:
 				enterOuterAlt(_localctx, 1);
 				{
+				setState(77); match(11);
+				((TypeContext)_localctx).stype =  new BoolType();
 				}
 				break;
 			case 9:
-			case BOOL:
-			case INT:
-			case IDENTIFIER:
-			case STRING:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(59); leftnode();
-				setState(60); match(4);
-				setState(61); rightnode();
-				  System.out.println("Plus Operator found! -> +");
+				setState(79); match(9);
+				((TypeContext)_localctx).stype =  new IntType();
+				}
+				break;
+			case 7:
+				enterOuterAlt(_localctx, 3);
+				{
+				setState(81); match(7);
+				((TypeContext)_localctx).stype =  new StringType();
 				}
 				break;
 			default:
@@ -361,202 +474,42 @@ public class SinansGrammerParser extends Parser {
 		return _localctx;
 	}
 
-	public static class LeftnodeContext extends ParserRuleContext {
-		public LeftNode ln;
-		public Token INT;
-		public Token BOOL;
-		public Token STRING;
-		public TerminalNode BOOL() { return getToken(SinansGrammerParser.BOOL, 0); }
-		public TerminalNode INT() { return getToken(SinansGrammerParser.INT, 0); }
-		public TerminalNode IDENTIFIER() { return getToken(SinansGrammerParser.IDENTIFIER, 0); }
-		public TerminalNode STRING() { return getToken(SinansGrammerParser.STRING, 0); }
-		public LeftnodeContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
+	public boolean sempred(RuleContext _localctx, int ruleIndex, int predIndex) {
+		switch (ruleIndex) {
+		case 4: return expression_sempred((ExpressionContext)_localctx, predIndex);
 		}
-		@Override public int getRuleIndex() { return RULE_leftnode; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof SinansGrammerListener ) ((SinansGrammerListener)listener).enterLeftnode(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof SinansGrammerListener ) ((SinansGrammerListener)listener).exitLeftnode(this);
-		}
+		return true;
 	}
-
-	public final LeftnodeContext leftnode() throws RecognitionException {
-		LeftnodeContext _localctx = new LeftnodeContext(_ctx, getState());
-		enterRule(_localctx, 10, RULE_leftnode);
-		int _la;
-		try {
-			setState(76);
-			switch (_input.LA(1)) {
-			case INT:
-				enterOuterAlt(_localctx, 1);
-				{
-				setState(66); ((LeftnodeContext)_localctx).INT = match(INT);
-				System.out.println("Integer Literal found! -> "+ (((LeftnodeContext)_localctx).INT!=null?((LeftnodeContext)_localctx).INT.getText():null)); ((LeftnodeContext)_localctx).ln =  new LeftNode(Integer.parseInt((((LeftnodeContext)_localctx).INT!=null?((LeftnodeContext)_localctx).INT.getText():null)));
-				}
-				break;
-			case BOOL:
-				enterOuterAlt(_localctx, 2);
-				{
-				setState(68); ((LeftnodeContext)_localctx).BOOL = match(BOOL);
-				System.out.println("Boolean Literal found! -> "+(((LeftnodeContext)_localctx).BOOL!=null?((LeftnodeContext)_localctx).BOOL.getText():null)); ((LeftnodeContext)_localctx).ln =  new LeftNode(Boolean.parseBoolean((((LeftnodeContext)_localctx).BOOL!=null?((LeftnodeContext)_localctx).BOOL.getText():null)));
-				}
-				break;
-			case STRING:
-				enterOuterAlt(_localctx, 3);
-				{
-				setState(70); ((LeftnodeContext)_localctx).STRING = match(STRING);
-				System.out.println("String Literal found! -> "+(((LeftnodeContext)_localctx).STRING!=null?((LeftnodeContext)_localctx).STRING.getText():null)); ((LeftnodeContext)_localctx).ln =  new LeftNode((((LeftnodeContext)_localctx).STRING!=null?((LeftnodeContext)_localctx).STRING.getText():null));
-				}
-				break;
-			case 9:
-			case IDENTIFIER:
-				enterOuterAlt(_localctx, 4);
-				{
-				setState(73);
-				_la = _input.LA(1);
-				if (_la==9) {
-					{
-					setState(72); match(9);
-					}
-				}
-
-				setState(75); match(IDENTIFIER);
-				}
-				break;
-			default:
-				throw new NoViableAltException(this);
-			}
+	private boolean expression_sempred(ExpressionContext _localctx, int predIndex) {
+		switch (predIndex) {
+		case 0: return precpred(_ctx, 1);
 		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	public static class RightnodeContext extends ParserRuleContext {
-		public RightNode rn;
-		public Token INT;
-		public Token BOOL;
-		public Token STRING;
-		public TerminalNode BOOL() { return getToken(SinansGrammerParser.BOOL, 0); }
-		public TerminalNode INT() { return getToken(SinansGrammerParser.INT, 0); }
-		public TerminalNode IDENTIFIER() { return getToken(SinansGrammerParser.IDENTIFIER, 0); }
-		public ExpressionContext expression() {
-			return getRuleContext(ExpressionContext.class,0);
-		}
-		public TerminalNode STRING() { return getToken(SinansGrammerParser.STRING, 0); }
-		public RightnodeContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_rightnode; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof SinansGrammerListener ) ((SinansGrammerListener)listener).enterRightnode(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof SinansGrammerListener ) ((SinansGrammerListener)listener).exitRightnode(this);
-		}
-	}
-
-	public final RightnodeContext rightnode() throws RecognitionException {
-		RightnodeContext _localctx = new RightnodeContext(_ctx, getState());
-		enterRule(_localctx, 12, RULE_rightnode);
-		int _la;
-		try {
-			setState(89);
-			switch ( getInterpreter().adaptivePredict(_input,7,_ctx) ) {
-			case 1:
-				enterOuterAlt(_localctx, 1);
-				{
-				setState(78); ((RightnodeContext)_localctx).INT = match(INT);
-				System.out.println("Integer Literal found! -> "+ (((RightnodeContext)_localctx).INT!=null?((RightnodeContext)_localctx).INT.getText():null)); ((RightnodeContext)_localctx).rn =  new RightNode(Integer.parseInt((((RightnodeContext)_localctx).INT!=null?((RightnodeContext)_localctx).INT.getText():null)));
-				}
-				break;
-
-			case 2:
-				enterOuterAlt(_localctx, 2);
-				{
-				setState(80); ((RightnodeContext)_localctx).BOOL = match(BOOL);
-				System.out.println("Boolean Literal found! -> "+(((RightnodeContext)_localctx).BOOL!=null?((RightnodeContext)_localctx).BOOL.getText():null)); ((RightnodeContext)_localctx).rn =  new RightNode(Boolean.parseBoolean((((RightnodeContext)_localctx).BOOL!=null?((RightnodeContext)_localctx).BOOL.getText():null)));
-				}
-				break;
-
-			case 3:
-				enterOuterAlt(_localctx, 3);
-				{
-				setState(82); ((RightnodeContext)_localctx).STRING = match(STRING);
-				System.out.println("String Literal found! -> "+(((RightnodeContext)_localctx).STRING!=null?((RightnodeContext)_localctx).STRING.getText():null)); ((RightnodeContext)_localctx).rn =  new RightNode((((RightnodeContext)_localctx).STRING!=null?((RightnodeContext)_localctx).STRING.getText():null));
-				}
-				break;
-
-			case 4:
-				enterOuterAlt(_localctx, 4);
-				{
-				setState(85);
-				_la = _input.LA(1);
-				if (_la==9) {
-					{
-					setState(84); match(9);
-					}
-				}
-
-				setState(87); match(IDENTIFIER);
-				}
-				break;
-
-			case 5:
-				enterOuterAlt(_localctx, 5);
-				{
-				setState(88); expression();
-				}
-				break;
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
+		return true;
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\24^\4\2\t\2\4\3\t"+
-		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\3\2\3\2\3\2\3\2\3\2\3\2\3\2"+
-		"\6\2\30\n\2\r\2\16\2\31\3\2\3\2\3\3\3\3\3\3\3\3\3\3\3\3\5\3$\n\3\3\4\3"+
-		"\4\3\4\3\4\3\4\3\4\3\4\3\4\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\6\5\67"+
-		"\n\5\r\5\16\58\3\5\3\5\3\6\3\6\3\6\3\6\3\6\3\6\5\6C\n\6\3\7\3\7\3\7\3"+
-		"\7\3\7\3\7\3\7\5\7L\n\7\3\7\5\7O\n\7\3\b\3\b\3\b\3\b\3\b\3\b\3\b\5\bX"+
-		"\n\b\3\b\3\b\5\b\\\n\b\3\b\2\2\t\2\4\6\b\n\f\16\2\2c\2\20\3\2\2\2\4#\3"+
-		"\2\2\2\6%\3\2\2\2\b-\3\2\2\2\nB\3\2\2\2\fN\3\2\2\2\16[\3\2\2\2\20\21\7"+
-		"\3\2\2\21\22\7\17\2\2\22\23\b\2\1\2\23\27\7\4\2\2\24\25\5\4\3\2\25\26"+
-		"\b\2\1\2\26\30\3\2\2\2\27\24\3\2\2\2\30\31\3\2\2\2\31\27\3\2\2\2\31\32"+
-		"\3\2\2\2\32\33\3\2\2\2\33\34\7\n\2\2\34\3\3\2\2\2\35\36\5\b\5\2\36\37"+
-		"\b\3\1\2\37$\3\2\2\2 !\5\6\4\2!\"\b\3\1\2\"$\3\2\2\2#\35\3\2\2\2# \3\2"+
-		"\2\2$\5\3\2\2\2%&\7\17\2\2&\'\b\4\1\2\'(\7\7\2\2()\7\20\2\2)*\b\4\1\2"+
-		"*+\7\r\2\2+,\b\4\1\2,\7\3\2\2\2-.\7\t\2\2./\7\b\2\2/\60\5\n\6\2\60\61"+
-		"\b\5\1\2\61\62\7\5\2\2\62\66\7\4\2\2\63\64\5\4\3\2\64\65\b\5\1\2\65\67"+
-		"\3\2\2\2\66\63\3\2\2\2\678\3\2\2\28\66\3\2\2\289\3\2\2\29:\3\2\2\2:;\7"+
-		"\n\2\2;\t\3\2\2\2<C\3\2\2\2=>\5\f\7\2>?\7\6\2\2?@\5\16\b\2@A\b\6\1\2A"+
-		"C\3\2\2\2B<\3\2\2\2B=\3\2\2\2C\13\3\2\2\2DE\7\16\2\2EO\b\7\1\2FG\7\f\2"+
-		"\2GO\b\7\1\2HI\7\20\2\2IO\b\7\1\2JL\7\13\2\2KJ\3\2\2\2KL\3\2\2\2LM\3\2"+
-		"\2\2MO\7\17\2\2ND\3\2\2\2NF\3\2\2\2NH\3\2\2\2NK\3\2\2\2O\r\3\2\2\2PQ\7"+
-		"\16\2\2Q\\\b\b\1\2RS\7\f\2\2S\\\b\b\1\2TU\7\20\2\2U\\\b\b\1\2VX\7\13\2"+
-		"\2WV\3\2\2\2WX\3\2\2\2XY\3\2\2\2Y\\\7\17\2\2Z\\\5\n\6\2[P\3\2\2\2[R\3"+
-		"\2\2\2[T\3\2\2\2[W\3\2\2\2[Z\3\2\2\2\\\17\3\2\2\2\n\31#8BKNW[";
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\25X\4\2\t\2\4\3\t"+
+		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\3\2\3\2\3\2\3\2\3\2\3\2\3\2\6\2\26"+
+		"\n\2\r\2\16\2\27\3\2\3\2\3\3\3\3\3\3\3\3\3\3\3\3\5\3\"\n\3\3\4\3\4\3\4"+
+		"\3\4\3\4\3\4\3\4\3\4\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\6\5\65\n\5\r"+
+		"\5\16\5\66\3\5\3\5\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\5\6D\n\6\3\6\3"+
+		"\6\3\6\3\6\3\6\7\6K\n\6\f\6\16\6N\13\6\3\7\3\7\3\7\3\7\3\7\3\7\5\7V\n"+
+		"\7\3\7\2\3\n\b\2\4\6\b\n\f\2\2Z\2\16\3\2\2\2\4!\3\2\2\2\6#\3\2\2\2\b+"+
+		"\3\2\2\2\nC\3\2\2\2\fU\3\2\2\2\16\17\7\3\2\2\17\20\7\20\2\2\20\21\b\2"+
+		"\1\2\21\25\7\4\2\2\22\23\5\4\3\2\23\24\b\2\1\2\24\26\3\2\2\2\25\22\3\2"+
+		"\2\2\26\27\3\2\2\2\27\25\3\2\2\2\27\30\3\2\2\2\30\31\3\2\2\2\31\32\7\f"+
+		"\2\2\32\3\3\2\2\2\33\34\5\b\5\2\34\35\b\3\1\2\35\"\3\2\2\2\36\37\5\6\4"+
+		"\2\37 \b\3\1\2 \"\3\2\2\2!\33\3\2\2\2!\36\3\2\2\2\"\5\3\2\2\2#$\7\20\2"+
+		"\2$%\b\4\1\2%&\7\7\2\2&\'\7\21\2\2\'(\b\4\1\2()\5\f\7\2)*\b\4\1\2*\7\3"+
+		"\2\2\2+,\7\n\2\2,-\7\b\2\2-.\5\n\6\2./\b\5\1\2/\60\7\5\2\2\60\64\7\4\2"+
+		"\2\61\62\5\4\3\2\62\63\b\5\1\2\63\65\3\2\2\2\64\61\3\2\2\2\65\66\3\2\2"+
+		"\2\66\64\3\2\2\2\66\67\3\2\2\2\678\3\2\2\289\7\f\2\29\t\3\2\2\2:;\b\6"+
+		"\1\2;<\7\17\2\2<D\b\6\1\2=>\7\16\2\2>D\b\6\1\2?@\7\21\2\2@D\b\6\1\2AB"+
+		"\7\20\2\2BD\b\6\1\2C:\3\2\2\2C=\3\2\2\2C?\3\2\2\2CA\3\2\2\2DL\3\2\2\2"+
+		"EF\f\3\2\2FG\7\6\2\2GH\5\n\6\4HI\b\6\1\2IK\3\2\2\2JE\3\2\2\2KN\3\2\2\2"+
+		"LJ\3\2\2\2LM\3\2\2\2M\13\3\2\2\2NL\3\2\2\2OP\7\r\2\2PV\b\7\1\2QR\7\13"+
+		"\2\2RV\b\7\1\2ST\7\t\2\2TV\b\7\1\2UO\3\2\2\2UQ\3\2\2\2US\3\2\2\2V\r\3"+
+		"\2\2\2\b\27!\66CLU";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
