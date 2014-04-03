@@ -8,16 +8,14 @@ namespace GOLD.Engine
 {
     public class Parser
     {
-        //TODO: Delegate or Action<>?
-        public event Action<Token> OnTokenRead;
-        public event Action<Tuple<int, int>, Tuple<int, int>, Reduction> OnReduction;
-        public event Action<object> OnCompletion;
-        public event Action OnGroupError;
-        public event Action OnInternalError;
-        public event Action OnNotLoadedError;
-        public event Action<Tuple<int, int>, string> OnLexicalError;
-        public event Action<Tuple<int, int>, string, string> OnSyntaxError;
-
+        public event Action<Token> TokenRead;
+        public event Action<Reduction> Reduction;
+        public event Action<object> Completed;
+        public event Action GroupError;
+        public event Action InternalError;
+        public event Action NotLoadedError;
+        public event Action<Tuple<int, int>, string> LexicalError;
+        public event Action<Tuple<int, int>, string, string> SyntaxError;
 
         public bool TrimReductions { get; set; }
         public bool SkipEmptyProductions { get; set; }
@@ -27,6 +25,70 @@ namespace GOLD.Engine
         {
             TrimReductions = false;
             SkipEmptyProductions = false;
+        }
+
+        protected virtual void OnTokenRead(Token token)
+        {
+            if (TokenRead != null)
+            {
+                TokenRead(token);
+            }
+        }
+
+        protected virtual void OnReduction(Reduction reduction)
+        {
+            if (Reduction != null)
+            {
+                Reduction(reduction);
+            }
+        }
+
+        protected virtual void OnCompleted(object obj)
+        {
+            if (Completed != null)
+            {
+                Completed(obj);
+            }
+        }
+
+        protected virtual void OnGroupError()
+        {
+            if (GroupError != null)
+            {
+                GroupError();
+            }
+        }
+
+        protected virtual void OnInternalError()
+        {
+            if (InternalError != null)
+            {
+                InternalError();
+            }
+        }
+
+        protected virtual void OnNotLoadedError()
+        {
+            if (NotLoadedError != null)
+            {
+                NotLoadedError();
+            }
+        }
+
+        protected virtual void OnLexicalError(Tuple<int, int> position, string symbol)
+        {
+            if (LexicalError != null)
+            {
+                LexicalError(position, symbol);
+            }
+        }
+
+        protected virtual void OnSyntaxError(Tuple<int, int> position, string symbol, string expected)
+        {
+            if (SyntaxError != null)
+            {
+                SyntaxError(position, symbol, expected);
+            }
         }
 
         public bool LoadEGT(BinaryReader reader)
@@ -193,10 +255,7 @@ namespace GOLD.Engine
         {
             if (egtDataManager == null)
             {
-                if (OnNotLoadedError != null)
-                {
-                    OnNotLoadedError();
-                }
+                OnNotLoadedError();
                 return false;
             }
 
@@ -212,18 +271,12 @@ namespace GOLD.Engine
                 if (inputTokens.Count == 0)
                 {
                     inputTokens.Push(ProduceToken(groupStack, lookAheadBuffer));
-                    if (OnTokenRead != null)
-                    {
-                        OnTokenRead(inputTokens.Peek());
-                    }
+                    OnTokenRead(inputTokens.Peek());
                 }
                 //Runaway group
                 else if (groupStack.Count != 0)
                 {
-                    if (OnGroupError != null)
-                    {
-                        OnGroupError();
-                    }
+                    OnGroupError();
                     return false; //Error; abort
                 }
                 else
@@ -237,10 +290,7 @@ namespace GOLD.Engine
                             break;
 
                         case SymbolType.Error:
-                            if (OnLexicalError != null)
-                            {
-                                OnLexicalError(read.EndPosition, read.Data);
-                            }
+                            OnLexicalError(read.EndPosition, read.Data);
                             return false; //Error; abort
 
                         default:
@@ -255,10 +305,7 @@ namespace GOLD.Engine
                             switch (parseAction.Type)
                             {
                                 case LRActionType.Accept:
-                                    if (OnCompletion != null)
-                                    {
-                                        OnCompletion(tokenStack.Peek().Tag);
-                                    }
+                                    OnCompleted(tokenStack.Peek().Tag);
                                     return true;
 
                                 case LRActionType.Shift:
@@ -323,10 +370,7 @@ namespace GOLD.Engine
             LRAction action = egtDataManager.GetLRActionList(tokenStack.Peek().State)[prod.Head];
             if (action == null)
             {
-                if (OnInternalError != null)
-                {
-                    OnInternalError();
-                }
+                OnInternalError();
                 return false;
             }
 
@@ -337,11 +381,7 @@ namespace GOLD.Engine
 
             if (!reductionSkipped)
             {
-                if (OnReduction != null)
-                {
-                    Reduction r = (Reduction)tokenStack.Peek();
-                    OnReduction(r.StartPosition, r.EndPosition, r);
-                }
+                OnReduction((Reduction)tokenStack.Peek());
             }
             return true;
         }
@@ -363,10 +403,7 @@ namespace GOLD.Engine
                 }
             }
 
-            if (OnSyntaxError != null)
-            {
-                OnSyntaxError(read.EndPosition, read.Data, String.Join(",", expectedSymbols));
-            }
+            OnSyntaxError(read.EndPosition, read.Data, String.Join(",", expectedSymbols));
         }
     }
 }

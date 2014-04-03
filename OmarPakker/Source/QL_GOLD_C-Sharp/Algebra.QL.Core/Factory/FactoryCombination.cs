@@ -145,6 +145,11 @@ namespace Algebra.QL.Core.Factory
                 Factory2.IfElse(toEval.Item2, ifTrue.Item2, ifFalse.Item2));
         }
 
+        public IPair<E1, E2> ExpressionOrder(IPair<E1, E2> e)
+        {
+            return new Pair<E1, E2>(Factory1.ExpressionOrder(e.Item1), Factory2.ExpressionOrder(e.Item2));
+        }
+
         public IPair<S1, S2> Statements(IPair<S1, S2> l, IPair<S1, S2> r)
         {
             return new Pair<S1, S2>(Factory1.Statements(l.Item1, r.Item1), Factory2.Statements(l.Item2, r.Item2));
@@ -174,6 +179,11 @@ namespace Algebra.QL.Core.Factory
         {
             return new Pair<S1, S2>(Factory1.IfElse(toEval.Item1, ifTrue.Item1, ifFalse.Item1),
                 Factory2.IfElse(toEval.Item2, ifTrue.Item2, ifFalse.Item2));
+        }
+
+        public IPair<S1, S2> Block(IPair<S1, S2> s)
+        {
+            return new Pair<S1, S2>(Factory1.Block(s.Item1), Factory2.Block(s.Item2));
         }
     }
 }

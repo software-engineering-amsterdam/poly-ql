@@ -163,6 +163,11 @@ namespace QL_Tests.Factory
             return new TernaryExpr(toEval, ifTrue, ifFalse);
         }
 
+        public ITestExpr ExpressionOrder(ITestExpr e)
+        {
+            return e; //TODO
+        }
+
         public ITestStmnt Forms(ITestStmnt l, ITestStmnt r)
         {
             return new CompStmnt(l, r);
@@ -216,6 +221,11 @@ namespace QL_Tests.Factory
         public ITestExpr Average(string s)
         {
             return new AvgExpr(s);
+        }
+
+        public ITestStmnt Block(ITestStmnt s)
+        {
+            return s; //TODO
         }
     }
 }

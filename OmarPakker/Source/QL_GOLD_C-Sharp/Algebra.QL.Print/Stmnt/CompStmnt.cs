@@ -11,11 +11,11 @@ namespace Algebra.QL.Print.Stmnt
 
         }
 
-        public Block BuildDocument()
+        public Block BuildDocument(int indentation)
         {
             Section s = new Section();
-            s.Blocks.Add(Statement1.BuildDocument());
-            s.Blocks.Add(Statement2.BuildDocument());
+            s.Blocks.Add(Statement1.BuildDocument(indentation));
+            s.Blocks.Add(Statement2.BuildDocument(indentation));
             return s;
         }
     }

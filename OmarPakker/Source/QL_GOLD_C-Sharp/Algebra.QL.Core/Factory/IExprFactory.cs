@@ -30,5 +30,7 @@ namespace Algebra.QL.Core.Factory
         E VarAssign(string var, T t, E e);
 
         E IfElse(E toEval, E ifTrue, E ifFalse);
+
+        E ExpressionOrder(E e);
     }
 }

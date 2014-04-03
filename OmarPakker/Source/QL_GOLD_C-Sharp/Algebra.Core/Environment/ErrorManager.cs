@@ -5,18 +5,18 @@ namespace Algebra.Core.Environment
 {
     public class ErrorManager
     {
-        //TODO: Delegate or Action<>?
-        public event Action<string, Tuple<int, int>, Tuple<int, int>> OnError;
-        public event Action<string, Tuple<int, int>, Tuple<int, int>> OnWarning;
-        public event Action<string, Tuple<int, int>, Tuple<int, int>> OnMessage;
+        public event Action<string, Tuple<int, int>, Tuple<int, int>> ErrorReported;
+        public event Action<string, Tuple<int, int>, Tuple<int, int>> WarningReported;
+        public event Action<string, Tuple<int, int>, Tuple<int, int>> InfoMessageReported;
 
         private readonly ICollection<ManagerMsg> errors;
         private readonly ICollection<ManagerMsg> warnings;
-        private readonly ICollection<ManagerMsg> messages;
+        private readonly ICollection<ManagerMsg> infoMessages;
 
         public bool HasErrors { get { return errors.Count > 0; } }
         public bool HasWarnings { get { return warnings.Count > 0; } }
-        public bool HasMessages { get { return messages.Count > 0; } }
+        public bool HasInfoMessages { get { return infoMessages.Count > 0; } }
+        public bool HasAnyMessage { get { return HasErrors || HasWarnings || HasInfoMessages; } }
 
         private readonly bool prefixMessageType;
         private readonly bool suffixPosition;
@@ -34,7 +34,7 @@ namespace Algebra.Core.Environment
 
             errors = new List<ManagerMsg>();
             warnings = new List<ManagerMsg>();
-            messages = new List<ManagerMsg>();
+            infoMessages = new List<ManagerMsg>();
         }
 
         public void ReportError(string msg)
@@ -60,9 +60,9 @@ namespace Algebra.Core.Environment
         {
             errors.Add(msg);
 
-            if (OnError != null)
+            if (ErrorReported != null)
             {
-                OnError(msg.Message, msg.StartPosition, msg.EndPosition);
+                ErrorReported(msg.Message, msg.StartPosition, msg.EndPosition);
             }
         }
 
@@ -89,34 +89,34 @@ namespace Algebra.Core.Environment
         {
             warnings.Add(msg);
 
-            if (OnWarning != null)
+            if (WarningReported != null)
             {
-                OnWarning(msg.Message, msg.StartPosition, msg.EndPosition);
+                WarningReported(msg.Message, msg.StartPosition, msg.EndPosition);
             }
         }
 
-        public void ReportMessage(string msg)
+        public void ReportInfoMessage(string msg)
         {
-            ReportMessage(msg, null, null);
+            ReportInfoMessage(msg, null, null);
         }
 
-        public void ReportMessage(string msg, Tuple<int, int> startPos, Tuple<int, int> endPos)
+        public void ReportInfoMessage(string msg, Tuple<int, int> startPos, Tuple<int, int> endPos)
         {
             if (suffixPosition && startPos != null && endPos != null)
             {
                 msg += String.Format(" (Start {0} | End {1}).", startPos, endPos);
             }
 
-            ReportMessage(new ManagerMsg(msg, startPos, endPos));
+            ReportInfoMessage(new ManagerMsg(msg, startPos, endPos));
         }
 
-        private void ReportMessage(ManagerMsg msg)
+        private void ReportInfoMessage(ManagerMsg msg)
         {
-            messages.Add(msg);
+            infoMessages.Add(msg);
 
-            if (OnMessage != null)
+            if (InfoMessageReported != null)
             {
-                OnMessage(msg.Message, msg.StartPosition, msg.EndPosition);
+                InfoMessageReported(msg.Message, msg.StartPosition, msg.EndPosition);
             }
         }
     }

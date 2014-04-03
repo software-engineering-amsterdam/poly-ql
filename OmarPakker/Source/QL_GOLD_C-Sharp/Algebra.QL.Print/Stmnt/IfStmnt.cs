@@ -1,6 +1,7 @@
-﻿using System.Windows.Documents;
-using Algebra.QL.Print.Expr;
+﻿using System.Windows;
+using System.Windows.Documents;
 using Algebra.QL.Core.Stmnt;
+using Algebra.QL.Print.Expr;
 
 namespace Algebra.QL.Print.Stmnt
 {
@@ -12,7 +13,7 @@ namespace Algebra.QL.Print.Stmnt
 
         }
 
-        public Block BuildDocument()
+        public Block BuildDocument(int indentation)
         {
             Paragraph p = new Paragraph();
             p.Inlines.Add(new Run("if") { Foreground = StyleSettings.KeyWordColor });
@@ -20,14 +21,9 @@ namespace Algebra.QL.Print.Stmnt
             p.Inlines.AddRange(CheckExpression.BuildDocument());
             p.Inlines.Add(")");
 
-            Block ifTrueBlock = IfTrueBody.BuildDocument();
-            ifTrueBlock.Margin = StyleSettings.Intendation;
-
-            Section s = new Section();
+            Section s = new Section() { Margin = new Thickness(indentation, 0, 0, 0) };
             s.Blocks.Add(p);
-            s.Blocks.Add(new Paragraph(new Run("{")));
-            s.Blocks.Add(ifTrueBlock);
-            s.Blocks.Add(new Paragraph(new Run("}")));
+            s.Blocks.Add(IfTrueBody.BuildDocument(indentation));
 
             return s;
         }

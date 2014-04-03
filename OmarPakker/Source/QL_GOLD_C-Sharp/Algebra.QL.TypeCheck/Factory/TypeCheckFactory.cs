@@ -143,6 +143,11 @@ namespace Algebra.QL.TypeCheck.Factory
             return new IfElseExpr(toEval, ifTrue, ifFalse);
         }
 
+        public ITypeCheckExpr ExpressionOrder(ITypeCheckExpr e)
+        {
+            return e; //TODO
+        }
+
         public ITypeCheckStmnt Statements(ITypeCheckStmnt l, ITypeCheckStmnt r)
         {
             return new StatementsStmnt(l, r);
@@ -171,6 +176,11 @@ namespace Algebra.QL.TypeCheck.Factory
         public ITypeCheckStmnt IfElse(ITypeCheckExpr toEval, ITypeCheckStmnt ifTrue, ITypeCheckStmnt ifFalse)
         {
             return new IfElseStmnt(toEval, ifTrue, ifFalse);
+        }
+
+        public ITypeCheckStmnt Block(ITypeCheckStmnt s)
+        {
+            return s; //TODO
         }
     }
 }

@@ -2,43 +2,41 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
-using GOLD.Engine;
 
 namespace Algebra.Core.Grammar
 {
     public abstract class Parser
     {
-        //TODO: Delegate or Action<>?
         public event Action<Tuple<int, int>, Tuple<int, int>, object> OnReduction;
         public event Action<object> OnCompletion
         {
-            add { parser.OnCompletion += value; }
-            remove { parser.OnCompletion -= value; }
+            add { parser.Completed += value; }
+            remove { parser.Completed -= value; }
         }
         public event Action OnGroupError
         {
-            add { parser.OnGroupError += value; }
-            remove { parser.OnGroupError -= value; }
+            add { parser.GroupError += value; }
+            remove { parser.GroupError -= value; }
         }
         public event Action OnInternalError
         {
-            add { parser.OnInternalError += value; }
-            remove { parser.OnInternalError -= value; }
+            add { parser.InternalError += value; }
+            remove { parser.InternalError -= value; }
         }
         public event Action OnNotLoadedError
         {
-            add { parser.OnNotLoadedError += value; }
-            remove { parser.OnNotLoadedError -= value; }
+            add { parser.NotLoadedError += value; }
+            remove { parser.NotLoadedError -= value; }
         }
-        public event Action<Tuple<int, int>, object> OnLexicalError
+        public event Action<Tuple<int, int>, string> OnLexicalError
         {
-            add { parser.OnLexicalError += value; }
-            remove { parser.OnLexicalError -= value; }
+            add { parser.LexicalError += value; }
+            remove { parser.LexicalError -= value; }
         }
-        public event Action<Tuple<int, int>, object, string> OnSyntaxError
+        public event Action<Tuple<int, int>, string, string> OnSyntaxError
         {
-            add { parser.OnSyntaxError += value; }
-            remove { parser.OnSyntaxError -= value; }
+            add { parser.SyntaxError += value; }
+            remove { parser.SyntaxError -= value; }
         }
 
         private GOLD.Engine.Parser parser;
@@ -50,19 +48,26 @@ namespace Algebra.Core.Grammar
             parser = new GOLD.Engine.Parser();
             parser.TrimReductions = trimReductions;
 
-            parser.OnReduction += (start, end, obj) =>
+            InitEvents();
+        }
+
+        private void InitEvents()
+        {
+            parser.Reduction += (reduction) =>
             {
-                object newObj = CreateObjectFor(obj);
-                obj.Tag = newObj;
+                object newObj = CreateObjectFor(reduction);
+                reduction.Tag = newObj;
 
                 Debug.Assert(newObj != null, "Object construction failed. Are you missing a grammar value check?");
 
                 if (OnReduction != null)
                 {
-                    OnReduction(start, end, newObj);
+                    OnReduction(reduction.StartPosition, reduction.EndPosition, reduction.Tag);
                 }
             };
         }
+
+        protected abstract object CreateObjectFor(GOLD.Engine.Reduction r);
 
         public bool LoadGrammar(BinaryReader reader)
         {
@@ -78,7 +83,5 @@ namespace Algebra.Core.Grammar
         {
             return parser.Parse(reader);
         }
-
-        protected abstract object CreateObjectFor(Reduction r);
     }
 }

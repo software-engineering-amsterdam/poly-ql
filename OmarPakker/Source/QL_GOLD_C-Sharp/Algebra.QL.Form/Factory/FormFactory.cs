@@ -143,6 +143,11 @@ namespace Algebra.QL.Form.Factory
             return new IfElseExpr(toEval, ifTrue, ifFalse);
         }
 
+        public IFormExpr ExpressionOrder(IFormExpr e)
+        {
+            return e; //TODO
+        }
+
         public IFormStmnt Statements(IFormStmnt l, IFormStmnt r)
         {
             return new StatementsStmnt(l, r);
@@ -171,6 +176,11 @@ namespace Algebra.QL.Form.Factory
         public IFormStmnt IfElse(IFormExpr toEval, IFormStmnt ifTrue, IFormStmnt ifFalse)
         {
             return new IfElseStmnt(toEval, ifTrue, ifFalse);
+        }
+
+        public IFormStmnt Block(IFormStmnt s)
+        {
+            return s; //TODO
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Windows.Documents;
+﻿using System.Windows;
+using System.Windows.Documents;
 using Algebra.QL.Core.Stmnt;
 using Algebra.QL.Print.Expr;
 
@@ -12,9 +13,9 @@ namespace Algebra.QL.Print.Stmnt
 
         }
 
-        public Block BuildDocument()
+        public Block BuildDocument(int indentation)
         {
-            Paragraph p = new Paragraph();
+            Paragraph p = new Paragraph() { Margin = new Thickness(indentation, 0, 0, 0) };
             p.Inlines.Add(new Run(Text) { Foreground = StyleSettings.QuestionStringColor });
             p.Inlines.Add(" << ");
             p.Inlines.AddRange(Expression.BuildDocument());

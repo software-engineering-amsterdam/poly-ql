@@ -148,6 +148,11 @@ namespace Algebra.QL.Print.Factory
             return new CompStmnt(l, r);
         }
 
+        public IPrintExpr ExpressionOrder(IPrintExpr e)
+        {
+            return new OrderExpr(e);
+        }
+
         public IPrintStmnt Statements(IPrintStmnt l, IPrintStmnt r)
         {
             return new CompStmnt(l, r);
@@ -176,6 +181,11 @@ namespace Algebra.QL.Print.Factory
         public IPrintStmnt IfElse(IPrintExpr toEval, IPrintStmnt ifTrue, IPrintStmnt ifFalse)
         {
             return new IfElseStmnt(toEval, ifTrue, ifFalse);
+        }
+
+        public IPrintStmnt Block(IPrintStmnt s)
+        {
+            return new BlockStmnt(s);
         }
     }
 }

@@ -43,7 +43,7 @@ namespace Algebra.QL.Core.Grammar
 
                 //<Block> ::= '{' <Statements> '}'
                 case "Block_Lbrace_Rbrace":
-                    return r[1].Tag; //TODO: create object for brackets?
+                    return factory.Block((S)r[1].Tag);
 
                 //<Statements> ::= <Statement> <Statements>
                 case "Statements":
@@ -199,7 +199,7 @@ namespace Algebra.QL.Core.Grammar
 
                 //<Value> ::= '(' <Expression> ')'
                 case "Value_Lparen_Rparen":
-                    return r[1].Tag; //TODO: create object for brackets?
+                    return factory.ExpressionOrder((E)r[1].Tag);
 
                 //<Literal> ::= StringLit
                 case "Literal_Stringlit":

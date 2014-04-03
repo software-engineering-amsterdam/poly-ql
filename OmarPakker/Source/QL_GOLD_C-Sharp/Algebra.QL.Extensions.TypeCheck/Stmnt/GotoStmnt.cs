@@ -9,6 +9,8 @@ namespace Algebra.QL.Extensions.TypeCheck.Stmnt
         public Tuple<int, int> SourceStartPosition { get; set; }
         public Tuple<int, int> SourceEndPosition { get; set; }
 
+        private const string gotoDeclareName = "$GOTO$";
+
         public GotoStmnt()
         {
             
@@ -16,14 +18,15 @@ namespace Algebra.QL.Extensions.TypeCheck.Stmnt
 
         public void TypeCheck(TypeEnvironment env)
         {
-            //if (env.IsGotoDeclared())
-            //{
-            //    errRep.ReportError(this, "You already defined a gotoNextForm. You can only have 1 per form.");
+            if (env.IsDeclared(gotoDeclareName))
+            {
+                env.ReportError("You already defined a gotoNextForm. You can only have 1 per form.",
+                    SourceStartPosition, SourceEndPosition);
 
-            //    return;
-            //}
+                return;
+            }
 
-            //env.DeclareGoto();
+            env.Declare(gotoDeclareName, null);
         }
     }
 }

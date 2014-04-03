@@ -10,5 +10,7 @@ namespace Algebra.QL.Core.Factory
         S Label(string s, E e);
         S If(E toEval, S ifTrue);
         S IfElse(E toEval, S ifTrue, S ifFalse);
+
+        S Block(S s);
     }
 }

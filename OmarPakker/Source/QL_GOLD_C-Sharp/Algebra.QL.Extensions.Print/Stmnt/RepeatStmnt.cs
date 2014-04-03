@@ -1,4 +1,5 @@
-﻿using System.Windows.Documents;
+﻿using System.Windows;
+using System.Windows.Documents;
 using Algebra.QL.Print;
 using Algebra.QL.Print.Expr;
 using Algebra.QL.Print.Stmnt;
@@ -16,7 +17,7 @@ namespace Algebra.QL.Extensions.Print.Stmnt
             Body = body;
         }
 
-        public Block BuildDocument()
+        public Block BuildDocument(int indentation)
         {
             Paragraph p = new Paragraph();
             p.Inlines.Add(new Run("repeat") { Foreground = StyleSettings.KeyWordColor });
@@ -24,14 +25,9 @@ namespace Algebra.QL.Extensions.Print.Stmnt
             p.Inlines.AddRange(Expression.BuildDocument());
             p.Inlines.Add(")");
 
-            Block bodyBlock = Body.BuildDocument();
-            bodyBlock.Margin = StyleSettings.Intendation;
-
-            Section s = new Section();
+            Section s = new Section() { Margin = new Thickness(indentation, 0, 0, 0) };
             s.Blocks.Add(p);
-            s.Blocks.Add(new Paragraph(new Run("{")));
-            s.Blocks.Add(bodyBlock);
-            s.Blocks.Add(new Paragraph(new Run("}")));
+            s.Blocks.Add(Body.BuildDocument(indentation));
 
             return s;
         }

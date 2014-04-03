@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
@@ -21,6 +20,7 @@ using Algebra.QL.TypeCheck.Expr;
 using Algebra.QL.TypeCheck.Stmnt;
 using Algebra.QL.TypeCheck.Type;
 using Microsoft.Win32;
+using WPFParser.Helpers;
 using WPFParser.MergedFactory;
 
 namespace WPFParser
@@ -36,7 +36,7 @@ namespace WPFParser
         {
             InitializeComponent();
 
-            Parser = GetExtendedParser<IPair<IPair<ITypeCheckStmnt, IPrintStmnt>, IFormStmnt>,
+            Parser = ParserConstructor.GetExtendedParser<IPair<IPair<ITypeCheckStmnt, IPrintStmnt>, IFormStmnt>,
                 IPair<IPair<ITypeCheckExpr, IPrintExpr>, IFormExpr>,
                 IPair<IPair<ITypeCheckType, IPrintType>, IFormType>,
                 TypeCheckPrintFormFactory>(new TypeCheckPrintFormFactory());
@@ -48,28 +48,6 @@ namespace WPFParser
             Parser.OnNotLoadedError += OnNotLoadedError;
             Parser.OnLexicalError += OnLexicalError;
             Parser.OnSyntaxError += OnSyntaxError;
-        }
-
-        private static Parser GetBasicParser<S, E, T, F>(F f)
-            where F : Algebra.QL.Core.Factory.IStmntFactory<S, E, T>
-        {
-            var parser = new Algebra.QL.Core.Grammar.Parser<S, E, T, F>(f);
-
-            Assembly a = parser.GetType().Assembly;
-            parser.LoadGrammar(new BinaryReader(a.GetManifestResourceStream("Algebra.QL.Core.Grammar.QL_Grammar.egt")));
-
-            return parser;
-        }
-
-        private static Parser GetExtendedParser<S, E, T, F>(F f)
-            where F : Algebra.QL.Extensions.Factory.IStmntFactory<S, E, T>
-        {
-            var parser = new Algebra.QL.Extensions.Grammar.Parser<S, E, T, F>(f);
-
-            Assembly a = parser.GetType().Assembly;
-            parser.LoadGrammar(new BinaryReader(a.GetManifestResourceStream("Algebra.QL.Extensions.Grammar.QL_Grammar.egt")));
-
-            return parser;
         }
 
         private void Reset()
@@ -116,23 +94,10 @@ namespace WPFParser
 
         private void OnReduction(Tuple<int, int> startPos, Tuple<int, int> endPos, object newObj)
         {
-            ITypeCheck typeCheckObj = null;
-
-            if (newObj is ITypeCheck)
-            {
-                typeCheckObj = (ITypeCheck)newObj;
-            }
-            else if (newObj is IPair<ITypeCheck, IPrint>)
-            {
-                typeCheckObj = ((IPair<ITypeCheck, IPrint>)newObj).Item1;
-            }
             if (newObj is IPair<IPair<ITypeCheck, IPrint>, IForm>)
             {
-                typeCheckObj = ((IPair<IPair<ITypeCheck, IPrint>, IForm>)newObj).Item1.Item1;
-            }
+                ITypeCheck typeCheckObj = ((IPair<IPair<ITypeCheck, IPrint>, IForm>)newObj).Item1.Item1;
 
-            if (typeCheckObj != null)
-            {
                 typeCheckObj.SourceStartPosition = startPos;
                 typeCheckObj.SourceEndPosition = endPos;
             }
@@ -141,37 +106,17 @@ namespace WPFParser
         private void OnCompletion(object root)
         {
             ErrorManager errMngr = new ErrorManager();
-            errMngr.OnError += (msg, sPos, ePos) => PrintMsg(sPos, ePos, msg, Colors.Red);
-            errMngr.OnWarning += (msg, sPos, ePos) => PrintMsg(sPos, ePos, msg, Colors.Yellow);
+            errMngr.ErrorReported += (msg, sPos, ePos) => PrintMsg(sPos, ePos, msg, Colors.Red);
+            errMngr.WarningReported += (msg, sPos, ePos) => PrintMsg(sPos, ePos, msg, Colors.Yellow);
 
-            TypeEnvironment env = new TypeEnvironment(errMngr);
+            IPair<IPair<ITypeCheckStmnt, IPrintStmnt>, IFormStmnt> combItem = (IPair<IPair<ITypeCheckStmnt, IPrintStmnt>, IFormStmnt>)root;
+            combItem.Item1.Item1.TypeCheck(new TypeEnvironment(errMngr));
 
-            if (root is ITypeCheckStmnt)
-            {
-                ((ITypeCheckStmnt)root).TypeCheck(env);
-            }
-            else if (root is IPair<ITypeCheckStmnt, IPrintStmnt>)
-            {
-                IPair<ITypeCheckStmnt, IPrintStmnt> combItem = (IPair<ITypeCheckStmnt, IPrintStmnt>)root;
-                combItem.Item1.TypeCheck(env);
-
-                printOutputBlock.Document = new FlowDocument(combItem.Item2.BuildDocument());
-            }
-            else if (root is IPair<IPair<ITypeCheckStmnt, IPrintStmnt>, IFormStmnt>)
-            {
-                IPair<IPair<ITypeCheckStmnt, IPrintStmnt>, IFormStmnt> combItem = (IPair<IPair<ITypeCheckStmnt, IPrintStmnt>, IFormStmnt>)root;
-                combItem.Item1.Item1.TypeCheck(env);
-
-                printOutputBlock.Document = new FlowDocument(combItem.Item1.Item2.BuildDocument());
-
-                if (!errMngr.HasErrors)
-                {
-                    formContainer.Content = combItem.Item2.BuildForm(new Algebra.QL.Eval.Environment.ValueEnvironment(), new Algebra.QL.Form.Environment.TypeEnvironment());
-                }
-            }
+            printOutputBlock.Document = new FlowDocument(combItem.Item1.Item2.BuildDocument(0));
 
             if (!errMngr.HasErrors)
             {
+                formContainer.Content = combItem.Item2.BuildForm(new Algebra.QL.Eval.Environment.ValueEnvironment(), new Algebra.QL.Form.Environment.TypeEnvironment());
                 tabControl.SelectedIndex = 1;
             }
         }

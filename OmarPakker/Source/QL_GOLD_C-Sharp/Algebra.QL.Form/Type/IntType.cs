@@ -24,7 +24,7 @@ namespace Algebra.QL.Form.Type
             {
                 value.Value = iud.Value;
             };
-            
+
             Action onValueChanged = () =>
             {
                 iud.Value = Convert.ToInt32(value.Value);

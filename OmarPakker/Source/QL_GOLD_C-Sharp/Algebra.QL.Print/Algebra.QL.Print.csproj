@@ -60,6 +60,8 @@
     <Compile Include="Expr\SubtractExpr.cs" />
     <Compile Include="Expr\VarExpr.cs" />
     <Compile Include="Expr\VarInitExpr.cs" />
+    <Compile Include="Expr\OrderExpr.cs" />
+    <Compile Include="Stmnt\BlockStmnt.cs" />
     <Compile Include="Factory\PrintFactory.cs" />
     <Compile Include="IPrint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

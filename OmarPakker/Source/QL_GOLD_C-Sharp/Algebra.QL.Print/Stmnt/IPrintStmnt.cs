@@ -4,6 +4,6 @@ namespace Algebra.QL.Print.Stmnt
 {
     public interface IPrintStmnt : IPrint
     {
-        Block BuildDocument();
+        Block BuildDocument(int indentation);
     }
 }
