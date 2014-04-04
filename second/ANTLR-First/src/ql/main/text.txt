@@ -1,0 +1,18 @@
+form BuyingADog {      
+	quest1:   "Do you want to buy a dog?"   boolean      
+	if (quest1) {      
+		priceQ:   "How much money do you want to pay for one?"   boolean      
+		if (priceQ>100) {      
+			taxes:   "You have to pay as taxes:"   integer(priceQ/5)     
+		} 
+	}     
+	if (quest1 == 1) {      
+		quest2:   "How about a cat?"   boolean      
+		if(quest2) {   
+			quest3:   "What should be the name of the cat?"   string     
+			if(quest3 == "sissy"  ) {   
+				quest4:   "That's an ugly name. How about 'Marco'?"   boolean    
+			}
+		}
+	}    
+}
