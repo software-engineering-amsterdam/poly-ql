@@ -17,8 +17,8 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             
-            <Button Grid.Column="0" Content="Load File" Click="LoadBtn_Click" />
-            <Button Grid.Column="1" Content="Use Default File" Click="DefaultBtn_Click"/>
+            <Button Grid.Column="0" Content="Load File" Click="OnLoadButtonClick" />
+            <Button Grid.Column="1" Content="Use Default File" Click="OnDefaultButtonClick"/>
         </Grid>
 
         <TabControl Name="tabControl" Grid.Row="1">
@@ -29,9 +29,9 @@
                         <RowDefinition Height="25"/>
                     </Grid.RowDefinitions>
                     
-                    <RichTextBox Name="customCodeBlock" Grid.Row="0" Background="#1E1E1E" Foreground="LightGray"
+                    <RichTextBox Name="codeTextBox" Grid.Row="0" Background="#1E1E1E" Foreground="LightGray"
                         ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                        SelectionChanged="CustomCodeBlock_SelectionChanged">
+                        SelectionChanged="OnCodeTextBoxSelectionChanged">
                         <RichTextBox.Resources>
                             <Style TargetType="{x:Type Paragraph}">
                                 <Setter Property="Margin" Value="0"/>
@@ -71,13 +71,13 @@
                                 <Label Name="colNumber">0</Label>
                             </StackPanel>
                         </StackPanel>
-                        <Button Grid.Column="1" Content="Run Custom Code" Click="CustomCodeBtn_Click"/>
+                        <Button Grid.Column="1" Content="Run Code" Click="OnRunCodeButtonClick"/>
                     </Grid>
                 </Grid>
             </TabItem>
 
             <TabItem Header="Code Printout">
-                <RichTextBox Name="printOutputBlock" IsReadOnly="True" Background="#1E1E1E" Foreground="LightGray"
+                <RichTextBox Name="printOutputTextBox" IsReadOnly="True" Background="#1E1E1E" Foreground="LightGray"
                     ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Auto">
                     <RichTextBox.Resources>
                         <Style TargetType="{x:Type Paragraph}">
@@ -87,7 +87,7 @@
                 </RichTextBox>
             </TabItem>
 
-            <TabItem Name="formContainer" Header="Questionaire">
+            <TabItem Name="questionaireContainer" Header="Questionaire">
                 
             </TabItem>
         </TabControl>
@@ -95,7 +95,7 @@
         <GridSplitter Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Top" 
              ResizeBehavior="PreviousAndNext" Height="5" Background="Gray" />
 
-        <RichTextBox Name="errorOutputBlock" Grid.Row="3" IsReadOnly="True" Background="#1E1E1E"
+        <RichTextBox Name="errorOutputTextBox" Grid.Row="3" IsReadOnly="True" Background="#1E1E1E"
             ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Auto">
             <RichTextBox.Resources>
                 <Style TargetType="{x:Type Paragraph}">

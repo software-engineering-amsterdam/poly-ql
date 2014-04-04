@@ -20,6 +20,7 @@ using Algebra.QL.TypeCheck.Expr;
 using Algebra.QL.TypeCheck.Stmnt;
 using Algebra.QL.TypeCheck.Type;
 using Microsoft.Win32;
+using WPFParser.ExtensionMethods;
 using WPFParser.Helpers;
 using WPFParser.MergedFactory;
 
@@ -52,33 +53,24 @@ namespace WPFParser
 
         private void Reset()
         {
-            printOutputBlock.Document.Blocks.Clear();
-            errorOutputBlock.Document.Blocks.Clear();
-            formContainer.Content = null;
+            codeTextBox.Document.Blocks.Clear();
+            printOutputTextBox.Document.Blocks.Clear();
+            errorOutputTextBox.Document.Blocks.Clear();
+            questionaireContainer.Content = null;
         }
 
-        private void RunParser(string code)
+        private void RunParser()
         {
-            Parser.Parse(code);
+            printOutputTextBox.Document.Blocks.Clear();
+            errorOutputTextBox.Document.Blocks.Clear();
+            questionaireContainer.Content = null;
+
+            Parser.Parse(new TextRange(codeTextBox.Document.ContentStart, codeTextBox.Document.ContentEnd).Text);
         }
 
         private void PrintMsg(Tuple<int, int> sourceStartPos, Tuple<int, int> sourceEndPos, string msg, Color color)
         {
-            TextPointer docStart = customCodeBlock.Document.ContentStart.GetLineStartPosition(0);
-
-            TextPointer start = docStart.GetLineStartPosition(sourceStartPos.Item1);
-            for (int i = 0; i <= sourceStartPos.Item2; i++)
-            {
-                start = start.GetNextInsertionPosition(LogicalDirection.Forward);
-            }
-
-            TextPointer end = docStart.GetLineStartPosition(sourceEndPos.Item1);
-            for (int i = 0; i <= sourceEndPos.Item2; i++)
-            {
-                end = end.GetNextInsertionPosition(LogicalDirection.Forward);
-            }
-
-            TextRange range = new TextRange(start, end);
+            TextRange range = new TextRange(codeTextBox.GetTextPointerForPosition(sourceStartPos), codeTextBox.GetTextPointerForPosition(sourceEndPos));
             range.ApplyPropertyValue(TextElement.BackgroundProperty, new SolidColorBrush(color));
 
             PrintMsg(msg, color);
@@ -86,7 +78,7 @@ namespace WPFParser
 
         private void PrintMsg(string msg, Color color)
         {
-            errorOutputBlock.Document.Blocks.Add(new Paragraph(new Run(msg)
+            errorOutputTextBox.Document.Blocks.Add(new Paragraph(new Run(msg)
             {
                 Foreground = new SolidColorBrush(color)
             }));
@@ -112,11 +104,10 @@ namespace WPFParser
             IPair<IPair<ITypeCheckStmnt, IPrintStmnt>, IFormStmnt> combItem = (IPair<IPair<ITypeCheckStmnt, IPrintStmnt>, IFormStmnt>)root;
             combItem.Item1.Item1.TypeCheck(new TypeEnvironment(errMngr));
 
-            printOutputBlock.Document = new FlowDocument(combItem.Item1.Item2.BuildDocument(0));
-
             if (!errMngr.HasErrors)
             {
-                formContainer.Content = combItem.Item2.BuildForm(new Algebra.QL.Eval.Environment.ValueEnvironment(), new Algebra.QL.Form.Environment.TypeEnvironment());
+                printOutputTextBox.Document = new FlowDocument(combItem.Item1.Item2.BuildDocument(0));
+                questionaireContainer.Content = combItem.Item2.BuildForm(new Algebra.QL.Eval.Environment.ValueEnvironment(), new Algebra.QL.Form.Environment.TypeEnvironment());
                 tabControl.SelectedIndex = 1;
             }
         }
@@ -138,81 +129,53 @@ namespace WPFParser
 
         private void OnLexicalError(Tuple<int, int> pos, object token)
         {
-            PrintMsg(String.Format("Unknown token '{0}' found on line {1} column {2}", token, pos.Item1, pos.Item2), Colors.Red);
+            PrintMsg(new Tuple<int,int>(pos.Item1, pos.Item2 - 1), pos,
+                String.Format("Unknown token '{0}' found on line {1} column {2}",
+                token, pos.Item1, pos.Item2), Colors.Red);
         }
 
         private void OnSyntaxError(Tuple<int, int> pos, object token, string expected)
         {
-            PrintMsg(String.Format("Unexpected token '{0}' on line {1} column {2}. Expected: {3}",
+            PrintMsg(new Tuple<int, int>(pos.Item1, pos.Item2 - 1), pos,
+                String.Format("Unexpected token '{0}' on line {1} column {2}. Expected: {3}",
                 token, pos.Item1, pos.Item2, expected), Colors.Red);
         }
 
-        private void LoadBtn_Click(object sender, RoutedEventArgs e)
+        private void OnLoadButtonClick(object sender, RoutedEventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog()
             {
-                DefaultExt = "txt",
+                DefaultExt = ".txt",
+                Filter = "Text Files|*.txt",
                 InitialDirectory = PathToTestFiles,
                 Multiselect = false
             };
 
-            dialog.FileOk += (s, dialogE) =>
+            if (dialog.ShowDialog().Value)
             {
-                if (!dialogE.Cancel)
-                {
-                    Reset();
+                Reset();
 
-                    string fileContents = new StreamReader(dialog.OpenFile()).ReadToEnd();
-                    customCodeBlock.Document.Blocks.Clear();
-                    customCodeBlock.AppendText(fileContents);
-
-                    RunParser(fileContents);
-                }
-            };
-
-            dialog.ShowDialog();
+                codeTextBox.AppendText(new StreamReader(dialog.OpenFile()).ReadToEnd());
+            }
         }
 
-        private void DefaultBtn_Click(object sender, RoutedEventArgs e)
+        private void OnDefaultButtonClick(object sender, RoutedEventArgs e)
         {
             Reset();
 
-            string defaultFileContents = File.OpenText(PathToTestFiles + DefaultFileName).ReadToEnd();
-            customCodeBlock.Document.Blocks.Clear();
-            customCodeBlock.AppendText(defaultFileContents);
-
-            RunParser(defaultFileContents);
+            codeTextBox.AppendText(File.OpenText(PathToTestFiles + DefaultFileName).ReadToEnd());
         }
 
-        private void CustomCodeBtn_Click(object sender, RoutedEventArgs e)
+        private void OnRunCodeButtonClick(object sender, RoutedEventArgs e)
         {
-            Reset();
-
-            RunParser(new TextRange(customCodeBlock.Document.ContentStart, customCodeBlock.Document.ContentEnd).Text);
+            RunParser();
         }
 
-        private void CustomCodeBlock_SelectionChanged(object sender, RoutedEventArgs e)
+        private void OnCodeTextBoxSelectionChanged(object sender, RoutedEventArgs e)
         {
-            TextPointer selStart = customCodeBlock.Selection.Start.GetInsertionPosition(LogicalDirection.Backward);
-            TextPointer selStartLine = selStart.GetLineStartPosition(0);
-
-            TextPointer docLine = customCodeBlock.Document.ContentStart.GetLineStartPosition(0);
-            int lineNr = 1;
-            while (selStartLine.CompareTo(docLine) > 0)
-            {
-                docLine = docLine.GetLineStartPosition(1);
-                lineNr++;
-            }
-            lnNumber.Content = lineNr;
-
-            TextPointer insPoint = selStartLine.GetNextInsertionPosition(LogicalDirection.Forward);
-            int colNr = 1;
-            while (selStart.CompareTo(insPoint) > 0)
-            {
-                insPoint = insPoint.GetNextInsertionPosition(LogicalDirection.Forward);
-                colNr++;
-            }
-            colNumber.Content = colNr;
+            TextPointer tp = codeTextBox.Selection.Start;
+            lnNumber.Content = codeTextBox.GetLineForTextPointer(tp);
+            colNumber.Content = codeTextBox.GetColumnForTextPointer(tp);
         }
     }
 }
