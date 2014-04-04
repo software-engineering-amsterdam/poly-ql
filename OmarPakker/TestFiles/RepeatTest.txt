@@ -1,0 +1,21 @@
+form Form1
+{
+    "Outer Repeat amount:" >> outerAmount:int;
+    "Inner Repeat amount:" >> innerAmount:int;
+    repeat (outerAmount)
+    {
+        "Outer input:" >> outerInput:int;
+        "Outer input * 2:" << outerMultiply:int = outerInput * 2;
+
+        repeat (innerAmount)
+        {
+            "Inner input:" >> innerInput:int;
+            "Inner input * 4:" << innerMultiply:int = innerInput * 4;
+            "Inner input + Outer Input" << innerPlusOuter:int = outerInput + innerInput;
+        }
+        "Inner input Sum:" << sum(innerInput);
+        "Inner input Avg:" << avg(innerInput);
+    }
+    "Outer input Sum:" << sum(outerInput);
+    "Outer input Avg:" << avg(outerInput);
+}

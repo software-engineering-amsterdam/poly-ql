@@ -1,0 +1,104 @@
+"Name"     = 'Questionaire Language'
+"Author"   = 'Omar Pakker'
+"Version"  = 'v1'
+"About"    = 'A grammar for Questionaires.'
+
+"Start Symbol"   = <Form>
+"Case Sensitive" = True
+
+! -------------------------------------------------
+! Character Sets
+! -------------------------------------------------
+{ID Head}      = {Letter} + [_]
+{ID Tail}      = {Alphanumeric} + [_]
+{String Chars} = {Printable} + {HT} - ["\]
+
+! -------------------------------------------------
+! Terminals
+! -------------------------------------------------
+Identifier    = {ID Head}{ID Tail}*
+
+StringLit = '"' ( {String Chars} | '\' {Printable} )* '"'
+IntLit    = {Digit}+
+RealLit   = {Digit}*'.'{Digit}+
+BoolLit   = 'true' | 'false'
+
+Comment Line = '//'
+Comment Start = '/*'
+Comment End   = '*/'
+
+! -------------------------------------------------
+! Types
+! -------------------------------------------------
+<Type>        ::= string
+               |  int
+               |  real
+               |  bool
+
+! -------------------------------------------------
+! Rules
+! -------------------------------------------------
+<Form>        ::= form Identifier <Block>
+
+<Block>       ::= '{' <Statements> '}'
+
+<Statements>  ::= <Statement> <Statements>
+               |  <Statement>
+
+<Statement>   ::= if '(' <Expression> ')' <Statement> <OptElse>
+               |  <Block>
+               |  <Question>
+
+! GOLD parser will choose 'shift' over 'reduce' for this,
+! which we want since we want the 'else' to associate with
+! the innermost 'if'.
+<OptElse>     ::= else <Statement>
+               |  <>
+
+<VarDecl>     ::= Identifier ':' <Type>
+
+<VarAssign>   ::= Identifier ':' <Type> '=' <Expression>
+
+<Question>    ::= StringLit '>>' <VarDecl> ';'
+               |  StringLit '<<' <VarAssign> ';'
+			   |  StringLit '<<' <Expression> ';'
+
+<Expression>  ::= <OrExpr> '?' <OrExpr> ':' <Expression>
+               |  <OrExpr>
+
+<OrExpr>      ::= <OrExpr> '||' <AndExpr>
+               |  <AndExpr>
+
+<AndExpr>     ::= <AndExpr> '&&' <EqExpr>
+               |  <EqExpr>
+
+<EqExpr>      ::= <EqExpr> '==' <CompExpr>
+               |  <EqExpr> '!=' <CompExpr>
+               |  <CompExpr>
+
+<CompExpr>    ::= <CompExpr> '<'  <AddExpr>
+               |  <CompExpr> '>'  <AddExpr>
+               |  <CompExpr> '<=' <AddExpr>
+               |  <CompExpr> '>=' <AddExpr>
+               |  <AddExpr>
+
+<AddExpr>     ::= <AddExpr> '+' <MultExpr>
+               |  <AddExpr> '-' <MultExpr>
+               |  <MultExpr>
+
+<MultExpr>    ::= <MultExpr> '*' <NegateExpr>
+               |  <MultExpr> '/' <NegateExpr>
+               |  <NegateExpr>
+
+<NegateExpr>  ::= '-' <Value>
+               |  '!' <Value>
+               |  <Value>
+
+<Value>       ::= Identifier
+               |  <Literal>
+               |  '(' <Expression> ')'
+
+<Literal>     ::= StringLit
+               |  IntLit
+               |  RealLit
+               |  BoolLit

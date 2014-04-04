@@ -1,0 +1,4 @@
+﻿The documentation for the GOLD file format ca be found at:
+http://goldparser.org/doc/egt/index.htm
+
+The enums values are set according to these specifications.

@@ -1,0 +1,14 @@
+form Form1
+{
+    "5 ^ 2:" << answer1:int = 5 ^ 2;
+    "10 % 3:" << 10 % 5;
+    "Date Input:" >> dateVar:date;
+    "Date Show:" << 2014-02-20T16:22:00+01:00;
+    "Repeat Amount:" >> myValue:int;
+    repeat (myValue)
+    {
+        "In the repeat:" >> loopAnswer:int;
+    }
+    "Sum:" << sum(loopAnswer);
+    "Avg:" << avg(loopAnswer);
+}
