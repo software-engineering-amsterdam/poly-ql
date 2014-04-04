@@ -1,7 +1,7 @@
 ﻿
 namespace Algebra.QL.Core.Factory
 {
-    public interface IExprFactory<E, T> : Algebra.Core.Factory.IExprFactory<E, T>, ITypeFactory<T>
+    public interface IExprFactory<E, T> : Algebra.Core.Factory.IExprFactory<E, T>
     {
         E String(string s);
         E Int(int i);

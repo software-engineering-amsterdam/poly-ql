@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using Algebra.QL.Core.Environment;
 using Algebra.QL.Eval.Environment;
 using Algebra.QL.Eval.Value;
+using Algebra.QL.Extensions.Environment;
 using Algebra.QL.Extensions.Stmnt;
 using Algebra.QL.Form.Environment;
 using Algebra.QL.Form.Expr;
@@ -20,9 +20,13 @@ namespace Algebra.QL.Extensions.Form.Stmnt
             
         }
 
-        public FrameworkElement BuildForm(ValueEnvironment vEnv, TypeEnvironment tEnv)
+        public FrameworkElement BuildForm(IValueEnvironment vEnv, ITypeEnvironment tEnv)
         {
             IList<int> baseInstances = null;
+
+            //TODO: Make it so no casting is needed
+            Eval.Environment.ValueEnvironment vEnvExt = (Eval.Environment.ValueEnvironment)vEnv;
+            Environment.TypeEnvironment tEnvExt = (Environment.TypeEnvironment)tEnv;
 
             //Need to execute the body atleast once to bring the variable into existance.
             Action<VarAccessEventArgs> onVarAccess = (args) =>
@@ -30,11 +34,11 @@ namespace Algebra.QL.Extensions.Form.Stmnt
                 baseInstances = args.Instances;
                 args.SetVarInstance(0);
             };
-            vEnv.VarAccess += onVarAccess;
-            tEnv.VarAccess += onVarAccess;
+            vEnvExt.VarAccess += onVarAccess;
+            tEnvExt.VarAccess += onVarAccess;
             Body.BuildForm(vEnv, tEnv);
-            vEnv.VarAccess -= onVarAccess;
-            tEnv.VarAccess -= onVarAccess;
+            vEnvExt.VarAccess -= onVarAccess;
+            tEnvExt.VarAccess -= onVarAccess;
 
             StackPanel sp = new StackPanel();
 
@@ -42,18 +46,18 @@ namespace Algebra.QL.Extensions.Form.Stmnt
             value.ValueChanged += () =>
             {
                 Action<VarAccessEventArgs> baseInstancesEvent = (args) => args.SetVarBaseInstances(baseInstances);
-                vEnv.VarAccess += baseInstancesEvent;
-                tEnv.VarAccess += baseInstancesEvent;
-                FillChildren(sp, Convert.ToInt32(value.Value), vEnv, tEnv);
-                vEnv.VarAccess -= baseInstancesEvent;
-                tEnv.VarAccess -= baseInstancesEvent;
+                vEnvExt.VarAccess += baseInstancesEvent;
+                tEnvExt.VarAccess += baseInstancesEvent;
+                FillChildren(sp, Convert.ToInt32(value.Value), vEnvExt, tEnvExt);
+                vEnvExt.VarAccess -= baseInstancesEvent;
+                tEnvExt.VarAccess -= baseInstancesEvent;
             };
-            FillChildren(sp, Convert.ToInt32(value.Value), vEnv, tEnv);
+            FillChildren(sp, Convert.ToInt32(value.Value), vEnvExt, tEnvExt);
 
             return sp;
         }
 
-        private void FillChildren(StackPanel sp, int count, ValueEnvironment vEnv, TypeEnvironment tEnv)
+        private void FillChildren(StackPanel sp, int count, Eval.Environment.ValueEnvironment vEnv, Environment.TypeEnvironment tEnv)
         {
             if (count >= 0 && count < sp.Children.Count)
             {

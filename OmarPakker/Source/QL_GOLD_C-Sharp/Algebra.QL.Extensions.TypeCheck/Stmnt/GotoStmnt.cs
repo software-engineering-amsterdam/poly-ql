@@ -16,7 +16,7 @@ namespace Algebra.QL.Extensions.TypeCheck.Stmnt
             
         }
 
-        public void TypeCheck(TypeEnvironment env)
+        public void TypeCheck(ITypeEnvironment env)
         {
             if (env.IsDeclared(gotoDeclareName))
             {

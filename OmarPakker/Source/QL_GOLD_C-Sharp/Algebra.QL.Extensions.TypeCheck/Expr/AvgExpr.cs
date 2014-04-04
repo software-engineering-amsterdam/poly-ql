@@ -1,5 +1,5 @@
 ﻿using System;
-using Algebra.QL.Core.Environment;
+using Algebra.QL.Extensions.Environment;
 using Algebra.QL.TypeCheck.Environment;
 using Algebra.QL.TypeCheck.Expr;
 using Algebra.QL.TypeCheck.Type;
@@ -19,10 +19,12 @@ namespace Algebra.QL.Extensions.TypeCheck.Expr
             
         }
 
-        public ITypeCheckType TypeCheck(TypeEnvironment env)
+        public ITypeCheckType TypeCheck(ITypeEnvironment env)
         {
             Action<VarAccessEventArgs> onVarAccess = (args) => args.SetVarInstance(0);
-            env.VarAccess += onVarAccess;
+            
+            //TODO: Make it so no casting is needed
+            ((Environment.TypeEnvironment)env).VarAccess += onVarAccess;
 
             if (!env.IsDeclared(Name))
             {
@@ -43,7 +45,9 @@ namespace Algebra.QL.Extensions.TypeCheck.Expr
                 return ExpressionUpperBound;
             }
 
-            env.VarAccess -= onVarAccess;
+            //TODO: Make it so no casting is needed
+            ((Environment.TypeEnvironment)env).VarAccess -= onVarAccess;
+
             return type;
         }
     }

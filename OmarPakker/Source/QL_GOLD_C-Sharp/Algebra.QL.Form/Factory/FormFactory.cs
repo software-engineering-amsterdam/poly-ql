@@ -1,4 +1,5 @@
 ﻿using Algebra.QL.Core.Factory;
+using Algebra.QL.Eval.Factory;
 using Algebra.QL.Form.Expr;
 using Algebra.QL.Form.Expr.Literals;
 using Algebra.QL.Form.Stmnt;
@@ -6,11 +7,19 @@ using Algebra.QL.Form.Type;
 
 namespace Algebra.QL.Form.Factory
 {
-    public class FormFactory : IStmntFactory<IFormStmnt, IFormExpr, IFormType>
+    public class FormFactory : IFactory<IFormStmnt, IFormExpr, IFormType>
     {
+        private readonly EvalFactory<IFormType> EvalFactory;
+
         public FormFactory()
+            : this(new EvalFactory<IFormType>())
         {
-            
+
+        }
+
+        protected FormFactory(EvalFactory<IFormType> evalFactory)
+        {
+            EvalFactory = evalFactory;
         }
 
         public IFormType StringType()
@@ -55,97 +64,97 @@ namespace Algebra.QL.Form.Factory
 
         public IFormExpr Variable(string var)
         {
-            return new VarExpr(var);
+            return new VarExpr(var, EvalFactory.Variable(var));
         }
 
         public IFormExpr Or(IFormExpr l, IFormExpr r)
         {
-            return new OrExpr(l, r);
+            return new BinaryExpr(l, r, EvalFactory.Or(l, r));
         }
 
         public IFormExpr And(IFormExpr l, IFormExpr r)
         {
-            return new AndExpr(l, r);
+            return new BinaryExpr(l, r, EvalFactory.And(l, r));
         }
 
         public IFormExpr Eq(IFormExpr l, IFormExpr r)
         {
-            return new EqualsExpr(l, r);
+            return new BinaryExpr(l, r, EvalFactory.Eq(l, r));
         }
 
         public IFormExpr NotEq(IFormExpr l, IFormExpr r)
         {
-            return new NotEqualExpr(l, r);
+            return new BinaryExpr(l, r, EvalFactory.NotEq(l, r));
         }
 
         public IFormExpr LessThen(IFormExpr l, IFormExpr r)
         {
-            return new LessThenExpr(l, r);
+            return new BinaryExpr(l, r, EvalFactory.LessThen(l, r));
         }
 
         public IFormExpr GreaterThen(IFormExpr l, IFormExpr r)
         {
-            return new GreaterThenExpr(l, r);
+            return new BinaryExpr(l, r, EvalFactory.GreaterThen(l, r));
         }
 
         public IFormExpr LessOrEqualTo(IFormExpr l, IFormExpr r)
         {
-            return new LessOrEqualToExpr(l, r);
+            return new BinaryExpr(l, r, EvalFactory.LessOrEqualTo(l, r));
         }
 
         public IFormExpr GreaterOrEqualTo(IFormExpr l, IFormExpr r)
         {
-            return new GreaterOrEqualToExpr(l, r);
+            return new BinaryExpr(l, r, EvalFactory.GreaterOrEqualTo(l, r));
         }
 
         public IFormExpr Add(IFormExpr l, IFormExpr r)
         {
-            return new AddExpr(l, r);
+            return new BinaryExpr(l, r, EvalFactory.Add(l, r));
         }
 
         public IFormExpr Subtract(IFormExpr l, IFormExpr r)
         {
-            return new SubtractExpr(l, r);
+            return new BinaryExpr(l, r, EvalFactory.Subtract(l, r));
         }
 
         public IFormExpr Multiply(IFormExpr l, IFormExpr r)
         {
-            return new MultiplyExpr(l, r);
+            return new BinaryExpr(l, r, EvalFactory.Multiply(l, r));
         }
 
         public IFormExpr Divide(IFormExpr l, IFormExpr r)
         {
-            return new DivideExpr(l, r);
+            return new BinaryExpr(l, r, EvalFactory.Divide(l, r));
         }
 
         public IFormExpr NegateBool(IFormExpr e)
         {
-            return new NegateBoolExpr(e);
+            return new NegateBoolExpr(e, EvalFactory.NegateBool(e));
         }
 
         public IFormExpr NegateNumeric(IFormExpr e)
         {
-            return new NegateNumericExpr(e);
+            return new NegateNumericExpr(e, EvalFactory.NegateNumeric(e));
         }
 
         public IFormExpr VarDecl(string var, IFormType t)
         {
-            return new VarInitExpr(var, t);
+            return new VarInitExpr(var, t, EvalFactory.VarAssign(var, t, t.DefaultValue));
         }
 
         public IFormExpr VarAssign(string var, IFormType t, IFormExpr e)
         {
-            return new VarInitExpr(var, t, e);
+            return new VarInitExpr(var, t, e, EvalFactory.VarAssign(var, t, e));
         }
 
         public IFormExpr IfElse(IFormExpr toEval, IFormExpr ifTrue, IFormExpr ifFalse)
         {
-            return new IfElseExpr(toEval, ifTrue, ifFalse);
+            return new IfElseExpr(toEval, ifTrue, ifFalse, EvalFactory.IfElse(toEval, ifTrue, ifFalse));
         }
 
         public IFormExpr ExpressionOrder(IFormExpr e)
         {
-            return e; //TODO
+            return e; //We can skip this
         }
 
         public IFormStmnt Statements(IFormStmnt l, IFormStmnt r)
@@ -180,7 +189,7 @@ namespace Algebra.QL.Form.Factory
 
         public IFormStmnt Block(IFormStmnt s)
         {
-            return s; //TODO
+            return s; //We can skip this
         }
     }
 }

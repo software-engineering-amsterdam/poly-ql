@@ -1,7 +1,7 @@
 ﻿
 namespace Algebra.Core.Expr
 {
-    public abstract class BinaryExpr<E> : UnaryExpr<E>
+    public class BinaryExpr<E> : UnaryExpr<E>
     {
         public E Expr2 { get; private set; }
 

@@ -17,7 +17,7 @@ namespace Algebra.QL.TypeCheck.Expr
 
         }
 
-        public ITypeCheckType TypeCheck(TypeEnvironment env)
+        public ITypeCheckType TypeCheck(ITypeEnvironment env)
         {
             ITypeCheckType a = Expr1.TypeCheck(env);
             ITypeCheckType b = Expr2.TypeCheck(env);

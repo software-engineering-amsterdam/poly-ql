@@ -6,7 +6,7 @@ using QL_Tests.Type;
 
 namespace QL_Tests.Factory
 {
-    public class TestFactory : IStmntFactory<ITestStmnt, ITestExpr, ITestType>
+    public class TestFactory : IFactory<ITestStmnt, ITestExpr, ITestType>
     {
         public TestFactory()
         {
@@ -165,7 +165,7 @@ namespace QL_Tests.Factory
 
         public ITestExpr ExpressionOrder(ITestExpr e)
         {
-            return e; //TODO
+            return e; //We can skip this
         }
 
         public ITestStmnt Forms(ITestStmnt l, ITestStmnt r)
@@ -225,7 +225,7 @@ namespace QL_Tests.Factory
 
         public ITestStmnt Block(ITestStmnt s)
         {
-            return s; //TODO
+            return s; //We can skip this
         }
     }
 }

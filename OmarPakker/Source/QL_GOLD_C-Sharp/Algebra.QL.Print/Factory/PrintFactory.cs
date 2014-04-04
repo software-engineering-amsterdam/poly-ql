@@ -6,7 +6,7 @@ using Algebra.QL.Print.Type;
 
 namespace Algebra.QL.Print.Factory
 {
-    public class PrintFactory : IStmntFactory<IPrintStmnt, IPrintExpr, IPrintType>
+    public class PrintFactory : IFactory<IPrintStmnt, IPrintExpr, IPrintType>
     {
         public PrintFactory()
         {
@@ -130,7 +130,7 @@ namespace Algebra.QL.Print.Factory
 
         public IPrintExpr VarDecl(string var, IPrintType t)
         {
-            return VarAssign(var, t, t.DefaultValue);
+            return new VarInitExpr(var, t);
         }
 
         public IPrintExpr VarAssign(string var, IPrintType t, IPrintExpr e)

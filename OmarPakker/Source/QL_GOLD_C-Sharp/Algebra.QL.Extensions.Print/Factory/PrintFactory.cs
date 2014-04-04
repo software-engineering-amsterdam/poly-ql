@@ -10,7 +10,7 @@ using Algebra.QL.Print.Type;
 
 namespace Algebra.QL.Extensions.Print.Factory
 {
-    public class PrintFactory : QL.Print.Factory.PrintFactory, IStmntFactory<IPrintStmnt, IPrintExpr, IPrintType>
+    public class PrintFactory : QL.Print.Factory.PrintFactory, IFactory<IPrintStmnt, IPrintExpr, IPrintType>
     {
         public PrintFactory()
         {

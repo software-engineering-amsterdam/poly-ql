@@ -3,9 +3,8 @@ using System.Diagnostics;
 using Algebra.Core.Collections;
 using Algebra.Core.Environment;
 
-namespace Algebra.QL.Core.Environment
+namespace Algebra.QL.Extensions.Environment
 {
-    //TODO: Move to extensions once environment is independent
     public class ExtVarEnvironment<T> : IVarEnvironment<T>
     {
         private const char RepeatedSuffix = '$';

@@ -11,7 +11,7 @@ namespace Algebra.QL.Eval.Expr
 
         }
 
-        public ValueContainer Evaluate(ValueEnvironment env)
+        public ValueContainer Evaluate(IValueEnvironment env)
         {
             return env.GetDeclared(Name);
         }

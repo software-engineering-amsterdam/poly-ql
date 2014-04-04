@@ -13,9 +13,9 @@ namespace Algebra.QL.Extensions.Form.Expr
             
         }
 
-        public IFormType BuildForm(TypeEnvironment env)
+        public IFormType BuildForm(ITypeEnvironment env)
         {
-            return env.GetRange(Name).First();
+            return ((Environment.TypeEnvironment)env).GetRange(Name).First();
         }
     }
 }

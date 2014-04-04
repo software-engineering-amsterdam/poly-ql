@@ -3,10 +3,9 @@ using Algebra.QL.Eval.Value;
 
 namespace Algebra.QL.Eval.Expr
 {
-    public class SubtractExpr<E> : BinaryExpr<E>, IEvalExpr
-        where E : IEvalExpr
+    public class SubtractExpr : BinaryExpr, IEvalExpr
     {
-        public SubtractExpr(E l, E r)
+        public SubtractExpr(IEvalExpr l, IEvalExpr r)
             : base(l, r)
         {
 

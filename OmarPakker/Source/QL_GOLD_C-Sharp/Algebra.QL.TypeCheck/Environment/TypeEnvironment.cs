@@ -5,7 +5,7 @@ using Algebra.QL.TypeCheck.Type;
 
 namespace Algebra.QL.TypeCheck.Environment
 {
-    public class TypeEnvironment : ExtVarEnvironment<ITypeCheckType>
+    public class TypeEnvironment : VarEnvironment<ITypeCheckType>, ITypeEnvironment
     {
         private readonly ErrorManager errorManager;
 

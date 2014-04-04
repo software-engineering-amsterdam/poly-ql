@@ -3,7 +3,7 @@ using Algebra.QL.Form.Type;
 
 namespace Algebra.QL.Form.Environment
 {
-    public class TypeEnvironment : ExtVarEnvironment<IFormType>
+    public class TypeEnvironment : VarEnvironment<IFormType>, ITypeEnvironment
     {
         public TypeEnvironment()
         {

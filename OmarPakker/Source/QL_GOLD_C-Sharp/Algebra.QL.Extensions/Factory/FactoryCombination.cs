@@ -5,9 +5,9 @@ namespace Algebra.QL.Extensions.Factory
 {
     public class FactoryCombination<S1, E1, T1, S2, E2, T2, F1, F2>
         : Core.Factory.FactoryCombination<S1, E1, T1, S2, E2, T2, F1, F2>,
-          IStmntFactory<IPair<S1, S2>, IPair<E1, E2>, IPair<T1, T2>>
-        where F1 : IStmntFactory<S1, E1, T1>
-        where F2 : IStmntFactory<S2, E2, T2>
+          IFactory<IPair<S1, S2>, IPair<E1, E2>, IPair<T1, T2>>
+        where F1 : IFactory<S1, E1, T1>
+        where F2 : IFactory<S2, E2, T2>
     {
         public FactoryCombination(F1 f1, F2 f2)
             : base(f1, f2)

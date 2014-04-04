@@ -15,7 +15,7 @@ namespace Algebra.QL.TypeCheck.Stmnt
 
         }
 
-        public void TypeCheck(TypeEnvironment env)
+        public void TypeCheck(ITypeEnvironment env)
         {
             env.Clear();
 

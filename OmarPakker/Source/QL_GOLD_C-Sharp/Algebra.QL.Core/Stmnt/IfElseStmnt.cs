@@ -1,7 +1,7 @@
 ﻿
 namespace Algebra.QL.Core.Stmnt
 {
-    public abstract class IfElseStmnt<E, S> : IfStmnt<E, S>
+    public class IfElseStmnt<E, S> : IfStmnt<E, S>
     {
         public S IfFalseBody { get; private set; }
 

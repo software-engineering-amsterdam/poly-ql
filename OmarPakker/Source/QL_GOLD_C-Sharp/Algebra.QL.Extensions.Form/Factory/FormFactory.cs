@@ -1,4 +1,5 @@
 ﻿using System;
+using Algebra.QL.Extensions.Eval.Factory;
 using Algebra.QL.Extensions.Factory;
 using Algebra.QL.Extensions.Form.Expr;
 using Algebra.QL.Extensions.Form.Expr.Literals;
@@ -10,11 +11,20 @@ using Algebra.QL.Form.Type;
 
 namespace Algebra.QL.Extensions.Form.Factory
 {
-    public class FormFactory : QL.Form.Factory.FormFactory, IStmntFactory<IFormStmnt, IFormExpr, IFormType>
+    public class FormFactory : QL.Form.Factory.FormFactory, IFactory<IFormStmnt, IFormExpr, IFormType>
     {
+        private readonly EvalFactory<IFormType> EvalFactory;
+
         public FormFactory()
+            : this(new EvalFactory<IFormType>())
         {
 
+        }
+
+        protected FormFactory(EvalFactory<IFormType> evalFactory)
+            : base(evalFactory)
+        {
+            EvalFactory = evalFactory;
         }
 
         public IFormType DateType()
@@ -29,12 +39,12 @@ namespace Algebra.QL.Extensions.Form.Factory
 
         public IFormExpr Modulo(IFormExpr l, IFormExpr r)
         {
-            return new ModuloExpr(l, r);
+            return new BinaryExpr(l, r, EvalFactory.Modulo(l, r));
         }
 
         public IFormExpr Power(IFormExpr l, IFormExpr r)
         {
-            return new PowerExpr(l, r);
+            return new BinaryExpr(l, r, EvalFactory.Power(l, r));
         }
 
         public IFormStmnt Forms(IFormStmnt l, IFormStmnt r)

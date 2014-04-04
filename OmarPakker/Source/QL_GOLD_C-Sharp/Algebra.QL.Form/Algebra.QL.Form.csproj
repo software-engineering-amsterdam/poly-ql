@@ -42,27 +42,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Expr\AddExpr.cs" />
-    <Compile Include="Expr\AndExpr.cs" />
-    <Compile Include="Expr\DivideExpr.cs" />
-    <Compile Include="Expr\EqualsExpr.cs" />
-    <Compile Include="Expr\GreaterOrEqualToExpr.cs" />
-    <Compile Include="Expr\GreaterThenExpr.cs" />
+    <Compile Include="Environment\ITypeEnvironment.cs" />
+    <Compile Include="Expr\BinaryExpr.cs" />
     <Compile Include="Expr\IfElseExpr.cs" />
     <Compile Include="Expr\IFormExpr.cs" />
-    <Compile Include="Expr\LessOrEqualToExpr.cs" />
-    <Compile Include="Expr\LessThenExpr.cs" />
-    <Compile Include="Expr\Literals\LiteralExpr.cs" />
     <Compile Include="Expr\Literals\BoolLiteral.cs" />
     <Compile Include="Expr\Literals\IntLiteral.cs" />
     <Compile Include="Expr\Literals\RealLiteral.cs" />
     <Compile Include="Expr\Literals\StringLiteral.cs" />
-    <Compile Include="Expr\MultiplyExpr.cs" />
     <Compile Include="Expr\NegateBoolExpr.cs" />
     <Compile Include="Expr\NegateNumericExpr.cs" />
-    <Compile Include="Expr\NotEqualExpr.cs" />
-    <Compile Include="Expr\OrExpr.cs" />
-    <Compile Include="Expr\SubtractExpr.cs" />
     <Compile Include="Expr\VarExpr.cs" />
     <Compile Include="Expr\VarInitExpr.cs" />
     <Compile Include="Factory\FormFactory.cs" />

@@ -6,6 +6,7 @@ using System.Windows.Media;
 using Algebra.Core.Collections;
 using Algebra.Core.Environment;
 using Algebra.Core.Grammar;
+using Algebra.QL.Extensions.TypeCheck.Environment;
 using Algebra.QL.Form;
 using Algebra.QL.Form.Expr;
 using Algebra.QL.Form.Stmnt;
@@ -15,7 +16,6 @@ using Algebra.QL.Print.Expr;
 using Algebra.QL.Print.Stmnt;
 using Algebra.QL.Print.Type;
 using Algebra.QL.TypeCheck;
-using Algebra.QL.TypeCheck.Environment;
 using Algebra.QL.TypeCheck.Expr;
 using Algebra.QL.TypeCheck.Stmnt;
 using Algebra.QL.TypeCheck.Type;
@@ -107,7 +107,8 @@ namespace WPFParser
             if (!errMngr.HasErrors)
             {
                 printOutputTextBox.Document = new FlowDocument(combItem.Item1.Item2.BuildDocument(0));
-                questionaireContainer.Content = combItem.Item2.BuildForm(new Algebra.QL.Eval.Environment.ValueEnvironment(), new Algebra.QL.Form.Environment.TypeEnvironment());
+                questionaireContainer.Content = combItem.Item2.BuildForm(new Algebra.QL.Extensions.Eval.Environment.ValueEnvironment(),
+                    new Algebra.QL.Extensions.Form.Environment.TypeEnvironment());
                 tabControl.SelectedIndex = 1;
             }
         }

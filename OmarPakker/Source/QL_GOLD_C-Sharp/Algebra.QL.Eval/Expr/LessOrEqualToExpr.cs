@@ -3,10 +3,9 @@ using Algebra.QL.Eval.Value;
 
 namespace Algebra.QL.Eval.Expr
 {
-    public class LessOrEqualToExpr<E> : BinaryExpr<E>, IEvalExpr
-        where E : IEvalExpr
+    public class LessOrEqualToExpr : BinaryExpr, IEvalExpr
     {
-        public LessOrEqualToExpr(E l, E r)
+        public LessOrEqualToExpr(IEvalExpr l, IEvalExpr r)
             : base(l, r)
         {
 

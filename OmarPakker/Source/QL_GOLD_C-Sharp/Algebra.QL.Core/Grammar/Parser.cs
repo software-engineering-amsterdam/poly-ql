@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using Algebra.QL.Core.Factory;
 using Grammar.Generated.v1;
 
 namespace Algebra.QL.Core.Grammar
 {
     public class Parser<S, E, T, F> : Algebra.Core.Grammar.Parser
-        where F : Algebra.QL.Core.Factory.IStmntFactory<S, E, T>
+        where F : IFactory<S, E, T>
     {
         protected override ReadOnlyDictionary<ushort, string> Rules { get { return GrammarData.Rules; } }
         protected readonly F factory;

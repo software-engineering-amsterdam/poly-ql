@@ -17,7 +17,7 @@ namespace Algebra.QL.Form.Stmnt
 
         }
 
-        public FrameworkElement BuildForm(ValueEnvironment vEnv, TypeEnvironment tEnv)
+        public FrameworkElement BuildForm(IValueEnvironment vEnv, ITypeEnvironment tEnv)
         {
             ValueContainer value = CheckExpression.Evaluate(vEnv);
 

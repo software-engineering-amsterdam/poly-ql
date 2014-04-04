@@ -6,7 +6,7 @@ using Algebra.QL.TypeCheck.Type;
 
 namespace Algebra.QL.TypeCheck.Factory
 {
-    public class TypeCheckFactory : IStmntFactory<ITypeCheckStmnt, ITypeCheckExpr, ITypeCheckType>
+    public class TypeCheckFactory : IFactory<ITypeCheckStmnt, ITypeCheckExpr, ITypeCheckType>
     {
         public TypeCheckFactory()
         {
@@ -130,7 +130,7 @@ namespace Algebra.QL.TypeCheck.Factory
 
         public ITypeCheckExpr VarDecl(string var, ITypeCheckType t)
         {
-            return VarAssign(var, t, t.DefaultValue);
+            return new VarInitExpr(var, t);
         }
 
         public ITypeCheckExpr VarAssign(string var, ITypeCheckType t, ITypeCheckExpr e)
@@ -145,7 +145,7 @@ namespace Algebra.QL.TypeCheck.Factory
 
         public ITypeCheckExpr ExpressionOrder(ITypeCheckExpr e)
         {
-            return e; //TODO
+            return e; //We can skip this
         }
 
         public ITypeCheckStmnt Statements(ITypeCheckStmnt l, ITypeCheckStmnt r)
@@ -180,7 +180,7 @@ namespace Algebra.QL.TypeCheck.Factory
 
         public ITypeCheckStmnt Block(ITypeCheckStmnt s)
         {
-            return s; //TODO
+            return s; //We can skip this
         }
     }
 }

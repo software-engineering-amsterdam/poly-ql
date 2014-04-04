@@ -1,7 +1,7 @@
 ﻿
 namespace Algebra.Core.Expr
 {
-    public abstract class VarInitExpr<E, T>
+    public class VarInitExpr<E, T>
     {
         public string Name { get; private set; }
         public T Type { get; private set; }

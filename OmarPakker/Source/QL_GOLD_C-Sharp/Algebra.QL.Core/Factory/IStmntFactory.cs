@@ -1,7 +1,7 @@
 ﻿
 namespace Algebra.QL.Core.Factory
 {
-    public interface IStmntFactory<S, E, T> : Algebra.Core.Factory.IStmntFactory<S, E, T>, IExprFactory<E, T>
+    public interface IStmntFactory<S, E, T> : Algebra.Core.Factory.IStmntFactory<S, E, T>
     {
         S Statements(S l, S r);
 

@@ -10,13 +10,19 @@ namespace Algebra.QL.TypeCheck.Expr
         public Tuple<int, int> SourceStartPosition { get; set; }
         public Tuple<int, int> SourceEndPosition { get; set; }
 
+        public VarInitExpr(string name, ITypeCheckType type)
+            : this(name, type, type.DefaultValue)
+        {
+
+        }
+
         public VarInitExpr(string name, ITypeCheckType type, ITypeCheckExpr value)
             : base(name, type, value)
         {
 
         }
 
-        public ITypeCheckType TypeCheck(TypeEnvironment env)
+        public ITypeCheckType TypeCheck(ITypeEnvironment env)
         {
             if (env.IsDeclared(Name))
             {

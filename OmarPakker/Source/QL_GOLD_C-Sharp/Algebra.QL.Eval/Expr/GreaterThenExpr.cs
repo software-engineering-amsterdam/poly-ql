@@ -3,10 +3,9 @@ using Algebra.QL.Eval.Value;
 
 namespace Algebra.QL.Eval.Expr
 {
-    public class GreaterThenExpr<E> : BinaryExpr<E>, IEvalExpr
-        where E : IEvalExpr
+    public class GreaterThenExpr : BinaryExpr, IEvalExpr
     {
-        public GreaterThenExpr(E l, E r)
+        public GreaterThenExpr(IEvalExpr l, IEvalExpr r)
             : base(l, r)
         {
 

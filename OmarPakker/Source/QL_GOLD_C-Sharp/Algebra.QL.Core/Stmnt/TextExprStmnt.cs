@@ -1,7 +1,7 @@
 ﻿
 namespace Algebra.QL.Core.Stmnt
 {
-    public abstract class TextExprStmnt<E>
+    public class TextExprStmnt<E>
     {
         public string Text { get; private set; }
         public E Expression { get; private set; }

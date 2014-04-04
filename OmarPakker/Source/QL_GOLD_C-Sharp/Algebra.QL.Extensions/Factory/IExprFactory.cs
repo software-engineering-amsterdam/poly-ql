@@ -2,7 +2,7 @@
 
 namespace Algebra.QL.Extensions.Factory
 {
-    public interface IExprFactory<E, T> : Core.Factory.IExprFactory<E, T>, ITypeFactory<T>
+    public interface IExprFactory<E, T> : Core.Factory.IExprFactory<E, T>
     {
         E Date(DateTime date);
 

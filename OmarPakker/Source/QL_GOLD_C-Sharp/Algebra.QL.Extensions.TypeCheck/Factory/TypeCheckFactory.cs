@@ -10,7 +10,7 @@ using Algebra.QL.TypeCheck.Type;
 
 namespace Algebra.QL.Extensions.TypeCheck.Factory
 {
-    public class TypeCheckFactory : QL.TypeCheck.Factory.TypeCheckFactory, IStmntFactory<ITypeCheckStmnt, ITypeCheckExpr, ITypeCheckType>
+    public class TypeCheckFactory : QL.TypeCheck.Factory.TypeCheckFactory, IFactory<ITypeCheckStmnt, ITypeCheckExpr, ITypeCheckType>
     {
         public TypeCheckFactory()
         {

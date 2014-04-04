@@ -15,7 +15,7 @@ namespace Algebra.QL.Extensions.Form.Stmnt
 
         }
 
-        public FrameworkElement BuildForm(ValueEnvironment vEnv, TypeEnvironment tEnv)
+        public FrameworkElement BuildForm(IValueEnvironment vEnv, ITypeEnvironment tEnv)
         {
             Style s = new Style();
             s.Setters.Add(new Setter(UIElement.VisibilityProperty, Visibility.Collapsed));

@@ -35,6 +35,7 @@
   <ItemGroup>
     <Compile Include="Environment\IVarEnvironment.cs" />
     <Compile Include="Expr\BinaryExpr.cs" />
+    <Compile Include="Expr\LiteralExpr.cs" />
     <Compile Include="Expr\TernaryExpr.cs" />
     <Compile Include="Expr\UnaryExpr.cs" />
     <Compile Include="Expr\VarExpr.cs" />
@@ -42,6 +43,7 @@
     <Compile Include="Factory\FactoryCombination.cs" />
     <Compile Include="Factory\FactoryUnion.cs" />
     <Compile Include="Factory\IExprFactory.cs" />
+    <Compile Include="Factory\IFactory.cs" />
     <Compile Include="Factory\IStmntFactory.cs" />
     <Compile Include="Factory\ITypeFactory.cs" />
     <Compile Include="Grammar\Parser.cs" />

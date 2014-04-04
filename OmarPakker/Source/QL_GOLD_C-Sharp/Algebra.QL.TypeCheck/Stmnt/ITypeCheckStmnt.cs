@@ -4,6 +4,6 @@ namespace Algebra.QL.TypeCheck.Stmnt
 {
     public interface ITypeCheckStmnt : ITypeCheck
     {
-        void TypeCheck(TypeEnvironment env);
+        void TypeCheck(ITypeEnvironment env);
     }
 }

@@ -6,6 +6,6 @@ namespace Algebra.QL.Form.Expr
 {
     public interface IFormExpr : IForm, IEvalExpr
     {
-        IFormType BuildForm(TypeEnvironment env);
+        IFormType BuildForm(ITypeEnvironment env);
     }
 }

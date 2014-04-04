@@ -15,11 +15,11 @@ namespace Algebra.QL.Form.Stmnt
 
         }
 
-        public FrameworkElement BuildForm(ValueEnvironment vEnv, TypeEnvironment tEnv)
+        public FrameworkElement BuildForm(IValueEnvironment vEnv, ITypeEnvironment tEnv)
         {
             StackPanel sp = new StackPanel();
             sp.Orientation = Orientation.Horizontal;
-            sp.Children.Add(new Label() { Width = 200, Content = Text });
+            sp.Children.Add(new Label() { Width = 200, Content = Text.Trim('\"') });
             sp.Children.Add(Expression.BuildForm(tEnv).BuildElement(Expression.Evaluate(vEnv), false));
 
             return sp;

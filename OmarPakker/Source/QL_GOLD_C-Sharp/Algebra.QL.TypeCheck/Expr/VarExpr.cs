@@ -15,7 +15,7 @@ namespace Algebra.QL.TypeCheck.Expr
 
         }
 
-        public ITypeCheckType TypeCheck(TypeEnvironment env)
+        public ITypeCheckType TypeCheck(ITypeEnvironment env)
         {
             if (!env.IsDeclared(Name))
             {

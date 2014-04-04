@@ -12,7 +12,7 @@ namespace Algebra.QL.Extensions.Form.Expr
             
         }
 
-        public IFormType BuildForm(TypeEnvironment env)
+        public IFormType BuildForm(ITypeEnvironment env)
         {
             return new RealType();
         }

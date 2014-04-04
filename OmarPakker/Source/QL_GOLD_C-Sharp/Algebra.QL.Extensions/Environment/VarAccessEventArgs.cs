@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Algebra.QL.Core.Environment
+namespace Algebra.QL.Extensions.Environment
 {
-    //TODO: Move to extensions once environment is independent
     public class VarAccessEventArgs : EventArgs
     {
         public IList<int> Instances { get { return new List<int>(instances); } }

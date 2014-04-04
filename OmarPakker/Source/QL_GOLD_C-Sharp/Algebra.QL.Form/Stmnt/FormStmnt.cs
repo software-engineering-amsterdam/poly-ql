@@ -14,7 +14,7 @@ namespace Algebra.QL.Form.Stmnt
 
         }
 
-        public FrameworkElement BuildForm(ValueEnvironment vEnv, TypeEnvironment tEnv)
+        public FrameworkElement BuildForm(IValueEnvironment vEnv, ITypeEnvironment tEnv)
         {
             vEnv.Clear();
             tEnv.Clear();

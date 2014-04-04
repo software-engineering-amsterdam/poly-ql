@@ -3,7 +3,7 @@ using Algebra.QL.Eval.Value;
 
 namespace Algebra.QL.Eval.Environment
 {
-    public class ValueEnvironment : ExtVarEnvironment<ValueContainer>
+    public class ValueEnvironment : VarEnvironment<ValueContainer>, IValueEnvironment
     {
         public ValueEnvironment()
         {

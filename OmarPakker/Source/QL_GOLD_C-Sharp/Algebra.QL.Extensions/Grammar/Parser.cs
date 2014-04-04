@@ -8,7 +8,7 @@ using Grammar.Generated.v2;
 namespace Algebra.QL.Extensions.Grammar
 {
     public class Parser<S, E, T, F> : Core.Grammar.Parser<S, E, T, F>
-        where F : IStmntFactory<S, E, T>
+        where F : IFactory<S, E, T>
     {
         protected override ReadOnlyDictionary<ushort, string> Rules { get { return GrammarData.Rules; } }
 

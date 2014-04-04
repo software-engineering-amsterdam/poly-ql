@@ -3,8 +3,8 @@ using Algebra.QL.Eval.Value;
 
 namespace Algebra.QL.Eval.Expr
 {
-    public interface IEvalExpr
+    public interface IEvalExpr : IEval
     {
-        ValueContainer Evaluate(ValueEnvironment env);
+        ValueContainer Evaluate(IValueEnvironment env);
     }
 }

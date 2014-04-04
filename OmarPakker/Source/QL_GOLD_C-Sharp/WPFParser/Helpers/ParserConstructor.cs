@@ -7,7 +7,7 @@ namespace WPFParser.Helpers
     public static class ParserConstructor
     {
         public static Parser GetBasicParser<S, E, T, F>(F f)
-            where F : Algebra.QL.Core.Factory.IStmntFactory<S, E, T>
+            where F : Algebra.QL.Core.Factory.IFactory<S, E, T>
         {
             var parser = new Algebra.QL.Core.Grammar.Parser<S, E, T, F>(f);
 
@@ -18,7 +18,7 @@ namespace WPFParser.Helpers
         }
 
         public static Parser GetExtendedParser<S, E, T, F>(F f)
-            where F : Algebra.QL.Extensions.Factory.IStmntFactory<S, E, T>
+            where F : Algebra.QL.Extensions.Factory.IFactory<S, E, T>
         {
             var parser = new Algebra.QL.Extensions.Grammar.Parser<S, E, T, F>(f);
 

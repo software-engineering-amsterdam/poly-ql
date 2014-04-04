@@ -2,10 +2,9 @@
 
 namespace Algebra.QL.Eval.Expr
 {
-    public class NotEqualExpr<E> : BinaryExpr<E>, IEvalExpr
-        where E : IEvalExpr
+    public class NotEqualExpr : BinaryExpr, IEvalExpr
     {
-        public NotEqualExpr(E l, E r)
+        public NotEqualExpr(IEvalExpr l, IEvalExpr r)
             : base(l, r)
         {
 

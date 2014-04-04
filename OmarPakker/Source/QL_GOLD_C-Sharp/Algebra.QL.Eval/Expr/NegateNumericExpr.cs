@@ -5,16 +5,15 @@ using Algebra.QL.Eval.Value;
 
 namespace Algebra.QL.Eval.Expr
 {
-    public class NegateNumericExpr<E> : UnaryExpr<E>, IEvalExpr
-        where E : IEvalExpr
+    public class NegateNumericExpr : UnaryExpr<IEvalExpr>, IEvalExpr
     {
-        public NegateNumericExpr(E expr)
+        public NegateNumericExpr(IEvalExpr expr)
             : base(expr)
         {
             
         }
 
-        public ValueContainer Evaluate(ValueEnvironment env)
+        public ValueContainer Evaluate(IValueEnvironment env)
         {
             ValueContainer a = Expr1.Evaluate(env);
             ValueContainer value = new ValueContainer(-Convert.ToDouble(a.Value));

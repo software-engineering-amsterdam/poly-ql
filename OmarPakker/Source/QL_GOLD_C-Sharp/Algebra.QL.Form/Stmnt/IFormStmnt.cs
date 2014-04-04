@@ -6,6 +6,6 @@ namespace Algebra.QL.Form.Stmnt
 {
     public interface IFormStmnt : IForm
     {
-        FrameworkElement BuildForm(ValueEnvironment vEnv, TypeEnvironment tEnv);
+        FrameworkElement BuildForm(IValueEnvironment vEnv, ITypeEnvironment tEnv);
     }
 }

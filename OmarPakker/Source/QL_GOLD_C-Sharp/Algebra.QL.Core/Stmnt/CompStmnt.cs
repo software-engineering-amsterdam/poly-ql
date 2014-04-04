@@ -1,7 +1,7 @@
 ﻿
 namespace Algebra.QL.Core.Stmnt
 {
-    public abstract class CompStmnt<S>
+    public class CompStmnt<S>
     {
         public S Statement1 { get; private set; }
         public S Statement2 { get; private set; }

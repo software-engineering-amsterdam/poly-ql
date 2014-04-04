@@ -5,6 +5,6 @@ namespace Algebra.QL.TypeCheck.Expr
 {
     public interface ITypeCheckExpr : ITypeCheck
     {
-        ITypeCheckType TypeCheck(TypeEnvironment env);
+        ITypeCheckType TypeCheck(ITypeEnvironment env);
     }
 }

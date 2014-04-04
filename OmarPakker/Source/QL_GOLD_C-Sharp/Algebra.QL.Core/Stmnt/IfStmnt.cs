@@ -1,7 +1,7 @@
 ﻿
 namespace Algebra.QL.Core.Stmnt
 {
-    public abstract class IfStmnt<E, S>
+    public class IfStmnt<E, S>
     {
         public E CheckExpression { get; private set; }
         public S IfTrueBody { get; private set; }

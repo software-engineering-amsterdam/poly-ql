@@ -1,20 +1,30 @@
-﻿using Algebra.QL.Eval.Expr;
+﻿using Algebra.Core.Expr;
+using Algebra.QL.Eval.Environment;
+using Algebra.QL.Eval.Expr;
+using Algebra.QL.Eval.Value;
 using Algebra.QL.Form.Environment;
 using Algebra.QL.Form.Type;
 
 namespace Algebra.QL.Form.Expr
 {
-    public class NegateNumericExpr : NegateNumericExpr<IFormExpr>, IFormExpr
+    public class NegateNumericExpr : UnaryExpr<IFormExpr>, IFormExpr
     {
-        public NegateNumericExpr(IFormExpr expr)
+        private readonly IEvalExpr evalExpr;
+
+        public NegateNumericExpr(IFormExpr expr, IEvalExpr eval)
             : base(expr)
         {
-            
+            evalExpr = eval;
         }
 
-        public IFormType BuildForm(TypeEnvironment env)
+        public IFormType BuildForm(ITypeEnvironment env)
         {
             return Expr1.BuildForm(env);
+        }
+
+        public ValueContainer Evaluate(IValueEnvironment env)
+        {
+            return evalExpr.Evaluate(env);
         }
     }
 }

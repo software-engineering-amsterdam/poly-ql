@@ -52,10 +52,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Environment\ValueEnvironment.cs" />
     <Compile Include="Expr\AvgExpr.cs" />
     <Compile Include="Expr\ModuloExpr.cs" />
     <Compile Include="Expr\PowerExpr.cs" />
     <Compile Include="Expr\SumExpr.cs" />
+    <Compile Include="Factory\EvalFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

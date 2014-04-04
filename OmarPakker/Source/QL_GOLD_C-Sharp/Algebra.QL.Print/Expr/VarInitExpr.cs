@@ -7,6 +7,12 @@ namespace Algebra.QL.Print.Expr
 {
     public class VarInitExpr : VarInitExpr<IPrintExpr, IPrintType>, IPrintExpr
     {
+        public VarInitExpr(string name, IPrintType type)
+            : this(name, type, type.DefaultValue)
+        {
+
+        }
+
         public VarInitExpr(string name, IPrintType type, IPrintExpr value)
             : base(name, type, value)
         {

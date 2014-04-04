@@ -4,10 +4,9 @@ using Algebra.QL.Eval.Value;
 
 namespace Algebra.QL.Eval.Expr
 {
-    public abstract class BinaryExpr<E> : Algebra.Core.Expr.BinaryExpr<E>, IEvalExpr
-        where E : IEvalExpr
+    public abstract class BinaryExpr : Algebra.Core.Expr.BinaryExpr<IEvalExpr>, IEvalExpr
     {
-        public BinaryExpr(E l, E r)
+        public BinaryExpr(IEvalExpr l, IEvalExpr r)
             : base(l, r)
         {
             
@@ -15,7 +14,7 @@ namespace Algebra.QL.Eval.Expr
 
         protected abstract object Evaluate(ValueContainer expr1Value, ValueContainer expr2Value);
 
-        public ValueContainer Evaluate(ValueEnvironment env)
+        public ValueContainer Evaluate(IValueEnvironment env)
         {
             ValueContainer a = Expr1.Evaluate(env);
             ValueContainer b = Expr2.Evaluate(env);

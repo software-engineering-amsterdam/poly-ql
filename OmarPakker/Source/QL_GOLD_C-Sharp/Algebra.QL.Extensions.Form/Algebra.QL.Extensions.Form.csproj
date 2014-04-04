@@ -42,10 +42,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Environment\TypeEnvironment.cs" />
     <Compile Include="Expr\AvgExpr.cs" />
     <Compile Include="Expr\Literals\DateLiteral.cs" />
-    <Compile Include="Expr\ModuloExpr.cs" />
-    <Compile Include="Expr\PowerExpr.cs" />
     <Compile Include="Expr\SumExpr.cs" />
     <Compile Include="Factory\FormFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

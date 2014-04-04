@@ -1,19 +1,19 @@
 ﻿using System;
+using Algebra.Core.Expr;
 using Algebra.QL.Eval.Environment;
 using Algebra.QL.Eval.Value;
 
 namespace Algebra.QL.Eval.Expr
 {
-    public class VarInitExpr<E, T> : Algebra.Core.Expr.VarInitExpr<E, T>, IEvalExpr
-        where E : IEvalExpr
+    public class VarInitExpr<T> : VarInitExpr<IEvalExpr, T>, IEvalExpr
     {
-        public VarInitExpr(string name, T type, E value)
+        public VarInitExpr(string name, T type, IEvalExpr value)
             : base(name, type, value)
         {
 
         }
 
-        public ValueContainer Evaluate(ValueEnvironment env)
+        public ValueContainer Evaluate(IValueEnvironment env)
         {
             if (!env.IsDeclared(Name))
             {

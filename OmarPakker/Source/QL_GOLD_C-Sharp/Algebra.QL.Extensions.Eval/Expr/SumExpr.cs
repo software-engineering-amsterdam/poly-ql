@@ -15,9 +15,10 @@ namespace Algebra.QL.Extensions.Eval.Expr
             
         }
 
-        public ValueContainer Evaluate(ValueEnvironment env)
+        public ValueContainer Evaluate(IValueEnvironment env)
         {
-            DictionaryKeyValueObserver<string, ValueContainer> repeatVariables = env.GetRange(Name);
+            //TODO: Make it so no casting is needed
+            DictionaryKeyValueObserver<string, ValueContainer> repeatVariables = ((Environment.ValueEnvironment)env).GetRange(Name);
             ValueContainer value = new ValueContainer(0);
 
             Action onValueChanged = () =>

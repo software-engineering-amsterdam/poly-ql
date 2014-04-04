@@ -3,15 +3,15 @@ using Algebra.QL.Eval.Value;
 
 namespace Algebra.QL.Eval.Expr.Literals
 {
-    public abstract class LiteralExpr<T, V> : QL.Core.Expr.LiteralExpr<T, V>, IEvalExpr
+    public class LiteralExpr<V> : Algebra.Core.Expr.LiteralExpr<V>, IEvalExpr
     {
-        protected LiteralExpr(V value)
+        public LiteralExpr(V value)
             : base(value)
         {
 
         }
 
-        public ValueContainer Evaluate(ValueEnvironment env)
+        public ValueContainer Evaluate(IValueEnvironment env)
         {
             return new ValueContainer(Value);
         }

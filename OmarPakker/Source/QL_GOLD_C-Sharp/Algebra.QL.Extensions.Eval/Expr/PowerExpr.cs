@@ -4,10 +4,9 @@ using Algebra.QL.Eval.Value;
 
 namespace Algebra.QL.Extensions.Eval.Expr
 {
-    public class PowerExpr<E> : BinaryExpr<E>, IEvalExpr
-        where E : IEvalExpr
+    public class PowerExpr : BinaryExpr, IEvalExpr
     {
-        public PowerExpr(E l, E r)
+        public PowerExpr(IEvalExpr l, IEvalExpr r)
             : base(l, r)
         {
 

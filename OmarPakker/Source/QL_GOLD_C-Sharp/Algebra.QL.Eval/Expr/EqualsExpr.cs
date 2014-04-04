@@ -2,10 +2,9 @@
 
 namespace Algebra.QL.Eval.Expr
 {
-    public class EqualsExpr<E> : BinaryExpr<E>, IEvalExpr
-        where E : IEvalExpr
+    public class EqualsExpr : BinaryExpr, IEvalExpr
     {
-        public EqualsExpr(E l, E r)
+        public EqualsExpr(IEvalExpr l, IEvalExpr r)
             : base(l, r)
         {
 

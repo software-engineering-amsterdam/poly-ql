@@ -33,6 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Environment\ITypeEnvironment.cs" />
     <Compile Include="Expr\AddExpr.cs" />
     <Compile Include="Expr\AndExpr.cs" />
     <Compile Include="Expr\BinaryExpr.cs" />
