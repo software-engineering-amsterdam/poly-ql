@@ -27,7 +27,7 @@ public class Bool extends Value {
 	}
 	
 	@Override
-	public Value Negate() {
+	public Value negate() {
 		Boolean returnValue = !value;
 		return new Bool(returnValue.toString());
 	}

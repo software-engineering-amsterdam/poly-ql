@@ -30,7 +30,7 @@ import org.uva.sea.ql.parser.antlr.Tests.errorMsgTests.plainTest;
 				EvaluatedValuesTest.class,
 				ValueEqualityTest.class,
 				EvaluateIdentifierTest.class,
-				EvaluateUnaryExprTest.class
+				EvaluateUnaryExprTest.class,
 				})
 public class TestSuite {
 
