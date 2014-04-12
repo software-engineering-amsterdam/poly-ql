@@ -15,60 +15,72 @@ public abstract class Value extends Expression {
 	/**
 	 * Throw unsupported operation for binary equality expressions
 	 */
-	public Value eq(Expression expr) {
+	public Value eq(Value val) {
 		throw new UnsupportedOperationException();
 	}
 	
-	public Value neq(Expression expr) {
+	public Value neq(Value val) {
 		throw new UnsupportedOperationException();
 	}
 	
 	/**
 	 * Throw unsupported operation for binary logical expressions
 	 */
-	public Value and(Expression expr) {
+	public Value and(Value val) {
 		throw new UnsupportedOperationException();
 	}
 	
-	public Value or(Expression expr) {
+	public Value or(Value val) {
 		throw new UnsupportedOperationException();
 	}
 	
 	/**
 	 * Throw unsupported operation for binary relational expressions
 	 */
-	public Value geq(Expression expr) {
+	public Value geq(Value val) {
 		throw new UnsupportedOperationException();
 	}
 
-	public Value gre(Expression expr) {
+	public Value gre(Value val) {
 		throw new UnsupportedOperationException();
 	}
 	
-	public Value leq(Expression expr) {
+	public Value leq(Value val) {
 		throw new UnsupportedOperationException();
 	}
 	
-	public Value les(Expression expr) {
+	public Value les(Value val) {
 		throw new UnsupportedOperationException();
 	}
 	
 	/**
 	 * Throw unsupported operation for binary mathematical expressions
 	 */
-	public Value plus(Expression expr) {
+	public Value plus(Value val) {
 		throw new UnsupportedOperationException();
 	}
 	
-	public Value min(Expression expr) {
+	public Value min(Value val) {
 		throw new UnsupportedOperationException();
 	}
 	
-	public Value div(Expression expr) {
+	public Value div(Value val) {
 		throw new UnsupportedOperationException();
 	}
 	
-	public Value mult(Expression expr) {
+	public Value mult(Value val) {
+		throw new UnsupportedOperationException();
+	}
+
+	
+	/**
+	 * Throw unsupported operation for binary logical double dispatch
+	 */
+	public Value orBool(Bool bool) {
+		throw new UnsupportedOperationException();
+	}
+	
+	public Value andBool(Bool bool) {
 		throw new UnsupportedOperationException();
 	}
 

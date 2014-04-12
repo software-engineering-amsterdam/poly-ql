@@ -26,10 +26,62 @@ public class Bool extends Value {
 		this.value = (stringValue.equalsIgnoreCase("true")) ? true : false;
 	}
 	
+	/**
+	 * returns negation of this object
+	 */
 	@Override
 	public Value negate() {
 		Boolean returnValue = !value;
 		return new Bool(returnValue.toString());
+	}
+	
+	/**
+	 * double dispatch
+	 */
+	@Override
+	public Value or(Value val) {
+		return val.orBool(this);
+	}
+	
+	@Override
+	public Value and(Value val) {
+		return val.andBool(this);
+	}
+	
+	/**
+	 * return bool and/or this
+	 */
+	@Override
+	public Value orBool(Bool bool) {
+		Bool returnBool;
+		
+		Bool trueBool = new Bool("true");
+		if (trueBool.equals(bool) || this.equals(trueBool)) {
+			returnBool = new Bool("true");
+		} else {
+			returnBool = new Bool("false");
+		}
+		
+		return returnBool;
+	}
+	
+	@Override
+	public Value andBool(Bool bool) {
+		Bool returnBool;
+		
+		Bool trueBool = new Bool("true");
+		if (trueBool.equals(bool) && this.equals(trueBool)) {
+			returnBool = new Bool("true");
+		} else {
+			returnBool = new Bool("false");
+		}
+		
+		return returnBool;
+	}
+	
+	@Override
+	public Type getType(Map<Identifier, Question> questions) {
+		return new BoolType();
 	}
 	
 	@Override
@@ -54,11 +106,6 @@ public class Bool extends Value {
 		return true;
 	}
 
-	@Override
-	public Type getType(Map<Identifier, Question> questions) {
-		return new BoolType();
-	}
-	
 	public String toString() {
 		return String.valueOf(value);
 	}
