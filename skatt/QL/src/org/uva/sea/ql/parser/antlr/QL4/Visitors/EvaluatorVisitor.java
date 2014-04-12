@@ -7,7 +7,6 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Form;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Label;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Question;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Structures;
-import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Expression;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Identifier;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.Equality.EqExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.Equality.NeqExpr;
@@ -92,32 +91,32 @@ public class EvaluatorVisitor implements IQLVisitor<Value> {
 	 */
 	@Override
 	public Value visit(GeqExpr expr) {
-		Expression lhs = expr.getLHS().accept(this);
-		Expression rhs = expr.getRHS().accept(this);
+		Value lhs = expr.getLHS().accept(this);
+		Value rhs = expr.getRHS().accept(this);
 		
 		return lhs.geq(rhs);
 	}
 
 	@Override
 	public Value visit(GreExpr expr) {
-		Expression lhs = expr.getLHS().accept(this);
-		Expression rhs = expr.getRHS().accept(this);
+		Value lhs = expr.getLHS().accept(this);
+		Value rhs = expr.getRHS().accept(this);
 		
 		return lhs.gre(rhs);
 	}
 
 	@Override
 	public Value visit(LeqExpr expr) {
-		Expression lhs = expr.getLHS().accept(this);
-		Expression rhs = expr.getRHS().accept(this);
+		Value lhs = expr.getLHS().accept(this);
+		Value rhs = expr.getRHS().accept(this);
 		
 		return lhs.leq(rhs);
 	}
 
 	@Override
 	public Value visit(LesExpr expr) {
-		Expression lhs = expr.getLHS().accept(this);
-		Expression rhs = expr.getRHS().accept(this);
+		Value lhs = expr.getLHS().accept(this);
+		Value rhs = expr.getRHS().accept(this);
 		
 		return lhs.les(rhs);
 	}
@@ -127,32 +126,32 @@ public class EvaluatorVisitor implements IQLVisitor<Value> {
 	 */
 	@Override
 	public Value visit(PlusExpr expr) {
-		Expression lhs = expr.getLHS().accept(this);
-		Expression rhs = expr.getRHS().accept(this);
+		Value lhs = expr.getLHS().accept(this);
+		Value rhs = expr.getRHS().accept(this);
 		
 		return lhs.plus(rhs);
 	}
 
 	@Override
 	public Value visit(MinExpr expr) {
-		Expression lhs = expr.getLHS().accept(this);
-		Expression rhs = expr.getRHS().accept(this);
+		Value lhs = expr.getLHS().accept(this);
+		Value rhs = expr.getRHS().accept(this);
 		
 		return lhs.min(rhs);
 	}
 
 	@Override
 	public Value visit(DivExpr expr) {
-		Expression lhs = expr.getLHS().accept(this);
-		Expression rhs = expr.getRHS().accept(this);
+		Value lhs = expr.getLHS().accept(this);
+		Value rhs = expr.getRHS().accept(this);
 		
 		return lhs.div(rhs);
 	}
 
 	@Override
 	public Value visit(MultExpr expr) {
-		Expression lhs = expr.getLHS().accept(this);
-		Expression rhs = expr.getRHS().accept(this);
+		Value lhs = expr.getLHS().accept(this);
+		Value rhs = expr.getRHS().accept(this);
 		
 		return lhs.mult(rhs);
 	}
@@ -162,16 +161,16 @@ public class EvaluatorVisitor implements IQLVisitor<Value> {
 	 */
 	@Override
 	public Value visit(AndExpr expr) {
-		Expression lhs = expr.getLHS().accept(this);
-		Expression rhs = expr.getRHS().accept(this);
+		Value lhs = expr.getLHS().accept(this);
+		Value rhs = expr.getRHS().accept(this);
 		
 		return lhs.and(rhs);
 	}
 
 	@Override
 	public Value visit(OrExpr expr) {
-		Expression lhs = expr.getLHS().accept(this);
-		Expression rhs = expr.getRHS().accept(this);
+		Value lhs = expr.getLHS().accept(this);
+		Value rhs = expr.getRHS().accept(this);
 		
 		return lhs.or(rhs);
 	}
@@ -181,16 +180,16 @@ public class EvaluatorVisitor implements IQLVisitor<Value> {
 	 */
 	@Override
 	public Value visit(EqExpr expr) {
-		Expression lhs = expr.getLHS().accept(this);
-		Expression rhs = expr.getRHS().accept(this);
+		Value lhs = expr.getLHS().accept(this);
+		Value rhs = expr.getRHS().accept(this);
 		
 		return lhs.eq(rhs);
 	}
 
 	@Override
 	public Value visit(NeqExpr expr) {
-		Expression lhs = expr.getLHS().accept(this);
-		Expression rhs = expr.getRHS().accept(this);
+		Value lhs = expr.getLHS().accept(this);
+		Value rhs = expr.getRHS().accept(this);
 		
 		
 		return lhs.neq(rhs);
