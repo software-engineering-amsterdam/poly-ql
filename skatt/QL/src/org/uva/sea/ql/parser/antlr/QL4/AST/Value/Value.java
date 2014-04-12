@@ -16,11 +16,11 @@ public abstract class Value extends Expression {
 	 * Throw unsupported operation for binary equality expressions
 	 */
 	public Value eq(Value val) {
-		throw new UnsupportedOperationException();
+		return new Bool(val.equals(this));
 	}
 	
 	public Value neq(Value val) {
-		throw new UnsupportedOperationException();
+		return new Bool(!val.equals(this));
 	}
 	
 	/**

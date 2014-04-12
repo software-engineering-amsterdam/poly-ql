@@ -79,10 +79,10 @@ public class EvaluateBinaryEqualityTest extends QL4EvaluationTest {
 	
 	@Test
 	public void testNeqFalse() {
-		NeqExpr eq1 = new NeqExpr(num1, num1);
-		NeqExpr eq2 = new NeqExpr(dec1, dec1);
-		NeqExpr eq3 = new NeqExpr(bool1, bool1);
-		NeqExpr eq4 = new NeqExpr(string1, string1);
+		NeqExpr eq1 = new NeqExpr(num1, dec1);
+		NeqExpr eq2 = new NeqExpr(dec1, bool1);
+		NeqExpr eq3 = new NeqExpr(bool1, string1);
+		NeqExpr eq4 = new NeqExpr(string1, num1);
 		
 		assertEquals(new Bool("true"), visitor.visit(eq1));
 		assertEquals(new Bool("true"), visitor.visit(eq2));
