@@ -72,7 +72,6 @@ public abstract class Value extends Expression {
 		throw new UnsupportedOperationException();
 	}
 
-	
 	/**
 	 * Throw unsupported operation for binary logical double dispatch
 	 */
@@ -84,6 +83,39 @@ public abstract class Value extends Expression {
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * Throw unsupported operation for binary mathematical double dispatch
+	 */
+	public Value plusNumber(Number val) {
+		throw new UnsupportedOperationException();
+	}
+	
+	public Value minNumber(Number  val) {
+		throw new UnsupportedOperationException();
+	}
 
+	public Value multNumber(Number val) {
+		throw new UnsupportedOperationException();
+	}
+	
+	public Value divNumber(Number  val) {
+		throw new UnsupportedOperationException();
+	}
+
+	public Value plusDec(Decimal val) {
+		throw new UnsupportedOperationException();
+	}
+	
+	public Value minDec(Decimal val) {
+		throw new UnsupportedOperationException();
+	}
+	
+	public Value divDec(Decimal decimal) {
+		throw new UnsupportedOperationException();
+	}
+	
+	public Value multDec(Decimal decimal) {
+		throw new UnsupportedOperationException();
+	}
 	
 }

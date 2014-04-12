@@ -10,6 +10,7 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.Mathematical.MinExp
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.Mathematical.MultExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.Mathematical.PlusExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Bool;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Decimal;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Number;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Text;
 
@@ -76,21 +77,21 @@ public class EvaluateBinaryMathExprTest extends QL4EvaluationTest {
 		MinExpr min1 = new MinExpr(one, two);
 		MinExpr min2 = new MinExpr(two, one);
 		
-		assertEquals(visitor.visit(min1), new Number("3"));
+		assertEquals(visitor.visit(min1), new Number("-1"));
 		assertFalse(visitor.visit(min1).equals(new Number("2")));
-		assertEquals(visitor.visit(min2), new Number("3"));
+		assertEquals(visitor.visit(min2), new Number("1"));
 		assertFalse(visitor.visit(min2).equals(new Number("2")));
 	}
 	
 	@Test
 	public void testDiv() {
-		DivExpr plus1 = new DivExpr(one, two);
-		DivExpr plus2 = new DivExpr(two, one);
+		DivExpr div1 = new DivExpr(one, two);
+		DivExpr div2 = new DivExpr(two, one);
 		
-		assertEquals(visitor.visit(plus1), new Number("0.5"));
-		assertFalse(visitor.visit(plus1).equals(new Number("2")));
-		assertEquals(visitor.visit(plus2), new Number("2"));
-		assertFalse(visitor.visit(plus2).equals(new Number("2")));
+		assertEquals(visitor.visit(div1), new Decimal("0.5"));
+		assertFalse(visitor.visit(div1).equals(new Decimal("2")));
+		assertEquals(visitor.visit(div2), new Decimal("2"));
+		assertFalse(visitor.visit(div2).equals(new Decimal("1")));
 	}
 	
 	@Test

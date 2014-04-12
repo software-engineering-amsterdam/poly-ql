@@ -17,10 +17,88 @@ public class Decimal extends Value {
 	
 	private final double value;
 	
+	/**
+	 * Constructors
+	 */
 	public Decimal(String value) {
 		this.value = Double.valueOf(value);
 	}
 	
+	public Decimal(double value) {
+		this.value = value;
+	}
+	
+	/**
+	 * Overridden double dispatch min/plus/div/mult
+	 */
+	@Override
+	public Value plus(Value val) {
+		return val.plusDec(this);
+	}
+	
+	@Override
+	public Value min(Value val) {
+		return val.minDec(this);
+	}
+	
+	public Value div(Value val) {
+		return val.divDec(this);
+	}
+	
+	public Value mult(Value val) {
+		return val.multDec(this);
+	}
+	
+	/**
+	 * Override this +/-* number
+	 */
+	@Override
+	public Value plusNumber(Number val) {
+		
+		return new Decimal(val.getValue() + this.getValue());
+	}
+	
+	@Override
+	public Value minNumber(Number val) {
+		return new Decimal(val.getValue() - this.getValue());
+	}
+	
+	@Override
+	public Value multNumber(Number val) {
+		return new Decimal(val.getValue() * this.getValue());
+	}
+	
+	@Override
+	public Value divNumber(Number val) {
+		return new Decimal(val.getValue() / this.getValue());
+	}
+
+	/**
+	 * Override this +/-* decimal
+	 */
+	@Override
+	public Value plusDec(Decimal val) {
+		return new Decimal(val.getValue() + this.getValue());
+	}
+	
+	@Override
+	public Value minDec(Decimal val) {
+		return new Decimal(val.getValue() - this.getValue());
+	}
+	
+	@Override
+	public Value multDec(Decimal val) {
+		return new Decimal(val.getValue() * this.getValue());
+	}
+	
+	@Override
+	public Value divDec(Decimal val) {
+		return new Decimal(val.getValue() / this.getValue());
+	}
+
+	/**
+	 * Hash and equals
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -46,9 +124,16 @@ public class Decimal extends Value {
 		return true;
 	}
 
+	/**
+	 * Getters
+	 */
 	@Override
 	public Type getType(Map<Identifier, Question> questions) {
 		return new NumberType();
+	}
+	
+	public double getValue() {
+		return this.value;
 	}
 	
 	public String toString() {

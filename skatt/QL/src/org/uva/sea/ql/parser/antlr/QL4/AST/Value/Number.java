@@ -17,10 +17,89 @@ public class Number extends Value {
 
 	private final int value;
 	
+	/**
+	 * Constructors
+	 */
 	public Number(String value) {
 		this.value = Integer.valueOf(value);
 	}
+
+	public Number(int value) {
+		this.value = value;
+	}
 	
+	/**
+	 * Overridden double dispatch min/plus/div/mult
+	 */
+	@Override
+	public Value plus(Value val) {
+		return val.plusNumber(this);
+	}
+	
+	@Override
+	public Value min(Value val) {
+		return val.minNumber(this);
+	}
+	
+	public Value div(Value val) {
+		return val.divNumber(this);
+	}
+	
+	public Value mult(Value val) {
+		return val.multNumber(this);
+	}
+
+	
+	/**
+	 * Override this +/-* number
+	 */
+	@Override
+	public Value plusNumber(Number val) {
+		return new Number(val.getValue() + this.getValue());
+	}
+	
+	@Override
+	public Value minNumber(Number val) {
+		return new Number(val.getValue() - this.getValue());
+	}
+	
+	@Override
+	public Value multNumber(Number val) {
+		return new Number(val.getValue() * this.getValue());
+	}
+	
+	@Override
+	public Value divNumber(Number val) {
+		// returns decimal after dividing
+		return new Decimal((double) val.getValue() / this.getValue());
+	}
+	
+	/**
+	 * Override this +/-* decimal
+	 */
+	@Override
+	public Value plusDec(Decimal val) {
+		return new Decimal(val.getValue() + this.getValue());
+	}
+	
+	@Override
+	public Value minDec(Decimal val) {
+		return new Decimal(val.getValue() - this.getValue());
+	}
+	
+	@Override
+	public Value multDec(Decimal val) {
+		return new Decimal(val.getValue() * this.getValue());
+	}
+	
+	@Override
+	public Value divDec(Decimal val) {
+		return new Decimal(val.getValue() / this.getValue());
+	}
+	
+	/**
+	 * Hash and equals
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -42,6 +121,13 @@ public class Number extends Value {
 			return false;
 		return true;
 	}
+
+	/**
+	 * Getters
+	 */
+	public int getValue() {
+		return this.value;
+	}
 	
 	@Override
 	public Type getType(Map<Identifier, Question> questions) {
@@ -57,4 +143,7 @@ public class Number extends Value {
 	public String toString() {
 		return String.valueOf(value);
 	}
+
+	
+	
 }
