@@ -97,6 +97,74 @@ public class Decimal extends Value {
 	}
 
 	/**
+	 * Overridden double dispatch > < => =<
+	 */
+	@Override
+	public Value geq(Value val) {
+		return val.geqDec(this);
+	}
+	
+	@Override
+	public Value leq(Value val) {
+		return val.leqDec(this);
+	}
+	
+	public Value les(Value val) {
+		return val.lesDec(this);
+	}
+	
+	public Value gre(Value val) {
+		return val.greDec(this);
+	}
+
+	
+	/**
+	 * Override this > < => =< number
+	 */
+	@Override
+	public Value geqNumber(Number val) {
+		return new Bool(val.getValue() >= this.getValue());
+	}
+	
+	@Override
+	public Value leqNumber(Number val) {
+		return new Bool(val.getValue() <= this.getValue());
+	}
+	
+	@Override
+	public Value greNumber(Number val) {
+		return new Bool(val.getValue() > this.getValue());
+	}
+	
+	@Override
+	public Value lesNumber(Number val) {
+		return new Bool(val.getValue() < this.getValue());
+	}
+	
+	/**
+	 * Override this > < => =< decimal
+	 */
+	@Override
+	public Value geqDec(Decimal val) {
+		return new Bool(val.getValue() >= this.getValue());
+	}
+	
+	@Override
+	public Value leqDec(Decimal val) {
+		return new Bool(val.getValue() <= this.getValue());
+	}
+	
+	@Override
+	public Value greDec(Decimal val) {
+		return new Bool(val.getValue() > this.getValue());
+	}
+	
+	@Override
+	public Value lesDec(Decimal val) {
+		return new Bool(val.getValue() < this.getValue());
+	}
+
+	/**
 	 * Hash and equals
 	 */
 	@Override

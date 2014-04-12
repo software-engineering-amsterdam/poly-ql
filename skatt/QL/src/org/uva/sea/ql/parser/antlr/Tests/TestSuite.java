@@ -5,6 +5,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.uva.sea.ql.parser.antlr.Tests.EvaluationTests.EvaluateBinaryLogicalExprTest;
 import org.uva.sea.ql.parser.antlr.Tests.EvaluationTests.EvaluateBinaryMathExprTest;
+import org.uva.sea.ql.parser.antlr.Tests.EvaluationTests.EvaluateBinaryRelationTest;
 import org.uva.sea.ql.parser.antlr.Tests.EvaluationTests.EvaluateIdentifierTest;
 import org.uva.sea.ql.parser.antlr.Tests.EvaluationTests.EvaluateUnaryExprTest;
 import org.uva.sea.ql.parser.antlr.Tests.EvaluationTests.EvaluatedValuesTest;
@@ -35,6 +36,7 @@ import org.uva.sea.ql.parser.antlr.Tests.errorMsgTests.plainTest;
 				EvaluateUnaryExprTest.class,
 				EvaluateBinaryLogicalExprTest.class,
 				EvaluateBinaryMathExprTest.class,
+				EvaluateBinaryRelationTest.class,
 				})
 
 public class TestSuite {

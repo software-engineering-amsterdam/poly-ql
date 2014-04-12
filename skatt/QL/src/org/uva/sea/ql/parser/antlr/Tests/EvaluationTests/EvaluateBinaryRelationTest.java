@@ -14,7 +14,7 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Number;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Text;
 
 /**
- * Tests the evaluator visitor on binary mathematical expressions (including throwing exceptions)
+ * Tests the evaluator visitor on binary relation expressions (including throwing exceptions)
  * @author Sammie Katt
  */
 public class EvaluateBinaryRelationTest extends QL4EvaluationTest {

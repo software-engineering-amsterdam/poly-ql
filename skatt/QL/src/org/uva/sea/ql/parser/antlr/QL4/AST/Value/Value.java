@@ -118,4 +118,40 @@ public abstract class Value extends Expression {
 		throw new UnsupportedOperationException();
 	}
 	
+	/**
+	 * Throw unsupported operation for binary relation double dispatch
+	 */
+
+	public Value geqNumber(Number number) {
+		throw new UnsupportedOperationException();
+	}
+	
+	public Value leqNumber(Number number) {
+		throw new UnsupportedOperationException();
+	}
+	
+	public Value greNumber(Number number) {
+		throw new UnsupportedOperationException();
+	}
+	
+	public Value lesNumber(Number number) {
+		throw new UnsupportedOperationException();
+	}
+	
+	public Value geqDec(Decimal dec) {
+		throw new UnsupportedOperationException();
+	}
+	
+	public Value leqDec(Decimal dec) {
+		throw new UnsupportedOperationException();
+	}
+	
+	public Value greDec(Decimal dec) {
+		throw new UnsupportedOperationException();
+	}
+	
+	public Value lesDec(Decimal dec) {
+		throw new UnsupportedOperationException();
+	}
+	
 }

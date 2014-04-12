@@ -18,14 +18,16 @@ public class Bool extends Value {
 	private final boolean value;
 	
 	/**
-	 * Constructor instantiates object and sets its value
-	 * Converts string input to boolean
-	 * Ignores cases (so tRue is considered true)
+	 * Constructors, setting value
 	 */
 	public Bool(String stringValue) {
 		this.value = (stringValue.equalsIgnoreCase("true")) ? true : false;
 	}
 	
+	public Bool(boolean bool) {
+		this.value = bool;
+	}
+
 	/**
 	 * returns negation of this object
 	 */
