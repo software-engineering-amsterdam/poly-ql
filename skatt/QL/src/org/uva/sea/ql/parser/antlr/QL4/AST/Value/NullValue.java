@@ -41,6 +41,14 @@ public class NullValue extends Value {
 			return false;
 		return true;
 	}
+
+	/**
+	 * Static function to test for null in QL4 AST
+	 */
+	public static boolean isNull(Value val) {
+		NullValue testVal = new NullValue();
+		return testVal.equals(val);
+	}
 	
 
 }
