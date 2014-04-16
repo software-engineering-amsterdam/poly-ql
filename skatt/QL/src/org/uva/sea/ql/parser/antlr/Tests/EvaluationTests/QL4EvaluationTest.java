@@ -6,7 +6,7 @@ import java.util.Map;
 import org.junit.Before;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Identifier;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Value;
-import org.uva.sea.ql.parser.antlr.QL4.Visitors.EvaluatorVisitor;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.Helpers.EvaluatorVisitor;
 
 /**
  * Abstract parent class of all evaluation tests

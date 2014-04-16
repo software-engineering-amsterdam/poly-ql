@@ -8,7 +8,7 @@ import org.junit.Test;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Identifier;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.NullValue;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Number;
-import org.uva.sea.ql.parser.antlr.QL4.Visitors.EvaluatorVisitor;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.Helpers.EvaluatorVisitor;
 
 public class EvaluateIdentifierTest extends QL4EvaluationTest {
 

@@ -3,6 +3,7 @@ package org.uva.sea.ql.parser.antlr.QL4.Visitors;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.uva.sea.ql.parser.antlr.QL4.Visitor;
 import org.uva.sea.ql.parser.antlr.QL4.AST.ConditionalStructure;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Form;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Label;
@@ -45,7 +46,7 @@ import org.uva.sea.ql.parser.antlr.QL4.Messages.QLErrorMsg;
  * @author Sammie Katt
  *
  */
-public class QLErrorVisitor implements IQLVisitor<List<QLErrorMsg>> {
+public class QLErrorVisitor extends Visitor implements IQLVisitor<List<QLErrorMsg>> {
 
 	@Override
 	public List<QLErrorMsg> visit(Form form) {

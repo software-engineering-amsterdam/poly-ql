@@ -70,11 +70,13 @@ public class EvaluateBinaryEqualityTest extends QL4EvaluationTest {
 		EqExpr eq2 = new EqExpr(dec1, bool1);
 		EqExpr eq3 = new EqExpr(bool1, string1);
 		EqExpr eq4 = new EqExpr(string1, num1);
+		EqExpr eq5 = new EqExpr(num1, num2);
 		
 		assertFalse(new Bool("true").equals(visitor.visit(eq1)));
 		assertFalse(new Bool("true").equals(visitor.visit(eq2)));
 		assertFalse(new Bool("true").equals(visitor.visit(eq3)));
 		assertFalse(new Bool("true").equals(visitor.visit(eq4)));
+		assertFalse(new Bool("true").equals(visitor.visit(eq5)));
 	}
 	
 	@Test
@@ -83,10 +85,12 @@ public class EvaluateBinaryEqualityTest extends QL4EvaluationTest {
 		NeqExpr eq2 = new NeqExpr(dec1, bool1);
 		NeqExpr eq3 = new NeqExpr(bool1, string1);
 		NeqExpr eq4 = new NeqExpr(string1, num1);
+		NeqExpr eq5 = new NeqExpr(num1, num2);
 		
 		assertEquals(new Bool("true"), visitor.visit(eq1));
 		assertEquals(new Bool("true"), visitor.visit(eq2));
 		assertEquals(new Bool("true"), visitor.visit(eq3));
 		assertEquals(new Bool("true"), visitor.visit(eq4));
+		assertEquals(new Bool("true"), visitor.visit(eq5));
 	}
 }

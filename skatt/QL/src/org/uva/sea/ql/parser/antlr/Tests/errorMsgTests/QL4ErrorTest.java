@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
-import org.uva.sea.ql.parser.antlr.QL4.QL4;
+import org.uva.sea.ql.parser.antlr.QL4.ASTManager;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Form;
 import org.uva.sea.ql.parser.antlr.QL4.Messages.QLErrorMsg;
 
@@ -24,7 +24,7 @@ public abstract class QL4ErrorTest {
 	
 	@Before 
 	public void setUp() {
-		QL4 ql4 = new QL4();
+		ASTManager ql4 = new ASTManager();
 		
 		try {
 			ast = ql4.parseQuestionair(fileToParse);
