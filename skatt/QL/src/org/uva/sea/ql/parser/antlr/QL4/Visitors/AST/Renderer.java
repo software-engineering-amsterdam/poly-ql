@@ -1,4 +1,4 @@
-package org.uva.sea.ql.parser.antlr.QL4.GUI.Visitors;
+package org.uva.sea.ql.parser.antlr.QL4.Visitors.AST;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +6,6 @@ import java.util.List;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 
-import org.uva.sea.ql.parser.antlr.QL4.Visitor;
 import org.uva.sea.ql.parser.antlr.QL4.AST.ConditionalStructure;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Form;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Label;
@@ -40,7 +39,7 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Decimal;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.NullValue;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Number;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Text;
-import org.uva.sea.ql.parser.antlr.QL4.Visitors.IQLVisitor;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.Visitor;
 
 /**
  * Renders form: extracts questions and returns a list of them rendered as hboxes

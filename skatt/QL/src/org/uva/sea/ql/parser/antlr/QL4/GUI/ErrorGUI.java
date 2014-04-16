@@ -5,8 +5,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import org.uva.sea.ql.parser.antlr.QL4.GUI.Visitors.GUIErrorVisitor;
 import org.uva.sea.ql.parser.antlr.QL4.Messages.QLErrorMsg;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.GUIErrorVisitor;
 
 /**
  * GUI for displaying errors created when parsing a questionair

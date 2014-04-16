@@ -1,4 +1,4 @@
-package org.uva.sea.ql.parser.antlr.QL4.Visitors.Errors;
+package org.uva.sea.ql.parser.antlr.QL4.Visitors.AST.Errors;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,8 +15,8 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Expression;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Identifier;
 import org.uva.sea.ql.parser.antlr.QL4.Messages.CyclicDependencyError;
 import org.uva.sea.ql.parser.antlr.QL4.Messages.QLErrorMsg;
-import org.uva.sea.ql.parser.antlr.QL4.Visitors.QLErrorVisitor;
-import org.uva.sea.ql.parser.antlr.QL4.Visitors.Helpers.IdentifierExtractor;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.AST.QLErrorVisitor;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.AST.Helpers.IdentifierExtractor;
 
 /**
  * This QLTree visitor will check for cyclic dependencies and return

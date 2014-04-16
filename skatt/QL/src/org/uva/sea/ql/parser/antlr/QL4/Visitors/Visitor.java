@@ -1,4 +1,4 @@
-package org.uva.sea.ql.parser.antlr.QL4;
+package org.uva.sea.ql.parser.antlr.QL4.Visitors;
 
 /**
  * Abstract parent of all visitors

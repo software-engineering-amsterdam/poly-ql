@@ -1,6 +1,6 @@
 package org.uva.sea.ql.parser.antlr.QL4.AST;
 
-import org.uva.sea.ql.parser.antlr.QL4.Visitors.IQLVisitor;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.AST.IQLVisitor;
 
 /**
  * Abstract syntax tree of the form construct in the QL4 grammar

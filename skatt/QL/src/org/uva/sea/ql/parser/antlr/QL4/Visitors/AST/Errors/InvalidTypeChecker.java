@@ -1,4 +1,4 @@
-package org.uva.sea.ql.parser.antlr.QL4.Visitors.Errors;
+package org.uva.sea.ql.parser.antlr.QL4.Visitors.AST.Errors;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Types.NumberType;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Types.Type;
 import org.uva.sea.ql.parser.antlr.QL4.Messages.InvalidTypeError;
 import org.uva.sea.ql.parser.antlr.QL4.Messages.QLErrorMsg;
-import org.uva.sea.ql.parser.antlr.QL4.Visitors.QLErrorVisitor;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.AST.QLErrorVisitor;
 
 /**
  * Checks whether the type of expressions in operators are

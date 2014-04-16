@@ -3,7 +3,7 @@ package org.uva.sea.ql.parser.antlr.QL4.AST;
 import java.util.List;
 
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Expression;
-import org.uva.sea.ql.parser.antlr.QL4.Visitors.IQLVisitor;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.AST.IQLVisitor;
 
 /**
  * Abstract syntax tree of the conditional construct in the QL4 grammar

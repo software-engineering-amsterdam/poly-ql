@@ -37,7 +37,7 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Decimal;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.NullValue;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Number;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Text;
-import org.uva.sea.ql.parser.antlr.QL4.GUI.Visitors.Renderer;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.AST.Renderer;
 
 /**
  * GUI for displaying questionair parsed from a form in QL4

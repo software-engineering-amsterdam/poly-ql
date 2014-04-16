@@ -2,7 +2,7 @@ package org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.Equality;
 
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Expression;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.EqualityExpr;
-import org.uva.sea.ql.parser.antlr.QL4.Visitors.IQLVisitor;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.AST.IQLVisitor;
 
 /**
  * Represents Equality expression in QL4 AST

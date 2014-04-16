@@ -6,7 +6,7 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Question;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Identifier;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Types.BoolType;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Types.Type;
-import org.uva.sea.ql.parser.antlr.QL4.Visitors.IQLVisitor;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.AST.IQLVisitor;
 
 /**
  * Representation of a boolean in the QL4 AST

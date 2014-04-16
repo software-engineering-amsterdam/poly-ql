@@ -1,4 +1,4 @@
-package org.uva.sea.ql.parser.antlr.QL4.Visitors.Errors;
+package org.uva.sea.ql.parser.antlr.QL4.Visitors.AST.Errors;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Identifier;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Types.BoolType;
 import org.uva.sea.ql.parser.antlr.QL4.Messages.ConditionError;
 import org.uva.sea.ql.parser.antlr.QL4.Messages.QLErrorMsg;
-import org.uva.sea.ql.parser.antlr.QL4.Visitors.QLErrorVisitor;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.AST.QLErrorVisitor;
 
 /**
  * Visitor for checking whether all conditions are of type

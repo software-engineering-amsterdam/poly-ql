@@ -1,8 +1,7 @@
-package org.uva.sea.ql.parser.antlr.QL4.GUI.Visitors;
+package org.uva.sea.ql.parser.antlr.QL4.Visitors;
 
 import javafx.scene.text.Text;
 
-import org.uva.sea.ql.parser.antlr.QL4.Visitor;
 import org.uva.sea.ql.parser.antlr.QL4.Messages.QLErrorMsg;
 
 

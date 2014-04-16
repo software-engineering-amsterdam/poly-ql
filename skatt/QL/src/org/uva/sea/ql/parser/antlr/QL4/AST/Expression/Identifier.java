@@ -5,7 +5,7 @@ import java.util.Map;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Question;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Types.NullType;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Types.Type;
-import org.uva.sea.ql.parser.antlr.QL4.Visitors.IQLVisitor;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.AST.IQLVisitor;
 
 /**
  * Class for AST representation of identifiers in QL

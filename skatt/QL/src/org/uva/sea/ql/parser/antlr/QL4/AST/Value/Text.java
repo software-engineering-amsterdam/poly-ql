@@ -2,7 +2,7 @@ package org.uva.sea.ql.parser.antlr.QL4.AST.Value;
 
 import org.uva.sea.ql.parser.antlr.QL4.AST.Types.StringType;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Types.Type;
-import org.uva.sea.ql.parser.antlr.QL4.Visitors.IQLVisitor;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.AST.IQLVisitor;
 
 public class Text extends Value {
 

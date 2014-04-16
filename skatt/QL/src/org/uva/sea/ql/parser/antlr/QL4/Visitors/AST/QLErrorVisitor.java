@@ -1,9 +1,8 @@
-package org.uva.sea.ql.parser.antlr.QL4.Visitors;
+package org.uva.sea.ql.parser.antlr.QL4.Visitors.AST;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.uva.sea.ql.parser.antlr.QL4.Visitor;
 import org.uva.sea.ql.parser.antlr.QL4.AST.ConditionalStructure;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Form;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Label;
@@ -39,6 +38,7 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Value.NullValue;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Number;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Text;
 import org.uva.sea.ql.parser.antlr.QL4.Messages.QLErrorMsg;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.Visitor;
 
 /**
  * Parent of all Error visitor classes. Implements the default

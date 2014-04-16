@@ -1,8 +1,7 @@
-package org.uva.sea.ql.parser.antlr.QL4.Visitors.Helpers;
+package org.uva.sea.ql.parser.antlr.QL4.Visitors.AST.Helpers;
 
 import java.util.Map;
 
-import org.uva.sea.ql.parser.antlr.QL4.Visitor;
 import org.uva.sea.ql.parser.antlr.QL4.AST.ConditionalStructure;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Form;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Label;
@@ -35,7 +34,8 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Value.NullValue;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Number;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Text;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Value;
-import org.uva.sea.ql.parser.antlr.QL4.Visitors.IQLVisitor;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.Visitor;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.AST.IQLVisitor;
 
 /**
  * Evaluates the QL4 expressions it visits
