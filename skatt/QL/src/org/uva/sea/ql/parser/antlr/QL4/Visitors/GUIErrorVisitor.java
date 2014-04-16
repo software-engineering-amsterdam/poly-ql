@@ -1,7 +1,5 @@
 package org.uva.sea.ql.parser.antlr.QL4.Visitors;
 
-import javafx.scene.text.Text;
-
 import org.uva.sea.ql.parser.antlr.QL4.Messages.QLErrorMsg;
 
 
@@ -11,7 +9,7 @@ import org.uva.sea.ql.parser.antlr.QL4.Messages.QLErrorMsg;
  */
 public class GUIErrorVisitor extends Visitor {
 
-	public Text visit(QLErrorMsg error) {
-		return new Text(error.toString());
+	public String visit(QLErrorMsg error) {
+		return error.toString();
 	}
 }

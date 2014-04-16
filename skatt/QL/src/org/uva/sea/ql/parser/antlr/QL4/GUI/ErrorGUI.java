@@ -1,10 +1,9 @@
 package org.uva.sea.ql.parser.antlr.QL4.GUI;
 
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import org.uva.sea.ql.parser.antlr.QL4.GUI.Elements.Error;
 import org.uva.sea.ql.parser.antlr.QL4.Messages.QLErrorMsg;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.GUIErrorVisitor;
 
@@ -34,11 +33,8 @@ public class ErrorGUI extends GUI {
 	 */
 	protected void render(VBox layout) {
 		for(QLErrorMsg msg : errors) {
-			Text errorText = guiErrorVisitor.visit(msg);
-
-			errorText.setFill(Color.RED);
-			
-			layout.getChildren().add(errorText);
+			Error er = new Error(guiErrorVisitor.visit(msg));
+			layout.getChildren().add(er.getRepresentation());
 		}
 	}
 

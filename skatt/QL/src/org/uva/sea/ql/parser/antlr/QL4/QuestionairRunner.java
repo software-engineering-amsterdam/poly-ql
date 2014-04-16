@@ -9,8 +9,8 @@ public class QuestionairRunner {
 	public static void main(String[] args) {
 		System.out.print("Running questionair... ");
 		
-		new Questionair();
-		//new Questionair("test/conditionTest");
+		//new Questionair();
+		new Questionair("test/conditionTest");
 		System.out.println("Done!");
 	}
 }
