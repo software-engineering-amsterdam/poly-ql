@@ -2,7 +2,7 @@ package org.uva.sea.ql.parser.antlr.QL4;
 
 import java.util.List;
 
-import org.uva.sea.ql.parser.antlr.QL4.AST.Form;
+import org.uva.sea.ql.parser.antlr.QL4.AST.HighLevel.Form;
 import org.uva.sea.ql.parser.antlr.QL4.GUI.ErrorGUI;
 import org.uva.sea.ql.parser.antlr.QL4.GUI.GUI;
 import org.uva.sea.ql.parser.antlr.QL4.GUI.QuestionairGUI;
@@ -14,15 +14,10 @@ import org.uva.sea.ql.parser.antlr.QL4.Messages.QLErrorMsg;
  */
 public class GUIManager {
 
-	final private Form ast;
-	final private List<QLErrorMsg> errors;
+	private Form ast;
+	private List<QLErrorMsg> errors;
 	private GUI gui;
 	
-	public GUIManager(Form ast, List<QLErrorMsg> errors) {
-		this.ast = ast;
-		this.errors = errors;
-	}
-
 	public void run() {
 		
 		// set correct gui
@@ -36,6 +31,17 @@ public class GUIManager {
 		
 		// run gui
 		new Thread(gui).start();
+	}
+
+	/**
+	 * Setters 
+	 */
+	public void setForm(Form ast) {
+		this.ast = ast;
+	}
+
+	public void setErrors(List<QLErrorMsg> errors) {
+		this.errors = errors;
 	}
 
 }

@@ -2,7 +2,7 @@ package org.uva.sea.ql.parser.antlr.QL4.AST.Expression;
 
 import java.util.Map;
 
-import org.uva.sea.ql.parser.antlr.QL4.AST.Question;
+import org.uva.sea.ql.parser.antlr.QL4.AST.HighLevel.Question;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Types.NullType;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Types.Type;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.AST.IQLVisitor;

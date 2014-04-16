@@ -9,7 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import org.uva.sea.ql.parser.antlr.QL4.AST.Form;
+import org.uva.sea.ql.parser.antlr.QL4.AST.HighLevel.Form;
 import org.uva.sea.ql.parser.antlr.QL4.Messages.QLErrorMsg;
 
 

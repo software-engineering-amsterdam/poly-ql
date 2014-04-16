@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.uva.sea.ql.parser.antlr.QL4.AST.Question;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.BinaryExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Identifier;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.Logical.AndExpr;
@@ -18,12 +17,13 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.Relational.GreExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.Relational.LeqExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.Relational.LesExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Unary.NegExpr;
+import org.uva.sea.ql.parser.antlr.QL4.AST.HighLevel.Question;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Types.BoolType;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Types.NumberType;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Types.Type;
 import org.uva.sea.ql.parser.antlr.QL4.Messages.InvalidTypeError;
 import org.uva.sea.ql.parser.antlr.QL4.Messages.QLErrorMsg;
-import org.uva.sea.ql.parser.antlr.QL4.Visitors.AST.QLErrorVisitor;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.AST.QLErrorGenerator;
 
 /**
  * Checks whether the type of expressions in operators are
@@ -35,7 +35,7 @@ import org.uva.sea.ql.parser.antlr.QL4.Visitors.AST.QLErrorVisitor;
  * @author Sammie Katt
  *
  */
-public class InvalidTypeChecker extends QLErrorVisitor {
+public class InvalidTypeChecker extends QLErrorGenerator {
 	
 	private Map<Identifier, Question> questions;
 	

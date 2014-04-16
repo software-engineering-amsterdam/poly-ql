@@ -3,7 +3,7 @@ package org.uva.sea.ql.parser.antlr.QL4;
 import java.io.IOException;
 import java.util.List;
 
-import org.uva.sea.ql.parser.antlr.QL4.AST.Form;
+import org.uva.sea.ql.parser.antlr.QL4.AST.HighLevel.Form;
 import org.uva.sea.ql.parser.antlr.QL4.Messages.QLErrorMsg;
 
 /**
@@ -13,6 +13,7 @@ public class Questionair {
 
 	// managers for generating and displaying QL4 elements
 	private ASTManager astManager = new ASTManager();
+	private GUIManager guiManager = new GUIManager();
 	
 	/**
 	 * Constructor parses default file "test/plainTest"
@@ -27,7 +28,9 @@ public class Questionair {
 	public Questionair(String fileToParse) {
 		Form ast = getForm(fileToParse);
 		List<QLErrorMsg> errors = getErrors(ast);
-		GUIManager guiManager = new GUIManager(ast, errors);
+		
+		guiManager.setForm(ast);
+		guiManager.setErrors(errors);
 		guiManager.run();
 	}
 	

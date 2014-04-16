@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.junit.Before;
 import org.uva.sea.ql.parser.antlr.QL4.ASTManager;
-import org.uva.sea.ql.parser.antlr.QL4.AST.Form;
+import org.uva.sea.ql.parser.antlr.QL4.AST.HighLevel.Form;
 import org.uva.sea.ql.parser.antlr.QL4.Messages.QLErrorMsg;
 
 /**

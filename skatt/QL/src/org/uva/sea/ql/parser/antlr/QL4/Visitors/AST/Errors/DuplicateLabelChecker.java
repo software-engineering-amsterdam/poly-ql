@@ -4,17 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.uva.sea.ql.parser.antlr.QL4.AST.Label;
-import org.uva.sea.ql.parser.antlr.QL4.AST.Question;
+import org.uva.sea.ql.parser.antlr.QL4.AST.HighLevel.Question;
 import org.uva.sea.ql.parser.antlr.QL4.Messages.DuplicateLabelError;
 import org.uva.sea.ql.parser.antlr.QL4.Messages.QLErrorMsg;
-import org.uva.sea.ql.parser.antlr.QL4.Visitors.AST.QLErrorVisitor;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.AST.QLErrorGenerator;
 
 /**
  * Visitor that checks a QLTree on duplicate labels
  * @author Sammie Katt
  *
  */
-public class DuplicateLabelChecker extends QLErrorVisitor {
+public class DuplicateLabelChecker extends QLErrorGenerator {
 
 	/**
 	 * The list of labels found when visiting

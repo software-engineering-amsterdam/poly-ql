@@ -3,12 +3,8 @@ package org.uva.sea.ql.parser.antlr.QL4.Visitors.AST;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.uva.sea.ql.parser.antlr.QL4.AST.ConditionalStructure;
-import org.uva.sea.ql.parser.antlr.QL4.AST.Form;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Label;
 import org.uva.sea.ql.parser.antlr.QL4.AST.QLTree;
-import org.uva.sea.ql.parser.antlr.QL4.AST.Question;
-import org.uva.sea.ql.parser.antlr.QL4.AST.Structures;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Expression;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Identifier;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.Equality.EqExpr;
@@ -25,6 +21,10 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.Relational.LeqExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.Relational.LesExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Unary.BraceExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Unary.NegExpr;
+import org.uva.sea.ql.parser.antlr.QL4.AST.HighLevel.ConditionalStructure;
+import org.uva.sea.ql.parser.antlr.QL4.AST.HighLevel.Form;
+import org.uva.sea.ql.parser.antlr.QL4.AST.HighLevel.Question;
+import org.uva.sea.ql.parser.antlr.QL4.AST.HighLevel.Structures;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Types.BoolType;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Types.CurrencyType;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Types.DateType;
@@ -37,8 +37,8 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Decimal;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.NullValue;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Number;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Text;
-import org.uva.sea.ql.parser.antlr.QL4.GUI.Elements.QuestionElement;
-import org.uva.sea.ql.parser.antlr.QL4.GUI.Elements.RegularQuestionElement;
+import org.uva.sea.ql.parser.antlr.QL4.GUI.Elements.Question.QuestionElement;
+import org.uva.sea.ql.parser.antlr.QL4.GUI.Elements.Question.RegularQuestionElement;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.Visitor;
 
 /**

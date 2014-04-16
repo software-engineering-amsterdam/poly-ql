@@ -8,12 +8,12 @@ import java.util.Map;
 import org.antlr.v4.runtime.ANTLRFileStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
-import org.uva.sea.ql.parser.antlr.QL4.AST.Form;
-import org.uva.sea.ql.parser.antlr.QL4.AST.Question;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Identifier;
+import org.uva.sea.ql.parser.antlr.QL4.AST.HighLevel.Form;
+import org.uva.sea.ql.parser.antlr.QL4.AST.HighLevel.Question;
 import org.uva.sea.ql.parser.antlr.QL4.Messages.QLErrorMsg;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.AntlrVisitor;
-import org.uva.sea.ql.parser.antlr.QL4.Visitors.AST.QLErrorVisitor;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.AST.QLErrorGenerator;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.AST.Errors.BoolConditionChecker;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.AST.Errors.CyclicDependencyChecker;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.AST.Errors.DuplicateLabelChecker;
@@ -67,7 +67,7 @@ public class ASTManager {
 		// holds all errors and warning msgs generated
 		List<QLErrorMsg> msgs = new ArrayList<QLErrorMsg>();
 		// the checker that will perform several checks on our ast input 
-		QLErrorVisitor ASTChecker;
+		QLErrorGenerator ASTChecker;
 		QuestionExtractor extract = new QuestionExtractor();
 		
 		/**

@@ -2,11 +2,7 @@ package org.uva.sea.ql.parser.antlr.QL4.Visitors.AST.Helpers;
 
 import java.util.Map;
 
-import org.uva.sea.ql.parser.antlr.QL4.AST.ConditionalStructure;
-import org.uva.sea.ql.parser.antlr.QL4.AST.Form;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Label;
-import org.uva.sea.ql.parser.antlr.QL4.AST.Question;
-import org.uva.sea.ql.parser.antlr.QL4.AST.Structures;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Identifier;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.Equality.EqExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.Equality.NeqExpr;
@@ -22,6 +18,10 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.Relational.LeqExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Binary.Relational.LesExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Unary.BraceExpr;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Unary.NegExpr;
+import org.uva.sea.ql.parser.antlr.QL4.AST.HighLevel.ConditionalStructure;
+import org.uva.sea.ql.parser.antlr.QL4.AST.HighLevel.Form;
+import org.uva.sea.ql.parser.antlr.QL4.AST.HighLevel.Question;
+import org.uva.sea.ql.parser.antlr.QL4.AST.HighLevel.Structures;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Types.BoolType;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Types.CurrencyType;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Types.DateType;

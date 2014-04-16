@@ -5,7 +5,7 @@ import java.util.List;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import org.uva.sea.ql.parser.antlr.QL4.GUI.Elements.QuestionElement;
+import org.uva.sea.ql.parser.antlr.QL4.GUI.Elements.Question.QuestionElement;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.AST.QuestionGUIGenerator;
 
 /**

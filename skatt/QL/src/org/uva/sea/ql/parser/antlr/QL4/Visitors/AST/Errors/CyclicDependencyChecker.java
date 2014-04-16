@@ -7,15 +7,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.uva.sea.ql.parser.antlr.QL4.AST.ConditionalStructure;
-import org.uva.sea.ql.parser.antlr.QL4.AST.Form;
-import org.uva.sea.ql.parser.antlr.QL4.AST.Question;
-import org.uva.sea.ql.parser.antlr.QL4.AST.Structures;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Expression;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Identifier;
+import org.uva.sea.ql.parser.antlr.QL4.AST.HighLevel.ConditionalStructure;
+import org.uva.sea.ql.parser.antlr.QL4.AST.HighLevel.Form;
+import org.uva.sea.ql.parser.antlr.QL4.AST.HighLevel.Question;
+import org.uva.sea.ql.parser.antlr.QL4.AST.HighLevel.Structures;
 import org.uva.sea.ql.parser.antlr.QL4.Messages.CyclicDependencyError;
 import org.uva.sea.ql.parser.antlr.QL4.Messages.QLErrorMsg;
-import org.uva.sea.ql.parser.antlr.QL4.Visitors.AST.QLErrorVisitor;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.AST.QLErrorGenerator;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.AST.Helpers.IdentifierExtractor;
 
 /**
@@ -24,7 +24,7 @@ import org.uva.sea.ql.parser.antlr.QL4.Visitors.AST.Helpers.IdentifierExtractor;
  * @author Sammie Katt
  *
  */
-public class CyclicDependencyChecker extends QLErrorVisitor {
+public class CyclicDependencyChecker extends QLErrorGenerator {
 
 	/**
 	 * Holds, for each question visited, a list of dependencies

@@ -3,18 +3,18 @@ package org.uva.sea.ql.parser.antlr.QL4.Visitors.AST.Errors;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.uva.sea.ql.parser.antlr.QL4.AST.Question;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Identifier;
+import org.uva.sea.ql.parser.antlr.QL4.AST.HighLevel.Question;
 import org.uva.sea.ql.parser.antlr.QL4.Messages.DuplicateQuestionError;
 import org.uva.sea.ql.parser.antlr.QL4.Messages.QLErrorMsg;
-import org.uva.sea.ql.parser.antlr.QL4.Visitors.AST.QLErrorVisitor;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.AST.QLErrorGenerator;
 
 /**
  * Visitor that checks a QLTree on duplicate question identifiers
  * @author Sammie Katt
  *
  */
-public class DuplicateQuestionChecker extends QLErrorVisitor {
+public class DuplicateQuestionChecker extends QLErrorGenerator {
 
 	/**
 	 * The list of identifiers found when visiting
