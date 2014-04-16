@@ -33,9 +33,14 @@ public class GUIManager {
 		new Thread(gui).start();
 	}
 
+	
 	/**
-	 * Setters 
+	 * Setters and getters
 	 */
+	public GUI getGUI() {
+		return gui;
+	}
+	
 	public void setForm(Form ast) {
 		this.ast = ast;
 	}

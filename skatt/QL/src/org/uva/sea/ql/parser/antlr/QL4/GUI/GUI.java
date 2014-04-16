@@ -6,10 +6,13 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Identifier;
 import org.uva.sea.ql.parser.antlr.QL4.AST.HighLevel.Form;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Value;
 import org.uva.sea.ql.parser.antlr.QL4.Messages.QLErrorMsg;
 
 
@@ -30,9 +33,12 @@ public abstract class GUI extends Application implements Runnable {
 	/**
 	 * Initiates the stage
 	 */
-	public void initStage(Stage stage, String title) {
+	public Pane initStage(Stage stage, String title) {
 		stage.setTitle(title);
-		createLayout();
+		Pane layout = createLayout();
+		showStage(stage, layout);
+		
+		return layout;
 	}
 	
 	/**
@@ -45,15 +51,28 @@ public abstract class GUI extends Application implements Runnable {
 	}
 	
 	
-	
 	/**
 	 * Creating highest level layout (vbox)
 	 */
-	protected VBox createLayout() {
+	protected Pane createLayout() {
 		VBox vbox = new VBox();
 	    vbox.setPadding(new Insets(10));
 	    vbox.setSpacing(8);
 	    return vbox;
+	}
+	
+	/**
+	 * Set visibility of a question, must be implemented in child
+	 */
+	public void updateVisibility(Identifier id, Boolean value) {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * Set the value of a question, must be implemented in child
+	 */
+	public void updateValue(Identifier id, Value value) {
+		throw new UnsupportedOperationException();
 	}
 	
 	/**
