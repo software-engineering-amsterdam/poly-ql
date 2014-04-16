@@ -11,10 +11,10 @@ import org.uva.sea.ql.parser.antlr.QL4.GUI.GUIElement;
  * @author Sammie Katt
  *
  */
-public class Error extends GUIElement{
+public class ErrorElement extends GUIElement{
 
 	private Text text;
-	public Error(String text) {
+	public ErrorElement(String text) {
 		this.text = new Text(text);
 		this.text.setFill(Color.RED);
 	}

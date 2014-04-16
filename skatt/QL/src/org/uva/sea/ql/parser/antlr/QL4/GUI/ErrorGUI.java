@@ -3,9 +3,9 @@ package org.uva.sea.ql.parser.antlr.QL4.GUI;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import org.uva.sea.ql.parser.antlr.QL4.GUI.Elements.Error;
+import org.uva.sea.ql.parser.antlr.QL4.GUI.Elements.ErrorElement;
 import org.uva.sea.ql.parser.antlr.QL4.Messages.QLErrorMsg;
-import org.uva.sea.ql.parser.antlr.QL4.Visitors.GUIErrorVisitor;
+import org.uva.sea.ql.parser.antlr.QL4.Visitors.ErrorGUIGenerator;
 
 /**
  * GUI for displaying errors created when parsing a questionair
@@ -13,7 +13,7 @@ import org.uva.sea.ql.parser.antlr.QL4.Visitors.GUIErrorVisitor;
  */
 public class ErrorGUI extends GUI {
 
-	private GUIErrorVisitor guiErrorVisitor = new GUIErrorVisitor();
+	private ErrorGUIGenerator guiErrorVisitor = new ErrorGUIGenerator();
 	
 	@Override
 	public void run() {
@@ -33,7 +33,7 @@ public class ErrorGUI extends GUI {
 	 */
 	protected void render(VBox layout) {
 		for(QLErrorMsg msg : errors) {
-			Error er = new Error(guiErrorVisitor.visit(msg));
+			ErrorElement er = new ErrorElement(guiErrorVisitor.visit(msg));
 			layout.getChildren().add(er.getRepresentation());
 		}
 	}

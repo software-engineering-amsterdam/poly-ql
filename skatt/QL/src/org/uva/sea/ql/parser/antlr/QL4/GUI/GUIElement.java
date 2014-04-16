@@ -6,7 +6,7 @@ import javafx.scene.Node;
  * Abstract parent of all QL gui elements
  * @author Sammie Katt
  */
-public class GUIElement {
+public abstract class GUIElement {
 
 	/**
 	 * Setter & getters to overwrite

@@ -3,9 +3,6 @@ package org.uva.sea.ql.parser.antlr.QL4.Visitors.AST;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
-
 import org.uva.sea.ql.parser.antlr.QL4.AST.ConditionalStructure;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Form;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Label;
@@ -34,37 +31,40 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Types.DateType;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Types.NullType;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Types.NumberType;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Types.StringType;
+import org.uva.sea.ql.parser.antlr.QL4.AST.Types.Type;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Bool;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Decimal;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.NullValue;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Number;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Text;
+import org.uva.sea.ql.parser.antlr.QL4.GUI.Elements.QuestionElement;
+import org.uva.sea.ql.parser.antlr.QL4.GUI.Elements.RegularQuestionElement;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.Visitor;
 
 /**
- * Renders form: extracts questions and returns a list of them rendered as hboxes
+ * Renders form: extracts questions and returns a list of them rendered as questions
  * @author Sammie Katt
  */
-public class Renderer extends Visitor implements IQLVisitor<List<HBox>>{
+public class QuestionGUIGenerator extends Visitor implements IQLVisitor<List<QuestionElement>>{
 
 	/**
 	 * Each visited child is handled through this function
 	 * Conducts checks on null
 	 */
-	private List<HBox> visitChild(QLTree child) {
-		List<HBox> hboxes = null; 
+	private List<QuestionElement> visitChild(QLTree child) {
+		List<QuestionElement> questions = null; 
 		
 		// if child is not null, visit
 		if(child != null) {
-			hboxes = child.accept(this);
+			questions = child.accept(this);
 		}
 		
 		// if resulting msgs are null, instantiate msgs as empty list
-		if (hboxes == null) {
-			hboxes = new ArrayList<HBox>();
+		if (questions == null) {
+			questions = new ArrayList<QuestionElement>();
 		}
 		
-		return hboxes;
+		return questions;
 	}
 	
 	/**
@@ -75,191 +75,193 @@ public class Renderer extends Visitor implements IQLVisitor<List<HBox>>{
 	 * - questions
 	 */
 	@Override
-	public List<HBox> visit(Form form) {
+	public List<QuestionElement> visit(Form form) {
 		return visitChild(form.getStructures());
 	}
 
 	@Override
-	public List<HBox> visit(Question question) {
-		List<HBox> questionContainer = new ArrayList<HBox>();
-		HBox questionGUI = new HBox();
+	public List<QuestionElement> visit(Question question) {
+		List<QuestionElement> questionContainer = new ArrayList<QuestionElement>();
+		javafx.scene.control.Label label = new javafx.scene.control.Label(question.getLabel().toString());
+		Type type = question.getType();
+		Identifier id = question.getIdentifier();
 		
-		questionGUI.getChildren().add(new javafx.scene.control.Label(question.getLabel().toString()));
-		questionGUI.getChildren().add(new TextField());
+		QuestionElement questionGUI = new RegularQuestionElement(label, type, id);
+		
 		questionContainer.add(questionGUI);
 		
 		return questionContainer;
 	}
 
 	@Override
-	public List<HBox> visit(Structures struc) {
-		List<HBox> hboxes = new ArrayList<HBox>();
+	public List<QuestionElement> visit(Structures struc) {
+		List<QuestionElement> questions = new ArrayList<QuestionElement>();
 		List<QLTree> structures = struc.getStructures();
 
-		// gather hboxes from all structures
+		// gather questions from all structures
 		for (QLTree structure : structures) {
-			hboxes.addAll(this.visitChild(structure));
+			questions.addAll(this.visitChild(structure));
 		}
 		
-		return hboxes;
+		return questions;
 	}
 
 	@Override
-	public List<HBox> visit(ConditionalStructure condition) {
-		List<HBox> hboxes = new ArrayList<HBox>();
+	public List<QuestionElement> visit(ConditionalStructure condition) {
+		List<QuestionElement> questions = new ArrayList<QuestionElement>();
 		
-		hboxes.addAll(this.visitChild(condition.getIfExpression()));
-		hboxes.addAll(this.visitChild(condition.getIfStructures()));
+		questions.addAll(this.visitChild(condition.getIfExpression()));
+		questions.addAll(this.visitChild(condition.getIfStructures()));
 		
 		List<Expression> elseIfExprs = condition.getElseIfExpr();
 		List<Structures> elseIfStructs = condition.getElseIfStructs();
 		
 		// loop over all elseif expressions and structures
 		for (int i = 0; i < elseIfExprs.size(); i++) {
-			hboxes.addAll(this.visitChild(elseIfExprs.get(i)));
-			hboxes.addAll(this.visitChild(elseIfStructs.get(i)));
+			questions.addAll(this.visitChild(elseIfExprs.get(i)));
+			questions.addAll(this.visitChild(elseIfStructs.get(i)));
 		}
 		
-		hboxes.addAll(this.visitChild(condition.getElseStruct()));
+		questions.addAll(this.visitChild(condition.getElseStruct()));
 		
-		return hboxes;
+		return questions;
 	}
 
 	/*
 	 * Other visits return null
 	 */
 	@Override
-	public List<HBox> visit(BraceExpr expr) {
+	public List<QuestionElement> visit(BraceExpr expr) {
 		return null;
 	}
 
 	@Override
-	public List<HBox> visit(NegExpr expr) {
+	public List<QuestionElement> visit(NegExpr expr) {
 		return null;
 	}
 
 	@Override
-	public List<HBox> visit(GeqExpr expr) {
+	public List<QuestionElement> visit(GeqExpr expr) {
 		return null;
 	}
 
 	@Override
-	public List<HBox> visit(GreExpr expr) {
+	public List<QuestionElement> visit(GreExpr expr) {
 		return null;
 	}
 
 	@Override
-	public List<HBox> visit(LeqExpr expr) {
+	public List<QuestionElement> visit(LeqExpr expr) {
 		return null;
 	}
 
 	@Override
-	public List<HBox> visit(LesExpr expr) {
+	public List<QuestionElement> visit(LesExpr expr) {
 		return null;
 	}
 
 	@Override
-	public List<HBox> visit(PlusExpr expr) {
+	public List<QuestionElement> visit(PlusExpr expr) {
 		return null;
 	}
 
 	@Override
-	public List<HBox> visit(MinExpr expr) {
+	public List<QuestionElement> visit(MinExpr expr) {
 		return null;
 	}
 
 	@Override
-	public List<HBox> visit(DivExpr expr) {
+	public List<QuestionElement> visit(DivExpr expr) {
 		return null;
 	}
 
 	@Override
-	public List<HBox> visit(MultExpr expr) {
+	public List<QuestionElement> visit(MultExpr expr) {
 		return null;
 	}
 
 	@Override
-	public List<HBox> visit(AndExpr expr) {
+	public List<QuestionElement> visit(AndExpr expr) {
 		return null;
 	}
 
 	@Override
-	public List<HBox> visit(OrExpr expr) {
+	public List<QuestionElement> visit(OrExpr expr) {
 		return null;
 	}
 
 	@Override
-	public List<HBox> visit(EqExpr expr) {
+	public List<QuestionElement> visit(EqExpr expr) {
 		return null;
 	}
 
 	@Override
-	public List<HBox> visit(NeqExpr expr) {
+	public List<QuestionElement> visit(NeqExpr expr) {
 		return null;
 	}
 
 	@Override
-	public List<HBox> visit(Identifier id) {
+	public List<QuestionElement> visit(Identifier id) {
 		return null;
 	}
 
 	@Override
-	public List<HBox> visit(Bool bool) {
+	public List<QuestionElement> visit(Bool bool) {
 		return null;
 	}
 
 	@Override
-	public List<HBox> visit(Decimal dec) {
+	public List<QuestionElement> visit(Decimal dec) {
 		return null;
 	}
 
 	@Override
-	public List<HBox> visit(Label label) {
+	public List<QuestionElement> visit(Label label) {
 		return null;
 	}
 
 	@Override
-	public List<HBox> visit(Number number) {
+	public List<QuestionElement> visit(Number number) {
 		return null;
 	}
 
 	@Override
-	public List<HBox> visit(NullValue nullValue) {
+	public List<QuestionElement> visit(NullValue nullValue) {
 		return null;
 	}
 
 	@Override
-	public List<HBox> visit(BoolType boolType) {
+	public List<QuestionElement> visit(BoolType boolType) {
 		return null;
 	}
 
 	@Override
-	public List<HBox> visit(NumberType numberType) {
+	public List<QuestionElement> visit(NumberType numberType) {
 		return null;
 	}
 
 	@Override
-	public List<HBox> visit(DateType dateType) {
+	public List<QuestionElement> visit(DateType dateType) {
 		return null;
 	}
 
 	@Override
-	public List<HBox> visit(CurrencyType currencyType) {
+	public List<QuestionElement> visit(CurrencyType currencyType) {
 		return null;
 	}
 
 	@Override
-	public List<HBox> visit(NullType nullType) {
+	public List<QuestionElement> visit(NullType nullType) {
 		return null;
 	}
 
 	@Override
-	public List<HBox> visit(StringType stringType) {
+	public List<QuestionElement> visit(StringType stringType) {
 		return null;
 	}
 
 	@Override
-	public List<HBox> visit(Text text) {
+	public List<QuestionElement> visit(Text text) {
 		return null;
 	}
 
