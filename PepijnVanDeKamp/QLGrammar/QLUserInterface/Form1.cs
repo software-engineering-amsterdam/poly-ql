@@ -33,6 +33,7 @@ namespace QLUserInterface
             _rules.Add(new QL.TypeChecker.DuplicateLabelsRule());
             _rules.Add(new QL.TypeChecker.ReferenceUndefinedQuestionsRule());
             _rules.Add(new QL.TypeChecker.DuplicateQuestionDeclarationsMustBeOfSameTypeRule());
+            _rules.Add(new QL.TypeChecker.ExpressionMustBeOfExpectedTypeRule());
             QL.TypeChecker.TypeChecker _checker = new QL.TypeChecker.TypeChecker(_rules);
             var _messages = _checker.getMessages(_form);
 

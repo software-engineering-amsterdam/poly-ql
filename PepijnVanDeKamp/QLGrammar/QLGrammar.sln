@@ -7,8 +7,6 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "QLParsing", "QLParsing\QLPa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QLUserInterface", "QLUserInterface\QLUserInterface.csproj", "{7B4A8EBC-10FD-4D0C-883C-006126D89124}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParseTests", "ParseTests\ParseTests.csproj", "{9877B094-3809-4E68-9560-709FF913D179}"
-EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "ParserTests", "ParserTests\ParserTests.fsproj", "{C0AFEF3F-F44C-4451-AC39-9C33FBD6997B}"
 EndProject
 Global
@@ -25,10 +23,6 @@ Global
 		{7B4A8EBC-10FD-4D0C-883C-006126D89124}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B4A8EBC-10FD-4D0C-883C-006126D89124}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B4A8EBC-10FD-4D0C-883C-006126D89124}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9877B094-3809-4E68-9560-709FF913D179}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9877B094-3809-4E68-9560-709FF913D179}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9877B094-3809-4E68-9560-709FF913D179}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9877B094-3809-4E68-9560-709FF913D179}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C0AFEF3F-F44C-4451-AC39-9C33FBD6997B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C0AFEF3F-F44C-4451-AC39-9C33FBD6997B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0AFEF3F-F44C-4451-AC39-9C33FBD6997B}.Release|Any CPU.ActiveCfg = Release|Any CPU
