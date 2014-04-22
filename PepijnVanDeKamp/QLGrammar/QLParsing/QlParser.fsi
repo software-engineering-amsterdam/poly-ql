@@ -23,7 +23,6 @@ type token =
   | BOOL_FALSE
   | BOOL_TRUE
   | QL_STRING
-  | QL_MONEY
   | QL_INTEGER
   | QL_BOOLEAN
   | FORM
@@ -54,7 +53,6 @@ type tokenId =
     | TOKEN_BOOL_FALSE
     | TOKEN_BOOL_TRUE
     | TOKEN_QL_STRING
-    | TOKEN_QL_MONEY
     | TOKEN_QL_INTEGER
     | TOKEN_QL_BOOLEAN
     | TOKEN_FORM

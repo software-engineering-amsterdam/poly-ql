@@ -12,7 +12,6 @@ open Microsoft.FSharp.Collections
 %token FORM
 %token QL_BOOLEAN
 %token QL_INTEGER
-%token QL_MONEY
 %token QL_STRING
 %token BOOL_TRUE
 %token BOOL_FALSE
@@ -64,18 +63,17 @@ Statement:
 	| Condition                                   { $1 }
 
 Question: 
-    | ID ASS STRING QuestionType PARENS_OPEN Expression PARENS_CLOSE { ComputedQuestion($1,$3,$4,$6) } 
+    | ID ASS STRING QuestionType PARENS_OPEN Expression PARENS_CLOSE { ComputedQuestion($1,$3,$4,$6,Position(parseState)) } 
     | ID ASS STRING QuestionType              { Question($1,$3,$4,Position(parseState)) } 
 
 QuestionType:
 	|	QL_BOOLEAN				                  { QL_Boolean }
 	|   QL_INTEGER				                  { QL_Integer }
-	|   QL_MONEY				                  { QL_Money }
 	|   QL_STRING				                  { QL_String }
 
 Condition: 
-    |   IF PARENS_OPEN Expression PARENS_CLOSE BRACKET_OPEN Statement_List BRACKET_CLOSE ELSE BRACKET_OPEN Statement_List BRACKET_CLOSE  { IfThenElse($3,$6,$10) } 
-    |   IF PARENS_OPEN Expression PARENS_CLOSE BRACKET_OPEN Statement_List BRACKET_CLOSE  { IfThen($3,$6) } 
+    |   IF PARENS_OPEN Expression PARENS_CLOSE BRACKET_OPEN Statement_List BRACKET_CLOSE ELSE BRACKET_OPEN Statement_List BRACKET_CLOSE  { IfThenElse($3,$6,$10,Position(parseState)) } 
+    |   IF PARENS_OPEN Expression PARENS_CLOSE BRACKET_OPEN Statement_List BRACKET_CLOSE  { IfThen($3,$6,Position(parseState)) } 
 
 
 Expression:

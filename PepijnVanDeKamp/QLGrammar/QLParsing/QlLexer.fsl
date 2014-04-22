@@ -11,7 +11,7 @@ let keywords =
         "form", FORM;  
         "boolean", QL_BOOLEAN;
         "integer", QL_INTEGER;
-        "money", QL_MONEY;
+        "string", QL_STRING;
         "true", BOOL_TRUE;
         "false", BOOL_FALSE;
         "if", IF;

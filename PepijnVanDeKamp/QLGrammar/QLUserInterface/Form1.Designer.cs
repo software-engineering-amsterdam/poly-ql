@@ -32,6 +32,7 @@
             this.txtOutput = new System.Windows.Forms.TextBox();
             this.btnLoad = new System.Windows.Forms.Button();
             this.btnParse = new System.Windows.Forms.Button();
+            this.txtCheckerMessages = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // txtInput
@@ -70,11 +71,20 @@
             this.btnParse.UseVisualStyleBackColor = true;
             this.btnParse.Click += new System.EventHandler(this.btnParse_Click);
             // 
+            // txtCheckerMessages
+            // 
+            this.txtCheckerMessages.Location = new System.Drawing.Point(12, 359);
+            this.txtCheckerMessages.Multiline = true;
+            this.txtCheckerMessages.Name = "txtCheckerMessages";
+            this.txtCheckerMessages.Size = new System.Drawing.Size(434, 123);
+            this.txtCheckerMessages.TabIndex = 4;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(536, 365);
+            this.ClientSize = new System.Drawing.Size(536, 491);
+            this.Controls.Add(this.txtCheckerMessages);
             this.Controls.Add(this.btnParse);
             this.Controls.Add(this.btnLoad);
             this.Controls.Add(this.txtOutput);
@@ -92,6 +102,7 @@
         private System.Windows.Forms.TextBox txtOutput;
         private System.Windows.Forms.Button btnLoad;
         private System.Windows.Forms.Button btnParse;
+        private System.Windows.Forms.TextBox txtCheckerMessages;
     }
 }
 
