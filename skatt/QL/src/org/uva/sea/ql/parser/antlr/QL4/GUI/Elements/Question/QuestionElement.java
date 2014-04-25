@@ -7,7 +7,6 @@ import javafx.scene.layout.HBox;
 
 import org.uva.sea.ql.parser.antlr.QL4.AST.Expression.Identifier;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Types.Type;
-import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Value;
 
 /**
  * Abstract parent class of question GUI elements representing (computed) questions in QL 
@@ -15,18 +14,23 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Value;
  */
 public abstract class QuestionElement {
 
-	protected Identifier id;
-	protected Label label;
+	final protected Identifier id;
+	
+	// graphical properties
+	final protected Label label;
 	protected TextInputControl input;
-	protected Type type;
+	final protected Type type;
 	
 	public QuestionElement(Label label, Type type, Identifier id, TextInputControl input) {
 		this.id = id;
+		this.type = type;
 		this.label = label;
-		this.id = id;
 		this.input = input;
 	}
 	
+	/**
+	 * GUI print
+	 */
 	public Node getRepresentation() {
 		HBox hbx = new HBox();
 		hbx.getChildren().add(label);
@@ -35,19 +39,4 @@ public abstract class QuestionElement {
 		return hbx;
 	}
 
-	/**
-	 * Sets visibility of both elements in question
-	 */
-	public void updateVisibility(Boolean visibility) {
-		label.setVisible(visibility);
-		input.setVisible(visibility);		
-	}
-
-	/**
-	 * Sets value of input, to be overridden
-	 */
-	public void updateValue(Value val) {
-		throw new UnsupportedOperationException();
-		
-	}
 }

@@ -19,12 +19,11 @@ public class GUIManager {
 	private GUI gui;
 	
 	public void run() {
-		
-		// set correct gui
+		// if errors/warnings, show them
 		if (errors.isEmpty()) {
 			gui = new QuestionairGUI();
-			gui.setForm(ast);
-		} else {
+			gui .setForm(ast);
+		} else { // otherwise show questionair
 			gui = new ErrorGUI();
 			gui.setErrors(errors);
 		}
@@ -35,12 +34,8 @@ public class GUIManager {
 
 	
 	/**
-	 * Setters and getters
+	 * Setters 
 	 */
-	public GUI getGUI() {
-		return gui;
-	}
-	
 	public void setForm(Form ast) {
 		this.ast = ast;
 	}

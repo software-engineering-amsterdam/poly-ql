@@ -12,8 +12,10 @@ import org.uva.sea.ql.parser.antlr.QL4.Messages.QLErrorMsg;
 public class Questionair {
 
 	// managers for generating and displaying QL4 elements
-	private ASTManager astManager = new ASTManager();
+	private ASTExtractor astManager = new ASTExtractor();
+	private ErrorExtractor errorManager = new ErrorExtractor();
 	private GUIManager guiManager = new GUIManager();
+	
 	
 	/**
 	 * Constructor parses default file "test/plainTest"
@@ -54,7 +56,7 @@ public class Questionair {
 	 * Returns the errors of an form
 	 */
 	private List<QLErrorMsg> getErrors(Form ast) {
-		return astManager.checkErrors(ast);
+		return errorManager.getErrors(ast);
 	}
 }
 

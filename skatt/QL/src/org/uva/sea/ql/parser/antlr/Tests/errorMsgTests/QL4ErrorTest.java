@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
-import org.uva.sea.ql.parser.antlr.QL4.ASTManager;
+import org.uva.sea.ql.parser.antlr.QL4.ASTExtractor;
+import org.uva.sea.ql.parser.antlr.QL4.ErrorExtractor;
 import org.uva.sea.ql.parser.antlr.QL4.AST.HighLevel.Form;
 import org.uva.sea.ql.parser.antlr.QL4.Messages.QLErrorMsg;
 
@@ -24,15 +25,16 @@ public abstract class QL4ErrorTest {
 	
 	@Before 
 	public void setUp() {
-		ASTManager ql4 = new ASTManager();
+		ASTExtractor astManager = new ASTExtractor();
+		ErrorExtractor errorManager = new ErrorExtractor();
 		
 		try {
-			ast = ql4.parseQuestionair(fileToParse);
+			ast = astManager.parseQuestionair(fileToParse);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-		errors = ql4.checkErrors(ast);
+		errors = errorManager.getErrors(ast);
 		expected = new ArrayList<QLErrorMsg>();
 	}
 	
