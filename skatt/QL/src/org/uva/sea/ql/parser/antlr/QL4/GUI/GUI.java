@@ -31,7 +31,7 @@ public abstract class GUI extends Application implements Runnable {
 	/**
 	 * Initiates the stage
 	 */
-	public Pane initStage(Stage stage, String title) {
+	protected Pane initStage(Stage stage, String title) {
 		stage.setTitle(title);
 		Pane layout = createLayout();
 		showStage(stage, layout);
@@ -42,7 +42,7 @@ public abstract class GUI extends Application implements Runnable {
 	/**
 	 * Shows stage given parent layout
 	 */
-	public void showStage(Stage stage, Parent layout) {
+	private void showStage(Stage stage, Parent layout) {
 		Scene scene = new Scene(layout, 600, 450);
 		stage.setScene(scene);
 		stage.show();
@@ -52,7 +52,7 @@ public abstract class GUI extends Application implements Runnable {
 	/**
 	 * Creating highest level layout (vbox)
 	 */
-	protected Pane createLayout() {
+	private Pane createLayout() {
 		VBox vbox = new VBox();
 	    vbox.setPadding(new Insets(10));
 	    vbox.setSpacing(8);

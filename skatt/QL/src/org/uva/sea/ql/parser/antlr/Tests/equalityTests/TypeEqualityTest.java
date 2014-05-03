@@ -15,9 +15,8 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Types.Type;
 /**
  * Performs tests on equality functionality of QL4 types
  * @author Sammie Katt
- * 
- * TODO
  */
+
 /**
  * Performs tests on equality functionality of QL4 types
  * @author Sammie Katt

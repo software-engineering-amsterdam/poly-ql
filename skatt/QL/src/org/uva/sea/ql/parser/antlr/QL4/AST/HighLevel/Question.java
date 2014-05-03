@@ -11,10 +11,9 @@ import org.uva.sea.ql.parser.antlr.QL4.Visitors.AST.IQLVisitor;
  * Abstract syntax tree of the regQuestion construct in the QL4 grammar
  * Contains a id, type, label and value 
  * 
- * TODO: May possibly be extended into several type of questions 
  * @author Sammie Katt
- *
  */
+
 public class Question implements QLTree {
 	final private boolean computed;
 	final private Identifier id; 
@@ -25,9 +24,6 @@ public class Question implements QLTree {
 	/**
 	 * Constructor, Sets the id, label and type
 	 * Additionally, sets computed to false
-	 * @param id
-	 * @param label
-	 * @param type
 	 */
 	public Question(Identifier id, Label label, Type type) {
 		this.computed = false;

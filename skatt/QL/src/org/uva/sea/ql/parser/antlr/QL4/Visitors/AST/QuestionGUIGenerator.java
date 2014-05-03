@@ -37,6 +37,7 @@ import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Decimal;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.NullValue;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Number;
 import org.uva.sea.ql.parser.antlr.QL4.AST.Value.Text;
+import org.uva.sea.ql.parser.antlr.QL4.GUI.Elements.Question.ComputedQuestionElement;
 import org.uva.sea.ql.parser.antlr.QL4.GUI.Elements.Question.QuestionElement;
 import org.uva.sea.ql.parser.antlr.QL4.GUI.Elements.Question.RegularQuestionElement;
 import org.uva.sea.ql.parser.antlr.QL4.Visitors.Visitor;
@@ -86,7 +87,12 @@ public class QuestionGUIGenerator extends Visitor implements IQLVisitor<List<Que
 		Type type = question.getType();
 		Identifier id = question.getIdentifier();
 		
-		QuestionElement questionGUI = new RegularQuestionElement(label, type, id);
+		// set question element
+		QuestionElement questionGUI = null;
+		if(question.isComputed())
+			questionGUI = new ComputedQuestionElement(label, type, id, question.getValue());
+		else 
+			questionGUI = new RegularQuestionElement(label, type, id);
 		
 		questionContainer.add(questionGUI);
 		
