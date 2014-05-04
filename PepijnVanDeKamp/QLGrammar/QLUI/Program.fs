@@ -1,4 +1,4 @@
-﻿module QLUI
+﻿module Program
 open System
 open System.Windows.Forms;
 
