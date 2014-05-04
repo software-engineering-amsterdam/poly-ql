@@ -63,8 +63,9 @@
     <None Include="QlParser.fsp" />
     <Compile Include="QlLexer.fs" />
     <Content Include="example.ql" />
-    <Compile Include="ParseQl.fs" />
+    <Compile Include="Parser.fs" />
     <Compile Include="TypeChecker.fs" />
+    <Compile Include="TypeCheckerRules.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.PowerPack">

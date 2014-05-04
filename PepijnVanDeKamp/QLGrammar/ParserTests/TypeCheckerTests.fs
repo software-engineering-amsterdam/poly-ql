@@ -6,10 +6,10 @@ open System.Linq
 open Microsoft.VisualStudio.TestTools.UnitTesting
 open QL.Grammar
 open QL.Parsing
-open QL.TypeChecker
+open QL.TypeChecking
+open QL.TypeCheckingRules
 
 
-// Form
 [<TestClass>]
 type TypeCheckerTests() = 
 
@@ -120,10 +120,32 @@ type TypeCheckerTests() =
      ("q13","int with neg",QL_Integer,Neg (LiteralStatement (Integer 4)),
       Position())];}
         let rules = new List<ITypeRule>();
-        rules.Add(new QL.TypeChecker.ExpressionMustBeOfExpectedTypeRule());
+        rules.Add(new ExpressionMustBeOfExpectedTypeRule());
         let checker = new TypeChecker(rules)
 
         let output = checker.getMessages(input).ToList()
 
         Assert.IsTrue(output.Count = 12);
         //Assert.IsTrue(output.[0].Message.Contains("hasSoldHouse") && output.[0].Message.Contains("expected 'boolean'"));
+
+    [<TestMethod>]
+    member x.OperantsTypeMustMatchOperator() =
+        let input = {Name = "Box1HouseOwning"; StatementList = [IfThen(BinaryExpression(LiteralStatement (Integer 1),Equals,LiteralStatement (String "1")),[], Position())];}
+        let rules = new List<ITypeRule>();
+        rules.Add(new OperantsMustBeOfValidTypeToOperatorsRule());
+        let checker = new TypeChecker(rules);
+
+        let output = checker.getMessages(input).ToList()
+
+        Assert.IsTrue(output.Exists(fun m ->m.Message.Contains("expected 'integer'")))
+
+    [<TestMethod>]
+    member x.CyclicDependencyNotAllowed() =
+        let input = {Name = "Box1HouseOwning"; StatementList =  [Question ("q1","Did you sell a house in 2010?",QL_Boolean,Position());   ComputedQuestion("q2","Did you by a house in 2010?",QL_Boolean,Id "q1",Position());   ComputedQuestion("q1","Did you enter a loan for maintenance/reconstruction?",QL_Boolean,Id "q2",Position())];}
+        let rules = new List<ITypeRule>();
+        rules.Add(new CyclicDependencyRule())
+        let checker = new TypeChecker(rules);
+
+        let output = checker.getMessages(input).ToList()
+
+        Assert.IsTrue(output.Exists(fun m -> m.Message.Contains("Cyclic")))

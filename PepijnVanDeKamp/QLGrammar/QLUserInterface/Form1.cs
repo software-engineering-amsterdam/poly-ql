@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.FSharp.Core;
 
 namespace QLUserInterface
 {
@@ -26,19 +27,36 @@ namespace QLUserInterface
 
         private void btnParse_Click(object sender, EventArgs e)
         {
-            var _form = QL.Parsing.Parse(txtInput.Text);
-            txtOutput.Text = _form.ToString().Replace("\n",Environment.NewLine);
+            try
+            {
+                QL.Parsing.Parser _parser = new QL.Parsing.Parser();
 
-            List<QL.TypeChecker.ITypeRule> _rules = new List<QL.TypeChecker.ITypeRule>();
-            _rules.Add(new QL.TypeChecker.DuplicateLabelsRule());
-            _rules.Add(new QL.TypeChecker.ReferenceUndefinedQuestionsRule());
-            _rules.Add(new QL.TypeChecker.DuplicateQuestionDeclarationsMustBeOfSameTypeRule());
-            _rules.Add(new QL.TypeChecker.ExpressionMustBeOfExpectedTypeRule());
-            QL.TypeChecker.TypeChecker _checker = new QL.TypeChecker.TypeChecker(_rules);
-            var _messages = _checker.getMessages(_form);
+                var _parseresult = _parser.Parse(txtInput.Text);
+                var _messages = _parseresult.Messages;
 
-            txtCheckerMessages.Text = String.Join(Environment.NewLine, _messages.Select(_m => _m.ToString()).ToArray());
+                if (FSharpOption<QL.Grammar.Form>.get_IsSome(_parseresult.ParseTree))
+                {
+                    var _parseTree = _parseresult.ParseTree.Value;
+                    txtOutput.Text = _parseTree.ToString().Replace("\n", Environment.NewLine);
 
+                    var _rules = new List<QL.TypeChecking.ITypeRule>();
+                    _rules.Add(new QL.TypeCheckingRules.DuplicateLabelsRule());
+                    _rules.Add(new QL.TypeCheckingRules.ReferenceUndefinedQuestionsRule());
+                    _rules.Add(new QL.TypeCheckingRules.DuplicateQuestionDeclarationsMustBeOfSameTypeRule());
+                    _rules.Add(new QL.TypeCheckingRules.ExpressionMustBeOfExpectedTypeRule());
+                    _rules.Add(new QL.TypeCheckingRules.OperantsMustBeOfValidTypeToOperatorsRule());
+                    _rules.Add(new QL.TypeCheckingRules.CyclicDependencyRule());
+
+                    var _checker = new QL.TypeChecking.TypeChecker(_rules);
+                    _messages.AddRange(_checker.getMessages(_parseTree));
+                }
+
+                txtCheckerMessages.Text = String.Join(Environment.NewLine, _messages.Select(_m => _m.ToString()).ToArray());
+            }
+            catch(Exception exc)
+            {
+                txtCheckerMessages.Text = String.Format("PARSE ERROR: {0}\n{1}",exc.Message,exc.StackTrace);
+            }
            
         }
     }

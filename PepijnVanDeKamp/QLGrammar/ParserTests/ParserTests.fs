@@ -16,9 +16,10 @@ type ParserTests() =
         let input = "form TestForm{ }"
         let expectedOutput = { Name = "TestForm"; StatementList = []; }
         //execute
-        let output = Parse input
+        let parser = new Parser()
+        let output = parser.Parse input
         //assert
-        Assert.AreEqual(expectedOutput.ToString(), output.ToString())
+        Assert.AreEqual(expectedOutput.ToString(), output.ParseTree.Value.ToString())
 
     [<TestMethod>]
     member x.FormWithOneQuestionTest() = 
@@ -26,6 +27,7 @@ type ParserTests() =
         let input = "form TestForm { hasSoldHouse: \"Dit is \\\" mijn vraag?\" boolean }"
         let expectedOutput = {Name = "TestForm"; StatementList = [Question ("hasSoldHouse","Dit is \\\" mijn vraag?",QL_Boolean,new QL.Grammar.Position())];}
         //execute
-        let output = Parse input
+        let parser = new Parser()
+        let output = parser.Parse input
         //assert
-        Assert.AreEqual(expectedOutput.ToString(), output.ToString())
+        Assert.AreEqual(expectedOutput.ToString(), output.ParseTree.Value.ToString())
