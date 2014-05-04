@@ -1,6 +1,6 @@
 ﻿namespace QLUserInterface
 {
-    partial class Form1
+    partial class QLComposerForm
     {
         /// <summary>
         /// Required designer variable.
@@ -48,6 +48,8 @@
             this.txtOutput.Location = new System.Drawing.Point(12, 230);
             this.txtOutput.Multiline = true;
             this.txtOutput.Name = "txtOutput";
+            this.txtOutput.ReadOnly = true;
+            this.txtOutput.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
             this.txtOutput.Size = new System.Drawing.Size(434, 123);
             this.txtOutput.TabIndex = 1;
             // 
@@ -57,7 +59,7 @@
             this.btnLoad.Name = "btnLoad";
             this.btnLoad.Size = new System.Drawing.Size(75, 23);
             this.btnLoad.TabIndex = 2;
-            this.btnLoad.Text = "Load";
+            this.btnLoad.Text = "Example";
             this.btnLoad.UseVisualStyleBackColor = true;
             this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
             // 
@@ -76,10 +78,12 @@
             this.txtCheckerMessages.Location = new System.Drawing.Point(12, 359);
             this.txtCheckerMessages.Multiline = true;
             this.txtCheckerMessages.Name = "txtCheckerMessages";
+            this.txtCheckerMessages.ReadOnly = true;
+            this.txtCheckerMessages.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
             this.txtCheckerMessages.Size = new System.Drawing.Size(434, 123);
             this.txtCheckerMessages.TabIndex = 4;
             // 
-            // Form1
+            // QLComposerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -89,8 +93,8 @@
             this.Controls.Add(this.btnLoad);
             this.Controls.Add(this.txtOutput);
             this.Controls.Add(this.txtInput);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "QLComposerForm";
+            this.Text = "QL Composer";
             this.ResumeLayout(false);
             this.PerformLayout();
 

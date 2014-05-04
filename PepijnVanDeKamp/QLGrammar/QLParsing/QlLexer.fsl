@@ -5,7 +5,6 @@ open System
 open QlParser
 open Microsoft.FSharp.Text.Lexing
  
-
 let keywords =   
     [   
         "form", FORM;  
@@ -41,9 +40,6 @@ let ops =
     ] |> Map.ofList   
 }  
 
-
-
-
 let char        = ['a'-'z' 'A'-'Z']   
 let digit       = ['0'-'9']   
 let int         = '-'?digit+   
@@ -51,13 +47,14 @@ let float       = '-'?digit+ '.' digit+
 let identifier  = char(char|digit|['-' '_' '.'])*   
 let symbol      = '{' | '}' | ':' | '(' | ')' | '+' | '-' | '/' | '*' | "==" | "!=" | '!' | '<' | '>' | "<=" | ">="
 let whitespace  = [' ' '\t']   
-let newline     = "\r\n" | "\n\r" | '\n' | '\r'  
+let newline     = "\r\n" | "\n\r" | '\n' | '\r' 
+let comment     = "//"
  
 rule tokenize = parse   
 | whitespace    { tokenize lexbuf }   
-| newline       { lexbuf.EndPos <- lexbuf.EndPos.NextLine; tokenize lexbuf; }   
-| int           { INT(Int32.Parse(LexBuffer<_>.LexemeString lexbuf)) }   
-//| float         { FLOAT(Double.Parse(LexBuffer<_>.LexemeString lexbuf)) }   
+| newline       { lexbuf.EndPos <- lexbuf.EndPos.NextLine; tokenize lexbuf; } 
+| comment       { linecomment lexbuf }
+| int           { INT(Int32.Parse(LexBuffer<_>.LexemeString lexbuf)) }     
 | identifier    { match keywords.TryFind(LexBuffer<_>.LexemeString lexbuf) with   
                   | Some(token) -> token   
                   | None -> ID(LexBuffer<_>.LexemeString lexbuf) }      
@@ -66,10 +63,12 @@ rule tokenize = parse
                   | None -> ID(LexBuffer<_>.LexemeString lexbuf) }  
 | "\""          { STRING (string lexbuf.StartPos "" lexbuf) }
 | eof           { EOF }
-
 and string pos s = parse
 | "\\\""        { string pos (s + "\\\"") lexbuf }
 | "\""          { s }
 | "\n"          { lexbuf.EndPos <- lexbuf.EndPos.NextLine;string pos (s + "\n") lexbuf }
-| eof           { failwithf "end of file in string started at or near %A" pos }
+| eof           { failwithf "String was not terminated" pos }
 | _             { string pos (s + (LexBuffer<_>.LexemeString lexbuf)) lexbuf }
+and linecomment = parse
+| newline       { lexbuf.EndPos <- lexbuf.EndPos.NextLine; tokenize lexbuf; }
+| _             { linecomment lexbuf }
