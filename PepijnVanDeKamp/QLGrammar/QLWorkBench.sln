@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "QLParsing", "QLParsing\QLParsing.fsproj", "{7138C2BD-D137-48C7-B14E-183EF6DA02CF}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "QL", "QLParsing\QL.fsproj", "{7138C2BD-D137-48C7-B14E-183EF6DA02CF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QLUserInterface", "QLUserInterface\QLUserInterface.csproj", "{7B4A8EBC-10FD-4D0C-883C-006126D89124}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "ParserTests", "ParserTests\ParserTests.fsproj", "{C0AFEF3F-F44C-4451-AC39-9C33FBD6997B}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "QLTests", "ParserTests\QLTests.fsproj", "{C0AFEF3F-F44C-4451-AC39-9C33FBD6997B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -30,7 +30,7 @@ type TypeCheckerTests() =
 
     [<TestMethod>]
     member x.ReferenceUndefinedQuestionErrorTest() =
-        let input = {Name = "Box1HouseOwning"; StatementList = [Question("hasBoughtHouse","Did you by a house in 2010?",QL_Boolean,Position()); IfThen(Id("hasSoldHouse"), [ComputedQuestion("valueResidue","Value residue:",QL_Integer,ArithmicExpression(Id("sellingPrice"),Minus,Id("privateDebt")),Position())],Position())];}
+        let input = {Name = "Box1HouseOwning"; StatementList = [Question("hasBoughtHouse","Did you buy a house in 2010?",QL_Boolean,Position()); IfThen(Id("hasSoldHouse"), [ComputedQuestion("valueResidue","Value residue:",QL_Integer,ArithmeticExpression(Id("sellingPrice"),Minus,Id("privateDebt")),Position())],Position())];}
         let rules = new List<ITypeRule>();
         rules.Add(new ReferenceUndefinedQuestionsRule());
         let checker = new TypeChecker(rules)
@@ -44,7 +44,7 @@ type TypeCheckerTests() =
 
     [<TestMethod>]
     member x.DuplicateQuestionDeclarationWithDifferentTypesTest() = 
-        let input = {Name = "Box1HouseOwning"; StatementList =  [Question ("hasSoldHouse","Did you sell a house in 2010?",QL_Boolean,Position());   Question ("hasSoldHouse","Did you by a house in 2010?",QL_Integer,Position())];}
+        let input = {Name = "Box1HouseOwning"; StatementList =  [Question ("hasSoldHouse","Did you sell a house in 2010?",QL_Boolean,Position());   Question ("hasSoldHouse","Did you buy a house in 2010?",QL_Integer,Position())];}
         let rules = new List<ITypeRule>();
         rules.Add(new DuplicateQuestionDeclarationsMustBeOfSameTypeRule());
         let checker = new TypeChecker(rules)
@@ -59,11 +59,11 @@ type TypeCheckerTests() =
 
 //    form ExpressionTest {
 //q1: "boolean with int literal" boolean(1)
-//q2: "boolean with int arithmic" boolean(1 + 2)
+//q2: "boolean with int Arithmetic" boolean(1 + 2)
 //q3: "int" integer
 //q4: "boolean with int id" boolean(q3)
 //q5: "string with int literal" string(1)
-//q6: "string with int arithmic" string(1+1)
+//q6: "string with int Arithmetic" string(1+1)
 //q7: "string with int id" string(q3)
 //q8: "string with binary" string(5 > 3)
 //q9: "string with neg" string(!5)
@@ -79,46 +79,46 @@ type TypeCheckerTests() =
 //}
 //}
 
-        let input = {Name = "ExpressionTest";
- StatementList =
-  [ComputedQuestion
-     ("q1","boolean with int literal",QL_Boolean,LiteralStatement (Integer 1),
-      Position());
-   ComputedQuestion
-     ("q2","boolean with int arithmic",QL_Boolean,
-      ArithmicExpression
-        (LiteralStatement (Integer 1),Plus,LiteralStatement (Integer 2)),
-      Position()); Question ("q3","int",QL_Integer,Position());
-   ComputedQuestion ("q4","boolean with int id",QL_Boolean,Id "q3",Position());
-   ComputedQuestion
-     ("q5","string with int literal",QL_String,LiteralStatement (Integer 1),
-      Position());
-   ComputedQuestion
-     ("q6","string with int arithmic",QL_String,
-      ArithmicExpression
-        (LiteralStatement (Integer 1),Plus,LiteralStatement (Integer 1)),
-      Position());
-   ComputedQuestion ("q7","string with int id",QL_String,Id "q3",Position());
-   ComputedQuestion
-     ("q8","string with binary",QL_String,
-      BinaryExpression
-        (LiteralStatement (Integer 5),GreaterThan,LiteralStatement (Integer 3)),
-      Position());
-   ComputedQuestion
-     ("q9","string with neg",QL_String,Neg (LiteralStatement (Integer 5)),
-      Position());
-   ComputedQuestion
-     ("q10","int with boolean literal",QL_Integer,
-      LiteralStatement (Boolean true),Position());
-   ComputedQuestion ("q11","int with string id",QL_Integer,Id "q5",Position());
-   ComputedQuestion
-     ("q12","int with binary",QL_Integer,
-      BinaryExpression
-        (LiteralStatement (Integer 1),GreaterThan,LiteralStatement (Integer 2)),
-      Position());
-   ComputedQuestion
-     ("q13","int with neg",QL_Integer,Neg (LiteralStatement (Integer 4)),
-      Position())];}
+        let input = {Name = "ExpressionTest"; StatementList =
+                       [ComputedQuestion
+                         ("q1","boolean with int literal",QL_Boolean,LiteralStatement (Integer 1),
+                          Position());
+                       ComputedQuestion
+                         ("q2","boolean with int Arithmetic",QL_Boolean,
+                          ArithmeticExpression
+                            (LiteralStatement (Integer 1),Plus,LiteralStatement (Integer 2)),
+                          Position()); Question ("q3","int",QL_Integer,Position());
+                       ComputedQuestion ("q4","boolean with int id",QL_Boolean,Id "q3",Position());
+                       ComputedQuestion
+                         ("q5","string with int literal",QL_String,LiteralStatement (Integer 1),
+                          Position());
+                       ComputedQuestion
+                         ("q6","string with int Arithmetic",QL_String,
+                          ArithmeticExpression
+                            (LiteralStatement (Integer 1),Plus,LiteralStatement (Integer 1)),
+                          Position());
+                       ComputedQuestion ("q7","string with int id",QL_String,Id "q3",Position());
+                       ComputedQuestion
+                         ("q8","string with binary",QL_String,
+                          BinaryExpression
+                            (LiteralStatement (Integer 5),GreaterThan,LiteralStatement (Integer 3)),
+                          Position());
+                       ComputedQuestion
+                         ("q9","string with neg",QL_String,Neg (LiteralStatement (Integer 5)),
+                          Position());
+                       ComputedQuestion
+                         ("q10","int with boolean literal",QL_Integer,
+                          LiteralStatement (Boolean true),Position());
+                       ComputedQuestion ("q11","int with string id",QL_Integer,Id "q5",Position());
+                       ComputedQuestion
+                         ("q12","int with binary",QL_Integer,
+                          BinaryExpression
+                            (LiteralStatement (Integer 1),GreaterThan,LiteralStatement (Integer 2)),
+                          Position());
+                       ComputedQuestion
+                         ("q13","int with neg",QL_Integer,Neg (LiteralStatement (Integer 4)),
+                          Position())];}
+
         let rules = new List<ITypeRule>();
         rules.Add(new ExpressionMustBeOfExpectedTypeRule());
         let checker = new TypeChecker(rules)
@@ -141,7 +141,7 @@ type TypeCheckerTests() =
 
     [<TestMethod>]
     member x.CyclicDependencyNotAllowed() =
-        let input = {Name = "Box1HouseOwning"; StatementList =  [Question ("q1","Did you sell a house in 2010?",QL_Boolean,Position());   ComputedQuestion("q2","Did you by a house in 2010?",QL_Boolean,Id "q1",Position());   ComputedQuestion("q1","Did you enter a loan for maintenance/reconstruction?",QL_Boolean,Id "q2",Position())];}
+        let input = {Name = "Box1HouseOwning"; StatementList =  [Question ("q1","Did you sell a house in 2010?",QL_Boolean,Position());   ComputedQuestion("q2","Did you buy a house in 2010?",QL_Boolean,Id "q1",Position());   ComputedQuestion("q1","Did you enter a loan for maintenance/reconstruction?",QL_Boolean,Id "q2",Position())];}
         let rules = new List<ITypeRule>();
         rules.Add(new CyclicDependencyRule())
         let checker = new TypeChecker(rules);

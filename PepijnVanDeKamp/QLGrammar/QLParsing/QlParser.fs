@@ -525,7 +525,7 @@ let _fsyacc_reductions ()  =    [|
                 (
                    (
 # 88 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
-                                                                      ArithmicExpression(_1,Plus,_3) 
+                                                                      ArithmeticExpression(_1,Plus,_3) 
                    )
 # 88 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                  : 'Expression));
@@ -537,7 +537,7 @@ let _fsyacc_reductions ()  =    [|
                 (
                    (
 # 89 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
-                                                                         ArithmicExpression(_1,Minus,_3) 
+                                                                         ArithmeticExpression(_1,Minus,_3) 
                    )
 # 89 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                  : 'Expression));
@@ -549,7 +549,7 @@ let _fsyacc_reductions ()  =    [|
                 (
                    (
 # 90 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
-                                                                         ArithmicExpression(_1,Divide,_3) 
+                                                                         ArithmeticExpression(_1,Divide,_3) 
                    )
 # 90 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                  : 'Expression));
@@ -561,7 +561,7 @@ let _fsyacc_reductions ()  =    [|
                 (
                    (
 # 91 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
-                                                                         ArithmicExpression(_1,Times,_3) 
+                                                                         ArithmeticExpression(_1,Times,_3) 
                    )
 # 91 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                  : 'Expression));

@@ -46,7 +46,7 @@ module Grammar =
     type Expression =
          | Id of string
          | Neg of Expression
-         | ArithmicExpression of Expression * NumericOperator * Expression
+         | ArithmeticExpression of Expression * NumericOperator * Expression
          | BinaryExpression of Expression * BinaryOperator * Expression
          | LiteralStatement of Literal
         

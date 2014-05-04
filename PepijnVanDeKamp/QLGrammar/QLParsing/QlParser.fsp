@@ -85,10 +85,10 @@ Expression:
 	| BOOL_TRUE                                   { LiteralStatement(Boolean(true)) }
     | BOOL_FALSE                                  { LiteralStatement(Boolean(false)) }
     | NOT Expression		                      { Neg($2) }
-	| Expression PLUS Expression                  { ArithmicExpression($1,Plus,$3) }
-    | Expression MINUS Expression                 { ArithmicExpression($1,Minus,$3) }
-    | Expression DIVIDE Expression                { ArithmicExpression($1,Divide,$3) }
-    | Expression TIMES Expression                 { ArithmicExpression($1,Times,$3) }
+	| Expression PLUS Expression                  { ArithmeticExpression($1,Plus,$3) }
+    | Expression MINUS Expression                 { ArithmeticExpression($1,Minus,$3) }
+    | Expression DIVIDE Expression                { ArithmeticExpression($1,Divide,$3) }
+    | Expression TIMES Expression                 { ArithmeticExpression($1,Times,$3) }
     | Expression EQUALS Expression                { BinaryExpression($1,Equals,$3) }
     | Expression NOT_EQUALS Expression            { BinaryExpression($1,NotEquals,$3) }
     | Expression LESS_THAN Expression             { BinaryExpression($1,LessThan,$3) }

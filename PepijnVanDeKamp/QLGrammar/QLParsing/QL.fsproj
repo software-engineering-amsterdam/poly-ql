@@ -5,13 +5,14 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>c0afef3f-f44c-4451-ac39-9c33fbd6997b</ProjectGuid>
+    <ProjectGuid>7138c2bd-d137-48c7-b14e-183ef6da02cf</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>ParserTests</RootNamespace>
-    <AssemblyName>ParserTests</AssemblyName>
+    <RootNamespace>ConsoleApplication1</RootNamespace>
+    <AssemblyName>QL</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFSharpCoreVersion>4.3.0.0</TargetFSharpCoreVersion>
-    <Name>ParserTests</Name>
+    <Name>QL</Name>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,7 +22,9 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
-    <DocumentationFile>bin\Debug\ParserTests.XML</DocumentationFile>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DocumentationFile>bin\Debug\ConsoleApplication1.XML</DocumentationFile>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,7 +33,9 @@
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
-    <DocumentationFile>bin\Release\ParserTests.XML</DocumentationFile>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DocumentationFile>bin\Release\ConsoleApplication1.XML</DocumentationFile>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
@@ -49,10 +54,18 @@
   </Choose>
   <Import Project="$(FSharpTargetsPath)" />
   <ItemGroup>
-    <Compile Include="ParserTests.fs" />
-    <None Include="Script.fsx" />
+    <None Include="App.config" />
     <None Include="packages.config" />
-    <Compile Include="TypeCheckerTests.fs" />
+    <Compile Include="Grammar.fs" />
+    <None Include="QlLexer.fsl" />
+    <Compile Include="QlParser.fsi" />
+    <Compile Include="QlParser.fs" />
+    <None Include="QlParser.fsp" />
+    <Compile Include="QlLexer.fs" />
+    <Content Include="example.ql" />
+    <Compile Include="Parser.fs" />
+    <Compile Include="TypeChecker.fs" />
+    <Compile Include="TypeCheckerRules.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.PowerPack">
@@ -71,7 +84,6 @@
       <HintPath>..\packages\FSPowerPack.Parallel.Seq.Community.3.0.0.0\Lib\Net40\FSharp.PowerPack.Parallel.Seq.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="mscorlib" />
     <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <Private>True</Private>
@@ -80,13 +92,14 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\QLParsing\QLParsing.fsproj">
-      <Name>QLParsing</Name>
-      <Project>{7138c2bd-d137-48c7-b14e-183ef6da02cf}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-  </ItemGroup>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>"C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\packages\FSPowerPack.Community.3.0.0.0\Tools\fslex.exe" "$(ProjectDir)QlLexer.fsl" --unicode
+"C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\packages\FSPowerPack.Community.3.0.0.0\Tools\fsyacc.exe" "$(ProjectDir)QlParser.fsp" --module QlParser</PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

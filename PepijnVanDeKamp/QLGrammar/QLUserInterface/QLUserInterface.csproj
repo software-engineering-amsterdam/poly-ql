@@ -80,9 +80,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\QLParsing\QLParsing.fsproj">
+    <ProjectReference Include="..\QLParsing\QL.fsproj">
       <Project>{7138c2bd-d137-48c7-b14e-183ef6da02cf}</Project>
-      <Name>QLParsing</Name>
+      <Name>QL</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
