@@ -11,7 +11,6 @@ module Grammar =
             let startPos, endPos = state.ResultRange
             Position(startPos, endPos)
         new() = Position(Lexing.Position.Empty, Lexing.Position.Empty)
-        //override m.ToString() = sprintf "Line:%i Column:%i" startPos.Line startPos.Column
         override m.ToString() = "Position"
         
 
@@ -57,8 +56,9 @@ module Grammar =
          | IfThenElse of Expression * Statement list * Statement list * Position
 
     type Form =
-        { Name : string;
-          StatementList : Statement list;
+         { 
+           Name : string;
+           StatementList : Statement list;
          } 
          override m.ToString() = sprintf "%+A" m
 

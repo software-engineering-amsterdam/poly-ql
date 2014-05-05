@@ -15,16 +15,13 @@ type TypeCheckerTests() =
 
     [<TestMethod>]
     member x.DuplicateLabelsWarningTest() = 
-        //setup
         let input = {Name = "Box1HouseOwning"; StatementList = [Question ("hasSoldHouse","Did you sell a house in 2010?",QL_Boolean,Position());   Question("hasBoughtHouse","Did you sell a house in 2010?",QL_Boolean,Position())];}
         let rules = new List<ITypeRule>();
         rules.Add(new DuplicateLabelsRule());
         let checker = new TypeChecker(rules)
 
-        //execute
         let output = checker.getMessages(input).ToList()
 
-        //assert
         Assert.IsTrue(output.Exists(fun _m -> _m.Message.Equals("Duplicate Label 'Did you sell a house in 2010?'")));
 
 
@@ -126,7 +123,7 @@ type TypeCheckerTests() =
         let output = checker.getMessages(input).ToList()
 
         Assert.IsTrue(output.Count = 12);
-        //Assert.IsTrue(output.[0].Message.Contains("hasSoldHouse") && output.[0].Message.Contains("expected 'boolean'"));
+
 
     [<TestMethod>]
     member x.OperantsTypeMustMatchOperator() =
