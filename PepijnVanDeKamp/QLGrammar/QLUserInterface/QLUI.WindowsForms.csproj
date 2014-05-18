@@ -51,11 +51,17 @@
     <Compile Include="Abstract\QuestionControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Composer\QLComposerForm.cs">
+    <Compile Include="Forms\QLComposerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Composer\QLComposerForm.Designer.cs">
+    <Compile Include="Forms\QLComposerForm.Designer.cs">
       <DependentUpon>QLComposerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\QLQuestionnaireForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\QLQuestionnaireForm.Designer.cs">
+      <DependentUpon>QLQuestionnaireForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuestionTypes\BooleanQuestionControl.cs">
@@ -76,8 +82,11 @@
     <Compile Include="QuestionTypes\StringQuestionControl.Designer.cs">
       <DependentUpon>StringQuestionControl.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Composer\QLComposerForm.resx">
+    <EmbeddedResource Include="Forms\QLComposerForm.resx">
       <DependentUpon>QLComposerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\QLQuestionnaireForm.resx">
+      <DependentUpon>QLQuestionnaireForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -94,6 +103,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="QuestionTypes\IntQuestionControl.resx">
       <DependentUpon>IntQuestionControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QuestionTypes\StringQuestionControl.resx">
+      <DependentUpon>StringQuestionControl.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -15,11 +15,16 @@ namespace QLUI.WindowsForms.QuestionTypes
     {
         public StringQuestionControl(string Id, String Label, Boolean IsReadOnly)
             : base(Id, Label, IsReadOnly)
-        { }
+        {
+            InitializeComponent();
+            label1.Text = Label;
+            textBox1.ReadOnly = IsReadOnly;
+            textBox1.Enabled = !IsReadOnly;
+        }
 
         public StringQuestionControl() : base()
         {
-            InitializeComponent();
+
         }
     }
 }

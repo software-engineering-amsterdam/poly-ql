@@ -15,11 +15,15 @@ namespace QLUI.WindowsForms.QuestionTypes
     {
         public BooleanQuestionControl(string Id, String Label, Boolean IsReadOnly)
             : base(Id, Label, IsReadOnly)
-        { }
+        {
+            InitializeComponent();
+            checkBox1.Text = Label;
+            checkBox1.Enabled = !IsReadOnly;
+        }
 
         public BooleanQuestionControl() : base()
         {
-            InitializeComponent();
+
         }
     }
 }

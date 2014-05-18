@@ -18,6 +18,9 @@ namespace QLUI.WindowsForms.QuestionTypes
         public IntQuestionControl(string Id, String Label, Boolean IsReadOnly) : base(Id,Label,IsReadOnly)
         {
             InitializeComponent();
+            label1.Text = Label;
+            numericUpDown1.ReadOnly = IsReadOnly;
+            numericUpDown1.Enabled = !IsReadOnly;
         }
     }
 }

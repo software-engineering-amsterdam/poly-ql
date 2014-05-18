@@ -3,6 +3,7 @@ open System
 open System.Windows.Forms;
 open System.Linq
 open QLUI
+open QuestionnaireGUI
 open QL.Parsing
 open QL.Checking
 open QL.Checks
@@ -10,7 +11,7 @@ open QL.Checks
 
 Application.EnableVisualStyles()
 Application.SetCompatibleTextRenderingDefault(false)
-let checkers = [DuplicateLabelsCheck;ReferenceUndefinedQuestionsCheck]
+let checkers = [DuplicateLabelsCheck;ReferenceUndefinedQuestionsCheck;DuplicateQuestionDeclarationsMustBeOfSameTypeCheck;ExpressionMustBeOfExpectedTypeCheck;OperandsMustBeOfValidTypeToOperatorsCheck;CyclicDependencyCheck]
 let mainForm = new QLUserInterface.QLComposerForm()
 
 let parseButtonClick _ _ =
@@ -26,7 +27,7 @@ let parseButtonClick _ _ =
         | Some ast -> ast |> setTreeToControl
                       let checkMessages = ast |> checkAst
                       checkMessages |> setMessagesToControl
-                      if not <| hasError checkMessages then [] |> setMessagesToControl
+                      if not <| hasError checkMessages then BuildGUI ast
         | None     -> String.Empty |> setTreeToControl
                       result.Messages |> setMessagesToControl
     mainForm.getInputString() |> ParseToParseResult |> processResult
