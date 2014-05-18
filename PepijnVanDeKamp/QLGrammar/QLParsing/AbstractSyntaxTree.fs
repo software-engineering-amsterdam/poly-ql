@@ -1,5 +1,5 @@
 ﻿namespace QL
-module Grammar =
+module AbstractSyntaxTree =
 
 
     type Position(startPos : Lexing.Position, endPos : Lexing.Position) =
@@ -12,6 +12,8 @@ module Grammar =
             Position(startPos, endPos)
         new() = Position(Lexing.Position.Empty, Lexing.Position.Empty)
         override m.ToString() = "Position"
+        override m.Equals(_) = true
+        override m.GetHashCode() = 1
         
 
     type QuestionType = 

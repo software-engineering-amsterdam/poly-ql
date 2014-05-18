@@ -1,6 +1,6 @@
 ﻿%{   
 open System
-open QL.Grammar
+open QL.AbstractSyntaxTree
 open Microsoft.FSharp.Collections   
 %}   
  
@@ -43,7 +43,9 @@ open Microsoft.FSharp.Collections
 
 // start   
 %start start   
-%type <QL.Grammar.Form> start   
+%start startexpression 
+%type <QL.AbstractSyntaxTree.Form> start  
+%type <QL.AbstractSyntaxTree.Expression> startexpression  
  
 %%   
  
@@ -51,7 +53,9 @@ start:  FORM ID BRACKET_OPEN Statement_List BRACKET_CLOSE
         EOF                 {
                                 {  Name = $2; 
                                    StatementList = $4; }
-                            }             
+                            }     
+							
+startexpression:  Expression EOF { $1 }         
 
 Statement_List:
     |                                             { [] }

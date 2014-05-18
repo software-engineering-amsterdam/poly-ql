@@ -63,8 +63,10 @@ type tokenId =
     | TOKEN_end_of_input
     | TOKEN_error
 type nonTerminalId = 
+    | NONTERM__startstartexpression
     | NONTERM__startstart
     | NONTERM_start
+    | NONTERM_startexpression
     | NONTERM_Statement_List
     | NONTERM_Statement
     | NONTERM_Question
@@ -82,4 +84,5 @@ val prodIdxToNonTerminal: int -> nonTerminalId
 
 /// This function gets the name of a token as a string
 val token_to_string: token -> string
-val start : (Microsoft.FSharp.Text.Lexing.LexBuffer<'cty> -> token) -> Microsoft.FSharp.Text.Lexing.LexBuffer<'cty> -> (QL.Grammar.Form) 
+val startexpression : (Microsoft.FSharp.Text.Lexing.LexBuffer<'cty> -> token) -> Microsoft.FSharp.Text.Lexing.LexBuffer<'cty> -> (QL.AbstractSyntaxTree.Expression) 
+val start : (Microsoft.FSharp.Text.Lexing.LexBuffer<'cty> -> token) -> Microsoft.FSharp.Text.Lexing.LexBuffer<'cty> -> (QL.AbstractSyntaxTree.Form) 

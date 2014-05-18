@@ -56,16 +56,17 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-    <Compile Include="Grammar.fs" />
+    <Compile Include="AbstractSyntaxTree.fs" />
     <None Include="QlLexer.fsl" />
     <Compile Include="QlParser.fsi" />
     <Compile Include="QlParser.fs" />
     <None Include="QlParser.fsp" />
     <Compile Include="QlLexer.fs" />
     <Content Include="example.ql" />
-    <Compile Include="Parser.fs" />
-    <Compile Include="TypeChecker.fs" />
-    <Compile Include="TypeCheckerRules.fs" />
+    <Compile Include="Parsing.fs" />
+    <Compile Include="Checking.fs" />
+    <Compile Include="Checks.fs" />
+    <Compile Include="ParserNew.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.PowerPack">
