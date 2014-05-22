@@ -47,7 +47,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.checkBox1);
             this.Name = "BooleanQuestionControl";
-            this.Size = new System.Drawing.Size(207, 21);
+            this.Size = new System.Drawing.Size(357, 21);
             this.ResumeLayout(false);
             this.PerformLayout();
 

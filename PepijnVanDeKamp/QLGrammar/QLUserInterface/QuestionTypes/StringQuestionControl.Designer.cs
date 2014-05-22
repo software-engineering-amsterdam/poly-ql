@@ -55,7 +55,7 @@
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label1);
             this.Name = "StringQuestionControl";
-            this.Size = new System.Drawing.Size(240, 45);
+            this.Size = new System.Drawing.Size(391, 45);
             this.ResumeLayout(false);
             this.PerformLayout();
 

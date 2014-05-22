@@ -11,7 +11,7 @@ using QLUI.WindowsForms.Abstract;
 
 namespace QLUI.WindowsForms.QuestionTypes
 {
-    public partial class IntQuestionControl : QuestionControl
+    public partial class IntQuestionControl : QuestionControl, IPrimitiveValue<int>
     {
         public IntQuestionControl() : base() { }
 
@@ -21,6 +21,16 @@ namespace QLUI.WindowsForms.QuestionTypes
             label1.Text = Label;
             numericUpDown1.ReadOnly = IsReadOnly;
             numericUpDown1.Enabled = !IsReadOnly;
+        }
+
+        public int GetValue()
+        {
+            return (int)numericUpDown1.Value;
+        }
+
+        public void SetValue(int Value)
+        {
+            numericUpDown1.Value = Value;
         }
     }
 }

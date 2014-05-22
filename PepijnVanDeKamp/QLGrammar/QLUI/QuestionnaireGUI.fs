@@ -1,6 +1,7 @@
 ﻿module QuestionnaireGUI
 open System.Windows.Forms
 open QL
+open QL.Values
 open QL.AbstractSyntaxTree
 open QLUI.WindowsForms.Abstract
 open QLUI.WindowsForms.Forms
@@ -8,11 +9,11 @@ open QLUI.WindowsForms.Forms
 let BuildGUI (ast:Form) = 
     let questionnaireForm = new QLUI.WindowsForms.Forms.QLQuestionnaireForm();
     
-    let createQuestionControl id label qltype isreadonly =
+    let createQuestionControl id label qltype isreadonly : QuestionControl =
         match qltype with
-        | QL_Boolean -> new QLUI.WindowsForms.QuestionTypes.BooleanQuestionControl(id,label,isreadonly) :> QuestionControl
-        | QL_Integer -> new QLUI.WindowsForms.QuestionTypes.IntQuestionControl(id,label,isreadonly) :> QuestionControl
-        | QL_String  -> new QLUI.WindowsForms.QuestionTypes.StringQuestionControl(id,label,isreadonly) :> QuestionControl
+        | QL_Boolean -> upcast new QLUI.WindowsForms.QuestionTypes.BooleanQuestionControl(id,label,isreadonly)
+        | QL_Integer -> upcast new QLUI.WindowsForms.QuestionTypes.IntQuestionControl(id,label,isreadonly)
+        | QL_String  -> upcast new QLUI.WindowsForms.QuestionTypes.StringQuestionControl(id,label,isreadonly)
 
     let rec createQuestionControls statement (parentControl:QLQuestionnaireForm) = 
        match statement with

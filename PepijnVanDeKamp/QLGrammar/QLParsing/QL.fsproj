@@ -57,6 +57,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
     <Compile Include="AbstractSyntaxTree.fs" />
+    <Compile Include="Values.fs" />
     <None Include="QlLexer.fsl" />
     <Compile Include="QlParser.fsi" />
     <Compile Include="QlParser.fs" />

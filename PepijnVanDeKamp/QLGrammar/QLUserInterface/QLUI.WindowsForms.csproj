@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstract\IPrimitiveValue.cs" />
     <Compile Include="Abstract\QuestionControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -117,7 +118,12 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\QLParsing\QL.fsproj">
+      <Project>{7138c2bd-d137-48c7-b14e-183ef6da02cf}</Project>
+      <Name>QL</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

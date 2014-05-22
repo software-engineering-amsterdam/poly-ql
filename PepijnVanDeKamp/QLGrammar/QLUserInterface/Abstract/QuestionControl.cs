@@ -22,6 +22,15 @@ namespace QLUI.WindowsForms.Abstract
             this.isreadonly = IsReadOnly;
         }
 
+        protected virtual void OnValueChanged(EventArgs e)
+        {
+            var _handler = ValueChanged;
+            if (_handler != null)
+                _handler(this, e);
+        }
+
+        public event EventHandler ValueChanged;
+
         public String Id
         {
             get
@@ -30,20 +39,7 @@ namespace QLUI.WindowsForms.Abstract
             }
         }
 
-        public String Label
-        {
-            get
-            {
-                return label;
-            }
-        }
 
-        public Boolean IsReadOnly
-        {
-            get
-            {
-                return isreadonly;
-            }
-        }
+
     }
 }
