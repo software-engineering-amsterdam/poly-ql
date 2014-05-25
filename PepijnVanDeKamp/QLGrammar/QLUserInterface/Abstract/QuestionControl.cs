@@ -38,8 +38,5 @@ namespace QLUI.WindowsForms.Abstract
                 return id;
             }
         }
-
-
-
     }
 }

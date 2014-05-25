@@ -42,5 +42,7 @@ namespace QLUI.WindowsForms.QuestionTypes
         {
             checkBox1.Checked = Value;
         }
+
+
     }
 }

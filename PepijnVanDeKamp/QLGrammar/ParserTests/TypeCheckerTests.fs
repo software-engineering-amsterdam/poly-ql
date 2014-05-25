@@ -104,7 +104,7 @@ type TypeCheckerTests() =
         Assert.IsTrue(output.Count() = 12);
 
     [<TestMethod>]
-    member x.OperantsTypeMustMatchOperator() =
+    member x.OperandsTypeMustMatchOperator() =
         let input = {Name = "Box1HouseOwning"; StatementList = [IfThen(BinaryExpression(LiteralStatement (Integer 1),Equals,LiteralStatement (String "1")),[], Position())];}
         let output = OperandsMustBeOfValidTypeToOperatorsCheck input
         Assert.IsTrue(output.[0].Message.Contains("expected 'integer'"))

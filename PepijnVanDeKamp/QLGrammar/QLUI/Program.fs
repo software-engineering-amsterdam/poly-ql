@@ -14,6 +14,11 @@ Application.SetCompatibleTextRenderingDefault(false)
 let checkers = [DuplicateLabelsCheck;ReferenceUndefinedQuestionsCheck;DuplicateQuestionDeclarationsMustBeOfSameTypeCheck;ExpressionMustBeOfExpectedTypeCheck;OperandsMustBeOfValidTypeToOperatorsCheck;CyclicDependencyCheck]
 let mainForm = new QLUserInterface.QLComposerForm()
 
+let loadQuestionForm ast = 
+    let questionnaireForm = new QLUI.WindowsForms.Forms.QLQuestionnaireForm()
+    let controlMap = BuildGUI ast questionnaireForm
+    questionnaireForm.Show()
+
 let parseButtonClick _ _ =
     let setTreeToControl tree = mainForm.setParseTree(tree.ToString())
     let MessagesToString messages = match messages with 
@@ -27,7 +32,7 @@ let parseButtonClick _ _ =
         | Some ast -> ast |> setTreeToControl
                       let checkMessages = ast |> checkAst
                       checkMessages |> setMessagesToControl
-                      if not <| hasError checkMessages then BuildGUI ast
+                      if not <| hasError checkMessages then loadQuestionForm ast
         | None     -> String.Empty |> setTreeToControl
                       result.Messages |> setMessagesToControl
     mainForm.getInputString() |> ParseToParseResult |> processResult

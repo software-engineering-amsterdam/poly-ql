@@ -56,8 +56,8 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-    <Compile Include="AbstractSyntaxTree.fs" />
     <Compile Include="Values.fs" />
+    <Compile Include="AbstractSyntaxTree.fs" />
     <None Include="QlLexer.fsl" />
     <Compile Include="QlParser.fsi" />
     <Compile Include="QlParser.fs" />
@@ -68,6 +68,7 @@
     <Compile Include="Checking.fs" />
     <Compile Include="Checks.fs" />
     <Compile Include="ParserNew.fs" />
+    <Compile Include="Interpreter.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.PowerPack">
