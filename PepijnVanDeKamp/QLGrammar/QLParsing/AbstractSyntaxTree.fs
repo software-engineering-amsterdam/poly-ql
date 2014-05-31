@@ -1,7 +1,6 @@
 ﻿namespace QL
 module AbstractSyntaxTree =
 
-
     type Position(startPos : Lexing.Position, endPos : Lexing.Position) =
         member this.ColumnStart = startPos.Column
         member this.LineStart = startPos.Line
@@ -14,7 +13,6 @@ module AbstractSyntaxTree =
         override m.ToString() = "Position"
         override m.Equals(_) = true
         override m.GetHashCode() = 1
-        
 
     type QuestionType = 
         | QL_Boolean 
@@ -63,9 +61,3 @@ module AbstractSyntaxTree =
            StatementList : Statement list;
          } 
          override m.ToString() = sprintf "%+A" m
-
-
-
-
- 
-

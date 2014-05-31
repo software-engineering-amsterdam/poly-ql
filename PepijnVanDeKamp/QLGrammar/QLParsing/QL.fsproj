@@ -62,11 +62,9 @@
     <Compile Include="QlParser.fs" />
     <None Include="QlParser.fsp" />
     <Compile Include="QlLexer.fs" />
-    <Content Include="example.ql" />
     <Compile Include="Parsing.fs" />
     <Compile Include="Checking.fs" />
     <Compile Include="Checks.fs" />
-    <Compile Include="ParserNew.fs" />
     <Compile Include="Interpreter.fs" />
   </ItemGroup>
   <ItemGroup>

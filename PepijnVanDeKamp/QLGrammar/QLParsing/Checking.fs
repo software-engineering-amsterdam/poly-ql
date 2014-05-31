@@ -7,9 +7,9 @@ module Checking =
     open QL.Parsing
 
     type InferedQuestionType =
-    | QL_Infered of QuestionType
-    | QL_Error
-    with override x.ToString() = match x with 
+        | QL_Infered of QuestionType
+        | QL_Error
+        with override x.ToString() = match x with 
                                      | QL_Infered(questionType) -> questionType.ToString()
                                      | QL_Error -> "error"
 

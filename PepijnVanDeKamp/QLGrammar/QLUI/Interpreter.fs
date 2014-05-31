@@ -1,5 +1,5 @@
 ﻿namespace QLUI
-module InterpretGUI =
+module Interpreter =
 
     open System.Windows.Forms
     open QL
@@ -22,11 +22,7 @@ module InterpretGUI =
         | :? IPrimitiveValue<string>, String(innervalue) -> (box control :?> IPrimitiveValue<string>).SetValue(innervalue)
         | _ -> failwith "Invalid combination of control and value"
 
-    let rec evaluateExpression (controlMap:Map<string,QuestionControl>) expression =
-        match expression with
-        | Id(id) -> getValueFromControl controlMap.[id]
-        | LiteralStatement(literalValue) -> literalValue
-        | Neg(innerExpression) -> evaluateNegationExpression (evaluateExpression controlMap innerExpression)
-        | BinaryExpression(leftExpression,operator,rightExpression) -> evaluateBinaryExpression (evaluateExpression controlMap leftExpression) operator (evaluateExpression controlMap rightExpression)
-        | ArithmeticExpression(leftExpression,operator,rightExpression) -> evaluateArithmeticExpression (evaluateExpression controlMap leftExpression) operator (evaluateExpression controlMap rightExpression)
+    let evaluateExpressionFromControls (controlMap:Map<string,QuestionControl>) expression =
+        let resolveIdValue id = getValueFromControl controlMap.[id]
+        evaluateExpression expression resolveIdValue
 

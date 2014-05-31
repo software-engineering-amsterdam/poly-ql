@@ -54,11 +54,12 @@
   </Choose>
   <Import Project="$(FSharpTargetsPath)" />
   <ItemGroup>
-    <Compile Include="InterpretGUI.fs" />
-    <Compile Include="QuestionnaireGUI.fs" />
+    <Compile Include="Interpreter.fs" />
+    <Compile Include="Builder.fs" />
     <Compile Include="Program.fs" />
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="example.ql" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.PowerPack">
