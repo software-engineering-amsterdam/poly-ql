@@ -20,6 +20,12 @@ namespace QLUI.WindowsForms.QuestionTypes
             label1.Text = Label;
             textBox1.ReadOnly = IsReadOnly;
             textBox1.Enabled = !IsReadOnly;
+            textBox1.TextChanged += textBox1_TextChanged;
+        }
+
+        void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            OnValueChanged(e);
         }
 
         public StringQuestionControl() : base()

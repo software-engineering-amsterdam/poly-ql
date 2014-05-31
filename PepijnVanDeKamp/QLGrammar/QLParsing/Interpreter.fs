@@ -2,32 +2,31 @@
 module Interpreter =
 
     open QL.AbstractSyntaxTree
-    open QL.Values
 
     let evaluateBinaryExpression left operator right =
         match (left, operator, right) with
-        | QLBoolean(leftValue), Equals,            QLBoolean(rightValue) -> QLBoolean(leftValue = rightValue)
-        | QLBoolean(leftValue), NotEquals ,        QLBoolean(rightValue) -> QLBoolean(not <| leftValue = rightValue)
-        | QLString(leftValue),  Equals,            QLString(rightValue)  -> QLBoolean(leftValue = rightValue)
-        | QLString(leftValue),  NotEquals ,        QLString(rightValue)  -> QLBoolean(not <| (leftValue = rightValue))
-        | QLInteger(leftValue), Equals,            QLInteger(rightValue) -> QLBoolean(leftValue = rightValue)
-        | QLInteger(leftValue), NotEquals ,        QLInteger(rightValue) -> QLBoolean(not <| (leftValue = rightValue))
-        | QLInteger(leftValue), GreaterEqualsThan, QLInteger(rightValue) -> QLBoolean(leftValue >= rightValue)
-        | QLInteger(leftValue), GreaterThan ,      QLInteger(rightValue) -> QLBoolean(not <| (leftValue > rightValue))
-        | QLInteger(leftValue), LessEqualsThan,    QLInteger(rightValue) -> QLBoolean(leftValue <= rightValue)
-        | QLInteger(leftValue), LessThan ,         QLInteger(rightValue) -> QLBoolean(not <| (leftValue < rightValue))
+        | Boolean(leftValue), Equals,            Boolean(rightValue) -> Boolean(leftValue = rightValue)
+        | Boolean(leftValue), NotEquals ,        Boolean(rightValue) -> Boolean(not <| leftValue = rightValue)
+        | String(leftValue),  Equals,            String(rightValue)  -> Boolean(leftValue = rightValue)
+        | String(leftValue),  NotEquals ,        String(rightValue)  -> Boolean(not <| (leftValue = rightValue))
+        | Integer(leftValue), Equals,            Integer(rightValue) -> Boolean(leftValue = rightValue)
+        | Integer(leftValue), NotEquals ,        Integer(rightValue) -> Boolean(not <| (leftValue = rightValue))
+        | Integer(leftValue), GreaterEqualsThan, Integer(rightValue) -> Boolean(leftValue >= rightValue)
+        | Integer(leftValue), GreaterThan ,      Integer(rightValue) -> Boolean(not <| (leftValue > rightValue))
+        | Integer(leftValue), LessEqualsThan,    Integer(rightValue) -> Boolean(leftValue <= rightValue)
+        | Integer(leftValue), LessThan ,         Integer(rightValue) -> Boolean(not <| (leftValue < rightValue))
         | _ -> failwith "Invalid combination of operands and operator"
     
     let evaluateArithmeticExpression left operator right =
         match (left, operator, right) with
-        | QLInteger(leftValue), Plus,   QLInteger(rightValue) -> QLInteger(leftValue + rightValue)
-        | QLInteger(leftValue), Minus,  QLInteger(rightValue) -> QLInteger(leftValue - rightValue)
-        | QLInteger(leftValue), Times,  QLInteger(rightValue) -> QLInteger(leftValue * rightValue)
-        | QLInteger(leftValue), Divide, QLInteger(0)          -> QLInteger(0)
-        | QLInteger(leftValue), Divide, QLInteger(rightValue) -> QLInteger(leftValue / rightValue)
+        | Integer(leftValue), Plus,   Integer(rightValue) -> Integer(leftValue + rightValue)
+        | Integer(leftValue), Minus,  Integer(rightValue) -> Integer(leftValue - rightValue)
+        | Integer(leftValue), Times,  Integer(rightValue) -> Integer(leftValue * rightValue)
+        | Integer(leftValue), Divide, Integer(0)          -> Integer(0)
+        | Integer(leftValue), Divide, Integer(rightValue) -> Integer(leftValue / rightValue)
         | _ -> failwith "Invalid combination of operands and operator"
 
     let evaluateNegationExpression expressionvalue = 
         match expressionvalue with
-        | QLBoolean(value) -> QLBoolean(not <| value)
+        | Boolean(value) -> Boolean(not <| value)
         | _ -> failwith "Invalid combination of operands and operator"

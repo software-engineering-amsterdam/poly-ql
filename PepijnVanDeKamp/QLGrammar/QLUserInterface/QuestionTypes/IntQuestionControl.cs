@@ -21,6 +21,13 @@ namespace QLUI.WindowsForms.QuestionTypes
             label1.Text = Label;
             numericUpDown1.ReadOnly = IsReadOnly;
             numericUpDown1.Enabled = !IsReadOnly;
+
+            numericUpDown1.ValueChanged += numericUpDown1_ValueChanged;
+        }
+
+        void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            OnValueChanged(e);
         }
 
         public int GetValue()

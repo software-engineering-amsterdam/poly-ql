@@ -3,7 +3,7 @@ open System
 open System.Windows.Forms;
 open System.Linq
 open QLUI
-open QuestionnaireGUI
+open QLUI.GUIBuilder
 open QL.Parsing
 open QL.Checking
 open QL.Checks

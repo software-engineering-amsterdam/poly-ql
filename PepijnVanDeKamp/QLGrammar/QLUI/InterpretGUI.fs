@@ -1,31 +1,32 @@
-﻿module InterpretGUI
-open System.Windows.Forms
-open QL
-open QL.Values
-open QL.AbstractSyntaxTree
-open QL.Interpreter
-open QLUI.WindowsForms.Abstract
-open QLUI.WindowsForms.Forms
+﻿namespace QLUI
+module InterpretGUI =
+
+    open System.Windows.Forms
+    open QL
+    open QL.AbstractSyntaxTree
+    open QL.Interpreter
+    open QLUI.WindowsForms.Abstract
+    open QLUI.WindowsForms.Forms
 
     let getValueFromControl (control:QuestionControl) =
         match box control with
-        | :? IPrimitiveValue<bool>   -> QLBoolean((box control :?> IPrimitiveValue<bool>).GetValue())
-        | :? IPrimitiveValue<int>    -> QLInteger((box control :?> IPrimitiveValue<int>).GetValue())
-        | :? IPrimitiveValue<string> -> QLString((box control :?> IPrimitiveValue<string>).GetValue())
+        | :? IPrimitiveValue<bool>   -> Boolean((box control :?> IPrimitiveValue<bool>).GetValue())
+        | :? IPrimitiveValue<int>    -> Integer((box control :?> IPrimitiveValue<int>).GetValue())
+        | :? IPrimitiveValue<string> -> String((box control :?> IPrimitiveValue<string>).GetValue())
         | _ -> failwith "Unexpected primitive type from GUI"
 
     let setValueToControl (control:QuestionControl) value =
         match (box control, value) with
-        | :? IPrimitiveValue<bool>, QLBoolean(innervalue)  -> (box control :?> IPrimitiveValue<bool>).SetValue(innervalue)
-        | :? IPrimitiveValue<int>, QLInteger(innervalue)   -> (box control :?> IPrimitiveValue<int>).SetValue(innervalue)
-        | :? IPrimitiveValue<string>, QLString(innervalue) -> (box control :?> IPrimitiveValue<string>).SetValue(innervalue)
+        | :? IPrimitiveValue<bool>, Boolean(innervalue)  -> (box control :?> IPrimitiveValue<bool>).SetValue(innervalue)
+        | :? IPrimitiveValue<int>, Integer(innervalue)   -> (box control :?> IPrimitiveValue<int>).SetValue(innervalue)
+        | :? IPrimitiveValue<string>, String(innervalue) -> (box control :?> IPrimitiveValue<string>).SetValue(innervalue)
         | _ -> failwith "Invalid combination of control and value"
 
-    let rec evaluateExpression expression (controlMap:Map<string,QuestionControl>) =
+    let rec evaluateExpression (controlMap:Map<string,QuestionControl>) expression =
         match expression with
         | Id(id) -> getValueFromControl controlMap.[id]
-        | LiteralStatement(literalValue) -> failwith ""
-        | Neg(innerExpression) -> evaluateNegationExpression (evaluateExpression innerExpression controlMap)
-        | BinaryExpression(leftExpression,operator,rightExpression) -> evaluateBinaryExpression (evaluateExpression leftExpression controlMap) operator (evaluateExpression rightExpression controlMap)
-        | ArithmeticExpression(leftExpression,operator,rightExpression) -> evaluateArithmeticExpression (evaluateExpression leftExpression controlMap) operator (evaluateExpression rightExpression controlMap)
+        | LiteralStatement(literalValue) -> literalValue
+        | Neg(innerExpression) -> evaluateNegationExpression (evaluateExpression controlMap innerExpression)
+        | BinaryExpression(leftExpression,operator,rightExpression) -> evaluateBinaryExpression (evaluateExpression controlMap leftExpression) operator (evaluateExpression controlMap rightExpression)
+        | ArithmeticExpression(leftExpression,operator,rightExpression) -> evaluateArithmeticExpression (evaluateExpression controlMap leftExpression) operator (evaluateExpression controlMap rightExpression)
 
