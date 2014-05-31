@@ -8,6 +8,8 @@ module Interpreter =
             match (left, operator, right) with
             | Boolean(leftValue), Equals,            Boolean(rightValue) -> Boolean(leftValue = rightValue)
             | Boolean(leftValue), NotEquals ,        Boolean(rightValue) -> Boolean(not <| leftValue = rightValue)
+            | Boolean(leftValue), And,               Boolean(rightValue) -> Boolean(leftValue && rightValue)
+            | Boolean(leftValue), Or ,               Boolean(rightValue) -> Boolean(leftValue || rightValue)
             | String(leftValue),  Equals,            String(rightValue)  -> Boolean(leftValue = rightValue)
             | String(leftValue),  NotEquals ,        String(rightValue)  -> Boolean(not <| (leftValue = rightValue))
             | Integer(leftValue), Equals,            Integer(rightValue) -> Boolean(leftValue = rightValue)

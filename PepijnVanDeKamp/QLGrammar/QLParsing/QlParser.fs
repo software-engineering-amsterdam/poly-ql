@@ -13,6 +13,8 @@ open Microsoft.FSharp.Collections
 // This type is the type of tokens accepted by the parser
 type token = 
   | EOF
+  | OR
+  | AND
   | GREATER_EQUALS_THAN
   | LESS_EQUALS_THAN
   | GREATER_THAN
@@ -44,6 +46,8 @@ type token =
 // This type is used to give symbolic names to token indexes, useful for error messages
 type tokenId = 
     | TOKEN_EOF
+    | TOKEN_OR
+    | TOKEN_AND
     | TOKEN_GREATER_EQUALS_THAN
     | TOKEN_LESS_EQUALS_THAN
     | TOKEN_GREATER_THAN
@@ -91,69 +95,73 @@ type nonTerminalId =
 let tagOfToken (t:token) = 
   match t with
   | EOF  -> 0 
-  | GREATER_EQUALS_THAN  -> 1 
-  | LESS_EQUALS_THAN  -> 2 
-  | GREATER_THAN  -> 3 
-  | LESS_THAN  -> 4 
-  | NOT  -> 5 
-  | NOT_EQUALS  -> 6 
-  | EQUALS  -> 7 
-  | TIMES  -> 8 
-  | DIVIDE  -> 9 
-  | MINUS  -> 10 
-  | PLUS  -> 11 
-  | PARENS_CLOSE  -> 12 
-  | PARENS_OPEN  -> 13 
-  | BRACKET_CLOSE  -> 14 
-  | BRACKET_OPEN  -> 15 
-  | ASS  -> 16 
-  | ELSE  -> 17 
-  | IF  -> 18 
-  | BOOL_FALSE  -> 19 
-  | BOOL_TRUE  -> 20 
-  | QL_STRING  -> 21 
-  | QL_INTEGER  -> 22 
-  | QL_BOOLEAN  -> 23 
-  | FORM  -> 24 
-  | BOOL _ -> 25 
-  | STRING _ -> 26 
-  | INT _ -> 27 
-  | ID _ -> 28 
+  | OR  -> 1 
+  | AND  -> 2 
+  | GREATER_EQUALS_THAN  -> 3 
+  | LESS_EQUALS_THAN  -> 4 
+  | GREATER_THAN  -> 5 
+  | LESS_THAN  -> 6 
+  | NOT  -> 7 
+  | NOT_EQUALS  -> 8 
+  | EQUALS  -> 9 
+  | TIMES  -> 10 
+  | DIVIDE  -> 11 
+  | MINUS  -> 12 
+  | PLUS  -> 13 
+  | PARENS_CLOSE  -> 14 
+  | PARENS_OPEN  -> 15 
+  | BRACKET_CLOSE  -> 16 
+  | BRACKET_OPEN  -> 17 
+  | ASS  -> 18 
+  | ELSE  -> 19 
+  | IF  -> 20 
+  | BOOL_FALSE  -> 21 
+  | BOOL_TRUE  -> 22 
+  | QL_STRING  -> 23 
+  | QL_INTEGER  -> 24 
+  | QL_BOOLEAN  -> 25 
+  | FORM  -> 26 
+  | BOOL _ -> 27 
+  | STRING _ -> 28 
+  | INT _ -> 29 
+  | ID _ -> 30 
 
 // This function maps integers indexes to symbolic token ids
 let tokenTagToTokenId (tokenIdx:int) = 
   match tokenIdx with
   | 0 -> TOKEN_EOF 
-  | 1 -> TOKEN_GREATER_EQUALS_THAN 
-  | 2 -> TOKEN_LESS_EQUALS_THAN 
-  | 3 -> TOKEN_GREATER_THAN 
-  | 4 -> TOKEN_LESS_THAN 
-  | 5 -> TOKEN_NOT 
-  | 6 -> TOKEN_NOT_EQUALS 
-  | 7 -> TOKEN_EQUALS 
-  | 8 -> TOKEN_TIMES 
-  | 9 -> TOKEN_DIVIDE 
-  | 10 -> TOKEN_MINUS 
-  | 11 -> TOKEN_PLUS 
-  | 12 -> TOKEN_PARENS_CLOSE 
-  | 13 -> TOKEN_PARENS_OPEN 
-  | 14 -> TOKEN_BRACKET_CLOSE 
-  | 15 -> TOKEN_BRACKET_OPEN 
-  | 16 -> TOKEN_ASS 
-  | 17 -> TOKEN_ELSE 
-  | 18 -> TOKEN_IF 
-  | 19 -> TOKEN_BOOL_FALSE 
-  | 20 -> TOKEN_BOOL_TRUE 
-  | 21 -> TOKEN_QL_STRING 
-  | 22 -> TOKEN_QL_INTEGER 
-  | 23 -> TOKEN_QL_BOOLEAN 
-  | 24 -> TOKEN_FORM 
-  | 25 -> TOKEN_BOOL 
-  | 26 -> TOKEN_STRING 
-  | 27 -> TOKEN_INT 
-  | 28 -> TOKEN_ID 
-  | 31 -> TOKEN_end_of_input
-  | 29 -> TOKEN_error
+  | 1 -> TOKEN_OR 
+  | 2 -> TOKEN_AND 
+  | 3 -> TOKEN_GREATER_EQUALS_THAN 
+  | 4 -> TOKEN_LESS_EQUALS_THAN 
+  | 5 -> TOKEN_GREATER_THAN 
+  | 6 -> TOKEN_LESS_THAN 
+  | 7 -> TOKEN_NOT 
+  | 8 -> TOKEN_NOT_EQUALS 
+  | 9 -> TOKEN_EQUALS 
+  | 10 -> TOKEN_TIMES 
+  | 11 -> TOKEN_DIVIDE 
+  | 12 -> TOKEN_MINUS 
+  | 13 -> TOKEN_PLUS 
+  | 14 -> TOKEN_PARENS_CLOSE 
+  | 15 -> TOKEN_PARENS_OPEN 
+  | 16 -> TOKEN_BRACKET_CLOSE 
+  | 17 -> TOKEN_BRACKET_OPEN 
+  | 18 -> TOKEN_ASS 
+  | 19 -> TOKEN_ELSE 
+  | 20 -> TOKEN_IF 
+  | 21 -> TOKEN_BOOL_FALSE 
+  | 22 -> TOKEN_BOOL_TRUE 
+  | 23 -> TOKEN_QL_STRING 
+  | 24 -> TOKEN_QL_INTEGER 
+  | 25 -> TOKEN_QL_BOOLEAN 
+  | 26 -> TOKEN_FORM 
+  | 27 -> TOKEN_BOOL 
+  | 28 -> TOKEN_STRING 
+  | 29 -> TOKEN_INT 
+  | 30 -> TOKEN_ID 
+  | 33 -> TOKEN_end_of_input
+  | 31 -> TOKEN_error
   | _ -> failwith "tokenTagToTokenId: bad token"
 
 /// This function maps production indexes returned in syntax errors to strings representing the non terminal that would be produced by that production
@@ -193,15 +201,19 @@ let prodIdxToNonTerminal (prodIdx:int) =
     | 31 -> NONTERM_Expression 
     | 32 -> NONTERM_Expression 
     | 33 -> NONTERM_Expression 
+    | 34 -> NONTERM_Expression 
+    | 35 -> NONTERM_Expression 
     | _ -> failwith "prodIdxToNonTerminal: bad production index"
 
-let _fsyacc_endOfInputTag = 31 
-let _fsyacc_tagOfErrorTerminal = 29
+let _fsyacc_endOfInputTag = 33 
+let _fsyacc_tagOfErrorTerminal = 31
 
 // This function gets the name of a token as a string
 let token_to_string (t:token) = 
   match t with 
   | EOF  -> "EOF" 
+  | OR  -> "OR" 
+  | AND  -> "AND" 
   | GREATER_EQUALS_THAN  -> "GREATER_EQUALS_THAN" 
   | LESS_EQUALS_THAN  -> "LESS_EQUALS_THAN" 
   | GREATER_THAN  -> "GREATER_THAN" 
@@ -235,6 +247,8 @@ let token_to_string (t:token) =
 let _fsyacc_dataOfToken (t:token) = 
   match t with 
   | EOF  -> (null : System.Object) 
+  | OR  -> (null : System.Object) 
+  | AND  -> (null : System.Object) 
   | GREATER_EQUALS_THAN  -> (null : System.Object) 
   | LESS_EQUALS_THAN  -> (null : System.Object) 
   | GREATER_THAN  -> (null : System.Object) 
@@ -263,18 +277,18 @@ let _fsyacc_dataOfToken (t:token) =
   | STRING _fsyacc_x -> Microsoft.FSharp.Core.Operators.box _fsyacc_x 
   | INT _fsyacc_x -> Microsoft.FSharp.Core.Operators.box _fsyacc_x 
   | ID _fsyacc_x -> Microsoft.FSharp.Core.Operators.box _fsyacc_x 
-let _fsyacc_gotos = [| 0us; 65535us; 0us; 65535us; 1us; 65535us; 2us; 3us; 1us; 65535us; 0us; 1us; 4us; 65535us; 6us; 7us; 12us; 13us; 30us; 31us; 34us; 35us; 4us; 65535us; 6us; 12us; 12us; 12us; 30us; 12us; 34us; 12us; 4us; 65535us; 6us; 14us; 12us; 14us; 30us; 14us; 34us; 14us; 1us; 65535us; 18us; 19us; 4us; 65535us; 6us; 15us; 12us; 15us; 30us; 15us; 34us; 15us; 15us; 65535us; 0us; 10us; 20us; 21us; 27us; 28us; 37us; 38us; 46us; 47us; 58us; 48us; 59us; 49us; 60us; 50us; 61us; 51us; 62us; 52us; 63us; 53us; 64us; 54us; 65us; 55us; 66us; 56us; 67us; 57us; |]
+let _fsyacc_gotos = [| 0us; 65535us; 0us; 65535us; 1us; 65535us; 2us; 3us; 1us; 65535us; 0us; 1us; 4us; 65535us; 6us; 7us; 12us; 13us; 30us; 31us; 34us; 35us; 4us; 65535us; 6us; 12us; 12us; 12us; 30us; 12us; 34us; 12us; 4us; 65535us; 6us; 14us; 12us; 14us; 30us; 14us; 34us; 14us; 1us; 65535us; 18us; 19us; 4us; 65535us; 6us; 15us; 12us; 15us; 30us; 15us; 34us; 15us; 17us; 65535us; 0us; 10us; 20us; 21us; 27us; 28us; 37us; 38us; 46us; 47us; 60us; 48us; 61us; 49us; 62us; 50us; 63us; 51us; 64us; 52us; 65us; 53us; 66us; 54us; 67us; 55us; 68us; 56us; 69us; 57us; 70us; 58us; 71us; 59us; |]
 let _fsyacc_sparseGotoTableRowOffsets = [|0us; 1us; 2us; 4us; 6us; 11us; 16us; 21us; 23us; 28us; |]
-let _fsyacc_stateToProdIdxsTableElements = [| 1us; 0us; 1us; 0us; 1us; 1us; 1us; 1us; 1us; 2us; 1us; 2us; 1us; 2us; 1us; 2us; 1us; 2us; 1us; 2us; 11us; 3us; 24us; 25us; 26us; 27us; 28us; 29us; 30us; 31us; 32us; 33us; 1us; 3us; 2us; 5us; 6us; 1us; 6us; 1us; 7us; 1us; 8us; 2us; 9us; 10us; 2us; 9us; 10us; 2us; 9us; 10us; 2us; 9us; 10us; 1us; 9us; 11us; 9us; 24us; 25us; 26us; 27us; 28us; 29us; 30us; 31us; 32us; 33us; 1us; 9us; 1us; 11us; 1us; 12us; 1us; 13us; 2us; 14us; 15us; 2us; 14us; 15us; 12us; 14us; 15us; 24us; 25us; 26us; 27us; 28us; 29us; 30us; 31us; 32us; 33us; 2us; 14us; 15us; 2us; 14us; 15us; 2us; 14us; 15us; 2us; 14us; 15us; 1us; 14us; 1us; 14us; 1us; 14us; 1us; 14us; 1us; 16us; 11us; 16us; 24us; 25us; 26us; 27us; 28us; 29us; 30us; 31us; 32us; 33us; 1us; 16us; 1us; 17us; 1us; 18us; 1us; 19us; 1us; 20us; 1us; 21us; 1us; 22us; 1us; 23us; 11us; 23us; 24us; 25us; 26us; 27us; 28us; 29us; 30us; 31us; 32us; 33us; 11us; 24us; 24us; 25us; 26us; 27us; 28us; 29us; 30us; 31us; 32us; 33us; 11us; 24us; 25us; 25us; 26us; 27us; 28us; 29us; 30us; 31us; 32us; 33us; 11us; 24us; 25us; 26us; 26us; 27us; 28us; 29us; 30us; 31us; 32us; 33us; 11us; 24us; 25us; 26us; 27us; 27us; 28us; 29us; 30us; 31us; 32us; 33us; 11us; 24us; 25us; 26us; 27us; 28us; 28us; 29us; 30us; 31us; 32us; 33us; 11us; 24us; 25us; 26us; 27us; 28us; 29us; 29us; 30us; 31us; 32us; 33us; 11us; 24us; 25us; 26us; 27us; 28us; 29us; 30us; 30us; 31us; 32us; 33us; 11us; 24us; 25us; 26us; 27us; 28us; 29us; 30us; 31us; 31us; 32us; 33us; 11us; 24us; 25us; 26us; 27us; 28us; 29us; 30us; 31us; 32us; 32us; 33us; 11us; 24us; 25us; 26us; 27us; 28us; 29us; 30us; 31us; 32us; 33us; 33us; 1us; 24us; 1us; 25us; 1us; 26us; 1us; 27us; 1us; 28us; 1us; 29us; 1us; 30us; 1us; 31us; 1us; 32us; 1us; 33us; |]
-let _fsyacc_stateToProdIdxsTableRowOffsets = [|0us; 2us; 4us; 6us; 8us; 10us; 12us; 14us; 16us; 18us; 20us; 32us; 34us; 37us; 39us; 41us; 43us; 46us; 49us; 52us; 55us; 57us; 69us; 71us; 73us; 75us; 77us; 80us; 83us; 96us; 99us; 102us; 105us; 108us; 110us; 112us; 114us; 116us; 118us; 130us; 132us; 134us; 136us; 138us; 140us; 142us; 144us; 146us; 158us; 170us; 182us; 194us; 206us; 218us; 230us; 242us; 254us; 266us; 278us; 280us; 282us; 284us; 286us; 288us; 290us; 292us; 294us; 296us; |]
-let _fsyacc_action_rows = 68
-let _fsyacc_actionTableElements = [|8us; 32768us; 5us; 46us; 13us; 37us; 19us; 45us; 20us; 44us; 25us; 42us; 26us; 43us; 27us; 41us; 28us; 40us; 0us; 49152us; 1us; 32768us; 24us; 4us; 0us; 49152us; 1us; 32768us; 28us; 5us; 1us; 32768us; 15us; 6us; 2us; 16388us; 18us; 26us; 28us; 16us; 1us; 32768us; 14us; 8us; 1us; 32768us; 0us; 9us; 0us; 16386us; 11us; 32768us; 0us; 11us; 1us; 67us; 2us; 65us; 3us; 66us; 4us; 64us; 6us; 63us; 7us; 62us; 8us; 61us; 9us; 60us; 10us; 59us; 11us; 58us; 0us; 16387us; 2us; 16388us; 18us; 26us; 28us; 16us; 0us; 16390us; 0us; 16391us; 0us; 16392us; 1us; 32768us; 16us; 17us; 1us; 32768us; 26us; 18us; 3us; 32768us; 21us; 25us; 22us; 24us; 23us; 23us; 1us; 16394us; 13us; 20us; 8us; 32768us; 5us; 46us; 13us; 37us; 19us; 45us; 20us; 44us; 25us; 42us; 26us; 43us; 27us; 41us; 28us; 40us; 11us; 32768us; 1us; 67us; 2us; 65us; 3us; 66us; 4us; 64us; 6us; 63us; 7us; 62us; 8us; 61us; 9us; 60us; 10us; 59us; 11us; 58us; 12us; 22us; 0us; 16393us; 0us; 16395us; 0us; 16396us; 0us; 16397us; 1us; 32768us; 13us; 27us; 8us; 32768us; 5us; 46us; 13us; 37us; 19us; 45us; 20us; 44us; 25us; 42us; 26us; 43us; 27us; 41us; 28us; 40us; 11us; 32768us; 1us; 67us; 2us; 65us; 3us; 66us; 4us; 64us; 6us; 63us; 7us; 62us; 8us; 61us; 9us; 60us; 10us; 59us; 11us; 58us; 12us; 29us; 1us; 32768us; 15us; 30us; 2us; 16388us; 18us; 26us; 28us; 16us; 1us; 32768us; 14us; 32us; 1us; 16399us; 17us; 33us; 1us; 32768us; 15us; 34us; 2us; 16388us; 18us; 26us; 28us; 16us; 1us; 32768us; 14us; 36us; 0us; 16398us; 8us; 32768us; 5us; 46us; 13us; 37us; 19us; 45us; 20us; 44us; 25us; 42us; 26us; 43us; 27us; 41us; 28us; 40us; 11us; 32768us; 1us; 67us; 2us; 65us; 3us; 66us; 4us; 64us; 6us; 63us; 7us; 62us; 8us; 61us; 9us; 60us; 10us; 59us; 11us; 58us; 12us; 39us; 0us; 16400us; 0us; 16401us; 0us; 16402us; 0us; 16403us; 0us; 16404us; 0us; 16405us; 0us; 16406us; 8us; 32768us; 5us; 46us; 13us; 37us; 19us; 45us; 20us; 44us; 25us; 42us; 26us; 43us; 27us; 41us; 28us; 40us; 0us; 16407us; 2us; 16408us; 8us; 61us; 9us; 60us; 2us; 16409us; 8us; 61us; 9us; 60us; 0us; 16410us; 0us; 16411us; 4us; 16412us; 8us; 61us; 9us; 60us; 10us; 59us; 11us; 58us; 4us; 16413us; 8us; 61us; 9us; 60us; 10us; 59us; 11us; 58us; 4us; 16414us; 8us; 61us; 9us; 60us; 10us; 59us; 11us; 58us; 4us; 16415us; 8us; 61us; 9us; 60us; 10us; 59us; 11us; 58us; 4us; 16416us; 8us; 61us; 9us; 60us; 10us; 59us; 11us; 58us; 4us; 16417us; 8us; 61us; 9us; 60us; 10us; 59us; 11us; 58us; 8us; 32768us; 5us; 46us; 13us; 37us; 19us; 45us; 20us; 44us; 25us; 42us; 26us; 43us; 27us; 41us; 28us; 40us; 8us; 32768us; 5us; 46us; 13us; 37us; 19us; 45us; 20us; 44us; 25us; 42us; 26us; 43us; 27us; 41us; 28us; 40us; 8us; 32768us; 5us; 46us; 13us; 37us; 19us; 45us; 20us; 44us; 25us; 42us; 26us; 43us; 27us; 41us; 28us; 40us; 8us; 32768us; 5us; 46us; 13us; 37us; 19us; 45us; 20us; 44us; 25us; 42us; 26us; 43us; 27us; 41us; 28us; 40us; 8us; 32768us; 5us; 46us; 13us; 37us; 19us; 45us; 20us; 44us; 25us; 42us; 26us; 43us; 27us; 41us; 28us; 40us; 8us; 32768us; 5us; 46us; 13us; 37us; 19us; 45us; 20us; 44us; 25us; 42us; 26us; 43us; 27us; 41us; 28us; 40us; 8us; 32768us; 5us; 46us; 13us; 37us; 19us; 45us; 20us; 44us; 25us; 42us; 26us; 43us; 27us; 41us; 28us; 40us; 8us; 32768us; 5us; 46us; 13us; 37us; 19us; 45us; 20us; 44us; 25us; 42us; 26us; 43us; 27us; 41us; 28us; 40us; 8us; 32768us; 5us; 46us; 13us; 37us; 19us; 45us; 20us; 44us; 25us; 42us; 26us; 43us; 27us; 41us; 28us; 40us; 8us; 32768us; 5us; 46us; 13us; 37us; 19us; 45us; 20us; 44us; 25us; 42us; 26us; 43us; 27us; 41us; 28us; 40us; |]
-let _fsyacc_actionTableRowOffsets = [|0us; 9us; 10us; 12us; 13us; 15us; 17us; 20us; 22us; 24us; 25us; 37us; 38us; 41us; 42us; 43us; 44us; 46us; 48us; 52us; 54us; 63us; 75us; 76us; 77us; 78us; 79us; 81us; 90us; 102us; 104us; 107us; 109us; 111us; 113us; 116us; 118us; 119us; 128us; 140us; 141us; 142us; 143us; 144us; 145us; 146us; 147us; 156us; 157us; 160us; 163us; 164us; 165us; 170us; 175us; 180us; 185us; 190us; 195us; 204us; 213us; 222us; 231us; 240us; 249us; 258us; 267us; 276us; |]
-let _fsyacc_reductionSymbolCounts = [|1us; 1us; 6us; 2us; 0us; 1us; 2us; 1us; 1us; 7us; 4us; 1us; 1us; 1us; 11us; 7us; 3us; 1us; 1us; 1us; 1us; 1us; 1us; 2us; 3us; 3us; 3us; 3us; 3us; 3us; 3us; 3us; 3us; 3us; |]
-let _fsyacc_productionToNonTerminalTable = [|0us; 1us; 2us; 3us; 4us; 4us; 4us; 5us; 5us; 6us; 6us; 7us; 7us; 7us; 8us; 8us; 9us; 9us; 9us; 9us; 9us; 9us; 9us; 9us; 9us; 9us; 9us; 9us; 9us; 9us; 9us; 9us; 9us; 9us; |]
-let _fsyacc_immediateActions = [|65535us; 49152us; 65535us; 49152us; 65535us; 65535us; 65535us; 65535us; 65535us; 16386us; 65535us; 16387us; 65535us; 16390us; 16391us; 16392us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 16393us; 16395us; 16396us; 16397us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 16398us; 65535us; 65535us; 16400us; 16401us; 16402us; 16403us; 16404us; 16405us; 16406us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; |]
+let _fsyacc_stateToProdIdxsTableElements = [| 1us; 0us; 1us; 0us; 1us; 1us; 1us; 1us; 1us; 2us; 1us; 2us; 1us; 2us; 1us; 2us; 1us; 2us; 1us; 2us; 13us; 3us; 24us; 25us; 26us; 27us; 28us; 29us; 30us; 31us; 32us; 33us; 34us; 35us; 1us; 3us; 2us; 5us; 6us; 1us; 6us; 1us; 7us; 1us; 8us; 2us; 9us; 10us; 2us; 9us; 10us; 2us; 9us; 10us; 2us; 9us; 10us; 1us; 9us; 13us; 9us; 24us; 25us; 26us; 27us; 28us; 29us; 30us; 31us; 32us; 33us; 34us; 35us; 1us; 9us; 1us; 11us; 1us; 12us; 1us; 13us; 2us; 14us; 15us; 2us; 14us; 15us; 14us; 14us; 15us; 24us; 25us; 26us; 27us; 28us; 29us; 30us; 31us; 32us; 33us; 34us; 35us; 2us; 14us; 15us; 2us; 14us; 15us; 2us; 14us; 15us; 2us; 14us; 15us; 1us; 14us; 1us; 14us; 1us; 14us; 1us; 14us; 1us; 16us; 13us; 16us; 24us; 25us; 26us; 27us; 28us; 29us; 30us; 31us; 32us; 33us; 34us; 35us; 1us; 16us; 1us; 17us; 1us; 18us; 1us; 19us; 1us; 20us; 1us; 21us; 1us; 22us; 1us; 23us; 13us; 23us; 24us; 25us; 26us; 27us; 28us; 29us; 30us; 31us; 32us; 33us; 34us; 35us; 13us; 24us; 24us; 25us; 26us; 27us; 28us; 29us; 30us; 31us; 32us; 33us; 34us; 35us; 13us; 24us; 25us; 25us; 26us; 27us; 28us; 29us; 30us; 31us; 32us; 33us; 34us; 35us; 13us; 24us; 25us; 26us; 26us; 27us; 28us; 29us; 30us; 31us; 32us; 33us; 34us; 35us; 13us; 24us; 25us; 26us; 27us; 27us; 28us; 29us; 30us; 31us; 32us; 33us; 34us; 35us; 13us; 24us; 25us; 26us; 27us; 28us; 28us; 29us; 30us; 31us; 32us; 33us; 34us; 35us; 13us; 24us; 25us; 26us; 27us; 28us; 29us; 29us; 30us; 31us; 32us; 33us; 34us; 35us; 13us; 24us; 25us; 26us; 27us; 28us; 29us; 30us; 30us; 31us; 32us; 33us; 34us; 35us; 13us; 24us; 25us; 26us; 27us; 28us; 29us; 30us; 31us; 31us; 32us; 33us; 34us; 35us; 13us; 24us; 25us; 26us; 27us; 28us; 29us; 30us; 31us; 32us; 32us; 33us; 34us; 35us; 13us; 24us; 25us; 26us; 27us; 28us; 29us; 30us; 31us; 32us; 33us; 33us; 34us; 35us; 13us; 24us; 25us; 26us; 27us; 28us; 29us; 30us; 31us; 32us; 33us; 34us; 34us; 35us; 13us; 24us; 25us; 26us; 27us; 28us; 29us; 30us; 31us; 32us; 33us; 34us; 35us; 35us; 1us; 24us; 1us; 25us; 1us; 26us; 1us; 27us; 1us; 28us; 1us; 29us; 1us; 30us; 1us; 31us; 1us; 32us; 1us; 33us; 1us; 34us; 1us; 35us; |]
+let _fsyacc_stateToProdIdxsTableRowOffsets = [|0us; 2us; 4us; 6us; 8us; 10us; 12us; 14us; 16us; 18us; 20us; 34us; 36us; 39us; 41us; 43us; 45us; 48us; 51us; 54us; 57us; 59us; 73us; 75us; 77us; 79us; 81us; 84us; 87us; 102us; 105us; 108us; 111us; 114us; 116us; 118us; 120us; 122us; 124us; 138us; 140us; 142us; 144us; 146us; 148us; 150us; 152us; 154us; 168us; 182us; 196us; 210us; 224us; 238us; 252us; 266us; 280us; 294us; 308us; 322us; 336us; 338us; 340us; 342us; 344us; 346us; 348us; 350us; 352us; 354us; 356us; 358us; |]
+let _fsyacc_action_rows = 72
+let _fsyacc_actionTableElements = [|8us; 32768us; 7us; 46us; 15us; 37us; 21us; 45us; 22us; 44us; 27us; 42us; 28us; 43us; 29us; 41us; 30us; 40us; 0us; 49152us; 1us; 32768us; 26us; 4us; 0us; 49152us; 1us; 32768us; 30us; 5us; 1us; 32768us; 17us; 6us; 2us; 16388us; 20us; 26us; 30us; 16us; 1us; 32768us; 16us; 8us; 1us; 32768us; 0us; 9us; 0us; 16386us; 13us; 32768us; 0us; 11us; 1us; 71us; 2us; 70us; 3us; 69us; 4us; 67us; 5us; 68us; 6us; 66us; 8us; 65us; 9us; 64us; 10us; 63us; 11us; 62us; 12us; 61us; 13us; 60us; 0us; 16387us; 2us; 16388us; 20us; 26us; 30us; 16us; 0us; 16390us; 0us; 16391us; 0us; 16392us; 1us; 32768us; 18us; 17us; 1us; 32768us; 28us; 18us; 3us; 32768us; 23us; 25us; 24us; 24us; 25us; 23us; 1us; 16394us; 15us; 20us; 8us; 32768us; 7us; 46us; 15us; 37us; 21us; 45us; 22us; 44us; 27us; 42us; 28us; 43us; 29us; 41us; 30us; 40us; 13us; 32768us; 1us; 71us; 2us; 70us; 3us; 69us; 4us; 67us; 5us; 68us; 6us; 66us; 8us; 65us; 9us; 64us; 10us; 63us; 11us; 62us; 12us; 61us; 13us; 60us; 14us; 22us; 0us; 16393us; 0us; 16395us; 0us; 16396us; 0us; 16397us; 1us; 32768us; 15us; 27us; 8us; 32768us; 7us; 46us; 15us; 37us; 21us; 45us; 22us; 44us; 27us; 42us; 28us; 43us; 29us; 41us; 30us; 40us; 13us; 32768us; 1us; 71us; 2us; 70us; 3us; 69us; 4us; 67us; 5us; 68us; 6us; 66us; 8us; 65us; 9us; 64us; 10us; 63us; 11us; 62us; 12us; 61us; 13us; 60us; 14us; 29us; 1us; 32768us; 17us; 30us; 2us; 16388us; 20us; 26us; 30us; 16us; 1us; 32768us; 16us; 32us; 1us; 16399us; 19us; 33us; 1us; 32768us; 17us; 34us; 2us; 16388us; 20us; 26us; 30us; 16us; 1us; 32768us; 16us; 36us; 0us; 16398us; 8us; 32768us; 7us; 46us; 15us; 37us; 21us; 45us; 22us; 44us; 27us; 42us; 28us; 43us; 29us; 41us; 30us; 40us; 13us; 32768us; 1us; 71us; 2us; 70us; 3us; 69us; 4us; 67us; 5us; 68us; 6us; 66us; 8us; 65us; 9us; 64us; 10us; 63us; 11us; 62us; 12us; 61us; 13us; 60us; 14us; 39us; 0us; 16400us; 0us; 16401us; 0us; 16402us; 0us; 16403us; 0us; 16404us; 0us; 16405us; 0us; 16406us; 8us; 32768us; 7us; 46us; 15us; 37us; 21us; 45us; 22us; 44us; 27us; 42us; 28us; 43us; 29us; 41us; 30us; 40us; 2us; 16407us; 1us; 71us; 2us; 70us; 4us; 16408us; 1us; 71us; 2us; 70us; 10us; 63us; 11us; 62us; 4us; 16409us; 1us; 71us; 2us; 70us; 10us; 63us; 11us; 62us; 2us; 16410us; 1us; 71us; 2us; 70us; 2us; 16411us; 1us; 71us; 2us; 70us; 6us; 16412us; 1us; 71us; 2us; 70us; 10us; 63us; 11us; 62us; 12us; 61us; 13us; 60us; 6us; 16413us; 1us; 71us; 2us; 70us; 10us; 63us; 11us; 62us; 12us; 61us; 13us; 60us; 6us; 16414us; 1us; 71us; 2us; 70us; 10us; 63us; 11us; 62us; 12us; 61us; 13us; 60us; 6us; 16415us; 1us; 71us; 2us; 70us; 10us; 63us; 11us; 62us; 12us; 61us; 13us; 60us; 6us; 16416us; 1us; 71us; 2us; 70us; 10us; 63us; 11us; 62us; 12us; 61us; 13us; 60us; 6us; 16417us; 1us; 71us; 2us; 70us; 10us; 63us; 11us; 62us; 12us; 61us; 13us; 60us; 12us; 16418us; 1us; 71us; 2us; 70us; 3us; 69us; 4us; 67us; 5us; 68us; 6us; 66us; 8us; 65us; 9us; 64us; 10us; 63us; 11us; 62us; 12us; 61us; 13us; 60us; 12us; 16419us; 1us; 71us; 2us; 70us; 3us; 69us; 4us; 67us; 5us; 68us; 6us; 66us; 8us; 65us; 9us; 64us; 10us; 63us; 11us; 62us; 12us; 61us; 13us; 60us; 8us; 32768us; 7us; 46us; 15us; 37us; 21us; 45us; 22us; 44us; 27us; 42us; 28us; 43us; 29us; 41us; 30us; 40us; 8us; 32768us; 7us; 46us; 15us; 37us; 21us; 45us; 22us; 44us; 27us; 42us; 28us; 43us; 29us; 41us; 30us; 40us; 8us; 32768us; 7us; 46us; 15us; 37us; 21us; 45us; 22us; 44us; 27us; 42us; 28us; 43us; 29us; 41us; 30us; 40us; 8us; 32768us; 7us; 46us; 15us; 37us; 21us; 45us; 22us; 44us; 27us; 42us; 28us; 43us; 29us; 41us; 30us; 40us; 8us; 32768us; 7us; 46us; 15us; 37us; 21us; 45us; 22us; 44us; 27us; 42us; 28us; 43us; 29us; 41us; 30us; 40us; 8us; 32768us; 7us; 46us; 15us; 37us; 21us; 45us; 22us; 44us; 27us; 42us; 28us; 43us; 29us; 41us; 30us; 40us; 8us; 32768us; 7us; 46us; 15us; 37us; 21us; 45us; 22us; 44us; 27us; 42us; 28us; 43us; 29us; 41us; 30us; 40us; 8us; 32768us; 7us; 46us; 15us; 37us; 21us; 45us; 22us; 44us; 27us; 42us; 28us; 43us; 29us; 41us; 30us; 40us; 8us; 32768us; 7us; 46us; 15us; 37us; 21us; 45us; 22us; 44us; 27us; 42us; 28us; 43us; 29us; 41us; 30us; 40us; 8us; 32768us; 7us; 46us; 15us; 37us; 21us; 45us; 22us; 44us; 27us; 42us; 28us; 43us; 29us; 41us; 30us; 40us; 8us; 32768us; 7us; 46us; 15us; 37us; 21us; 45us; 22us; 44us; 27us; 42us; 28us; 43us; 29us; 41us; 30us; 40us; 8us; 32768us; 7us; 46us; 15us; 37us; 21us; 45us; 22us; 44us; 27us; 42us; 28us; 43us; 29us; 41us; 30us; 40us; |]
+let _fsyacc_actionTableRowOffsets = [|0us; 9us; 10us; 12us; 13us; 15us; 17us; 20us; 22us; 24us; 25us; 39us; 40us; 43us; 44us; 45us; 46us; 48us; 50us; 54us; 56us; 65us; 79us; 80us; 81us; 82us; 83us; 85us; 94us; 108us; 110us; 113us; 115us; 117us; 119us; 122us; 124us; 125us; 134us; 148us; 149us; 150us; 151us; 152us; 153us; 154us; 155us; 164us; 167us; 172us; 177us; 180us; 183us; 190us; 197us; 204us; 211us; 218us; 225us; 238us; 251us; 260us; 269us; 278us; 287us; 296us; 305us; 314us; 323us; 332us; 341us; 350us; |]
+let _fsyacc_reductionSymbolCounts = [|1us; 1us; 6us; 2us; 0us; 1us; 2us; 1us; 1us; 7us; 4us; 1us; 1us; 1us; 11us; 7us; 3us; 1us; 1us; 1us; 1us; 1us; 1us; 2us; 3us; 3us; 3us; 3us; 3us; 3us; 3us; 3us; 3us; 3us; 3us; 3us; |]
+let _fsyacc_productionToNonTerminalTable = [|0us; 1us; 2us; 3us; 4us; 4us; 4us; 5us; 5us; 6us; 6us; 7us; 7us; 7us; 8us; 8us; 9us; 9us; 9us; 9us; 9us; 9us; 9us; 9us; 9us; 9us; 9us; 9us; 9us; 9us; 9us; 9us; 9us; 9us; 9us; 9us; |]
+let _fsyacc_immediateActions = [|65535us; 49152us; 65535us; 49152us; 65535us; 65535us; 65535us; 65535us; 65535us; 16386us; 65535us; 16387us; 65535us; 16390us; 16391us; 16392us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 16393us; 16395us; 16396us; 16397us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 16398us; 65535us; 65535us; 16400us; 16401us; 16402us; 16403us; 16404us; 16405us; 16406us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; |]
 let _fsyacc_reductions ()  =    [| 
-# 277 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
+# 291 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : QL.AbstractSyntaxTree.Expression)) in
             Microsoft.FSharp.Core.Operators.box
@@ -283,7 +297,7 @@ let _fsyacc_reductions ()  =    [|
                       raise (Microsoft.FSharp.Text.Parsing.Accept(Microsoft.FSharp.Core.Operators.box _1))
                    )
                  : '_startstartexpression));
-# 286 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
+# 300 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : QL.AbstractSyntaxTree.Form)) in
             Microsoft.FSharp.Core.Operators.box
@@ -292,88 +306,88 @@ let _fsyacc_reductions ()  =    [|
                       raise (Microsoft.FSharp.Text.Parsing.Accept(Microsoft.FSharp.Core.Operators.box _1))
                    )
                  : '_startstart));
-# 295 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
+# 309 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             let _2 = (let data = parseState.GetInput(2) in (Microsoft.FSharp.Core.Operators.unbox data : string)) in
             let _4 = (let data = parseState.GetInput(4) in (Microsoft.FSharp.Core.Operators.unbox data : 'Statement_List)) in
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 53 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 55 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                                                   
                                                      {  Name = _2; 
                                                         StatementList = _4; }
                                                  
                    )
-# 53 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 55 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                  : QL.AbstractSyntaxTree.Form));
-# 310 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
+# 324 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : 'Expression)) in
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 58 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 60 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                                                         _1 
                    )
-# 58 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 60 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                  : QL.AbstractSyntaxTree.Expression));
-# 321 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
+# 335 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 61 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 63 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                                                                          [] 
                    )
-# 61 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 63 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                  : 'Statement_List));
-# 331 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
+# 345 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : 'Statement)) in
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 62 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 64 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                                                              [_1] 
                    )
-# 62 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 64 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                  : 'Statement_List));
-# 342 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
+# 356 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : 'Statement)) in
             let _2 = (let data = parseState.GetInput(2) in (Microsoft.FSharp.Core.Operators.unbox data : 'Statement_List)) in
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 63 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 65 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                                                                      _1 :: _2 
                    )
-# 63 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 65 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                  : 'Statement_List));
-# 354 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
+# 368 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : 'Question)) in
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 66 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 68 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                                                                          _1 
                    )
-# 66 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 68 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                  : 'Statement));
-# 365 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
+# 379 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : 'Condition)) in
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 67 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 69 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                                                                       _1 
                    )
-# 67 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 69 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                  : 'Statement));
-# 376 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
+# 390 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : string)) in
             let _3 = (let data = parseState.GetInput(3) in (Microsoft.FSharp.Core.Operators.unbox data : string)) in
@@ -382,12 +396,12 @@ let _fsyacc_reductions ()  =    [|
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 70 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 72 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                                                                                             ComputedQuestion(_1,_3,_4,_6,Position(parseState)) 
                    )
-# 70 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 72 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                  : 'Question));
-# 390 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
+# 404 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : string)) in
             let _3 = (let data = parseState.GetInput(3) in (Microsoft.FSharp.Core.Operators.unbox data : string)) in
@@ -395,42 +409,42 @@ let _fsyacc_reductions ()  =    [|
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 71 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 73 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                                                                      Question(_1,_3,_4,Position(parseState)) 
                    )
-# 71 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 73 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                  : 'Question));
-# 403 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
+# 417 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 74 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 76 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                                                           QL_Boolean 
                    )
-# 74 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 76 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                  : 'QuestionType));
-# 413 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
+# 427 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 75 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 77 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                                                             QL_Integer 
                    )
-# 75 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 77 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                  : 'QuestionType));
-# 423 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
+# 437 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 76 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 78 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                                                            QL_String 
                    )
-# 76 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 78 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                  : 'QuestionType));
-# 433 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
+# 447 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             let _3 = (let data = parseState.GetInput(3) in (Microsoft.FSharp.Core.Operators.unbox data : 'Expression)) in
             let _6 = (let data = parseState.GetInput(6) in (Microsoft.FSharp.Core.Operators.unbox data : 'Statement_List)) in
@@ -438,231 +452,255 @@ let _fsyacc_reductions ()  =    [|
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 79 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 81 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                                                                                                                                                                 IfThenElse(_3,_6,_10,Position(parseState)) 
                    )
-# 79 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 81 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                  : 'Condition));
-# 446 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
+# 460 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             let _3 = (let data = parseState.GetInput(3) in (Microsoft.FSharp.Core.Operators.unbox data : 'Expression)) in
             let _6 = (let data = parseState.GetInput(6) in (Microsoft.FSharp.Core.Operators.unbox data : 'Statement_List)) in
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 80 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 82 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                                                                                                                  IfThen(_3,_6,Position(parseState)) 
                    )
-# 80 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 82 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                  : 'Condition));
-# 458 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
+# 472 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             let _2 = (let data = parseState.GetInput(2) in (Microsoft.FSharp.Core.Operators.unbox data : 'Expression)) in
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 84 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 86 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                                                                          _2 
                    )
-# 84 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 86 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                  : 'Expression));
-# 469 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
+# 483 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : string)) in
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 85 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 87 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                                                                          Id(_1) 
                    )
-# 85 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 87 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                  : 'Expression));
-# 480 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
+# 494 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : int)) in
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 86 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 88 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                                                                          LiteralStatement(Integer(_1)) 
                    )
-# 86 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 88 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                  : 'Expression));
-# 491 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
+# 505 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : bool)) in
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 87 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 89 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                                                                          LiteralStatement(Boolean(_1)) 
                    )
-# 87 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 89 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                  : 'Expression));
-# 502 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
+# 516 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : string)) in
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 88 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 90 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                                                                          LiteralStatement(String(_1)) 
                    )
-# 88 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 90 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                  : 'Expression));
-# 513 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
+# 527 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 89 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 91 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                                                                       LiteralStatement(Boolean(true)) 
                    )
-# 89 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 91 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                  : 'Expression));
-# 523 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
+# 537 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 90 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 92 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                                                                          LiteralStatement(Boolean(false)) 
                    )
-# 90 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 92 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                  : 'Expression));
-# 533 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
+# 547 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             let _2 = (let data = parseState.GetInput(2) in (Microsoft.FSharp.Core.Operators.unbox data : 'Expression)) in
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 91 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 93 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                                                                    Neg(_2) 
                    )
-# 91 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 93 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                  : 'Expression));
-# 544 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
+# 558 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : 'Expression)) in
             let _3 = (let data = parseState.GetInput(3) in (Microsoft.FSharp.Core.Operators.unbox data : 'Expression)) in
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 92 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 94 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                                                                       ArithmeticExpression(_1,Plus,_3) 
                    )
-# 92 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 94 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                  : 'Expression));
-# 556 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
+# 570 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : 'Expression)) in
             let _3 = (let data = parseState.GetInput(3) in (Microsoft.FSharp.Core.Operators.unbox data : 'Expression)) in
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 93 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 95 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                                                                          ArithmeticExpression(_1,Minus,_3) 
                    )
-# 93 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 95 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                  : 'Expression));
-# 568 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
+# 582 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : 'Expression)) in
             let _3 = (let data = parseState.GetInput(3) in (Microsoft.FSharp.Core.Operators.unbox data : 'Expression)) in
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 94 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 96 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                                                                          ArithmeticExpression(_1,Divide,_3) 
                    )
-# 94 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 96 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                  : 'Expression));
-# 580 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
+# 594 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : 'Expression)) in
             let _3 = (let data = parseState.GetInput(3) in (Microsoft.FSharp.Core.Operators.unbox data : 'Expression)) in
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 95 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 97 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                                                                          ArithmeticExpression(_1,Times,_3) 
                    )
-# 95 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 97 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                  : 'Expression));
-# 592 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
+# 606 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : 'Expression)) in
             let _3 = (let data = parseState.GetInput(3) in (Microsoft.FSharp.Core.Operators.unbox data : 'Expression)) in
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 96 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 98 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                                                                          BinaryExpression(_1,Equals,_3) 
                    )
-# 96 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 98 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                  : 'Expression));
-# 604 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
+# 618 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : 'Expression)) in
             let _3 = (let data = parseState.GetInput(3) in (Microsoft.FSharp.Core.Operators.unbox data : 'Expression)) in
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 97 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 99 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                                                                          BinaryExpression(_1,NotEquals,_3) 
                    )
-# 97 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 99 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                  : 'Expression));
-# 616 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
+# 630 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : 'Expression)) in
             let _3 = (let data = parseState.GetInput(3) in (Microsoft.FSharp.Core.Operators.unbox data : 'Expression)) in
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 98 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 100 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                                                                          BinaryExpression(_1,LessThan,_3) 
                    )
-# 98 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 100 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                  : 'Expression));
-# 628 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
+# 642 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : 'Expression)) in
             let _3 = (let data = parseState.GetInput(3) in (Microsoft.FSharp.Core.Operators.unbox data : 'Expression)) in
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 99 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 101 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                                                                          BinaryExpression(_1,LessEqualsThan,_3) 
                    )
-# 99 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 101 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                  : 'Expression));
-# 640 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
+# 654 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : 'Expression)) in
             let _3 = (let data = parseState.GetInput(3) in (Microsoft.FSharp.Core.Operators.unbox data : 'Expression)) in
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 100 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 102 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                                                                          BinaryExpression(_1,GreaterThan,_3) 
                    )
-# 100 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 102 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                  : 'Expression));
-# 652 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
+# 666 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
         (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
             let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : 'Expression)) in
             let _3 = (let data = parseState.GetInput(3) in (Microsoft.FSharp.Core.Operators.unbox data : 'Expression)) in
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 101 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 103 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                                                                          BinaryExpression(_1,GreaterEqualsThan,_3) 
                    )
-# 101 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+# 103 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+                 : 'Expression));
+# 678 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
+        (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
+            let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : 'Expression)) in
+            let _3 = (let data = parseState.GetInput(3) in (Microsoft.FSharp.Core.Operators.unbox data : 'Expression)) in
+            Microsoft.FSharp.Core.Operators.box
+                (
+                   (
+# 104 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+                                                                         BinaryExpression(_1,And,_3) 
+                   )
+# 104 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+                 : 'Expression));
+# 690 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
+        (fun (parseState : Microsoft.FSharp.Text.Parsing.IParseState) ->
+            let _1 = (let data = parseState.GetInput(1) in (Microsoft.FSharp.Core.Operators.unbox data : 'Expression)) in
+            let _3 = (let data = parseState.GetInput(3) in (Microsoft.FSharp.Core.Operators.unbox data : 'Expression)) in
+            Microsoft.FSharp.Core.Operators.box
+                (
+                   (
+# 105 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
+                                                                         BinaryExpression(_1,Or,_3) 
+                   )
+# 105 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fsp"
                  : 'Expression));
 |]
-# 665 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
+# 703 "C:\Users\p3pij_000\Documents\GitHub\poly-ql\PepijnVanDeKamp\QLGrammar\QLParsing\QlParser.fs"
 let tables () : Microsoft.FSharp.Text.Parsing.Tables<_> = 
   { reductions= _fsyacc_reductions ();
     endOfInputTag = _fsyacc_endOfInputTag;
@@ -681,7 +719,7 @@ let tables () : Microsoft.FSharp.Text.Parsing.Tables<_> =
                               match parse_error_rich with 
                               | Some f -> f ctxt
                               | None -> parse_error ctxt.Message);
-    numTerminals = 32;
+    numTerminals = 34;
     productionToNonTerminalTable = _fsyacc_productionToNonTerminalTable  }
 let engine lexer lexbuf startState = (tables ()).Interpret(lexer, lexbuf, startState)
 let startexpression lexer lexbuf : QL.AbstractSyntaxTree.Expression =

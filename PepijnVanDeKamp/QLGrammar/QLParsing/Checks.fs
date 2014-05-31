@@ -140,7 +140,11 @@ module Checks =
                                                                                              yield! checkIfOfType literalType expectedtype position
               | BinaryExpression(leftexpression,BinaryOperator.Equals,rightexpression)
               | BinaryExpression(leftexpression,BinaryOperator.NotEquals,rightexpression) -> let lefttype = expectedType leftexpression questioncollection
-                                                                                             yield! checkExpression rightexpression lefttype questioncollection position        
+                                                                                             yield! checkExpression rightexpression lefttype questioncollection position     
+              | BinaryExpression(leftexpression,BinaryOperator.And,rightexpression)
+              | BinaryExpression(leftexpression,BinaryOperator.Or,rightexpression)        -> let expectedType = QL_Boolean |> QL_Infered
+                                                                                             yield! checkExpression leftexpression expectedType questioncollection position
+                                                                                             yield! checkExpression rightexpression expectedType questioncollection position                                                                                                
               | Neg(negatedexpression)                                                    -> let expectedType = QL_Boolean |> QL_Infered
                                                                                              yield! checkExpression negatedexpression expectedType questioncollection position
               | BinaryExpression(leftexpression,_,rightexpression)        

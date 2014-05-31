@@ -2,6 +2,8 @@
 module QlParser
 type token = 
   | EOF
+  | OR
+  | AND
   | GREATER_EQUALS_THAN
   | LESS_EQUALS_THAN
   | GREATER_THAN
@@ -32,6 +34,8 @@ type token =
   | ID of (string)
 type tokenId = 
     | TOKEN_EOF
+    | TOKEN_OR
+    | TOKEN_AND
     | TOKEN_GREATER_EQUALS_THAN
     | TOKEN_LESS_EQUALS_THAN
     | TOKEN_GREATER_THAN

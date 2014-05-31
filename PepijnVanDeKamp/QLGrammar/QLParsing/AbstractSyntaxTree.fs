@@ -36,6 +36,8 @@ module AbstractSyntaxTree =
          | LessThan
          | GreaterEqualsThan
          | LessEqualsThan
+         | And
+         | Or
 
     type Literal = 
          | Boolean of bool
