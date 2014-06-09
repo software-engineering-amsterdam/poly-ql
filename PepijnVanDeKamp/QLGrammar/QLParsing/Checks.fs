@@ -12,7 +12,7 @@ module Checks =
             let rec checkExpression dependentId expression (dependencyMap:Map<string,Set<string>>) =
                 match expression with
                 | Id(identifier)                                                                ->  if not(dependencyMap.ContainsKey(dependentId)) then dependencyMap.Add(dependentId,Set.empty.Add(identifier)) else dependencyMap.Add(dependentId,dependencyMap.[dependentId].Add(identifier))                                                              
-                | Neg(negatedexpression)                                                        ->  dependencyMap |> checkExpression dependentId negatedexpression  
+                | NegationExpression(negatedexpression)                                         ->  dependencyMap |> checkExpression dependentId negatedexpression  
                 | ArithmeticExpression(leftExpression,_,rightExpression)
                 | BinaryExpression(leftExpression,_,rightExpression)                            ->  dependencyMap |> checkExpression dependentId leftExpression |> checkExpression dependentId rightExpression
                 | _                                                                             ->  dependencyMap
@@ -56,7 +56,7 @@ module Checks =
             [ if not <| questioncollection.Contains(id) then yield ErrorMessage(String.Format("Undefined question '{0}'",id),position) :> Message ]
         let rec checkExpression expression (questioncollection:List<String>) position =
             [ match expression with
-              | Neg(negatedexpression)                                            -> yield! checkExpression negatedexpression questioncollection position
+              | NegationExpression(negatedexpression)                             -> yield! checkExpression negatedexpression questioncollection position
               | ArithmeticExpression(leftExpression,_,rightExpression)            -> yield! checkExpression leftExpression questioncollection position
                                                                                      yield! checkExpression rightExpression questioncollection position
               | BinaryExpression(leftExpression,_,rightExpression)                -> yield! checkExpression leftExpression questioncollection position
@@ -102,7 +102,7 @@ module Checks =
               | Id(identifier)                                                    -> yield! checkIfQuestionIsOfType identifier expectedtype questioncollection position
               | LiteralStatement(literal)                                         -> let literalType = mapLiteralToQLType literal
                                                                                      yield! checkIfOfType literalType expectedtype position
-              | Neg(_)                                                                        
+              | NegationExpression(_)                                                                        
               | BinaryExpression(_,_,_)                                           -> yield! checkIfOfType QL_Boolean expectedtype position
               | ArithmeticExpression(_,_,_)                                       -> yield! checkIfOfType QL_Integer expectedtype position ]
         let rec checkStatements statements questioncollection =
@@ -130,7 +130,7 @@ module Checks =
             match expression with
             | Id(identifier)                -> checkIdentifierType identifier questioncollection
             | LiteralStatement(literal)     -> mapLiteralToQLType literal |> QL_Infered
-            | Neg(_)                        
+            | NegationExpression(_)                        
             | BinaryExpression(_,_,_)       -> QL_Boolean |> QL_Infered
             | ArithmeticExpression(_,_,_)   -> QL_Integer |> QL_Infered
         let rec checkExpression expression (expectedtype:InferedQuestionType) questioncollection position =
@@ -145,7 +145,7 @@ module Checks =
               | BinaryExpression(leftexpression,BinaryOperator.Or,rightexpression)        -> let expectedType = QL_Boolean |> QL_Infered
                                                                                              yield! checkExpression leftexpression expectedType questioncollection position
                                                                                              yield! checkExpression rightexpression expectedType questioncollection position                                                                                                
-              | Neg(negatedexpression)                                                    -> let expectedType = QL_Boolean |> QL_Infered
+              | NegationExpression(negatedexpression)                                     -> let expectedType = QL_Boolean |> QL_Infered
                                                                                              yield! checkExpression negatedexpression expectedType questioncollection position
               | BinaryExpression(leftexpression,_,rightexpression)        
               | ArithmeticExpression(leftexpression,_,rightexpression)                    -> let expectedType = QL_Integer |> QL_Infered

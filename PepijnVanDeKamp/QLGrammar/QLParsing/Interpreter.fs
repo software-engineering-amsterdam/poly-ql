@@ -29,14 +29,14 @@ module Interpreter =
             | Integer(leftValue), Divide, Integer(rightValue) -> Integer(leftValue / rightValue)
             | _ -> failwith "Invalid combination of operands and operator in arithmetic expression"
 
-        let evaluateNegationExpression expressionvalue = 
+        let evaluateNegationExpressionationExpression expressionvalue = 
             match expressionvalue with
             | Boolean(value)    -> Boolean(not <| value)
-            | _                 -> failwith "Invalid combination of operands and operator in negation expression"
+            | _                 -> failwith "Invalid combination of operands and operator in NegationExpressionation expression"
 
         match expression with
         | Id(id)                                        -> resolveIdValue(id)
         | LiteralStatement(value)                       -> value
-        | Neg(innerExpression)                          -> evaluateNegationExpression (evaluateExpression innerExpression resolveIdValue)
+        | NegationExpression(innerExpression)           -> evaluateNegationExpressionationExpression (evaluateExpression innerExpression resolveIdValue)
         | BinaryExpression(left,operator,right)         -> evaluateBinaryExpression (evaluateExpression left resolveIdValue) operator (evaluateExpression right resolveIdValue)
         | ArithmeticExpression(left,operator,right)     -> evaluateArithmeticExpression (evaluateExpression left resolveIdValue) operator (evaluateExpression right resolveIdValue)

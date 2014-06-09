@@ -39,7 +39,7 @@ module Builder =
                 match expression with
                 | Id(id)                                -> [controlmap.[id]]
                 | LiteralStatement(_)                   -> []
-                | Neg(innerExpression)                  -> getDependentExpressionControls controlmap innerExpression 
+                | NegationExpression(innerExpression)                  -> getDependentExpressionControls controlmap innerExpression 
                 | BinaryExpression(left,_,right) 
                 | ArithmeticExpression(left,_,right)    -> getDependentExpressionControls controlmap left  @ getDependentExpressionControls controlmap right
             
@@ -73,7 +73,7 @@ module Builder =
                                                                              let thenvisibilityEventHandler _ = doQuestionControlVisibility thenchildstatements expression controlmap
                                                                              addEventHandler expression thenvisibilityEventHandler controlmap
                                                                              let elsechildstatements = elsestatements |> List.map ProcessStatement |> foldLists
-                                                                             let elseexpression = (Neg(expression))
+                                                                             let elseexpression = (NegationExpression(expression))
                                                                              let elsevisibilityEventHandler _ = doQuestionControlVisibility elsechildstatements elseexpression controlmap
                                                                              addEventHandler elseexpression elsevisibilityEventHandler controlmap
                                                                              thenchildstatements @ elsechildstatements

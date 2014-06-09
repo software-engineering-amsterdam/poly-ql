@@ -45,8 +45,10 @@ open Microsoft.FSharp.Collections
 
 // start   
 %start start   
+%start startstatement 
 %start startexpression 
 %type <QL.AbstractSyntaxTree.Form> start  
+%type <QL.AbstractSyntaxTree.Statement> startstatement
 %type <QL.AbstractSyntaxTree.Expression> startexpression  
  
 %%   
@@ -57,6 +59,8 @@ start:  FORM ID BRACKET_OPEN Statement_List BRACKET_CLOSE
                                    StatementList = $4; }
                             }     
 							
+startstatement:  Statement EOF { $1 } 
+
 startexpression:  Expression EOF { $1 }         
 
 Statement_List:
@@ -90,7 +94,7 @@ Expression:
     | STRING                                      { LiteralStatement(String($1)) }
 	| BOOL_TRUE                                   { LiteralStatement(Boolean(true)) }
     | BOOL_FALSE                                  { LiteralStatement(Boolean(false)) }
-    | NOT Expression		                      { Neg($2) }
+    | NOT Expression		                      { NegationExpression($2) }
 	| Expression PLUS Expression                  { ArithmeticExpression($1,Plus,$3) }
     | Expression MINUS Expression                 { ArithmeticExpression($1,Minus,$3) }
     | Expression DIVIDE Expression                { ArithmeticExpression($1,Divide,$3) }

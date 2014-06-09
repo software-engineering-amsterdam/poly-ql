@@ -18,10 +18,48 @@ type ParserTests() =
         Assert.AreEqual(expectedOutput, output)
 
     [<TestMethod>]
-    member x.FormWithOneQuestionTest() = 
+    member x.FormWithOneStatementTest() = 
         let input = "form TestForm { hasSoldHouse: \"Dit is \\\" mijn vraag?\" boolean }"
         let expectedOutput = {Name = "TestForm"; StatementList = [Question ("hasSoldHouse","Dit is \\\" mijn vraag?",QL_Boolean,new Position())];}
         let output = ParseToObject QlParser.start (LexBuffer input)
+        Assert.AreEqual(expectedOutput, output)
+
+    [<TestMethod>]
+    member x.SingleLineCommentTest() = 
+        let input = @"form TestForm { 
+                         //Dit is een regel commentaar
+                         hasSoldHouse: ""Dit is mijn vraag"" boolean 
+                      }"
+        let expectedOutput = {Name = "TestForm"; StatementList = [Question ("hasSoldHouse","Dit is mijn vraag",QL_Boolean,new Position())];}
+        let output = ParseToObject QlParser.start (LexBuffer input)
+        Assert.AreEqual(expectedOutput, output)
+
+    [<TestMethod>]
+    member x.ParseComputedQuestionTest() = 
+        let input = "hasSoldHouse: \"Dit is mijn vraag?\" boolean(true)"
+        let expectedOutput = ComputedQuestion("hasSoldHouse","Dit is mijn vraag?",QL_Boolean,LiteralStatement(Boolean(true)),new Position());
+        let output = ParseToObject QlParser.startstatement (LexBuffer input)
+        Assert.AreEqual(expectedOutput, output)
+
+    [<TestMethod>]
+    member x.ParseConditionIfThenTest() = 
+        let input = "if(true){}"
+        let expectedOutput = IfThen(LiteralStatement(Boolean(true)),[],Position());
+        let output = ParseToObject QlParser.startstatement (LexBuffer input)
+        Assert.AreEqual(expectedOutput, output)
+
+    [<TestMethod>]
+    member x.ParseConditionIfThenElseTest() = 
+        let input = "if(true){}else{}"
+        let expectedOutput = IfThenElse(LiteralStatement(Boolean(true)),[],[],Position());
+        let output = ParseToObject QlParser.startstatement (LexBuffer input)
+        Assert.AreEqual(expectedOutput, output)
+
+    [<TestMethod>]
+    member x.ParseNestedConditionsTest() = 
+        let input = "if(true){if(false){if(true){}else{if(false){}else{}}}}else{}"
+        let expectedOutput = IfThenElse(LiteralStatement(Boolean(true)),[IfThen(LiteralStatement(Boolean(false)),[IfThenElse(LiteralStatement(Boolean(true)),[],[IfThenElse(LiteralStatement(Boolean(false)),[],[],Position())],Position())],Position())],[],Position());
+        let output = ParseToObject QlParser.startstatement (LexBuffer input)
         Assert.AreEqual(expectedOutput, output)
 
     [<TestMethod>]

@@ -62,6 +62,6 @@ type InterpreterTests() =
     [<TestMethod>]
     member x.EvaluateNegationExpression() = 
        let idResolver id = failwith "Id resolver is just a placeholder and should not be called"
-       let evalBoolean value  = evaluateExpression (Neg(LiteralStatement(Boolean(value)))) idResolver
+       let evalBoolean value  = evaluateExpression (NegationExpression(LiteralStatement(Boolean(value)))) idResolver
        Assert.AreEqual(evalBoolean true,Boolean(false))
        Assert.AreEqual(evalBoolean false,Boolean(true))

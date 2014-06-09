@@ -48,11 +48,11 @@ type TypeCheckerTests() =
 //q6: "string with int Arithmetic" string(1+1)
 //q7: "string with int id" string(q3)
 //q8: "string with binary" string(5 > 3)
-//q9: "string with neg" string(!5)
+//q9: "string with NegationExpression" string(!5)
 //q10: "int with boolean literal" integer(true)
 //q11: "int with string id" integer(q5)
 //q12: "int with binary" integer(1 > 2)
-//q13: "int with neg" integer(!4)
+//q13: "int with NegationExpression" integer(!4)
 //if(1+1)
 //{
 //}
@@ -86,7 +86,7 @@ type TypeCheckerTests() =
                             (LiteralStatement (Integer 5),GreaterThan,LiteralStatement (Integer 3)),
                           Position());
                        ComputedQuestion
-                         ("q9","string with neg",QL_String,Neg (LiteralStatement (Integer 5)),
+                         ("q9","string with NegationExpression",QL_String,NegationExpression (LiteralStatement (Integer 5)),
                           Position());
                        ComputedQuestion
                          ("q10","int with boolean literal",QL_Integer,
@@ -98,7 +98,7 @@ type TypeCheckerTests() =
                             (LiteralStatement (Integer 1),GreaterThan,LiteralStatement (Integer 2)),
                           Position());
                        ComputedQuestion
-                         ("q13","int with neg",QL_Integer,Neg (LiteralStatement (Integer 4)),
+                         ("q13","int with NegationExpression",QL_Integer,NegationExpression (LiteralStatement (Integer 4)),
                           Position())];}
         let output = ExpressionMustBeOfExpectedTypeCheck input
         Assert.IsTrue(output.Count() = 12);

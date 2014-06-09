@@ -46,7 +46,7 @@ module AbstractSyntaxTree =
 
     type Expression =
          | Id of string
-         | Neg of Expression
+         | NegationExpression of Expression
          | ArithmeticExpression of Expression * NumericOperator * Expression
          | BinaryExpression of Expression * BinaryOperator * Expression
          | LiteralStatement of Literal
