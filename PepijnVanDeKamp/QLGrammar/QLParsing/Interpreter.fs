@@ -15,10 +15,10 @@ module Interpreter =
             | Integer(leftValue), Equals,            Integer(rightValue) -> Boolean(leftValue = rightValue)
             | Integer(leftValue), NotEquals ,        Integer(rightValue) -> Boolean(not <| (leftValue = rightValue))
             | Integer(leftValue), GreaterEqualsThan, Integer(rightValue) -> Boolean(leftValue >= rightValue)
-            | Integer(leftValue), GreaterThan ,      Integer(rightValue) -> Boolean(not <| (leftValue > rightValue))
+            | Integer(leftValue), GreaterThan ,      Integer(rightValue) -> Boolean(leftValue > rightValue)
             | Integer(leftValue), LessEqualsThan,    Integer(rightValue) -> Boolean(leftValue <= rightValue)
-            | Integer(leftValue), LessThan ,         Integer(rightValue) -> Boolean(not <| (leftValue < rightValue))
-            | _ -> failwith "Invalid combination of operands and operator"
+            | Integer(leftValue), LessThan ,         Integer(rightValue) -> Boolean(leftValue < rightValue)
+            | _ -> failwith "Invalid combination of operands and operator in binary expression"
         
         let evaluateArithmeticExpression left operator right =
             match (left, operator, right) with
@@ -27,12 +27,12 @@ module Interpreter =
             | Integer(leftValue), Times,  Integer(rightValue) -> Integer(leftValue * rightValue)
             | Integer(leftValue), Divide, Integer(0)          -> Integer(0)
             | Integer(leftValue), Divide, Integer(rightValue) -> Integer(leftValue / rightValue)
-            | _ -> failwith "Invalid combination of operands and operator"
+            | _ -> failwith "Invalid combination of operands and operator in arithmetic expression"
 
         let evaluateNegationExpression expressionvalue = 
             match expressionvalue with
             | Boolean(value)    -> Boolean(not <| value)
-            | _                 -> failwith "Invalid combination of operands and operator"
+            | _                 -> failwith "Invalid combination of operands and operator in negation expression"
 
         match expression with
         | Id(id)                                        -> resolveIdValue(id)
