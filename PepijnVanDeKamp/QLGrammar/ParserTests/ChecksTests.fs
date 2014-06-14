@@ -38,79 +38,29 @@ type TypeCheckerTests() =
 
     [<TestMethod>]
     member x.ExpectedTypeShouldMatchExpressionTypeTest() =
-
-//    form ExpressionTest {
-//q1: "boolean with int literal" boolean(1)
-//q2: "boolean with int Arithmetic" boolean(1 + 2)
-//q3: "int" integer
-//q4: "boolean with int id" boolean(q3)
-//q5: "string with int literal" string(1)
-//q6: "string with int Arithmetic" string(1+1)
-//q7: "string with int id" string(q3)
-//q8: "string with binary" string(5 > 3)
-//q9: "string with NegationExpression" string(!5)
-//q10: "int with boolean literal" integer(true)
-//q11: "int with string id" integer(q5)
-//q12: "int with binary" integer(1 > 2)
-//q13: "int with NegationExpression" integer(!4)
-//if(1+1)
-//{
-//}
-//if("a")
-//{
-//}
-//}
-
-        let input = {Name = "ExpressionTest"; StatementList =
-                       [ComputedQuestion
-                         ("q1","boolean with int literal",QL_Boolean,LiteralStatement (Integer 1),
-                          Position());
-                       ComputedQuestion
-                         ("q2","boolean with int Arithmetic",QL_Boolean,
-                          ArithmeticExpression
-                            (LiteralStatement (Integer 1),Plus,LiteralStatement (Integer 2)),
-                          Position()); Question ("q3","int",QL_Integer,Position());
-                       ComputedQuestion ("q4","boolean with int id",QL_Boolean,Id "q3",Position());
-                       ComputedQuestion
-                         ("q5","string with int literal",QL_String,LiteralStatement (Integer 1),
-                          Position());
-                       ComputedQuestion
-                         ("q6","string with int Arithmetic",QL_String,
-                          ArithmeticExpression
-                            (LiteralStatement (Integer 1),Plus,LiteralStatement (Integer 1)),
-                          Position());
-                       ComputedQuestion ("q7","string with int id",QL_String,Id "q3",Position());
-                       ComputedQuestion
-                         ("q8","string with binary",QL_String,
-                          BinaryExpression
-                            (LiteralStatement (Integer 5),GreaterThan,LiteralStatement (Integer 3)),
-                          Position());
-                       ComputedQuestion
-                         ("q9","string with NegationExpression",QL_String,NegationExpression (LiteralStatement (Integer 5)),
-                          Position());
-                       ComputedQuestion
-                         ("q10","int with boolean literal",QL_Integer,
-                          LiteralStatement (Boolean true),Position());
-                       ComputedQuestion ("q11","int with string id",QL_Integer,Id "q5",Position());
-                       ComputedQuestion
-                         ("q12","int with binary",QL_Integer,
-                          BinaryExpression
-                            (LiteralStatement (Integer 1),GreaterThan,LiteralStatement (Integer 2)),
-                          Position());
-                       ComputedQuestion
-                         ("q13","int with NegationExpression",QL_Integer,NegationExpression (LiteralStatement (Integer 4)),
-                          Position())];}
-        let output = ExpressionMustBeOfExpectedTypeCheck input
-        Assert.IsTrue(output.Count() = 12);
+        let output questions = ExpressionMustBeOfExpectedTypeCheck {Name = "ExpressionTest"; StatementList = questions}
+        let assertCheck questions expectedCount = Assert.IsTrue(output(questions).Count() = expectedCount)
+        assertCheck [ComputedQuestion("q1","boolean with int literal",QL_Boolean,LiteralStatement (Integer 1),Position())] 1
+        assertCheck [ComputedQuestion("q2","boolean with int Arithmetic",QL_Boolean, ArithmeticExpression(LiteralStatement (Integer 1),Plus,LiteralStatement (Integer 2)),Position())] 1
+        assertCheck [Question ("q3","int",QL_Integer,Position());ComputedQuestion ("q4","boolean with int id",QL_Boolean,Id "q3",Position())] 1
+        assertCheck [ComputedQuestion("q5","string with int literal",QL_String,LiteralStatement (Integer 1),Position())] 1
+        assertCheck [ComputedQuestion("q6","string with int Arithmetic",QL_String, ArithmeticExpression(LiteralStatement (Integer 1),Plus,LiteralStatement (Integer 1)),Position())] 1
+        assertCheck [Question ("q3","int",QL_Integer,Position());ComputedQuestion ("q7","string with int id",QL_String,Id "q3",Position())] 1
+        assertCheck [ComputedQuestion("q8","string with binary",QL_String,BinaryExpression(LiteralStatement (Integer 5),GreaterThan,LiteralStatement (Integer 3)),Position())] 1
+        assertCheck [ComputedQuestion("q9","string with NegationExpression",QL_String,NegationExpression (LiteralStatement (Integer 5)),Position())] 1
+        assertCheck [ComputedQuestion("q10","int with boolean literal",QL_Integer,LiteralStatement (Boolean true),Position())] 1
+        assertCheck [ComputedQuestion("q5","string with int literal",QL_String,LiteralStatement (Integer 1),Position());ComputedQuestion ("q11","int with string id",QL_Integer,Id "q5",Position())] 2
+        assertCheck [ComputedQuestion("q12","int with binary",QL_Integer,BinaryExpression(LiteralStatement (Integer 1),GreaterThan,LiteralStatement (Integer 2)),Position())] 1
+        assertCheck [ComputedQuestion("q13","int with NegationExpression",QL_Integer,NegationExpression (LiteralStatement (Integer 4)),Position())] 1
 
     [<TestMethod>]
-    member x.OperandsTypeMustMatchOperator() =
+    member x.OperandTypeMustMatchOperatorTest() =
         let input = {Name = "Box1HouseOwning"; StatementList = [IfThen(BinaryExpression(LiteralStatement (Integer 1),Equals,LiteralStatement (String "1")),[], Position())];}
         let output = OperandsMustBeOfValidTypeToOperatorsCheck input
         Assert.IsTrue(output.[0].Message.Contains("expected 'integer'"))
 
     [<TestMethod>]
-    member x.CyclicDependencyNotAllowed() =
+    member x.CyclicDependencyNotAllowedTest() =
         let input = {Name = "Box1HouseOwning"; StatementList =  [Question ("q1","Did you sell a house in 2010?",QL_Boolean,Position());   ComputedQuestion("q2","Did you buy a house in 2010?",QL_Boolean,Id "q1",Position());   ComputedQuestion("q1","Did you enter a loan for maintenance/reconstruction?",QL_Boolean,Id "q2",Position())];}
         let output = CyclicDependencyCheck input
         Assert.IsTrue(output.[0].Message.Contains("Cyclic"))

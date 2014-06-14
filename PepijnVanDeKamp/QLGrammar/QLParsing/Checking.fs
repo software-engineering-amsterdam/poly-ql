@@ -12,7 +12,7 @@ module Checking =
         with override x.ToString() = match x with 
                                      | QL_Infered(questionType) -> questionType.ToString()
                                      | QL_Error -> "error"
-
+                                      
     type WarningMessage(Message:string,Position:Position) =
         inherit Message(Message,Position)
         override this.ToString() = String.Format("WARNING: {0} - Line: {1} Column: {2}",Message,Position.LineStart,Position.ColumnStart)

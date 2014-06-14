@@ -15,7 +15,7 @@ open QL.Interpreter
 type InterpreterTests() = 
 
     [<TestMethod>]
-    member x.EvaluateBinaryExpression() = 
+    member x.EvaluateBinaryExpressionTest() = 
        let idResolver id = failwith "Id resolver is just a placeholder and should not be called"
        let evalBoolean left operator right = evaluateExpression (BinaryExpression(LiteralStatement(Boolean(left)), operator ,LiteralStatement(Boolean(right)))) idResolver
        let evalString left operator right = evaluateExpression (BinaryExpression(LiteralStatement(String(left)), operator ,LiteralStatement(String(right)))) idResolver
@@ -49,7 +49,7 @@ type InterpreterTests() =
        Assert.AreEqual(evalInteger 1 LessEqualsThan 2, Boolean(true))
 
     [<TestMethod>]
-    member x.EvaluateArithmeticExpression() = 
+    member x.EvaluateArithmeticExpressionTest() = 
        let idResolver id = failwith "Id resolver is just a placeholder and should not be called"
        let evalInteger left operator right = evaluateExpression (ArithmeticExpression(LiteralStatement(Integer(left)), operator ,LiteralStatement(Integer(right)))) idResolver
        Assert.AreEqual(evalInteger 1 Plus 1,Integer(2))
@@ -60,7 +60,7 @@ type InterpreterTests() =
        Assert.AreEqual(evalInteger 10 Divide 3,Integer(3))
 
     [<TestMethod>]
-    member x.EvaluateNegationExpression() = 
+    member x.EvaluateNegationExpressionTest() = 
        let idResolver id = failwith "Id resolver is just a placeholder and should not be called"
        let evalBoolean value  = evaluateExpression (NegationExpression(LiteralStatement(Boolean(value)))) idResolver
        Assert.AreEqual(evalBoolean true,Boolean(false))
