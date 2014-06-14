@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace QLUI.WindowsForms.Abstract
 {
-    public class QuestionControl : UserControl
+    public abstract class QuestionControl : UserControl
     {
         private string id;
         private string label;

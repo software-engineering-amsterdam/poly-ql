@@ -16,14 +16,14 @@ type TypeCheckerTests() =
     [<TestMethod>]
     member x.DuplicateLabelsWarningTest() = 
         let input = {Name = "Box1HouseOwning"; StatementList = [Question ("hasSoldHouse","Did you sell a house in 2010?",QL_Boolean,Position());   Question("hasBoughtHouse","Did you sell a house in 2010?",QL_Boolean,Position())];}     
-        let output = DuplicateLabelsCheck(input)
+        let output = duplicateLabelsCheck(input)
         Assert.IsTrue(output.Count() = 1)
         Assert.IsTrue(output.[0].Message.Equals("Duplicate Label 'Did you sell a house in 2010?'"));
 
     [<TestMethod>]
     member x.ReferenceUndefinedQuestionErrorTest() =
         let input = {Name = "Box1HouseOwning"; StatementList = [Question("hasBoughtHouse","Did you buy a house in 2010?",QL_Boolean,Position()); IfThen(Id("hasSoldHouse"), [ComputedQuestion("valueResidue","Value residue:",QL_Integer,ArithmeticExpression(Id("sellingPrice"),Minus,Id("privateDebt")),Position())],Position())];}
-        let output = ReferenceUndefinedQuestionsCheck input
+        let output = referenceUndefinedQuestionsCheck input
         Assert.IsTrue(output.Count() = 3);
         Assert.IsTrue(output.[0].Message.Contains("hasSoldHouse"));
         Assert.IsTrue(output.[1].Message.Contains("sellingPrice"));
@@ -32,13 +32,13 @@ type TypeCheckerTests() =
     [<TestMethod>]
     member x.DuplicateQuestionDeclarationWithDifferentTypesTest() = 
         let input = {Name = "Box1HouseOwning"; StatementList =  [Question ("hasSoldHouse","Did you sell a house in 2010?",QL_Boolean,Position());   Question ("hasSoldHouse","Did you buy a house in 2010?",QL_Integer,Position())];}
-        let output = DuplicateQuestionDeclarationsMustBeOfSameTypeCheck input
+        let output = duplicateQuestionDeclarationsMustBeOfSameTypeCheck input
         Assert.IsTrue(output.Count() = 1);
         Assert.IsTrue(output.[0].Message.Contains("hasSoldHouse") && output.[0].Message.Contains("expected 'boolean'"));
 
     [<TestMethod>]
     member x.ExpectedTypeShouldMatchExpressionTypeTest() =
-        let output questions = ExpressionMustBeOfExpectedTypeCheck {Name = "ExpressionTest"; StatementList = questions}
+        let output questions = expressionMustBeOfExpectedTypeCheck {Name = "ExpressionTest"; StatementList = questions}
         let assertCheck questions expectedCount = Assert.IsTrue(output(questions).Count() = expectedCount)
         assertCheck [ComputedQuestion("q1","boolean with int literal",QL_Boolean,LiteralStatement (Integer 1),Position())] 1
         assertCheck [ComputedQuestion("q2","boolean with int Arithmetic",QL_Boolean, ArithmeticExpression(LiteralStatement (Integer 1),Plus,LiteralStatement (Integer 2)),Position())] 1
@@ -56,11 +56,11 @@ type TypeCheckerTests() =
     [<TestMethod>]
     member x.OperandTypeMustMatchOperatorTest() =
         let input = {Name = "Box1HouseOwning"; StatementList = [IfThen(BinaryExpression(LiteralStatement (Integer 1),Equals,LiteralStatement (String "1")),[], Position())];}
-        let output = OperandsMustBeOfValidTypeToOperatorsCheck input
+        let output = operandsMustBeOfValidTypeToOperatorsCheck input
         Assert.IsTrue(output.[0].Message.Contains("expected 'integer'")) 
 
     [<TestMethod>]
     member x.CyclicDependencyNotAllowedTest() =
         let input = {Name = "Box1HouseOwning"; StatementList =  [Question ("q1","Did you sell a house in 2010?",QL_Boolean,Position());   ComputedQuestion("q2","Did you buy a house in 2010?",QL_Boolean,Id "q1",Position());   ComputedQuestion("q1","Did you enter a loan for maintenance/reconstruction?",QL_Boolean,Id "q2",Position())];}
-        let output = CyclicDependencyCheck input
+        let output = cyclicDependencyCheck input
         Assert.IsTrue(output.[0].Message.Contains("Cyclic"))

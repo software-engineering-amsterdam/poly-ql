@@ -8,7 +8,7 @@ module Builder =
     open QLUI.WindowsForms.Abstract
     open QLUI.WindowsForms.Forms
 
-    let BuildUI (ast:Form) formControl = 
+    let buildUI (ast:Form) formControl = 
     
         let joinMaps map1 map2 = Map.fold (fun acc key value -> Map.add key value acc) map1 map2
         let foldLists = List.fold (fun acc elem -> acc @ elem ) []
@@ -30,7 +30,7 @@ module Builder =
             | IfThen(_,thenstatements, _)                    -> thenstatements |> mapControls parentControl createQuestionControls |> joinMaps controlmap
             | IfThenElse(_,thenstatements,elsestatements, _) -> controlmap |> joinMaps (thenstatements |> mapControls parentControl createQuestionControls) |> joinMaps (elsestatements |> mapControls parentControl createQuestionControls)
 
-        let ProcessForm (ast:Form) (controlmap:Map<string,QuestionControl>) =
+        let processForm (ast:Form) (controlmap:Map<string,QuestionControl>) =
 
             let getValueFromControl (control:QuestionControl) =
                 match box control with
@@ -72,8 +72,8 @@ module Builder =
             let computeQuestionValue expression questionId (controlmap:Map<string,QuestionControl>) =
                 expression |> evaluateExpressionFromControls controlmap |> setValueToControl controlmap.[questionId]
 
-            let rec ProcessStatement statement =
-                let addEventHandlerToStatements statements expression = let childstatements = statements |> List.map ProcessStatement |> foldLists
+            let rec processStatement statement =
+                let addEventHandlerToStatements statements expression = let childstatements = statements |> List.map processStatement |> foldLists
                                                                         let visibilityEventHandler _ = doQuestionControlVisibility childstatements expression controlmap
                                                                         addEventHandler expression visibilityEventHandler controlmap
                                                                         childstatements
@@ -84,6 +84,6 @@ module Builder =
                                                                              [id]
                 | IfThen(expression,thenstatements, _)                    -> addEventHandlerToStatements thenstatements expression
                 | IfThenElse(expression,thenstatements,elsestatements, _) -> addEventHandlerToStatements thenstatements expression @ addEventHandlerToStatements elsestatements (NegationExpression(expression))
-            ast.StatementList |> List.map ProcessStatement |> foldLists
+            ast.StatementList |> List.map processStatement |> foldLists
 
-        ast.StatementList |> mapControls formControl createQuestionControls |> ProcessForm ast
+        ast.StatementList |> mapControls formControl createQuestionControls |> processForm ast
