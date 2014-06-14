@@ -57,7 +57,7 @@ type TypeCheckerTests() =
     member x.OperandTypeMustMatchOperatorTest() =
         let input = {Name = "Box1HouseOwning"; StatementList = [IfThen(BinaryExpression(LiteralStatement (Integer 1),Equals,LiteralStatement (String "1")),[], Position())];}
         let output = OperandsMustBeOfValidTypeToOperatorsCheck input
-        Assert.IsTrue(output.[0].Message.Contains("expected 'integer'"))
+        Assert.IsTrue(output.[0].Message.Contains("expected 'integer'")) 
 
     [<TestMethod>]
     member x.CyclicDependencyNotAllowedTest() =
