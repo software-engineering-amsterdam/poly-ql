@@ -13,8 +13,6 @@ namespace QLUI.WindowsForms.QuestionTypes
 {
     public partial class IntQuestionControl : QuestionControl, IPrimitiveValue<int>
     {
-        public IntQuestionControl() : base() { }
-
         public IntQuestionControl(string Id, String Label, Boolean IsReadOnly) : base(Id,Label,IsReadOnly)
         {
             InitializeComponent();

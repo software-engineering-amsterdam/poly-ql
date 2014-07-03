@@ -71,7 +71,7 @@
             this.btnParse.TabIndex = 3;
             this.btnParse.Text = "Parse";
             this.btnParse.UseVisualStyleBackColor = true;
-            this.btnParse.Click += new System.EventHandler(this.btnParse_Click);
+            
             // 
             // txtCheckerMessages
             // 

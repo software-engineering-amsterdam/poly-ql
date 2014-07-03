@@ -28,11 +28,6 @@ namespace QLUI.WindowsForms.QuestionTypes
             OnValueChanged(e);
         }
 
-        public BooleanQuestionControl() : base()
-        {
-
-        }
-
         public bool GetValue()
         {
             return checkBox1.Checked;

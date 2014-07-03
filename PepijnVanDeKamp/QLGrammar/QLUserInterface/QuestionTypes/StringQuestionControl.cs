@@ -28,12 +28,6 @@ namespace QLUI.WindowsForms.QuestionTypes
             OnValueChanged(e);
         }
 
-        public StringQuestionControl() : base()
-        {
-
-        }
-
-
         public string GetValue()
         {
             return textBox1.Text;
