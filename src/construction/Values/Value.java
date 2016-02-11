@@ -29,5 +29,5 @@ public interface Value {
     
     public JComponent getControlComponent(boolean isReadOnly);
 
-    public void addValueChangedListener(ValueChangedListener vcl);
+    public void setValueChangedListener(ValueChangedListener vcl);
 }

@@ -17,10 +17,9 @@
 package construction.Values;
 
 import construction.RenderElements.ValueChangedListener;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JComponent;
 import javax.swing.JTextField;
 
@@ -31,7 +30,7 @@ import javax.swing.JTextField;
 public class IntValue implements Value, ActionListener {
 
     int value = 0;
-    List<ValueChangedListener> valueChangedListeners = new ArrayList();
+    ValueChangedListener valueChangedListener;
 
     public IntValue(int value) {
         this.value = value;
@@ -59,6 +58,7 @@ public class IntValue implements Value, ActionListener {
     @Override
     public JComponent getControlComponent(boolean isReadOnly) {
         JTextField tf = new JTextField();
+        tf.setPreferredSize(new Dimension(50, 20));
         tf.setText(String.valueOf(value));
         tf.setEnabled(!isReadOnly);
         tf.addActionListener(this);
@@ -66,15 +66,15 @@ public class IntValue implements Value, ActionListener {
     }
 
     @Override
-    public void addValueChangedListener(ValueChangedListener vcl) {
-        valueChangedListeners.clear();
-        valueChangedListeners.add(vcl);
+    public void setValueChangedListener(ValueChangedListener vcl) {
+        //   valueChangedListeners.clear();
+        valueChangedListener = vcl;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         value = Integer.parseInt(e.getActionCommand());
-        for (ValueChangedListener valueChangedListener : valueChangedListeners) {
+        if (valueChangedListener != null) {
             valueChangedListener.valueChanged(new IntValue(value));
         }
     }

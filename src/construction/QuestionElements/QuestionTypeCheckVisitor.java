@@ -61,10 +61,14 @@ public class QuestionTypeCheckVisitor implements Visitor {
                 typeErrors.add(new InvalidOperandError(cq.getCondition().getType(memory), new BoolType(), cq.getCondition().getLine()));
             }
         }
-      
+
         scope++;
-        for (GeneralQuestion generalQuestion : cq.getQuestions()) {
-         //   System.out.println("Scope: " + scope);
+        for (GeneralQuestion generalQuestion : cq.getTrueConditionQuestions()) {
+            //   System.out.println("Scope: " + scope);
+            generalQuestion.accept(this);
+        }
+        for (GeneralQuestion generalQuestion : cq.getFalseConditionQuestions()) {
+            //   System.out.println("Scope: " + scope);
             generalQuestion.accept(this);
         }
         scope--;

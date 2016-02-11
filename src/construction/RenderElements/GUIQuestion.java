@@ -21,31 +21,55 @@ import construction.Values.Value;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  *
  * @author svene_000
  */
 public class GUIQuestion implements ValueChangedListener {
-    
-    List<QuestionChangedListener> questionChangedListeners = new ArrayList();
+
     Question question;
     Value value;
-    
-    public JComponent getRender(boolean readOnly)
-    {
-        return null;
+    boolean isReadOnly;
+    List<QuestionChangedListener> questionChangedListeners = new ArrayList();
+
+    public GUIQuestion(Question q, Value v, boolean isReadOnly) {
+        this.question = q;
+        this.value = v;
+        this.isReadOnly = isReadOnly;
     }
-    
-    public void addQuestionChangedListener(QuestionChangedListener questionChangedListener) {
-        this.questionChangedListeners.add(questionChangedListener);
+
+    public JComponent render() {
+        value.setValueChangedListener(this);
+        JComponent questionBox = new JPanel();
+        JLabel questionLabelBox = new JLabel();
+        questionLabelBox.setText(question.getQuestionContent());
+        questionBox.add(questionLabelBox);
+        questionBox.add(value.getControlComponent(isReadOnly));
+        return questionBox;
     }
-    
+
+    public void addQuestionChangedListener(QuestionChangedListener qcl) {
+        questionChangedListeners.add(qcl);
+    }
+
     @Override
     public void valueChanged(Value newValue) {
-        for (QuestionChangedListener questionChangedListener : questionChangedListeners) {
-           // questionChangedListener.questionChanged(this, newValue);
+        System.out.println(question.getQuestionName() + " changed to: " + newValue.toString());
+        for (QuestionChangedListener qcl : questionChangedListeners) {
+            qcl.questionChanged(question, value);
         }
     }
-    
+
+    public boolean equals(Object o) {
+        if (o instanceof GUIQuestion) {
+            GUIQuestion tq = (GUIQuestion) o;
+            if (tq.equals(question)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

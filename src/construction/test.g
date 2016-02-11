@@ -2,6 +2,7 @@ grammar test;
 
 @header {
 package construction;
+import java.util.Map;
 import java.util.HashMap;
 import java.util.ArrayList;
 import construction.Operators.*;
@@ -29,16 +30,16 @@ item returns [GeneralQuestion question] :
 
 questionentry returns [Question question] @init {} :
     IDENTIFIER ':' STRING type
-    {$question = new Question($IDENTIFIER.text,$STRING.text,$type.t,$IDENTIFIER.line);};
+    {$question = new Question($IDENTIFIER.text,$STRING.text.substring(1, $STRING.text.length() - 1),$type.t,$IDENTIFIER.line);};
 
 conditional returns [ConditionalQuestion cq] @init {List<GeneralQuestion> gql = new ArrayList();} :
     'if' '(' exp {$cq = new ConditionalQuestion($exp.ex,($exp.start).getLine());} ')' 
-    '{' (item {$cq.add($item.question);})* '}' 
-    ('else' '{' (item {$cq.add($item.question);})*  '}')*;
+    '{' (item {$cq.addTrueConditionQuestion($item.question);})* '}' 
+    ('else' '{' (item {$cq.addFalseConditionQuestion($item.question);})*  '}')*;
 
 computed returns [ComputedQuestion question] @init {} :
     IDENTIFIER ':' STRING type '(' exp  ')'
-    {$question = new ComputedQuestion($IDENTIFIER.text,$STRING.text,$type.t,$exp.ex,$IDENTIFIER.line);};
+    {$question = new ComputedQuestion($IDENTIFIER.text,$STRING.text.substring(1, $STRING.text.length() - 1),$type.t,$exp.ex,$IDENTIFIER.line);};
     
 
 type returns [IType t] : 'boolean'{$t = new BoolType();} 

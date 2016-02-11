@@ -1,20 +1,7 @@
-/* 
- * Copyright (C) 2014 svene_000
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// Generated from C:\Users\svene_000\Documents\NetBeansProjects\Construction\src\construction\test.g by ANTLR 4.2
+
 package construction;
+import java.util.Map;
 import java.util.HashMap;
 import java.util.ArrayList;
 import construction.Operators.*;
@@ -71,7 +58,7 @@ public class testParser extends Parser {
 
 
 	/** Map variable name to Integer object holding value */
-	HashMap<String,IType> memory = new HashMap<String,IType>();
+	Map<String,IType> memory = new HashMap<String,IType>();
 
 	public testParser(TokenStream input) {
 		super(input);
@@ -246,7 +233,7 @@ public class testParser extends Parser {
 			setState(39); match(6);
 			setState(40); ((QuestionentryContext)_localctx).STRING = match(STRING);
 			setState(41); ((QuestionentryContext)_localctx).type = type();
-			((QuestionentryContext)_localctx).question =  new Question((((QuestionentryContext)_localctx).IDENTIFIER!=null?((QuestionentryContext)_localctx).IDENTIFIER.getText():null),(((QuestionentryContext)_localctx).STRING!=null?((QuestionentryContext)_localctx).STRING.getText():null),((QuestionentryContext)_localctx).type.t,(((QuestionentryContext)_localctx).IDENTIFIER!=null?((QuestionentryContext)_localctx).IDENTIFIER.getLine():0));
+			((QuestionentryContext)_localctx).question =  new Question((((QuestionentryContext)_localctx).IDENTIFIER!=null?((QuestionentryContext)_localctx).IDENTIFIER.getText():null),(((QuestionentryContext)_localctx).STRING!=null?((QuestionentryContext)_localctx).STRING.getText():null).substring(1, (((QuestionentryContext)_localctx).STRING!=null?((QuestionentryContext)_localctx).STRING.getText():null).length() - 1),((QuestionentryContext)_localctx).type.t,(((QuestionentryContext)_localctx).IDENTIFIER!=null?((QuestionentryContext)_localctx).IDENTIFIER.getLine():0));
 			}
 		}
 		catch (RecognitionException re) {
@@ -290,7 +277,7 @@ public class testParser extends Parser {
 	public final ConditionalContext conditional() throws RecognitionException {
 		ConditionalContext _localctx = new ConditionalContext(_ctx, getState());
 		enterRule(_localctx, 6, RULE_conditional);
-		ArrayList<GeneralQuestion> gql = new ArrayList();
+		List<GeneralQuestion> gql = new ArrayList();
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
@@ -308,7 +295,7 @@ public class testParser extends Parser {
 				{
 				{
 				setState(50); ((ConditionalContext)_localctx).item = item();
-				_localctx.cq.add(((ConditionalContext)_localctx).item.question);
+				_localctx.cq.addTrueConditionQuestion(((ConditionalContext)_localctx).item.question);
 				}
 				}
 				setState(57);
@@ -331,7 +318,7 @@ public class testParser extends Parser {
 					{
 					{
 					setState(61); ((ConditionalContext)_localctx).item = item();
-					_localctx.cq.add(((ConditionalContext)_localctx).item.question);
+					_localctx.cq.addFalseConditionQuestion(((ConditionalContext)_localctx).item.question);
 					}
 					}
 					setState(68);
@@ -399,7 +386,7 @@ public class testParser extends Parser {
 			setState(79); match(7);
 			setState(80); ((ComputedContext)_localctx).exp = exp(0);
 			setState(81); match(19);
-			((ComputedContext)_localctx).question =  new ComputedQuestion((((ComputedContext)_localctx).IDENTIFIER!=null?((ComputedContext)_localctx).IDENTIFIER.getText():null),(((ComputedContext)_localctx).STRING!=null?((ComputedContext)_localctx).STRING.getText():null),((ComputedContext)_localctx).type.t,((ComputedContext)_localctx).exp.ex,(((ComputedContext)_localctx).IDENTIFIER!=null?((ComputedContext)_localctx).IDENTIFIER.getLine():0));
+			((ComputedContext)_localctx).question =  new ComputedQuestion((((ComputedContext)_localctx).IDENTIFIER!=null?((ComputedContext)_localctx).IDENTIFIER.getText():null),(((ComputedContext)_localctx).STRING!=null?((ComputedContext)_localctx).STRING.getText():null).substring(1, (((ComputedContext)_localctx).STRING!=null?((ComputedContext)_localctx).STRING.getText():null).length() - 1),((ComputedContext)_localctx).type.t,((ComputedContext)_localctx).exp.ex,(((ComputedContext)_localctx).IDENTIFIER!=null?((ComputedContext)_localctx).IDENTIFIER.getLine():0));
 			}
 		}
 		catch (RecognitionException re) {

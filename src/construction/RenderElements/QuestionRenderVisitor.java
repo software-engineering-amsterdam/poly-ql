@@ -21,9 +21,7 @@ import construction.QuestionElements.ConditionalQuestion;
 import construction.QuestionElements.GeneralQuestion;
 import construction.QuestionElements.Question;
 import construction.QuestionElements.Visitor;
-import construction.Types.BoolType;
 import construction.Values.BoolValue;
-
 import construction.Values.Value;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,67 +31,40 @@ import java.util.Map;
 public class QuestionRenderVisitor implements Visitor {
 
     Map<String, Value> memory;
-
-    //Map<String,List<
-    List<RenderedQuestion> questions = new ArrayList();
-    List<qst> questions2 = new ArrayList();
-    int scope = 0;
+    List<GUIQuestion> questions = new ArrayList();
 
     public QuestionRenderVisitor(Map<String, Value> memory) {
         this.memory = memory;
     }
 
     public QuestionRenderVisitor() {
-        this.memory = new HashMap<String, Value>();
+        this.memory = new HashMap();
     }
 
     @Override
     public void visit(Question q) {
-
-        //    RenderedQuestion qb = new RenderedQuestion(q.getQuestionType());  
-        //  memory.put(q.getQuestionName(), q.getQuestionType());
-        //   labels.put(q.getQuestionContent(), q.getLine());
-        /*
-         if (q.getQuestionType().isCompatible(new BoolType())) {
-         RenderedBooleanQuestion rbq = new RenderedBooleanQuestion(q);
-         memory.put(q.getQuestionName(), rbq.getValue());
-         questions.add(rbq);
-         }
-        
-         */
-        //  System.out.println(memory);
         if (!memory.containsKey(q.getQuestionName())) {
             memory.put(q.getQuestionName(), q.getQuestionType().getUndefinedValue());
         }
-
-        questions2.add(new qst(q, memory.get(q.getQuestionName()), false));
-    }
-
-    public List<RenderedQuestion> getRender() {
-        return questions;
-    }
-
-    public List<qst> getRender2() {
-        return questions2;
+        questions.add(new GUIQuestion(q, memory.get(q.getQuestionName()), false));
     }
 
     @Override
     public void visit(ConditionalQuestion cq) {
-         System.out.println(memory);
         BoolValue expressionResult = (BoolValue) cq.getCondition().getValue(memory);
         if (expressionResult == null) {
             System.out.println("Expression returned NULL, Exiting node");
             return;
         }
-        System.out.println(cq.getLine());
-        System.out.println(expressionResult.getBoolValue());
-        System.out.println("Expression returned: " + expressionResult.getBoolValue());
         if ((expressionResult.getBoolValue() == true)) {
-            for (GeneralQuestion generalQuestion : cq.getQuestions()) {
+            for (GeneralQuestion generalQuestion : cq.getTrueConditionQuestions()) {
+                generalQuestion.accept(this);
+            }
+        } else {
+            for (GeneralQuestion generalQuestion : cq.getFalseConditionQuestions()) {
                 generalQuestion.accept(this);
             }
         }
-
     }
 
     @Override
@@ -108,11 +79,11 @@ public class QuestionRenderVisitor implements Visitor {
             memory.remove(cq.getQuestion().getQuestionName());
             memory.put(cq.getQuestion().getQuestionName(), expressionResult);
         }
-
-        questions2.add(new qst(cq.getQuestion(), expressionResult, true));
+        questions.add(new GUIQuestion(cq.getQuestion(), expressionResult, true));
     }
 
-    public Map<String, Value> getMemory() {
-        return memory;
+    public List<GUIQuestion> getRender() {
+        return questions;
     }
+
 }

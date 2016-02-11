@@ -22,7 +22,7 @@ import construction.QuestionElements.QuestionForm;
 import construction.QuestionElements.QuestionTypeCheckVisitor;
 import construction.RenderElements.QuestionGUI;
 import construction.RenderElements.QuestionRenderVisitor;
-import construction.RenderElements.qst;
+import construction.RenderElements.GUIQuestion;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -53,32 +53,6 @@ public class Construction {
         return v.getTypeErrors().size();
     }
 
-    private void renderer(QuestionForm qf) {
-        /*
-        QuestionRenderVisitor v = new QuestionRenderVisitor();
-        for (GeneralQuestion gq : qf.getQuestions()) {
-            gq.accept(v);
-        }
-        List<qst> rq = v.getRender2();
-        */
-        QuestionGUI g = new QuestionGUI(qf.getName(),qf.getQuestions());
-        g.render();
-/*
-        JFrame frame = new JFrame(qf.getName());
-        
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new GridLayout(rq.size(),1));
-        for (qst trq : rq) {
-            JComponent jcp = trq.render();
-            frame.add(jcp, BorderLayout.CENTER);
-
-        }
-        frame.pack();
-        frame.setSize(400, 200);
-        frame.setVisible(true);
-*/
-    }
-
     public void parseIT(String inputFile) {
         try {
             System.out.println("Parsing file, " + inputFile);
@@ -91,7 +65,8 @@ public class Construction {
 
             int typeErrors = TypeChecker(q.getQuestions());
             if (typeErrors == 0) {
-                renderer(q);
+                QuestionGUI g = new QuestionGUI(q.getName(), q.getQuestions());
+                g.render();
             } else {
                 System.out.println("Type Errors were found, fix these before proceeding");
             }

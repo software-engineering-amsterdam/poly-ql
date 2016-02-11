@@ -22,12 +22,14 @@ import java.util.List;
 
 public class ConditionalQuestion implements GeneralQuestion, Visitable {
 
-    List<GeneralQuestion> questions = new ArrayList();
+    List<GeneralQuestion> trueConditionQuestionList = new ArrayList();
+    List<GeneralQuestion> falseConditionQuestionList = new ArrayList();
     Expression expression;
     int line;
 
-    public ConditionalQuestion(List<GeneralQuestion> questions, Expression expression, int line) {
-        this.questions = questions;
+    public ConditionalQuestion(List<GeneralQuestion> trueQuestions, List<GeneralQuestion> falseQuestions, Expression expression, int line) {
+        this.trueConditionQuestionList = trueQuestions;
+        this.trueConditionQuestionList = falseQuestions;
         this.expression = expression;
         this.line = line;
     }
@@ -45,16 +47,24 @@ public class ConditionalQuestion implements GeneralQuestion, Visitable {
         this.expression = ex;
     }
 
-    public void add(GeneralQuestion gq) {
-        questions.add(gq);
+    public void addTrueConditionQuestion(GeneralQuestion gq) {
+        trueConditionQuestionList.add(gq);
+    }
+
+    public void addFalseConditionQuestion(GeneralQuestion gq) {
+        falseConditionQuestionList.add(gq);
     }
 
     public void addAll(List<GeneralQuestion> gq) {
-        questions.addAll(gq);
+        trueConditionQuestionList.addAll(gq);
     }
 
-    public List<GeneralQuestion> getQuestions() {
-        return questions;
+    public List<GeneralQuestion> getTrueConditionQuestions() {
+        return trueConditionQuestionList;
+    }
+
+    public List<GeneralQuestion> getFalseConditionQuestions() {
+        return falseConditionQuestionList;
     }
 
     public Expression getCondition() {
@@ -78,7 +88,7 @@ public class ConditionalQuestion implements GeneralQuestion, Visitable {
         }
         sb.append(toString());
         //    sb.append("\tCheck: "+(condition.c?"Pass":"Fail"));
-        for (GeneralQuestion gq : questions) {
+        for (GeneralQuestion gq : trueConditionQuestionList) {
             sb.append("\r\n");
             sb.append(gq.toString(depth + 1));
         }

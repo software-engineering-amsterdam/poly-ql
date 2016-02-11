@@ -16,12 +16,9 @@
  */
 package construction.Values;
 
-import construction.RenderElements.AbstractRenderedQuestion;
 import construction.RenderElements.ValueChangedListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 
@@ -30,23 +27,23 @@ import javax.swing.JComponent;
  * @author svene_000
  */
 public class BoolValue implements Value, ItemListener {
-
+    
     boolean value = false;
-    List<ValueChangedListener> valueChangedListeners = new ArrayList();
-
+    ValueChangedListener valueChangedListener;
+    
     public BoolValue(boolean value) {
         this.value = value;
     }
-
+    
     @Override
     public Value getValue() {
         return this;
     }
-
+    
     public boolean getBoolValue() {
         return value;
     }
-
+    
     public boolean equals(Object o) {
         if (o instanceof BoolValue) {
             BoolValue b = (BoolValue) o;
@@ -56,13 +53,13 @@ public class BoolValue implements Value, ItemListener {
         }
         return false;
     }
-
+    
     @Override
-    public void addValueChangedListener(ValueChangedListener vcl) {
-        valueChangedListeners.clear();
-        valueChangedListeners.add(vcl);
+    public void setValueChangedListener(ValueChangedListener vcl) {
+        //  valueChangedListeners.clear();
+        valueChangedListener = vcl;
     }
-
+    
     @Override
     public JComponent getControlComponent(boolean isReadOnly) {
         JCheckBox cb = new JCheckBox("Ja/Nee");
@@ -71,21 +68,17 @@ public class BoolValue implements Value, ItemListener {
         cb.addItemListener(this);
         return cb;
     }
-
+    
     @Override
     public void itemStateChanged(ItemEvent e) {
         boolean newValue = false;
-        System.out.println("EEEEEEEEEEEEEEEEEEEEEEEE" + e.getStateChange());
         if (e.getStateChange() == 1) {
             newValue = true;
         }
         value = newValue;
-        System.out.println("VALUE IS: ------" + value);
-        for (ValueChangedListener valueChangedListener : valueChangedListeners) {
-            valueChangedListener.valueChanged(new BoolValue(value));
-        }
+        if(valueChangedListener!=null) valueChangedListener.valueChanged(new BoolValue(value));
     }
-
+    
     public String toString() {
         if (value) {
             return "True";

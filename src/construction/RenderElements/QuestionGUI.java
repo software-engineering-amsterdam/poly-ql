@@ -19,15 +19,19 @@ package construction.RenderElements;
 import construction.QuestionElements.GeneralQuestion;
 import construction.QuestionElements.Question;
 import construction.Values.Value;
-import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED;
+import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -39,42 +43,34 @@ public class QuestionGUI implements QuestionChangedListener {
     JPanel questionPanel = new JPanel();
     Map<String, Value> memory = new HashMap();
 
-    public QuestionGUI(String formTitle, List<GeneralQuestion> gql) {
-        this.generalQuestionList = gql;
-
+    public QuestionGUI(String formTitle, List<GeneralQuestion> generalQuestionList) {
+        this.generalQuestionList = generalQuestionList;
+        questionPanel.setBorder(BorderFactory.createTitledBorder("Questions"));
+        JScrollPane jsp = new JScrollPane(questionPanel, VERTICAL_SCROLLBAR_AS_NEEDED, HORIZONTAL_SCROLLBAR_AS_NEEDED);
         JFrame frame = new JFrame(formTitle);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new GridLayout(1, 1));
-        frame.add(questionPanel, BorderLayout.CENTER);
+        frame.getContentPane().add(jsp);
         frame.pack();
-        frame.setSize(400, 200);
         frame.setVisible(true);
     }
-
-    boolean first = false;
 
     public void render() {
         QuestionRenderVisitor v = new QuestionRenderVisitor(memory);
         questionPanel.removeAll();
-        
         for (GeneralQuestion gq : generalQuestionList) {
             gq.accept(v);
         }
-
-        List<qst> questions = v.getRender2();
-
-        //   questionPanel.revalidate();
-        //   questionPanel.repaint();
+        List<GUIQuestion> questions = v.getRender();
         questionPanel.setLayout(new GridLayout(questions.size(), 1));
-        for (qst trq : questions) {
-            trq.addQuestionChangedListener(this);
-            JComponent jcp = trq.render();
+        for (GUIQuestion guiQuestion : questions) {
+            guiQuestion.addQuestionChangedListener(this);
+            JComponent jcp = guiQuestion.render();
             questionPanel.add(jcp);
-
         }
         questionPanel.revalidate();
         questionPanel.repaint();
-        first = true;
+        JFrame parent = (JFrame) SwingUtilities.getAncestorOfClass(JFrame.class, questionPanel);
+        parent.pack();
     }
 
     @Override
@@ -84,6 +80,5 @@ public class QuestionGUI implements QuestionChangedListener {
             memory.put(q.getQuestionName(), v);
             render();
         }
-
     }
 }

@@ -29,6 +29,7 @@ import javax.swing.JTextField;
 public class StringValue implements Value, ActionListener {
 
     String value = "";
+    ValueChangedListener valueChangedListener;
 
     public StringValue(String value) {
         this.value = value;
@@ -53,13 +54,16 @@ public class StringValue implements Value, ActionListener {
     }
 
     @Override
-    public void addValueChangedListener(ValueChangedListener vcl) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void setValueChangedListener(ValueChangedListener vcl) {
+        valueChangedListener = vcl;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        value = e.getActionCommand();
+        if (valueChangedListener != null) {
+            valueChangedListener.valueChanged(new StringValue(value));
+        }
     }
 
     public String toString() {

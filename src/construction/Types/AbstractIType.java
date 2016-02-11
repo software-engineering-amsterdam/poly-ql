@@ -16,8 +16,6 @@
  */
 package construction.Types;
 
-import construction.Values.Value;
-
 public abstract class AbstractIType implements IType {
 
    
