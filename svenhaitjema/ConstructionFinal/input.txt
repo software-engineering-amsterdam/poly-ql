@@ -1,0 +1,25 @@
+form doei {
+test: "hoi dit" money
+nog: "Zo" money
+af: "DI" money(test+nog)
+ah: "vraag" boolean
+bla: "hoe dan" boolean
+ca: "lala" boolean(bla and ah)
+if(ah==true)
+	{
+	nss: "obama" boolean
+	if(ca)
+		{
+		da: "did" boolean
+		}
+	if(test>10)
+		{
+		tra: "la" boolean
+		}
+ 	else 
+		{ 
+ 		zwa: "vraa" money
+ 		}
+	}
+
+}
