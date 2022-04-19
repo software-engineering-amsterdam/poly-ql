@@ -4,13 +4,13 @@
   "version": "0.0.1",
   "maintainers": [
     {
-      "name"  : "Fabiën Tesselaar",
+      "name"  : "FabiÃ«n Tesselaar",
       "email" : "fabientesselaar@gmail.com",
       "web"   : "tessmore.nl"
     }
   ],
   "dependencies": {
-    "minimist" : "0.0.8"
+    "minimist" : "1.2.6"
   },
   "devDependencies" : {
     "jslint" : "~0.2.11",
